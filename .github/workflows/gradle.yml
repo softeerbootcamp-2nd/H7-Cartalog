@@ -28,7 +28,5 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
     - name: Build with Gradle
+      run: ./gradlew build
       working-directory: backend
-      uses: gradle/gradle-build-action@v3
-      with:
-        arguments: build
