@@ -4,7 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="navController"
+            type="androidx.navigation.NavController" />
 
+        <variable
+            name="viewModel"
+            type="com.softeer.cartalog.viewmodel.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -76,10 +82,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_logo"
+            app:tabChange="@{navController}"
             app:tabIndicatorColor="@color/primary_color_500"
             app:tabSelectedTextColor="@color/primary_color_500"
             app:tabTextAppearance="@style/TabTextStyle"
-            app:tabTextColor="@color/gray_200">
+            app:tabTextColor="@color/gray_200"
+            app:viewModel="@{viewModel}">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
