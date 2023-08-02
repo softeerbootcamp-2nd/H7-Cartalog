@@ -1,4 +1,6 @@
 package com.softeer.cartalog.ui.fragment
 
-class ExteriorFragment {
+import androidx.fragment.app.Fragment
+
+class ExteriorFragment: Fragment() {
 }

@@ -1,4 +1,6 @@
 package com.softeer.cartalog.ui.fragment
 
-class TypeFragment {
+import androidx.fragment.app.Fragment
+
+class TypeFragment: Fragment() {
 }
