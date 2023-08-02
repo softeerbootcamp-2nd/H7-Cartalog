@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CarTaLog</string>
+    <string name="text_btn_exit">종료</string>
 </resources>
