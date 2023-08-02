@@ -13,8 +13,5 @@
 
     <style name="Theme.CarTaLog" parent="Base.Theme.CarTaLog" />
 
-    <style name="TabTextStyle" parent="@android:style/TextAppearance.Widget.TabWidget">
-        <item name="android:fontFamily">@font/hyndaisans_head</item>
-        <item name="android:textSize">14sp</item>
-    </style>
+
 </resources>
