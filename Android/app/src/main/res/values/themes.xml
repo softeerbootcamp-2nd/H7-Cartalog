@@ -2,7 +2,11 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.CarTaLog" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:textViewStyle">@style/hyndaiTextFontStyle</item>
+        <item name="android:buttonStyle">@style/hyndaiButtonFontStyle</item>
+        <item name="android:editTextStyle">@style/hyndaiEditTextFontStyle</item>
+        <item name="android:radioButtonStyle">@style/hyndaiCompoundButtonFontStyle</item>
+        <item name="android:checkboxStyle">@style/hyndaiCheckBoxFontStyle</item>
     </style>
 
     <style name="Theme.CarTaLog" parent="Base.Theme.CarTaLog" />
