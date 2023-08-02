@@ -26,6 +26,12 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="TabItemStyle" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/hyndaisans_head</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/active_blue2</item>
+    </style>
+
     <style name="HmgDataTag">
         <item name="fontFamily">@font/hyndaisans_head</item>
         <item name="android:textSize">10sp</item>

@@ -5,6 +5,13 @@
 
     <data>
 
+        <variable
+            name="navController"
+            type="androidx.navigation.NavController" />
+
+        <variable
+            name="viewModel"
+            type="com.softeer.cartalog.viewmodel.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -73,6 +80,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:orientation="horizontal"
+            tabChange="@{navController}"
+            tabColorChange="@{viewModel.stepIndex}"
+            viewModel="@{viewModel}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_logo"
