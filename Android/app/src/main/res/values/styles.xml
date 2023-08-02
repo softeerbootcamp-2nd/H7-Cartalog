@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="hyndaiTextFontStyle" parent="@android:style/Widget.DeviceDefault.TextView">
         <item name="android:fontFamily">@font/hyndaisans_text</item>
     </style>
@@ -18,6 +19,29 @@
 
     <style name="hyndaiCheckBoxFontStyle" parent="@android:style/Widget.DeviceDefault.CompoundButton.CheckBox">
         <item name="android:fontFamily">@font/hyndaisans_text</item>
+    </style>
+
+    <style name="TabTextStyle" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/hyndaisans_head</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="HmgDataTag">
+        <item name="fontFamily">@font/hyndaisans_head</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:text">HMG Data</item>
+        <item name="android:background">@color/active_blue2</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="HmgDataButton">
+        <item name="fontFamily">@font/hyndaisans_head</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:text">HMG Data</item>
+        <item name="android:background">@color/active_blue2</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:padding">10dp</item>
     </style>
 
 </resources>

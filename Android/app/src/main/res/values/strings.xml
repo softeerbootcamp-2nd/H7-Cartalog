@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">CarTaLog</string>
+    <string name="btn_exit">종료</string>
+    <string name="tab_trim">트림</string>
+    <string name="tab_type">타입</string>
+    <string name="tab_exterior">외장</string>
+    <string name="tab_interior">내장</string>
+    <string name="tab_option">옵션</string>
+    <string name="tab_confirm">완료</string>
 </resources>

@@ -7,7 +7,11 @@
         <item name="android:editTextStyle">@style/hyndaiEditTextFontStyle</item>
         <item name="android:radioButtonStyle">@style/hyndaiCompoundButtonFontStyle</item>
         <item name="android:checkboxStyle">@style/hyndaiCheckBoxFontStyle</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="Theme.CarTaLog" parent="Base.Theme.CarTaLog" />
+
+
 </resources>
