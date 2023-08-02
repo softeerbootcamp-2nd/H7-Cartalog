@@ -45,7 +45,7 @@
             app:layout_constraintTop_toTopOf="@id/gl_top" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/iv_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
@@ -57,10 +57,56 @@
             android:id="@+id/btn_exit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/text_btn_exit"
+            android:text="@string/btn_exit"
             android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@id/gl_end"
             app:layout_constraintTop_toTopOf="@id/gl_top" />
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:tabTextAppearance="@style/TabTextStyle"
+            android:orientation="horizontal"
+            app:tabSelectedTextColor="@color/primary_color_500"
+            app:tabTextColor="#CACACA"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_logo">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_trim" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_type" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_exterior" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_interior" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_option" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_confirm" />
+
+
+        </com.google.android.material.tabs.TabLayout>
 
 
         <androidx.appcompat.widget.AppCompatButton
