@@ -21,8 +21,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ColorControllerTest {
 
     SoftAssertions softAssertions;
-    ColorService colorService = new MockColorService();
-    ColorController colorController = new ColorController(colorService);
+    ColorService colorService;
+    ColorController colorController;
 
 
     @BeforeEach
@@ -34,11 +34,16 @@ class ColorControllerTest {
     @DisplayName("트림 외장 색상 목록 조회 테스트")
     class searchTrimExteriorColor {
 
+        @BeforeEach
+        void setUp() {
+            colorService = new MockColorService();
+            colorController = new ColorController(colorService);
+        }
+
         @Test
         @DisplayName("올바른 요청시 200 상태와 함께 트림 외장 색상 리스트를 반환해야 한다.")
         void success() {
             //given
-            colorService = new MockColorService();
             TrimExteriorColor mockData = ((MockColorService) colorService).getMockData();
 
             //when
@@ -64,7 +69,6 @@ class ColorControllerTest {
         @DisplayName("존재하지 않는 트림 식별자로 색상 요청시 404 상태를 반환해야 한다.")
         void notFound() {
             //given
-            colorService = new MockColorService();
 
             //when
             ResponseEntity<TrimExteriorColorListResponseDto> responseEntity = colorController.trimExteriorColorList(100L);
