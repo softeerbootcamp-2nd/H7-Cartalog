@@ -9,5 +9,5 @@ export const Exit = styled.div`
 
 export const Text = styled.span`
   color: ${({ theme }) => theme.color.gray['800']};
-  font: ${({ theme }) => theme.font.TextKRMedium14};
+  font: ${({ theme }) => theme.font.textKR.Medium14};
 `;
