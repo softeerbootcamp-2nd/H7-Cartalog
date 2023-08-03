@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("모델 도메인 컨트롤러 테스트")
 class ModelControllerTest {
-    TrimController trimController = new TrimController();
+    ModelController modelController = new ModelController();
 
 
     @Nested
@@ -42,7 +42,7 @@ class ModelControllerTest {
                     .build();
 
             //when
-            ModelTypeListResponseDto realResponse = trimController.searchModelType();
+            ModelTypeListResponseDto realResponse = modelController.searchModelType();
 
             //then
             assertThat(realResponse).isEqualTo(expectResponse);
