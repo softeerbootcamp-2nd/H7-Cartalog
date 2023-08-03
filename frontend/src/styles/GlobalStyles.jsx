@@ -1,13 +1,28 @@
 import { createGlobalStyle } from 'styled-components';
+
+import HyundaiSansHeadBold from '../../assets/fonts/HyundaiSansHead-Bold.woff2';
 import HyundaiSansHeadKRBold from '../../assets/fonts/HyundaiSansHeadKROTFBold.woff2';
 import HyundaiSansHeadKRMedium from '../../assets/fonts/HyundaiSansHeadKROTFMedium.woff2';
 import HyundaiSansHeadKRRegular from '../../assets/fonts/HyundaiSansHeadKROTFRegular.woff2';
-
+import HyundaiSansTextMedium from '../../assets/fonts/HyundaiSansText-Medium.woff2';
 import HyundaiSansTextKRBold from '../../assets/fonts/HyundaiSansTextKROTFBold.woff2';
 import HyundaiSansTextKRMedium from '../../assets/fonts/HyundaiSansTextKROTFMedium.woff2';
 import HyundaiSansTextKRRegular from '../../assets/fonts/HyundaiSansTextKROTFRegular.woff2';
 
 const GlobalStyle = createGlobalStyle`
+  @font-face {
+    font-family: 'HyundaiSansHeadBold';
+    src: url(${HyundaiSansHeadBold}) format('woff2');
+    font-weight: 700;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'HyundaiSansTextMedium';
+    src: url(${HyundaiSansTextMedium}) format('woff2');
+    font-weight: 500;
+    font-style: normal;
+  }
+  
   @font-face {
     font-family: 'HyundaiSansHeadKRBold';
     src: url(${HyundaiSansHeadKRBold}) format('woff2');
@@ -26,7 +41,6 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 400;
     font-style: normal;
   }
-
   @font-face {
     font-family: 'HyundaiSansTextKRBold';
     src: url(${HyundaiSansTextKRBold}) format('woff2');
@@ -69,6 +83,9 @@ const GlobalStyle = createGlobalStyle`
   ul {
     list-style: none;
     padding: 0;
+    margin: 0;
+  }
+  p, h1, h2, h3, h4, h5, h6 {
     margin: 0;
   }
 `;
