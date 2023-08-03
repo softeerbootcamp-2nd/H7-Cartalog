@@ -32,7 +32,7 @@ public class TrimExteriorColorListResponseDto {
                     .id(color.getId())
                     .name(color.getName())
                     .price(color.getPrice())
-                    .code(color.getCode())
+                    .code("#" +color.getCode())
                     .chosen(color.getChosen())
                     .build();
         }
