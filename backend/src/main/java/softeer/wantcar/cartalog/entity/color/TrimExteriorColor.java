@@ -6,6 +6,7 @@ public class TrimExteriorColor {
 
     private Long id;
     private int price;
+    private String name;
     private List<TrimInteriorColor> interiorColors;
     private String code;
 
