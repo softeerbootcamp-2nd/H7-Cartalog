@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomTypeSelectView">
+        <attr name="modelType" format="enum">
+            <enum name="POWERTRAIN" value="0" />
+            <enum name="BODYTYPE" value="1" />
+            <enum name="WHEELDRIVE" value="2" />
+        </attr>
+    </declare-styleable>
+</resources>

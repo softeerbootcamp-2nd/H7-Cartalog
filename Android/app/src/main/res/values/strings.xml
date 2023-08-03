@@ -7,4 +7,8 @@
     <string name="tab_interior">내장</string>
     <string name="tab_option">옵션</string>
     <string name="tab_confirm">완료</string>
+    <string name="type_select_header">모델타입을 선택해주세요.</string>
+    <string name="type_powertrain">파워트레인</string>
+    <string name="type_bodytype">바디타입</string>
+    <string name="type_wheeldrive">구동방식</string>
 </resources>
