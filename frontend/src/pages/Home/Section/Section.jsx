@@ -1,6 +1,7 @@
 import * as S from './SectionStyle';
 import HMGTag20 from '../../../components/HMGTag/HMGTag20';
 import HMGData from '../../../components/HMGData/HMGData';
+import TrimImages from './TrimImages/TrimImages';
 
 function Section() {
   return (
@@ -28,11 +29,7 @@ function Section() {
         </S.Data>
       </S.Contents>
       {/* 이미지 */}
-      <S.Image>
-        <S.MainImage src="../../../../assets/images/TrimSelect/exterior.png" />
-        <S.SubImage src="../../../../assets/images/TrimSelect/interior.png" />
-        <S.SubImage src="../../../../assets/images/TrimSelect/wheel.png" />
-      </S.Image>
+      <TrimImages trim={'LeBlanc'} />
     </S.Section>
   );
 }
