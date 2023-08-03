@@ -6,5 +6,6 @@ public class TrimInteriorColor {
     private int price;
     private String name;
     private String imageUrl;
+    private int chosen;
 
 }

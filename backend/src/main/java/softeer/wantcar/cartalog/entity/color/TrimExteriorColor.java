@@ -9,5 +9,6 @@ public class TrimExteriorColor {
     private String name;
     private List<TrimInteriorColor> interiorColors;
     private String code;
+    private int chosen;
 
 }
