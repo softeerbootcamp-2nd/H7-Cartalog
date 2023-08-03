@@ -104,7 +104,7 @@ class MockColorServiceTest {
             //when
             RuntimeException runtimeException = assertThrows(
                     RuntimeException.class,
-                    () -> mockColorService.findTrimInteriorColorListByTrimId(exteriorColorId, exteriorColorId)
+                    () -> mockColorService.findTrimInteriorColorListByTrimId(exteriorColorId, trimId)
             );
 
             //then
