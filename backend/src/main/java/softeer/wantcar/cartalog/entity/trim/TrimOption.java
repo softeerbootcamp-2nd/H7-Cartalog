@@ -1,5 +1,6 @@
 package softeer.wantcar.cartalog.entity.trim;
 
+import softeer.wantcar.cartalog.entity.HMGData;
 import softeer.wantcar.cartalog.entity.OptionCategory;
 import softeer.wantcar.cartalog.entity.hashtag.HashTag;
 
@@ -15,7 +16,7 @@ public class TrimOption implements TrimSelectable {
     private int price;
     private String imageUrl;
     private boolean basic;
-    private float HMGData;
+    private List<HMGData> HMGData;
     private boolean visibility;
     private List<HashTag> hashTags;
 
