@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import softeer.wantcar.cartalog.dto.TrimExteriorColorListResponseDto;
 import softeer.wantcar.cartalog.entity.color.TrimExteriorColor;
@@ -58,15 +59,18 @@ class ColorControllerTest {
             softAssertions.assertThat(trimExteriorColorDto.getChosen()).isEqualTo(mockData.getChosen());
         }
 
-        // TODO
         @DisplayName("존재하지 않는 트림 식별자로 색상 요청시 404 상태를 반환해야 한다.")
         void notFound() {
             //given
+            colorService = new MockColorService();
 
             //when
+            ResponseEntity<TrimExteriorColorListResponseDto> responseEntity = colorController.trimExteriorColorList(100L);
 
             //then
-
+            softAssertions.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            softAssertions.assertThat(responseEntity.getBody()).isNull();
+            softAssertions.assertAll();
         }
 
     }
