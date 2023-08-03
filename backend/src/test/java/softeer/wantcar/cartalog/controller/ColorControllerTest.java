@@ -119,9 +119,35 @@ class ColorControllerTest {
             softAssertions.assertThat(trimInteriorColorDto.getPrice()).isEqualTo(mockData.getPrice());
             softAssertions.assertThat(trimInteriorColorDto.getChosen()).isEqualTo(mockData.getChosen());
             softAssertions.assertAll();
-
         }
 
+        @Test
+        @DisplayName("존재하지 않는 트림 식별자로 색상 요청시 404 상태를 반환해야 한다.")
+        void notFound() {
+            //given
+
+            //when
+            ResponseEntity<TrimInteriorColorListResponseDto> responseEntity = colorController.trimInteriorColorList(100L, 100L);
+
+            //then
+            softAssertions.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            softAssertions.assertThat(responseEntity.getBody()).isNull();
+            softAssertions.assertAll();
+        }
+
+        @Test
+        @DisplayName("외장 색상 누락시 404 상태를 반환해야 한다.")
+        void notFound2() {
+            //given
+
+            //when
+            ResponseEntity<TrimInteriorColorListResponseDto> responseEntity = colorController.trimInteriorColorList(100L, null);
+
+            //then
+            softAssertions.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            softAssertions.assertThat(responseEntity.getBody()).isNull();
+            softAssertions.assertAll();
+        }
 
     }
 
