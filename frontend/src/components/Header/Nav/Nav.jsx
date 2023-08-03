@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-// import NavStyle from './NavStyle';
 import * as S from './NavStyle';
 
 function Nav() {

@@ -19,5 +19,5 @@ export const Step = styled.li`
   width: 52px;
   height: 22px;
   color: ${({ theme }) => theme.color.gray['200']};
-  font: ${({ theme }) => theme.font.TextKRMedium14};
+  font: ${({ theme }) => theme.font.textKR.Medium14};
 `;
