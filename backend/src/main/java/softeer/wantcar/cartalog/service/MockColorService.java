@@ -36,7 +36,7 @@ public class MockColorService implements ColorService {
             log.debug("mock 객체가 호출되었습니다. :{}", TrimExteriorColor.class);
             return List.of(getMockData());
         } else {
-            throw new RuntimeException("존재하지 않은 trimId 입니다.");
+            throw new RuntimeException("존재하지 않은 트림 식별자 입니다.");
         }
     }
 
