@@ -5,8 +5,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.ResponseEntity;
 import softeer.wantcar.cartalog.dto.TrimExteriorColorListResponseDto;
 import softeer.wantcar.cartalog.entity.color.TrimExteriorColor;
+import softeer.wantcar.cartalog.service.ColorService;
+import softeer.wantcar.cartalog.service.MockColorService;
 
 import java.util.List;
 
@@ -17,7 +20,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ColorControllerTest {
 
     SoftAssertions softAssertions;
-    ColorController colorController = new ColorController();
+    ColorService colorService = new MockColorService();
+    ColorController colorController = new ColorController(colorService);
+
 
     @BeforeEach
     void setUp() {
@@ -32,34 +37,25 @@ class ColorControllerTest {
         @DisplayName("올바른 요청시 200 상태와 함께 트림 외장 색상 리스트를 반환해야 한다.")
         void success() {
             //given
-            Long id = 1L;
-            String name = "어비스 블랙 펄";
-            String code = "141423";
-            int price = 0;
-            int chosen = 38;
-            TrimExteriorColor color = TrimExteriorColor.builder()
-                    .id(id)
-                    .name(name)
-                    .code(code)
-                    .price(price)
-                    .chosen(chosen)
-                    .build();
-            TrimExteriorColorListResponseDto expectResponse = TrimExteriorColorListResponseDto.from(List.of(color));
+            colorService = new MockColorService();
+            TrimExteriorColor mockData = ((MockColorService) colorService).getMockData();
 
             //when
-            TrimExteriorColorListResponseDto responseDto = colorController.trimExteriorColorList(id);
+            ResponseEntity<TrimExteriorColorListResponseDto> responseEntity = colorController.trimExteriorColorList(mockData.getId());
 
             //then
+            TrimExteriorColorListResponseDto responseDto = responseEntity.getBody();
+            assertThat(responseDto).isNotNull();
             List<TrimExteriorColorListResponseDto.TrimExteriorColorDto> trimExteriorColorDtoList = responseDto.getTrimExteriorColorDtoList();
             assertThat(trimExteriorColorDtoList.size()).isEqualTo(1);
 
             TrimExteriorColorListResponseDto.TrimExteriorColorDto trimExteriorColorDto = trimExteriorColorDtoList.get(0);
 
-            softAssertions.assertThat(trimExteriorColorDto.getId()).isEqualTo(id);
-            softAssertions.assertThat(trimExteriorColorDto.getName()).isEqualTo(name);
-            softAssertions.assertThat(trimExteriorColorDto.getCode()).isEqualTo("#" + code);
-            softAssertions.assertThat(trimExteriorColorDto.getPrice()).isEqualTo(price);
-            softAssertions.assertThat(trimExteriorColorDto.getChosen()).isEqualTo(chosen);
+            softAssertions.assertThat(trimExteriorColorDto.getId()).isEqualTo(mockData.getId());
+            softAssertions.assertThat(trimExteriorColorDto.getName()).isEqualTo(mockData.getName());
+            softAssertions.assertThat(trimExteriorColorDto.getCode()).isEqualTo("#" + mockData.getCode());
+            softAssertions.assertThat(trimExteriorColorDto.getPrice()).isEqualTo(mockData.getPrice());
+            softAssertions.assertThat(trimExteriorColorDto.getChosen()).isEqualTo(mockData.getChosen());
         }
 
         // TODO
