@@ -46,20 +46,3 @@ export const Info = styled.div`
 export const MainInfo = styled.div`
   color: ${({ theme }) => theme.color.activeBlue};
 `;
-
-export const Image = styled.div`
-  display: flex;
-  gap: 8px;
-`;
-
-export const MainImage = styled.img`
-  width: 504px;
-  height: 360px;
-  object-fit: cover;
-`;
-
-export const SubImage = styled.img`
-  width: 71px;
-  height: 360px;
-  object-fit: cover;
-`;
