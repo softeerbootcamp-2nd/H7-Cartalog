@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape_round_box"
+        android:backgroundTint="@color/card_bg_color">
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.65" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/tmp_img_engine"
+            app:layout_constraintBottom_toTopOf="@id/gl_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/btn_hmg_data"
+            style="@style/HmgDataTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="8dp"
+            android:visibility="visible"
+            app:drawableEndCompat="@drawable/icon_arrow_end_small"
+            app:drawableTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/btn_detail_view"
+            style="@style/DetailViewTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:visibility="gone"
+            app:drawableEndCompat="@drawable/icon_arrow_end_small"
+            app:drawableTint="@color/gray_800"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/cv_btn1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginVertical="4dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="2dp"
+            android:background="@drawable/selector_type_select_box"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/cv_btn2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gl_btn" />
+
+        <TextView
+            android:id="@+id/tv_selected_percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="13dp"
+            android:textColor="@color/active_blue"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_type_name"
+            app:layout_constraintStart_toStartOf="@id/cv_btn1"
+            app:layout_constraintTop_toTopOf="@id/cv_btn1"
+            tools:text="38%" />
+
+        <TextView
+            android:id="@+id/tv_selected_percent_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray_700"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_selected_percent"
+            app:layout_constraintStart_toEndOf="@id/tv_selected_percent"
+            app:layout_constraintTop_toTopOf="@id/tv_selected_percent"
+            tools:text="의 선택" />
+
+        <TextView
+            android:id="@+id/tv_type_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/hyndaisans_head"
+            android:textColor="@color/gray_700"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_type_price"
+            app:layout_constraintStart_toStartOf="@id/tv_selected_percent"
+            app:layout_constraintTop_toBottomOf="@id/tv_selected_percent"
+            tools:text="디젤 2.2" />
+
+        <TextView
+            android:id="@+id/tv_type_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/hyndaisans_head"
+            android:textColor="@color/gray_700"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/cv_btn1"
+            app:layout_constraintStart_toStartOf="@id/tv_selected_percent"
+            app:layout_constraintTop_toBottomOf="@id/tv_type_name"
+            tools:text="+ 0 원" />
+
+        <ImageView
+            android:id="@+id/btn_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:src="@drawable/selector_check_btn"
+            app:layout_constraintBottom_toBottomOf="@id/cv_btn1"
+            app:layout_constraintEnd_toEndOf="@id/cv_btn1" />
+
+
+        <View
+            android:id="@+id/cv_btn2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginVertical="4dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/selector_type_select_box"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cv_btn1"
+            app:layout_constraintTop_toBottomOf="@id/gl_btn" />
+
+        <TextView
+            android:id="@+id/tv_selected_percent2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="13dp"
+            android:textColor="@color/active_blue"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_type_name2"
+            app:layout_constraintStart_toStartOf="@id/cv_btn2"
+            app:layout_constraintTop_toTopOf="@id/cv_btn2"
+            tools:text="38%" />
+
+        <TextView
+            android:id="@+id/tv_selected_percent_guide2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray_700"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_selected_percent2"
+            app:layout_constraintStart_toEndOf="@id/tv_selected_percent2"
+            app:layout_constraintTop_toTopOf="@id/tv_selected_percent2"
+            tools:text="의 선택" />
+
+        <TextView
+            android:id="@+id/tv_type_name2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/hyndaisans_head"
+            android:textColor="@color/gray_700"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_type_price2"
+            app:layout_constraintStart_toStartOf="@id/tv_selected_percent2"
+            app:layout_constraintTop_toBottomOf="@id/tv_selected_percent2"
+            tools:text="가솔린 3.8" />
+
+        <TextView
+            android:id="@+id/tv_type_price2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/hyndaisans_head"
+            android:textColor="@color/gray_700"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/cv_btn2"
+            app:layout_constraintStart_toStartOf="@id/tv_selected_percent2"
+            app:layout_constraintTop_toBottomOf="@id/tv_type_name2"
+            tools:text="- 280,000 원" />
+
+        <ImageView
+            android:id="@+id/btn_check2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:src="@drawable/selector_check_btn"
+            app:layout_constraintBottom_toBottomOf="@id/cv_btn2"
+            app:layout_constraintEnd_toEndOf="@id/cv_btn2" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
