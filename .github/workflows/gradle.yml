@@ -7,10 +7,11 @@ on:
       - "dev"
       - "BE_dev"
   pull_request:
+    type: closed
     branches:
       - "main"
       - "dev"
-      - "BE_dev"
+      - "FE_dev"
 
 permissions:
   contents: read
