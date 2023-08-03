@@ -1,0 +1,9 @@
+package softeer.wantcar.cartalog.entity.color;
+
+public class TrimInteriorColor {
+
+    private Long id;
+    private int price;
+    private String imageUrl;
+
+}
