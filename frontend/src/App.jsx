@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import Interaction from './interaction/interaction';
+import Interaction from './interaction/Interaction';
 
 function App() {
   return (

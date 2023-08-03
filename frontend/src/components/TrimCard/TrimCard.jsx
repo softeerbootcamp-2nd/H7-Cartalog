@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import * as S from './TrimCardStyle';
 
-function TrimCard({ name, description, price }) {
+function TrimCard({ name, description, price, nextPage }) {
   const [active, setActive] = useState(false);
 
   return (
@@ -11,7 +11,7 @@ function TrimCard({ name, description, price }) {
         <S.Name>{name}</S.Name>
       </S.Trim>
       <S.Price>{price}</S.Price>
-      <S.SelectButton>선택하기</S.SelectButton>
+      <S.SelectButton onClick={nextPage}>선택하기</S.SelectButton>
     </S.TrimCard>
   );
 }

@@ -8,18 +8,26 @@ function Interaction() {
   const [page, setPage] = useState(0);
   const pageRef = useRef();
   const nextPage = () => setPage(page + 1);
+  const prevPage = () => setPage(history.state.nowPage);
 
-  // useEffect(() => {
-  //   pageRef.current.style.transition = 'all 0.5s ease-in-out';
-  //   pageRef.current.style.transform = `translateX(-${page}00%)`;
-  //   console.log('눌럿니');
-  // }, [page]);
+  useEffect(() => window.addEventListener('popstate', prevPage), []);
+
+  useEffect(() => {
+    pageRef.current.style.transition = 'all 1.5s ease-in-out';
+    pageRef.current.style.transform = `translateX(-${page}00%)`;
+    if (history.state.nowPage !== page) history.pushState({ nowPage: page }, '');
+  }, [page]);
 
   return (
     <S.Interaction>
       <Header />
-      <S.Page onClick={nextPage} ref={pageRef}>
-        <Home />
+      <S.Page ref={pageRef}>
+        <Home nextPage={nextPage} />
+        <Home nextPage={nextPage} />
+        <Home nextPage={nextPage} />
+        <Home nextPage={nextPage} />
+        <Home nextPage={nextPage} />
+        <Home nextPage={nextPage} />
       </S.Page>
     </S.Interaction>
   );

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const Home = styled.div``;
+export const Home = styled.div`
+  min-width: 100%;
+`;
 
 export const Shadow = styled.div`
   background: ${({ theme }) => theme.color.trimGrad};
