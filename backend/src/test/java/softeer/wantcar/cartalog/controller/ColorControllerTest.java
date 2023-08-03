@@ -81,4 +81,22 @@ class ColorControllerTest {
 
     }
 
+    @Nested
+    @DisplayName("트림 내장 색상 목록 조회 테스트")
+    class searchTrimInteriorColor {
+
+        @Test
+        @DisplayName("올바른 요청시 200 상태와 함께 트림 내장 색상 리스트를 반환해야 한다.")
+        void success() {
+            //given
+
+            //when
+
+            //then
+
+        }
+
+
+    }
+
 }

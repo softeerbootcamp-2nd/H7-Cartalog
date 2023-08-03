@@ -1,5 +1,12 @@
 package softeer.wantcar.cartalog.entity.color;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
+@Builder
+@AllArgsConstructor
 public class TrimInteriorColor {
 
     private Long id;
