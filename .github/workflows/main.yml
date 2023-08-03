@@ -1,0 +1,23 @@
+name: Close Issue on Merge
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  close-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Close issue if merged into non-default branch
+        if: github.event.pull_request.merged == true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          issue_number=$(jq --raw-output .pull_request.body $GITHUB_EVENT_PATH | grep -oE '#[0-9]+' | head -1 | cut -d'#' -f2)
+          if [ -n "$issue_number" ]; then
+            echo "Closing issue #$issue_number"
+            curl -X POST -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/${GITHUB_REPOSITORY}/issues/$issue_number" -d '{"state": "closed"}'
+          fi
