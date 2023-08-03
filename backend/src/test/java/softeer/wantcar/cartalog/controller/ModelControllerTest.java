@@ -14,7 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ModelControllerTest {
     ModelController modelController = new ModelController();
 
-
     @Nested
     @DisplayName("존재하는 모델의 식별자를 통해 모델 타입을 조회할 경우")
     class getModelTypeByModelId {
