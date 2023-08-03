@@ -1,6 +1,5 @@
 package softeer.wantcar.cartalog.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -32,7 +31,7 @@ public class TrimExteriorColorListResponseDto {
                     .id(color.getId())
                     .name(color.getName())
                     .price(color.getPrice())
-                    .code("#" +color.getCode())
+                    .code("#" + color.getCode())
                     .chosen(color.getChosen())
                     .build();
         }
