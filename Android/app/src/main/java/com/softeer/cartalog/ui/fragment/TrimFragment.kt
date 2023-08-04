@@ -44,6 +44,7 @@ class TrimFragment : Fragment() {
         binding.vpSlideContainer.setPadding(70,0,70,0)
         binding.vpSlideContainer.offscreenPageLimit = 2
         binding.vpSlideContainer.adapter = trimItemAdapter
+        binding.dotsIndicator.attachTo(binding.vpSlideContainer)
     }
 
     override fun onDestroyView() {
