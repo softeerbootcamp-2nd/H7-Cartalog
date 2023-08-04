@@ -1,7 +1,7 @@
-import * as S from './HeaderStyle';
-import Logo from './Logo/Logo';
-import Nav from './Nav/Nav';
-import Exit from './Exit/Exit';
+import * as S from './style';
+import Logo from './Logo';
+import Nav from './Nav';
+import Exit from './Exit';
 
 function Header() {
   return (

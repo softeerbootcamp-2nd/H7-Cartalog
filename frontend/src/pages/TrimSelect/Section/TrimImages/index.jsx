@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import * as S from './TrimImagesStyle';
+import * as S from './style';
 
 const IMG_DIRECTORY = '../../../../../assets/images/TrimSelect/';
 

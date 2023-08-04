@@ -1,5 +1,5 @@
-import * as S from './SelectStyle';
-import TrimCard from '../../../components/TrimCard/TrimCard';
+import * as S from './style';
+import TrimCard from './TrimCard';
 
 function Select({ nextPage }) {
   return (

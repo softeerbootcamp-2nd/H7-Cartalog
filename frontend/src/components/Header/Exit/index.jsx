@@ -1,4 +1,4 @@
-import * as S from './ExitStyle';
+import * as S from './style';
 import { ReactComponent as Cancel } from '../../../../assets/icons/cancel.svg';
 
 function Exit() {

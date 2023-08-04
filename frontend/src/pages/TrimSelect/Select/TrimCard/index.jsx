@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import * as S from './TrimCardStyle';
+import * as S from './style';
 
 function TrimCard({ name, description, price, nextPage }) {
   const [active, setActive] = useState(false);

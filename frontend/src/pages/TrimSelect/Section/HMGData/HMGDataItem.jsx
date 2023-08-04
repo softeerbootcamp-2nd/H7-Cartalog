@@ -1,4 +1,4 @@
-import * as S from './HMGDataStyle';
+import * as S from './style';
 
 function HMGDataItem({ data }) {
   return (

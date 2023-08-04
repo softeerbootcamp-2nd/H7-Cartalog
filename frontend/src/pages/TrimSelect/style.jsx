@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Home = styled.div`
+export const TrimSelect = styled.div`
   min-width: 100%;
 `;
 
