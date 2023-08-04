@@ -5,8 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.softeer.cartalog.databinding.ItemTrimCardBinding
 import com.softeer.cartalog.model.data.Trim
+import com.softeer.cartalog.viewmodel.TrimViewModel
 
-class TrimCardAdapter(private val trimList: List<Trim>) : RecyclerView.Adapter<TrimCardAdapter.TrimCardViewHolder>() {
+class TrimCardAdapter(private val viewModel: TrimViewModel) : RecyclerView.Adapter<TrimCardAdapter.TrimCardViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -17,17 +18,21 @@ class TrimCardAdapter(private val trimList: List<Trim>) : RecyclerView.Adapter<T
     }
 
     override fun onBindViewHolder(holder: TrimCardViewHolder, position: Int) {
-        holder.bind()
+        val currentItem = viewModel.trimList.value?.get(position)
+        holder.bind(currentItem, position)
     }
 
     override fun getItemCount(): Int {
-        return trimList.size
+        return viewModel.trimList.value!!.size
     }
 
-    inner class TrimCardViewHolder(binding: ItemTrimCardBinding):
+    inner class TrimCardViewHolder(val binding: ItemTrimCardBinding):
         RecyclerView.ViewHolder(binding.root) {
-            fun bind() {
-
+            var isSelected = false
+            fun bind(item: Trim?, position: Int) {
+                isSelected = position == viewModel.selectedTrim.value
+                binding.isSelected = isSelected
+                binding.trimItem = item
             }
     }
 }

@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.softeer.cartalog.viewmodel.TrimViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,11 +30,10 @@
 
         <TextView
             android:id="@+id/tv_header"
+            style="@style/FragmentHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/trim_select_header"
-            android:textSize="18sp"
-            android:fontFamily="@font/hyndaisans_head"
             app:layout_constraintStart_toStartOf="@id/gl_start"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,32 +42,36 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
-            android:clipToPadding="false"
             android:clipChildren="false"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_header"
+            android:clipToPadding="false"
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"
+            app:viewModel="@{viewModel}"
+            app:attachIndicator="@{dotsIndicator}"
             app:layout_constraintBottom_toTopOf="@id/dots_indicator"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_header" />
 
         <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
             android:id="@+id/dots_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="24dp"
             app:dotsColor="@color/gray_200"
             app:dotsCornerRadius="8dp"
             app:dotsSize="8dp"
             app:dotsSpacing="4dp"
             app:dotsWidthFactor="3"
-            app:selectedDotColor="@color/primary_color_500"
-            app:progressMode="false"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/vp_slide_container"
-            />
+            app:progressMode="false"
+            app:selectedDotColor="@color/primary_color_500" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
