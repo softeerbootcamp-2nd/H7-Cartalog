@@ -38,7 +38,7 @@ public class MockColorService implements ColorService {
                     trimInteriorColor = TrimInteriorColor.builder()
                             .id(1L)
                             .name("퀼팅천연(블랙)")
-                            .imageUrl("https://want-car.s3.ap-northeast-2.amazonaws.com/colors/interior/I49.png")
+                            .imageUrl("example-url/colors/interior/I49.png")
                             .price(0)
                             .chosen(38)
                             .build();
