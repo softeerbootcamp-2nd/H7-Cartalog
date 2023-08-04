@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Select = styled.div`
+export const Pick = styled.div`
   display: flex;
   flex-direction: column;
 `;

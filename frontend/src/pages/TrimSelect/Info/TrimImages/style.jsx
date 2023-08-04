@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 
-export const TrimImages = styled.div`
+export const TrimImage = styled.div`
   display: flex;
   gap: 8px;
 `;

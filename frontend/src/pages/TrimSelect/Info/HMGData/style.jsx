@@ -7,7 +7,7 @@ export const HMGData = styled.div`
   gap: 52px;
 `;
 
-export const HMGDataItem = styled.div`
+export const Item = styled.div`
   display: flex;
   flex-direction: column;
   width: 60px;

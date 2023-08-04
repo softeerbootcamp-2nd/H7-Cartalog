@@ -1,9 +1,9 @@
 import * as S from './style';
 import TrimCard from './TrimCard';
 
-function Select({ nextPage }) {
+function Pick({ nextPage }) {
   return (
-    <S.Select>
+    <S.Pick>
       <S.Title>트림을 선택해주세요</S.Title>
       <S.Trim>
         <TrimCard
@@ -31,8 +31,8 @@ function Select({ nextPage }) {
           nextPage={nextPage}
         />
       </S.Trim>
-    </S.Select>
+    </S.Pick>
   );
 }
 
-export default Select;
+export default Pick;

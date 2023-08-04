@@ -3,12 +3,12 @@ import * as S from './style';
 
 const IMG_DIRECTORY = '../../../../../assets/images/TrimSelect/';
 
-function TrimImages({ trim }) {
+function TrimImage({ trim }) {
   const IMAGE_NAME = ['exterior', 'interior', 'wheel'];
   const [page, setPage] = useState(0);
 
   return (
-    <S.TrimImages>
+    <S.TrimImage>
       {IMAGE_NAME.map((name, index) => {
         const src = `${IMG_DIRECTORY}${trim}/${name}.png`;
         const handleClick = () => setPage(index);
@@ -20,8 +20,8 @@ function TrimImages({ trim }) {
           </S.TrimImageItem>
         );
       })}
-    </S.TrimImages>
+    </S.TrimImage>
   );
 }
 
-export default TrimImages;
+export default TrimImage;

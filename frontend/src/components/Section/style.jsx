@@ -6,7 +6,7 @@ export const Section = styled.div`
 `;
 
 export const Background = styled.div`
-  ${(type, url, theme) => {
+  ${({ type, url, theme }) => {
     switch (type) {
       case 'TrimSelect':
         return `
@@ -14,8 +14,10 @@ export const Background = styled.div`
         `;
       case 'ModelType':
         return `
-          background: ${theme.color.ModelGrad};
+          background: ${theme.color.modelGrad};
         `;
+      default:
+        return '';
     }
   }}
   box-shadow: 0px 0px 8px 0px rgba(131, 133, 136, 0.2);
