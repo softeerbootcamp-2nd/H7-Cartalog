@@ -1,6 +1,6 @@
 import * as S from './SectionStyle';
 import HMGTag20 from '../../../components/HMGTag/HMGTag20';
-import HMGData from '../../../components/HMGData/HMGData';
+import HMGData from './HMGData/HMGData';
 import TrimImages from './TrimImages/TrimImages';
 
 function Section() {

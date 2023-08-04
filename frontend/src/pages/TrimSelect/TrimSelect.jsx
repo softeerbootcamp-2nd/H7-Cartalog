@@ -1,5 +1,5 @@
 import Header from '../../components/Header/Header';
-import * as S from './HomeStyle';
+import * as S from './TrimSelectStyle';
 
 import Section from './Section/Section';
 import Select from './Select/Select';

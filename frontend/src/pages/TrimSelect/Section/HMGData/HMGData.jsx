@@ -3,7 +3,7 @@ import * as S from './HMGDataStyle';
 
 function HMGData({ dataList }) {
   return (
-    <S.HMGData id="asdf">
+    <S.HMGData>
       {dataList.map((item, index) => (
         <HMGDataItem key={index} data={item} />
       ))}
