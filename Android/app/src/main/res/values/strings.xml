@@ -7,4 +7,5 @@
     <string name="tab_interior">내장</string>
     <string name="tab_option">옵션</string>
     <string name="tab_confirm">완료</string>
+    <string name="trim_select_header">트림을 선택해주세요.</string>
 </resources>
