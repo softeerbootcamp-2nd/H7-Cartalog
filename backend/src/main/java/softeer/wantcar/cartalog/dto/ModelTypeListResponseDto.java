@@ -21,19 +21,28 @@ public class ModelTypeListResponseDto {
     @Builder
     public static class ModelTypeDto {
         private String name;
-        private List<Option> options;
+        private List<OptionDto> optionDtos;
     }
 
     @Getter
     @AllArgsConstructor
     @EqualsAndHashCode
     @Builder
-    public static class Option {
+    public static class OptionDto {
         private String name;
         private int price;
         private int chosen;
         private String image;
         private String description;
-        private List<HMGData> HMGData;
+        private List<HMGDataDto> HMGData;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @EqualsAndHashCode
+    @Builder
+    public static class HMGDataDto {
+        private String name;
+        private String value;
     }
 }

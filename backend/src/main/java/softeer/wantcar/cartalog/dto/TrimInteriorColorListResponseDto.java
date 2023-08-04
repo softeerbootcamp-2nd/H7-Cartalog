@@ -2,6 +2,7 @@ package softeer.wantcar.cartalog.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import softeer.wantcar.cartalog.entity.color.TrimInteriorColor;
 
 import java.util.List;
 import java.util.stream.Collectors;

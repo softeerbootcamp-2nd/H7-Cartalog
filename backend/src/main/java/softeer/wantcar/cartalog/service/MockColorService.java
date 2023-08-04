@@ -2,6 +2,10 @@ package softeer.wantcar.cartalog.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import softeer.wantcar.cartalog.entity.color.ExteriorColor;
+import softeer.wantcar.cartalog.entity.color.InteriorColor;
+import softeer.wantcar.cartalog.entity.color.TrimExteriorColor;
+import softeer.wantcar.cartalog.entity.color.TrimInteriorColor;
 
 import java.util.List;
 
@@ -19,8 +23,11 @@ public class MockColorService implements ColorService {
                     log.debug("mock 객체가 생성되었습니다. :{}", TrimExteriorColor.class);
                     trimExteriorColor = TrimExteriorColor.builder()
                             .id(1L)
-                            .name("어비스 블랙 펄")
-                            .code("141423")
+                            .color(ExteriorColor.builder()
+                                    .id("A2B")
+                                    .name("어비스 블랙 펄")
+                                    .code("141423")
+                                    .build())
                             .price(0)
                             .chosen(38)
                             .build();
@@ -37,8 +44,11 @@ public class MockColorService implements ColorService {
                     log.debug("mock 객체가 생성되었습니다. :{}", TrimInteriorColor.class);
                     trimInteriorColor = TrimInteriorColor.builder()
                             .id(1L)
-                            .name("퀼팅천연(블랙)")
-                            .imageUrl("example-url/colors/interior/I49.png")
+                            .color(InteriorColor.builder()
+                                    .id("A22")
+                                    .name("퀼팅천연(블랙)")
+                                    .imageUrl("example-url/colors/interior/I49.png")
+                                    .build())
                             .price(0)
                             .chosen(38)
                             .build();
