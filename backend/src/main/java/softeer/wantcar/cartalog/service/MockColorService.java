@@ -2,8 +2,6 @@ package softeer.wantcar.cartalog.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import softeer.wantcar.cartalog.entity.color.TrimExteriorColor;
-import softeer.wantcar.cartalog.entity.color.TrimInteriorColor;
 
 import java.util.List;
 

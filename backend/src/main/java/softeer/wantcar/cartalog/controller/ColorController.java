@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import softeer.wantcar.cartalog.dto.TrimExteriorColorListResponseDto;
 import softeer.wantcar.cartalog.dto.TrimInteriorColorListResponseDto;
-import softeer.wantcar.cartalog.entity.color.TrimExteriorColor;
-import softeer.wantcar.cartalog.entity.color.TrimInteriorColor;
 import softeer.wantcar.cartalog.service.ColorService;
 
 import javax.websocket.server.PathParam;

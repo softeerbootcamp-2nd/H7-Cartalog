@@ -3,8 +3,6 @@ package softeer.wantcar.cartalog.service;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import softeer.wantcar.cartalog.entity.color.TrimExteriorColor;
-import softeer.wantcar.cartalog.entity.color.TrimInteriorColor;
 
 import java.util.List;
 

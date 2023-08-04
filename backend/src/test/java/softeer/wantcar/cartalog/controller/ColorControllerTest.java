@@ -9,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import softeer.wantcar.cartalog.dto.TrimExteriorColorListResponseDto;
 import softeer.wantcar.cartalog.dto.TrimInteriorColorListResponseDto;
-import softeer.wantcar.cartalog.entity.color.TrimExteriorColor;
-import softeer.wantcar.cartalog.entity.color.TrimInteriorColor;
 import softeer.wantcar.cartalog.service.ColorService;
 import softeer.wantcar.cartalog.service.MockColorService;
 
