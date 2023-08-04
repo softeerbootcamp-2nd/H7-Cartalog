@@ -1,17 +1,18 @@
 import * as S from './style';
 import { HMGTag20 } from '../../../components/HMGTag';
 import HMGData from './HMGData';
+import Title from '../../../components/Title';
 import TrimImages from './TrimImages';
 
 function Info() {
   return (
     <S.Info>
       <S.Text>
-        {/* 타이틀 */}
-        <S.Title>
-          <S.SubTitle>기본에 충실한 펠리세이드</S.SubTitle>
-          <S.MainTitle>Le Blanc</S.MainTitle>
-        </S.Title>
+        <Title
+          subTitle={'기본에 충실한 펠리세이드'}
+          mainTitle={'Le Blanc'}
+          info={`높은 토크로 파워풀한 드라이빙이 가능하며,\n차급대비 연비 효율이 우수합니다`}
+        />
 
         {/* 현대 데이터 */}
         <S.Data>

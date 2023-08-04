@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Section = styled.div`
   min-width: 100%;
+  margin-top: 60px;
 `;
 
 export const Background = styled.div`
