@@ -6,5 +6,7 @@
             <enum name="BODYTYPE" value="1" />
             <enum name="WHEELDRIVE" value="2" />
         </attr>
+        <attr name="typeViewModel" format="reference" />
+        <attr name="selected" format="integer" />
     </declare-styleable>
 </resources>

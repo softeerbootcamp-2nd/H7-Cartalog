@@ -5,10 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.softeer.cartalog.databinding.FragmentTrimBinding
+import androidx.fragment.app.viewModels
 import com.softeer.cartalog.databinding.FragmentTypeBinding
+import com.softeer.cartalog.viewmodel.TypeViewModel
 
 class TypeFragment: Fragment() {
+
+    private val typeViewModel: TypeViewModel by viewModels()
 
     private var _binding: FragmentTypeBinding? = null
     private val binding get() = _binding!!
@@ -24,8 +27,8 @@ class TypeFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //findNavController().navigate(R.id.secondFragment)
-
+        binding.viewModel = typeViewModel
+        binding.lifecycleOwner = this
     }
 
     override fun onDestroyView() {

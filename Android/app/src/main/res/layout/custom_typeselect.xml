@@ -5,6 +5,19 @@
 
     <data>
 
+        <variable
+            name="selected"
+            type="Integer" />
+
+        <variable
+            name="type"
+            type="ModelTypeSubject" />
+
+        <variable
+            name="viewModel"
+            type="com.softeer.cartalog.viewmodel.TypeViewModel" />
+
+        <import type="com.softeer.cartalog.model.enums.ModelTypeSubject" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,7 +74,8 @@
             android:layout_marginVertical="4dp"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="2dp"
-            android:background="@drawable/selector_type_select_box"
+            android:background="@{type == ModelTypeSubject.POWERTRAIN ? (viewModel.powertrain1Selected ? @drawable/shape_type_select_box_selected : @drawable/shape_type_select_box_unselected) : type == ModelTypeSubject.BODYTYPE ? (viewModel.bodytype1Selected ? @drawable/shape_type_select_box_selected : @drawable/shape_type_select_box_unselected) : (viewModel.wheeldrive1Selected ? @drawable/shape_type_select_box_selected : @drawable/shape_type_select_box_unselected)}"
+            android:onClick="@{() -> viewModel.selectType(type)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/cv_btn2"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,47 +86,47 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="13dp"
-            android:textColor="@color/active_blue"
+            android:text="38%"
+            android:textColor="@{type == ModelTypeSubject.POWERTRAIN ? (viewModel.powertrain1Selected ? @color/active_blue : @color/gray_600) : type == ModelTypeSubject.BODYTYPE ? (viewModel.bodytype1Selected ? @color/active_blue : @color/gray_600) : (viewModel.wheeldrive1Selected ? @color/active_blue : @color/gray_600)}"
             android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@id/tv_type_name"
             app:layout_constraintStart_toStartOf="@id/cv_btn1"
-            app:layout_constraintTop_toTopOf="@id/cv_btn1"
-            tools:text="38%" />
+            app:layout_constraintTop_toTopOf="@id/cv_btn1" />
 
         <TextView
             android:id="@+id/tv_selected_percent_guide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray_700"
+            android:text="의 선택"
+            android:textColor="@{type == ModelTypeSubject.POWERTRAIN ? (viewModel.powertrain1Selected ? @color/gray_700 : @color/gray_600) : type == ModelTypeSubject.BODYTYPE ? (viewModel.bodytype1Selected ? @color/gray_700 : @color/gray_600) : (viewModel.wheeldrive1Selected ? @color/gray_700 : @color/gray_600)}"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_selected_percent"
             app:layout_constraintStart_toEndOf="@id/tv_selected_percent"
-            app:layout_constraintTop_toTopOf="@id/tv_selected_percent"
-            tools:text="의 선택" />
+            app:layout_constraintTop_toTopOf="@id/tv_selected_percent" />
 
         <TextView
             android:id="@+id/tv_type_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/hyndaisans_head"
-            android:textColor="@color/gray_700"
+            android:text="디젤 2.2"
+            android:textColor="@{type == ModelTypeSubject.POWERTRAIN ? (viewModel.powertrain1Selected ? @color/gray_900 : @color/gray_600) : type == ModelTypeSubject.BODYTYPE ? (viewModel.bodytype1Selected ? @color/gray_900 : @color/gray_600) : (viewModel.wheeldrive1Selected ? @color/gray_900 : @color/gray_600)}"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/tv_type_price"
             app:layout_constraintStart_toStartOf="@id/tv_selected_percent"
-            app:layout_constraintTop_toBottomOf="@id/tv_selected_percent"
-            tools:text="디젤 2.2" />
+            app:layout_constraintTop_toBottomOf="@id/tv_selected_percent" />
 
         <TextView
             android:id="@+id/tv_type_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/hyndaisans_head"
-            android:textColor="@color/gray_700"
+            android:fontFamily="@font/hyndaisans_text"
+            android:text="+ 0 원"
+            android:textColor="@{type == ModelTypeSubject.POWERTRAIN ? (viewModel.powertrain1Selected ? @color/gray_900 : @color/gray_600) : type == ModelTypeSubject.BODYTYPE ? (viewModel.bodytype1Selected ? @color/gray_900 : @color/gray_600) : (viewModel.wheeldrive1Selected ? @color/gray_900 : @color/gray_600)}"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/cv_btn1"
             app:layout_constraintStart_toStartOf="@id/tv_selected_percent"
-            app:layout_constraintTop_toBottomOf="@id/tv_type_name"
-            tools:text="+ 0 원" />
+            app:layout_constraintTop_toBottomOf="@id/tv_type_name" />
 
         <ImageView
             android:id="@+id/btn_check"
@@ -120,6 +134,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:src="@drawable/selector_check_btn"
+            android:tint="@{type == ModelTypeSubject.POWERTRAIN ? (viewModel.powertrain1Selected ? @color/active_blue : @color/gray_200) : type == ModelTypeSubject.BODYTYPE ? (viewModel.bodytype1Selected ? @color/active_blue : @color/gray_200) : (viewModel.wheeldrive1Selected ? @color/active_blue : @color/gray_200)}"
             app:layout_constraintBottom_toBottomOf="@id/cv_btn1"
             app:layout_constraintEnd_toEndOf="@id/cv_btn1" />
 
@@ -131,7 +146,8 @@
             android:layout_marginVertical="4dp"
             android:layout_marginStart="2dp"
             android:layout_marginEnd="4dp"
-            android:background="@drawable/selector_type_select_box"
+            android:background="@{type == ModelTypeSubject.POWERTRAIN ? (viewModel.powertrain1Selected ? @drawable/shape_type_select_box_unselected : @drawable/shape_type_select_box_selected) : type == ModelTypeSubject.BODYTYPE ? (viewModel.bodytype1Selected ? @drawable/shape_type_select_box_unselected : @drawable/shape_type_select_box_selected) : (viewModel.wheeldrive1Selected ? @drawable/shape_type_select_box_unselected : @drawable/shape_type_select_box_selected)}"
+            android:onClick="@{() -> viewModel.selectType(type)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/cv_btn1"
@@ -142,47 +158,47 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="13dp"
-            android:textColor="@color/active_blue"
+            android:text="38%"
+            android:textColor="@{type == ModelTypeSubject.POWERTRAIN ? (viewModel.powertrain1Selected ? @color/gray_600 : @color/active_blue) : type == ModelTypeSubject.BODYTYPE ? (viewModel.bodytype1Selected ? @color/gray_600 : @color/active_blue) : (viewModel.wheeldrive1Selected ? @color/gray_600 : @color/active_blue)}"
             android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@id/tv_type_name2"
             app:layout_constraintStart_toStartOf="@id/cv_btn2"
-            app:layout_constraintTop_toTopOf="@id/cv_btn2"
-            tools:text="38%" />
+            app:layout_constraintTop_toTopOf="@id/cv_btn2" />
 
         <TextView
             android:id="@+id/tv_selected_percent_guide2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray_700"
+            android:text="의 선택"
+            android:textColor="@{type == ModelTypeSubject.POWERTRAIN ? (viewModel.powertrain1Selected ? @color/gray_600 : @color/gray_700) : type == ModelTypeSubject.BODYTYPE ? (viewModel.bodytype1Selected ? @color/gray_600 : @color/gray_700) : (viewModel.wheeldrive1Selected ? @color/gray_600 : @color/gray_700)}"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_selected_percent2"
             app:layout_constraintStart_toEndOf="@id/tv_selected_percent2"
-            app:layout_constraintTop_toTopOf="@id/tv_selected_percent2"
-            tools:text="의 선택" />
+            app:layout_constraintTop_toTopOf="@id/tv_selected_percent2" />
 
         <TextView
             android:id="@+id/tv_type_name2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/hyndaisans_head"
-            android:textColor="@color/gray_700"
+            android:text="가솔린 3.8"
+            android:textColor="@{type == ModelTypeSubject.POWERTRAIN ? (viewModel.powertrain1Selected ? @color/gray_600 : @color/gray_900) : type == ModelTypeSubject.BODYTYPE ? (viewModel.bodytype1Selected ? @color/gray_600 : @color/gray_900) : (viewModel.wheeldrive1Selected ? @color/gray_600 : @color/gray_900)}"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/tv_type_price2"
             app:layout_constraintStart_toStartOf="@id/tv_selected_percent2"
-            app:layout_constraintTop_toBottomOf="@id/tv_selected_percent2"
-            tools:text="가솔린 3.8" />
+            app:layout_constraintTop_toBottomOf="@id/tv_selected_percent2" />
 
         <TextView
             android:id="@+id/tv_type_price2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/hyndaisans_head"
-            android:textColor="@color/gray_700"
+            android:fontFamily="@font/hyndaisans_text"
+            android:text="- 280,000 원"
+            android:textColor="@{type == ModelTypeSubject.POWERTRAIN ? (viewModel.powertrain1Selected ? @color/gray_600 : @color/gray_900) : type == ModelTypeSubject.BODYTYPE ? (viewModel.bodytype1Selected ? @color/gray_600 : @color/gray_900) : (viewModel.wheeldrive1Selected ? @color/gray_600 : @color/gray_900)}"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/cv_btn2"
             app:layout_constraintStart_toStartOf="@id/tv_selected_percent2"
-            app:layout_constraintTop_toBottomOf="@id/tv_type_name2"
-            tools:text="- 280,000 원" />
+            app:layout_constraintTop_toBottomOf="@id/tv_type_name2" />
 
         <ImageView
             android:id="@+id/btn_check2"
@@ -190,6 +206,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:src="@drawable/selector_check_btn"
+            android:tint="@{type == ModelTypeSubject.POWERTRAIN ? (viewModel.powertrain1Selected ? @color/gray_200 : @color/active_blue) : type == ModelTypeSubject.BODYTYPE ? (viewModel.bodytype1Selected ? @color/gray_200 : @color/active_blue) : (viewModel.wheeldrive1Selected ? @color/gray_200 : @color/active_blue)}"
             app:layout_constraintBottom_toBottomOf="@id/cv_btn2"
             app:layout_constraintEnd_toEndOf="@id/cv_btn2" />
 
