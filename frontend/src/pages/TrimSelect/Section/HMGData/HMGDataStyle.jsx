@@ -8,9 +8,9 @@ export const HMGData = styled.div`
 `;
 
 export const HMGDataItem = styled.div`
-  flex: 1;
   display: flex;
   flex-direction: column;
+  width: 60px;
 `;
 
 export const Title = styled.h4`
