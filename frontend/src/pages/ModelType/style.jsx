@@ -5,7 +5,7 @@ export const ModelType = styled.div`
 `;
 
 export const Shadow = styled.div`
-  background: ${({ theme }) => theme.color.trimGrad};
+  background: ${({ theme }) => theme.color.ModelGrad};
   box-shadow: 0px 0px 8px 0px rgba(131, 133, 136, 0.2);
 `;
 

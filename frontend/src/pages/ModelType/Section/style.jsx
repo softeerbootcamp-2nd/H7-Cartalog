@@ -17,6 +17,7 @@ export const Contents = styled.div`
 export const Title = styled.div`
   display: flex;
   flex-direction: column;
+  width: 210px;
   gap: 4px;
 `;
 
@@ -27,23 +28,18 @@ export const SubTitle = styled.h2`
 
 export const MainTitle = styled.h1`
   color: ${({ theme }) => theme.color.primary['700']};
-  font: ${({ theme }) => theme.font.head.Bold32};
+  font: ${({ theme }) => theme.font.headKR.Bold32};
+`;
+
+export const InfoTitle = styled.h4`
+  margin-top: 4px;
+  word-break: keep-all;
+  color: ${({ theme }) => theme.color.gray['800']};
+  font: ${({ theme }) => theme.font.textKR.Regular12};
 `;
 
 export const Data = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 32px;
-`;
-
-export const Info = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 12px;
-  color: ${({ theme }) => theme.color.gray['900']};
-  font: ${({ theme }) => theme.font.textKR.Medium12};
-`;
-
-export const MainInfo = styled.div`
-  color: ${({ theme }) => theme.color.activeBlue};
 `;
