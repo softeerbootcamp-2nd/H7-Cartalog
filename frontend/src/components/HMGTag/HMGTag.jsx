@@ -1,4 +1,4 @@
-import * as S from './HMGTagStyle';
+import * as S from './style';
 
 function HMGTag(props) {
   return (

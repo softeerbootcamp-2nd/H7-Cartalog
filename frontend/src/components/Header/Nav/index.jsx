@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import * as S from './NavStyle';
+import * as S from './style';
 
 function Nav() {
   return (

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import * as S from './InteractionStyle';
-
-import Header from '../components/Header/Header';
-import Home from '../pages/TrimSelect/TrimSelect';
+import * as S from './style';
+import Header from '../components/Header';
+import TrimSelect from '../pages/TrimSelect';
+import ModelType from '../pages/ModelType';
 
 function Interaction() {
   const [page, setPage] = useState(0);
@@ -22,12 +22,13 @@ function Interaction() {
     <S.Interaction>
       <Header />
       <S.Page ref={pageRef}>
-        <Home nextPage={nextPage} />
-        <Home nextPage={nextPage} />
-        <Home nextPage={nextPage} />
-        <Home nextPage={nextPage} />
-        <Home nextPage={nextPage} />
-        <Home nextPage={nextPage} />
+        <TrimSelect nextPage={nextPage} />
+        <ModelType />
+        <TrimSelect nextPage={nextPage} />
+        <TrimSelect nextPage={nextPage} />
+        <TrimSelect nextPage={nextPage} />
+        <TrimSelect nextPage={nextPage} />
+        <TrimSelect nextPage={nextPage} />
       </S.Page>
     </S.Interaction>
   );

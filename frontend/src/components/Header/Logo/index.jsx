@@ -1,4 +1,4 @@
-import * as S from './LogoStyle';
+import * as S from './style';
 import { ReactComponent as ArrowDown } from '../../../../assets/icons/arrow_down.svg';
 import { ReactComponent as HyundaiLogo } from '../../../../assets/images/Hyundai_logo.svg';
 

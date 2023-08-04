@@ -1,7 +1,7 @@
-import * as S from './SectionStyle';
-import HMGTag20 from '../../../components/HMGTag/HMGTag20';
-import HMGData from './HMGData/HMGData';
-import TrimImages from './TrimImages/TrimImages';
+import * as S from './style';
+import { HMGTag20 } from '../../../components/HMGTag';
+import HMGData from './HMGData';
+import TrimImages from './TrimImages';
 
 function Section() {
   return (

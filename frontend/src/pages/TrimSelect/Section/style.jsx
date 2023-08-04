@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Section = styled.div`
   display: flex;
   flex-direction: row;
+  height: 360px;
   margin-top: 60px;
   justify-content: space-between;
 `;

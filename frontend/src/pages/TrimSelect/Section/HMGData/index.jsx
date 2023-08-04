@@ -1,5 +1,5 @@
 import HMGDataItem from './HMGDataItem';
-import * as S from './HMGDataStyle';
+import * as S from './style';
 
 function HMGData({ dataList }) {
   return (
