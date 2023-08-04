@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.softeer.cartalog.viewmodel.TypeViewModel" />
+
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -172,7 +176,6 @@
                 android:id="@+id/vw_divider"
                 android:layout_width="1dp"
                 android:layout_height="60dp"
-                android:layout_marginTop="26dp"
                 android:background="@color/gray_400"
                 app:layout_constraintBottom_toBottomOf="@+id/vw_hmg_data"
                 app:layout_constraintEnd_toEndOf="@id/gl_end"
@@ -189,19 +192,19 @@
                 app:layout_constraintBottom_toBottomOf="@id/vw_hmg_data"
                 app:layout_constraintEnd_toStartOf="@id/vw_divider"
                 app:layout_constraintStart_toEndOf="@id/gl_start"
-                app:layout_constraintTop_toBottomOf="@id/tv_hmgdata_powertrain" />
+                app:layout_constraintTop_toTopOf="@id/tv_hmgdata_powertrain" />
 
             <TextView
                 android:id="@+id/tv_cc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
+                android:text="2,199cc"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/vw_hmg_data"
                 app:layout_constraintEnd_toStartOf="@id/vw_divider"
                 app:layout_constraintStart_toEndOf="@id/gl_start"
-                app:layout_constraintTop_toBottomOf="@id/tv_cc_name"
-                tools:text="2,199cc" />
+                app:layout_constraintTop_toTopOf="@id/tv_cc_name" />
 
             <TextView
                 android:id="@+id/tv_efficiency_name"
@@ -213,19 +216,19 @@
                 app:layout_constraintBottom_toBottomOf="@id/vw_hmg_data"
                 app:layout_constraintEnd_toEndOf="@id/gl_end"
                 app:layout_constraintStart_toEndOf="@id/vw_divider"
-                app:layout_constraintTop_toBottomOf="@id/tv_hmgdata_powertrain" />
+                app:layout_constraintTop_toTopOf="@id/tv_hmgdata_powertrain" />
 
             <TextView
                 android:id="@+id/tv_efficiency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
+                android:text="12km/s"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/vw_hmg_data"
                 app:layout_constraintEnd_toEndOf="@id/gl_end"
                 app:layout_constraintStart_toEndOf="@id/vw_divider"
-                app:layout_constraintTop_toBottomOf="@id/tv_efficiency_name"
-                tools:text="12km/s" />
+                app:layout_constraintTop_toTopOf="@id/tv_efficiency_name" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
