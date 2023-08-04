@@ -1,5 +1,6 @@
 import * as S from './style';
 import { HMGTag20 } from '../../../components/HMGTag';
+import HMGData from './HMGData';
 
 function Section() {
   return (
@@ -17,6 +18,7 @@ function Section() {
         {/* 현대 데이터 */}
         <S.Data>
           <HMGTag20 />
+          <HMGData />
         </S.Data>
       </S.Contents>
       {/* 이미지 */}

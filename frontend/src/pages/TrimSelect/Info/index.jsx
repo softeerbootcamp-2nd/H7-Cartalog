@@ -3,10 +3,10 @@ import { HMGTag20 } from '../../../components/HMGTag';
 import HMGData from './HMGData';
 import TrimImages from './TrimImages';
 
-function Section() {
+function Info() {
   return (
-    <S.Section>
-      <S.Contents>
+    <S.Info>
+      <S.Text>
         {/* 타이틀 */}
         <S.Title>
           <S.SubTitle>기본에 충실한 펠리세이드</S.SubTitle>
@@ -27,11 +27,11 @@ function Section() {
             ]}
           />
         </S.Data>
-      </S.Contents>
+      </S.Text>
       {/* 이미지 */}
       <TrimImages trim={'LeBlanc'} />
-    </S.Section>
+    </S.Info>
   );
 }
 
-export default Section;
+export default Info;

@@ -25,6 +25,7 @@ function Interaction() {
         <TrimSelect nextPage={nextPage} />
         <ModelType />
         <TrimSelect nextPage={nextPage} />
+
         <TrimSelect nextPage={nextPage} />
         <TrimSelect nextPage={nextPage} />
         <TrimSelect nextPage={nextPage} />
