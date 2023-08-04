@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.softeer.cartalog.R
 import com.softeer.cartalog.model.enums.ModelTypeSubject
+import com.softeer.cartalog.ui.dialog.TypeDetailDialog
 
 class TypeViewModel : ViewModel() {
 

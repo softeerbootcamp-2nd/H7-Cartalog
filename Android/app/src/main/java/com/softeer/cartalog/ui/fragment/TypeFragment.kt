@@ -28,7 +28,7 @@ class TypeFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewModel = typeViewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
     }
 
     override fun onDestroyView() {

@@ -17,7 +17,7 @@ import com.softeer.cartalog.viewmodel.TypeViewModel
 
 class CustomTypeSelectView(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
     private var binding: CustomTypeselectBinding
-    private lateinit var modelType: ModelTypeSubject
+    private var modelType: ModelTypeSubject
     private var selected: Int
     private val viewModel by lazy {
         ViewModelProvider(findViewTreeViewModelStoreOwner()!!).get<TypeViewModel>()
