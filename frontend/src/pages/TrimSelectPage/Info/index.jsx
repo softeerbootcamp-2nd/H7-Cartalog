@@ -2,13 +2,13 @@ import * as S from './style';
 import Title from '../../../components/Title';
 import HMGTag from '../../../components/HMGTag';
 import HMGData from './HMGData';
-import TrimImages from './TrimImages';
+import TrimImage from './TrimImage';
 
 function Info() {
   return (
     <S.Info>
       <S.TrimText>
-        <Title subTitle={'기본에 충실한 펠리세이드'} mainTitle={'Le Blanc'} />
+        <Title type={'dark'} subTitle={'기본에 충실한 펠리세이드'} mainTitle={'Le Blanc'} />
         <S.HMG>
           <HMGTag type={'Tag1'} />
           <S.HMGInfo>
@@ -23,7 +23,7 @@ function Info() {
           />
         </S.HMG>
       </S.TrimText>
-      <TrimImages trim={'LeBlanc'} />
+      <TrimImage trim={'LeBlanc'} />
     </S.Info>
   );
 }
