@@ -23,7 +23,7 @@ public class TrimListResponseDTO {
         private int maxPrice;
         private DefaultExteriorColorDto defaultExteriorColor;
         private DefaultInteriorColorDto defaultInteriorColor;
-        private List<HMGDataDto> hmgDataDtos;
+        private List<HMGDataDto> hmgData;
     }
 
     @AllArgsConstructor
