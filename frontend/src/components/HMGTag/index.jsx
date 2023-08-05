@@ -1,4 +1,16 @@
-import HMGTag20 from './HMGTag20';
-import HMGTag32 from './HMGTag32';
+import * as S from './style';
 
-export { HMGTag20, HMGTag32 };
+/**
+ * HMGTag를 생성하는 컴포넌트
+ * @param type {string} Tag1 || Tag2
+ * @returns
+ */
+function HMGTag({ type }) {
+  return (
+    <S.HMGTag type={type}>
+      <S.Text>HMG Data</S.Text>
+    </S.HMGTag>
+  );
+}
+
+export default HMGTag;

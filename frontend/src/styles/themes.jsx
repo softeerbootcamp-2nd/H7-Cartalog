@@ -35,7 +35,9 @@ const theme = {
     lightSand: '#F6F3F2',
     trimGrad:
       'linear-gradient(180deg, rgba(162, 199, 231, 0.20) 24.92%, rgba(255, 255, 255, 0.00) 61.36%), #FFF',
-    ModelGrad: 'linear-gradient(90deg, #F4F5F7 24.92%, rgba(204, 215, 229, 0.34) 61.36%), #FFF',
+    modelGrad: 'linear-gradient(90deg, #F4F5F7 24.92%, rgba(204, 215, 229, 0.54) 61.36%), #FFF',
+    finishGrad:
+      'linear-gradient(180deg, rgba(156, 202, 255, 0.90) 0%, rgba(201, 226, 255, 0.90) 0.01%, rgba(255, 255, 255, 0.00) 100%)',
   },
   font: {
     head: {
@@ -67,6 +69,7 @@ const theme = {
       Medium18: '500 18px/28px HyundaiSansHeadKRMedium',
       Medium16: '500 16px/24px HyundaiSansHeadKRMedium',
       Medium14: '500 14px/22px HyundaiSansHeadKRMedium',
+      Regular28: '400 28px/40px HyundaiSansHeadKRRegular',
       Regular26: '400 26px/36px HyundaiSansHeadKRRegular',
       Regular24: '400 24px/32px HyundaiSansHeadKRRegular',
       Regular22: '400 22px/28px HyundaiSansHeadKRRegular',
