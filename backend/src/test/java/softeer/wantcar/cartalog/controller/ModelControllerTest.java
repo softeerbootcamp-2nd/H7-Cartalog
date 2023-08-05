@@ -34,7 +34,41 @@ class ModelControllerTest {
                     .build();
 
             //when
-            TrimListResponseDTO realResponse = modelController.searchTrimList();
+            TrimListResponseDTO realResponse = modelController.searchTrimList().getBody();
+
+            //then
+            assertThat(realResponse).isEqualTo(expectResponse);
+        }
+    }
+
+    @Nested
+    @DisplayName("존재하는 모델의 식별자를 통해 모델 타입을 조회할 경우")
+    class getModelTypeByModelId {
+        @Test
+        @DisplayName("모델 식별자에 해당하는 모델의 모델 타입들을 담은 DTO를 반환한다")
+        void returnDtoHasModelTypeOfModelId() {
+            //given
+            ModelTypeListResponseDto.ModelTypeDto powerTrains = ModelTypeListResponseDto.ModelTypeDto.builder()
+                    .type("powerTrain")
+                    .options(List.of(getDieselEngine(), getGasolineEngine()))
+                    .build();
+
+            ModelTypeListResponseDto.ModelTypeDto wheelDrives = ModelTypeListResponseDto.ModelTypeDto.builder()
+                    .type("wheelDrive")
+                    .options(List.of(get2WD(), get4WD()))
+                    .build();
+
+            ModelTypeListResponseDto.ModelTypeDto bodyTypes = ModelTypeListResponseDto.ModelTypeDto.builder()
+                    .type("bodyType")
+                    .options(List.of(get7Seat(), get8Seat()))
+                    .build();
+
+            ModelTypeListResponseDto expectResponse = ModelTypeListResponseDto.builder()
+                    .modelTypes(List.of(powerTrains, wheelDrives, bodyTypes))
+                    .build();
+
+            //when
+            ModelTypeListResponseDto realResponse = modelController.searchModelType().getBody();
 
             //then
             assertThat(realResponse).isEqualTo(expectResponse);
@@ -71,40 +105,6 @@ class ModelControllerTest {
                 .id("A22")
                 .name("퀼팅천연(블랙)")
                 .build();
-    }
-
-    @Nested
-    @DisplayName("존재하는 모델의 식별자를 통해 모델 타입을 조회할 경우")
-    class getModelTypeByModelId {
-        @Test
-        @DisplayName("모델 식별자에 해당하는 모델의 모델 타입들을 담은 DTO를 반환한다")
-        void returnDtoHasModelTypeOfModelId() {
-            //given
-            ModelTypeListResponseDto.ModelTypeDto powerTrains = ModelTypeListResponseDto.ModelTypeDto.builder()
-                    .type("powerTrain")
-                    .options(List.of(getDieselEngine(), getGasolineEngine()))
-                    .build();
-
-            ModelTypeListResponseDto.ModelTypeDto wheelDrives = ModelTypeListResponseDto.ModelTypeDto.builder()
-                    .type("wheelDrive")
-                    .options(List.of(get2WD(), get4WD()))
-                    .build();
-
-            ModelTypeListResponseDto.ModelTypeDto bodyTypes = ModelTypeListResponseDto.ModelTypeDto.builder()
-                    .type("bodyType")
-                    .options(List.of(get7Seat(), get8Seat()))
-                    .build();
-
-            ModelTypeListResponseDto expectResponse = ModelTypeListResponseDto.builder()
-                    .modelTypes(List.of(powerTrains, wheelDrives, bodyTypes))
-                    .build();
-
-            //when
-            ModelTypeListResponseDto realResponse = modelController.searchModelType();
-
-            //then
-            assertThat(realResponse).isEqualTo(expectResponse);
-        }
     }
 
     private ModelTypeListResponseDto.OptionDto get7Seat() {
