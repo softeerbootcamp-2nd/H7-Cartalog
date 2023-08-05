@@ -2,6 +2,7 @@ package softeer.wantcar.cartalog.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
+import softeer.wantcar.cartalog.dto.HMGDataDto;
 import softeer.wantcar.cartalog.dto.ModelTypeListResponseDto;
 
 import java.util.List;
@@ -71,8 +72,8 @@ public class ModelController {
                 .description("높은 토크로 파워풀한 드라이빙이 가능하며, 차급대비 연비 효율이 우수합니다")
                 .chosen(38)
                 .image("example-url/palisade/le-blanc/options/gasoline3.8_s.jpg")
-                .hmgData(List.of(new ModelTypeListResponseDto.HMGDataDto("최고출력(PS/rpm)", "202/3,800"),
-                        new ModelTypeListResponseDto.HMGDataDto("최대토크(kgf-m/rpm)", "45.0/1,750~2,750")))
+                .hmgData(List.of(new HMGDataDto("최고출력(PS/rpm)", "202/3,800"),
+                        new HMGDataDto("최대토크(kgf-m/rpm)", "45.0/1,750~2,750")))
                 .build();
     }
 
@@ -84,8 +85,8 @@ public class ModelController {
                 .description("고마력의 우수한 가속 성능을 확보하여, 넉넉하고 안정감 있는 주행이 가능합니다\n" +
                              "엔진의 진동이 적어 편안하고 조용한 드라이빙 감성을 제공합니다")
                 .image("example-url/palisade/le-blanc/options/dieselengine2.2_s.jpg")
-                .hmgData(List.of(new ModelTypeListResponseDto.HMGDataDto("최고출력(PS/rpm)", "295/60,00"),
-                        new ModelTypeListResponseDto.HMGDataDto("최대토크(kgf-m/rpm)", "36.2/5,200")))
+                .hmgData(List.of(new HMGDataDto("최고출력(PS/rpm)", "295/60,00"),
+                        new HMGDataDto("최대토크(kgf-m/rpm)", "36.2/5,200")))
                 .build();
     }
 }
