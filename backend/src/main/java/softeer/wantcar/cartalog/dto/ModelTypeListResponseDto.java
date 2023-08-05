@@ -35,13 +35,4 @@ public class ModelTypeListResponseDto {
         private String description;
         private List<HMGDataDto> hmgData;
     }
-
-    @Getter
-    @AllArgsConstructor
-    @EqualsAndHashCode
-    @Builder
-    public static class HMGDataDto {
-        private String name;
-        private String value;
-    }
 }
