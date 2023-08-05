@@ -21,24 +21,8 @@ public class TrimListResponseDTO {
         private String description;
         private int minPrice;
         private int maxPrice;
-        private DefaultExteriorColorDto defaultExteriorColor;
-        private DefaultInteriorColorDto defaultInteriorColor;
+        private String defaultExteriorColorId;
+        private String defaultInteriorColorId;
         private List<HMGDataDto> hmgData;
-    }
-
-    @AllArgsConstructor
-    @Builder
-    @EqualsAndHashCode
-    public static class DefaultExteriorColorDto {
-        private String id;
-        private String name;
-    }
-
-    @AllArgsConstructor
-    @Builder
-    @EqualsAndHashCode
-    public static class DefaultInteriorColorDto {
-        private String id;
-        private String name;
     }
 }

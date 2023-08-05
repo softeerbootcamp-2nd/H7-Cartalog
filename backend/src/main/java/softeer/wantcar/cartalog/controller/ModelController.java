@@ -115,29 +115,15 @@ public class ModelController {
                 new HMGDataDto("후방 교차 충돌방지 보조", "42회"));
     }
 
-    private static TrimListResponseDTO.DefaultExteriorColorDto getDefaultExteriorColorDto() {
-        return TrimListResponseDTO.DefaultExteriorColorDto.builder()
-                .id("A2B")
-                .name("어비스 블랙 펄")
-                .build();
-    }
-
-    private static TrimListResponseDTO.DefaultInteriorColorDto getDefaultInteriorColorDto() {
-        return TrimListResponseDTO.DefaultInteriorColorDto.builder()
-                .id("A22")
-                .name("퀼팅천연(블랙)")
-                .build();
-    }
-
     private static TrimListResponseDTO.TrimDto getTrimDto(String name, String description, int minPrice, int maxPrice) {
         return TrimListResponseDTO.TrimDto.builder()
                 .name(name)
                 .description(description)
                 .minPrice(minPrice)
                 .maxPrice(maxPrice)
-                .defaultExteriorColor(getDefaultExteriorColorDto())
-                .defaultInteriorColor(getDefaultInteriorColorDto())
-                .hmgDataDtos(getHmgDataDtos())
+                .defaultExteriorColorId("A2B")
+                .defaultInteriorColorId("A22")
+                .hmgData(getHmgDataDtos())
                 .build();
     }
 }

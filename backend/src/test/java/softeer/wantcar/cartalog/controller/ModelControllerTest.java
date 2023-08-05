@@ -81,9 +81,9 @@ class ModelControllerTest {
                 .description(description)
                 .minPrice(minPrice)
                 .maxPrice(maxPrice)
-                .defaultExteriorColor(getDefaultExteriorColorDto())
-                .defaultInteriorColor(getDefaultInteriorColorDto())
-                .hmgDataDtos(getHmgDataDtos())
+                .defaultExteriorColorId("A2B")
+                .defaultInteriorColorId("A22")
+                .hmgData(getHmgDataDtos())
                 .build();
     }
 
@@ -91,20 +91,6 @@ class ModelControllerTest {
         return List.of(new HMGDataDto("안전 하차 정보", "42회"),
                 new HMGDataDto("후측방 충돌 경고", "42회"),
                 new HMGDataDto("후방 교차 충돌방지 보조", "42회"));
-    }
-
-    private static DefaultExteriorColorDto getDefaultExteriorColorDto() {
-        return DefaultExteriorColorDto.builder()
-                .id("A2B")
-                .name("어비스 블랙 펄")
-                .build();
-    }
-
-    private static DefaultInteriorColorDto getDefaultInteriorColorDto() {
-        return DefaultInteriorColorDto.builder()
-                .id("A22")
-                .name("퀼팅천연(블랙)")
-                .build();
     }
 
     private ModelTypeListResponseDto.OptionDto get7Seat() {
