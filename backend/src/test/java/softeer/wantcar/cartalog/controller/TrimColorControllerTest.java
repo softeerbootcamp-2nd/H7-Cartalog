@@ -9,10 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import softeer.wantcar.cartalog.dto.TrimExteriorColorListResponseDto;
 import softeer.wantcar.cartalog.dto.TrimInteriorColorListResponseDto;
-import softeer.wantcar.cartalog.entity.color.TrimExteriorColor;
-import softeer.wantcar.cartalog.entity.color.TrimInteriorColor;
-import softeer.wantcar.cartalog.service.ColorService;
-import softeer.wantcar.cartalog.service.MockColorService;
+import softeer.wantcar.cartalog.entity.model.ModelExteriorColor;
+import softeer.wantcar.cartalog.entity.model.ModelInteriorColor;
+import softeer.wantcar.cartalog.service.MockTrimColorService;
+import softeer.wantcar.cartalog.service.TrimColorService;
 
 import java.util.List;
 
@@ -20,11 +20,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @DisplayName("색상 도메인 컨트롤러 테스트")
-class ColorControllerTest {
+class TrimColorControllerTest {
 
     SoftAssertions softAssertions;
-    ColorService colorService;
-    ColorController colorController;
+    TrimColorService trimColorService;
+    TrimColorController trimColorController;
 
 
     @BeforeEach
@@ -38,8 +38,8 @@ class ColorControllerTest {
 
         @BeforeEach
         void setUp() {
-            colorService = new MockColorService();
-            colorController = new ColorController(colorService);
+            trimColorService = new MockTrimColorService();
+            trimColorController = new TrimColorController(trimColorService);
         }
 
         @Test
@@ -47,10 +47,10 @@ class ColorControllerTest {
         void success() {
             //given
             Long trimId = 1L;
-            TrimExteriorColor mockData = ((MockColorService) colorService).getMockData();
+            ModelExteriorColor mockData = ((MockTrimColorService) trimColorService).getMockModelExteriorColor();
 
             //when
-            ResponseEntity<TrimExteriorColorListResponseDto> responseEntity = colorController.trimExteriorColorList(trimId);
+            ResponseEntity<TrimExteriorColorListResponseDto> responseEntity = trimColorController.trimExteriorColorList(trimId);
 
             //then
             TrimExteriorColorListResponseDto responseDto = responseEntity.getBody();
@@ -61,10 +61,10 @@ class ColorControllerTest {
             TrimExteriorColorListResponseDto.TrimExteriorColorDto trimExteriorColorDto = trimExteriorColorDtoList.get(0);
 
             softAssertions.assertThat(trimExteriorColorDto.getId()).isEqualTo(mockData.getId());
-            softAssertions.assertThat(trimExteriorColorDto.getName()).isEqualTo(mockData.getName());
-            softAssertions.assertThat(trimExteriorColorDto.getCode()).isEqualTo("#" + mockData.getCode());
+            softAssertions.assertThat(trimExteriorColorDto.getName()).isEqualTo(mockData.getColor().getName());
+            softAssertions.assertThat(trimExteriorColorDto.getCode()).isEqualTo("#" + mockData.getColor().getCode());
             softAssertions.assertThat(trimExteriorColorDto.getPrice()).isEqualTo(mockData.getPrice());
-            softAssertions.assertThat(trimExteriorColorDto.getChosen()).isEqualTo(mockData.getChosen());
+            softAssertions.assertThat(trimExteriorColorDto.getChosen()).isEqualTo(38);
             softAssertions.assertAll();
         }
 
@@ -74,7 +74,7 @@ class ColorControllerTest {
             //given
 
             //when
-            ResponseEntity<TrimExteriorColorListResponseDto> responseEntity = colorController.trimExteriorColorList(100L);
+            ResponseEntity<TrimExteriorColorListResponseDto> responseEntity = trimColorController.trimExteriorColorList(100L);
 
             //then
             softAssertions.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
@@ -90,8 +90,8 @@ class ColorControllerTest {
 
         @BeforeEach
         void setUp() {
-            colorService = new MockColorService();
-            colorController = new ColorController(colorService);
+            trimColorService = new MockTrimColorService();
+            trimColorController = new TrimColorController(trimColorService);
         }
 
         @Test
@@ -100,10 +100,10 @@ class ColorControllerTest {
             //given
             Long trimId = 1L;
             Long exteriorColorId = 1L;
-            TrimInteriorColor mockData = ((MockColorService) colorService).getMockData2();
+            ModelInteriorColor mockData = ((MockTrimColorService) trimColorService).getMockModelInteriorColor();
 
             //when
-            ResponseEntity<TrimInteriorColorListResponseDto> responseEntity = colorController.trimInteriorColorList(trimId, exteriorColorId);
+            ResponseEntity<TrimInteriorColorListResponseDto> responseEntity = trimColorController.trimInteriorColorList(trimId, exteriorColorId);
 
             //then
             TrimInteriorColorListResponseDto responseDto = responseEntity.getBody();
@@ -117,7 +117,7 @@ class ColorControllerTest {
             softAssertions.assertThat(trimInteriorColorDto.getName()).isEqualTo(mockData.getName());
             softAssertions.assertThat(trimInteriorColorDto.getImageUrl()).isEqualTo(mockData.getImageUrl());
             softAssertions.assertThat(trimInteriorColorDto.getPrice()).isEqualTo(mockData.getPrice());
-            softAssertions.assertThat(trimInteriorColorDto.getChosen()).isEqualTo(mockData.getChosen());
+            softAssertions.assertThat(trimInteriorColorDto.getChosen()).isEqualTo(38);
             softAssertions.assertAll();
         }
 
@@ -127,7 +127,7 @@ class ColorControllerTest {
             //given
 
             //when
-            ResponseEntity<TrimInteriorColorListResponseDto> responseEntity = colorController.trimInteriorColorList(100L, 100L);
+            ResponseEntity<TrimInteriorColorListResponseDto> responseEntity = trimColorController.trimInteriorColorList(100L, 100L);
 
             //then
             softAssertions.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
@@ -141,7 +141,7 @@ class ColorControllerTest {
             //given
 
             //when
-            ResponseEntity<TrimInteriorColorListResponseDto> responseEntity = colorController.trimInteriorColorList(100L, null);
+            ResponseEntity<TrimInteriorColorListResponseDto> responseEntity = trimColorController.trimInteriorColorList(100L, null);
 
             //then
             softAssertions.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);

@@ -9,25 +9,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import softeer.wantcar.cartalog.dto.TrimExteriorColorListResponseDto;
 import softeer.wantcar.cartalog.dto.TrimInteriorColorListResponseDto;
-import softeer.wantcar.cartalog.entity.color.TrimExteriorColor;
-import softeer.wantcar.cartalog.entity.color.TrimInteriorColor;
-import softeer.wantcar.cartalog.service.ColorService;
+import softeer.wantcar.cartalog.entity.model.ModelExteriorColor;
+import softeer.wantcar.cartalog.entity.model.ModelInteriorColor;
+import softeer.wantcar.cartalog.service.TrimColorService;
 
 import javax.websocket.server.PathParam;
-import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
 @AllArgsConstructor
-public class ColorController {
+public class TrimColorController {
 
-    private final ColorService colorService;
+    private final TrimColorService trimColorService;
 
     @GetMapping(value = "/models/trims/{trimId}/exterior-colors")
     public ResponseEntity<TrimExteriorColorListResponseDto> trimExteriorColorList(@PathVariable(value = "trimId") Long id) {
         try {
-            List<TrimExteriorColor> trimExteriorColorList = colorService.findTrimExteriorColorListByTrimId(id);
-            return new ResponseEntity<>(TrimExteriorColorListResponseDto.from(trimExteriorColorList), HttpStatus.OK);
+            Map<ModelExteriorColor, Integer> exteriorColorInfo = trimColorService.findTrimExteriorColorListByTrimId(id);
+            return new ResponseEntity<>(TrimExteriorColorListResponseDto.from(exteriorColorInfo), HttpStatus.OK);
         } catch (Exception exception) {
             log.error(exception.getMessage());
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -38,8 +38,8 @@ public class ColorController {
     public ResponseEntity<TrimInteriorColorListResponseDto> trimInteriorColorList(@PathVariable(value = "trimId") Long trimId,
                                                                                   @PathParam(value = "exteriorColorId") Long exteriorColorId) {
         try {
-            List<TrimInteriorColor> trimInteriorColorList = colorService.findTrimInteriorColorListByTrimId(trimId, exteriorColorId);
-            return new ResponseEntity<>(TrimInteriorColorListResponseDto.from(trimInteriorColorList), HttpStatus.OK);
+            Map<ModelInteriorColor, Integer> interiorCOlorInfo = trimColorService.findTrimInteriorColorListByTrimId(trimId, exteriorColorId);
+            return new ResponseEntity<>(TrimInteriorColorListResponseDto.from(interiorCOlorInfo), HttpStatus.OK);
         } catch (RuntimeException exception) {
             log.error(exception.getMessage());
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
