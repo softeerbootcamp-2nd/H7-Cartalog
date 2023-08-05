@@ -1,15 +1,17 @@
 package softeer.wantcar.cartalog.entity.trim;
 
-import softeer.wantcar.cartalog.entity.model.ModelExteriorColor;
 import softeer.wantcar.cartalog.entity.model.ModelInteriorColor;
 
 import java.util.List;
 
-public class Trim {
+public class DetailTrimPackage {
     private Long id;
-    private String name;
+    private int price;
     private String description;
+    private String type;
+    private boolean colorCondition;
     private String imageUrl;
-    private List<ModelExteriorColor> exteriorColors;
-    private List<ModelInteriorColor> interiorColors;
+    private List<DetailTrimOption> options;
+    private List<ModelInteriorColor> possibleColors;
+
 }
