@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import softeer.wantcar.cartalog.entity.HMGData;
 
 import java.util.List;
 
@@ -13,15 +12,15 @@ import java.util.List;
 @EqualsAndHashCode
 @AllArgsConstructor
 public class ModelTypeListResponseDto {
-    private List<ModelTypeDto> modelTypeDtos;
+    private List<ModelTypeDto> modelTypes;
 
     @Getter
     @AllArgsConstructor
     @EqualsAndHashCode
     @Builder
     public static class ModelTypeDto {
-        private String name;
-        private List<OptionDto> optionDtos;
+        private String type;
+        private List<OptionDto> options;
     }
 
     @Getter
@@ -34,7 +33,7 @@ public class ModelTypeListResponseDto {
         private int chosen;
         private String image;
         private String description;
-        private List<HMGDataDto> HMGData;
+        private List<HMGDataDto> hmgData;
     }
 
     @Getter
