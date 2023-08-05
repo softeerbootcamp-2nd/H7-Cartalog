@@ -1,11 +1,8 @@
-import { useState } from 'react';
 import * as S from './style';
 
-function TrimCard({ name, description, price, nextPage }) {
-  const [active, setActive] = useState(false);
-
+function TrimCard({ name, description, price, active, onClick, nextPage }) {
   return (
-    <S.TrimCard className={active ? 'active' : null} onClick={() => setActive(!active)}>
+    <S.TrimCard className={active ? 'active' : null} onClick={onClick}>
       <S.Trim>
         <S.Description>{description}</S.Description>
         <S.Name>{name}</S.Name>
