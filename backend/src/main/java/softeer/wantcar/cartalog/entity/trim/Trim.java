@@ -10,6 +10,8 @@ public class Trim {
     private String name;
     private String description;
     private String imageUrl;
+    private int minPrice;
+    private int maxPrice;
     private List<ModelExteriorColor> exteriorColors;
     private List<ModelInteriorColor> interiorColors;
 }
