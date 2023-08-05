@@ -6,7 +6,7 @@ export const Section = styled.div`
 `;
 
 export const Background = styled.div`
-  ${({ type, url, theme }) => {
+  ${({ type, $url, theme }) => {
     switch (type) {
       case 'TrimSelect':
         return `
@@ -18,7 +18,7 @@ export const Background = styled.div`
         `;
       case 'InteriorColor':
         return `
-          background: url(${url});
+          background: url(${$url});
           background-size: cover;
         `;
       case 'AddOption':
@@ -43,10 +43,8 @@ export const ColorDiv = styled.div`
 
 export const ImageDiv = styled.div`
   min-width: 50%;
-  ${({ url }) => `
-    background: url(${url});
-    background-size: cover;
-  `};
+  background: url(${({ $url }) => $url});
+  background-size: cover;
 `;
 
 export const Contents = styled.div`

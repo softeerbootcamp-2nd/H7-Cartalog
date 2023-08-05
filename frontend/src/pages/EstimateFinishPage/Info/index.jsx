@@ -1,11 +1,18 @@
 import * as S from './style';
 import Title from '../../../components/Title';
 
+const TYPE = 'dark';
+const MAIN_TITLE = 'Le Blanc';
+
 function Info() {
+  const TitleProps = {
+    type: TYPE,
+    mainTitle: MAIN_TITLE,
+  };
+
   return (
     <S.Info>
-      {/* 수정 필요 */}
-      <Title type={'dark'} mainTitle={'Le Blanc'} />
+      <Title {...TitleProps} />
     </S.Info>
   );
 }

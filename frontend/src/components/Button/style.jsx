@@ -5,13 +5,13 @@ export const Button = styled.button`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: ${({ state, theme }) => {
-    switch (state) {
+  background-color: ${({ $state, theme }) => {
+    switch ($state) {
       case 'active':
         return ` ${theme.color.primary['700']}`;
       case 'hover':
         return `${theme.color.primary['500']}`;
-      case 'click':
+      case 'state':
         return `${theme.color.primary['800']}`;
       case 'inactive':
         return `${theme.color.gray['300']}`;
@@ -66,6 +66,6 @@ export const MainTitle = styled.h1`
   color: ${({ theme }) => theme.color.white};
   ${({ type, theme }) => {
     if (type === 'buttonC') return `font: ${theme.font.textKR.Medium12}`;
-    else return `font: ${theme.font.textKR.Medium16}`;
+    return `font: ${theme.font.textKR.Medium16}`;
   }};
 `;

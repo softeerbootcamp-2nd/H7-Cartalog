@@ -2,12 +2,16 @@ import * as S from './style';
 
 /**
  * HMGTag를 생성하는 컴포넌트
- * @param type {string} Tag1 || Tag2
+ * @param type {string} tag20 || tag32
  * @returns
  */
 function HMGTag({ type }) {
+  const HMGTagProps = {
+    type: type,
+  };
+
   return (
-    <S.HMGTag type={type}>
+    <S.HMGTag {...HMGTagProps}>
       <S.Text>HMG Data</S.Text>
     </S.HMGTag>
   );

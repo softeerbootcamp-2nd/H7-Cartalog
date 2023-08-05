@@ -7,22 +7,10 @@ export const HMGTag = styled.div`
   width: 70px;
   background-color: ${({ theme }) => theme.color.activeBlue2};
 
-  ${(type) => {
-    switch (type) {
-      case 'Tag1':
-        return `
-        height: 20px;
-        `;
-      case 'Tag2':
-        return `
-        height: 30px;
-        `;
-      default:
-        return `
-        height: 20px;
-        `;
-    }
-  }};
+  ${({ type }) => {
+    if (type === 'tag20') return `height: 20px`;
+    if (type === 'tag32') return `height: 32px`;
+  }}
 `;
 
 export const Text = styled.h2`

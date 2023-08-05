@@ -13,6 +13,9 @@ function Interaction() {
   const pageRef = useRef();
   const nextPage = () => setPage(page + 1);
   const prevPage = () => setPage(history.state.nowPage);
+  const InteractionProps = {
+    nextPage: nextPage,
+  };
 
   useEffect(() => window.addEventListener('popstate', prevPage), []);
 
@@ -26,11 +29,11 @@ function Interaction() {
     <S.Interaction>
       <Header />
       <S.Page ref={pageRef}>
-        <TrimSelectPage nextPage={nextPage} />
-        <ModelTypePage nextPage={nextPage} />
-        <ExteriorColorPage nextPage={nextPage} />
-        <InteriorColorPage nextPage={nextPage} />
-        <AddOptionPage nextPage={nextPage} />
+        <TrimSelectPage {...InteractionProps} />
+        <ModelTypePage {...InteractionProps} />
+        <ExteriorColorPage {...InteractionProps} />
+        <InteriorColorPage {...InteractionProps} />
+        <AddOptionPage {...InteractionProps} />
         <EstimateFinishPage />
       </S.Page>
     </S.Interaction>

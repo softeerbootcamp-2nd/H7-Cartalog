@@ -2,16 +2,18 @@ import Section from '../../components/Section';
 import Info from './Info';
 import Pick from './Pick';
 
+const TYPE = 'InteriorColor';
+const IMAGE_URL = '../../../../../assets/images/TrimSelect/interior.png';
+
 function InteriorColor({ nextPage }) {
-  const imageUrl = '../../../../../assets/images/TrimSelect/interior.png';
-  return (
-    <Section
-      type="InteriorColor"
-      url={imageUrl}
-      Info={<Info />}
-      Pick={<Pick nextPage={nextPage} />}
-    />
-  );
+  const SectionProps = {
+    type: TYPE,
+    url: IMAGE_URL,
+    Info: <Info />,
+    Pick: <Pick nextPage={nextPage} />,
+  };
+
+  return <Section {...SectionProps} />;
 }
 
 export default InteriorColor;

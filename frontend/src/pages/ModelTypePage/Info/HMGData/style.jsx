@@ -6,12 +6,6 @@ export const HMGData = styled.div`
   margin-top: 16px;
 `;
 
-export const HMGDataItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 60px;
-`;
-
 export const Title = styled.h4`
   display: flex;
   flex-direction: row;

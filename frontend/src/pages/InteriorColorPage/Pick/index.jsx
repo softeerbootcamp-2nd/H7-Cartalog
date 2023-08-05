@@ -1,12 +1,16 @@
 import * as S from './style';
 import Button from '../../../components/Button';
 
+const TYPE = 'buttonD';
+const STATE = 'active';
+const MAIN_TITLE = '다음';
+
 function Pick({ nextPage }) {
   const buttonProps = {
     nextPage: nextPage,
-    type: 'buttonD',
-    state: 'active',
-    mainTitle: '다음',
+    type: TYPE,
+    state: STATE,
+    mainTitle: MAIN_TITLE,
   };
 
   return (
