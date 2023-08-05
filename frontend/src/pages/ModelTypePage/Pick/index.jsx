@@ -11,7 +11,6 @@ function Pick({ nextPage }) {
 
   return (
     <S.Pick>
-      {/* 수정필요 */}
       <Button {...buttonProps}></Button>
     </S.Pick>
   );

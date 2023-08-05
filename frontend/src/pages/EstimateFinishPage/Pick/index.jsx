@@ -1,10 +1,16 @@
 import * as S from './style';
 
 function Pick({ nextPage }) {
+  const buttonProps = {
+    nextPage: nextPage,
+    type: 'buttonD',
+    state: 'active',
+    mainTitle: '다음',
+  };
+
   return (
     <S.Pick>
-      {/* 수정필요 */}
-      <S.SelectButton onClick={nextPage}>선택하기</S.SelectButton>
+      <Button {...buttonProps}></Button>
     </S.Pick>
   );
 }

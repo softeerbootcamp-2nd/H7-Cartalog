@@ -20,6 +20,14 @@ export const Button = styled.button`
     }
   }};
 
+  &:hover {
+    background-color: ${({ theme }) => theme.color.primary['500']};
+    transition: all 0.1s ease-in;
+  }
+  &:not(:hover) {
+    transition: all 0.1s ease-out;
+  }
+
   ${({ type }) => {
     switch (type) {
       case 'buttonA' || 'buttonB':
@@ -56,8 +64,8 @@ export const SubTitle = styled.h2`
 
 export const MainTitle = styled.h1`
   color: ${({ theme }) => theme.color.white};
-  font: ${({ type, theme }) => {
-    if (type === 'buttonC') return `${theme.font.textKR.Medium12}`;
-    return `${theme.font.textKR.Medium16}`;
+  ${({ type, theme }) => {
+    if (type === 'buttonC') return `font: ${theme.font.textKR.Medium12}`;
+    else return `font: ${theme.font.textKR.Medium16}`;
   }};
 `;

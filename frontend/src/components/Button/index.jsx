@@ -10,10 +10,15 @@ import * as S from './style';
  * @returns
  */
 function Button({ nextPage, type, state, subTitle, mainTitle }) {
+  const buttonProps = {
+    type: type,
+    state: state,
+  };
+
   return (
-    <S.Button onClick={nextPage} type={type} state={state}>
+    <S.Button onClick={nextPage} {...buttonProps}>
       <S.SubTitle>{subTitle}</S.SubTitle>
-      <S.MainTitle>{mainTitle}</S.MainTitle>
+      <S.MainTitle {...buttonProps}>{mainTitle}</S.MainTitle>
     </S.Button>
   );
 }

@@ -44,15 +44,6 @@ export const Price = styled.div`
   color: ${({ theme }) => theme.color.gray['900']};
 `;
 
-export const SelectButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 220px;
-  height: 36px;
-  margin: 4px 12px 12px;
-  border-radius: 2px;
-  background-color: ${({ theme }) => theme.color.primary.default};
-  font: ${({ theme }) => theme.font.textKR.Medium12};
-  color: ${({ theme }) => theme.color.gray['50']};
+export const SelectButton = styled.div`
+  margin: 4px 12px;
 `;
