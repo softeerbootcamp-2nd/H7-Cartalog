@@ -9,11 +9,14 @@ import * as S from './style';
  * @returns
  */
 function Title({ type, subTitle, mainTitle, info }) {
+  const SectionProps = {
+    type: type,
+  };
   return (
     <S.Title>
-      <S.SubTitle type={type}>{subTitle}</S.SubTitle>
-      <S.MainTitle type={type}>{mainTitle}</S.MainTitle>
-      <S.Info type={type}>{info}</S.Info>
+      <S.SubTitle {...SectionProps}>{subTitle}</S.SubTitle>
+      <S.MainTitle {...SectionProps}>{mainTitle}</S.MainTitle>
+      <S.Info {...SectionProps}>{info}</S.Info>
     </S.Title>
   );
 }

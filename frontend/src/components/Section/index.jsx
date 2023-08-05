@@ -1,5 +1,7 @@
 import * as S from './style';
 
+const ADD_OPTION = 'AddOption';
+
 /**
  * Section 구역을 분리하는 컴포넌트
  * @param type {string} TrimSelect || ModelType || ExteriorColor || InteriorColor || AddOption
@@ -9,14 +11,19 @@ import * as S from './style';
  * @returns
  */
 function Section({ type, url, Info, Pick }) {
-  if (type === 'AddOption') {
+  const SectionProps = {
+    type: type,
+    $url: url,
+  };
+
+  if (type === ADD_OPTION) {
     return (
       <S.Section>
-        <S.Background type={type}>
+        <S.Background {...SectionProps}>
           <S.ColorDiv>
             <S.Contents>{Info}</S.Contents>
           </S.ColorDiv>
-          <S.ImageDiv url={url}></S.ImageDiv>
+          <S.ImageDiv {...SectionProps}></S.ImageDiv>
         </S.Background>
         <S.Contents>{Pick}</S.Contents>
       </S.Section>
@@ -24,7 +31,7 @@ function Section({ type, url, Info, Pick }) {
   } else {
     return (
       <S.Section>
-        <S.Background type={type} url={url}>
+        <S.Background {...SectionProps}>
           <S.Contents>{Info}</S.Contents>
         </S.Background>
         <S.Contents>{Pick}</S.Contents>

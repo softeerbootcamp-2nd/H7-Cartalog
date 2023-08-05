@@ -1,10 +1,20 @@
 import * as S from './style';
 
+const TYPE = 'buttonD';
+const STATE = 'active';
+const MAIN_TITLE = '다음';
+
 function Pick({ nextPage }) {
+  const buttonProps = {
+    nextPage: nextPage,
+    type: TYPE,
+    state: STATE,
+    mainTitle: MAIN_TITLE,
+  };
+
   return (
     <S.Pick>
-      {/* 수정필요 */}
-      <S.SelectButton onClick={nextPage}>선택하기</S.SelectButton>
+      <Button {...buttonProps}></Button>
     </S.Pick>
   );
 }

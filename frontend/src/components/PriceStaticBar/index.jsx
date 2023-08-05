@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import * as S from './style';
-import Description from './Description';
 import { ReactComponent as ArrowDown } from '../../../assets/icons/arrow_down.svg';
+import Description from './Description';
 import Slider from './Slider';
 import SliderMark from './SliderMark';
 
@@ -12,6 +12,18 @@ const PriceStaticBar = ({ min, max, price }) => {
   const [budget, setBudget] = useState((min + max) / 2);
   const handleClick = () => setExpanded((expanded) => !expanded);
   const over = price > budget;
+
+  // 이런식으로 바꾸는건 어때요?
+  const SliderProps = {
+    min: min,
+    max: max,
+    step: 100000,
+    disabled: !expanded,
+    price: price,
+    budget: budget,
+    setBudget: setBudget,
+    $over: over,
+  };
 
   return (
     <S.PriceStaticBar $over={over}>
