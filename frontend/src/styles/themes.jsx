@@ -83,7 +83,7 @@ const theme = {
     textKR: {
       Bold12: '700 12px/18px HyundaiSansTextKRBold',
       Medium18: '500 18px/28px HyundaiSansTextKRMedium',
-      Medium16: '500 16px/18px HyundaiSansTextKRMedium',
+      Medium16: '500 16px/24px HyundaiSansTextKRMedium',
       Medium14: '500 14px/22px HyundaiSansTextKRMedium',
       Medium12: '500 12px/18px HyundaiSansTextKRMedium',
       Medium10: '500 10px/18px HyundaiSansTextKRMedium',
