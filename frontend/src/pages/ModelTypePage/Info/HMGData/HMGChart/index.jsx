@@ -11,9 +11,7 @@ const OUTPUT_DIVIDE = '/';
  * @returns
  */
 function HMGChart({ title, unit, rpm, width }) {
-  const chartProps = {
-    width: width,
-  };
+  const chartProps = { width };
 
   return (
     <S.HMGChart>

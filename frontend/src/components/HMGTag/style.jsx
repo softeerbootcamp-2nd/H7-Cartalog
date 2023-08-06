@@ -1,16 +1,17 @@
 import styled from 'styled-components';
 
+const TagByType = {
+  tag20: '20px',
+  tag32: '32px',
+};
+
 export const HMGTag = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 70px;
   background-color: ${({ theme }) => theme.color.activeBlue2};
-
-  ${({ type }) => {
-    if (type === 'tag20') return `height: 20px`;
-    if (type === 'tag32') return `height: 32px`;
-  }}
+  height: ${({ type }) => TagByType[type]};
 `;
 
 export const Text = styled.h2`

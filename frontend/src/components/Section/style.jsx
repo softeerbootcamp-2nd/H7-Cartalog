@@ -6,7 +6,7 @@ export const Section = styled.div`
   margin-top: 60px;
 `;
 
-const styleByType = {
+const SectionByType = {
   TrimSelect: ({ theme }) => `
     background: ${theme.color.trimGrad};
   `,
@@ -17,7 +17,6 @@ const styleByType = {
   `,
   InteriorColor: ({ theme }) => `
     position: relative;
-    background: ${theme.color.modelGrad};
   `,
   AddOption: () => `
     display: flex;
@@ -26,7 +25,7 @@ const styleByType = {
 };
 
 export const Background = styled.div`
-  ${({ type, theme }) => styleByType[type] && styleByType[type]({ type, theme })};
+  ${({ type, theme }) => SectionByType[type] && SectionByType[type]({ type, theme })};
   height: 360px;
   box-shadow: 0px 0px 8px 0px rgba(131, 133, 136, 0.2);
 `;

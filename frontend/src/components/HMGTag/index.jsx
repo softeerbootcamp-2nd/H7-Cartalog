@@ -6,9 +6,7 @@ import * as S from './style';
  * @returns
  */
 function HMGTag({ type }) {
-  const HMGTagProps = {
-    type: type,
-  };
+  const HMGTagProps = { type };
 
   return (
     <S.HMGTag {...HMGTagProps}>
