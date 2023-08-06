@@ -23,8 +23,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Swagger 문서 제목")
-                .description("Swagger 문서 설명")
+                .title("WantCar API 명세서")
+                .description("WantCar API 명세서")
                 .version("1.0")
                 .build();
     }
