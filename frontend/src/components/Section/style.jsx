@@ -1,53 +1,55 @@
 import styled, { StyleSheetManager } from 'styled-components';
 
 export const Section = styled.div`
+  position: relative;
   min-width: 100%;
   margin-top: 60px;
 `;
 
+const SectionByType = {
+  TrimSelect: ({ theme }) => `
+    background: ${theme.color.trimGrad};
+  `,
+  ModelType: ({ theme }) => `
+    display: flex;
+    flex-direction: row;
+    background: ${theme.color.modelGrad};
+  `,
+  InteriorColor: ({ theme }) => `
+    position: relative;
+  `,
+  AddOption: () => `
+    display: flex;
+    flex-direction: row;
+  `,
+};
+
 export const Background = styled.div`
-  ${({ type, $url, theme }) => {
-    switch (type) {
-      case 'TrimSelect':
-        return `
-          background: ${theme.color.trimGrad};
-        `;
-      case 'ModelType':
-        return `
-          background: ${theme.color.modelGrad};
-        `;
-      case 'InteriorColor':
-        return `
-          background: url(${$url});
-          background-size: cover;
-        `;
-      case 'AddOption':
-        return `
-          display: flex;
-          flex-direction: row;
-        `;
-      default:
-        return `
-          background: ${theme.color.blueBG};
-        `;
-    }
-  }}
+  ${({ type, theme }) => SectionByType[type] && SectionByType[type]({ type, theme })};
   height: 360px;
   box-shadow: 0px 0px 8px 0px rgba(131, 133, 136, 0.2);
 `;
 
-export const ColorDiv = styled.div`
-  min-width: 50%;
-  background: ${({ theme }) => theme.color.blueBG};
+export const BackgroundImage = styled.img`
+  position: absolute;
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  object-position: 25% 25%;
 `;
 
-export const ImageDiv = styled.div`
+export const ColorDiv = styled.div`
   min-width: 50%;
-  background: url(${({ $url }) => $url});
-  background-size: cover;
+  ${({ type, theme }) => type === 'AddOption' && `background: ${theme.color.blueBG}`};
+`;
+
+export const ImageDiv = styled.img`
+  min-width: 50%;
+  object-fit: cover;
 `;
 
 export const Contents = styled.div`
+  ${({ type }) => type === 'InteriorColor' && 'position: absolute'};
   display: flex;
   flex-direction: column;
   width: 1280px;

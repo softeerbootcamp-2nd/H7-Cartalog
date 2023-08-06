@@ -1,5 +1,7 @@
 import * as S from './style';
 
+const MODEL_TYPE = 'ModelType';
+const INTERIOR_COLOR = 'InteriorColor';
 const ADD_OPTION = 'AddOption';
 
 /**
@@ -11,33 +13,27 @@ const ADD_OPTION = 'AddOption';
  * @returns
  */
 function Section({ type, url, Info, Pick }) {
-  const SectionProps = {
-    type: type,
-    $url: url,
-  };
+  const SectionProps = { type };
+  const isInteriorColor = type === INTERIOR_COLOR;
+  const isAddOptionOrModelType = type === ADD_OPTION || type === MODEL_TYPE;
 
-  if (type === ADD_OPTION) {
-    return (
-      <S.Section>
-        <S.Background {...SectionProps}>
-          <S.ColorDiv>
-            <S.Contents>{Info}</S.Contents>
-          </S.ColorDiv>
-          <S.ImageDiv {...SectionProps}></S.ImageDiv>
-        </S.Background>
-        <S.Contents>{Pick}</S.Contents>
-      </S.Section>
-    );
-  } else {
-    return (
-      <S.Section>
-        <S.Background {...SectionProps}>
-          <S.Contents>{Info}</S.Contents>
-        </S.Background>
-        <S.Contents>{Pick}</S.Contents>
-      </S.Section>
-    );
-  }
+  return (
+    <S.Section>
+      <S.Background {...SectionProps}>
+        {isInteriorColor && <S.BackgroundImage src={url} />}
+        {isAddOptionOrModelType && (
+          <>
+            <S.ColorDiv {...SectionProps}>
+              <S.Contents>{Info}</S.Contents>
+            </S.ColorDiv>
+            <S.ImageDiv src={url}></S.ImageDiv>
+          </>
+        )}
+        {!isAddOptionOrModelType && <S.Contents {...SectionProps}>{Info}</S.Contents>}
+      </S.Background>
+      <S.Contents {...SectionProps}>{Pick}</S.Contents>
+    </S.Section>
+  );
 }
 
 export default Section;

@@ -15,9 +15,7 @@ function Pick({ nextPage }) {
     mainTitle: MAIN_TITLE,
   };
 
-  const pickTitleProps = {
-    mainTitle: PICK_MAIN_TITLE,
-  };
+  const pickTitleProps = { mainTitle: PICK_MAIN_TITLE };
 
   return (
     <S.Pick>

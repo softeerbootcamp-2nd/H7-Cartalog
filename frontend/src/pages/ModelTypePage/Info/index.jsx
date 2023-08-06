@@ -18,9 +18,7 @@ function Info() {
     info: INFO,
   };
 
-  const HMGTagProps = {
-    type: HMGTAG_TYPE,
-  };
+  const HMGTagProps = { type: HMGTAG_TYPE };
 
   return (
     <S.Info>
@@ -28,7 +26,6 @@ function Info() {
         <Title {...TitleProps} />
         <S.HMG>
           <HMGTag {...HMGTagProps} />
-          {/* 개발 진행 중 */}
           <HMGData />
         </S.HMG>
       </S.ModelText>

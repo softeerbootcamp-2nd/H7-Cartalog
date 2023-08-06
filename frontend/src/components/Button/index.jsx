@@ -11,7 +11,7 @@ import * as S from './style';
  */
 function Button({ nextPage, type, state, subTitle, mainTitle }) {
   const ButtonProps = {
-    type: type,
+    type,
     $state: state,
   };
 
