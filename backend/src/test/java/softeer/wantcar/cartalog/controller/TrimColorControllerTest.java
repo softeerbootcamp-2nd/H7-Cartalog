@@ -60,9 +60,9 @@ class TrimColorControllerTest {
 
             TrimExteriorColorListResponseDto.TrimExteriorColorDto trimExteriorColorDto = trimExteriorColorDtoList.get(0);
 
-            softAssertions.assertThat(trimExteriorColorDto.getId()).isEqualTo(mockData.getId());
+            softAssertions.assertThat(trimExteriorColorDto.getId()).isEqualTo(mockData.getColor().getId());
             softAssertions.assertThat(trimExteriorColorDto.getName()).isEqualTo(mockData.getColor().getName());
-            softAssertions.assertThat(trimExteriorColorDto.getCode()).isEqualTo("#" + mockData.getColor().getCode());
+            softAssertions.assertThat(trimExteriorColorDto.getColor()).isEqualTo("#" + mockData.getColor().getCode());
             softAssertions.assertThat(trimExteriorColorDto.getPrice()).isEqualTo(mockData.getPrice());
             softAssertions.assertThat(trimExteriorColorDto.getChosen()).isEqualTo(38);
             softAssertions.assertAll();
@@ -72,7 +72,6 @@ class TrimColorControllerTest {
         @DisplayName("존재하지 않는 트림 식별자로 색상 요청시 404 상태를 반환해야 한다.")
         void notFound() {
             //given
-
             //when
             ResponseEntity<TrimExteriorColorListResponseDto> responseEntity = trimColorController.trimExteriorColorList(100L);
 
@@ -87,7 +86,6 @@ class TrimColorControllerTest {
     @Nested
     @DisplayName("트림 내장 색상 목록 조회 테스트")
     class searchTrimInteriorColor {
-
         @BeforeEach
         void setUp() {
             trimColorService = new MockTrimColorService();
@@ -115,7 +113,7 @@ class TrimColorControllerTest {
 
             softAssertions.assertThat(trimInteriorColorDto.getId()).isEqualTo(mockData.getId());
             softAssertions.assertThat(trimInteriorColorDto.getName()).isEqualTo(mockData.getName());
-            softAssertions.assertThat(trimInteriorColorDto.getImageUrl()).isEqualTo(mockData.getImageUrl());
+            softAssertions.assertThat(trimInteriorColorDto.getColorImageUrl()).isEqualTo(mockData.getImageUrl());
             softAssertions.assertThat(trimInteriorColorDto.getPrice()).isEqualTo(mockData.getPrice());
             softAssertions.assertThat(trimInteriorColorDto.getChosen()).isEqualTo(38);
             softAssertions.assertAll();

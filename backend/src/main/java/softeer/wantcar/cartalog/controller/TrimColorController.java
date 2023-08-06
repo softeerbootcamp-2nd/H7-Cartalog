@@ -23,8 +23,8 @@ public class TrimColorController {
 
     private final TrimColorService trimColorService;
 
-    @GetMapping(value = "/models/trims/{trimId}/exterior-colors")
-    public ResponseEntity<TrimExteriorColorListResponseDto> trimExteriorColorList(@PathVariable(value = "trimId") Long id) {
+    @GetMapping(value = "/models/trims/exterior-colors")
+    public ResponseEntity<TrimExteriorColorListResponseDto> trimExteriorColorList(@PathParam("trimId") Long id) {
         try {
             Map<ModelExteriorColor, Integer> exteriorColorInfo = trimColorService.findTrimExteriorColorListByTrimId(id);
             return new ResponseEntity<>(TrimExteriorColorListResponseDto.from(exteriorColorInfo), HttpStatus.OK);
@@ -34,8 +34,8 @@ public class TrimColorController {
         }
     }
 
-    @GetMapping(value = "/models/trims/{trimId}/interior-colors")
-    public ResponseEntity<TrimInteriorColorListResponseDto> trimInteriorColorList(@PathVariable(value = "trimId") Long trimId,
+    @GetMapping(value = "/models/trims/interior-colors")
+    public ResponseEntity<TrimInteriorColorListResponseDto> trimInteriorColorList(@PathParam("trimId") Long trimId,
                                                                                   @PathParam(value = "exteriorColorId") Long exteriorColorId) {
         try {
             Map<ModelInteriorColor, Integer> interiorCOlorInfo = trimColorService.findTrimInteriorColorListByTrimId(trimId, exteriorColorId);

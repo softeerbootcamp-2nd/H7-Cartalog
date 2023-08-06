@@ -20,19 +20,20 @@ public class TrimExteriorColorListResponseDto {
     @Builder
     @EqualsAndHashCode
     public static class TrimExteriorColorDto {
-
-        private Long id;
+        private String id;
         private String name;
-        private String code;
+        private String color;
+        private String carImageUrl;
         private int price;
         private int chosen;
 
-        public static TrimExteriorColorDto from(ModelExteriorColor exteriorColor, int chosen) {
+        public static TrimExteriorColorDto from(ModelExteriorColor exteriorColor, int chosen, String carImageUrl) {
             return TrimExteriorColorDto.builder()
-                    .id(exteriorColor.getId())
+                    .id(exteriorColor.getColor().getId())
                     .name(exteriorColor.getColor().getName())
                     .price(exteriorColor.getPrice())
-                    .code("#" + exteriorColor.getColor().getCode())
+                    .color("#" + exteriorColor.getColor().getCode())
+                    .carImageUrl(carImageUrl)
                     .chosen(chosen)
                     .build();
         }
@@ -40,7 +41,7 @@ public class TrimExteriorColorListResponseDto {
 
     public static TrimExteriorColorListResponseDto from(Map<ModelExteriorColor, Integer> exteriorColors) {
         List<TrimExteriorColorDto> exteriorColorDtos = exteriorColors.entrySet().stream()
-                .map(entry -> TrimExteriorColorDto.from(entry.getKey(), entry.getValue()))
+                .map(entry -> TrimExteriorColorDto.from(entry.getKey(), entry.getValue(), "image"))
                 .collect(Collectors.toList());
 
         return TrimExteriorColorListResponseDto.builder()

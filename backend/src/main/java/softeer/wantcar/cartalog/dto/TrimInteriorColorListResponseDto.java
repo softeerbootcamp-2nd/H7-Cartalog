@@ -20,15 +20,17 @@ public class TrimInteriorColorListResponseDto {
 
         private String id;
         private String name;
-        private String imageUrl;
+        private String colorImageUrl;
+        private String carImageUrl;
         private int price;
         private int chosen;
 
-        public static TrimInteriorColorDto from(ModelInteriorColor color, int chosen) {
+        public static TrimInteriorColorDto from(ModelInteriorColor color, int chosen, String carImageUrl) {
             return TrimInteriorColorDto.builder()
                     .id(color.getId())
                     .name(color.getName())
-                    .imageUrl(color.getImageUrl())
+                    .colorImageUrl(color.getImageUrl())
+                    .carImageUrl(carImageUrl)
                     .price(color.getPrice())
                     .chosen(chosen)
                     .build();
@@ -38,12 +40,11 @@ public class TrimInteriorColorListResponseDto {
 
     public static TrimInteriorColorListResponseDto from(Map<ModelInteriorColor, Integer> interiorColorInfos) {
         List<TrimInteriorColorDto> interiorColorDtos = interiorColorInfos.entrySet().stream()
-                .map(entry -> TrimInteriorColorDto.from(entry.getKey(), entry.getValue()))
+                .map(entry -> TrimInteriorColorDto.from(entry.getKey(), entry.getValue(), "image"))
                 .collect(Collectors.toList());
 
         return TrimInteriorColorListResponseDto.builder()
                 .trimInteriorColorDtoList(interiorColorDtos)
                 .build();
     }
-
 }
