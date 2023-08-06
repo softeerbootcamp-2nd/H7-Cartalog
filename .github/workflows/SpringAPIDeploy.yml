@@ -4,9 +4,9 @@ name: Spring API CD
 # events but only for the dev branch
 on:
   push:
-    branches: [ BE_feature/#72 ]
+    branches: [ main, dev ]
   pull_request:
-    branches: [ BE_feature/#72 ]
+    branches: [ main, dev ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
