@@ -5,7 +5,7 @@ const TYPE = 'dark';
 const SUB_TITLE = '파워트레인';
 const MAIN_TITLE = '컴포트 ll';
 
-function Info() {
+function Info({ imageUrl }) {
   const TitleProps = {
     type: TYPE,
     subTitle: SUB_TITLE,
@@ -14,7 +14,11 @@ function Info() {
 
   return (
     <S.Info>
-      <Title {...TitleProps} />
+      <S.ModelText>
+        <Title {...TitleProps} />
+      </S.ModelText>
+
+      <S.ModelImage src={imageUrl} />
     </S.Info>
   );
 }

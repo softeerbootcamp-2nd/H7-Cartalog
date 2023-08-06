@@ -6,10 +6,10 @@ const TYPE = 'AddOption';
 const IMAGE_URL = '../../../../../assets/images/TrimSelect/interior.png';
 
 function AddOption({ nextPage }) {
+  const InfoProps = { imageUrl: IMAGE_URL };
   const SectionProps = {
     type: TYPE,
-    url: IMAGE_URL,
-    Info: <Info />,
+    Info: <Info {...InfoProps} />,
     Pick: <Pick nextPage={nextPage} />,
   };
 

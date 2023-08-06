@@ -6,10 +6,10 @@ const TYPE = 'ModelType';
 const IMAGE_URL = '../../../../../assets/images/ModelType/diesel.png';
 
 function ModelType({ nextPage }) {
+  const InfoProps = { imageUrl: IMAGE_URL };
   const SectionProps = {
     type: TYPE,
-    url: IMAGE_URL,
-    Info: <Info />,
+    Info: <Info {...InfoProps} />,
     Pick: <Pick nextPage={nextPage} />,
   };
 
