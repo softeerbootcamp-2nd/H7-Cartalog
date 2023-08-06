@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View" />
+
         <variable
             name="navController"
             type="androidx.navigation.NavController" />
@@ -37,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="20dp" />
+            app:layout_constraintGuide_begin="10dp" />
 
         <TextView
             android:id="@+id/btn_selected_car"
@@ -128,7 +131,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="20dp"
-            app:layout_constraintBottom_toTopOf="@id/btn_select"
+            app:layout_constraintBottom_toTopOf="@id/btn_prev"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tl_step"
@@ -136,17 +139,36 @@
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_select"
+            android:id="@+id/btn_prev"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/gray_300"
+            android:fontFamily="@font/hyndaisans_head_medium"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:text="@string/btn_prev"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:visibility="@{viewModel.stepIndex == 0 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_next"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_next"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/primary_color_700"
+            android:fontFamily="@font/hyndaisans_head_medium"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:text="@string/btn_next"
             android:textColor="@color/white"
             android:textSize="16sp"
-            app:cornerRadius="0dp"
+            android:visibility="@{viewModel.stepIndex == 0 ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="선택하기" />
+            app:layout_constraintStart_toEndOf="@id/btn_prev" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

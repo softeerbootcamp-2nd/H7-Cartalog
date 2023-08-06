@@ -19,12 +19,18 @@ class TrimViewModel : ViewModel() {
     private fun setTrimData(): List<Trim>{
         // 임시 데이터 설정
         val tmpOption = listOf(TrimOption("a",12))
-        val tmpData = Trim("name","desc",10,tmpOption)
-        return listOf(tmpData,tmpData,tmpData,tmpData)
+        val tmpData = Trim("Le Blanc","desc",10,tmpOption)
+        val tmpData2 = Trim("Car ","desc",10,tmpOption)
+        return listOf(tmpData,tmpData2,tmpData,tmpData2)
     }
 
     fun changeSelectedTrim(idx: Int){
         _selectedTrim.value = idx
+    }
+
+    fun getSelectedTrimString(): String{
+        val selected = trimList.value?.get(selectedTrim.value!!)
+        return "${selected?.trimName} 선택하기"
     }
 
 }
