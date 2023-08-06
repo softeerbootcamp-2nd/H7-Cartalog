@@ -1,0 +1,42 @@
+name: Spring API CD
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the dev branch
+on:
+  push:
+    branches: [ BE_feature/#72 ]
+  pull_request:
+    branches: [ BE_feature/#72 ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        shell: bash
+        working-directory: backend
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: JDK 11 설치
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11.0.8
+
+      - name: ./gradlew 권한 설정
+        run: chmod +x ./gradlew
+
+      - name: 빌드
+        run: ./gradlew build
+
+      - name: aws 세팅
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
