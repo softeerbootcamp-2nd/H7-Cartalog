@@ -12,4 +12,5 @@ import lombok.Getter;
 public class HMGDataDto {
     private String name;
     private String value;
+    private String measure;
 }
