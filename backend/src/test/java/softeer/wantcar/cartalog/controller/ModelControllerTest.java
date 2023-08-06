@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import softeer.wantcar.cartalog.dto.HMGDataDto;
 import softeer.wantcar.cartalog.dto.ModelTypeListResponseDto;
-import softeer.wantcar.cartalog.dto.TrimListResponseDTO;
 
 import java.util.List;
 

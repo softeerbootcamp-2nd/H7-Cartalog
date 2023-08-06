@@ -21,8 +21,36 @@ public class TrimListResponseDTO {
         private String description;
         private int minPrice;
         private int maxPrice;
-        private String defaultExteriorColorId;
-        private String defaultInteriorColorId;
+        private String exteriorImage;
+        private String interiorImage;
+        private String wheelImage;
         private List<HMGDataDto> hmgData;
+        private DefaultTrimInfoDto defaultInfo;
+    }
+
+    @AllArgsConstructor
+    @Builder
+    @EqualsAndHashCode
+    public static class DefaultTrimInfoDto {
+        private List<ModelTypeDto> modelTypes;
+        private String exteriorColorId;
+        private String interiorColorId;
+    }
+
+    @AllArgsConstructor
+    @Builder
+    @EqualsAndHashCode
+    public static class ModelTypeDto {
+        private String type;
+        private OptionDto option;
+    }
+
+    @AllArgsConstructor
+    @Builder
+    @EqualsAndHashCode
+    public static class OptionDto {
+        private Long id;
+        private String name;
+        private int price;
     }
 }
