@@ -9,6 +9,12 @@ export const ModelText = styled.div`
   flex-direction: column;
 `;
 
+export const ModelImage = styled.img`
+  width: 632px;
+  height: 360px;
+  margin-left: 72px;
+`;
+
 export const HMG = styled.div`
   margin-top: 24px;
 `;

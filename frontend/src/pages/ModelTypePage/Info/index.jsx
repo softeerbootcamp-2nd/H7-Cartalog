@@ -10,7 +10,7 @@ const INFO = '높은 토크로 파워풀한 드라이빙이 가능하며,\n 차�
 
 const HMGTAG_TYPE = 'tag20';
 
-function Info() {
+function Info({ imageUrl }) {
   const TitleProps = {
     type: TYPE,
     subTitle: SUB_TITLE,
@@ -29,6 +29,7 @@ function Info() {
           <HMGData />
         </S.HMG>
       </S.ModelText>
+      <S.ModelImage src={imageUrl} />
     </S.Info>
   );
 }
