@@ -17,6 +17,7 @@ import static softeer.wantcar.cartalog.dto.TrimListResponseDTO.*;
 @DisplayName("트림 도메인 컨트롤러 테스트")
 class TrimControllerTest {
     TrimController trimController = new TrimController();
+    static String imageServerPath = "example-url";
 
     @Nested
     @DisplayName("존재하는 모델 식별자로 트림 목록을 조회할 경우")
@@ -73,6 +74,9 @@ class TrimControllerTest {
                 .description(description)
                 .minPrice(minPrice)
                 .maxPrice(maxPrice)
+                .exteriorImage(imageServerPath + "/example-exterior-image")
+                .interiorImage(imageServerPath + "/example-interior-image")
+                .wheelImage(imageServerPath + "/example-wheel-image")
                 .hmgData(getHmgDataDtos())
                 .defaultInfo(defaultTrimInfo)
                 .build();

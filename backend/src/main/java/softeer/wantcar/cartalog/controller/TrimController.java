@@ -2,6 +2,7 @@ package softeer.wantcar.cartalog.controller;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/models/trims")
 public class TrimController {
+    @Value("${env.imageServerPath}")
+    private String imageServerPath = "example-url";
+
     @GetMapping("")
     public ResponseEntity<TrimListResponseDTO> searchTrimList(@PathParam("modelId") Long modelId) {
         if (modelId != 1) {
@@ -39,7 +43,7 @@ public class TrimController {
                 new HMGDataDto("후방 교차 충돌방지 보조", "42회", "15,000km 당"));
     }
 
-    private static TrimListResponseDTO.TrimDto getTrimDto(String name, String description, int minPrice, int maxPrice) {
+    private TrimListResponseDTO.TrimDto getTrimDto(String name, String description, int minPrice, int maxPrice) {
         List<TrimListResponseDTO.ModelTypeDto> modelTypeDtos = List.of(
                 new TrimListResponseDTO.ModelTypeDto("파워트레인", new TrimListResponseDTO.OptionDto(1L, "디젤 2.2", 0)),
                 new TrimListResponseDTO.ModelTypeDto("구동방식", new TrimListResponseDTO.OptionDto(3L, "2WD", 0)),
@@ -53,6 +57,9 @@ public class TrimController {
                 .description(description)
                 .minPrice(minPrice)
                 .maxPrice(maxPrice)
+                .exteriorImage(imageServerPath + "/example-exterior-image")
+                .interiorImage(imageServerPath + "/example-interior-image")
+                .wheelImage(imageServerPath + "/example-wheel-image")
                 .hmgData(getHmgDataDtos())
                 .defaultInfo(defaultTrimInfo)
                 .build();

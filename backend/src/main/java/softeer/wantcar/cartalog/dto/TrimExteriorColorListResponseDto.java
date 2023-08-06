@@ -39,9 +39,12 @@ public class TrimExteriorColorListResponseDto {
         }
     }
 
-    public static TrimExteriorColorListResponseDto from(Map<ModelExteriorColor, Integer> exteriorColors) {
+    public static TrimExteriorColorListResponseDto from(Map<ModelExteriorColor, Integer> exteriorColors, String imageServerPath) {
         List<TrimExteriorColorDto> exteriorColorDtos = exteriorColors.entrySet().stream()
-                .map(entry -> TrimExteriorColorDto.from(entry.getKey(), entry.getValue(), "image"))
+                .map(entry -> TrimExteriorColorDto.from(
+                        entry.getKey(),
+                        entry.getValue(),
+                        imageServerPath + "/image.jpg"))
                 .collect(Collectors.toList());
 
         return TrimExteriorColorListResponseDto.builder()
