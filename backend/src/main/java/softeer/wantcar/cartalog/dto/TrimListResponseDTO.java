@@ -3,9 +3,11 @@ package softeer.wantcar.cartalog.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import java.util.List;
 
+@Getter
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode
@@ -13,6 +15,7 @@ public class TrimListResponseDTO {
     private String modelName;
     private List<TrimDto> trims;
 
+    @Getter
     @AllArgsConstructor
     @Builder
     @EqualsAndHashCode
@@ -28,6 +31,7 @@ public class TrimListResponseDTO {
         private DefaultTrimInfoDto defaultInfo;
     }
 
+    @Getter
     @AllArgsConstructor
     @Builder
     @EqualsAndHashCode
@@ -37,6 +41,7 @@ public class TrimListResponseDTO {
         private String interiorColorId;
     }
 
+    @Getter
     @AllArgsConstructor
     @Builder
     @EqualsAndHashCode
@@ -45,6 +50,7 @@ public class TrimListResponseDTO {
         private OptionDto option;
     }
 
+    @Getter
     @AllArgsConstructor
     @Builder
     @EqualsAndHashCode
