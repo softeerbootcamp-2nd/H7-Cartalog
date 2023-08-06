@@ -18,7 +18,7 @@ import java.util.List;
 public class ModelController {
     @GetMapping("/{modelId}/types")
     public ResponseEntity<ModelTypeListResponseDto> searchModelType(@PathVariable Long modelId) {
-        if(modelId != 1) {
+        if (modelId != 1) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 

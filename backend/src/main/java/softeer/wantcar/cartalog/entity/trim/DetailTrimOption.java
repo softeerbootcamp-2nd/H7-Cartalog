@@ -5,7 +5,7 @@ import softeer.wantcar.cartalog.entity.model.ModelOption;
 
 import java.util.List;
 
-public class DetailTrimOption   {
+public class DetailTrimOption {
     private Long id;
     private ModelOption modelOption;
     private int price;

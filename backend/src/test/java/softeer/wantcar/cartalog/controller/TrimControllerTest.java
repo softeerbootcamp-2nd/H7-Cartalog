@@ -39,7 +39,7 @@ class TrimControllerTest {
             assertThat(realResponse).isEqualTo(expectResponse);
         }
     }
-    
+
     @Nested
     @DisplayName("존재하지 않는 모델 식별자로 트림 목록을 조회할 경우")
     class getTrimsByNotExistModel {
@@ -52,7 +52,7 @@ class TrimControllerTest {
 
             //then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        }   
+        }
     }
 
     private static List<HMGDataDto> getHmgDataDtos() {

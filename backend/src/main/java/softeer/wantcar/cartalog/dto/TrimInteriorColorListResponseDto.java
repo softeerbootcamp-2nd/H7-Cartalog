@@ -35,7 +35,6 @@ public class TrimInteriorColorListResponseDto {
                     .chosen(chosen)
                     .build();
         }
-
     }
 
     public static TrimInteriorColorListResponseDto from(Map<ModelInteriorColor, Integer> interiorColorInfos) {
