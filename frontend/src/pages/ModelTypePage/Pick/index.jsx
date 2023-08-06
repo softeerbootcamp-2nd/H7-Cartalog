@@ -1,16 +1,27 @@
 import * as S from './style';
 import Button from '../../../components/Button';
+import PickTitle from '../../../components/PickTitle';
+
+const TYPE = 'buttonD';
+const STATE = 'active';
+const MAIN_TITLE = '다음';
+const PICK_MAIN_TITLE = '모델타입을 선택해주세요.';
 
 function Pick({ nextPage }) {
   const buttonProps = {
     nextPage: nextPage,
-    type: 'buttonD',
-    state: 'active',
-    mainTitle: '다음',
+    type: TYPE,
+    state: STATE,
+    mainTitle: MAIN_TITLE,
+  };
+
+  const pickTitleProps = {
+    mainTitle: PICK_MAIN_TITLE,
   };
 
   return (
     <S.Pick>
+      <PickTitle {...pickTitleProps} />
       <Button {...buttonProps}></Button>
     </S.Pick>
   );

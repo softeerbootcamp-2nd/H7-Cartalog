@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import * as S from './style';
+import PickTitle from '../../../components/PickTitle';
 import TrimCard from './TrimCard';
 
 const TRIM_DATA = [
@@ -25,12 +26,17 @@ const TRIM_DATA = [
   },
 ];
 
+const PICK_MAIN_TITLE = '트림을 선택해주세요.';
+
 function Pick({ nextPage }) {
   const [active, setActive] = useState(null);
+  const pickTitleProps = {
+    mainTitle: PICK_MAIN_TITLE,
+  };
 
   return (
     <S.Pick>
-      <S.Title>트림을 선택해주세요</S.Title>
+      <PickTitle {...pickTitleProps} />
       <S.Trim>
         {TRIM_DATA.map((trim, index) => {
           const handleClick = () => setActive(index);
