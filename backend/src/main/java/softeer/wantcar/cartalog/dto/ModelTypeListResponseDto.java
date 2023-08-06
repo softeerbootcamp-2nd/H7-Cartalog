@@ -28,10 +28,11 @@ public class ModelTypeListResponseDto {
     @EqualsAndHashCode
     @Builder
     public static class OptionDto {
+        private Long id;
         private String name;
         private int price;
         private int chosen;
-        private String image;
+        private String imageUrl;
         private String description;
         private List<HMGDataDto> hmgData;
     }
