@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, css, keyframes } from 'styled-components';
 
 import HyundaiSansHeadBold from '../../assets/fonts/HyundaiSansHead-Bold.woff2';
 import HyundaiSansHeadKRBold from '../../assets/fonts/HyundaiSansHeadKROTFBold.woff2';
@@ -88,6 +88,30 @@ const GlobalStyle = createGlobalStyle`
   p, h1, h2, h3, h4, h5, h6 {
     margin: 0;
   }
+`;
+
+const fadeInWithTransformAnimation = keyframes`
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+`;
+
+const fadeInAnimation = keyframes`
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+`;
+
+export const FadeInWithTransform = css`
+  animation: ${fadeInWithTransformAnimation} 0.25s ease-out forwards;
+`;
+
+export const FadeIn = css`
+  animation: ${fadeInAnimation} 0.25s ease-out forwards;
 `;
 
 export default GlobalStyle;
