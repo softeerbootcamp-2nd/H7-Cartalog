@@ -53,7 +53,7 @@
             android:paddingTop="0dp"
             android:paddingEnd="25dp"
             android:paddingBottom="0dp"
-            app:attachIndicator="@{dotsIndicator}"
+            app:indicator="@{dotsIndicator}"
             app:layout_constraintBottom_toTopOf="@id/dots_indicator"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -13,7 +13,8 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingBottom="60dp">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:fontFamily="@font/hyndaisans_head"
+                style="@style/FragmentHeader"
                 android:text="@string/type_select_header"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@id/gl_start"
@@ -51,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:fontFamily="@font/hyndaisans_head"
+                android:fontFamily="@font/hyndaisans_head_bold"
                 android:text="@string/type_powertrain"
                 android:textColor="@color/gray_700"
                 android:textSize="18sp"
@@ -73,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:fontFamily="@font/hyndaisans_head"
+                android:fontFamily="@font/hyndaisans_head_bold"
                 android:text="@string/type_bodytype"
                 android:textColor="@color/gray_700"
                 android:textSize="18sp"
@@ -95,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:fontFamily="@font/hyndaisans_head"
+                android:fontFamily="@font/hyndaisans_head_bold"
                 android:text="@string/type_wheeldrive"
                 android:textColor="@color/gray_700"
                 android:textSize="18sp"

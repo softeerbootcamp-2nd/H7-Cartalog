@@ -10,4 +10,9 @@
     <string name="trim_select_header">트림을 선택해주세요.</string>
     <string name="btn_prev">이전</string>
     <string name="btn_next">다음</string>
+    <string name="type_select_header">타입을 선택해주세요.</string>
+    <string name="type_powertrain">파워트레인</string>
+    <string name="type_bodytype">바디타입</string>
+    <string name="type_wheeldrive">구동방식</string>
+
 </resources>
