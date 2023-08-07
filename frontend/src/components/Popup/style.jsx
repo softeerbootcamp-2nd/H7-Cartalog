@@ -31,13 +31,13 @@ export const Popup = styled.div`
 
 export const PopupContent = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-evenly;
   align-items: center;
   flex: 1;
   padding: 20px;
-  font-size: 14px;
-  line-height: 1.5;
-  color: ${({ theme }) => theme.color.black};
+  font: ${({ theme }) => theme.font.textKR.Medium14};
+  color: ${({ theme }) => theme.color.gray['900']};
 `;
 
 export const PopupActions = styled.div`
