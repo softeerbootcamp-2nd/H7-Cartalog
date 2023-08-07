@@ -41,7 +41,7 @@ class TrimControllerTest {
         }
 
         @Test
-        @DisplayName("존재하지 않는 모델 식별자로 트림 목록 요청시 404 상태를 반환해야 한다.상태코드 404를 반환한다")
+        @DisplayName("존재하지 않는 모델 식별자로 트림 목록 요청시 404 상태를 반환해야 한다.")
         void returnStatusCode404WhenGetTrimsByNotExistModel() {
             //given
             //when
