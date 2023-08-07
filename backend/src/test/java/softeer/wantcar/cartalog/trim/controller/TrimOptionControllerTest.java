@@ -7,7 +7,11 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import softeer.wantcar.cartalog.global.dto.HMGDataDto;
+import softeer.wantcar.cartalog.trim.dto.OptionDetailResponseDto;
+import softeer.wantcar.cartalog.trim.dto.TrimOptionDetailDetailResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimOptionListResponseDto;
+import softeer.wantcar.cartalog.trim.dto.TrimPackageDetailDetailResponseDto;
 
 import java.util.List;
 
@@ -62,6 +66,121 @@ public class TrimOptionControllerTest {
             //given
             //when
             ResponseEntity<TrimOptionListResponseDto> response = trimOptionController.getOptionInfos(-1L);
+
+            //then
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @Nested
+    @DisplayName("비패키지 옵션 상세 조회 테스트")
+    class getOptionDetailTest {
+        @Test
+        @DisplayName("올바른 요청시 200 상태와 함께 옵션 상세 정보를 반환해야 한다.")
+        void returnOptionDetailWithStatusCode200() {
+            //given
+            //when
+            TrimOptionDetailDetailResponseDto realResponse =
+                    (TrimOptionDetailDetailResponseDto) trimOptionController.getOptionDetail("O1", 1L).getBody();
+
+            //then
+            assert realResponse != null;
+            softAssertions.assertThat(realResponse.isPackage()).isFalse();
+            softAssertions.assertThat(realResponse.getName()).isEqualTo("2열 통풍시트");
+            softAssertions.assertThat(realResponse.getDescription()).isEqualTo("대강 좋다는 내용");
+            softAssertions.assertThat(realResponse.getHashTags()).contains("장거리 운전");
+            softAssertions.assertThat(realResponse.getHmgData())
+                    .contains(new HMGDataDto("주행 중 실제로", "73.2", "15,000km 당"));
+            softAssertions.assertAll();
+        }
+
+        @Test
+        @DisplayName("잘못된 양식의 옵션 식별자로 요청할 경우 400 상태 코드를 반환해야 한다.")
+        void returnStatusCode404WhenGetOptionDetailByWrongOptionId() {
+            //given
+            //when
+            ResponseEntity<OptionDetailResponseDto> response = trimOptionController.getOptionDetail("O-1", 1L);
+
+            //then
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        }
+
+        @Test
+        @DisplayName("존재하지 않는 옵션 식별자로 요청할 경우 404 상태 코드를 반환해야 한다.")
+        void returnStatusCode404WhenGetOptionDetailByNotExistOptionId() {
+            //given
+            //when
+            ResponseEntity<OptionDetailResponseDto> response = trimOptionController.getOptionDetail("O-1", 1L);
+
+            //then
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        }
+
+        @Test
+        @DisplayName("존재하지 않는 트림 식별자로 요청할 경우 404 상태 코드를 반환해야 한다.")
+        void returnStatusCode404WhenGetOptionDetailByNotExistTrimId() {
+            //given
+            //when
+            ResponseEntity<OptionDetailResponseDto> response = trimOptionController.getOptionDetail("O1", -1L);
+
+            //then
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @Nested
+    @DisplayName("패키지 옵션 상세 조회 테스트")
+    class getPackageDetailTest {
+        @Test
+        @DisplayName("올바른 요청시 200 상태와 함께 패키지 상세 정보를 반환해야 한다.")
+        void returnPackageDetailWithStatusCode200() {
+            //given
+            //when
+            TrimPackageDetailDetailResponseDto realResponse =
+                    (TrimPackageDetailDetailResponseDto) trimOptionController.getOptionDetail("P1", 1L).getBody();
+
+            //then
+            assert realResponse != null;
+            softAssertions.assertThat(realResponse.isPackage()).isFalse();
+            List<TrimPackageDetailDetailResponseDto.PackageOptionDetailDto> options = realResponse.getOptions();
+            softAssertions.assertThat(options)
+                            .contains(new TrimPackageDetailDetailResponseDto.PackageOptionDetailDto(
+                                    "패키지 이름",
+                                    "패키지 설명",
+                                    List.of("장거리 운전"),
+                                    List.of(new HMGDataDto("구매자 절반 이상이", "2384", "최근 90일 동안"))
+                            ));
+            softAssertions.assertAll();
+        }
+
+        @Test
+        @DisplayName("잘못된 양식의 옵션 식별자로 요청할 경우 400 상태 코드를 반환해야 한다.")
+        void returnStatusCode404WhenGetOptionDetailByWrongOptionId() {
+            //given
+            //when
+            ResponseEntity<OptionDetailResponseDto> response = trimOptionController.getOptionDetail("P-1", 1L);
+
+            //then
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        }
+
+        @Test
+        @DisplayName("존재하지 않는 옵션 식별자로 요청할 경우 404 상태 코드를 반환해야 한다.")
+        void returnStatusCode404WhenGetOptionDetailByNotExistOptionId() {
+            //given
+            //when
+            ResponseEntity<OptionDetailResponseDto> response = trimOptionController.getOptionDetail("O-1", 1L);
+
+            //then
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        }
+
+        @Test
+        @DisplayName("존재하지 않는 트림 식별자로 요청할 경우 404 상태 코드를 반환해야 한다.")
+        void returnStatusCode404WhenGetOptionDetailByNotExistTrimId() {
+            //given
+            //when
+            ResponseEntity<OptionDetailResponseDto> response = trimOptionController.getOptionDetail("O1", -1L);
 
             //then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);

@@ -1,6 +1,7 @@
 package softeer.wantcar.cartalog.trim.controller;
 
 
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -8,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import softeer.wantcar.cartalog.global.dto.HMGDataDto;
 import softeer.wantcar.cartalog.trim.dto.TrimListResponseDTO;
-import softeer.wantcar.cartalog.trim.controller.TrimController;
+import softeer.wantcar.cartalog.trim.dto.TrimOptionDetailDetailResponseDto;
 
 import java.util.List;
 
@@ -17,8 +18,13 @@ import static softeer.wantcar.cartalog.trim.dto.TrimListResponseDTO.*;
 
 @DisplayName("트림 도메인 컨트롤러 테스트")
 class TrimControllerTest {
+    SoftAssertions softAssertions;
     TrimController trimController = new TrimController();
     static String imageServerPath = "example-url";
+
+    void setUp() {
+        softAssertions = new SoftAssertions();
+    }
 
     @Nested
     @DisplayName("트림 모델 목록 조회 테스트")

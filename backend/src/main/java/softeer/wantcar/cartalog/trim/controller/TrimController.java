@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import softeer.wantcar.cartalog.global.dto.HMGDataDto;
+import softeer.wantcar.cartalog.trim.dto.OptionDetailResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimListResponseDTO;
 
 import javax.websocket.server.PathParam;
