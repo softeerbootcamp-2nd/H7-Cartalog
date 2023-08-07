@@ -6,17 +6,17 @@ import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewTreeViewModelStoreOwner
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.lifecycle.get
+import androidx.navigation.findNavController
 import com.softeer.cartalog.R
-import com.softeer.cartalog.databinding.CustomTypeselectBinding
+import com.softeer.cartalog.databinding.ViewTypeselectBinding
 import com.softeer.cartalog.model.enums.ModelTypeSubject
 import com.softeer.cartalog.viewmodel.TypeViewModel
 
-class CustomTypeSelectView(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
-    private var binding: CustomTypeselectBinding
+class TypeSelectView(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
+    private var binding: ViewTypeselectBinding
     private var modelType: ModelTypeSubject
     private var selected: Int
     private val viewModel by lazy {
@@ -37,7 +37,7 @@ class CustomTypeSelectView(context: Context, attrs: AttributeSet) : ConstraintLa
             else -> ModelTypeSubject.POWERTRAIN
         }
 
-        binding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.custom_typeselect,this, true)
+        binding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.view_typeselect,this, true)
         setInit()
 
     }
@@ -45,10 +45,9 @@ class CustomTypeSelectView(context: Context, attrs: AttributeSet) : ConstraintLa
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         binding.lifecycleOwner = findViewTreeLifecycleOwner()
+        binding.navController = findNavController()
         binding.viewModel = viewModel
         binding.type = modelType
-        binding.selected = selected
-
     }
 
     fun setInit(){

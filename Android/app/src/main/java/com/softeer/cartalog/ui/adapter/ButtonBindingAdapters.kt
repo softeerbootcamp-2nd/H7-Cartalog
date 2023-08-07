@@ -11,6 +11,6 @@ import com.softeer.cartalog.viewmodel.TypeViewModel
 
 @BindingAdapter("onClickShowDialog")
 fun onClickShowDialog(view: View, viewModel: TypeViewModel) {
-    //TypeDetailDialog().show(supportFragmentManager, "TypeDetailDialog")
+
 }
 

@@ -6,12 +6,12 @@
     <data>
 
         <variable
-            name="selected"
-            type="Integer" />
-
-        <variable
             name="type"
             type="ModelTypeSubject" />
+
+        <variable
+            name="navController"
+            type="androidx.navigation.NavController" />
 
         <variable
             name="viewModel"
@@ -46,7 +46,6 @@
         <TextView
             android:id="@+id/btn_hmg_data"
             style="@style/HmgDataTag"
-            onClickShowDialog="@{viewModel}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="8dp"
@@ -54,7 +53,8 @@
             app:drawableEndCompat="@drawable/icon_arrow_end_small"
             app:drawableTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:navController="@{navController}" />
 
         <TextView
             android:id="@+id/btn_detail_view"

@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_typeFragment_to_trimFragment"
             app:destination="@id/trimFragment" />
+        <action
+            android:id="@+id/action_typeFragment_to_typeDetailPopup"
+            app:destination="@id/typeDetailPopup" />
     </fragment>
     <fragment
         android:id="@+id/exteriorFragment"
@@ -65,4 +68,9 @@
             android:id="@+id/action_confirmFragment_to_optionFragment"
             app:destination="@id/optionFragment" />
     </fragment>
+    <activity
+        android:id="@+id/typeDetailPopup"
+        android:name="com.softeer.cartalog.ui.dialog.TypeDetailPopupActivity"
+        android:label="TypeDetailPopup" >
+    </activity>
 </navigation>
