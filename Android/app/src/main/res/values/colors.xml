@@ -33,4 +33,6 @@
     <color name="sand">#B67B5E</color>
     <color name="sand2">#E4DCD3</color>
     <color name="light_sand">#F6F3F2</color>
+
+    <color name="card_bg_color">#F7F7F9</color>
 </resources>
