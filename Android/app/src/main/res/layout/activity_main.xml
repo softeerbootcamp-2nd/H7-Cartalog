@@ -6,6 +6,9 @@
     <data>
 
         <import type="android.view.View" />
+        <variable
+            name="mainActivity"
+            type="com.softeer.cartalog.ui.activity.MainActivity" />
 
         <variable
             name="navController"
@@ -137,7 +140,6 @@
             app:layout_constraintTop_toBottomOf="@id/tl_step"
             app:navGraph="@navigation/nav_graph" />
 
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_prev"
             android:layout_width="0dp"
@@ -150,6 +152,8 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             android:visibility="@{viewModel.stepIndex == 0 ? View.GONE : View.VISIBLE}"
+            activity="@{mainActivity}"
+            index="@{(viewModel.stepIndex-1)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_next"
             app:layout_constraintStart_toStartOf="parent" />
@@ -166,6 +170,8 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             android:visibility="@{viewModel.stepIndex == 0 ? View.GONE : View.VISIBLE}"
+            activity="@{mainActivity}"
+            index="@{(viewModel.stepIndex+1)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_prev" />

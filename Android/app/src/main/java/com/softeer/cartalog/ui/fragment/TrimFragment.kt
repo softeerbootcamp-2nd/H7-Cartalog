@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.softeer.cartalog.databinding.FragmentTrimBinding
+import com.softeer.cartalog.ui.activity.MainActivity
 import com.softeer.cartalog.viewmodel.TrimViewModel
 
 class TrimFragment : Fragment() {
@@ -26,6 +27,7 @@ class TrimFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = trimViewModel
+        binding.mainActivity = activity as MainActivity
     }
 
     override fun onDestroyView() {

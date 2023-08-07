@@ -4,9 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.softeer.cartalog.viewmodel.TrimViewModel" />
+
+        <variable
+            name="mainActivity"
+            type="com.softeer.cartalog.ui.activity.MainActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,15 +50,15 @@
             android:clipChildren="false"
             android:clipToPadding="false"
             android:paddingStart="25dp"
-            android:paddingEnd="25dp"
             android:paddingTop="0dp"
+            android:paddingEnd="25dp"
             android:paddingBottom="0dp"
-            app:viewModel="@{viewModel}"
             app:attachIndicator="@{dotsIndicator}"
             app:layout_constraintBottom_toTopOf="@id/dots_indicator"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_header" />
+            app:layout_constraintTop_toBottomOf="@id/tv_header"
+            app:viewModel="@{viewModel}" />
 
         <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
             android:id="@+id/dots_indicator"
@@ -78,16 +83,17 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/primary_color_700"
-            android:textColor="@color/gray_50"
-            android:textSize="16sp"
+            android:inputType="text"
             android:paddingTop="20dp"
             android:paddingBottom="20dp"
-            android:inputType="text"
             android:text="@{viewModel.selectedTrimString}"
+            android:textColor="@color/gray_50"
+            android:textSize="16sp"
+            app:activity="@{mainActivity}"
+            app:index= "@{1}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

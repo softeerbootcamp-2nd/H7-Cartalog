@@ -11,14 +11,20 @@ import com.softeer.cartalog.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
     private val mainViewModel: MainViewModel by viewModels()
+    private val binding: ActivityMainBinding by lazy {
+        DataBindingUtil.setContentView(this, R.layout.activity_main)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityMainBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_main)
         val navController = binding.fcContainer.getFragment<NavHostFragment>().navController
         binding.navController = navController
+        binding.mainActivity = this@MainActivity
         binding.viewModel = mainViewModel
         binding.lifecycleOwner = this
+    }
+
+    fun changeTab(idx: Int){
+        binding.tlStep.selectTab(binding.tlStep.getTabAt(idx))
     }
 }
