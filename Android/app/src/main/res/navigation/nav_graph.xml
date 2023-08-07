@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/trimFragment">
 
@@ -8,65 +9,88 @@
     <fragment
         android:id="@+id/trimFragment"
         android:name="com.softeer.cartalog.ui.fragment.TrimFragment"
-        android:label="TrimFragment" >
+        android:label="TrimFragment"
+        tools:layout="@layout/fragment_trim">
         <action
             android:id="@+id/action_trimFragment_to_typeFragment"
-            app:destination="@id/typeFragment" />
+            app:destination="@id/typeFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left" />
     </fragment>
     <fragment
         android:id="@+id/typeFragment"
         android:name="com.softeer.cartalog.ui.fragment.TypeFragment"
-        android:label="TypeFragment" >
+        android:label="TypeFragment"
+        tools:layout="@layout/fragment_type">
         <action
             android:id="@+id/action_typeFragment_to_exteriorFragment"
-            app:destination="@id/exteriorFragment" />
+            app:destination="@id/exteriorFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left" />
         <action
             android:id="@+id/action_typeFragment_to_trimFragment"
-            app:destination="@id/trimFragment" />
-        <action
+            app:destination="@id/trimFragment"
+            app:enterAnim="@anim/slide_in_from_left"
+            app:exitAnim="@anim/slide_out_to_right" />
+      <action
             android:id="@+id/action_typeFragment_to_typeDetailPopup"
             app:destination="@id/typeDetailPopup" />
     </fragment>
     <fragment
         android:id="@+id/exteriorFragment"
         android:name="com.softeer.cartalog.ui.fragment.ExteriorFragment"
-        android:label="ExteriorFragment" >
+        android:label="ExteriorFragment"
+        tools:layout="@layout/fragment_exterior">
         <action
             android:id="@+id/action_exteriorFragment_to_interiorFragment"
-            app:destination="@id/interiorFragment" />
+            app:destination="@id/interiorFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left" />
         <action
             android:id="@+id/action_exteriorFragment_to_typeFragment"
-            app:destination="@id/typeFragment" />
+            app:destination="@id/typeFragment"
+            app:enterAnim="@anim/slide_in_from_left"
+            app:exitAnim="@anim/slide_out_to_right" />
     </fragment>
     <fragment
         android:id="@+id/interiorFragment"
         android:name="com.softeer.cartalog.ui.fragment.InteriorFragment"
-        android:label="InteriorFragment" >
+        android:label="InteriorFragment">
         <action
             android:id="@+id/action_interiorFragment_to_optionFragment"
-            app:destination="@id/optionFragment" />
+            app:destination="@id/optionFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left" />
         <action
             android:id="@+id/action_interiorFragment_to_exteriorFragment"
-            app:destination="@id/exteriorFragment" />
+            app:destination="@id/exteriorFragment"
+            app:enterAnim="@anim/slide_in_from_left"
+            app:exitAnim="@anim/slide_out_to_right" />
     </fragment>
     <fragment
         android:id="@+id/optionFragment"
         android:name="com.softeer.cartalog.ui.fragment.OptionFragment"
-        android:label="OptionFragment" >
+        android:label="OptionFragment">
         <action
             android:id="@+id/action_optionFragment_to_confirmFragment"
-            app:destination="@id/confirmFragment" />
+            app:destination="@id/confirmFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left" />
         <action
             android:id="@+id/action_optionFragment_to_interiorFragment"
-            app:destination="@id/interiorFragment" />
+            app:destination="@id/interiorFragment"
+            app:enterAnim="@anim/slide_in_from_left"
+            app:exitAnim="@anim/slide_out_to_right" />
     </fragment>
     <fragment
         android:id="@+id/confirmFragment"
         android:name="com.softeer.cartalog.ui.fragment.ConfirmFragment"
-        android:label="ConfirmFragment" >
+        android:label="ConfirmFragment">
         <action
             android:id="@+id/action_confirmFragment_to_optionFragment"
-            app:destination="@id/optionFragment" />
+            app:destination="@id/optionFragment"
+            app:enterAnim="@anim/slide_in_from_left"
+            app:exitAnim="@anim/slide_out_to_right" />
     </fragment>
     <activity
         android:id="@+id/typeDetailPopup"

@@ -13,6 +13,7 @@ import com.softeer.cartalog.R
 import com.softeer.cartalog.ui.dialog.TypeDetailPopupActivity
 import com.softeer.cartalog.viewmodel.MainViewModel
 import com.softeer.cartalog.viewmodel.TypeViewModel
+import com.softeer.cartalog.viewmodel.TrimViewModel
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 
 @BindingAdapter("tabChange", "viewModel")
@@ -21,24 +22,25 @@ fun setOnTabChanged(
     navController: NavController,
     viewModel: MainViewModel
 ) {
-    val font = ResourcesCompat.getFont(tabLayout.context, R.font.hyndaisans_head)
+    val font = ResourcesCompat.getFont(tabLayout.context, R.font.hyndaisans_head_bold)
 
     tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
         override fun onTabSelected(tab: TabLayout.Tab?) {
             tab?.let {
                 val selectedPosition = it.position
-                val tv = TextView(tabLayout.context)
-
-                when (selectedPosition) {
-                    0 -> navController.navigate(R.id.trimFragment)
-                    1 -> navController.navigate(R.id.typeFragment)
-                    2 -> navController.navigate(R.id.exteriorFragment)
-                    3 -> navController.navigate(R.id.interiorFragment)
-                    4 -> navController.navigate(R.id.optionFragment)
-                    5 -> navController.navigate(R.id.confirmFragment)
-                }
 
                 if (selectedPosition > viewModel.stepIndex.value!!) {
+
+                    when (selectedPosition) {
+                        0 -> navController.navigate(R.id.trimFragment)
+                        1 -> navController.navigate(R.id.action_trimFragment_to_typeFragment)
+                        2 -> navController.navigate(R.id.action_typeFragment_to_exteriorFragment)
+                        3 -> navController.navigate(R.id.action_exteriorFragment_to_interiorFragment)
+                        4 -> navController.navigate(R.id.action_interiorFragment_to_optionFragment)
+                        5 -> navController.navigate(R.id.action_optionFragment_to_confirmFragment)
+                    }
+
+                    val tv = TextView(tabLayout.context)
                     tv.setTextColor(
                         ContextCompat.getColor(
                             tabLayout.context,
@@ -49,17 +51,25 @@ fun setOnTabChanged(
                     tv.gravity = Gravity.CENTER
                     tv.text = tabLayout.getTabAt(selectedPosition - 1)?.text
                     tabLayout.getTabAt(selectedPosition - 1)?.customView = tv
+
                 } else {
+                    when (selectedPosition) {
+                        0 -> navController.navigate(R.id.action_typeFragment_to_trimFragment)
+                        1 -> navController.navigate(R.id.action_exteriorFragment_to_typeFragment)
+                        2 -> navController.navigate(R.id.action_interiorFragment_to_exteriorFragment)
+                        3 -> navController.navigate(R.id.action_optionFragment_to_interiorFragment)
+                        4 -> navController.navigate(R.id.action_confirmFragment_to_optionFragment)
+                        5 -> navController.navigate(R.id.confirmFragment)
+                    }
                     tabLayout.getTabAt(selectedPosition)?.customView = null
                 }
                 viewModel.setStepIndex(selectedPosition)
             }
         }
-
         override fun onTabUnselected(tab: TabLayout.Tab?) {}
         override fun onTabReselected(tab: TabLayout.Tab?) {}
     })
-}
+}        
 
 @BindingAdapter("navController")
 fun setShowDialog(view: TextView, navController: NavController) {
@@ -75,31 +85,63 @@ fun setCloseDialog(view: ImageView, activity: TypeDetailPopupActivity) {
     }
 }
 
-@BindingAdapter("viewModel", "attachIndicator")
+@BindingAdapter("viewModel", "indicator")
 fun setTypeDetailViewPager(
-    viewpager: ViewPager2,
+    viewPager: ViewPager2,
     viewModel: TypeViewModel,
     indicator: DotsIndicator
 ) {
 
-    val pageMarginPx = viewpager.context.resources.getDimensionPixelOffset(R.dimen.pageMargin)
-    val pagerWidth = viewpager.context.resources.getDimensionPixelOffset(R.dimen.pagerWidth)
-    val screenWidth = viewpager.context.resources.displayMetrics.widthPixels
+    val pageMarginPx = viewPager.context.resources.getDimensionPixelOffset(R.dimen.pageMargin)
+    val pagerWidth = viewPager.context.resources.getDimensionPixelOffset(R.dimen.pagerWidth)
+    val screenWidth = viewPager.context.resources.displayMetrics.widthPixels
     val offsetPx = screenWidth - pageMarginPx - pagerWidth
 
     val trimItemAdapter = TypeDetailPopupAdapter(viewModel)
-    viewpager.offscreenPageLimit = 2
-    viewpager.adapter = trimItemAdapter
-    viewpager.setPageTransformer { page, position ->
-        page.translationX = position * -offsetPx
-    }
-    viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-        override fun onPageSelected(position: Int) {
-            super.onPageSelected(position)
-            viewModel.changeSelectedTrim(position)
-            trimItemAdapter.notifyItemRangeChanged(position - 1, 3)
+    with(viewPager) {
+        offscreenPageLimit = 2
+        adapter = trimItemAdapter
+        setPageTransformer { page, position ->
+            page.translationX = position * -offsetPx
         }
-    })
-
-    indicator.attachTo(viewpager)
+        registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                viewModel.changeSelectedTrim(position)
+                trimItemAdapter.notifyItemRangeChanged(position - 1, 3)
+            }
+        })
+    }
+    indicator.attachTo(viewPager)
 }
+
+@BindingAdapter("viewModel", "indicator")
+fun setTrimCardViewPager(
+    viewPager: ViewPager2,
+    viewModel: TrimViewModel,
+    indicator: DotsIndicator
+) {
+
+    val pageMarginPx = viewPager.context.resources.getDimensionPixelOffset(R.dimen.pageMargin)
+    val pagerWidth = viewPager.context.resources.getDimensionPixelOffset(R.dimen.pagerWidth)
+    val screenWidth = viewPager.context.resources.displayMetrics.widthPixels
+    val offsetPx = screenWidth - pageMarginPx - pagerWidth
+
+    val trimItemAdapter = TrimCardAdapter(viewModel)
+    with(viewPager) {
+        offscreenPageLimit = 2
+        adapter = trimItemAdapter
+        setPageTransformer { page, position ->
+            page.translationX = position * -offsetPx
+        }
+        registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                viewModel.changeSelectedTrim(position)
+                trimItemAdapter.notifyItemRangeChanged(position - 1, 3)
+            }
+        })
+    }
+    indicator.attachTo(viewPager)
+}
+
