@@ -46,7 +46,7 @@ class TrimControllerTest {
         void returnStatusCode404WhenGetTrimsByNotExistModel() {
             //given
             //when
-            ResponseEntity<TrimListResponseDTO> response = trimController.searchTrimList(100L);
+            ResponseEntity<TrimListResponseDTO> response = trimController.searchTrimList(-1L);
 
             //then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);

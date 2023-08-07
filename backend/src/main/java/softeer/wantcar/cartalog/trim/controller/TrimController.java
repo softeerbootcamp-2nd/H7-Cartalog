@@ -23,7 +23,7 @@ public class TrimController {
 
     @GetMapping("")
     public ResponseEntity<TrimListResponseDTO> searchTrimList(@PathParam("modelId") Long modelId) {
-        if (modelId != 1) {
+        if (modelId < 0) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         List<TrimListResponseDTO.TrimDto> trimDtos = List.of(

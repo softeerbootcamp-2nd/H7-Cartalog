@@ -23,7 +23,7 @@ public class ModelController {
 
     @GetMapping("/{modelId}/types")
     public ResponseEntity<ModelTypeListResponseDto> searchModelType(@PathVariable("modelId") Long modelId) {
-        if (modelId != 1) {
+        if (modelId < 0) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         log.info(imageServerPath);

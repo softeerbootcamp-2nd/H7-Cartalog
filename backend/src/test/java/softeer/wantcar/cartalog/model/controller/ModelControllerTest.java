@@ -64,7 +64,7 @@ class ModelControllerTest {
         void returnStatusCode404WhenGetModelTypeByExistModelId() {
             //given
             //when
-            ResponseEntity<ModelTypeListResponseDto> response = modelController.searchModelType(100L);
+            ResponseEntity<ModelTypeListResponseDto> response = modelController.searchModelType(-1L);
 
             //then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
