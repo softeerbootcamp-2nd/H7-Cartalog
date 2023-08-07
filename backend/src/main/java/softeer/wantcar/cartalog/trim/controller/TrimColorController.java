@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimInteriorColorListResponseDto;
@@ -18,6 +19,7 @@ import java.util.Map;
 
 @Slf4j
 @RestController
+@RequestMapping("/models/trims")
 @RequiredArgsConstructor
 public class TrimColorController {
     @Value("${env.imageServerPath}")
@@ -25,7 +27,7 @@ public class TrimColorController {
 
     private final TrimColorService trimColorService;
 
-    @GetMapping(value = "/models/trims/exterior-colors")
+    @GetMapping(value = "/exterior-colors")
     public ResponseEntity<TrimExteriorColorListResponseDto> trimExteriorColorList(@PathParam("trimId") Long id) {
         try {
             Map<ModelExteriorColor, Integer> exteriorColorInfo = trimColorService.findTrimExteriorColorListByTrimId(id);
@@ -36,7 +38,7 @@ public class TrimColorController {
         }
     }
 
-    @GetMapping(value = "/models/trims/interior-colors")
+    @GetMapping(value = "경/interior-colors")
     public ResponseEntity<TrimInteriorColorListResponseDto> trimInteriorColorList(@PathParam("trimId") Long trimId,
                                                                                   @PathParam(value = "exteriorColorId") Long exteriorColorId) {
         try {
