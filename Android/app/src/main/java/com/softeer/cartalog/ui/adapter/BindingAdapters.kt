@@ -81,18 +81,19 @@ fun setBindingViewPager(
     val offsetPx = screenWidth - pageMarginPx - pagerWidth
 
     val trimItemAdapter = TrimCardAdapter(viewModel)
-    viewpager.offscreenPageLimit = 2
-    viewpager.adapter = trimItemAdapter
-    viewpager.setPageTransformer { page, position ->
-        page.translationX = position * -offsetPx
-    }
-    viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-        override fun onPageSelected(position: Int) {
-            super.onPageSelected(position)
-            viewModel.changeSelectedTrim(position)
-            trimItemAdapter.notifyItemRangeChanged(position - 1, 3)
+    with(viewpager) {
+        offscreenPageLimit = 2
+        adapter = trimItemAdapter
+        setPageTransformer { page, position ->
+            page.translationX = position * -offsetPx
         }
-    })
-
+        registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                viewModel.changeSelectedTrim(position)
+                trimItemAdapter.notifyItemRangeChanged(position - 1, 3)
+            }
+        })
+    }
     indicator.attachTo(viewpager)
 }
