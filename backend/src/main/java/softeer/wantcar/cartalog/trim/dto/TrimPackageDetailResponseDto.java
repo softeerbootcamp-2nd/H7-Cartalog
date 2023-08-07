@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode(callSuper = false)
-public class TrimPackageDetailDetailResponseDto extends OptionDetailResponseDto {
+public class TrimPackageDetailResponseDto extends OptionDetailResponseDto {
     private boolean isPackage;
     private List<PackageOptionDetailDto> options;
 
