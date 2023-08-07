@@ -15,7 +15,7 @@ import softeer.wantcar.cartalog.trim.dto.TrimPackageDetailResponseDto;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 @DisplayName("트림 옵션 도메인 테스트")
@@ -59,7 +59,7 @@ public class TrimOptionControllerTest {
                             350000));
             softAssertions.assertAll();
         }
-        
+
         @Test
         @DisplayName("존재하지 않는 트림 식별자로 옵션 정보 목록 요청시 404 상태를 반환해야 한다")
         void returnStatusCode404WhenGetOptionInfoListBy() {
@@ -144,12 +144,12 @@ public class TrimOptionControllerTest {
             softAssertions.assertThat(realResponse.isPackage()).isTrue();
             List<TrimPackageDetailResponseDto.PackageOptionDetailDto> options = realResponse.getOptions();
             softAssertions.assertThat(options)
-                            .contains(new TrimPackageDetailResponseDto.PackageOptionDetailDto(
-                                    "패키지 이름",
-                                    "패키지 설명",
-                                    List.of("장거리 운전"),
-                                    List.of(new HMGDataDto("구매자 절반 이상이", "2384", "최근 90일 동안"))
-                            ));
+                    .contains(new TrimPackageDetailResponseDto.PackageOptionDetailDto(
+                            "패키지 이름",
+                            "패키지 설명",
+                            List.of("장거리 운전"),
+                            List.of(new HMGDataDto("구매자 절반 이상이", "2384", "최근 90일 동안"))
+                    ));
             softAssertions.assertAll();
         }
 

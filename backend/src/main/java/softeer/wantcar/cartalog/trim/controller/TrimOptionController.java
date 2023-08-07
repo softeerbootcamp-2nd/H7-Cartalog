@@ -29,7 +29,7 @@ public class TrimOptionController {
 
     @GetMapping("")
     public ResponseEntity<TrimOptionListResponseDto> getOptionInfos(@PathParam("trimId") Long trimId) {
-        if(trimId < 0) {
+        if (trimId < 0) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         TrimOptionListResponseDto trimOptionListResponseDto = TrimOptionListResponseDto.builder()
@@ -55,16 +55,16 @@ public class TrimOptionController {
     public ResponseEntity<OptionDetailResponseDto> getOptionDetail(@PathVariable("optionId") String optionId,
                                                                    @PathParam("trimId") Long trimId) {
         int id = Integer.parseInt(optionId.substring(1));
-        if((optionId.charAt(0) != 'O' && optionId.charAt(0) != 'P')) {
+        if ((optionId.charAt(0) != 'O' && optionId.charAt(0) != 'P')) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        if(id < 0 || trimId < 0) {
+        if (id < 0 || trimId < 0) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         boolean isPackage = optionId.charAt(0) == 'P';
-        if(isPackage) {
+        if (isPackage) {
             TrimPackageDetailResponseDto trimPackageDetail = TrimPackageDetailResponseDto.builder()
                     .isPackage(true)
                     .options(List.of(TrimPackageDetailResponseDto.PackageOptionDetailDto.builder()

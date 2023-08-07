@@ -8,10 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
-import softeer.wantcar.cartalog.trim.dto.TrimInteriorColorListResponseDto;
 import softeer.wantcar.cartalog.entity.model.ModelExteriorColor;
 import softeer.wantcar.cartalog.entity.model.ModelInteriorColor;
+import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
+import softeer.wantcar.cartalog.trim.dto.TrimInteriorColorListResponseDto;
 import softeer.wantcar.cartalog.trim.service.TrimColorService;
 
 import javax.websocket.server.PathParam;

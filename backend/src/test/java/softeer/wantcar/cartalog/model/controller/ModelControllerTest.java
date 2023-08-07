@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import softeer.wantcar.cartalog.model.dto.ModelPerformanceDto;
 import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
-import softeer.wantcar.cartalog.model.controller.ModelController;
 
 import java.util.List;
 
@@ -25,7 +24,7 @@ class ModelControllerTest {
     void setUp() {
         softAssertions = new SoftAssertions();
     }
-    
+
     @Nested
     @DisplayName("모델타입 목록 조회 테스트")
     class getModelTypeListTest {
@@ -58,7 +57,7 @@ class ModelControllerTest {
             //then
             assertThat(realResponse).isEqualTo(expectResponse);
         }
-        
+
         @Test
         @DisplayName("존재하지 않는 모델의 식별자로 조회할 경우 404 상태를 반환해야 한다.")
         void returnStatusCode404WhenGetModelTypeByExistModelId() {
@@ -70,7 +69,7 @@ class ModelControllerTest {
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         }
     }
-    
+
     @Nested
     @DisplayName("모델 성능 조회 테스트")
     class getModelPerformanceTest {

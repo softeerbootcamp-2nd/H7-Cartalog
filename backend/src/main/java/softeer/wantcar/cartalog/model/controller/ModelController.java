@@ -50,7 +50,7 @@ public class ModelController {
     public ResponseEntity<ModelPerformanceDto> getModelPerformance(@PathVariable("modelId") Long modelId,
                                                                    @PathParam("powerTrainId") Long powerTrainId,
                                                                    @PathParam("WDId") Long wdId) {
-        if(modelId < 0 || powerTrainId < 0 || wdId < 0 ) {
+        if (modelId < 0 || powerTrainId < 0 || wdId < 0) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         ModelPerformanceDto modelPerformance = new ModelPerformanceDto(2199, 12);
