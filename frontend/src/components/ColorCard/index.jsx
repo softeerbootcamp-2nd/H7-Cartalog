@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import * as S from './style';
 
 function ColorCard({ selected, pickRatio, name, price, onClick, children }) {
@@ -19,5 +20,14 @@ function ColorCard({ selected, pickRatio, name, price, onClick, children }) {
     </S.ColorCard>
   );
 }
+
+ColorCard.propTypes = {
+  selected: PropTypes.bool.isRequired,
+  pickRatio: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  onClick: PropTypes.func.isRequired,
+  children: PropTypes.string.isRequired,
+};
 
 export default ColorCard;

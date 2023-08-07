@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import * as S from './style';
 
@@ -20,5 +21,13 @@ function Toggle({ big = false, state, setState, inactiveText = '외장', activeT
     </S.Toggle>
   );
 }
+
+Toggle.propTypes = {
+  big: PropTypes.bool.isRequired,
+  state: PropTypes.string.isRequired,
+  setState: PropTypes.func.isRequired,
+  inactiveText: PropTypes.string.isRequired,
+  activeText: PropTypes.string.isRequired,
+};
 
 export default Toggle;

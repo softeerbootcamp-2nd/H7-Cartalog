@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import * as S from './style';
 import { ReactComponent as ArrowDown } from '../../../assets/icons/arrow_down.svg';
@@ -7,23 +8,11 @@ import SliderMark from './SliderMark';
 
 const TITLE = '예산범위';
 
-const PriceStaticBar = ({ min, max, price }) => {
+function PriceStaticBar({ min, max, price }) {
   const [expanded, setExpanded] = useState(false);
   const [budget, setBudget] = useState((min + max) / 2);
   const handleClick = () => setExpanded((expanded) => !expanded);
   const over = price > budget;
-
-  // 이런식으로 바꾸는건 어때요?
-  const SliderProps = {
-    min: min,
-    max: max,
-    step: 100000,
-    disabled: !expanded,
-    price: price,
-    budget: budget,
-    setBudget: setBudget,
-    $over: over,
-  };
 
   return (
     <S.PriceStaticBar $over={over}>
@@ -47,6 +36,12 @@ const PriceStaticBar = ({ min, max, price }) => {
       </S.ExpandedArea>
     </S.PriceStaticBar>
   );
+}
+
+PriceStaticBar.propTypes = {
+  min: PropTypes.number.isRequired,
+  max: PropTypes.number.isRequired,
+  price: PropTypes.number.isRequired,
 };
 
 export default PriceStaticBar;

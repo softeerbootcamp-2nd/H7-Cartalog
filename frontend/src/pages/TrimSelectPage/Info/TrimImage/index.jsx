@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import * as S from './style';
 
 const IMG_DIRECTORY = '../../../../../assets/images/TrimSelect/';
@@ -15,7 +16,7 @@ function TrimImage({ trim }) {
         const className = index === page ? 'selected' : null;
 
         return (
-          <S.TrimImageItem key={index} className={className} onClick={handleClick}>
+          <S.TrimImageItem key={name} className={className} onClick={handleClick}>
             <img src={src} alt={name} />
           </S.TrimImageItem>
         );
@@ -23,5 +24,9 @@ function TrimImage({ trim }) {
     </S.TrimImage>
   );
 }
+
+TrimImage.propTypes = {
+  trim: PropTypes.string.isRequired,
+};
 
 export default TrimImage;

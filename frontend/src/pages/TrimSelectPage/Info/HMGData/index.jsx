@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import * as S from './style';
 
 const COUNT = '회';
@@ -11,8 +12,8 @@ const PER = '15,000km 당';
 function HMGData({ dataList }) {
   return (
     <S.HMGData>
-      {dataList.map((item, index) => (
-        <S.Item key={index}>
+      {dataList.map((item) => (
+        <S.Item key={item.count}>
           <S.Title>{item.title}</S.Title>
           <S.Divide />
           <S.Count>
@@ -25,5 +26,9 @@ function HMGData({ dataList }) {
     </S.HMGData>
   );
 }
+
+HMGData.propTypes = {
+  dataList: PropTypes.instanceOf(Object).isRequired,
+};
 
 export default HMGData;

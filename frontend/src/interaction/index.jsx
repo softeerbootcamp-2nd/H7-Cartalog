@@ -13,9 +13,7 @@ function Interaction() {
   const pageRef = useRef();
   const nextPage = () => setPage(page + 1);
   const prevPage = () => setPage(history.state.nowPage);
-  const InteractionProps = {
-    nextPage: nextPage,
-  };
+  const InteractionProps = { nextPage };
 
   useEffect(() => window.addEventListener('popstate', prevPage), []);
 
