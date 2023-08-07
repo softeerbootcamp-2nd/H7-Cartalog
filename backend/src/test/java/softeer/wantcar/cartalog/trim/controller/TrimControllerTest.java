@@ -2,6 +2,7 @@ package softeer.wantcar.cartalog.trim.controller;
 
 
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,7 @@ class TrimControllerTest {
     TrimController trimController = new TrimController();
     static String imageServerPath = "example-url";
 
+    @BeforeEach
     void setUp() {
         softAssertions = new SoftAssertions();
     }
