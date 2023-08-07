@@ -1,4 +1,4 @@
-package softeer.wantcar.cartalog.controller;
+package softeer.wantcar.cartalog.model.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import softeer.wantcar.cartalog.dto.HMGDataDto;
-import softeer.wantcar.cartalog.dto.ModelTypeListResponseDto;
+import softeer.wantcar.cartalog.model.dto.ModelPerformanceDto;
+import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @Slf4j
@@ -21,7 +22,7 @@ public class ModelController {
     private String imageServerPath = "example-url";
 
     @GetMapping("/{modelId}/types")
-    public ResponseEntity<ModelTypeListResponseDto> searchModelType(@PathVariable Long modelId) {
+    public ResponseEntity<ModelTypeListResponseDto> searchModelType(@PathVariable("modelId") Long modelId) {
         if (modelId != 1) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -43,6 +44,17 @@ public class ModelController {
                 .modelTypes(List.of(powerTrains, wheelDrives, bodyTypes))
                 .build();
         return new ResponseEntity<>(modelTypeListResponseDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/{modelId}/performance")
+    public ResponseEntity<ModelPerformanceDto> getModelPerformance(@PathVariable("modelId") Long modelId,
+                                                                   @PathParam("powerTrainId") Long powerTrainId,
+                                                                   @PathParam("WDId") Long wdId) {
+        if(modelId < 0 || powerTrainId < 0 || wdId < 0 ) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        ModelPerformanceDto modelPerformance = new ModelPerformanceDto(2199, 12);
+        return new ResponseEntity<>(modelPerformance, HttpStatus.OK);
     }
 
     private ModelTypeListResponseDto.OptionDto get7Seat() {

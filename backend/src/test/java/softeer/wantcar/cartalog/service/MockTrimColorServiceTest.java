@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import softeer.wantcar.cartalog.entity.model.ModelExteriorColor;
 import softeer.wantcar.cartalog.entity.model.ModelInteriorColor;
+import softeer.wantcar.cartalog.trim.service.MockTrimColorService;
 
 import java.util.ArrayList;
 import java.util.List;

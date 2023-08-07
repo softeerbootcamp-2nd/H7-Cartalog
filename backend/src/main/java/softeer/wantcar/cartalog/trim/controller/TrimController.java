@@ -1,4 +1,4 @@
-package softeer.wantcar.cartalog.controller;
+package softeer.wantcar.cartalog.trim.controller;
 
 
 import lombok.extern.slf4j.Slf4j;
@@ -8,8 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import softeer.wantcar.cartalog.dto.HMGDataDto;
-import softeer.wantcar.cartalog.dto.TrimListResponseDTO;
+import softeer.wantcar.cartalog.global.dto.HMGDataDto;
+import softeer.wantcar.cartalog.trim.dto.TrimListResponseDTO;
 
 import javax.websocket.server.PathParam;
 import java.util.List;

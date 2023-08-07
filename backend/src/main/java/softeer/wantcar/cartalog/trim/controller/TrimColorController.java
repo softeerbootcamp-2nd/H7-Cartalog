@@ -1,4 +1,4 @@
-package softeer.wantcar.cartalog.controller;
+package softeer.wantcar.cartalog.trim.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,11 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import softeer.wantcar.cartalog.dto.TrimExteriorColorListResponseDto;
-import softeer.wantcar.cartalog.dto.TrimInteriorColorListResponseDto;
+import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
+import softeer.wantcar.cartalog.trim.dto.TrimInteriorColorListResponseDto;
 import softeer.wantcar.cartalog.entity.model.ModelExteriorColor;
 import softeer.wantcar.cartalog.entity.model.ModelInteriorColor;
-import softeer.wantcar.cartalog.service.TrimColorService;
+import softeer.wantcar.cartalog.trim.service.TrimColorService;
 
 import javax.websocket.server.PathParam;
 import java.util.Map;

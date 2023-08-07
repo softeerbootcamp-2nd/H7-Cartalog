@@ -1,4 +1,4 @@
-package softeer.wantcar.cartalog.dto;
+package softeer.wantcar.cartalog.trim.dto;
 
 import lombok.Builder;
 import lombok.Getter;

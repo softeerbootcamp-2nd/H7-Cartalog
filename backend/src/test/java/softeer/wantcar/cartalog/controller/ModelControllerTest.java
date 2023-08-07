@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import softeer.wantcar.cartalog.dto.HMGDataDto;
-import softeer.wantcar.cartalog.dto.ModelPerformanceDto;
-import softeer.wantcar.cartalog.dto.ModelTypeListResponseDto;
+import softeer.wantcar.cartalog.model.dto.ModelPerformanceDto;
+import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
+import softeer.wantcar.cartalog.model.controller.ModelController;
 
 import java.util.List;
 
@@ -114,7 +114,7 @@ class ModelControllerTest {
 
         @Test
         @DisplayName("존재하지 않는 구동방식 식별자로 조회할 경우 404 에러를 반환해야 한다.")
-        void returnStatusCode404WhenGetNotExistWDId() {
+        void returnStatusCode404WhenGetNotExistWD가Id() {
             //given
             //when
             ResponseEntity<ModelPerformanceDto> realResponse = modelController.getModelPerformance(1L, 3L, -1L);

@@ -1,4 +1,4 @@
-package softeer.wantcar.cartalog.dto;
+package softeer.wantcar.cartalog.global.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,8 @@ import lombok.Getter;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Builder
-public class ModelPerformanceDto {
-    private float displacement;
-    private float fuelEfficiency;
+public class HMGDataDto {
+    private String name;
+    private String value;
+    private String measure;
 }

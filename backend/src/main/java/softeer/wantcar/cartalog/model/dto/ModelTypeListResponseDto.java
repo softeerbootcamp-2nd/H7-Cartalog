@@ -1,9 +1,10 @@
-package softeer.wantcar.cartalog.dto;
+package softeer.wantcar.cartalog.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import softeer.wantcar.cartalog.global.dto.HMGDataDto;
 
 import java.util.List;
 
