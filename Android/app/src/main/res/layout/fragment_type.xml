@@ -58,7 +58,7 @@
                 app:layout_constraintStart_toStartOf="@id/gl_start"
                 app:layout_constraintTop_toBottomOf="@id/tv_type_select_header" />
 
-            <com.softeer.cartalog.ui.view.CustomTypeSelectView
+            <com.softeer.cartalog.ui.view.TypeSelectView
                 android:id="@+id/cv_powertrain_select"
                 android:layout_width="0dp"
                 android:layout_height="250dp"
@@ -80,7 +80,7 @@
                 app:layout_constraintStart_toStartOf="@id/gl_start"
                 app:layout_constraintTop_toBottomOf="@id/cv_powertrain_select" />
 
-            <com.softeer.cartalog.ui.view.CustomTypeSelectView
+            <com.softeer.cartalog.ui.view.TypeSelectView
                 android:id="@+id/cv_bodytype_select"
                 android:layout_width="0dp"
                 android:layout_height="250dp"
@@ -102,7 +102,7 @@
                 app:layout_constraintStart_toStartOf="@id/gl_start"
                 app:layout_constraintTop_toBottomOf="@id/cv_bodytype_select" />
 
-            <com.softeer.cartalog.ui.view.CustomTypeSelectView
+            <com.softeer.cartalog.ui.view.TypeSelectView
                 android:id="@+id/cv_wheeldrive_select"
                 android:layout_width="0dp"
                 android:layout_height="250dp"

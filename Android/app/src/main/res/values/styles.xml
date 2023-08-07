@@ -61,6 +61,14 @@
         <item name="android:padding">10dp</item>
     </style>
 
+    <style name="Theme.AppCompat.Transparent.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+      
     <style name="FragmentHeader" parent="@android:style/Widget.DeviceDefault.TextView">
         <item name="android:textSize">18sp</item>
         <item name="fontFamily">@font/hyndaisans_head_bold</item>

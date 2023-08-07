@@ -32,6 +32,9 @@
             app:destination="@id/trimFragment"
             app:enterAnim="@anim/slide_in_from_left"
             app:exitAnim="@anim/slide_out_to_right" />
+      <action
+            android:id="@+id/action_typeFragment_to_typeDetailPopup"
+            app:destination="@id/typeDetailPopup" />
     </fragment>
     <fragment
         android:id="@+id/exteriorFragment"
@@ -89,4 +92,9 @@
             app:enterAnim="@anim/slide_in_from_left"
             app:exitAnim="@anim/slide_out_to_right" />
     </fragment>
+    <activity
+        android:id="@+id/typeDetailPopup"
+        android:name="com.softeer.cartalog.ui.dialog.TypeDetailPopupActivity"
+        android:label="TypeDetailPopup" >
+    </activity>
 </navigation>

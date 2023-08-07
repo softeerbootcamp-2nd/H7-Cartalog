@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <variable
-            name="selected"
-            type="Integer" />
+        <import type="com.softeer.cartalog.model.enums.ModelTypeSubject" />
 
         <variable
             name="type"
             type="ModelTypeSubject" />
 
         <variable
+            name="navController"
+            type="androidx.navigation.NavController" />
+
+        <variable
             name="viewModel"
             type="com.softeer.cartalog.viewmodel.TypeViewModel" />
 
-        <import type="com.softeer.cartalog.model.enums.ModelTypeSubject" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,7 +53,8 @@
             app:drawableEndCompat="@drawable/icon_arrow_end_small"
             app:drawableTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:navController="@{navController}" />
 
         <TextView
             android:id="@+id/btn_detail_view"
@@ -65,7 +66,8 @@
             app:drawableEndCompat="@drawable/icon_arrow_end_small"
             app:drawableTint="@color/gray_800"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:navController="@{navController}"/>
 
         <View
             android:id="@+id/cv_btn1"

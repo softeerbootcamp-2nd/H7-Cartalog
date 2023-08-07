@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.softeer.cartalog.model.enums.ModelTypeSubject" />
+
+        <variable
+            name="type"
+            type="ModelTypeSubject" />
+
+        <variable
+            name="isSelected"
+            type="Boolean" />
+
+        <variable
+            name="typeItem"
+            type="com.softeer.cartalog.model.data.Type" />
+
+        <variable
+            name="activity"
+            type="com.softeer.cartalog.ui.dialog.TypeDetailPopupActivity" />
+
+        <variable
+            name="viewModel"
+            type="com.softeer.cartalog.viewmodel.TypeViewModel" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="10dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp"
+        app:layout_constraintBottom_toTopOf="@id/dots_indicator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="24dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="24dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="210dp" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/hyndaisans_head"
+                android:gravity="center"
+                android:text="파워트레인"
+                android:textColor="@color/gray_900"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@id/gl_end"
+                app:layout_constraintStart_toStartOf="@id/gl_start"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/outline_close_24"
+                app:activity="@{activity}"
+                app:layout_constraintEnd_toEndOf="@id/gl_end"
+                app:layout_constraintTop_toTopOf="@id/tv_title"
+                app:tint="@color/gray_800" />
+
+
+            <ImageView
+                android:id="@+id/iv_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="140dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/card_bg_color"
+                android:src="@drawable/tmp_img_engine"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+            <TextView
+                android:id="@+id/tv_option_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/hyndaisans_head"
+                android:text="디젤 2.2"
+                android:textColor="@color/gray_900"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@id/gl_start"
+                app:layout_constraintTop_toBottomOf="@id/iv_detail" />
+
+            <TextView
+                android:id="@+id/tv_selected_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="13dp"
+                android:text="38%"
+                android:textColor="@{type == ModelTypeSubject.POWERTRAIN ? (viewModel.powertrain1Selected ? @color/active_blue : @color/gray_600) : type == ModelTypeSubject.BODYTYPE ? (viewModel.bodytype1Selected ? @color/active_blue : @color/gray_600) : (viewModel.wheeldrive1Selected ? @color/active_blue : @color/gray_600)}"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@id/tv_selected_percent_guide"
+                app:layout_constraintTop_toTopOf="@id/tv_option_title" />
+
+            <TextView
+                android:id="@+id/tv_selected_percent_guide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="의 선택"
+                android:textColor="@{type == ModelTypeSubject.POWERTRAIN ? (viewModel.powertrain1Selected ? @color/gray_700 : @color/gray_600) : type == ModelTypeSubject.BODYTYPE ? (viewModel.bodytype1Selected ? @color/gray_700 : @color/gray_600) : (viewModel.wheeldrive1Selected ? @color/gray_700 : @color/gray_600)}"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_selected_percent"
+                app:layout_constraintEnd_toEndOf="@id/gl_end"
+                app:layout_constraintTop_toTopOf="@id/tv_selected_percent" />
+
+            <TextView
+                android:id="@+id/tv_detail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="높은 토크로 파워풀한 드라이빙이 가능하며, 차급대비 연비 효율이 우수합니다"
+                android:textColor="@color/gray_800"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@id/gl_end"
+                app:layout_constraintStart_toStartOf="@id/gl_start"
+                app:layout_constraintTop_toBottomOf="@id/tv_option_title" />
+
+            <View
+                android:id="@+id/v_gray_bgr"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/gray_50"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/gl_bottom" />
+
+            <TextView
+                android:id="@+id/tv_hmg_tag"
+                style="@style/HmgDataTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/gl_start"
+                app:layout_constraintTop_toBottomOf="@id/gl_bottom" />
+
+            <TextView
+                android:id="@+id/tv_hmgdata_1_guide"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:text="최고출력(PS/rpm)"
+                android:textColor="@color/gray_800"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_hmgdata_1"
+                app:layout_constraintStart_toStartOf="@id/gl_start"
+                app:layout_constraintTop_toBottomOf="@id/tv_hmg_tag" />
+
+            <TextView
+                android:id="@+id/tv_hmgdata_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:fontFamily="@font/hyndaisans_head"
+                android:gravity="end"
+                android:text="202/3,800"
+                android:textColor="@color/gray_800"
+                android:textSize="22sp"
+                app:layout_constraintBottom_toTopOf="@id/pi_hmgdata_1"
+                app:layout_constraintEnd_toEndOf="@id/gl_end"
+                app:layout_constraintStart_toEndOf="@id/tv_hmgdata_1_guide"
+                app:layout_constraintTop_toBottomOf="@id/tv_hmg_tag" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/pi_hmgdata_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:progress="80"
+                app:indicatorColor="@color/active_blue2"
+                app:layout_constraintEnd_toEndOf="@id/gl_end"
+                app:layout_constraintStart_toStartOf="@id/gl_start"
+                app:layout_constraintTop_toBottomOf="@id/tv_hmgdata_1_guide"
+                app:trackColor="@color/gray_200" />
+
+            <TextView
+                android:id="@+id/tv_hmgdata_2_guide"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="최대토크(kgf·m/rpm)"
+                android:textColor="@color/gray_800"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_hmgdata_2"
+                app:layout_constraintStart_toStartOf="@id/gl_start"
+                app:layout_constraintTop_toBottomOf="@id/pi_hmgdata_1" />
+
+            <TextView
+                android:id="@+id/tv_hmgdata_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:fontFamily="@font/hyndaisans_head"
+                android:gravity="end"
+                android:text="36.2/5,200"
+                android:textColor="@color/gray_800"
+                android:textSize="22sp"
+                app:layout_constraintBottom_toTopOf="@id/pi_hmgdata_2"
+                app:layout_constraintEnd_toEndOf="@id/gl_end"
+                app:layout_constraintStart_toEndOf="@id/tv_hmgdata_2_guide"
+                app:layout_constraintTop_toBottomOf="@id/pi_hmgdata_1" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/pi_hmgdata_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20sp"
+                android:progress="80"
+                app:indicatorColor="@color/active_blue2"
+                app:layout_constraintBottom_toTopOf="@id/tv_select_price"
+                app:layout_constraintEnd_toEndOf="@id/gl_end"
+                app:layout_constraintStart_toStartOf="@id/gl_start"
+                app:layout_constraintTop_toBottomOf="@id/tv_hmgdata_2"
+                app:trackColor="@color/gray_200" />
+
+            <TextView
+                android:id="@+id/tv_select_price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/primary_color_700"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:text="+ 0 원"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@id/tv_select_guide"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pi_hmgdata_2" />
+
+            <TextView
+                android:id="@+id/tv_select_guide"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/primary_color_700"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:text="선택하기"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_select_price" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</layout>

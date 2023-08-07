@@ -1,6 +1,7 @@
 package com.softeer.cartalog.ui.adapter
 
 import android.view.Gravity
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -9,7 +10,9 @@ import androidx.navigation.NavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.softeer.cartalog.R
+import com.softeer.cartalog.ui.dialog.TypeDetailPopupActivity
 import com.softeer.cartalog.viewmodel.MainViewModel
+import com.softeer.cartalog.viewmodel.TypeViewModel
 import com.softeer.cartalog.viewmodel.TrimViewModel
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 
@@ -25,6 +28,7 @@ fun setOnTabChanged(
         override fun onTabSelected(tab: TabLayout.Tab?) {
             tab?.let {
                 val selectedPosition = it.position
+
                 if (selectedPosition > viewModel.stepIndex.value!!) {
 
                     when (selectedPosition) {
@@ -62,26 +66,39 @@ fun setOnTabChanged(
                 viewModel.setStepIndex(selectedPosition)
             }
         }
-
         override fun onTabUnselected(tab: TabLayout.Tab?) {}
         override fun onTabReselected(tab: TabLayout.Tab?) {}
     })
+}        
+
+@BindingAdapter("navController")
+fun setShowDialog(view: TextView, navController: NavController) {
+    view.setOnClickListener {
+        navController.navigate(R.id.typeDetailPopup)
+    }
 }
 
-@BindingAdapter("viewModel", "attachIndicator")
-fun setBindingViewPager(
-    viewpager: ViewPager2,
-    viewModel: TrimViewModel,
+@BindingAdapter("activity")
+fun setCloseDialog(view: ImageView, activity: TypeDetailPopupActivity) {
+    view.setOnClickListener {
+        activity.finish()
+    }
+}
+
+@BindingAdapter("viewModel", "indicator")
+fun setTypeDetailViewPager(
+    viewPager: ViewPager2,
+    viewModel: TypeViewModel,
     indicator: DotsIndicator
 ) {
 
-    val pageMarginPx = viewpager.context.resources.getDimensionPixelOffset(R.dimen.pageMargin)
-    val pagerWidth = viewpager.context.resources.getDimensionPixelOffset(R.dimen.pagerWidth)
-    val screenWidth = viewpager.context.resources.displayMetrics.widthPixels
+    val pageMarginPx = viewPager.context.resources.getDimensionPixelOffset(R.dimen.pageMargin)
+    val pagerWidth = viewPager.context.resources.getDimensionPixelOffset(R.dimen.pagerWidth)
+    val screenWidth = viewPager.context.resources.displayMetrics.widthPixels
     val offsetPx = screenWidth - pageMarginPx - pagerWidth
 
-    val trimItemAdapter = TrimCardAdapter(viewModel)
-    with(viewpager) {
+    val trimItemAdapter = TypeDetailPopupAdapter(viewModel)
+    with(viewPager) {
         offscreenPageLimit = 2
         adapter = trimItemAdapter
         setPageTransformer { page, position ->
@@ -95,5 +112,36 @@ fun setBindingViewPager(
             }
         })
     }
-    indicator.attachTo(viewpager)
+    indicator.attachTo(viewPager)
 }
+
+@BindingAdapter("viewModel", "indicator")
+fun setTrimCardViewPager(
+    viewPager: ViewPager2,
+    viewModel: TrimViewModel,
+    indicator: DotsIndicator
+) {
+
+    val pageMarginPx = viewPager.context.resources.getDimensionPixelOffset(R.dimen.pageMargin)
+    val pagerWidth = viewPager.context.resources.getDimensionPixelOffset(R.dimen.pagerWidth)
+    val screenWidth = viewPager.context.resources.displayMetrics.widthPixels
+    val offsetPx = screenWidth - pageMarginPx - pagerWidth
+
+    val trimItemAdapter = TrimCardAdapter(viewModel)
+    with(viewPager) {
+        offscreenPageLimit = 2
+        adapter = trimItemAdapter
+        setPageTransformer { page, position ->
+            page.translationX = position * -offsetPx
+        }
+        registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                viewModel.changeSelectedTrim(position)
+                trimItemAdapter.notifyItemRangeChanged(position - 1, 3)
+            }
+        })
+    }
+    indicator.attachTo(viewPager)
+}
+
