@@ -20,11 +20,11 @@ class TrimControllerTest {
     static String imageServerPath = "example-url";
 
     @Nested
-    @DisplayName("존재하는 모델 식별자로 트림 목록을 조회할 경우")
-    class getTrimsByExistModel {
+    @DisplayName("트림 모델 목록 조회 테스트")
+    class getTrimModelListTest {
         @Test
-        @DisplayName("트림 목록을 담은 DTO를 반환한다")
-        void returnDtoHasTrims() {
+        @DisplayName("올바른 요청시 200 상태와 함께 트림 목록을 반환해야 한다.")
+        void returnDtoHasTrimsWhenGetTrimsByExistModel() {
             //given
             List<TrimDto> trimDtos = List.of(getTrimDto("Exclusive", "기본기를 갖춘 베이직한 팰리세이드", 40440000, 100000000),
                     getTrimDto("Le Blanc", "실용적인 사양의 경제적인 팰리세이드", 43460000, 100000000),
@@ -39,14 +39,10 @@ class TrimControllerTest {
             //then
             assertThat(realResponse).isEqualTo(expectResponse);
         }
-    }
 
-    @Nested
-    @DisplayName("존재하지 않는 모델 식별자로 트림 목록을 조회할 경우")
-    class getTrimsByNotExistModel {
         @Test
-        @DisplayName("상태코드 404를 반환한다")
-        void returnStatusCode404() {
+        @DisplayName("존재하지 않는 모델 식별자로 트림 목록 요청시 404 상태를 반환해야 한다.상태코드 404를 반환한다")
+        void returnStatusCode404WhenGetTrimsByNotExistModel() {
             //given
             //when
             ResponseEntity<TrimListResponseDTO> response = trimController.searchTrimList(100L);
