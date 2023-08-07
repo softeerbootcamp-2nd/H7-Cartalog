@@ -66,7 +66,8 @@
             app:drawableEndCompat="@drawable/icon_arrow_end_small"
             app:drawableTint="@color/gray_800"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:navController="@{navController}"/>
 
         <View
             android:id="@+id/cv_btn1"

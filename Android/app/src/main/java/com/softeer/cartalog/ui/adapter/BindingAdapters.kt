@@ -62,14 +62,14 @@ fun setOnTabChanged(
 }
 
 @BindingAdapter("navController")
-fun showDialog(view: TextView, navController: NavController) {
+fun setShowDialog(view: TextView, navController: NavController) {
     view.setOnClickListener {
         navController.navigate(R.id.typeDetailPopup)
     }
 }
 
 @BindingAdapter("activity")
-fun closeDialog(view: ImageView, activity: TypeDetailPopupActivity) {
+fun setCloseDialog(view: ImageView, activity: TypeDetailPopupActivity) {
     view.setOnClickListener {
         activity.finish()
     }
