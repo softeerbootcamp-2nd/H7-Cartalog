@@ -25,9 +25,9 @@ public class ModelTypeListResponseDto {
 
     @Getter
     @AllArgsConstructor
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper = false)
     @Builder
-    public static class OptionDto {
+    public static class ModelTypeOptionDto extends OptionDto {
         private Long id;
         private String name;
         private int price;
@@ -35,5 +35,33 @@ public class ModelTypeListResponseDto {
         private String imageUrl;
         private String description;
         private List<HMGDataDto> hmgData;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    @Builder
+    public static class PowerTrainOptionDto extends OptionDto {
+        private Long id;
+        private String name;
+        private int price;
+        private int chosen;
+        private String imageUrl;
+        private String description;
+        private List<PowerTrainHMGDataDto> powerTrainHMGData;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @Builder
+    @EqualsAndHashCode
+    public static class PowerTrainHMGDataDto {
+        private String name;
+        private float value;
+        private String rpm;
+        private String measure;
+    }
+
+    public static abstract class OptionDto {
     }
 }

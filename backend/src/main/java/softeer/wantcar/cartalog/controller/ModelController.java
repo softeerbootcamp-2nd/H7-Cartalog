@@ -46,7 +46,7 @@ public class ModelController {
     }
 
     private ModelTypeListResponseDto.OptionDto get7Seat() {
-        return ModelTypeListResponseDto.OptionDto.builder()
+        return ModelTypeListResponseDto.ModelTypeOptionDto.builder()
                 .id(5L)
                 .name("7인승")
                 .price(0)
@@ -56,7 +56,7 @@ public class ModelController {
     }
 
     private ModelTypeListResponseDto.OptionDto get8Seat() {
-        return ModelTypeListResponseDto.OptionDto.builder()
+        return ModelTypeListResponseDto.ModelTypeOptionDto.builder()
                 .id(6L)
                 .name("8인승")
                 .price(0)
@@ -66,7 +66,7 @@ public class ModelController {
     }
 
     private ModelTypeListResponseDto.OptionDto get2WD() {
-        return ModelTypeListResponseDto.OptionDto.builder()
+        return ModelTypeListResponseDto.ModelTypeOptionDto.builder()
                 .id(3L)
                 .name("2WD")
                 .price(0)
@@ -77,7 +77,7 @@ public class ModelController {
     }
 
     private ModelTypeListResponseDto.OptionDto get4WD() {
-        return ModelTypeListResponseDto.OptionDto.builder()
+        return ModelTypeListResponseDto.ModelTypeOptionDto.builder()
                 .id(4L)
                 .name("4WD")
                 .price(2370000)
@@ -88,28 +88,30 @@ public class ModelController {
     }
 
     private ModelTypeListResponseDto.OptionDto getGasolineEngine() {
-        return ModelTypeListResponseDto.OptionDto.builder()
+        return ModelTypeListResponseDto.PowerTrainOptionDto.builder()
                 .id(1L)
                 .name("디젤 2.2")
                 .price(1480000)
                 .description("높은 토크로 파워풀한 드라이빙이 가능하며, 차급대비 연비 효율이 우수합니다")
                 .chosen(38)
                 .imageUrl(imageServerPath + "/palisade/le-blanc/options/gasoline3.8_s.jpg")
-                .hmgData(List.of(new HMGDataDto("최고출력", "202/3,800", "PS/rpm"),
-                        new HMGDataDto("최대토크", "45.0/1,750~2,750", "kgf-m/rpm")))
+                .powerTrainHMGData(List.of(
+                        new ModelTypeListResponseDto.PowerTrainHMGDataDto("최고출력", 202f, "3,800", "PS/rpm"),
+                        new ModelTypeListResponseDto.PowerTrainHMGDataDto("최대토크", 45.0f, "1,750~2,750", "kgf-m/rpm")))
                 .build();
     }
 
     private ModelTypeListResponseDto.OptionDto getDieselEngine() {
-        return ModelTypeListResponseDto.OptionDto.builder()
+        return ModelTypeListResponseDto.PowerTrainOptionDto.builder()
                 .name("디젤 2.2")
                 .price(0)
                 .chosen(38)
                 .description("고마력의 우수한 가속 성능을 확보하여, 넉넉하고 안정감 있는 주행이 가능합니다\n" +
                              "엔진의 진동이 적어 편안하고 조용한 드라이빙 감성을 제공합니다")
                 .imageUrl(imageServerPath + "/palisade/le-blanc/options/dieselengine2.2_s.jpg")
-                .hmgData(List.of(new HMGDataDto("최고출력", "295/60,00", "PS/rpm"),
-                        new HMGDataDto("최대토크", "36.2/5,200", "kgf-m/rpm")))
+                .powerTrainHMGData(List.of(
+                        new ModelTypeListResponseDto.PowerTrainHMGDataDto("최고출력", 295f, "6,000", "PS/rpm"),
+                        new ModelTypeListResponseDto.PowerTrainHMGDataDto("최대토크", 36.2f, "5,200", "kgf-m/rpm")))
                 .build();
     }
 }

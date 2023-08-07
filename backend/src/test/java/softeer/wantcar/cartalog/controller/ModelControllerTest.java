@@ -16,13 +16,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ModelControllerTest {
     ModelController modelController = new ModelController();
     static String imageServerPath = "example-url";
-
+    
     @Nested
-    @DisplayName("존재하는 모델의 식별자를 통해 모델 타입을 조회할 경우")
-    class getModelTypeByExistModelId {
+    @DisplayName("모델타입 목록 조회 테스트")
+    class getModelTypeListTest {
         @Test
-        @DisplayName("모델 식별자에 해당하는 모델의 모델 타입들을 담은 DTO를 반환한다")
-        void returnDtoHasModelTypeOfModelId() {
+        @DisplayName("올바른 요청시 200 상태와 함께 모델 식별자에 해당하는 모델의 모델 타입 리스트를 반환한다.")
+        void returnDtoHasModelTypeOfModelIdWhenGetModelTypeByExistModelId() {
             //given
             ModelTypeListResponseDto.ModelTypeDto powerTrains = ModelTypeListResponseDto.ModelTypeDto.builder()
                     .type("powerTrain")
@@ -49,25 +49,21 @@ class ModelControllerTest {
             //then
             assertThat(realResponse).isEqualTo(expectResponse);
         }
+        
+        @Test
+        @DisplayName("존재하지 않는 모델의 식별자를 조회할 경우 404 상태를 반환해야 한다.")
+        void returnStatusCode404WhenGetModelTypeByExistModelId() {
+            //given
+            //when
+            ResponseEntity<ModelTypeListResponseDto> response = modelController.searchModelType(100L);
 
-        @Nested
-        @DisplayName("존재하지 않는 모델의 식별자를 조회할 경우")
-        class getModelTypeByNotExistModelId {
-            @Test
-            @DisplayName("상태코드 404를 반환한다")
-            void returnStatusCode404() {
-                //given
-                //when
-                ResponseEntity<ModelTypeListResponseDto> response = modelController.searchModelType(100L);
-
-                //then
-                assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-            }
+            //then
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         }
     }
 
     private ModelTypeListResponseDto.OptionDto get7Seat() {
-        return ModelTypeListResponseDto.OptionDto.builder()
+        return ModelTypeListResponseDto.ModelTypeOptionDto.builder()
                 .id(5L)
                 .name("7인승")
                 .price(0)
@@ -77,7 +73,7 @@ class ModelControllerTest {
     }
 
     private ModelTypeListResponseDto.OptionDto get8Seat() {
-        return ModelTypeListResponseDto.OptionDto.builder()
+        return ModelTypeListResponseDto.ModelTypeOptionDto.builder()
                 .id(6L)
                 .name("8인승")
                 .price(0)
@@ -87,7 +83,7 @@ class ModelControllerTest {
     }
 
     private ModelTypeListResponseDto.OptionDto get2WD() {
-        return ModelTypeListResponseDto.OptionDto.builder()
+        return ModelTypeListResponseDto.ModelTypeOptionDto.builder()
                 .id(3L)
                 .name("2WD")
                 .price(0)
@@ -98,7 +94,7 @@ class ModelControllerTest {
     }
 
     private ModelTypeListResponseDto.OptionDto get4WD() {
-        return ModelTypeListResponseDto.OptionDto.builder()
+        return ModelTypeListResponseDto.ModelTypeOptionDto.builder()
                 .id(4L)
                 .name("4WD")
                 .price(2370000)
@@ -109,28 +105,30 @@ class ModelControllerTest {
     }
 
     private ModelTypeListResponseDto.OptionDto getGasolineEngine() {
-        return ModelTypeListResponseDto.OptionDto.builder()
+        return ModelTypeListResponseDto.PowerTrainOptionDto.builder()
                 .id(1L)
                 .name("디젤 2.2")
                 .price(1480000)
                 .description("높은 토크로 파워풀한 드라이빙이 가능하며, 차급대비 연비 효율이 우수합니다")
                 .chosen(38)
                 .imageUrl(imageServerPath + "/palisade/le-blanc/options/gasoline3.8_s.jpg")
-                .hmgData(List.of(new HMGDataDto("최고출력", "202/3,800", "PS/rpm"),
-                        new HMGDataDto("최대토크", "45.0/1,750~2,750", "kgf-m/rpm")))
+                .powerTrainHMGData(List.of(
+                        new ModelTypeListResponseDto.PowerTrainHMGDataDto("최고출력", 202f, "3,800", "PS/rpm"),
+                        new ModelTypeListResponseDto.PowerTrainHMGDataDto("최대토크", 45.0f, "1,750~2,750", "kgf-m/rpm")))
                 .build();
     }
 
     private static ModelTypeListResponseDto.OptionDto getDieselEngine() {
-        return ModelTypeListResponseDto.OptionDto.builder()
+        return ModelTypeListResponseDto.PowerTrainOptionDto.builder()
                 .name("디젤 2.2")
                 .price(0)
                 .chosen(38)
                 .description("고마력의 우수한 가속 성능을 확보하여, 넉넉하고 안정감 있는 주행이 가능합니다\n" +
                              "엔진의 진동이 적어 편안하고 조용한 드라이빙 감성을 제공합니다")
                 .imageUrl(imageServerPath + "/palisade/le-blanc/options/dieselengine2.2_s.jpg")
-                .hmgData(List.of(new HMGDataDto("최고출력", "295/60,00", "PS/rpm"),
-                        new HMGDataDto("최대토크", "36.2/5,200", "kgf-m/rpm")))
+                .powerTrainHMGData(List.of(
+                        new ModelTypeListResponseDto.PowerTrainHMGDataDto("최고출력", 295f, "6,000", "PS/rpm"),
+                        new ModelTypeListResponseDto.PowerTrainHMGDataDto("최대토크", 36.2f, "5,200", "kgf-m/rpm")))
                 .build();
     }
 }
