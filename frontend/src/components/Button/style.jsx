@@ -26,30 +26,22 @@ export const Button = styled.button`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  transition: all 0.2s ease-in;
+  ${({ type }) => buttonByType[type] || buttonByType.default};
   background-color: ${({ $state, theme }) => {
     switch ($state) {
       case 'active':
         return theme.color.primary['700'];
-      case 'hover':
-        return theme.color.primary['500'];
-      case 'state':
-        return theme.color.primary['800'];
       case 'inactive':
         return theme.color.gray['300'];
       default:
-        return theme.color.primary['700'];
+        throw new Error('active || inactive');
     }
   }};
 
   &:hover {
     background-color: ${({ theme }) => theme.color.primary['500']};
-    transition: all 0.1s ease-in;
   }
-  &:not(:hover) {
-    transition: all 0.1s ease-out;
-  }
-
-  ${({ type }) => buttonByType[type] || buttonByType.default};
 `;
 
 export const SubTitle = styled.h2`
