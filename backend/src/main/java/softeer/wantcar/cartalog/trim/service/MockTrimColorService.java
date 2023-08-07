@@ -1,4 +1,4 @@
-package softeer.wantcar.cartalog.service;
+package softeer.wantcar.cartalog.trim.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package softeer.wantcar.cartalog.service;
+package softeer.wantcar.cartalog.trim.service;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

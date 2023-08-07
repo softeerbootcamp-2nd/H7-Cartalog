@@ -1,4 +1,4 @@
-package softeer.wantcar.cartalog.controller;
+package softeer.wantcar.cartalog.trim.controller;
 
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import softeer.wantcar.cartalog.dto.TrimExteriorColorListResponseDto;
-import softeer.wantcar.cartalog.dto.TrimInteriorColorListResponseDto;
 import softeer.wantcar.cartalog.entity.model.ModelExteriorColor;
 import softeer.wantcar.cartalog.entity.model.ModelInteriorColor;
-import softeer.wantcar.cartalog.service.MockTrimColorService;
-import softeer.wantcar.cartalog.service.TrimColorService;
+import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
+import softeer.wantcar.cartalog.trim.dto.TrimInteriorColorListResponseDto;
+import softeer.wantcar.cartalog.trim.service.MockTrimColorService;
+import softeer.wantcar.cartalog.trim.service.TrimColorService;
 
 import java.util.List;
 

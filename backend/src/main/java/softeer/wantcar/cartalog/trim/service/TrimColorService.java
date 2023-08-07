@@ -1,4 +1,4 @@
-package softeer.wantcar.cartalog.service;
+package softeer.wantcar.cartalog.trim.service;
 
 import softeer.wantcar.cartalog.entity.model.ModelExteriorColor;
 import softeer.wantcar.cartalog.entity.model.ModelInteriorColor;
