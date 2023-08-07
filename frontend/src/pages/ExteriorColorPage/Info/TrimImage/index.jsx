@@ -23,7 +23,6 @@ function TrimImage({ trim, start }) {
     }
   };
 
-  console.log(start);
   return (
     <S.TrimImage>
       <S.Image

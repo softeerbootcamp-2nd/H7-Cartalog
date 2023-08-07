@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 
 export const TrimImage = styled.div`
+  position: relative;
   display: flex;
   width: 592px;
   height: 325px;

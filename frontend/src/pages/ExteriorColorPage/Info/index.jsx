@@ -2,6 +2,7 @@ import { useState } from 'react';
 import * as S from './style';
 import Title from '../../../components/Title';
 import TrimImage from './TrimImage';
+import TrimStand from './TrimStand';
 
 const TYPE = 'dark';
 const SUB_TITLE = '외장색상';
@@ -21,6 +22,7 @@ function Info() {
   return (
     <S.Info onMouseDown={() => setStart(true)}>
       <Title {...TitleProps} />
+      <TrimStand />
       <TrimImage {...TrimImageProps} />
     </S.Info>
   );
