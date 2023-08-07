@@ -5,15 +5,13 @@ const palisadeUrl = 'https://want-car-image.s3.ap-northeast-2.amazonaws.com/pali
 const trimSelect = 'le-blanc';
 const exteriorSelect = 'A2B';
 
-function TrimImage({ trim }) {
-  const [start, setStart] = useState(false);
+function TrimImage({ trim, start }) {
   const [image, setImage] = useState(1);
   const [prevX, setPrevX] = useState(0);
 
   const startSwipe = (event) => {
     if (start) {
       setPrevX(event.clientX);
-      //   console.log(prevX, event.clientX);
       if (prevX < event.clientX) {
         if (1 >= image) setImage(60);
         else setImage((prevImage) => prevImage - 1);
@@ -24,14 +22,14 @@ function TrimImage({ trim }) {
       }
     }
   };
+
+  console.log(start);
   return (
     <S.TrimImage>
       <S.Image
         src={`${palisadeUrl}/${trimSelect}/exterior/${exteriorSelect}/${image
           .toString()
           .padStart(3, '0')}.png`}
-        onMouseDown={() => setStart(true)}
-        onMouseUp={() => setStart(false)}
         onMouseMove={startSwipe}
       />
     </S.TrimImage>
