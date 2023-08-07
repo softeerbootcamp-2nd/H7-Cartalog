@@ -11,6 +11,4 @@ class MainViewModel : ViewModel() {
     fun setStepIndex(index: Int){
         _stepIndex.value = index
     }
-
-
 }

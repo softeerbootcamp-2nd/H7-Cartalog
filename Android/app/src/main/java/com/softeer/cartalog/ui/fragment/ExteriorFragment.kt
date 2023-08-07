@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.softeer.cartalog.databinding.FragmentExteriorBinding
-import com.softeer.cartalog.databinding.FragmentInteriorBinding
 
 class ExteriorFragment: Fragment() {
     private var _binding: FragmentExteriorBinding? = null
@@ -22,7 +21,6 @@ class ExteriorFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
 
     override fun onDestroyView() {

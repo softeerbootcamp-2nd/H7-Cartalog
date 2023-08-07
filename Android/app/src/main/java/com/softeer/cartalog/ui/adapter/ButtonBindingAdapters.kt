@@ -1,13 +1,15 @@
 package com.softeer.cartalog.ui.adapter
 
-import android.util.Log
-import android.view.View
-import androidx.appcompat.content.res.AppCompatResources
+import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.BindingAdapter
-import com.softeer.cartalog.R
-import com.softeer.cartalog.model.enums.ModelTypeSubject
-import com.softeer.cartalog.viewmodel.TypeViewModel
-
-object ButtonBindingAdapters {
-
+import com.softeer.cartalog.ui.activity.MainActivity
+@BindingAdapter("activity", "index")
+fun setOnClickTabBtn(
+    button: AppCompatButton,
+    activity: MainActivity,
+    idx: Int
+){
+    button.setOnClickListener {
+        activity.changeTab(idx)
+    }
 }
