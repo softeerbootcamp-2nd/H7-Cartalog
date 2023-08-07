@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.softeer.cartalog.model.enums.ModelTypeSubject" />
 
         <variable
             name="type"
@@ -17,7 +18,6 @@
             name="viewModel"
             type="com.softeer.cartalog.viewmodel.TypeViewModel" />
 
-        <import type="com.softeer.cartalog.model.enums.ModelTypeSubject" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="com.softeer.cartalog.model.enums.ModelTypeSubject" />
+
         <variable
             name="selected"
             type="Integer" />
@@ -17,7 +19,6 @@
             name="viewModel"
             type="com.softeer.cartalog.viewmodel.TypeViewModel" />
 
-        <import type="com.softeer.cartalog.model.enums.ModelTypeSubject" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

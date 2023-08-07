@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="com.softeer.cartalog.model.enums.ModelTypeSubject" />
+
         <variable
             name="type"
             type="ModelTypeSubject" />
@@ -25,7 +27,6 @@
             name="viewModel"
             type="com.softeer.cartalog.viewmodel.TypeViewModel" />
 
-        <import type="com.softeer.cartalog.model.enums.ModelTypeSubject" />
     </data>
 
     <androidx.cardview.widget.CardView
