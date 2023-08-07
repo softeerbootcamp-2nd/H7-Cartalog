@@ -38,7 +38,7 @@ public class TrimColorController {
         }
     }
 
-    @GetMapping(value = "경/interior-colors")
+    @GetMapping(value = "/interior-colors")
     public ResponseEntity<TrimInteriorColorListResponseDto> trimInteriorColorList(@PathParam("trimId") Long trimId,
                                                                                   @PathParam(value = "exteriorColorId") Long exteriorColorId) {
         try {
