@@ -28,6 +28,8 @@ class TrimFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = trimViewModel
         binding.mainActivity = activity as MainActivity
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.executePendingBindings()
     }
 
     override fun onDestroyView() {

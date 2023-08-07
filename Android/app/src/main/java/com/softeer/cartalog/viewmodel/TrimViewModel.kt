@@ -27,10 +27,4 @@ class TrimViewModel : ViewModel() {
     fun changeSelectedTrim(idx: Int){
         _selectedTrim.value = idx
     }
-
-    fun getSelectedTrimString(): String{
-        val selected = trimList.value?.get(selectedTrim.value!!)
-        return "${selected?.trimName} 선택하기"
-    }
-
 }

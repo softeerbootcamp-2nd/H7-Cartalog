@@ -86,11 +86,11 @@
             android:inputType="text"
             android:paddingTop="20dp"
             android:paddingBottom="20dp"
-            android:text="@{viewModel.selectedTrimString}"
             android:textColor="@color/gray_50"
             android:textSize="16sp"
+            android:text='@{String.format("%s %s",viewModel.trimList.get(viewModel.selectedTrim).trimName, "선택하기")}'
             app:activity="@{mainActivity}"
-            app:index= "@{1}"
+            app:index="@{1}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
