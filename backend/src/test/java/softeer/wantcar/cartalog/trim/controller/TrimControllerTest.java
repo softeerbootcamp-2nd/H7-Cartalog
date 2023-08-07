@@ -1,4 +1,4 @@
-package softeer.wantcar.cartalog.controller;
+package softeer.wantcar.cartalog.trim.controller;
 
 
 import org.junit.jupiter.api.DisplayName;

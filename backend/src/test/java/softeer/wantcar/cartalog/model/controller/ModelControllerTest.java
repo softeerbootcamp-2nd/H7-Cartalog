@@ -1,4 +1,4 @@
-package softeer.wantcar.cartalog.controller;
+package softeer.wantcar.cartalog.model.controller;
 
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
