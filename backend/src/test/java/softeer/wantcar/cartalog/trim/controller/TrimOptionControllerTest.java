@@ -9,9 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import softeer.wantcar.cartalog.global.dto.HMGDataDto;
 import softeer.wantcar.cartalog.trim.dto.OptionDetailResponseDto;
-import softeer.wantcar.cartalog.trim.dto.TrimOptionDetailDetailResponseDto;
+import softeer.wantcar.cartalog.trim.dto.TrimOptionDetailResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimOptionListResponseDto;
-import softeer.wantcar.cartalog.trim.dto.TrimPackageDetailDetailResponseDto;
+import softeer.wantcar.cartalog.trim.dto.TrimPackageDetailResponseDto;
 
 import java.util.List;
 
@@ -80,8 +80,8 @@ public class TrimOptionControllerTest {
         void returnOptionDetailWithStatusCode200() {
             //given
             //when
-            TrimOptionDetailDetailResponseDto realResponse =
-                    (TrimOptionDetailDetailResponseDto) trimOptionController.getOptionDetail("O1", 1L).getBody();
+            TrimOptionDetailResponseDto realResponse =
+                    (TrimOptionDetailResponseDto) trimOptionController.getOptionDetail("O1", 1L).getBody();
 
             //then
             assert realResponse != null;
@@ -99,7 +99,7 @@ public class TrimOptionControllerTest {
         void returnStatusCode404WhenGetOptionDetailByWrongOptionId() {
             //given
             //when
-            ResponseEntity<OptionDetailResponseDto> response = trimOptionController.getOptionDetail("O-1", 1L);
+            ResponseEntity<OptionDetailResponseDto> response = trimOptionController.getOptionDetail("X1", 1L);
 
             //then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -136,15 +136,15 @@ public class TrimOptionControllerTest {
         void returnPackageDetailWithStatusCode200() {
             //given
             //when
-            TrimPackageDetailDetailResponseDto realResponse =
-                    (TrimPackageDetailDetailResponseDto) trimOptionController.getOptionDetail("P1", 1L).getBody();
+            TrimPackageDetailResponseDto realResponse =
+                    (TrimPackageDetailResponseDto) trimOptionController.getOptionDetail("P1", 1L).getBody();
 
             //then
             assert realResponse != null;
-            softAssertions.assertThat(realResponse.isPackage()).isFalse();
-            List<TrimPackageDetailDetailResponseDto.PackageOptionDetailDto> options = realResponse.getOptions();
+            softAssertions.assertThat(realResponse.isPackage()).isTrue();
+            List<TrimPackageDetailResponseDto.PackageOptionDetailDto> options = realResponse.getOptions();
             softAssertions.assertThat(options)
-                            .contains(new TrimPackageDetailDetailResponseDto.PackageOptionDetailDto(
+                            .contains(new TrimPackageDetailResponseDto.PackageOptionDetailDto(
                                     "패키지 이름",
                                     "패키지 설명",
                                     List.of("장거리 운전"),
@@ -158,7 +158,7 @@ public class TrimOptionControllerTest {
         void returnStatusCode404WhenGetOptionDetailByWrongOptionId() {
             //given
             //when
-            ResponseEntity<OptionDetailResponseDto> response = trimOptionController.getOptionDetail("P-1", 1L);
+            ResponseEntity<OptionDetailResponseDto> response = trimOptionController.getOptionDetail("X1", 1L);
 
             //then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -169,7 +169,7 @@ public class TrimOptionControllerTest {
         void returnStatusCode404WhenGetOptionDetailByNotExistOptionId() {
             //given
             //when
-            ResponseEntity<OptionDetailResponseDto> response = trimOptionController.getOptionDetail("O-1", 1L);
+            ResponseEntity<OptionDetailResponseDto> response = trimOptionController.getOptionDetail("P-1", 1L);
 
             //then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
