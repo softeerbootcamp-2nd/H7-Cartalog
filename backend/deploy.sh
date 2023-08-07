@@ -5,7 +5,7 @@ REPOSITORY=$HOME_DIRECTORY/server
 cd $REPOSITORY
 
 LOG_FILE=$HOME_DIRECTORY/deploy.log
-APP_NAME=CartalogApplication
+APP_NAME=cartalog
 JAR_NAME=$(ls $REPOSITORY/build/libs/ | grep '.jar' | tail -n 1)
 JAR_PATH=$REPOSITORY/build/libs/$JAR_NAME
 
