@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import * as S from './style';
 
 /**
@@ -22,5 +23,12 @@ function RoundButton({ clickEvent, type, state, title }) {
     </S.RoundButton>
   );
 }
+
+RoundButton.propTypes = {
+  clickEvent: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
+  state: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+};
 
 export default RoundButton;

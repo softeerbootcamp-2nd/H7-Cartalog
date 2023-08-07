@@ -1,4 +1,6 @@
+import PropTypes from 'prop-types';
 import * as S from './style';
+import Button from '../../../components/Button';
 
 const TYPE = 'buttonD';
 const STATE = 'active';
@@ -6,7 +8,7 @@ const MAIN_TITLE = '다음';
 
 function Pick({ nextPage }) {
   const buttonProps = {
-    nextPage: nextPage,
+    nextPage,
     type: TYPE,
     state: STATE,
     mainTitle: MAIN_TITLE,
@@ -14,9 +16,13 @@ function Pick({ nextPage }) {
 
   return (
     <S.Pick>
-      <Button {...buttonProps}></Button>
+      <Button {...buttonProps} />
     </S.Pick>
   );
 }
+
+Pick.propTypes = {
+  nextPage: PropTypes.func.isRequired,
+};
 
 export default Pick;

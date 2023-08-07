@@ -1,11 +1,12 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import * as S from './style';
 
 const palisadeUrl = 'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade';
 const trimSelect = 'le-blanc';
 const exteriorSelect = 'A2B';
 
-function TrimImage({ trim, start }) {
+function TrimImage({ start }) {
   const [image, setImage] = useState(1);
   const [prevX, setPrevX] = useState(0);
 
@@ -13,11 +14,11 @@ function TrimImage({ trim, start }) {
     if (start) {
       setPrevX(event.clientX);
       if (prevX < event.clientX) {
-        if (1 >= image) setImage(60);
+        if (image <= 1) setImage(60);
         else setImage((prevImage) => prevImage - 1);
       }
       if (prevX > event.clientX) {
-        if (60 <= image) setImage(1);
+        if (image >= 60) setImage(1);
         else setImage((prevImage) => prevImage + 1);
       }
     }
@@ -34,5 +35,9 @@ function TrimImage({ trim, start }) {
     </S.TrimImage>
   );
 }
+
+TrimImage.propTypes = {
+  start: PropTypes.bool.isRequired,
+};
 
 export default TrimImage;

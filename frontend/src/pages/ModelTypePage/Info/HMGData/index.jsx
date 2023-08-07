@@ -21,7 +21,7 @@ function HMGData() {
   return (
     <S.HMGData>
       {TRIM_DATA.map((data, index) => (
-        <React.Fragment key={index}>
+        <React.Fragment key={data.title}>
           <HMGChart {...data} />
           {index === 0 && <S.Divide />}
         </React.Fragment>

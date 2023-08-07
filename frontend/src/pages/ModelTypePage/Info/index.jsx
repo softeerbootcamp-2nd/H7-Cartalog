@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import * as S from './style';
 import Title from '../../../components/Title';
 import HMGTag from '../../../components/HMGTag';
@@ -33,5 +34,9 @@ function Info({ imageUrl }) {
     </S.Info>
   );
 }
+
+Info.propTypes = {
+  imageUrl: PropTypes.func.isRequired,
+};
 
 export default Info;

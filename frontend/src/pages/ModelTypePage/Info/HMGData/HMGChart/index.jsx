@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import * as S from './style';
 
 const OUTPUT_DIVIDE = '/';
@@ -22,10 +23,17 @@ function HMGChart({ title, unit, rpm, width }) {
         {rpm}
       </S.Output>
       <S.Chart>
-        <S.Bar {...chartProps}></S.Bar>
+        <S.Bar {...chartProps} />
       </S.Chart>
     </S.HMGChart>
   );
 }
+
+HMGChart.propTypes = {
+  title: PropTypes.string.isRequired,
+  unit: PropTypes.string.isRequired,
+  rpm: PropTypes.string.isRequired,
+  width: PropTypes.string.isRequired,
+};
 
 export default HMGChart;
