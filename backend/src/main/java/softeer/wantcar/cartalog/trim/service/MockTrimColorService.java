@@ -1,6 +1,7 @@
 package softeer.wantcar.cartalog.trim.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import softeer.wantcar.cartalog.entity.Color;
 import softeer.wantcar.cartalog.entity.model.ModelExteriorColor;
@@ -13,6 +14,9 @@ import java.util.Map;
 @Slf4j
 @Service
 public class MockTrimColorService implements TrimColorService {
+
+    @Value("${env.imageServerPath}")
+    private String imageServerPath = "example-url";
 
     private volatile ModelExteriorColor modelExteriorColor;
     private volatile ModelInteriorColor modelInteriorColor;
@@ -27,7 +31,7 @@ public class MockTrimColorService implements TrimColorService {
                             .color(Color.builder()
                                     .id("A2B")
                                     .name("어비스 블랙 펄")
-                                    .code("141423")
+                                    .imageUrl(imageServerPath + "/colors/exterior/A2B.png")
                                     .build())
                             .price(0)
                             .build();
@@ -46,7 +50,7 @@ public class MockTrimColorService implements TrimColorService {
                             .id("A22")
                             .name("퀼팅천연(블랙)")
                             .price(0)
-                            .imageUrl("example-url/colors/interior/I49.png")
+                            .imageUrl(imageServerPath + "/colors/interior/I49.png")
                             .build();
                 }
             }
