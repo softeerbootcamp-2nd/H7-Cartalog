@@ -169,7 +169,7 @@ class ModelControllerTest {
     private ModelTypeListResponseDto.OptionDto getGasolineEngine() {
         return ModelTypeListResponseDto.PowerTrainOptionDto.builder()
                 .id(1L)
-                .name("디젤 2.2")
+                .name("가솔린 3.8")
                 .price(1480000)
                 .description("높은 토크로 파워풀한 드라이빙이 가능하며, 차급대비 연비 효율이 우수합니다")
                 .chosen(38)
@@ -182,6 +182,7 @@ class ModelControllerTest {
 
     private static ModelTypeListResponseDto.OptionDto getDieselEngine() {
         return ModelTypeListResponseDto.PowerTrainOptionDto.builder()
+                .id(2L)
                 .name("디젤 2.2")
                 .price(0)
                 .chosen(38)
