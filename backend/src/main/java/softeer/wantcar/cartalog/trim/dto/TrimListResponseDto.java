@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode
-public class TrimListResponseDTO {
+public class TrimListResponseDto {
     private String modelName;
     private List<TrimDto> trims;
 

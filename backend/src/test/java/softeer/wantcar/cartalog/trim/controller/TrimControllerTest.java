@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import softeer.wantcar.cartalog.global.dto.HMGDataDto;
-import softeer.wantcar.cartalog.trim.dto.TrimListResponseDTO;
+import softeer.wantcar.cartalog.trim.dto.TrimListResponseDto;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static softeer.wantcar.cartalog.trim.dto.TrimListResponseDTO.*;
+import static softeer.wantcar.cartalog.trim.dto.TrimListResponseDto.*;
 
 @DisplayName("트림 도메인 컨트롤러 테스트")
 class TrimControllerTest {
@@ -39,10 +39,10 @@ class TrimControllerTest {
                     getTrimDto("Prestige", "합리적인 필수 사양을 더한 팰리세이드", 47720000, 100000000),
                     getTrimDto("Calligraphy", "프리미엄한 경험을 선사하는 팰리세이드", 52540000, 100000000));
 
-            TrimListResponseDTO expectResponse = new TrimListResponseDTO("팰리세이드", trimDtoList);
+            TrimListResponseDto expectResponse = new TrimListResponseDto("팰리세이드", trimDtoList);
 
             //when
-            TrimListResponseDTO realResponse = trimController.searchTrimList(1L).getBody();
+            TrimListResponseDto realResponse = trimController.searchTrimList(1L).getBody();
 
             //then
             assertThat(realResponse).isEqualTo(expectResponse);
@@ -53,7 +53,7 @@ class TrimControllerTest {
         void returnStatusCode404WhenGetTrimsByNotExistModel() {
             //given
             //when
-            ResponseEntity<TrimListResponseDTO> response = trimController.searchTrimList(-1L);
+            ResponseEntity<TrimListResponseDto> response = trimController.searchTrimList(-1L);
 
             //then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
