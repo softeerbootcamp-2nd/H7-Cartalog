@@ -4,11 +4,11 @@ import Pick from './Pick';
 
 const TYPE = 'TrimSelect';
 
-function TrimSelect({ nextPage }) {
+function TrimSelect() {
   const SectionProps = {
     type: TYPE,
     Info: <Info />,
-    Pick: <Pick nextPage={nextPage} />,
+    Pick: <Pick />,
   };
 
   return <Section {...SectionProps} />;

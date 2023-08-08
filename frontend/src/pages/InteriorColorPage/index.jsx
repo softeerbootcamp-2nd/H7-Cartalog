@@ -5,12 +5,12 @@ import Pick from './Pick';
 const TYPE = 'InteriorColor';
 const IMAGE_URL = '../../../../../assets/images/TrimSelect/interior.png';
 
-function InteriorColor({ nextPage }) {
+function InteriorColor() {
   const SectionProps = {
     type: TYPE,
     url: IMAGE_URL,
     Info: <Info />,
-    Pick: <Pick nextPage={nextPage} />,
+    Pick: <Pick />,
   };
 
   return <Section {...SectionProps} />;

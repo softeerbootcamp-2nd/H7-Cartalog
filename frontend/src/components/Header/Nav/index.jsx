@@ -9,19 +9,19 @@ function Nav() {
           <Link to="/">트림</Link>
         </S.Step>
         <S.Step>
-          <Link to="/">타입</Link>
+          <Link to="/modelType">타입</Link>
         </S.Step>
         <S.Step>
-          <Link to="/">외장</Link>
+          <Link to="/exteriorColor">외장</Link>
         </S.Step>
         <S.Step>
-          <Link to="/">내장</Link>
+          <Link to="/interiorColor">내장</Link>
         </S.Step>
         <S.Step>
-          <Link to="/">옵션</Link>
+          <Link to="/addOptions">옵션</Link>
         </S.Step>
         <S.Step>
-          <Link to="/">완료</Link>
+          <Link to="/estimateFinish">완료</Link>
         </S.Step>
       </S.Stage>
     </S.Nav>

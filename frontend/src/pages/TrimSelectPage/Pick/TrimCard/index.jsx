@@ -5,9 +5,8 @@ const TYPE = 'buttonC';
 const STATE = 'active';
 const MAIN_TITLE = '선택하기';
 
-function TrimCard({ name, description, price, active, onClick, nextPage }) {
+function TrimCard({ name, description, price, active, onClick }) {
   const buttonProps = {
-    nextPage: nextPage,
     type: TYPE,
     state: STATE,
     mainTitle: MAIN_TITLE,
@@ -21,7 +20,7 @@ function TrimCard({ name, description, price, active, onClick, nextPage }) {
       </S.Trim>
       <S.Price>{price}</S.Price>
       <S.SelectButton>
-        <Button {...buttonProps}></Button>
+        <Button {...buttonProps} />
       </S.SelectButton>
     </S.TrimCard>
   );
