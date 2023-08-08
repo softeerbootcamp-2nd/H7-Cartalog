@@ -23,6 +23,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         tools:context=".ui.activity.MainActivity">
 
         <androidx.constraintlayout.widget.Guideline
@@ -128,19 +129,169 @@
 
         </com.google.android.material.tabs.TabLayout>
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_budget_range"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:visibility="@{viewModel.stepIndex == 0 ? View.GONE : View.VISIBLE}"
+            android:backgroundTint="@color/primary_color_700"
+            app:layout_constraintBottom_toTopOf="@id/fc_container"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_start"
+            app:layout_constraintTop_toBottomOf="@id/tl_step">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_budget_range_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="예산 범위"
+                    android:fontFamily="@font/hyndaisans_head_bold"
+                    android:textColor="@color/gray_50"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginBottom="9dp"
+                    app:layout_constraintBottom_toTopOf="@id/cl_hide_container"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tv_budget_range_text_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="설정한 예산까지 "
+                    android:fontFamily="@font/hyndaisans_head_light"
+                    android:textColor="@color/gray_50"
+                    android:textSize="12sp"
+                    android:textAlignment="textEnd"
+                    android:layout_marginStart="9dp"
+                    app:layout_constraintStart_toEndOf="@id/tv_budget_range_title"
+                    app:layout_constraintTop_toTopOf="@id/tv_budget_range_title"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_budget_range_title"
+                    app:layout_constraintEnd_toStartOf="@id/tv_budget_range_text_price"/>
+
+                <TextView
+                    android:id="@+id/tv_budget_range_text_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1,250,000원"
+                    android:fontFamily="@font/hyndaisans_head_medium"
+                    android:textColor="@color/active_blue2"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toTopOf="@id/tv_budget_range_text_1"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_budget_range_text_1"
+                    app:layout_constraintEnd_toStartOf="@id/tv_budget_range_text_2"/>
+
+                <TextView
+                    android:id="@+id/tv_budget_range_text_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 남았어요."
+                    android:fontFamily="@font/hyndaisans_head_light"
+                    android:textColor="@color/gray_50"
+                    android:textSize="12sp"
+                    android:layout_marginEnd="4dp"
+                    app:layout_constraintTop_toTopOf="@id/tv_budget_range_text_1"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_budget_range_text_1"
+                    app:layout_constraintEnd_toStartOf="@id/btn_budget_range_toggle"/>
+
+                <ImageButton
+                    android:id="@+id/btn_budget_range_toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:layout_marginEnd="16dp"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_budget_range_text_2"
+                    app:layout_constraintTop_toTopOf="@id/tv_budget_range_text_2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/icon_arrow_down_big"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_hide_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <androidx.appcompat.widget.AppCompatSeekBar
+                    android:id="@+id/sb_budget_range_bar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:thumb="@drawable/shape_seekbar_thumb"
+                    android:splitTrack="false"
+                    android:progressDrawable="@drawable/shape_seekbar_bar"
+                    android:progress="30"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <SeekBar
+                    android:id="@+id/sb_budget_range_limit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:progressDrawable="@android:color/transparent"
+                    android:thumb="@drawable/icon_seekbar_user_pin"
+                    android:progress="40"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tv_min_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3850만원"
+                    android:textSize="10sp"
+                    android:textColor="@color/primary_color_200"
+                    android:layout_marginBottom="14dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintTop_toBottomOf="@id/sb_budget_range_bar"
+                    app:layout_constraintStart_toStartOf="@id/sb_budget_range_bar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_max_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4300만원"
+                    android:textSize="10sp"
+                    android:textColor="@color/primary_color_200"
+                    android:layout_marginBottom="14dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintTop_toBottomOf="@id/sb_budget_range_bar"
+                    app:layout_constraintEnd_toEndOf="@id/sb_budget_range_bar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fc_container"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="20dp"
             app:defaultNavHost="true"
+            android:paddingTop="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tl_step"
+            app:layout_constraintTop_toBottomOf="@id/cv_budget_range"
             app:layout_constraintVertical_bias="0.0"
             app:navGraph="@navigation/nav_graph" />
 
@@ -177,5 +328,7 @@
             app:layout_constraintStart_toEndOf="@id/btn_prev" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </layout>
