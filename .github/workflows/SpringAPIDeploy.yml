@@ -28,7 +28,7 @@ jobs:
           java-version: 11.0.8
 
       - name: 운영 서버 설정 파일 생성
-        run: echo "APPLICATION_PRODUCTION=$APPLICATION_PRODUCTION" >> ./main/resources/application-production.yml
+        run: echo "APPLICATION_PRODUCTION=$APPLICATION_PRODUCTION" > ./main/resources/application-production.yml
         env:
           APPLICATION_PRODUCTION: ${{ secrets.APPLICATION_PRODUCTION }}
 
