@@ -38,7 +38,7 @@ public class TrimInteriorColorListResponseDto {
     }
 
     public static TrimInteriorColorListResponseDto from(Map<ModelInteriorColor, Integer> interiorColorInfos, String imageServerPath) {
-        List<TrimInteriorColorDto> interiorColorDtos = interiorColorInfos.entrySet().stream()
+        List<TrimInteriorColorDto> interiorColorDtoList = interiorColorInfos.entrySet().stream()
                 .map(entry -> TrimInteriorColorDto.from(
                         entry.getKey(),
                         entry.getValue(),
@@ -46,7 +46,7 @@ public class TrimInteriorColorListResponseDto {
                 .collect(Collectors.toList());
 
         return TrimInteriorColorListResponseDto.builder()
-                .trimInteriorColorDtoList(interiorColorDtos)
+                .trimInteriorColorDtoList(interiorColorDtoList)
                 .build();
     }
 }

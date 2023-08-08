@@ -22,7 +22,7 @@ public class TrimExteriorColorListResponseDto {
     public static class TrimExteriorColorDto {
         private String id;
         private String name;
-        private String color;
+        private String colorImageUrl;
         private String carImageUrl;
         private int price;
         private int chosen;
@@ -32,7 +32,7 @@ public class TrimExteriorColorListResponseDto {
                     .id(exteriorColor.getColor().getId())
                     .name(exteriorColor.getColor().getName())
                     .price(exteriorColor.getPrice())
-                    .color("#" + exteriorColor.getColor().getCode())
+                    .colorImageUrl(exteriorColor.getColor().getImageUrl())
                     .carImageUrl(carImageUrl)
                     .chosen(chosen)
                     .build();
@@ -40,7 +40,7 @@ public class TrimExteriorColorListResponseDto {
     }
 
     public static TrimExteriorColorListResponseDto from(Map<ModelExteriorColor, Integer> exteriorColors, String imageServerPath) {
-        List<TrimExteriorColorDto> exteriorColorDtos = exteriorColors.entrySet().stream()
+        List<TrimExteriorColorDto> exteriorColorDtoList = exteriorColors.entrySet().stream()
                 .map(entry -> TrimExteriorColorDto.from(
                         entry.getKey(),
                         entry.getValue(),
@@ -48,7 +48,7 @@ public class TrimExteriorColorListResponseDto {
                 .collect(Collectors.toList());
 
         return TrimExteriorColorListResponseDto.builder()
-                .trimExteriorColorDtoList(exteriorColorDtos)
+                .trimExteriorColorDtoList(exteriorColorDtoList)
                 .build();
     }
 }

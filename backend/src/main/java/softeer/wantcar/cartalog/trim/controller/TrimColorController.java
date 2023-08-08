@@ -32,20 +32,18 @@ public class TrimColorController {
         try {
             Map<ModelExteriorColor, Integer> exteriorColorInfo = trimColorService.findTrimExteriorColorListByTrimId(id);
             return new ResponseEntity<>(TrimExteriorColorListResponseDto.from(exteriorColorInfo, imageServerPath), HttpStatus.OK);
-        } catch (Exception exception) {
-            log.error(exception.getMessage());
+        } catch (RuntimeException exception) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping(value = "/interior-colors")
     public ResponseEntity<TrimInteriorColorListResponseDto> trimInteriorColorList(@PathParam("trimId") Long trimId,
-                                                                                  @PathParam(value = "exteriorColorId") Long exteriorColorId) {
+                                                                                  @PathParam("exteriorColorId") Long exteriorColorId) {
         try {
-            Map<ModelInteriorColor, Integer> interiorCOlorInfo = trimColorService.findTrimInteriorColorListByTrimId(trimId, exteriorColorId);
-            return new ResponseEntity<>(TrimInteriorColorListResponseDto.from(interiorCOlorInfo, imageServerPath), HttpStatus.OK);
+            Map<ModelInteriorColor, Integer> interiorColorInfo = trimColorService.findTrimInteriorColorListByTrimId(trimId, exteriorColorId);
+            return new ResponseEntity<>(TrimInteriorColorListResponseDto.from(interiorColorInfo, imageServerPath), HttpStatus.OK);
         } catch (RuntimeException exception) {
-            log.error(exception.getMessage());
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }

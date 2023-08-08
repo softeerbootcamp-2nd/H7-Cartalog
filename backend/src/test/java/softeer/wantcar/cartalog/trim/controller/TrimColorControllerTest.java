@@ -62,7 +62,7 @@ class TrimColorControllerTest {
 
             softAssertions.assertThat(trimExteriorColorDto.getId()).isEqualTo(mockData.getColor().getId());
             softAssertions.assertThat(trimExteriorColorDto.getName()).isEqualTo(mockData.getColor().getName());
-            softAssertions.assertThat(trimExteriorColorDto.getColor()).isEqualTo("#" + mockData.getColor().getCode());
+            softAssertions.assertThat(trimExteriorColorDto.getColorImageUrl()).isEqualTo(mockData.getColor().getImageUrl());
             softAssertions.assertThat(trimExteriorColorDto.getPrice()).isEqualTo(mockData.getPrice());
             softAssertions.assertThat(trimExteriorColorDto.getChosen()).isEqualTo(38);
             softAssertions.assertAll();

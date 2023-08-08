@@ -83,6 +83,7 @@ class ModelControllerTest {
             ModelPerformanceDto realResponse = modelController.getModelPerformance(1L, 3L, 5L).getBody();
 
             //then
+            assertThat(realResponse).isNotNull();
             softAssertions.assertThat(realResponse.getDisplacement()).isEqualTo(2199f);
             softAssertions.assertThat(realResponse.getFuelEfficiency()).isEqualTo(12f);
             softAssertions.assertThat(realResponse).isEqualTo(expectResponse);
@@ -113,7 +114,7 @@ class ModelControllerTest {
 
         @Test
         @DisplayName("존재하지 않는 구동방식 식별자로 조회할 경우 404 에러를 반환해야 한다.")
-        void returnStatusCode404WhenGetNotExistWD가Id() {
+        void returnStatusCode404WhenGetNotExistWDId() {
             //given
             //when
             ResponseEntity<ModelPerformanceDto> realResponse = modelController.getModelPerformance(1L, 3L, -1L);
@@ -168,7 +169,7 @@ class ModelControllerTest {
     private ModelTypeListResponseDto.OptionDto getGasolineEngine() {
         return ModelTypeListResponseDto.PowerTrainOptionDto.builder()
                 .id(1L)
-                .name("디젤 2.2")
+                .name("가솔린 3.8")
                 .price(1480000)
                 .description("높은 토크로 파워풀한 드라이빙이 가능하며, 차급대비 연비 효율이 우수합니다")
                 .chosen(38)
@@ -181,6 +182,7 @@ class ModelControllerTest {
 
     private static ModelTypeListResponseDto.OptionDto getDieselEngine() {
         return ModelTypeListResponseDto.PowerTrainOptionDto.builder()
+                .id(2L)
                 .name("디젤 2.2")
                 .price(0)
                 .chosen(38)
