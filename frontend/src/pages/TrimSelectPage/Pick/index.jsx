@@ -28,7 +28,7 @@ const TRIM_DATA = [
 
 const PICK_MAIN_TITLE = '트림을 선택해주세요.';
 
-function Pick({ nextPage }) {
+function Pick() {
   const [active, setActive] = useState(null);
   const pickTitleProps = {
     mainTitle: PICK_MAIN_TITLE,
@@ -43,13 +43,12 @@ function Pick({ nextPage }) {
 
           return (
             <TrimCard
-              key={index}
+              key={trim.name}
               name={trim.name}
               description={trim.description}
               price={trim.price}
               active={active === index}
               onClick={handleClick}
-              nextPage={nextPage}
             />
           );
         })}

@@ -5,12 +5,12 @@ import Pick from './Pick';
 const TYPE = 'AddOption';
 const IMAGE_URL = '../../../../../assets/images/TrimSelect/interior.png';
 
-function AddOption({ nextPage }) {
+function AddOption() {
   const InfoProps = { imageUrl: IMAGE_URL };
   const SectionProps = {
     type: TYPE,
     Info: <Info {...InfoProps} />,
-    Pick: <Pick nextPage={nextPage} />,
+    Pick: <Pick />,
   };
 
   return <Section {...SectionProps} />;
