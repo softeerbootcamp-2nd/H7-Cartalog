@@ -39,7 +39,7 @@ public class TrimColorController {
 
     @GetMapping(value = "/interior-colors")
     public ResponseEntity<TrimInteriorColorListResponseDto> trimInteriorColorList(@PathParam("trimId") Long trimId,
-                                                                                  @PathParam(value = "exteriorColorId") Long exteriorColorId) {
+                                                                                  @PathParam("exteriorColorId") Long exteriorColorId) {
         try {
             Map<ModelInteriorColor, Integer> interiorCOlorInfo = trimColorService.findTrimInteriorColorListByTrimId(trimId, exteriorColorId);
             return new ResponseEntity<>(TrimInteriorColorListResponseDto.from(interiorCOlorInfo, imageServerPath), HttpStatus.OK);
