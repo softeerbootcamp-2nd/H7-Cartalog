@@ -4,11 +4,11 @@ import Pick from './Pick';
 
 const TYPE = 'ExteriorColor';
 
-function ExteriorColor({ nextPage }) {
+function ExteriorColor() {
   const SectionProps = {
     type: TYPE,
     Info: <Info />,
-    Pick: <Pick nextPage={nextPage} />,
+    Pick: <Pick />,
   };
 
   return <Section {...SectionProps} />;
