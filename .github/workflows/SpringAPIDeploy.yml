@@ -27,6 +27,9 @@ jobs:
         with:
           java-version: 11.0.8
 
+      - name: 운영 서버 설정 파일 생성
+        run: ${{ secrets.APPLICATION_PRODUCTION }} > ./main/resources/application-production.yml
+
       - name: ./gradlew 권한 설정
         run: chmod +x ./gradlew
 
