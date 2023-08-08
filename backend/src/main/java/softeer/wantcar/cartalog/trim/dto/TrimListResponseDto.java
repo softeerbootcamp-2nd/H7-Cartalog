@@ -21,6 +21,7 @@ public class TrimListResponseDto {
     @Builder
     @EqualsAndHashCode
     public static class TrimDto {
+        private Long id;
         private String name;
         private String description;
         private int minPrice;

@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### production 설정 파일 격리 ###
+**/application-production.yml

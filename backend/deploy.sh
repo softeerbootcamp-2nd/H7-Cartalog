@@ -21,6 +21,6 @@ else
 fi
 
 echo "> $JAR_PATH 배포"
-nohup java -jar $JAR_PATH >> $LOG_FILE 2>&1 &
+nohup java -jar -Dspring.profiles.active=production $JAR_PATH >> $LOG_FILE 2>&1 &
 
 echo "[$(date)] server deploy" >> $LOG_FILE

@@ -1,0 +1,6 @@
+# application-local.yml
+server:
+  port: 8080
+
+env:
+  imageServerPath: imageServerUrl
