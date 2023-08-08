@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.softeer.cartalog.databinding.FragmentTypeBinding
 import com.softeer.cartalog.viewmodel.TypeViewModel
 
 class TypeFragment: Fragment() {
-    private val typeViewModel: TypeViewModel by activityViewModels()
+    private val typeViewModel: TypeViewModel by viewModels()
 
     private var _binding: FragmentTypeBinding? = null
     private val binding get() = _binding!!

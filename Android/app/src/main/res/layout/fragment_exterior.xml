@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.softeer.cartalog.viewmodel.ExteriorViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -77,6 +80,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_header"
+            app:viewModel="@{viewModel}"
             tools:listitem="@layout/item_exterior_color" />
 
 
