@@ -27,10 +27,10 @@ public class TrimController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         List<TrimListResponseDto.TrimDto> trimDtoList = List.of(
-                getTrimDto("Exclusive", "기본기를 갖춘 베이직한 팰리세이드", 40440000, 100000000),
-                getTrimDto("Le Blanc", "실용적인 사양의 경제적인 팰리세이드", 43460000, 100000000),
-                getTrimDto("Prestige", "합리적인 필수 사양을 더한 팰리세이드", 47720000, 100000000),
-                getTrimDto("Calligraphy", "프리미엄한 경험을 선사하는 팰리세이드", 52540000, 100000000));
+                getTrimDto(1L, "Exclusive", "기본기를 갖춘 베이직한 팰리세이드", 40440000, 100000000),
+                getTrimDto(2L, "Le Blanc", "실용적인 사양의 경제적인 팰리세이드", 43460000, 100000000),
+                getTrimDto(3L, "Prestige", "합리적인 필수 사양을 더한 팰리세이드", 47720000, 100000000),
+                getTrimDto(4L, "Calligraphy", "프리미엄한 경험을 선사하는 팰리세이드", 52540000, 100000000));
 
         TrimListResponseDto trimListResponseDTO = new TrimListResponseDto("팰리세이드", trimDtoList);
 
@@ -43,7 +43,7 @@ public class TrimController {
                 new HMGDataDto("후방 교차 충돌방지 보조", "42회", "15,000km 당"));
     }
 
-    private TrimListResponseDto.TrimDto getTrimDto(String name, String description, int minPrice, int maxPrice) {
+    private TrimListResponseDto.TrimDto getTrimDto(Long id, String name, String description, int minPrice, int maxPrice) {
         List<TrimListResponseDto.ModelTypeDto> modelTypeDtoList = List.of(
                 new TrimListResponseDto.ModelTypeDto("파워트레인", new TrimListResponseDto.OptionDto(1L, "디젤 2.2", 0)),
                 new TrimListResponseDto.ModelTypeDto("구동방식", new TrimListResponseDto.OptionDto(3L, "2WD", 0)),
@@ -53,6 +53,7 @@ public class TrimController {
                 new TrimListResponseDto.DefaultTrimInfoDto(modelTypeDtoList, "A2B", "A22");
 
         return TrimListResponseDto.TrimDto.builder()
+                .id(id)
                 .name(name)
                 .description(description)
                 .minPrice(minPrice)
