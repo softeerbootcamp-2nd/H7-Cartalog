@@ -32,7 +32,7 @@ public class TrimColorController {
         try {
             Map<ModelExteriorColor, Integer> exteriorColorInfo = trimColorService.findTrimExteriorColorListByTrimId(id);
             return new ResponseEntity<>(TrimExteriorColorListResponseDto.from(exteriorColorInfo, imageServerPath), HttpStatus.OK);
-        } catch (Exception exception) {
+        } catch (RuntimeException exception) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
