@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as S from './style';
 
 const COUNT = '회';
@@ -26,9 +25,5 @@ function HMGData({ dataList }) {
     </S.HMGData>
   );
 }
-
-HMGData.propTypes = {
-  dataList: PropTypes.instanceOf(Object).isRequired,
-};
 
 export default HMGData;

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as S from './style';
 
 /**
@@ -21,12 +20,5 @@ function Title({ type, subTitle, mainTitle, info }) {
     </S.Title>
   );
 }
-
-Title.propTypes = {
-  type: PropTypes.string.isRequired,
-  subTitle: PropTypes.string.isRequired,
-  mainTitle: PropTypes.string.isRequired,
-  info: PropTypes.string.isRequired,
-};
 
 export default Title;

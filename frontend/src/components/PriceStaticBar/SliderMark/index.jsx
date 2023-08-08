@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as S from './style';
 
 function SliderMark({ minPrice, maxPrice }) {
@@ -12,10 +11,5 @@ function SliderMark({ minPrice, maxPrice }) {
     </S.SliderMark>
   );
 }
-
-SliderMark.propTypes = {
-  minPrice: PropTypes.number.isRequired,
-  maxPrice: PropTypes.number.isRequired,
-};
 
 export default SliderMark;

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useState } from 'react';
 import * as S from './style';
 import { ReactComponent as ArrowDown } from '../../../assets/icons/arrow_down.svg';
@@ -11,7 +10,7 @@ const TITLE = '예산범위';
 function PriceStaticBar({ min, max, price }) {
   const [expanded, setExpanded] = useState(false);
   const [budget, setBudget] = useState((min + max) / 2);
-  const handleClick = () => setExpanded((expanded) => !expanded);
+  const handleClick = () => setExpanded((isExpanded) => !isExpanded);
   const over = price > budget;
 
   return (
@@ -37,11 +36,4 @@ function PriceStaticBar({ min, max, price }) {
     </S.PriceStaticBar>
   );
 }
-
-PriceStaticBar.propTypes = {
-  min: PropTypes.number.isRequired,
-  max: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
-};
-
 export default PriceStaticBar;

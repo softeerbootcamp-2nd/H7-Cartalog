@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as S from './style';
 
 const OUTPUT_DIVIDE = '/';
@@ -28,12 +27,5 @@ function HMGChart({ title, unit, rpm, width }) {
     </S.HMGChart>
   );
 }
-
-HMGChart.propTypes = {
-  title: PropTypes.string.isRequired,
-  unit: PropTypes.string.isRequired,
-  rpm: PropTypes.string.isRequired,
-  width: PropTypes.string.isRequired,
-};
 
 export default HMGChart;

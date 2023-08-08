@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as S from './style';
 import Title from '../../../components/Title';
 
@@ -23,9 +22,5 @@ function Info({ imageUrl }) {
     </S.Info>
   );
 }
-
-Info.propTypes = {
-  imageUrl: PropTypes.string.isRequired,
-};
 
 export default Info;

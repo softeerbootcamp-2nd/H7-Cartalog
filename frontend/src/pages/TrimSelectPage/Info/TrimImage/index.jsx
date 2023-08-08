@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import * as S from './style';
 
 const IMG_DIRECTORY = '../../../../../assets/images/TrimSelect/';
@@ -24,9 +23,5 @@ function TrimImage({ trim }) {
     </S.TrimImage>
   );
 }
-
-TrimImage.propTypes = {
-  trim: PropTypes.string.isRequired,
-};
 
 export default TrimImage;

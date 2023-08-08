@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as S from './style';
 
 /**
@@ -21,12 +20,5 @@ function Section({ type, url, Info, Pick }) {
     </S.Section>
   );
 }
-
-Section.propTypes = {
-  type: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-  Info: PropTypes.element.isRequired,
-  Pick: PropTypes.element.isRequired,
-};
 
 export default Section;

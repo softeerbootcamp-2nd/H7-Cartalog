@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as S from './style';
 
 function Slider({ min = 0, max = 100, step = 1, disabled, price, budget, setBudget }) {
@@ -29,15 +28,5 @@ function Slider({ min = 0, max = 100, step = 1, disabled, price, budget, setBudg
     </S.SliderContainer>
   );
 }
-
-Slider.propTypes = {
-  min: PropTypes.number.isRequired,
-  max: PropTypes.number.isRequired,
-  step: PropTypes.number.isRequired,
-  disabled: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
-  budget: PropTypes.number.isRequired,
-  setBudget: PropTypes.func.isRequired,
-};
 
 export default Slider;

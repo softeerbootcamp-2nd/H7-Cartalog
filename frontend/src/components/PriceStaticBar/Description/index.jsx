@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as S from './style';
 
 function Description({ $remainPrice }) {
@@ -15,9 +14,5 @@ function Description({ $remainPrice }) {
     </S.Description>
   );
 }
-
-Description.propTypes = {
-  $remainPrice: PropTypes.number.isRequired,
-};
 
 export default Description;

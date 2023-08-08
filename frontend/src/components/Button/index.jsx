@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as S from './style';
 
 /**
@@ -23,13 +22,5 @@ function Button({ nextPage, type, state, subTitle, mainTitle }) {
     </S.Button>
   );
 }
-
-Button.propTypes = {
-  nextPage: PropTypes.func.isRequired,
-  type: PropTypes.string.isRequired,
-  state: PropTypes.string.isRequired,
-  subTitle: PropTypes.string.isRequired,
-  mainTitle: PropTypes.string.isRequired,
-};
 
 export default Button;

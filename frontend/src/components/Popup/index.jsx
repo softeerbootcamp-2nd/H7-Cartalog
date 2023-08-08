@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import * as S from './style';
 
@@ -36,12 +35,5 @@ function Popup({ show, close, actions, children }) {
     )
   );
 }
-
-Popup.propTypes = {
-  show: PropTypes.bool.isRequired,
-  close: PropTypes.func.isRequired,
-  actions: PropTypes.PropTypes.instanceOf(Object).isRequired,
-  children: PropTypes.string.isRequired,
-};
 
 export default Popup;

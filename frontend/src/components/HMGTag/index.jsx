@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as S from './style';
 
 /**
@@ -15,9 +14,5 @@ function HMGTag({ type }) {
     </S.HMGTag>
   );
 }
-
-HMGTag.propTypes = {
-  type: PropTypes.string.isRequired,
-};
 
 export default HMGTag;

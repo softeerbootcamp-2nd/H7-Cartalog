@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as S from './style';
 import RoundButton from '../../../components/RoundButton';
 import Button from '../../../components/Button';
@@ -33,9 +32,5 @@ function Pick({ nextPage }) {
     </S.Pick>
   );
 }
-
-Pick.propTypes = {
-  nextPage: PropTypes.func.isRequired,
-};
 
 export default Pick;

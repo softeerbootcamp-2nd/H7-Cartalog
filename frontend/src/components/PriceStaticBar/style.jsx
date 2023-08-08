@@ -13,6 +13,7 @@ export const PriceStaticBar = styled.div.attrs(({ theme, $over }) => ({
   backdrop-filter: blur(3px);
   user-select: none;
   transition: background-color 0.5s ease;
+  overflow-x: hidden;
 
   &.over {
     background-color: #000b19e5;
@@ -29,7 +30,7 @@ export const CollapsedArea = styled.div`
   align-items: center;
   gap: 9px;
   width: 100%;
-  height: 40px;
+  height: 32px;
   cursor: pointer;
 
   & > svg {
@@ -51,7 +52,6 @@ export const ExpandedArea = styled.div`
   justify-content: center;
   align-items: stretch;
   height: 38px;
-  margin-bottom: 6px;
   transition:
     visibility 0.2s ease,
     height 0.2s ease,

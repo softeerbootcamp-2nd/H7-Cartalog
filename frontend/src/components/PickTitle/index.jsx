@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as S from './style';
 
 /**
@@ -13,9 +12,5 @@ function PickTitle({ mainTitle }) {
     </S.PickTitle>
   );
 }
-
-PickTitle.propTypes = {
-  mainTitle: PropTypes.string.isRequired,
-};
 
 export default PickTitle;

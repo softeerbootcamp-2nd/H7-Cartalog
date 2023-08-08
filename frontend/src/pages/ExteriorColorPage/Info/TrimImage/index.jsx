@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import * as S from './style';
 
 const palisadeUrl = 'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade';
@@ -35,9 +34,5 @@ function TrimImage({ start }) {
     </S.TrimImage>
   );
 }
-
-TrimImage.propTypes = {
-  start: PropTypes.bool.isRequired,
-};
 
 export default TrimImage;
