@@ -26,7 +26,6 @@ public class ModelController {
         if (modelId < 0) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        log.info(imageServerPath);
         ModelTypeListResponseDto.ModelTypeDto powerTrains = ModelTypeListResponseDto.ModelTypeDto.builder()
                 .type("powerTrain")
                 .options(List.of(getDieselEngine(), getGasolineEngine()))

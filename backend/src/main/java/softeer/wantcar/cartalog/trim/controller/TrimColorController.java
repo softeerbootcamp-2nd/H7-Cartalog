@@ -33,7 +33,6 @@ public class TrimColorController {
             Map<ModelExteriorColor, Integer> exteriorColorInfo = trimColorService.findTrimExteriorColorListByTrimId(id);
             return new ResponseEntity<>(TrimExteriorColorListResponseDto.from(exteriorColorInfo, imageServerPath), HttpStatus.OK);
         } catch (Exception exception) {
-            log.error(exception.getMessage());
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
@@ -45,7 +44,6 @@ public class TrimColorController {
             Map<ModelInteriorColor, Integer> interiorCOlorInfo = trimColorService.findTrimInteriorColorListByTrimId(trimId, exteriorColorId);
             return new ResponseEntity<>(TrimInteriorColorListResponseDto.from(interiorCOlorInfo, imageServerPath), HttpStatus.OK);
         } catch (RuntimeException exception) {
-            log.error(exception.getMessage());
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
