@@ -1,3 +1,4 @@
+import CheckIcon from '../CheckIcon';
 import * as S from './style';
 
 function ColorCard({ selected, pickRatio, name, price, onClick, children }) {
@@ -6,14 +7,14 @@ function ColorCard({ selected, pickRatio, name, price, onClick, children }) {
       <S.ColorPreview>{children}</S.ColorPreview>
       <S.ColorInfo>
         <S.UpperInfo>
-          <S.PickRatio>
+          <div className="pickRatio">
             <span>{pickRatio}%</span>가 선택했어요
-          </S.PickRatio>
-          <S.ColorName>{name}</S.ColorName>
+          </div>
+          <div className="title">{name}</div>
         </S.UpperInfo>
         <S.LowerInfo>
-          <S.Price>+{price.toLocaleString()} 원</S.Price>
-          <S.CheckIcons />
+          <div className="price">+{price.toLocaleString()} 원</div>
+          <CheckIcon />
         </S.LowerInfo>
       </S.ColorInfo>
     </S.ColorCard>

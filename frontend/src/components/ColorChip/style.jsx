@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 
+// eslint-disable-next-line import/prefer-default-export
 export const ColorChip = styled.div`
   width: 58px;
   height: 58px;
@@ -13,9 +14,10 @@ export const ColorChip = styled.div`
     border-color: ${({ theme }) => theme.color.primary.default};
   }
 
-  & > div {
+  & > img {
     width: 100%;
     height: 100%;
     border-radius: 50%;
+    object-fit: cover;
   }
 `;

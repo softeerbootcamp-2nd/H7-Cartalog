@@ -114,4 +114,52 @@ export const FadeIn = css`
   animation: ${fadeInAnimation} 0.25s ease-out forwards;
 `;
 
+export const CardCss = css`
+  border-radius: 2px;
+  border: 1px solid ${({ theme }) => theme.color.gray['200']};
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+
+  &:hover {
+    border-color: ${({ theme }) => theme.color.activeBlue};
+  }
+
+  &.selected {
+    border-color: ${({ theme }) => theme.color.activeBlue};
+    background-color: ${({ theme }) => theme.color.cardBG};
+
+    & .pickRatio {
+      color: ${({ theme }) => theme.color.gray['700']};
+
+      & > span {
+        color: ${({ theme }) => theme.color.activeBlue};
+      }
+    }
+
+    & .title,
+    & .price {
+      color: ${({ theme }) => theme.color.gray['900']};
+    }
+  }
+
+  & .pickRatio {
+    font: ${({ theme }) => theme.font.textKR.Regular12};
+    color: ${({ theme }) => theme.color.gray['600']};
+    transition: color 0.2s ease;
+  }
+
+  & .price {
+    font: ${({ theme }) => theme.font.textKR.Medium14};
+    color: ${({ theme }) => theme.color.gray['600']};
+    transition: color 0.2s ease;
+  }
+
+  & .title {
+    font: ${({ theme }) => theme.font.headKR.Medium14};
+    color: ${({ theme }) => theme.color.gray['500']};
+    transition: color 0.2s ease;
+  }
+`;
+
 export default GlobalStyle;

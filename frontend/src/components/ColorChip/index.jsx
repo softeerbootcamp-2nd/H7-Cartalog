@@ -1,9 +1,9 @@
 import * as S from './style';
 
-function ColorChip({ color, selected }) {
+function ColorChip({ selected, src }) {
   return (
     <S.ColorChip className={selected ? 'selected' : null}>
-      <div style={{ backgroundColor: `${color}` }} />
+      <img src={src} alt="color" />
     </S.ColorChip>
   );
 }
