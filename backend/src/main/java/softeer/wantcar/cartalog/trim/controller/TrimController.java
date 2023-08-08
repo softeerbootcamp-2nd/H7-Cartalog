@@ -37,7 +37,7 @@ public class TrimController {
         return new ResponseEntity<>(trimListResponseDTO, HttpStatus.OK);
     }
 
-    private static List<HMGDataDto> getHmgDataDtos() {
+    private static List<HMGDataDto> getHmgDataDtoList() {
         return List.of(new HMGDataDto("안전 하차 정보", "42회", "15,000km 당"),
                 new HMGDataDto("후측방 충돌 경고", "42회", "15,000km 당"),
                 new HMGDataDto("후방 교차 충돌방지 보조", "42회", "15,000km 당"));
@@ -60,7 +60,7 @@ public class TrimController {
                 .exteriorImage(imageServerPath + "/example-exterior-image")
                 .interiorImage(imageServerPath + "/example-interior-image")
                 .wheelImage(imageServerPath + "/example-wheel-image")
-                .hmgData(getHmgDataDtos())
+                .hmgData(getHmgDataDtoList())
                 .defaultInfo(defaultTrimInfo)
                 .build();
     }

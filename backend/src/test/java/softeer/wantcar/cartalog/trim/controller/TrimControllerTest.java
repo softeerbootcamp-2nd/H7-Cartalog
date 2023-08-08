@@ -34,12 +34,12 @@ class TrimControllerTest {
         @DisplayName("올바른 요청시 200 상태와 함께 트림 목록을 반환해야 한다.")
         void returnDtoHasTrimsWhenGetTrimsByExistModel() {
             //given
-            List<TrimDto> trimDtos = List.of(getTrimDto("Exclusive", "기본기를 갖춘 베이직한 팰리세이드", 40440000, 100000000),
+            List<TrimDto> trimDtoList = List.of(getTrimDto("Exclusive", "기본기를 갖춘 베이직한 팰리세이드", 40440000, 100000000),
                     getTrimDto("Le Blanc", "실용적인 사양의 경제적인 팰리세이드", 43460000, 100000000),
                     getTrimDto("Prestige", "합리적인 필수 사양을 더한 팰리세이드", 47720000, 100000000),
                     getTrimDto("Calligraphy", "프리미엄한 경험을 선사하는 팰리세이드", 52540000, 100000000));
 
-            TrimListResponseDTO expectResponse = new TrimListResponseDTO("팰리세이드", trimDtos);
+            TrimListResponseDTO expectResponse = new TrimListResponseDTO("팰리세이드", trimDtoList);
 
             //when
             TrimListResponseDTO realResponse = trimController.searchTrimList(1L).getBody();
@@ -67,11 +67,11 @@ class TrimControllerTest {
     }
 
     private static TrimDto getTrimDto(String name, String description, int minPrice, int maxPrice) {
-        List<ModelTypeDto> modelTypeDtos = List.of(new ModelTypeDto("파워트레인", new OptionDto(1L, "디젤 2.2", 0)),
+        List<ModelTypeDto> modelTypeDtoList = List.of(new ModelTypeDto("파워트레인", new OptionDto(1L, "디젤 2.2", 0)),
                 new ModelTypeDto("구동방식", new OptionDto(3L, "2WD", 0)),
                 new ModelTypeDto("바디타입", new OptionDto(5L, "7인승", 0)));
 
-        DefaultTrimInfoDto defaultTrimInfo = new DefaultTrimInfoDto(modelTypeDtos, "A2B", "A22");
+        DefaultTrimInfoDto defaultTrimInfo = new DefaultTrimInfoDto(modelTypeDtoList, "A2B", "A22");
 
         return TrimDto.builder()
                 .name(name)
