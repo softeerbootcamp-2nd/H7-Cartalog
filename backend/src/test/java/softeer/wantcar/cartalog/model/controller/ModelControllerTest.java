@@ -83,6 +83,7 @@ class ModelControllerTest {
             ModelPerformanceDto realResponse = modelController.getModelPerformance(1L, 3L, 5L).getBody();
 
             //then
+            assertThat(realResponse).isNotNull();
             softAssertions.assertThat(realResponse.getDisplacement()).isEqualTo(2199f);
             softAssertions.assertThat(realResponse.getFuelEfficiency()).isEqualTo(12f);
             softAssertions.assertThat(realResponse).isEqualTo(expectResponse);
@@ -113,7 +114,7 @@ class ModelControllerTest {
 
         @Test
         @DisplayName("존재하지 않는 구동방식 식별자로 조회할 경우 404 에러를 반환해야 한다.")
-        void returnStatusCode404WhenGetNotExistWD가Id() {
+        void returnStatusCode404WhenGetNotExistWDId() {
             //given
             //when
             ResponseEntity<ModelPerformanceDto> realResponse = modelController.getModelPerformance(1L, 3L, -1L);
