@@ -101,17 +101,32 @@ const fadeInWithTransformAnimation = keyframes`
   }
 `;
 
+export const FadeInWithTransform = css`
+  animation: ${fadeInWithTransformAnimation} 0.25s ease-out forwards;
+`;
+
 const fadeInAnimation = keyframes`
   0% { opacity: 0; }
   100% { opacity: 1; }
 `;
 
-export const FadeInWithTransform = css`
-  animation: ${fadeInWithTransformAnimation} 0.25s ease-out forwards;
-`;
-
 export const FadeIn = css`
   animation: ${fadeInAnimation} 0.25s ease-out forwards;
+`;
+
+const slideFromRightAnimation = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+`;
+
+export const SlideFromRight = css`
+  animation: ${slideFromRightAnimation} 0.5s ease-out forwards;
 `;
 
 export const CardCss = css`

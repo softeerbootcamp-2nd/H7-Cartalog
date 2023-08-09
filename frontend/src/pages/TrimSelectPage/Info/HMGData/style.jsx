@@ -1,10 +1,12 @@
 import styled from 'styled-components';
+import { SlideFromRight } from '../../../../styles/GlobalStyle';
 
 export const HMGData = styled.div`
   display: flex;
   flex-direction: row;
   margin-top: 16px;
   gap: 52px;
+  ${SlideFromRight};
 `;
 
 export const Item = styled.div`
