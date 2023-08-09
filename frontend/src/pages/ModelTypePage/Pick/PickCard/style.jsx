@@ -9,6 +9,9 @@ export const SelectCard = styled.div`
   display: flex;
   padding: 4px;
   gap: 5px;
+  border-radius: 8px;
+  margin-top: 4px;
+  background-color: ${({ theme }) => theme.color.gray['50']};
 `;
 
 export const TypeCardName = styled.div`
