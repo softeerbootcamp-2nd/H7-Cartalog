@@ -9,10 +9,14 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
 import androidx.navigation.NavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.softeer.cartalog.R
 import com.softeer.cartalog.ui.dialog.TypeDetailPopupActivity
+import com.softeer.cartalog.viewmodel.ExteriorViewModel
+import com.softeer.cartalog.viewmodel.InteriorViewModel
 import com.softeer.cartalog.viewmodel.MainViewModel
 import com.softeer.cartalog.viewmodel.TypeViewModel
 import com.softeer.cartalog.viewmodel.TrimViewModel
@@ -146,6 +150,24 @@ fun setTrimCardViewPager(
         })
     }
     indicator.attachTo(viewPager)
+}
+
+@BindingAdapter("viewModel")
+fun setExteriorColorRecyclerView(
+    recyclerView: RecyclerView,
+    viewModel: ExteriorViewModel
+) {
+    val adapter = ExteriorColorAdapter(viewModel)
+    recyclerView.adapter = adapter
+}
+
+@BindingAdapter("viewModel")
+fun setInteriorColorRecyclerView(
+    recyclerView: RecyclerView,
+    viewModel: InteriorViewModel
+) {
+    val adapter = InteriorColorAdapter(viewModel)
+    recyclerView.adapter = adapter
 }
 
 @BindingAdapter("bottomSeekBar")

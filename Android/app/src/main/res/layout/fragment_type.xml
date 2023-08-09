@@ -141,7 +141,7 @@
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/gl_start"
                 app:layout_constraintTop_toBottomOf="@id/tag_hmg_data"
-                tools:text="디젤 2.2" />
+                android:text="디젤 2.2" />
 
             <TextView
                 android:id="@+id/tv_hmgdata_1"
@@ -161,7 +161,7 @@
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/tv_hmgdata_1"
                 app:layout_constraintTop_toTopOf="@id/tv_hmgdata_powertrain"
-                tools:text="2WD" />
+                android:text="2WD" />
 
             <TextView
                 android:id="@+id/tv_hmgdata_2"
@@ -176,7 +176,7 @@
             <View
                 android:id="@+id/vw_divider"
                 android:layout_width="1dp"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:background="@color/gray_400"
                 app:layout_constraintBottom_toBottomOf="@+id/vw_hmg_data"
                 app:layout_constraintEnd_toEndOf="@id/gl_end"
@@ -201,7 +201,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:text="2,199cc"
-                android:textSize="16sp"
+                android:fontFamily="@font/hyndaisans_head_medium"
+                android:textSize="28sp"
                 app:layout_constraintBottom_toBottomOf="@id/vw_hmg_data"
                 app:layout_constraintEnd_toStartOf="@id/vw_divider"
                 app:layout_constraintStart_toEndOf="@id/gl_start"
@@ -225,7 +226,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:text="12km/s"
-                android:textSize="16sp"
+                android:fontFamily="@font/hyndaisans_head_medium"
+                android:textSize="28sp"
                 app:layout_constraintBottom_toBottomOf="@id/vw_hmg_data"
                 app:layout_constraintEnd_toEndOf="@id/gl_end"
                 app:layout_constraintStart_toEndOf="@id/vw_divider"
