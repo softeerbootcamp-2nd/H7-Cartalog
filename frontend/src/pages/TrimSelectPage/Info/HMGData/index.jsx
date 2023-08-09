@@ -1,6 +1,5 @@
 import * as S from './style';
 
-const COUNT = '회';
 const PER = '15,000km 당';
 
 /**
@@ -11,14 +10,11 @@ const PER = '15,000km 당';
 function HMGData({ dataList }) {
   return (
     <S.HMGData>
-      {dataList.map((item) => (
-        <S.Item key={item.count}>
-          <S.Title>{item.title}</S.Title>
+      {dataList?.map((item) => (
+        <S.Item key={item.name + item.value}>
+          <S.Title>{item.name}</S.Title>
           <S.Divide />
-          <S.Count>
-            {item.count}
-            {COUNT}
-          </S.Count>
+          <S.Count>{item.value}</S.Count>
           <S.Per>{PER}</S.Per>
         </S.Item>
       ))}

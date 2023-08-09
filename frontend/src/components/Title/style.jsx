@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { SlideFromRight } from '../../styles/GlobalStyle';
 
 export const Title = styled.div`
   display: flex;
@@ -12,6 +13,7 @@ export const SubTitle = styled.h2`
     if (type === 'dark') return `color: ${theme.color.gray['900']}`;
   }};
   font: ${({ theme }) => theme.font.textKR.Regular14};
+  ${SlideFromRight};
 `;
 
 export const MainTitle = styled.h1`
@@ -21,6 +23,7 @@ export const MainTitle = styled.h1`
     if (type === 'dark') return `color: ${theme.color.primary['700']}`;
   }};
   font: ${({ theme }) => theme.font.head.Bold32};
+  ${SlideFromRight};
 `;
 
 export const Info = styled.h2`
@@ -31,4 +34,5 @@ export const Info = styled.h2`
     if (type === 'dark') return `color: ${theme.color.gray['800']}`;
   }};
   font: ${({ theme }) => theme.font.textKR.Regular12};
+  ${SlideFromRight};
 `;

@@ -5,31 +5,30 @@ import HMGData from './HMGData';
 import TrimImage from './TrimImage';
 
 const TYPE = 'dark';
-const SUB_TITLE = '기본에 충실한 펠리세이드';
-const MAIN_TITLE = 'Le Blanc';
 const HMGTAG_TITLE = 'tag20';
 
 const INFO = '해당 트림 포함된 옵션들의';
 const INFO_DATA = '실활용 데이터';
 const INFO_LAST = '에요.';
 
-const HMG_TITLES = [
-  { title: '안전 하차 보조', count: 35 },
-  { title: '후측방 충돌 경고', count: 45 },
-  { title: '후방 교차 충돌방지 보조', count: 42 },
-];
+const MOCK_SELECTED_TRIM = {
+  exterior:
+    'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade/le-blanc/exterior/A2B/001.png',
+  interior:
+    'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade/le-blanc/interior/I49/img.png',
+  wheel:
+    'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade/le-blanc/options/alconbreak_s.jpg',
+};
 
-const TRIM = 'LeBlanc';
-
-function Info() {
+function Info({ trimId, data }) {
+  const selectedTrim = data?.find((trim) => trim.id === trimId);
   const titleProps = {
     type: TYPE,
-    subTitle: SUB_TITLE,
-    mainTitle: MAIN_TITLE,
+    subTitle: selectedTrim?.description,
+    mainTitle: selectedTrim?.name,
   };
 
   const hmgTagProps = { type: HMGTAG_TITLE };
-  const trimImageProps = { trim: TRIM };
 
   return (
     <S.Info>
@@ -42,10 +41,12 @@ function Info() {
             <S.Highlight>{INFO_DATA}</S.Highlight>
             {INFO_LAST}
           </S.HMGInfo>
-          <HMGData dataList={HMG_TITLES} />
+          <HMGData dataList={selectedTrim?.hmgData} />
         </S.HMG>
       </S.TrimText>
-      <TrimImage {...trimImageProps} />
+      {/* <TrimImage data={selectedTrim} /> */}
+      {/* FIXME: API 업데이트되면 위 코드로 바꾸기 */}
+      <TrimImage data={MOCK_SELECTED_TRIM} />
     </S.Info>
   );
 }
