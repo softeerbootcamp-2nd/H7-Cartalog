@@ -6,5 +6,6 @@ data class CarColor(
     val colorImageUrl: String,
     val carImageUrl: String,
     val price: Int,
-    val chosen: Int
+    val chosen: Int,
+    var isSelected: Boolean
 )

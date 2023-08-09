@@ -10,6 +10,8 @@ import com.softeer.cartalog.viewmodel.ExteriorViewModel
 class ExteriorColorAdapter(private val viewModel: ExteriorViewModel) :
     RecyclerView.Adapter<ExteriorColorAdapter.ExteriorColorViewHolder>() {
 
+    var selectedItem = 0
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -30,11 +32,12 @@ class ExteriorColorAdapter(private val viewModel: ExteriorViewModel) :
 
     inner class ExteriorColorViewHolder(val binding: ItemExteriorColorBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        var isSelected = false
         fun bind(item: CarColor?, position: Int) {
-            isSelected = position == viewModel.selectedColor.value
-            binding.isSelected = isSelected
+            binding.lifecycleOwner = binding.lifecycleOwner
+            binding.viewModel = viewModel
+            binding.position = position
             binding.carColor = item
+            binding.adapter = this@ExteriorColorAdapter
         }
     }
 }
