@@ -29,7 +29,6 @@ class TrimFragment : Fragment() {
         binding.viewModel = trimViewModel
         binding.mainActivity = activity as MainActivity
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.executePendingBindings()
     }
 
     override fun onDestroyView() {

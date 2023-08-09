@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val navController = binding.fcContainer.getFragment<NavHostFragment>().navController
         binding.navController = navController
-        binding.mainActivity = this@MainActivity
+        binding.activity = this@MainActivity
         binding.viewModel = mainViewModel
         binding.lifecycleOwner = this
     }

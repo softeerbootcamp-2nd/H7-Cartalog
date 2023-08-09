@@ -2,7 +2,9 @@ package com.softeer.cartalog.ui.adapter
 
 import android.view.Gravity
 import android.widget.ImageView
+import android.widget.SeekBar
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatSeekBar
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
@@ -158,4 +160,42 @@ fun setInteriorColorRecyclerView(
 ) {
     val adapter = InteriorColorAdapter(viewModel)
     recyclerView.adapter = adapter
+}
+
+@BindingAdapter("bottomSeekBar")
+fun setHideSeekBar(
+    topSeekBar: SeekBar,
+    bottomSeekBar: AppCompatSeekBar
+) {
+    topSeekBar.setOnTouchListener { _, event ->
+        bottomSeekBar.dispatchTouchEvent(event)
+        true
+    }
+}
+
+@BindingAdapter("viewModel")
+fun setBudgetLimit(
+    seekBar: AppCompatSeekBar,
+    viewModel: MainViewModel
+) {
+    // 받아온 데이터로 설정
+    //val minValue = 3850
+    //val maxValue = 4300
+
+    seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        override fun onProgressChanged(seekbar: SeekBar?, progress: Int, fromUser: Boolean) {
+            // progress 값으로 비교해 놓은 상태
+            //val mappedValue = minValue + (maxValue - minValue) * progress / 100
+            viewModel.budgetRangeLimit.value = progress
+            viewModel.isExcess.value =
+                viewModel.budgetRangeLimit.value!! < viewModel.totalPrice.value!!
+        }
+
+        override fun onStartTrackingTouch(p0: SeekBar?) {
+        }
+
+        override fun onStopTrackingTouch(p0: SeekBar?) {
+        }
+
+    })
 }
