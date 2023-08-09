@@ -1,4 +1,4 @@
-package com.softeer.cartalog.model.enums
+package com.softeer.cartalog.data.enums
 
 enum class ModelTypeSubject {
         POWERTRAIN,

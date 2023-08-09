@@ -7,7 +7,7 @@
 
         <variable
             name="carColor"
-            type="com.softeer.cartalog.model.data.CarColor" />
+            type="com.softeer.cartalog.data.model.CarColor" />
 
         <variable
             name="position"

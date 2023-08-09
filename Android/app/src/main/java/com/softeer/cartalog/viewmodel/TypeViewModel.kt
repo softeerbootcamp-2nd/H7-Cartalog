@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.softeer.cartalog.model.data.Type
-import com.softeer.cartalog.model.data.TypeHmgData
-import com.softeer.cartalog.model.data.TypeOption
-import com.softeer.cartalog.model.enums.ModelTypeSubject
+import com.softeer.cartalog.data.model.Type
+import com.softeer.cartalog.data.model.TypeHmgData
+import com.softeer.cartalog.data.model.TypeOption
+import com.softeer.cartalog.data.enums.ModelTypeSubject
 
 class TypeViewModel : ViewModel() {
 

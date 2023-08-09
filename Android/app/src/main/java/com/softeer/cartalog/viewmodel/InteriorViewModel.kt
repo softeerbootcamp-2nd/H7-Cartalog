@@ -3,7 +3,7 @@ package com.softeer.cartalog.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.softeer.cartalog.model.data.CarColor
+import com.softeer.cartalog.data.model.CarColor
 
 class InteriorViewModel : ViewModel() {
 

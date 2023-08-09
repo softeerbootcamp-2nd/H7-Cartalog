@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.softeer.cartalog.databinding.ItemTrimCardBinding
-import com.softeer.cartalog.model.data.Trim
+import com.softeer.cartalog.data.model.Trim
 import com.softeer.cartalog.viewmodel.TrimViewModel
 
 class TrimCardAdapter(private val viewModel: TrimViewModel) : RecyclerView.Adapter<TrimCardAdapter.TrimCardViewHolder>() {
