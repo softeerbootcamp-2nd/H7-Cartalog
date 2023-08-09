@@ -34,7 +34,7 @@ class TypeViewModel : ViewModel() {
 
     private fun setTrimData(): List<Type> {
         // 임시 데이터 설정
-        val tmpHmgData = listOf(TypeHmgData("최고출력", 202, "3,800", "PS/rpm"))
+        val tmpHmgData = listOf(TypeHmgData("최고출력", 202f, "3,800", "PS/rpm"))
         val tmpOption = listOf(TypeOption(5, "디젤 2.2", 0, 38, "", "설명", tmpHmgData))
         val tmpData = Type("디젤", tmpOption)
         val tmpData2 = Type("가솔린", tmpOption)

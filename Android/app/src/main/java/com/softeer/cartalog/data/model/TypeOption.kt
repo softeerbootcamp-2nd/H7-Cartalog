@@ -7,5 +7,5 @@ data class TypeOption(
     val chosen: Int,
     val imageUrl: String,
     val description: String,
-    val powerTrainHMGData: List<TypeHmgData>
+    val hmgData: List<TypeHmgData>?
 )

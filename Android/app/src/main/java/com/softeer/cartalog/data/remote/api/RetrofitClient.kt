@@ -16,6 +16,6 @@ object RetrofitClient {
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 
-    val apiService: ApiService = client.create(ApiService::class.java)
+    val carApi: CarApi = client.create(CarApi::class.java)
 
 }
