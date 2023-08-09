@@ -117,6 +117,7 @@ export const FadeIn = css`
 export const CardCss = css`
   border-radius: 2px;
   border: 1px solid ${({ theme }) => theme.color.gray['200']};
+  background-color: ${({ theme }) => theme.color.white};
   transition:
     border-color 0.2s ease,
     background-color 0.2s ease;

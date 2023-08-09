@@ -9,6 +9,7 @@ export const TypeCard = styled.button`
   height: 76px;
   padding: 8px 12px;
   box-sizing: border-box;
+  background-color: ${({ theme }) => theme.color.skyBlue4c};
 
   & .pickRatio {
     margin-bottom: -3px;
