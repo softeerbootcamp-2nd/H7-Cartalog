@@ -8,7 +8,7 @@
         <import type="android.view.View" />
 
         <variable
-            name="mainActivity"
+            name="activity"
             type="com.softeer.cartalog.ui.activity.MainActivity" />
 
         <variable
@@ -23,6 +23,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         tools:context=".ui.activity.MainActivity">
 
         <androidx.constraintlayout.widget.Guideline
@@ -128,21 +129,174 @@
 
         </com.google.android.material.tabs.TabLayout>
 
-
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fc_container"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="20dp"
             app:defaultNavHost="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tl_step"
             app:layout_constraintVertical_bias="0.0"
             app:navGraph="@navigation/nav_graph" />
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_budget_range"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@{viewModel.isExcess ? @color/excess_bg_color : @color/primary_color_700}"
+            android:visibility="@{viewModel.stepIndex == 0 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_start"
+            app:layout_constraintTop_toBottomOf="@id/tl_step">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_budget_range_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginBottom="9dp"
+                    android:fontFamily="@font/hyndaisans_head_bold"
+                    android:text="예산 범위"
+                    android:textColor="@color/gray_50"
+                    app:layout_constraintBottom_toTopOf="@id/cl_hide_container"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_budget_range_text_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="9dp"
+                    android:fontFamily="@font/hyndaisans_head_light"
+                    android:text="@{viewModel.isExcess ? `설정한 예산보다 ` : `설정한 예산까지 `}"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/gray_50"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_budget_range_title"
+                    app:layout_constraintEnd_toStartOf="@id/tv_budget_range_text_price"
+                    app:layout_constraintStart_toEndOf="@id/tv_budget_range_title"
+                    app:layout_constraintTop_toTopOf="@id/tv_budget_range_title" />
+
+                <TextView
+                    android:id="@+id/tv_budget_range_text_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/hyndaisans_head_medium"
+                    android:text="1,250,000원"
+                    android:textColor="@{viewModel.isExcess ? @color/sand : @color/active_blue2}"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_budget_range_text_1"
+                    app:layout_constraintEnd_toStartOf="@id/tv_budget_range_text_2"
+                    app:layout_constraintTop_toTopOf="@id/tv_budget_range_text_1" />
+
+                <TextView
+                    android:id="@+id/tv_budget_range_text_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:fontFamily="@font/hyndaisans_head_light"
+                    android:text="@{viewModel.isExcess ? ` 더 들었어요.` : ` 남았어요.`}"
+                    android:textColor="@color/gray_50"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_budget_range_text_1"
+                    app:layout_constraintEnd_toStartOf="@id/btn_budget_range_toggle"
+                    app:layout_constraintTop_toTopOf="@id/tv_budget_range_text_1" />
+
+                <ImageButton
+                    android:id="@+id/btn_budget_range_toggle"
+                    fragmentContainer="@{fcContainer}"
+                    layout="@{clHideContainer}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:adjustViewBounds="true"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/icon_arrow_down_big"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_budget_range_text_2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_budget_range_text_2" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_hide_container"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatSeekBar
+                        android:id="@+id/sb_budget_range_limit"
+                        viewModel="@{viewModel}"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:progress="50"
+                        android:progressDrawable="@{viewModel.isExcess ? @drawable/shape_seekbar_bar_excess : @drawable/shape_seekbar_bar}"
+                        android:splitTrack="false"
+                        android:thumb="@{viewModel.isExcess ? @drawable/shape_seekbar_thumb_excess : @drawable/shape_seekbar_thumb}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <SeekBar
+                        android:id="@+id/sb_user_total_price"
+                        bottomSeekBar="@{sbBudgetRangeLimit}"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:progress="@{viewModel.totalPrice}"
+                        android:progressDrawable="@android:color/transparent"
+                        android:thumb="@drawable/icon_seekbar_user_pin"
+                        android:thumbTint="@{viewModel.isExcess ? @color/sand : @color/active_blue}"
+                        app:layout_constraintEnd_toEndOf="@id/sb_budget_range_limit"
+                        app:layout_constraintStart_toStartOf="@id/sb_budget_range_limit"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_min_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="14dp"
+                        android:text="3850만원"
+                        android:textColor="@{viewModel.isExcess ? @color/gray_200 : @color/primary_color_200}"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/sb_budget_range_limit"
+                        app:layout_constraintTop_toBottomOf="@id/sb_budget_range_limit" />
+
+                    <TextView
+                        android:id="@+id/tv_max_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="14dp"
+                        android:text="4300만원"
+                        android:textColor="@{viewModel.isExcess ? @color/gray_200 : @color/primary_color_200}"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/sb_budget_range_limit"
+                        app:layout_constraintTop_toBottomOf="@id/sb_budget_range_limit" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_prev"
@@ -154,7 +308,7 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             android:visibility="@{viewModel.stepIndex == 0 ? View.GONE : View.VISIBLE}"
-            app:activity="@{mainActivity}"
+            app:activity="@{activity}"
             app:index="@{(viewModel.stepIndex-1)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_next"
@@ -170,12 +324,13 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             android:visibility="@{viewModel.stepIndex == 0 ? View.GONE : View.VISIBLE}"
-            app:activity="@{mainActivity}"
+            app:activity="@{activity}"
             app:index="@{(viewModel.stepIndex+1)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_prev" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </layout>
