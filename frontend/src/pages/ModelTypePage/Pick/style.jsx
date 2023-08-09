@@ -2,8 +2,17 @@ import styled from 'styled-components';
 
 export const Pick = styled.div``;
 
-export const SelectModel = styled.div`
+export const PickModel = styled.div`
   display: flex;
   margin-top: 8px;
   gap: 16px;
+`;
+
+export const Footer = styled.div`
+  position: fixed;
+  display: flex;
+  z-index: 2;
+  margin-top: 28px;
+  bottom: 0;
+  gap: 7px;
 `;

@@ -19,13 +19,16 @@ function ModelType() {
 
       setTrimState((prevState) => ({
         ...prevState,
+        page: 2,
         modelType: {
+          ...prevState.modelType,
           ...dataFetch,
           powerTrain: 1,
           wheelDrive: 2,
           bodyType: 1,
         },
         price: {
+          ...prevState.price,
           powerTrainPrice: 1888000,
           bodyTypePrice: null,
           wheelDrivePrice: null,
