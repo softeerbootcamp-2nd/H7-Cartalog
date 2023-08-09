@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from '../Header';
+import Footer from '../Footer';
 
 function Layout() {
   const [state, setState] = useState({
@@ -19,6 +20,7 @@ function Layout() {
     <>
       <Header />
       <Outlet state={state} setState={setState} />
+      <Footer />
     </>
   );
 }

@@ -27,6 +27,13 @@ export function StateProvider({ children }) {
         interiorColorPrice: null,
         optionPrice: null,
       };
+    }
+    if (key === 'modelType') {
+      acc[key] = {
+        powerTrain: 1,
+        wheelDrive: 2,
+        bodyType: 1,
+      };
     } else {
       acc[key] = null; // 다른 키들은 null로 초기화
     }

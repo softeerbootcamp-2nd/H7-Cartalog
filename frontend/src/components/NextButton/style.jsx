@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const NextButton = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   width: 340px;
   gap: 8px;
 `;
