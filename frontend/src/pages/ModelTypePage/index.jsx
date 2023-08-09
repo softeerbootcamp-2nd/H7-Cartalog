@@ -26,7 +26,7 @@ function ModelType() {
           bodyType: 1,
         },
         price: {
-          powerTrainPrice: 200,
+          powerTrainPrice: 1888000,
           bodyTypePrice: null,
           wheelDrivePrice: null,
         },

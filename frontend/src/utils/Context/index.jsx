@@ -52,3 +52,9 @@ export function useData() {
   }
   return context;
 }
+
+export function TotalPrice(priceObj) {
+  const prices = Object.values(priceObj);
+  const totalPrice = prices.reduce((acc, price) => acc + (price || 0), 0);
+  return totalPrice;
+}
