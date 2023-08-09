@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.softeer.cartalog.model.enums.ModelTypeSubject" />
+        <import type="com.softeer.cartalog.data.enums.ModelTypeSubject" />
 
         <variable
             name="type"

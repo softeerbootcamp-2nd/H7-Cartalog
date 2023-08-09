@@ -1,4 +1,4 @@
-package com.softeer.cartalog.model.data
+package com.softeer.cartalog.data.model
 
 data class Type(
     val type: String,

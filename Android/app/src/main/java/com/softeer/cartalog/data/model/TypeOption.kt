@@ -1,4 +1,4 @@
-package com.softeer.cartalog.model.data
+package com.softeer.cartalog.data.model
 
 data class TypeOption(
     val id: Int,
@@ -7,5 +7,5 @@ data class TypeOption(
     val chosen: Int,
     val imageUrl: String,
     val description: String,
-    val powerTrainHMGData: List<TypeHmgData>
+    val hmgData: List<TypeHmgData>?
 )

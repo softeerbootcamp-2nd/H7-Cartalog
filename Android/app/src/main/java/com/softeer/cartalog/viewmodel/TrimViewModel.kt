@@ -3,8 +3,8 @@ package com.softeer.cartalog.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.softeer.cartalog.model.data.Trim
-import com.softeer.cartalog.model.data.TrimOption
+import com.softeer.cartalog.data.model.Trim
+import com.softeer.cartalog.data.model.TrimOption
 
 class TrimViewModel : ViewModel() {
 

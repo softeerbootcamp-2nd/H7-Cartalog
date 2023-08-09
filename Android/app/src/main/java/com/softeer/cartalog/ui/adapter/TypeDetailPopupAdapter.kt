@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.softeer.cartalog.databinding.ItemTypeDetailPopupBinding
-import com.softeer.cartalog.model.data.Type
+import com.softeer.cartalog.data.model.Type
 import com.softeer.cartalog.ui.dialog.TypeDetailPopupActivity
 import com.softeer.cartalog.viewmodel.TypeViewModel
 
