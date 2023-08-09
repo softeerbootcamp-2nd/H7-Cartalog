@@ -8,7 +8,7 @@
         <import type="android.view.View" />
 
         <variable
-            name="mainActivity"
+            name="activity"
             type="com.softeer.cartalog.ui.activity.MainActivity" />
 
         <variable
@@ -148,7 +148,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:backgroundTint="@{viewModel.budgetRangeLimit >= viewModel.totalPrice ? @color/primary_color_700 : @color/excess_bg_color}"
+            android:backgroundTint="@{viewModel.isExcess ? @color/excess_bg_color : @color/primary_color_700}"
             android:visibility="@{viewModel.stepIndex == 0 ? View.GONE : View.VISIBLE}"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintStart_toStartOf="@id/gl_start"
@@ -178,7 +178,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="9dp"
                     android:fontFamily="@font/hyndaisans_head_light"
-                    android:text="설정한 예산까지 "
+                    android:text="@{viewModel.isExcess ? `설정한 예산보다 ` : `설정한 예산까지 `}"
                     android:textAlignment="textEnd"
                     android:textColor="@color/gray_50"
                     android:textSize="12sp"
@@ -193,7 +193,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/hyndaisans_head_medium"
                     android:text="1,250,000원"
-                    android:textColor="@{viewModel.budgetRangeLimit >= viewModel.totalPrice ? @color/active_blue2 : @color/sand}"
+                    android:textColor="@{viewModel.isExcess ? @color/sand : @color/active_blue2}"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@id/tv_budget_range_text_1"
                     app:layout_constraintEnd_toStartOf="@id/tv_budget_range_text_2"
@@ -205,7 +205,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:fontFamily="@font/hyndaisans_head_light"
-                    android:text=" 남았어요."
+                    android:text="@{viewModel.isExcess ? ` 더 들었어요.` : ` 남았어요.`}"
                     android:textColor="@color/gray_50"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@id/tv_budget_range_text_1"
@@ -214,6 +214,7 @@
 
                 <ImageButton
                     android:id="@+id/btn_budget_range_toggle"
+                    fragmentContainer="@{fcContainer}"
                     layout="@{clHideContainer}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -222,7 +223,6 @@
                     android:background="@android:color/transparent"
                     android:scaleType="fitCenter"
                     android:src="@drawable/icon_arrow_down_big"
-                    fragmentContainer="@{fcContainer}"
                     app:layout_constraintBottom_toBottomOf="@id/tv_budget_range_text_2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tv_budget_range_text_2" />
@@ -238,25 +238,28 @@
 
                     <androidx.appcompat.widget.AppCompatSeekBar
                         android:id="@+id/sb_budget_range_limit"
+                        viewModel="@{viewModel}"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:progress="30"
-                        android:progressDrawable="@{viewModel.budgetRangeLimit >= viewModel.totalPrice ? @drawable/shape_seekbar_bar : @drawable/shape_seekbar_bar_excess}"
+                        android:progress="50"
+                        android:progressDrawable="@{viewModel.isExcess ? @drawable/shape_seekbar_bar_excess : @drawable/shape_seekbar_bar}"
                         android:splitTrack="false"
-                        android:thumb="@{viewModel.budgetRangeLimit >= viewModel.totalPrice ? @drawable/shape_seekbar_thumb : @drawable/shape_seekbar_thumb_excess}"
+                        android:thumb="@{viewModel.isExcess ? @drawable/shape_seekbar_thumb_excess : @drawable/shape_seekbar_thumb}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <SeekBar
                         android:id="@+id/sb_user_total_price"
+                        bottomSeekBar="@{sbBudgetRangeLimit}"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:progress="@{viewModel.totalPrice}"
                         android:progressDrawable="@android:color/transparent"
                         android:thumb="@drawable/icon_seekbar_user_pin"
-                        android:thumbTint="@{viewModel.budgetRangeLimit >= viewModel.totalPrice ? @color/active_blue : @color/sand}"
-                        bottomSeekBar="@{sbBudgetRangeLimit}"
+                        android:thumbTint="@{viewModel.isExcess ? @color/sand : @color/active_blue}"
+                        app:layout_constraintEnd_toEndOf="@id/sb_budget_range_limit"
                         app:layout_constraintStart_toStartOf="@id/sb_budget_range_limit"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -268,7 +271,7 @@
                         android:layout_marginTop="4dp"
                         android:layout_marginBottom="14dp"
                         android:text="3850만원"
-                        android:textColor="@{viewModel.budgetRangeLimit >= viewModel.totalPrice ? @color/primary_color_200 : @color/gray_200}"
+                        android:textColor="@{viewModel.isExcess ? @color/gray_200 : @color/primary_color_200}"
                         android:textSize="10sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="@id/sb_budget_range_limit"
@@ -282,7 +285,7 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="14dp"
                         android:text="4300만원"
-                        android:textColor="@{viewModel.budgetRangeLimit >= viewModel.totalPrice ? @color/primary_color_200 : @color/gray_200}"
+                        android:textColor="@{viewModel.isExcess ? @color/gray_200 : @color/primary_color_200}"
                         android:textSize="10sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@id/sb_budget_range_limit"
@@ -295,7 +298,6 @@
         </com.google.android.material.card.MaterialCardView>
 
 
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_prev"
             android:layout_width="0dp"
@@ -306,7 +308,7 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             android:visibility="@{viewModel.stepIndex == 0 ? View.GONE : View.VISIBLE}"
-            app:activity="@{mainActivity}"
+            app:activity="@{activity}"
             app:index="@{(viewModel.stepIndex-1)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_next"
@@ -322,7 +324,7 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             android:visibility="@{viewModel.stepIndex == 0 ? View.GONE : View.VISIBLE}"
-            app:activity="@{mainActivity}"
+            app:activity="@{activity}"
             app:index="@{(viewModel.stepIndex+1)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
