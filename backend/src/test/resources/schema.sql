@@ -1,3 +1,5 @@
+-- noinspection SqlInsertValuesForFile
+
 DROP TABLE IF EXISTS detail_trim_package_interior_color_condition;
 DROP TABLE IF EXISTS detail_trim_option_interior_color_condition;
 DROP TABLE IF EXISTS trim_interior_colors;
