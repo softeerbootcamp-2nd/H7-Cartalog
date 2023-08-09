@@ -1,38 +1,27 @@
-import { useEffect } from 'react';
-import { useData } from '../../../utils/Context';
 import * as S from './style';
-
+import { useData } from '../../../utils/Context';
+import { TITLE, BUTTON, ROUND_BUTTON } from './constants';
 import PickTitle from '../../../components/PickTitle';
 import PickCard from './PickCard';
 
 import RoundButton from '../../../components/RoundButton';
 import Button from '../../../components/Button';
 
-const TYPE = 'buttonD';
-const STATE = 'active';
-const MAIN_TITLE = '다음';
-const PICK_MAIN_TITLE = '모델타입을 선택해주세요.';
-
 function Pick() {
-  const { setState } = useData();
-  useEffect(() => {
-    setState((prevState) => ({
-      ...prevState,
-      page: 1,
-    }));
-  }, []);
+  const { modelType } = useData();
+  console.log(modelType.modelTypes);
 
-  const pickTitleProps = { mainTitle: PICK_MAIN_TITLE };
+  const pickTitleProps = { mainTitle: TITLE };
   const buttonProps = {
-    type: TYPE,
-    state: STATE,
-    mainTitle: MAIN_TITLE,
+    type: BUTTON.TYPE,
+    state: BUTTON.STATE,
+    mainTitle: BUTTON.MAIN_TITLE,
   };
 
   const roundButtonProps = {
-    type: 'price',
-    state: 'active',
-    title: '견적 요약',
+    type: ROUND_BUTTON.TYPE,
+    state: ROUND_BUTTON.STATE,
+    title: ROUND_BUTTON.TITLE,
   };
 
   return (
@@ -40,9 +29,9 @@ function Pick() {
       <PickTitle {...pickTitleProps} />
 
       <S.SelectModel>
-        <PickCard />
-        <PickCard />
-        <PickCard />
+        {modelType.modelTypes.map((type) => (
+          <PickCard key={type.type} />
+        ))}
       </S.SelectModel>
 
       <RoundButton {...roundButtonProps} />
