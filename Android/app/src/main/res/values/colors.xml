@@ -25,9 +25,9 @@
     <color name="gray_900">#212122</color>
 
     <color name="active_blue">#00AAD2</color>
+    <color name="active_blue_card_bg">#1A00AAD2</color>
     <color name="active_blue2">#00C3F0</color>
     <color name="sky_blue">#A2C7E7</color>
-    <color name="active_blue_card_bg">#A2C7E74D</color>
     <color name="card_bg">#00AAD21A</color>
     <color name="blue_bg">#F4F5F7</color>
     <color name="sand">#B67B5E</color>

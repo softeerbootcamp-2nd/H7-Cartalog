@@ -26,6 +26,8 @@ class ExteriorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        exteriorViewModel.setExteriorColorData()
+
         binding.viewModel = exteriorViewModel
         binding.lifecycleOwner = viewLifecycleOwner
     }

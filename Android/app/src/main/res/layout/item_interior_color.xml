@@ -6,30 +6,41 @@
     <data>
 
         <variable
-            name="isSelected"
-            type="Boolean" />
-
-        <variable
             name="carColor"
             type="com.softeer.cartalog.model.data.CarColor" />
+
+        <variable
+            name="position"
+            type="Integer" />
+
+        <variable
+            name="adapter"
+            type="com.softeer.cartalog.ui.adapter.InteriorColorAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.softeer.cartalog.viewmodel.InteriorViewModel" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cv_trim_card"
+        android:id="@+id/cv_card"
         android:layout_width="150dp"
         android:layout_height="190dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        app:cardBackgroundColor="@color/white"
+        app:adapter="@{adapter}"
+        app:cardBackgroundColor="@{position == adapter.selectedItem ? @color/active_blue_card_bg : @color/white}"
         app:cardCornerRadius="2dp"
         app:cardElevation="2dp"
-        app:strokeColor="@color/sky_blue">
+        app:position="@{position}"
+        app:strokeColor="@color/active_blue"
+        app:strokeWidth="@{position == adapter.selectedItem ? 7 : 0}"
+        app:viewModel="@{viewModel}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.Guideline
@@ -77,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="38%"
-                android:textColor="@color/active_blue"
+                android:textColor="@{position == adapter.selectedItem ? @color/active_blue : @color/gray_600}"
                 android:textSize="10sp"
                 app:layout_constraintStart_toStartOf="@id/gl_start"
                 app:layout_constraintTop_toBottomOf="@id/iv_color" />
@@ -87,6 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="의 선택"
+                android:textColor="@{position == adapter.selectedItem ? @color/gray_700 : @color/gray_600}"
                 android:textSize="10sp"
                 app:layout_constraintStart_toEndOf="@id/tv_selected_percent"
                 app:layout_constraintTop_toTopOf="@id/tv_selected_percent" />
@@ -97,6 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="퀼팅천연(블랙)"
+                android:textColor="@{position == adapter.selectedItem ? @color/gray_900 : @color/gray_600}"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@id/gl_start"
                 app:layout_constraintTop_toBottomOf="@id/tv_selected_percent_guide" />
@@ -107,6 +120,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="+ 0 원"
+                android:textColor="@{position == adapter.selectedItem ? @color/gray_900 : @color/gray_600}"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/gl_bottom"
                 app:layout_constraintStart_toStartOf="@id/gl_start" />
@@ -115,8 +129,8 @@
                 android:id="@+id/btn_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="12dp"
                 android:src="@drawable/selector_check_btn"
+                android:tint="@{position == adapter.selectedItem ? @color/active_blue : @color/gray_600}"
                 app:layout_constraintBottom_toBottomOf="@id/gl_bottom"
                 app:layout_constraintEnd_toEndOf="@id/gl_end" />
 
