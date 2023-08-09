@@ -2,7 +2,9 @@ package com.softeer.cartalog.ui.adapter
 
 import android.view.Gravity
 import android.widget.ImageView
+import android.widget.SeekBar
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatSeekBar
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
@@ -66,10 +68,11 @@ fun setOnTabChanged(
                 viewModel.setStepIndex(selectedPosition)
             }
         }
+
         override fun onTabUnselected(tab: TabLayout.Tab?) {}
         override fun onTabReselected(tab: TabLayout.Tab?) {}
     })
-}        
+}
 
 @BindingAdapter("navController")
 fun setShowDialog(view: TextView, navController: NavController) {
@@ -145,3 +148,13 @@ fun setTrimCardViewPager(
     indicator.attachTo(viewPager)
 }
 
+@BindingAdapter("bottomSeekBar")
+fun setHideSeekBar(
+    topSeekBar: SeekBar,
+    bottomSeekBar: AppCompatSeekBar
+) {
+    topSeekBar.setOnTouchListener { _, event ->
+        bottomSeekBar.dispatchTouchEvent(event)
+        true
+    }
+}
