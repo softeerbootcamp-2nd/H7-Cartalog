@@ -42,7 +42,6 @@ class ModelControllerTest {
             Long modelId = 1L;
             ModelTypeListResponseDto returnDto = mock(ModelTypeListResponseDto.class);
             when(modelOptionQueryRepository.findByModelTypeOptionsById(modelId)).thenReturn(returnDto);
-            when(returnDto.modelTypeSize()).thenReturn(1);
 
             //when
             ResponseEntity<ModelTypeListResponseDto> response = modelController.searchModelType(modelId);
@@ -58,9 +57,7 @@ class ModelControllerTest {
         void returnStatusCode404WhenGetModelTypeByExistModelId() {
             //given
             Long modelId = -1L;
-            ModelTypeListResponseDto returnDto = mock(ModelTypeListResponseDto.class);
-            when(modelOptionQueryRepository.findByModelTypeOptionsById(modelId)).thenReturn(returnDto);
-            when(returnDto.modelTypeSize()).thenReturn(0);
+            when(modelOptionQueryRepository.findByModelTypeOptionsById(modelId)).thenReturn(null);
 
             //when
             ResponseEntity<ModelTypeListResponseDto> response = modelController.searchModelType(modelId);

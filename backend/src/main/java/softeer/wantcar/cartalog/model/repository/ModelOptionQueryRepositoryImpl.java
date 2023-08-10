@@ -95,6 +95,10 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
                         .price(rs.getInt("price"))
                         .build(), modelId);
 
+        if (simpleModelOptionMapperList.isEmpty()) {
+            return null;
+        }
+
         return buildModelTypeListResponseDto(simpleModelOptionMapperList);
     }
 

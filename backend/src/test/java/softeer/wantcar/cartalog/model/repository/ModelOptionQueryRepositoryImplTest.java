@@ -58,15 +58,14 @@ class ModelOptionQueryRepositoryImplTest {
         }
 
         @Test
-        @DisplayName("없는 식별자로 조회시 빈 dto를 반환해야 한다.")
+        @DisplayName("없는 식별자로 조회시 null을 반환해야 한다.")
         void findByModelTypeOptionsByIdWithIllegalId() {
             //given
             //when
             ModelTypeListResponseDto response = modelOptionQueryRepository.findByModelTypeOptionsById(-1L);
 
             //then
-            assertThat(response).isNotNull();
-            assertThat(response.modelTypeSize()).isEqualTo(0);
+            assertThat(response).isNull();
         }
     }
 }
