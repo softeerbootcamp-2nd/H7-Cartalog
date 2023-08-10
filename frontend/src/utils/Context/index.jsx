@@ -33,6 +33,13 @@ export function StateProvider({ children }) {
         wheelDrive: 2,
         bodyType: 1,
       };
+    } else if (key === 'exteriorColor') {
+      acc[key] = {
+        dataFetch: [],
+        pick: null,
+      };
+    } else if (key === 'trimId') {
+      acc[key] = 1;
     } else {
       acc[key] = null; // 다른 키들은 null로 초기화
     }
