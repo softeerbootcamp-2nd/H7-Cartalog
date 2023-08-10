@@ -2,13 +2,17 @@ package com.softeer.cartalog.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.softeer.cartalog.R
+import com.softeer.cartalog.data.remote.api.RetrofitClient
 import com.softeer.cartalog.databinding.ActivityMainBinding
 import com.softeer.cartalog.ui.dialog.PriceSummaryBottomSheetFragment
 import com.softeer.cartalog.viewmodel.MainViewModel
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private val mainViewModel: MainViewModel by viewModels()

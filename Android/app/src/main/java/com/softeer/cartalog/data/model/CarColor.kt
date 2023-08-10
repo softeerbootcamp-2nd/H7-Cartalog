@@ -1,4 +1,4 @@
-package com.softeer.cartalog.model.data
+package com.softeer.cartalog.data.model
 
 data class CarColor(
     val id: String,
@@ -6,5 +6,6 @@ data class CarColor(
     val colorImageUrl: String,
     val carImageUrl: String,
     val price: Int,
-    val chosen: Int
+    val chosen: Int,
+    var isSelected: Boolean
 )

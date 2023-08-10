@@ -12,7 +12,7 @@ import androidx.lifecycle.get
 import androidx.navigation.findNavController
 import com.softeer.cartalog.R
 import com.softeer.cartalog.databinding.ViewTypeselectBinding
-import com.softeer.cartalog.model.enums.ModelTypeSubject
+import com.softeer.cartalog.data.enums.ModelTypeSubject
 import com.softeer.cartalog.viewmodel.TypeViewModel
 
 class TypeSelectView(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {

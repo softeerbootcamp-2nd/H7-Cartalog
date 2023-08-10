@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.softeer.cartalog.model.data.Type
-import com.softeer.cartalog.model.data.TypeHmgData
-import com.softeer.cartalog.model.data.TypeOption
-import com.softeer.cartalog.model.enums.ModelTypeSubject
+import com.softeer.cartalog.data.model.Type
+import com.softeer.cartalog.data.model.TypeHmgData
+import com.softeer.cartalog.data.model.TypeOption
+import com.softeer.cartalog.data.enums.ModelTypeSubject
 
 class TypeViewModel : ViewModel() {
 
@@ -34,7 +34,7 @@ class TypeViewModel : ViewModel() {
 
     private fun setTrimData(): List<Type> {
         // 임시 데이터 설정
-        val tmpHmgData = listOf(TypeHmgData("최고출력", 202, "3,800", "PS/rpm"))
+        val tmpHmgData = listOf(TypeHmgData("최고출력", 202f, "3,800", "PS/rpm"))
         val tmpOption = listOf(TypeOption(5, "디젤 2.2", 0, 38, "", "설명", tmpHmgData))
         val tmpData = Type("디젤", tmpOption)
         val tmpData2 = Type("가솔린", tmpOption)

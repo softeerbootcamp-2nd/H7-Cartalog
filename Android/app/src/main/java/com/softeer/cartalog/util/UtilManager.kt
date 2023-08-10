@@ -1,0 +1,23 @@
+package com.softeer.cartalog.util
+
+import androidx.viewpager2.widget.ViewPager2
+import com.softeer.cartalog.R
+
+class UtilManager {
+    companion object {
+
+        fun getViewPagerGap(viewPager: ViewPager2): Int {
+            val pageMarginPx =
+                viewPager.context.resources.getDimensionPixelOffset(R.dimen.pageMargin)
+            val pagerWidth = viewPager.context.resources.getDimensionPixelOffset(R.dimen.pagerWidth)
+            val screenWidth = viewPager.context.resources.displayMetrics.widthPixels
+            val offsetPx = screenWidth - pageMarginPx - pagerWidth
+
+            val screenWidthDp = screenWidth / viewPager.context.resources.displayMetrics.density
+            val referenceWidthDp = 900
+            val scaleFactor = screenWidthDp / referenceWidthDp
+
+            return (offsetPx * scaleFactor).toInt()
+        }
+    }
+}

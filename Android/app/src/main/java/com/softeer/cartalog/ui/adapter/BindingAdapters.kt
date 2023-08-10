@@ -15,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.softeer.cartalog.R
 import com.softeer.cartalog.ui.dialog.TypeDetailPopupActivity
+import com.softeer.cartalog.util.UtilManager
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import com.softeer.cartalog.viewmodel.InteriorViewModel
 import com.softeer.cartalog.viewmodel.MainViewModel
@@ -98,18 +99,13 @@ fun setTypeDetailViewPager(
     viewModel: TypeViewModel,
     indicator: DotsIndicator
 ) {
-
-    val pageMarginPx = viewPager.context.resources.getDimensionPixelOffset(R.dimen.pageMargin)
-    val pagerWidth = viewPager.context.resources.getDimensionPixelOffset(R.dimen.pagerWidth)
-    val screenWidth = viewPager.context.resources.displayMetrics.widthPixels
-    val offsetPx = screenWidth - pageMarginPx - pagerWidth
-
+    val adjustedOffsetPx = UtilManager.getViewPagerGap(viewPager)
     val trimItemAdapter = TypeDetailPopupAdapter(viewModel)
     with(viewPager) {
         offscreenPageLimit = 2
         adapter = trimItemAdapter
         setPageTransformer { page, position ->
-            page.translationX = position * -offsetPx
+            page.translationX = position * -adjustedOffsetPx
         }
         registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -129,17 +125,13 @@ fun setTrimCardViewPager(
     indicator: DotsIndicator
 ) {
 
-    val pageMarginPx = viewPager.context.resources.getDimensionPixelOffset(R.dimen.pageMargin)
-    val pagerWidth = viewPager.context.resources.getDimensionPixelOffset(R.dimen.pagerWidth)
-    val screenWidth = viewPager.context.resources.displayMetrics.widthPixels
-    val offsetPx = screenWidth - pageMarginPx - pagerWidth
-
+    val adjustedOffsetPx = UtilManager.getViewPagerGap(viewPager)
     val trimItemAdapter = TrimCardAdapter(viewModel)
     with(viewPager) {
         offscreenPageLimit = 2
         adapter = trimItemAdapter
         setPageTransformer { page, position ->
-            page.translationX = position * -offsetPx
+            page.translationX = position * -adjustedOffsetPx
         }
         registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {

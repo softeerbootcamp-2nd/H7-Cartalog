@@ -8,7 +8,7 @@
             type="Boolean" />
         <variable
             name="trimItem"
-            type="com.softeer.cartalog.model.data.Trim" />
+            type="com.softeer.cartalog.data.model.Trim" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
