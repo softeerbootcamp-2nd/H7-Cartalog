@@ -11,9 +11,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @Builder
-@EqualsAndHashCode
 @AllArgsConstructor
-@ToString()
 public class ModelTypeListResponseDto {
     @Singular
     private List<ModelTypeDto> modelTypes;

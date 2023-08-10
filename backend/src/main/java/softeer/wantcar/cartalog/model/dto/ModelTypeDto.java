@@ -7,10 +7,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-@EqualsAndHashCode
 @Builder
-@ToString
-@Slf4j
 public class ModelTypeDto {
     private String type;
     @Singular

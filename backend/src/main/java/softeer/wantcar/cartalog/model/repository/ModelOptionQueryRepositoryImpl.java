@@ -2,8 +2,6 @@ package softeer.wantcar.cartalog.model.repository;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,13 +18,11 @@ import java.util.Map;
 
 @Repository
 @AllArgsConstructor
-@Slf4j
 public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepository {
     private final JdbcTemplate template;
 
     @Builder
     @AllArgsConstructor
-    @ToString
     private static class SimpleModelOptionMapper {
         private Long model_option_Id;
         private String name;

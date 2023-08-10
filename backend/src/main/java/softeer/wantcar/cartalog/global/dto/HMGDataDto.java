@@ -6,7 +6,6 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Builder
-@ToString
 public class HMGDataDto implements HMGDataDtoInterface {
     private String name;
     private String value;

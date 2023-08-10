@@ -7,9 +7,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-@EqualsAndHashCode
 @Builder
-@ToString
 public class OptionDto {
     private Long id;
     private String name;
