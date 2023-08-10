@@ -1,4 +1,4 @@
-import { useData, TotalPrice } from '../../../utils/Context';
+import { useData } from '../../../utils/Context';
 import { EXTERIOR_COLOR, PICK } from '../constants';
 import * as S from './style';
 import PickTitle from '../../../components/PickTitle';
@@ -7,15 +7,9 @@ import ColorChip from '../../../components/ColorChip';
 import NextButton from '../../../components/NextButton';
 
 function Pick() {
-  const { setTrimState, exteriorColor, price } = useData();
+  // const navigate = useNavigate();
+  const { setTrimState, exteriorColor } = useData();
   const pickTitleProps = { mainTitle: PICK.TITLE };
-
-  // !FIX 안넘겨주고 컴포넌트에서 처리해도 될듯
-  const nextButtonProps = {
-    totalPrice: TotalPrice(price),
-    estimateEvent: '',
-    nextEvent: '',
-  };
 
   return (
     <S.Pick>
@@ -55,7 +49,7 @@ function Pick() {
 
       <S.Footer>
         <S.FooterEnd>
-          <NextButton {...nextButtonProps} />
+          <NextButton />
         </S.FooterEnd>
       </S.Footer>
     </S.Pick>
