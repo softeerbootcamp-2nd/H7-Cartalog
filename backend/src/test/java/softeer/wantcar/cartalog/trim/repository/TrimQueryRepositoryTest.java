@@ -101,13 +101,17 @@ class TrimQueryRepositoryTest {
         softAssertions.assertThat(exclusive.getDescription()).isEqualTo(description);
         softAssertions.assertThat(exclusive.getMinPrice()).isEqualTo(minPrice);
         softAssertions.assertThat(exclusive.getMaxPrice()).isEqualTo(maxPrice);
-        softAssertions.assertThat(exclusive.getExteriorImageUrl()).startsWith(imageServerPath);
-        softAssertions.assertThat(exclusive.getInteriorImageUrl()).startsWith(imageServerPath);
-        softAssertions.assertThat(exclusive.getWheelImageUrl()).startsWith(imageServerPath);
+        softAssertions.assertThat(exclusive.getExteriorImageUrl()).startsWith(imageServerPath + "/");
+        softAssertions.assertThat(exclusive.getInteriorImageUrl()).startsWith(imageServerPath + "/");
+        softAssertions.assertThat(exclusive.getWheelImageUrl()).startsWith(imageServerPath + "/");
 
         List<HMGDataDto> hmgData = exclusive.getHmgData();
         softAssertions.assertThat(hmgData).isNotNull();
         softAssertions.assertThat(hmgData.size()).isLessThanOrEqualTo(3);
+        for (int idx = 0; idx < hmgData.size() - 1; idx++) {
+            softAssertions.assertThat(hmgData.get(idx))
+                    .isNotEqualTo(hmgData.get(idx + 1));
+        }
 
         TrimListResponseDto.DefaultTrimInfoDto defaultInfo = exclusive.getDefaultInfo();
         softAssertions.assertThat(defaultInfo).isNotNull();
