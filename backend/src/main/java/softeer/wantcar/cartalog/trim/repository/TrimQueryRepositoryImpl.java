@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import softeer.wantcar.cartalog.global.dto.HMGDataDto;
@@ -21,6 +22,9 @@ import java.util.stream.Collectors;
 @Repository
 @RequiredArgsConstructor
 public class TrimQueryRepositoryImpl implements TrimQueryRepository {
+    @Value("${env.imageServerPath}")
+    private String imageServerPath = "example-url";
+
     private final JdbcTemplate jdbcTemplate;
 
     @AllArgsConstructor
@@ -57,7 +61,7 @@ public class TrimQueryRepositoryImpl implements TrimQueryRepository {
                 new int[]{Types.BIGINT, Types.BIGINT, Types.BIGINT, Types.BIGINT},
                 (rs, rowNum) -> getTrimListQueryResult(rs, trimListResponseDtoBuilder));
 
-        if(trimListQueryResults.isEmpty()) {
+        if (trimListQueryResults.isEmpty()) {
             return null;
         }
 
@@ -71,7 +75,7 @@ public class TrimQueryRepositoryImpl implements TrimQueryRepository {
         return trimListResponseDtoBuilder.build();
     }
 
-    private static TrimListResponseDto.TrimDto getTrimDto(Map<Long, List<TrimListQueryResult>> queryResultsGroupByTrimId, Long trimId) {
+    private TrimListResponseDto.TrimDto getTrimDto(Map<Long, List<TrimListQueryResult>> queryResultsGroupByTrimId, Long trimId) {
         List<TrimListQueryResult> trimInfos = queryResultsGroupByTrimId.get(trimId);
         TrimListQueryResult trimInfo = trimInfos.get(0);
         TrimListResponseDto.TrimDto.TrimDtoBuilder trimDtoBuilder = TrimListResponseDto.TrimDto.builder()
@@ -80,9 +84,9 @@ public class TrimQueryRepositoryImpl implements TrimQueryRepository {
                 .description(trimInfo.getDescription())
                 .maxPrice(trimInfo.getMaxPrice())
                 .minPrice(trimInfo.getMinPrice())
-                .exteriorImageUrl(trimInfo.getExteriorImageUrl())
-                .interiorImageUrl(trimInfo.getInteriorImageUrl())
-                .wheelImageUrl(trimInfo.getWheelImageUrl());
+                .exteriorImageUrl(imageServerPath + trimInfo.getExteriorImageUrl())
+                .interiorImageUrl(imageServerPath + trimInfo.getInteriorImageUrl())
+                .wheelImageUrl(imageServerPath + trimInfo.getWheelImageUrl());
 
         getTrimDefaultModelTypes(trimInfos, trimInfo, trimDtoBuilder);
         getTrimHMGData(trimInfos, trimDtoBuilder);

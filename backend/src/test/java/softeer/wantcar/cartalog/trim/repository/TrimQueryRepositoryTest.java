@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
@@ -22,6 +23,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @JdbcTest
 @Sql({"classpath:schema.sql"})
 class TrimQueryRepositoryTest {
+    @Value("${env.imageServerPath}")
+    String imageServerPath = "example-url";
+
     @Autowired
     JdbcTemplate jdbcTemplate;
 
@@ -97,6 +101,9 @@ class TrimQueryRepositoryTest {
         softAssertions.assertThat(exclusive.getDescription()).isEqualTo(description);
         softAssertions.assertThat(exclusive.getMinPrice()).isEqualTo(minPrice);
         softAssertions.assertThat(exclusive.getMaxPrice()).isEqualTo(maxPrice);
+        softAssertions.assertThat(exclusive.getExteriorImageUrl()).startsWith(imageServerPath);
+        softAssertions.assertThat(exclusive.getInteriorImageUrl()).startsWith(imageServerPath);
+        softAssertions.assertThat(exclusive.getWheelImageUrl()).startsWith(imageServerPath);
 
         List<HMGDataDto> hmgData = exclusive.getHmgData();
         softAssertions.assertThat(hmgData).isNotNull();
