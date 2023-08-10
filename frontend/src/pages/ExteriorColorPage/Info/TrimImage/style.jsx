@@ -9,6 +9,6 @@ export const TrimImage = styled.div`
   margin-left: 65px;
 `;
 
-export const Image = styled.img`
+export const RotateImage = styled.img`
   -webkit-user-drag: none;
 `;

@@ -1,16 +1,17 @@
 import { useState } from 'react';
+import { useData } from '../../../../utils/Context';
 import * as S from './style';
 
-const palisadeUrl = 'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade';
+// !FIX : API완성되면 상수 없애기
 const trimSelect = 'le-blanc';
-const exteriorSelect = 'A2B';
 
-function TrimImage({ start }) {
+function TrimImage() {
+  const { exteriorColor } = useData();
   const [image, setImage] = useState(1);
   const [prevX, setPrevX] = useState(0);
 
   const startSwipe = (event) => {
-    if (start) {
+    if (exteriorColor.rotate) {
       setPrevX(event.clientX);
       if (prevX < event.clientX) {
         if (image <= 1) setImage(60);
@@ -25,8 +26,8 @@ function TrimImage({ start }) {
 
   return (
     <S.TrimImage>
-      <S.Image
-        src={`${palisadeUrl}/${trimSelect}/exterior/${exteriorSelect}/${image
+      <S.RotateImage
+        src={`${exteriorColor.pickCarImageUrl}/${trimSelect}/exterior/${exteriorColor.pick}/${image
           .toString()
           .padStart(3, '0')}.png`}
         onMouseMove={startSwipe}
