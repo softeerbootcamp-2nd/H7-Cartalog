@@ -1,35 +1,40 @@
 package softeer.wantcar.cartalog.trim.repository;
 
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
+import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.event.annotation.BeforeTestClass;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.entity.model.BasicModel;
 import softeer.wantcar.cartalog.global.dto.HMGDataDto;
+import softeer.wantcar.cartalog.model.repository.ModelQueryRepository;
 import softeer.wantcar.cartalog.trim.dto.TrimListResponseDto;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-@DataJdbcTest
-@Transactional
+@JdbcTest
+@Sql({"classpath:schema.sql"})
 class TrimQueryRepositoryTest {
     @Autowired
+    JdbcTemplate jdbcTemplate;
+
     ModelQueryRepository modelQueryRepository;
-
-    @Autowired
     TrimQueryRepository trimQueryRepository;
-
     SoftAssertions softAssertions;
 
     @BeforeEach
     void setUp() {
+        modelQueryRepository = new ModelQueryRepository(jdbcTemplate);
+        trimQueryRepository = new TrimQueryRepository(jdbcTemplate);
         softAssertions = new SoftAssertions();
     }
 
@@ -41,10 +46,10 @@ class TrimQueryRepositoryTest {
         @DisplayName("modelId가 존재하면 modelId 맞는 트림 목록을 반환한다")
         void returnTrimListMatchedModelIdWhenModelIdExist() {
             //given
-            BasicModel basicModel = ModelQueryRepository.findBasicModelByName("팰리세이드");
+            BasicModel basicModel = modelQueryRepository.findBasicModelByName("팰리세이드");
 
             //when
-            TrimListResponseDto trimListResponseDto = trimQueryRepository.findTrims(basicModels);
+            TrimListResponseDto trimListResponseDto = trimQueryRepository.findTrimsByBasicModelId(basicModel.getId());
 
             //then
             softAssertions.assertThat(trimListResponseDto).isNotNull();
@@ -72,7 +77,7 @@ class TrimQueryRepositoryTest {
         void returnNullWhenModelIdNotMatched() {
             //given
             //when
-            TrimListResponseDto trimListResponseDto = trimQueryRepository.findTrims(-1);
+            TrimListResponseDto trimListResponseDto = trimQueryRepository.findTrimsByBasicModelId(-1L);
 
             //then
             assertThat(trimListResponseDto).isNull();
