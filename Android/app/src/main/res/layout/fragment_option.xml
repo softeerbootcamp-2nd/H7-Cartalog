@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:paddingBottom="60dp"
+        android:paddingBottom="120dp"
         tools:context=".ui.fragment.OptionFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
