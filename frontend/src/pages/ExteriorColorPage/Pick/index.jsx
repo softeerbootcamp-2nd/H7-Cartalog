@@ -1,73 +1,56 @@
-import { useState } from 'react';
+import { useData, TotalPrice } from '../../../utils/Context';
+import { PICK_TITLE } from '../constants';
 import * as S from './style';
-import Button from '../../../components/Button';
 import PickTitle from '../../../components/PickTitle';
 import ColorCard from '../../../components/ColorCard';
 import ColorChip from '../../../components/ColorChip';
+import NextButton from '../../../components/NextButton';
 
-const TYPE = 'buttonD';
-const STATE = 'active';
-const MAIN_TITLE = '다음';
-const PICK_MAIN_TITLE = '외장 색상을 선택해주세요.';
+function Pick() {
+  const { setTrimState, exteriorColor, price } = useData();
+  const pickTitleProps = { mainTitle: PICK_TITLE };
 
-const COLOR_DATA = [
-  {
-    id: 'A2B',
-    name: '어비스 블랙 펄',
-    price: 100000,
-    chosen: 38,
-  },
-  {
-    id: 'R2T',
-    name: '쉬머링 실버 메탈릭',
-    price: 100000,
-    chosen: 38,
-  },
-  {
-    id: 'R8N',
-    name: '로버스트 에메랄드 펄',
-    price: 100000,
-    chosen: 38,
-  },
-  {
-    id: 'UB7',
-    name: '문라이트 블루 펄',
-    price: 100000,
-    chosen: 38,
-  },
-];
-
-function Pick({ nextPage }) {
-  const pickTitleProps = { mainTitle: PICK_MAIN_TITLE };
-  const [active, setActive] = useState(null);
-
-  const buttonProps = {
-    nextPage,
-    type: TYPE,
-    state: STATE,
-    mainTitle: MAIN_TITLE,
+  const nextButtonProps = {
+    totalPrice: TotalPrice(price),
+    estimateEvent: '',
+    nextEvent: '',
   };
 
   return (
     <S.Pick>
       <PickTitle {...pickTitleProps} />
-      {/* 컬러 칩들을 맵으로 생성 */}
       <S.Color>
-        {COLOR_DATA.map((color) => (
+        {exteriorColor.dataFetch.map((color) => (
           <ColorCard
             key={color.id}
             pickRatio={color.chosen}
             name={color.name}
             price={color.price}
-            selected={active === color.id}
-            onClick={() => setActive(color.id)}
+            selected={exteriorColor.pick === color.id}
+            onClick={() =>
+              setTrimState((prevState) => ({
+                ...prevState,
+                exteriorColor: {
+                  ...prevState.exteriorColor,
+                  pick: color.id,
+                },
+                price: {
+                  ...prevState.price,
+                  exteriorColorPrice: color.price,
+                },
+              }))
+            }
           >
-            <ColorChip color="#343736" />
+            <ColorChip selected={exteriorColor.pick === color.id} src={color.colorImageUrl} />
           </ColorCard>
         ))}
       </S.Color>
 
-      <Button {...buttonProps} />
+      <S.Footer>
+        <S.FooterEnd>
+          <NextButton {...nextButtonProps} />
+        </S.FooterEnd>
+      </S.Footer>
     </S.Pick>
   );
 }

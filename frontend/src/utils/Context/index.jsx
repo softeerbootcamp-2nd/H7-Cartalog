@@ -19,21 +19,27 @@ export function StateProvider({ children }) {
   const initialState = stateKeys.reduce((acc, key) => {
     if (key === 'price') {
       acc[key] = {
-        trimPrice: null,
-        powerTrainPrice: null,
-        bodyTypePrice: null,
-        wheelDrivePrice: null,
-        exteriorColorPrice: null,
-        interiorColorPrice: null,
-        optionPrice: null,
+        trimPrice: 100000,
+        powerTrainPrice: 100000,
+        bodyTypePrice: 100000,
+        wheelDrivePrice: 100000,
+        exteriorColorPrice: 100000,
+        interiorColorPrice: 100000,
+        optionPrice: 100000,
       };
-    }
-    if (key === 'modelType') {
+    } else if (key === 'modelType') {
       acc[key] = {
         powerTrain: 1,
         wheelDrive: 2,
         bodyType: 1,
       };
+    } else if (key === 'exteriorColor') {
+      acc[key] = {
+        dataFetch: [],
+        pick: null,
+      };
+    } else if (key === 'trimId') {
+      acc[key] = 1;
     } else {
       acc[key] = null; // 다른 키들은 null로 초기화
     }
