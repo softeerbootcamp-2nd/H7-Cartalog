@@ -17,7 +17,7 @@ export const PriceStaticBar = styled.div.attrs(({ theme, $over }) => ({
   backdrop-filter: blur(3px);
   user-select: none;
   transition: background-color 0.5s ease;
-  overflow-x: hidden;
+  overflow: hidden;
 
   &.over {
     background-color: #000b19e5;
