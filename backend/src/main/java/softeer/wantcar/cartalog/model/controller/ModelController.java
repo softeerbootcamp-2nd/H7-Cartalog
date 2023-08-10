@@ -2,7 +2,6 @@ package softeer.wantcar.cartalog.model.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,18 +19,21 @@ import javax.websocket.server.PathParam;
 @RequestMapping("/models")
 @RequiredArgsConstructor
 public class ModelController {
-    @Value("${env.imageServerPath}")
-    private String imageServerPath = "example-url";
     private final ModelOptionQueryRepository modelOptionQueryRepository;
 
     @GetMapping("/{modelId}/types")
     public ResponseEntity<ModelTypeListResponseDto> searchModelType(@PathVariable("modelId") Long modelId) {
-        ModelTypeListResponseDto dto = modelOptionQueryRepository.findByModelId(modelId);
-        if (dto.modelTypeSize() == 0) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        try {
+            ModelTypeListResponseDto dto = modelOptionQueryRepository.findByModelId(modelId);
 
-        return new ResponseEntity<>(dto, HttpStatus.OK);
+            if (dto.modelTypeSize() == 0) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            return new ResponseEntity<>(dto, HttpStatus.OK);
+        } catch (RuntimeException exception) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/{modelId}/performance")
