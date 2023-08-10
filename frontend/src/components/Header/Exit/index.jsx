@@ -1,11 +1,12 @@
 import * as S from './style';
+import { EXIT } from '../constants';
 import { ReactComponent as Cancel } from '../../../../assets/icons/cancel.svg';
 
 function Exit() {
   return (
     <S.Exit>
-      <S.Text>종료</S.Text>
-      <Cancel width="12px" />
+      <S.Text>{EXIT.TEXT}</S.Text>
+      <Cancel />
     </S.Exit>
   );
 }

@@ -1,28 +1,25 @@
 import { Link } from 'react-router-dom';
+import { useData } from '../../../utils/Context';
+import { NAV } from '../constants';
+import NavToggle from '../../NavToggle';
 import * as S from './style';
 
 function Nav() {
+  const { page } = useData();
+
   return (
     <S.Nav>
       <S.Stage>
-        <S.Step>
-          <Link to="/">트림</Link>
-        </S.Step>
-        <S.Step>
-          <Link to="/modelType">타입</Link>
-        </S.Step>
-        <S.Step>
-          <Link to="/exteriorColor">외장</Link>
-        </S.Step>
-        <S.Step>
-          <Link to="/interiorColor">내장</Link>
-        </S.Step>
-        <S.Step>
-          <Link to="/addOptions">옵션</Link>
-        </S.Step>
-        <S.Step>
-          <Link to="/estimateFinish">완료</Link>
-        </S.Step>
+        {NAV.map((item) => (
+          <S.Step key={item.label}>
+            <S.Text className={item.page === page ? 'selected' : null}>
+              <Link to={item.to}>{item.label}</Link>
+            </S.Text>
+            <S.Bar>
+              <NavToggle selected={item.page === page} />
+            </S.Bar>
+          </S.Step>
+        ))}
       </S.Stage>
     </S.Nav>
   );
