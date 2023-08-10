@@ -4,8 +4,8 @@ import Layout from './components/PageLayout';
 import TrimSelect from './pages/TrimSelectPage';
 import ModelType from './pages/ModelTypePage';
 import ExteriorColor from './pages/ExteriorColorPage';
-import AddOption from './pages/AddOptionPage';
-import EstimateFinish from './pages/EstimateFinishPage';
+import OptionPicker from './pages/OptionPickerPage';
+import Estimation from './pages/EstimationPage';
 
 function App() {
   return (
@@ -15,8 +15,8 @@ function App() {
         <Route path="/modelType" element={<ModelType />} />
         <Route path="/exteriorColor" element={<ExteriorColor />} />
         <Route path="/interiorColor" element={<InteriorColor />} />
-        <Route path="/addOptions" element={<AddOption />} />
-        <Route path="/estimateFinish" element={<EstimateFinish />} />
+        <Route path="/optionPicker" element={<OptionPicker />} />
+        <Route path="/estimation" element={<Estimation />} />
       </Route>
     </Routes>
   );

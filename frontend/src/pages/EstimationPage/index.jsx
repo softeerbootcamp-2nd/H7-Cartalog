@@ -3,7 +3,7 @@ import PriceStaticBar from '../../components/PriceStaticBar';
 import Preview from './Preview';
 import * as S from './style';
 
-function EstimateFinish() {
+function Estimation() {
   const [collapsed, setCollapsed] = useState(false);
 
   const handleScroll = () => {
@@ -30,4 +30,4 @@ function EstimateFinish() {
   );
 }
 
-export default EstimateFinish;
+export default Estimation;

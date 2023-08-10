@@ -5,7 +5,7 @@ import Pick from './Pick';
 const TYPE = 'AddOption';
 const IMAGE_URL = '../../../../../assets/images/TrimSelect/interior.png';
 
-function AddOption() {
+function OptionPicker() {
   const InfoProps = { imageUrl: IMAGE_URL };
   const SectionProps = {
     type: TYPE,
@@ -16,4 +16,4 @@ function AddOption() {
   return <Section {...SectionProps} />;
 }
 
-export default AddOption;
+export default OptionPicker;
