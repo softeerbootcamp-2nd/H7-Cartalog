@@ -6,6 +6,7 @@ export function StateProvider({ children }) {
   const stateKeys = [
     'page',
     'trimId',
+    'trim',
     'powerTrain',
     'bodyType',
     'wd',
@@ -19,13 +20,20 @@ export function StateProvider({ children }) {
   const initialState = stateKeys.reduce((acc, key) => {
     if (key === 'price') {
       acc[key] = {
-        trimPrice: 100000,
+        trimPrice: 38960000,
         powerTrainPrice: 100000,
         bodyTypePrice: 100000,
         wheelDrivePrice: 100000,
         exteriorColorPrice: 100000,
         interiorColorPrice: 100000,
         optionPrice: 100000,
+      };
+    } else if (key === 'trim') {
+      acc[key] = {
+        trimFetch: [],
+        isTrimFetch: false,
+        trimId: 2,
+        trimIndex: 0,
       };
     } else if (key === 'modelType') {
       acc[key] = {
@@ -50,7 +58,7 @@ export function StateProvider({ children }) {
           'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade/le-blanc/options/10_driverseat_s.jpg',
       };
     } else if (key === 'trimId') {
-      acc[key] = 1;
+      acc[key] = 2;
     } else {
       acc[key] = null; // 다른 키들은 null로 초기화
     }
