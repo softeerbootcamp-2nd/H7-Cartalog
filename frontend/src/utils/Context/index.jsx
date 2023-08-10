@@ -5,15 +5,11 @@ const StateContext = createContext(null);
 export function StateProvider({ children }) {
   const stateKeys = [
     'page',
-    'trimId',
     'trim',
-    'powerTrain',
-    'bodyType',
-    'wd',
+    'modelType',
     'exteriorColor',
     'interiorColor',
-    'addOption',
-    'modelType',
+    'optionPicker',
     'price',
   ];
 
@@ -33,18 +29,18 @@ export function StateProvider({ children }) {
         trimFetch: [],
         isTrimFetch: false,
         trimId: 2,
-        trimIndex: 0,
       };
     } else if (key === 'modelType') {
       acc[key] = {
-        powerTrain: 1,
-        wheelDrive: 2,
-        bodyType: 1,
+        powerTrainId: 1,
+        bodyTypeId: 5,
+        wheelDriveId: 3,
       };
     } else if (key === 'exteriorColor') {
       acc[key] = {
         dataFetch: [],
-        pick: 'A2B',
+        exteriorColorId: 'A2B',
+
         pickName: '어비스 블랙 펄',
         pickCarImageUrl: 'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade',
         rotate: false,
@@ -52,13 +48,13 @@ export function StateProvider({ children }) {
     } else if (key === 'interiorColor') {
       acc[key] = {
         dataFetch: [],
+        interiorColorId: 'I49',
+
         pick: 'A22',
         pickName: '퀼팅천연(블랙)',
         pickCarImageUrl:
           'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade/le-blanc/options/10_driverseat_s.jpg',
       };
-    } else if (key === 'trimId') {
-      acc[key] = 2;
     } else {
       acc[key] = null; // 다른 키들은 null로 초기화
     }

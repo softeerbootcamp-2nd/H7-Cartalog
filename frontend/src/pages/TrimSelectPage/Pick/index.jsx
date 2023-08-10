@@ -6,11 +6,11 @@ import TrimCard from './TrimCard';
 
 function Pick() {
   const { setTrimState, trim } = useData();
-  const PickTitleProps = { mainTitle: PICK.TITLE };
+  const pickTitleProps = { mainTitle: PICK.TITLE };
 
   return (
     <S.Pick>
-      <PickTitle {...PickTitleProps} />
+      <PickTitle {...pickTitleProps} />
       <S.Trim>
         {trim.trimFetch.map((trimData) => {
           return (
@@ -19,6 +19,7 @@ function Pick() {
               name={trimData.name}
               description={trimData.description}
               price={trimData.minPrice}
+              defaultInfo={trimData.defaultInfo}
               active={trimData.id === trim.trimId}
               onClick={() => {
                 if (trimData.id === trim.trimId) return;

@@ -30,12 +30,9 @@ function TrimSelect() {
     fetchData();
   }, []);
 
-  //
-  console.log(trim);
-
   const SectionProps = {
     type: TRIM_SELECT.TYPE,
-    // Info: <Info trimId={trimId ?? 1} data={trimData?.trims} />,
+    Info: <Info />,
     Pick: <Pick />,
     showPriceStatic: false,
   };
