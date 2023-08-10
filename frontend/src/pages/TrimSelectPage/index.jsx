@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useData } from '../../utils/Context';
 import { TRIM_SELECT } from './constants';
 import Section from '../../components/Section';
@@ -6,7 +6,6 @@ import Info from './Info';
 import Pick from './Pick';
 
 function TrimSelect() {
-  const [isFetched, setIsFetched] = useState(false);
   const { setTrimState, trim } = useData();
 
   useEffect(() => {
@@ -17,15 +16,14 @@ function TrimSelect() {
 
         setTrimState((prevState) => ({
           ...prevState,
-          page: 1,
           trim: {
             ...prevState.trim,
             trimFetch: [...dataFetch.trims],
             isTrimFetch: true,
           },
         }));
-        setIsFetched(true);
       }
+      setTrimState((prevState) => ({ ...prevState, page: 1 }));
     }
     fetchData();
   }, []);
@@ -37,7 +35,7 @@ function TrimSelect() {
     showPriceStatic: false,
   };
 
-  return isFetched ? <Section {...SectionProps} /> : <div>loading...</div>;
+  return trim.isTrimFetch ? <Section {...SectionProps} /> : <div>loading...</div>;
 }
 
 export default TrimSelect;
