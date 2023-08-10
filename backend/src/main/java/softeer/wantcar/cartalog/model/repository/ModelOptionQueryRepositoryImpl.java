@@ -40,32 +40,33 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
         private int price;
 
         private HMGDataDtoInterface toHMGDataDto() {
-            HMGDataDtoInterface dto;
+            HMGDataDtoInterface hmgDataDto;
             if (hmgDataName == null && hmgDataValue == null && hmgDataMeasure == null) {
                 return null;
             }
             if ("파워트레인/성능".equals(childCategory)) {
+                assert hmgDataValue != null;
                 String[] valueAndRpm = hmgDataValue.split("/", 2);
-                dto = PowerTrainHMGDataDto.builder()
+                hmgDataDto = PowerTrainHMGDataDto.builder()
                         .name(hmgDataName)
                         .value(Float.parseFloat(valueAndRpm[0]))
                         .rpm(valueAndRpm[1])
                         .measure(hmgDataMeasure)
                         .build();
             } else {
-                dto = HMGDataDto.builder()
+                hmgDataDto = HMGDataDto.builder()
                         .name(hmgDataName)
                         .value(hmgDataValue)
                         .measure(hmgDataMeasure)
                         .build();
             }
-            return dto;
+            return hmgDataDto;
         }
     }
 
     @Override
     @Transactional
-    public ModelTypeListResponseDto findByModelId(Long id) {
+    public ModelTypeListResponseDto findByModelId(Long modelId) {
         String selectSimpleModelOptionSQL = "SELECT model_options.id AS model_option_id, " +
                 "       model_options.name, " +
                 "       child_category, " +
@@ -92,12 +93,12 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
                         .hmgDataValue(rs.getString("hmg_data_value"))
                         .hmgDataMeasure(rs.getString("hmg_data_measure"))
                         .price(rs.getInt("price"))
-                        .build(), id);
+                        .build(), modelId);
 
-        Map<String, Map<Long, OptionDto.OptionDtoBuilder>> builderMap = new HashMap<>();
+        Map<String, Map<Long, OptionDto.OptionDtoBuilder>> dtoBuilderMap = new HashMap<>();
         for (SimpleModelOptionMapper mapper : simpleModelOptionMapperList) {
-            Map<Long, OptionDto.OptionDtoBuilder> builder2 = builderMap.getOrDefault(mapper.childCategory, new HashMap<>());
-            OptionDto.OptionDtoBuilder builder = builder2.getOrDefault(mapper.model_option_Id,
+            Map<Long, OptionDto.OptionDtoBuilder> optionDtoBuilderMap = dtoBuilderMap.getOrDefault(mapper.childCategory, new HashMap<>());
+            OptionDto.OptionDtoBuilder optionDtoBuilder = optionDtoBuilderMap.getOrDefault(mapper.model_option_Id,
                     OptionDto.builder()
                             .id(mapper.model_option_Id)
                             .name(mapper.name)
@@ -108,22 +109,19 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
 
             HMGDataDtoInterface hmgDataDto = mapper.toHMGDataDto();
             if (hmgDataDto != null) {
-                builder.hmgDatum(mapper.toHMGDataDto());
+                optionDtoBuilder.hmgDatum(mapper.toHMGDataDto());
             }
-            builder2.put(mapper.model_option_Id, builder);
-            builderMap.put(mapper.childCategory, builder2);
+            optionDtoBuilderMap.put(mapper.model_option_Id, optionDtoBuilder);
+            dtoBuilderMap.put(mapper.childCategory, optionDtoBuilderMap);
         }
 
         ModelTypeListResponseDto.ModelTypeListResponseDtoBuilder builder = ModelTypeListResponseDto.builder();
-        builderMap.forEach((key, value) -> {
-            ModelTypeDto.ModelTypeDtoBuilder type = ModelTypeDto.builder().type(key);
-            value.forEach((key2, value2) -> {
-                type.option(value2.build());
-            });
-            builder.modelType(type.build());
+        dtoBuilderMap.forEach((type, optionDtoBuilderMap) -> {
+            ModelTypeDto.ModelTypeDtoBuilder modelTypeDtoBuilder = ModelTypeDto.builder().type(type);
+            optionDtoBuilderMap.forEach((modelOptionId, optionDtoBuilder) -> modelTypeDtoBuilder.option(optionDtoBuilder.build()));
+            builder.modelType(modelTypeDtoBuilder.build());
         });
 
-        log.info(builder.build().toString());
         return builder.build();
     }
 }
