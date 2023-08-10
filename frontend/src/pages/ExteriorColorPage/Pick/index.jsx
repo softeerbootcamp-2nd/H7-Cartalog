@@ -1,9 +1,10 @@
 import { useState } from 'react';
+import { useData, TotalPrice } from '../../../utils/Context';
 import * as S from './style';
-import Button from '../../../components/Button';
 import PickTitle from '../../../components/PickTitle';
 import ColorCard from '../../../components/ColorCard';
 import ColorChip from '../../../components/ColorChip';
+import NextButton from '../../../components/NextButton';
 
 const TYPE = 'buttonD';
 const STATE = 'active';
@@ -38,14 +39,16 @@ const COLOR_DATA = [
 ];
 
 function Pick({ nextPage }) {
+  const { modelType, price } = useData();
+  console.log(modelType, TotalPrice(price));
+
   const pickTitleProps = { mainTitle: PICK_MAIN_TITLE };
   const [active, setActive] = useState(null);
 
-  const buttonProps = {
-    nextPage,
-    type: TYPE,
-    state: STATE,
-    mainTitle: MAIN_TITLE,
+  const nextButtonProps = {
+    totalPrice: TotalPrice(price),
+    estimateEvent: '',
+    nextEvent: '',
   };
 
   return (
@@ -67,7 +70,11 @@ function Pick({ nextPage }) {
         ))}
       </S.Color>
 
-      <Button {...buttonProps} />
+      <S.Footer>
+        <S.FooterEnd>
+          <NextButton {...nextButtonProps} />
+        </S.FooterEnd>
+      </S.Footer>
     </S.Pick>
   );
 }

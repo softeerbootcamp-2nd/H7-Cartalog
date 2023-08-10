@@ -12,7 +12,6 @@ export const Footer = styled.div`
   position: fixed;
   display: flex;
   z-index: 2;
-  margin-top: 28px;
   bottom: 0;
   gap: 7px;
 `;

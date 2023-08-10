@@ -19,16 +19,15 @@ export function StateProvider({ children }) {
   const initialState = stateKeys.reduce((acc, key) => {
     if (key === 'price') {
       acc[key] = {
-        trimPrice: null,
-        powerTrainPrice: null,
-        bodyTypePrice: null,
-        wheelDrivePrice: null,
-        exteriorColorPrice: null,
-        interiorColorPrice: null,
-        optionPrice: null,
+        trimPrice: 100000,
+        powerTrainPrice: 100000,
+        bodyTypePrice: 100000,
+        wheelDrivePrice: 100000,
+        exteriorColorPrice: 100000,
+        interiorColorPrice: 100000,
+        optionPrice: 100000,
       };
-    }
-    if (key === 'modelType') {
+    } else if (key === 'modelType') {
       acc[key] = {
         powerTrain: 1,
         wheelDrive: 2,
