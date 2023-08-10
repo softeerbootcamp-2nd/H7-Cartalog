@@ -27,6 +27,7 @@ function TrimSelect() {
     type: TYPE,
     Info: <Info trimId={trimId ?? 1} data={trimData?.trims} />,
     Pick: <Pick trimId={trimId ?? 1} setTrimState={setTrimState} data={trimData?.trims} />,
+    showPriceStatic: false,
   };
 
   return <Section {...SectionProps} />;

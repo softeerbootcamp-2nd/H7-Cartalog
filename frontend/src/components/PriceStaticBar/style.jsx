@@ -5,6 +5,10 @@ export const PriceStaticBar = styled.div.attrs(({ theme, $over }) => ({
     backgroundColor: $over ? '#000b19e5' : theme.color.primary['700'],
   },
 }))`
+  position: fixed;
+  top: 76px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   width: 343px;
