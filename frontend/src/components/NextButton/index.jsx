@@ -1,13 +1,21 @@
+import { useNavigate } from 'react-router-dom';
+import { useData, TotalPrice } from '../../utils/Context';
+import { TOTAL, BUTTON, ROUND_BUTTON, PAGE } from './constants';
 import * as S from './style';
-import { TOTAL, BUTTON, ROUND_BUTTON } from './constants';
 import RoundButton from '../RoundButton';
 import Button from '../Button';
 
-function NextButton({ totalPrice, estimateEvent, nextEvent }) {
+function NextButton() {
+  const { page, price } = useData();
+  const navigate = useNavigate();
+
   const buttonProps = {
     type: BUTTON.TYPE,
     state: BUTTON.STATE,
     mainTitle: BUTTON.MAIN_TITLE,
+    event: () => {
+      navigate(PAGE.find((type) => type.page === page + 1).to);
+    },
   };
 
   const roundButtonProps = {
@@ -19,16 +27,16 @@ function NextButton({ totalPrice, estimateEvent, nextEvent }) {
   return (
     <S.NextButton>
       <S.Estimate>
-        <RoundButton onClick={estimateEvent} {...roundButtonProps} />
+        <RoundButton {...roundButtonProps} />
         <S.TotalPrice>
           <S.TotalPriceText>{TOTAL.PRICE}</S.TotalPriceText>
           <S.TotalPriceNumber>
-            {totalPrice.toLocaleString('ko-KR')}
+            {TotalPrice(price).toLocaleString('ko-KR')}
             {TOTAL.WON}
           </S.TotalPriceNumber>
         </S.TotalPrice>
       </S.Estimate>
-      <Button onClick={nextEvent} {...buttonProps} />
+      <Button {...buttonProps} />
     </S.NextButton>
   );
 }
