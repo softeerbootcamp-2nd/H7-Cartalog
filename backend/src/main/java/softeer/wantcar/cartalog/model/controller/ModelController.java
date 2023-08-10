@@ -23,17 +23,18 @@ public class ModelController {
 
     @GetMapping("/{modelId}/types")
     public ResponseEntity<ModelTypeListResponseDto> searchModelType(@PathVariable("modelId") Long modelId) {
+        ModelTypeListResponseDto dto;
         try {
-            ModelTypeListResponseDto dto = modelOptionQueryRepository.findByModelId(modelId);
-
-            if (dto.modelTypeSize() == 0) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-
-            return new ResponseEntity<>(dto, HttpStatus.OK);
+            dto = modelOptionQueryRepository.findByModelId(modelId);
         } catch (RuntimeException exception) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
+        if (dto.modelTypeSize() == 0) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @GetMapping("/{modelId}/performance")
