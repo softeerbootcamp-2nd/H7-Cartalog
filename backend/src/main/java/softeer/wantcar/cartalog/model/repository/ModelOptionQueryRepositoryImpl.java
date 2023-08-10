@@ -64,7 +64,7 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public ModelTypeListResponseDto findByModelId(Long modelId) {
         String selectSimpleModelOptionSQL = "SELECT model_options.id AS model_option_id, " +
                 "       model_options.name, " +
@@ -93,7 +93,6 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
                         .hmgDataMeasure(rs.getString("hmg_data_measure"))
                         .price(rs.getInt("price"))
                         .build(), modelId);
-
 
         return buildModelTypeListResponseDto(simpleModelOptionMapperList);
     }
