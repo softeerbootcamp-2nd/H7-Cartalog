@@ -18,7 +18,8 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("softeer.wantcar.cartalog"))
                 .paths(PathSelectors.any())
                 .build()
-                .apiInfo(apiInfo());
+                .apiInfo(apiInfo())
+                .useDefaultResponseMessages(false);
     }
 
     private ApiInfo apiInfo() {

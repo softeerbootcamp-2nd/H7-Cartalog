@@ -4,10 +4,10 @@ import lombok.*;
 
 @Getter
 @AllArgsConstructor
-@EqualsAndHashCode
 @Builder
-public class HMGDataDto implements HMGDataDtoInterface {
+public class PowerTrainHMGDataDto implements HMGDataDtoInterface {
     private String name;
-    private String value;
+    private float value;
+    private String rpm;
     private String measure;
 }

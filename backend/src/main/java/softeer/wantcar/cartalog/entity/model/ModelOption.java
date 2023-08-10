@@ -10,7 +10,8 @@ public class ModelOption {
     private String name;
     private String description;
     private String type;
-    private String category;
+    private String parentCategory;
+    private String childCategory;
     private String imageUrl;
     private List<HashTag> hashTags;
     private List<HMGData> hmgData;

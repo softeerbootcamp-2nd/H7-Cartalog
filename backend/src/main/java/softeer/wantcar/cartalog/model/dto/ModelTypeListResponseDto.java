@@ -1,68 +1,56 @@
 package softeer.wantcar.cartalog.model.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import softeer.wantcar.cartalog.global.dto.HMGDataDto;
+import lombok.*;
+import softeer.wantcar.cartalog.global.annotation.TestMethod;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Getter
 @Builder
-@EqualsAndHashCode
 @AllArgsConstructor
 public class ModelTypeListResponseDto {
+    @Singular
     private List<ModelTypeDto> modelTypes;
 
-    @Getter
-    @AllArgsConstructor
-    @EqualsAndHashCode
-    @Builder
-    public static class ModelTypeDto {
-        private String type;
-        private List<OptionDto> options;
+    public int modelTypeSize() {
+        return modelTypes.size();
     }
 
-    @Getter
-    @AllArgsConstructor
-    @EqualsAndHashCode(callSuper = false)
-    @Builder
-    public static class ModelTypeOptionDto extends OptionDto {
-        private Long id;
-        private String name;
-        private int price;
-        private int chosen;
-        private String imageUrl;
-        private String description;
-        private List<HMGDataDto> hmgData;
+    @TestMethod
+    public boolean equalAndAllContain(List<String> expected, List<String> actual) {
+        return expected.size() == actual.size() && new HashSet<>(expected).equals(new HashSet<>(actual));
     }
 
-    @Getter
-    @AllArgsConstructor
-    @EqualsAndHashCode(callSuper = false)
-    @Builder
-    public static class PowerTrainOptionDto extends OptionDto {
-        private Long id;
-        private String name;
-        private int price;
-        private int chosen;
-        private String imageUrl;
-        private String description;
-        private List<PowerTrainHMGDataDto> powerTrainHMGData;
+    @TestMethod
+    public boolean equalAndAllContainTypes(List<String> type) {
+        List<String> types = modelTypes.stream()
+                .map(ModelTypeDto::getType).collect(Collectors.toUnmodifiableList());
+
+        return equalAndAllContain(type, types);
     }
 
-    @Getter
-    @AllArgsConstructor
-    @Builder
-    @EqualsAndHashCode
-    public static class PowerTrainHMGDataDto {
-        private String name;
-        private float value;
-        private String rpm;
-        private String measure;
+    @TestMethod
+    public boolean hasOptions(Map<String, List<String>> checkOptions) {
+        return checkOptions.entrySet().stream()
+                .allMatch((checkOptionMap) -> {
+                    List<String> actualOptionNames = modelTypes.stream()
+                            .filter(modelTypeDto -> modelTypeDto.getType().equals(checkOptionMap.getKey()))
+                            .map(ModelTypeDto::getOptions)
+                            .flatMap(Collection::stream)
+                            .map(OptionDto::getName)
+                            .collect(Collectors.toUnmodifiableList());
+                    return equalAndAllContain(checkOptionMap.getValue(), actualOptionNames);
+                });
     }
 
-    public static abstract class OptionDto {
+    @TestMethod
+    public boolean startWithUrl(String url) {
+        return modelTypes.stream()
+                .flatMap(modelTypeDto -> modelTypeDto.getOptions().stream())
+                .allMatch(optionDto -> optionDto.startWithUrl(url));
     }
 }
