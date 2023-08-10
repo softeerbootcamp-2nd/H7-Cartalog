@@ -19,4 +19,6 @@
     <string name="summary_model">모델</string>
     <string name="summary_exterior">외장 색상</string>
     <string name="summary_interior">내장 색상</string>
+    <string name="summary_complete">견적 완료하기</string>
+    <string name="btn_close_price_summary">요약닫기</string>
 </resources>

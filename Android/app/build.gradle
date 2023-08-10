@@ -50,5 +50,4 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
     implementation 'com.tbuonomo:dotsindicator:5.0'
     implementation 'com.google.android.material:material:1.11.0-alpha01'
-    implementation 'nl.bryanderidder:themed-toggle-button-group:1.4.1'
 }
