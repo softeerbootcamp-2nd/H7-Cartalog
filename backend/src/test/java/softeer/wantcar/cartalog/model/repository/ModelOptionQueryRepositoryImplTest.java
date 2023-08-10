@@ -33,7 +33,7 @@ class ModelOptionQueryRepositoryImplTest {
     @DisplayName("findByModelId 테스트")
     class findByModelId {
         @Test
-        void findByModelId1() {
+        void findByModelIdWithCollectId() {
             //given
             Long modelId = 1L;
             List<String> checkTypes = List.of("파워트레인/성능", "바디타입", "구동방식");
@@ -54,8 +54,8 @@ class ModelOptionQueryRepositoryImplTest {
         }
 
         @Test
-        @DisplayName("없는 아이디로 조회")
-        void findByModelId() {
+        @DisplayName("없는 식별자로 조회시 빈 dto를 반환해야 한다.")
+        void findByModelIdWithIllegalId() {
             //given
             //when
             ModelTypeListResponseDto response = modelOptionQueryRepository.findByModelId(-1L);
