@@ -85,7 +85,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/outline_close_24"
+                android:src="@drawable/icon_close"
                 app:activity="@{activity}"
                 app:layout_constraintEnd_toEndOf="@id/gl_end"
                 app:layout_constraintTop_toTopOf="@id/tv_title"

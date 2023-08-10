@@ -8,6 +8,7 @@ import androidx.databinding.BindingAdapter
 import com.google.android.material.card.MaterialCardView
 import androidx.fragment.app.FragmentContainerView
 import com.softeer.cartalog.ui.activity.MainActivity
+import com.softeer.cartalog.ui.dialog.PriceSummaryBottomSheetFragment
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import com.softeer.cartalog.viewmodel.InteriorViewModel
 
@@ -83,5 +84,36 @@ fun setOnClickToggle(
             button.animate().rotation(180f).start()
             fragmentContainer.setPadding(0,150,0,0)
         }
+    }
+}
+
+@BindingAdapter("activity")
+fun setOnClickSummaryBtn(
+    button: AppCompatButton,
+    activity: MainActivity
+) {
+    val bottomSheetFragment = PriceSummaryBottomSheetFragment()
+    button.setOnClickListener {
+        activity.openSummaryPage(bottomSheetFragment)
+    }
+}
+
+@BindingAdapter("fragment")
+fun setOnClickSummaryCloseBtn(
+    button: ImageButton,
+    fragment: PriceSummaryBottomSheetFragment
+){
+    button.setOnClickListener {
+        fragment.dismiss()
+    }
+}
+
+@BindingAdapter("fragment")
+fun setOnClickSummaryCloseBtn(
+    button: AppCompatButton,
+    fragment: PriceSummaryBottomSheetFragment
+){
+    button.setOnClickListener {
+        fragment.dismiss()
     }
 }
