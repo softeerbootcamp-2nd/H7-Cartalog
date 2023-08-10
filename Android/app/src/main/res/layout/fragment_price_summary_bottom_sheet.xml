@@ -415,7 +415,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="20dp"
-                android:text="@string/title_price_summary"
+                android:text="@string/summary_now_price"
                 android:textColor="@color/gray_700"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
