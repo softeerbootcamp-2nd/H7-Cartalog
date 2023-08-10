@@ -1,15 +1,35 @@
+import { useNavigate } from 'react-router-dom';
+import { useData } from '../../../../utils/Context';
+import { PAGE, TRIM_CARD } from '../../constants';
 import * as S from './style';
 import Button from '../../../../components/Button';
 
-const TYPE = 'buttonC';
-const STATE = 'active';
-const MAIN_TITLE = '선택하기';
+function TrimCard({ name, description, price, defaultInfo, active, onClick }) {
+  const { setTrimState, page } = useData();
+  const navigate = useNavigate();
 
-function TrimCard({ name, description, price, active, onClick }) {
   const buttonProps = {
-    type: TYPE,
-    state: STATE,
-    mainTitle: MAIN_TITLE,
+    type: TRIM_CARD.TYPE,
+    state: TRIM_CARD.STATE,
+    mainTitle: TRIM_CARD.MAIN_TITLE,
+    event: () => {
+      navigate(PAGE.find((type) => type.page === page + 1).to);
+      setTrimState((prevState) => ({
+        ...prevState,
+        modelType: {
+          ...prevState.modelType,
+          powerTrainId: defaultInfo.modelTypes.map((model) => model.option.id[0]),
+          bodyTypeId: defaultInfo.modelTypes.map((model) => model.option.id[1]),
+          wheelDriveId: defaultInfo.modelTypes.map((model) => model.option.id[2]),
+        },
+        exteriorColor: {
+          exteriorColorId: defaultInfo.exteriorColorId,
+        },
+        interiorColor: {
+          interiorColorId: defaultInfo.interiorColorId,
+        },
+      }));
+    },
   };
 
   return (
@@ -18,7 +38,7 @@ function TrimCard({ name, description, price, active, onClick }) {
         <S.Description>{description}</S.Description>
         <S.Name>{name}</S.Name>
       </S.Trim>
-      <S.Price>{price}</S.Price>
+      <S.Price>{price.toLocaleString('ko-KR')}</S.Price>
       <S.SelectButton>
         <Button {...buttonProps} />
       </S.SelectButton>

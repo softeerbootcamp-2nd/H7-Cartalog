@@ -1,36 +1,43 @@
 import { useEffect, useState } from 'react';
+import { useData } from '../../utils/Context';
+import { TRIM_SELECT } from './constants';
 import Section from '../../components/Section';
 import Info from './Info';
 import Pick from './Pick';
-import { useData } from '../../utils/Context';
-
-const TYPE = 'TrimSelect';
 
 function TrimSelect() {
-  const [trimData, setTrimData] = useState(null);
-  const { trimId, setTrimState } = useData();
+  const [isFetched, setIsFetched] = useState(false);
+  const { setTrimState, trim } = useData();
 
   useEffect(() => {
-    fetch('http://3.36.126.30/models/trims?modelId=1')
-      .then((res) => res.json())
-      .then((data) => setTrimData(data));
-    setTrimState((prevState) => ({
-      ...prevState,
-      trimId: 1,
-      page: 1,
-    }));
-  }, [setTrimState]);
+    async function fetchData() {
+      if (!trim.isTrimFetch) {
+        const response = await fetch('http://3.36.126.30/models/trims?basicModelId=1');
+        const dataFetch = await response.json();
 
-  if (!trimData) return <div>loading...</div>;
+        setTrimState((prevState) => ({
+          ...prevState,
+          page: 1,
+          trim: {
+            ...prevState.trim,
+            trimFetch: [...dataFetch.trims],
+            isTrimFetch: true,
+          },
+        }));
+        setIsFetched(true);
+      }
+    }
+    fetchData();
+  }, []);
 
   const SectionProps = {
-    type: TYPE,
-    Info: <Info trimId={trimId ?? 1} data={trimData?.trims} />,
-    Pick: <Pick trimId={trimId ?? 1} setTrimState={setTrimState} data={trimData?.trims} />,
+    type: TRIM_SELECT.TYPE,
+    Info: <Info />,
+    Pick: <Pick />,
     showPriceStatic: false,
   };
 
-  return <Section {...SectionProps} />;
+  return isFetched ? <Section {...SectionProps} /> : <div>loading...</div>;
 }
 
 export default TrimSelect;

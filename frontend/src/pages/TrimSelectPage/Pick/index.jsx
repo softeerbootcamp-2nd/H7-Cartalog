@@ -1,32 +1,36 @@
+import { useData } from '../../../utils/Context';
+import { PICK } from '../constants';
 import * as S from './style';
 import PickTitle from '../../../components/PickTitle';
 import TrimCard from './TrimCard';
 
-const PICK_MAIN_TITLE = '트림을 선택해주세요.';
-
-function Pick({ trimId, setTrimState, data }) {
-  const pickTitleProps = {
-    mainTitle: PICK_MAIN_TITLE,
-  };
+function Pick() {
+  const { setTrimState, trim } = useData();
+  const pickTitleProps = { mainTitle: PICK.TITLE };
 
   return (
     <S.Pick>
       <PickTitle {...pickTitleProps} />
       <S.Trim>
-        {data?.map((trim) => {
-          const handleClick = () => {
-            if (trimId === trim.id) return;
-            setTrimState({ trimId: trim.id });
-          };
-
+        {trim.trimFetch.map((trimData) => {
           return (
             <TrimCard
-              key={trim.id}
-              name={trim.name}
-              description={trim.description}
-              price={trim.minPrice}
-              active={trimId === trim.id}
-              onClick={handleClick}
+              key={trimData.id}
+              name={trimData.name}
+              description={trimData.description}
+              price={trimData.minPrice}
+              defaultInfo={trimData.defaultInfo}
+              active={trimData.id === trim.trimId}
+              onClick={() => {
+                if (trimData.id === trim.trimId) return;
+                setTrimState((prevState) => ({
+                  ...prevState,
+                  trim: {
+                    ...prevState.trim,
+                    trimId: trimData.id,
+                  },
+                }));
+              }}
             />
           );
         })}
