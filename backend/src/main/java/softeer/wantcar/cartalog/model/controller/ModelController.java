@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,16 +29,15 @@ public class ModelController {
             value = "모델 타입 조회",
             notes = "모델에서 사용가능한 모델 옵션과 세부 정보를 조회한다.")
     @ApiImplicitParam(
-            name = "modelId", value = "모델 식별자", required = true, dataType = "Long", paramType = "query", defaultValue = "None")
+            name = "basicModelId", value = "모델 식별자", required = true, dataType = "Long", paramType = "query", defaultValue = "None")
     @ApiResponses({
             @ApiResponse(code = 404, message = "존재하지 않는 식별자입니다."),
-            @ApiResponse(code = 500, message = "적절하지 않은 데이터가 있어 요청을 처리할 수 없습니다. 관리자에게 문의하세요.")
-    })
+            @ApiResponse(code = 500, message = "적절하지 않은 데이터가 있어 요청을 처리할 수 없습니다. 관리자에게 문의하세요.")})
     @GetMapping("/types")
-    public ResponseEntity<ModelTypeListResponseDto> searchModelType(@PathParam("modelId") Long modelId) {
+    public ResponseEntity<ModelTypeListResponseDto> searchModelType(@PathParam("basicModelId") Long basicModelId) {
         ModelTypeListResponseDto dto;
         try {
-            dto = modelOptionQueryRepository.findByModelTypeOptionsById(modelId);
+            dto = modelOptionQueryRepository.findByModelTypeOptionsByBasicModelId(basicModelId);
         } catch (RuntimeException exception) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

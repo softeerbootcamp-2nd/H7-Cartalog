@@ -4,6 +4,6 @@ import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
 
 public interface ModelOptionQueryRepository {
 
-    ModelTypeListResponseDto findByModelTypeOptionsById(Long id);
+    ModelTypeListResponseDto findByModelTypeOptionsByBasicModelId(Long id);
 
 }

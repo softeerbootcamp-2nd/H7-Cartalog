@@ -37,14 +37,14 @@ class ModelControllerTest {
     class getModelTypeListTest {
         @Test
         @DisplayName("올바른 요청시 200 상태와 함께 모델 식별자에 해당하는 모델의 모델 타입 리스트를 반환한다.")
-        void returnDtoHasModelTypeOfModelIdWhenGetModelTypeByExistModelId() {
+        void returnDtoHasModelTypeOfBasicModelIdWhenGetModelTypeByExistBasicModelId() {
             //given
-            Long modelId = 1L;
+            Long basicModelId = 1L;
             ModelTypeListResponseDto returnDto = mock(ModelTypeListResponseDto.class);
-            when(modelOptionQueryRepository.findByModelTypeOptionsById(modelId)).thenReturn(returnDto);
+            when(modelOptionQueryRepository.findByModelTypeOptionsByBasicModelId(basicModelId)).thenReturn(returnDto);
 
             //when
-            ResponseEntity<ModelTypeListResponseDto> response = modelController.searchModelType(modelId);
+            ResponseEntity<ModelTypeListResponseDto> response = modelController.searchModelType(basicModelId);
 
             //then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -56,11 +56,11 @@ class ModelControllerTest {
         @DisplayName("존재하지 않는 모델의 식별자로 조회할 경우 404 상태를 반환해야 한다.")
         void returnStatusCode404WhenGetModelTypeByExistModelId() {
             //given
-            Long modelId = -1L;
-            when(modelOptionQueryRepository.findByModelTypeOptionsById(modelId)).thenReturn(null);
+            Long basicModelId = -1L;
+            when(modelOptionQueryRepository.findByModelTypeOptionsByBasicModelId(basicModelId)).thenReturn(null);
 
             //when
-            ResponseEntity<ModelTypeListResponseDto> response = modelController.searchModelType(modelId);
+            ResponseEntity<ModelTypeListResponseDto> response = modelController.searchModelType(basicModelId);
 
             //then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
