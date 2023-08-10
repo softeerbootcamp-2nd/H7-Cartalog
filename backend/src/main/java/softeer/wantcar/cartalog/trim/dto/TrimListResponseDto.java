@@ -1,9 +1,6 @@
 package softeer.wantcar.cartalog.trim.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 import softeer.wantcar.cartalog.global.dto.HMGDataDto;
 
 import java.util.List;
@@ -14,6 +11,8 @@ import java.util.List;
 @EqualsAndHashCode
 public class TrimListResponseDto {
     private String modelName;
+
+    @Singular(value = "trim")
     private List<TrimDto> trims;
 
     @Getter
@@ -26,9 +25,11 @@ public class TrimListResponseDto {
         private String description;
         private int minPrice;
         private int maxPrice;
-        private String exteriorImage;
-        private String interiorImage;
-        private String wheelImage;
+        private String exteriorImageUrl;
+        private String interiorImageUrl;
+        private String wheelImageUrl;
+
+        @Singular(value = "eachHMGData")
         private List<HMGDataDto> hmgData;
         private DefaultTrimInfoDto defaultInfo;
     }
@@ -38,6 +39,7 @@ public class TrimListResponseDto {
     @Builder
     @EqualsAndHashCode
     public static class DefaultTrimInfoDto {
+        @Singular(value = "modelType")
         private List<ModelTypeDto> modelTypes;
         private String exteriorColorId;
         private String interiorColorId;

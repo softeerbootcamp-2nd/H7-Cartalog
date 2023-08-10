@@ -23,6 +23,30 @@ import java.util.stream.Collectors;
 public class TrimQueryRepository {
     private final JdbcTemplate jdbcTemplate;
 
+    @AllArgsConstructor
+    @Builder
+    @Getter
+    private static class TrimListQueryResult {
+        private Long trimId;
+        private String trimName;
+        private String description;
+        private int minPrice;
+        private int maxPrice;
+        private String exteriorImageUrl;
+        private String interiorImageUrl;
+        private String wheelImageUrl;
+        private String hmgName;
+        private String hmgVal;
+        private String hmgMeasure;
+        private String hmgUnit;
+        private String defaultModelTypeChildCategory;
+        private Long defaultModelTypeOptionId;
+        private String defaultModelTypeOptionName;
+        private int defaultModelTypeOptionPrice;
+        private String defaultExteriorColorCode;
+        private String defaultInteriorColorCode;
+    }
+
     public TrimListResponseDto findTrimsByBasicModelId(Long basicModelId) {
         TrimListResponseDto.TrimListResponseDtoBuilder trimListResponseDtoBuilder = TrimListResponseDto.builder();
 
@@ -32,16 +56,18 @@ public class TrimQueryRepository {
                 new int[]{Types.BIGINT, Types.BIGINT, Types.BIGINT, Types.BIGINT},
                 (rs, rowNum) -> getTrimListQueryResult(rs, trimListResponseDtoBuilder));
 
+        if(trimListQueryResults.isEmpty()) {
+            return null;
+        }
+
         Map<Long, List<TrimListQueryResult>> queryResultsGroupByTrimId = trimListQueryResults.stream()
                 .collect(Collectors.groupingBy(TrimListQueryResult::getTrimId));
 
-        List<TrimListResponseDto.TrimDto> trimDtoList = new ArrayList<>();
         for (Long trimId : queryResultsGroupByTrimId.keySet()) {
-            trimDtoList.add(getTrimDto(queryResultsGroupByTrimId, trimId));
+            trimListResponseDtoBuilder.trim(getTrimDto(queryResultsGroupByTrimId, trimId));
         }
 
-        return trimListResponseDtoBuilder.trims(trimDtoList)
-                .build();
+        return trimListResponseDtoBuilder.build();
     }
 
     private static TrimListResponseDto.TrimDto getTrimDto(Map<Long, List<TrimListQueryResult>> queryResultsGroupByTrimId, Long trimId) {
@@ -49,11 +75,13 @@ public class TrimQueryRepository {
         TrimListQueryResult trimInfo = trimInfos.get(0);
         TrimListResponseDto.TrimDto.TrimDtoBuilder trimDtoBuilder = TrimListResponseDto.TrimDto.builder()
                 .id(trimId)
+                .name(trimInfo.getTrimName())
                 .description(trimInfo.getDescription())
                 .maxPrice(trimInfo.getMaxPrice())
                 .minPrice(trimInfo.getMinPrice())
-                .exteriorImage(trimInfo.getExteriorImage())
-                .interiorImage(trimInfo.getInteriorImage());
+                .exteriorImageUrl(trimInfo.getExteriorImageUrl())
+                .interiorImageUrl(trimInfo.getInteriorImageUrl())
+                .wheelImageUrl(trimInfo.getWheelImageUrl());
 
         getTrimDefaultModelTypes(trimInfos, trimInfo, trimDtoBuilder);
         getTrimHMGData(trimInfos, trimDtoBuilder);
@@ -62,22 +90,20 @@ public class TrimQueryRepository {
     }
 
     private static void getTrimHMGData(List<TrimListQueryResult> trimInfos, TrimListResponseDto.TrimDto.TrimDtoBuilder trimDtoBuilder) {
-        List<TrimListQueryResult> collect = trimInfos.stream()
-                .filter(r -> r.getHmgValue() != null)
-                .filter(r -> r.getHmgValue().matches("[-+]?\\d*\\.?\\d+"))
-                .sorted(Comparator.comparingDouble(r -> Double.parseDouble(r.getHmgValue())))
+        List<TrimListQueryResult> hmgInfos = trimInfos.stream()
+                .filter(r -> r.getHmgVal() != null)
+                .filter(r -> r.getHmgVal().matches("[-+]?\\d*\\.?\\d+"))
+                .sorted(Comparator.comparingDouble(r -> Double.parseDouble(r.getHmgVal())))
                 .limit(3)
                 .collect(Collectors.toList());
 
-        List<HMGDataDto> hmgDataDtoList = new ArrayList<>();
-        for (TrimListQueryResult trimListQueryResult : collect) {
-            hmgDataDtoList.add(HMGDataDto.builder()
-                    .name(trimListQueryResult.getHmgName())
-                    .value(trimListQueryResult.getHmgValue())
-                    .measure(trimListQueryResult.getHmgMeasure())
+        for (TrimListQueryResult hmgInfo : hmgInfos) {
+            trimDtoBuilder.eachHMGData(HMGDataDto.builder()
+                    .name(hmgInfo.getHmgName())
+                    .value(hmgInfo.getHmgVal() + hmgInfo.getHmgUnit())
+                    .measure(hmgInfo.getHmgMeasure())
                     .build());
         }
-        trimDtoBuilder.hmgData(hmgDataDtoList);
     }
 
     private static void getTrimDefaultModelTypes(List<TrimListQueryResult> trimInfos, TrimListQueryResult trimInfo, TrimListResponseDto.TrimDto.TrimDtoBuilder trimDtoBuilder) {
@@ -86,7 +112,7 @@ public class TrimQueryRepository {
 
         List<TrimListResponseDto.ModelTypeDto> modelTypeDtoList = new ArrayList<>();
         for (String modelType : defaultTrimInfos.keySet()) {
-            TrimListQueryResult modelTypeOption = defaultTrimInfos.get(0).get(0);
+            TrimListQueryResult modelTypeOption = defaultTrimInfos.get(modelType).get(0);
             modelTypeDtoList.add(
                     new TrimListResponseDto.ModelTypeDto(modelType, new TrimListResponseDto.OptionDto(
                             modelTypeOption.getDefaultModelTypeOptionId(),
@@ -94,7 +120,7 @@ public class TrimQueryRepository {
                             modelTypeOption.getDefaultModelTypeOptionPrice())));
         }
         trimDtoBuilder.defaultInfo(new TrimListResponseDto.DefaultTrimInfoDto(
-                modelTypeDtoList, trimInfo.getDefaultExteriorColor(), trimInfo.getDefaultInteriorColor()));
+                modelTypeDtoList, trimInfo.getDefaultExteriorColorCode(), trimInfo.getDefaultInteriorColorCode()));
     }
 
     private static TrimListQueryResult getTrimListQueryResult(ResultSet rs,
@@ -102,41 +128,23 @@ public class TrimQueryRepository {
         builder.modelName(rs.getString("modelName"));
         return TrimListQueryResult.builder()
                 .trimId(rs.getLong("trimId"))
+                .trimName(rs.getString("trimName"))
                 .description(rs.getString("description"))
                 .minPrice(rs.getInt("minPrice"))
                 .maxPrice(rs.getInt("maxPrice"))
-                .exteriorImage(rs.getString("exteriorImage"))
-                .interiorImage(rs.getString("interiorImage"))
+                .exteriorImageUrl(rs.getString("exteriorImageUrl"))
+                .interiorImageUrl(rs.getString("interiorImageUrl"))
+                .wheelImageUrl(rs.getString("wheelImageUrl"))
                 .hmgName(rs.getString("hmgName"))
-                .hmgValue(rs.getString("hmgValue"))
+                .hmgVal(rs.getString("hmgVal"))
                 .hmgMeasure(rs.getString("hmgMeasure"))
+                .hmgUnit(rs.getString("hmgUnit"))
                 .defaultModelTypeChildCategory(rs.getString("defaultModelTypeChildCategory"))
                 .defaultModelTypeOptionId(rs.getLong("defaultModelTypeOptionId"))
                 .defaultModelTypeOptionName(rs.getString("defaultModelTypeOptionName"))
                 .defaultModelTypeOptionPrice(rs.getInt("defaultModelTypeOptionPrice"))
-                .defaultExteriorColor(rs.getString("defaultExteriorColor"))
-                .defaultInteriorColor(rs.getString("defaultInteriorColor"))
+                .defaultExteriorColorCode(rs.getString("defaultExteriorColorCode"))
+                .defaultInteriorColorCode(rs.getString("defaultInteriorColorCode"))
                 .build();
-    }
-
-    @AllArgsConstructor
-    @Builder
-    @Getter
-    private static class TrimListQueryResult {
-        private Long trimId;
-        private String description;
-        private int minPrice;
-        private int maxPrice;
-        private String exteriorImage;
-        private String interiorImage;
-        private String hmgName;
-        private String hmgValue;
-        private String hmgMeasure;
-        private String defaultModelTypeChildCategory;
-        private Long defaultModelTypeOptionId;
-        private String defaultModelTypeOptionName;
-        private int defaultModelTypeOptionPrice;
-        private String defaultExteriorColor;
-        private String defaultInteriorColor;
     }
 }
