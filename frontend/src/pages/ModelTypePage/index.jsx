@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useData } from '../../utils/Context';
-
 import Section from '../../components/Section';
 import Info from './Info';
 import Pick from './Pick';
