@@ -114,7 +114,7 @@ id|model_id|name|parent_category|child_category|image_url|description|price_if_m
 113|1|헤드업 디스플레이|\N|지능형 안전기술|palisade/le-blanc/options/headupdisplay.jpg|-|\N
 114|1|전방 충돌방지 보조(교차 차량/추월시 대향차/측방 접근차)|\N|지능형 안전기술|palisade/le-blanc/options/fca2.jpg|-|\N
 115|1|내비게이션 기반 스마트 크루즈 컨트롤(진출입로)|\N|지능형 안전기술|palisade/le-blanc/options/ncss2.jpg|-|\N
-116|1|고속도로 주행 보조2|\N|지능형 안전기술|palisade/le-blanc/options/hda2.jpg|-|\N
+116|1|고속도로 주행 보조 2|\N|지능형 안전기술|palisade/le-blanc/options/hda2.jpg|-|\N
 117|1|후방 주차 충돌방지 보조|\N|지능형 안전기술|palisade/le-blanc/options/pca.jpg|주차 또는 출차 시 저속 후진 중 후방카메라와 센서로 정후면에 위치한 보행자 및 장애물과의 충돌이 예상되면 운전자에게 경고하고 차량의 제동을 제어하여 충돌방지를 보조합니다.|\N
 118|1|원격 스마트 주차 보조|\N|지능형 안전기술|palisade/le-blanc/options/rspa.jpg|주차 보조 기능을 활성화 한 후 주차공간을 발견하게 되면 차량 내 안내에 따라 하차한 다음, 스마트키의 작동 버튼을 누르고만 있으면 차가 스스로 주차합니다. 직각주차 및 평행주차 모두 가능하며, 운전자 탑승 시에도 차량 내부의 작동 버튼을 누르고 있으면 자동 주차 보조를 지원합니다.|\N
 119|1|러기지 프로텍션 매트|\N|편의|palisade/le-blanc/options/luggageprotectmat.jpg|-|\N
