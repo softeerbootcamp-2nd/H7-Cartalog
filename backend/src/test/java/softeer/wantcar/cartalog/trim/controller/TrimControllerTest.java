@@ -6,25 +6,30 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import softeer.wantcar.cartalog.global.dto.HMGDataDto;
 import softeer.wantcar.cartalog.trim.dto.TrimListResponseDto;
-
-import java.util.List;
+import softeer.wantcar.cartalog.trim.repository.TrimQueryRepository;
+import softeer.wantcar.cartalog.trim.repository.TrimQueryRepositoryImpl;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static softeer.wantcar.cartalog.trim.dto.TrimListResponseDto.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @DisplayName("트림 도메인 컨트롤러 테스트")
+@ExtendWith(MockitoExtension.class)
 class TrimControllerTest {
+    TrimController trimController;
+    TrimQueryRepository trimQueryRepository;
     SoftAssertions softAssertions;
-    TrimController trimController = new TrimController();
-    static String imageServerPath = "example-url";
 
     @BeforeEach
     void setUp() {
         softAssertions = new SoftAssertions();
+        trimQueryRepository = mock(TrimQueryRepositoryImpl.class);
+        trimController = new TrimController(trimQueryRepository);
     }
 
     @Nested
@@ -34,56 +39,33 @@ class TrimControllerTest {
         @DisplayName("올바른 요청시 200 상태와 함께 트림 목록을 반환해야 한다.")
         void returnDtoHasTrimsWhenGetTrimsByExistModel() {
             //given
-            List<TrimDto> trimDtoList = List.of(getTrimDto(1L, "Exclusive", "기본기를 갖춘 베이직한 팰리세이드", 40440000, 100000000),
-                    getTrimDto(2L, "Le Blanc", "실용적인 사양의 경제적인 팰리세이드", 43460000, 100000000),
-                    getTrimDto(3L, "Prestige", "합리적인 필수 사양을 더한 팰리세이드", 47720000, 100000000),
-                    getTrimDto(4L, "Calligraphy", "프리미엄한 경험을 선사하는 팰리세이드", 52540000, 100000000));
-
-            TrimListResponseDto expectResponse = new TrimListResponseDto("팰리세이드", trimDtoList);
+            Long basicModelId = 1L;
+            TrimListResponseDto mockTrimListResponseDto = mock(TrimListResponseDto.class);
+            when(trimQueryRepository.findTrimsByBasicModelId(basicModelId))
+                    .thenReturn(mockTrimListResponseDto);
 
             //when
-            TrimListResponseDto realResponse = trimController.searchTrimList(1L).getBody();
+            ResponseEntity<TrimListResponseDto> actualResponse = trimController.searchTrimList(basicModelId);
 
             //then
-            assertThat(realResponse).isEqualTo(expectResponse);
+            assertThat(actualResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(actualResponse.getBody()).isNotNull();
         }
 
         @Test
         @DisplayName("존재하지 않는 모델 식별자로 트림 목록 요청시 404 상태를 반환해야 한다.")
         void returnStatusCode404WhenGetTrimsByNotExistModel() {
             //given
+            Long notExistBasicModelId = -1L;
+            when(trimQueryRepository.findTrimsByBasicModelId(notExistBasicModelId))
+                    .thenReturn(null);
+
             //when
-            ResponseEntity<TrimListResponseDto> response = trimController.searchTrimList(-1L);
+            ResponseEntity<TrimListResponseDto> actualResponse = trimController.searchTrimList(notExistBasicModelId);
 
             //then
-            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            assertThat(actualResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            assertThat(actualResponse.getBody()).isNull();
         }
-    }
-
-    private static List<HMGDataDto> getHmgDataDtoList() {
-        return List.of(new HMGDataDto("안전 하차 정보", "42회", "15,000km 당"),
-                new HMGDataDto("후측방 충돌 경고", "42회", "15,000km 당"),
-                new HMGDataDto("후방 교차 충돌방지 보조", "42회", "15,000km 당"));
-    }
-
-    private static TrimDto getTrimDto(Long id, String name, String description, int minPrice, int maxPrice) {
-        List<ModelTypeDto> modelTypeDtoList = List.of(new ModelTypeDto("파워트레인", new OptionDto(1L, "디젤 2.2", 0)),
-                new ModelTypeDto("구동방식", new OptionDto(3L, "2WD", 0)),
-                new ModelTypeDto("바디타입", new OptionDto(5L, "7인승", 0)));
-
-        DefaultTrimInfoDto defaultTrimInfo = new DefaultTrimInfoDto(modelTypeDtoList, "A2B", "A22");
-
-        return TrimDto.builder()
-                .id(id)
-                .name(name)
-                .description(description)
-                .minPrice(minPrice)
-                .maxPrice(maxPrice)
-                .exteriorImage(imageServerPath + "/example-exterior-image")
-                .interiorImage(imageServerPath + "/example-interior-image")
-                .wheelImage(imageServerPath + "/example-wheel-image")
-                .hmgData(getHmgDataDtoList())
-                .defaultInfo(defaultTrimInfo)
-                .build();
     }
 }
