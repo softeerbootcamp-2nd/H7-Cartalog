@@ -16,8 +16,9 @@ export const Item = styled.div`
 `;
 
 export const Title = styled.h4`
-  height: 36px;
+  height: 35px;
   word-break: keep-all;
+  overflow: hidden;
   color: ${({ theme }) => theme.color.gray['900']};
   font: ${({ theme }) => theme.font.textKR.Regular10};
 `;
