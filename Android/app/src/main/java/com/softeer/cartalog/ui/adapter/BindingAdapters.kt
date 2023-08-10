@@ -1,15 +1,18 @@
 package com.softeer.cartalog.ui.adapter
 
 import android.view.Gravity
+import android.view.View
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatSeekBar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
+import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.NavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
@@ -198,4 +201,52 @@ fun setBudgetLimit(
         }
 
     })
+}
+
+@BindingAdapter("idx", "button", "fragment")
+fun setRangeBarVisibility(
+    layout: ConstraintLayout,
+    idx: Int,
+    button: ImageButton,
+    fragmentContainer: FragmentContainerView
+) {
+    if (idx == 1 && layout.visibility != View.GONE) {
+        layout.animate()
+            .alpha(0f)
+            .setDuration(300)
+            .withEndAction {
+                layout.visibility = View.GONE
+                layout.translationY = 0f
+                fragmentContainer.setPadding(0, 0, 0, 0)
+            }
+        button.animate().rotation(0f).start()
+    }
+    if (idx == 5 && layout.visibility == View.GONE) {
+        layout.visibility = View.VISIBLE
+        layout.alpha = 0f
+        layout.animate()
+            .alpha(1f).duration = 300
+        button.animate().rotation(180f).start()
+        fragmentContainer.setPadding(0, 150, 0, 0)
+    }
+}
+
+@BindingAdapter("idx", "isExcess")
+fun setRangeBarVisibility(
+    seekBar: AppCompatSeekBar,
+    idx: Int,
+    isExcess: Boolean
+) {
+    if (idx == 5) {
+        seekBar.isEnabled = false
+        seekBar.thumb =
+            ContextCompat.getDrawable(seekBar.context, R.drawable.shape_seekbar_transparent)
+    } else {
+        seekBar.thumb = if (isExcess) {
+            ContextCompat.getDrawable(seekBar.context, R.drawable.shape_seekbar_thumb_excess)
+        } else {
+            ContextCompat.getDrawable(seekBar.context, R.drawable.shape_seekbar_thumb)
+        }
+        seekBar.isEnabled = true
+    }
 }

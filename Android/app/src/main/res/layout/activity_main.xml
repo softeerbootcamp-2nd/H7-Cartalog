@@ -171,7 +171,7 @@
                     android:fontFamily="@font/hyndaisans_head_bold"
                     android:text="예산 범위"
                     android:textColor="@color/gray_50"
-                    app:layout_constraintBottom_toTopOf="@id/cl_hide_container"
+                    app:layout_constraintBottom_toTopOf="@id/cl_range_bar_container"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -217,8 +217,6 @@
 
                 <ImageButton
                     android:id="@+id/btn_budget_range_toggle"
-                    fragmentContainer="@{fcContainer}"
-                    layout="@{clHideContainer}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -226,42 +224,48 @@
                     android:background="@android:color/transparent"
                     android:scaleType="fitCenter"
                     android:src="@drawable/icon_arrow_down_big"
+                    app:fragmentContainer="@{fcContainer}"
+                    app:layout="@{clRangeBarContainer}"
                     app:layout_constraintBottom_toBottomOf="@id/tv_budget_range_text_2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tv_budget_range_text_2" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_hide_container"
+                    android:id="@+id/cl_range_bar_container"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
+                    app:button="@{btnBudgetRangeToggle}"
+                    app:fragment="@{fcContainer}"
+                    app:idx="@{viewModel.stepIndex}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
 
                     <androidx.appcompat.widget.AppCompatSeekBar
                         android:id="@+id/sb_budget_range_limit"
-                        viewModel="@{viewModel}"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:progress="50"
                         android:progressDrawable="@{viewModel.isExcess ? @drawable/shape_seekbar_bar_excess : @drawable/shape_seekbar_bar}"
                         android:splitTrack="false"
-                        android:thumb="@{viewModel.isExcess ? @drawable/shape_seekbar_thumb_excess : @drawable/shape_seekbar_thumb}"
+                        app:idx="@{viewModel.stepIndex}"
+                        app:isExcess="@{viewModel.isExcess}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:viewModel="@{viewModel}" />
 
                     <SeekBar
                         android:id="@+id/sb_user_total_price"
-                        bottomSeekBar="@{sbBudgetRangeLimit}"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:progress="@{viewModel.totalPrice}"
                         android:progressDrawable="@android:color/transparent"
                         android:thumb="@drawable/icon_seekbar_user_pin"
                         android:thumbTint="@{viewModel.isExcess ? @color/sand : @color/active_blue}"
+                        app:bottomSeekBar="@{sbBudgetRangeLimit}"
                         app:layout_constraintEnd_toEndOf="@id/sb_budget_range_limit"
                         app:layout_constraintStart_toStartOf="@id/sb_budget_range_limit"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -276,7 +280,7 @@
                         android:text="3850만원"
                         android:textColor="@{viewModel.isExcess ? @color/gray_200 : @color/primary_color_200}"
                         android:textSize="10sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/btn_similar_estimate"
                         app:layout_constraintStart_toStartOf="@id/sb_budget_range_limit"
                         app:layout_constraintTop_toBottomOf="@id/sb_budget_range_limit" />
 
@@ -290,11 +294,29 @@
                         android:text="4300만원"
                         android:textColor="@{viewModel.isExcess ? @color/gray_200 : @color/primary_color_200}"
                         android:textSize="10sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/btn_similar_estimate"
                         app:layout_constraintEnd_toEndOf="@id/sb_budget_range_limit"
                         app:layout_constraintTop_toBottomOf="@id/sb_budget_range_limit" />
 
+                    <Button
+                        android:id="@+id/btn_similar_estimate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="13dp"
+                        android:backgroundTint="@{viewModel.isExcess ? @color/gray_800 : @color/light_blue}"
+                        android:fontFamily="@font/hyndaisans_head_bold"
+                        android:text="@string/btn_open_similar_estimate"
+                        android:textColor="@{viewModel.isExcess ? @color/white : @color/primary_color_500}"
+                        android:visibility="@{viewModel.stepIndex == 5 ? View.VISIBLE : View.GONE}"
+                        app:cornerRadius="0dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
