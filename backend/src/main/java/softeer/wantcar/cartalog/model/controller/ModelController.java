@@ -21,8 +21,8 @@ import javax.websocket.server.PathParam;
 public class ModelController {
     private final ModelOptionQueryRepository modelOptionQueryRepository;
 
-    @GetMapping("/{modelId}/types")
-    public ResponseEntity<ModelTypeListResponseDto> searchModelType(@PathVariable("modelId") Long modelId) {
+    @GetMapping("/types")
+    public ResponseEntity<ModelTypeListResponseDto> searchModelType(@PathParam("modelId") Long modelId) {
         ModelTypeListResponseDto dto;
         try {
             dto = modelOptionQueryRepository.findByModelTypeOptionsById(modelId);
