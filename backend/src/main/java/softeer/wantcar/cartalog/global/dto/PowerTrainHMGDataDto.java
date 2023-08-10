@@ -1,14 +1,12 @@
 package softeer.wantcar.cartalog.global.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 
 @Getter
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode
+@ToString
 public class PowerTrainHMGDataDto implements HMGDataDtoInterface {
     private String name;
     private float value;

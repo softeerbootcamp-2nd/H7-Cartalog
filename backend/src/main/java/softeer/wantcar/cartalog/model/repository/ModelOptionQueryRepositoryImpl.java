@@ -10,15 +10,20 @@ import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.global.dto.HMGDataDto;
 import softeer.wantcar.cartalog.global.dto.HMGDataDtoInterface;
 import softeer.wantcar.cartalog.global.dto.PowerTrainHMGDataDto;
+import softeer.wantcar.cartalog.model.dto.ModelTypeDto;
 import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
+import softeer.wantcar.cartalog.model.dto.OptionDto;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @AllArgsConstructor
 @Slf4j
 public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepository {
-    private JdbcTemplate template;
+    private final JdbcTemplate template;
+    private static final int CHOSEN_MOCK = 38;
 
     @Builder
     @AllArgsConstructor
@@ -36,7 +41,10 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
 
         private HMGDataDtoInterface toHMGDataDto() {
             HMGDataDtoInterface dto;
-            if("파워트레인/성능".equals(childCategory)) {
+            if (hmgDataName == null && hmgDataValue == null && hmgDataMeasure == null) {
+                return null;
+            }
+            if ("파워트레인/성능".equals(childCategory)) {
                 String[] valueAndRpm = hmgDataValue.split("/", 2);
                 dto = PowerTrainHMGDataDto.builder()
                         .name(hmgDataName)
@@ -63,22 +71,15 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
                 "       child_category, " +
                 "       image_url, " +
                 "       description, " +
-                "       hmg_data.name    AS hmg_data_name, " +
-                "       hmg_data.`value` AS hmg_data_value, " +
-                "       hmg_data.measure AS hmg_data_measure, " +
-                "       price " +
+                "       hmg_data.name              AS hmg_data_name, " +
+                "       hmg_data.`value`           AS hmg_data_value, " +
+                "       hmg_data.measure           AS hmg_data_measure, " +
+                "       price_if_model_type_option AS price " +
                 "FROM   model_options " +
                 "       LEFT JOIN hmg_data " +
                 "              ON model_options.id = hmg_data.model_option_id " +
-                "       INNER JOIN (SELECT model_option_id, " +
-                "                          Max(price) AS price " +
-                "                   FROM   detail_model_decision_options " +
-                "                   WHERE  detail_model_id IN (SELECT id " +
-                "                                              FROM   detail_models " +
-                "                                              WHERE  basic_model_id = ?) " +
-                "                   GROUP  BY model_option_id) AS " +
-                "                  MAX_PRICE_IN_TARGET_MODEL_TYPE_OPION " +
-                "               ON model_options.id = MAX_PRICE_IN_TARGET_MODEL_TYPE_OPION.model_option_id; ";
+                "WHERE  model_id = ? " +
+                "       AND price_if_model_type_option IS NOT NULL";
 
         List<SimpleModelOptionMapper> simpleModelOptionMapperList = template.query(selectSimpleModelOptionSQL, (rs, rowNum) ->
                 SimpleModelOptionMapper.builder()
@@ -91,12 +92,38 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
                         .hmgDataValue(rs.getString("hmg_data_value"))
                         .hmgDataMeasure(rs.getString("hmg_data_measure"))
                         .price(rs.getInt("price"))
-                        .build(), 1);
+                        .build(), id);
 
+        Map<String, Map<Long, OptionDto.OptionDtoBuilder>> builderMap = new HashMap<>();
         for (SimpleModelOptionMapper mapper : simpleModelOptionMapperList) {
+            Map<Long, OptionDto.OptionDtoBuilder> builder2 = builderMap.getOrDefault(mapper.childCategory, new HashMap<>());
+            OptionDto.OptionDtoBuilder builder = builder2.getOrDefault(mapper.model_option_Id,
+                    OptionDto.builder()
+                            .id(mapper.model_option_Id)
+                            .name(mapper.name)
+                            .price(mapper.price)
+                            .chosen(CHOSEN_MOCK)
+                            .imageUrl(mapper.imageUrl)
+                            .description(mapper.description));
+
             HMGDataDtoInterface hmgDataDto = mapper.toHMGDataDto();
-            log.info(mapper.toString());
+            if (hmgDataDto != null) {
+                builder.hmgDatum(mapper.toHMGDataDto());
+            }
+            builder2.put(mapper.model_option_Id, builder);
+            builderMap.put(mapper.childCategory, builder2);
         }
-        return null;
+
+        ModelTypeListResponseDto.ModelTypeListResponseDtoBuilder builder = ModelTypeListResponseDto.builder();
+        builderMap.forEach((key, value) -> {
+            ModelTypeDto.ModelTypeDtoBuilder type = ModelTypeDto.builder().type(key);
+            value.forEach((key2, value2) -> {
+                type.option(value2.build());
+            });
+            builder.modelType(type.build());
+        });
+
+        log.info(builder.build().toString());
+        return builder.build();
     }
 }

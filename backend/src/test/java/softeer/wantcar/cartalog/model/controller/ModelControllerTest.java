@@ -5,22 +5,38 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.internal.matchers.Any;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import softeer.wantcar.cartalog.model.dto.ModelPerformanceDto;
 import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
+import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
+import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepositoryImpl;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @DisplayName("모델 도메인 컨트롤러 테스트")
+@ExtendWith(MockitoExtension.class)
 class ModelControllerTest {
     SoftAssertions softAssertions;
-    ModelController modelController = new ModelController();
-    static String imageServerPath = "example-url";
+    ModelController modelController;
+    ModelOptionQueryRepository modelOptionQueryRepository;
 
     @BeforeEach
     void setUp() {
         softAssertions = new SoftAssertions();
+        modelOptionQueryRepository = mock(ModelOptionQueryRepositoryImpl.class);
+        modelController = new ModelController(modelOptionQueryRepository);
     }
 
     @Nested
@@ -30,38 +46,31 @@ class ModelControllerTest {
         @DisplayName("올바른 요청시 200 상태와 함께 모델 식별자에 해당하는 모델의 모델 타입 리스트를 반환한다.")
         void returnDtoHasModelTypeOfModelIdWhenGetModelTypeByExistModelId() {
             //given
-//            ModelTypeListResponseDto.ModelTypeDto powerTrains = ModelTypeListResponseDto.ModelTypeDto.builder()
-//                    .type("powerTrain")
-//                    .options(List.of(getDieselEngine(), getGasolineEngine()))
-//                    .build();
-//
-//            ModelTypeListResponseDto.ModelTypeDto wheelDrives = ModelTypeListResponseDto.ModelTypeDto.builder()
-//                    .type("wheelDrive")
-//                    .options(List.of(get2WD(), get4WD()))
-//                    .build();
-//
-//            ModelTypeListResponseDto.ModelTypeDto bodyTypes = ModelTypeListResponseDto.ModelTypeDto.builder()
-//                    .type("bodyType")
-//                    .options(List.of(get7Seat(), get8Seat()))
-//                    .build();
-//
-//            ModelTypeListResponseDto expectResponse = ModelTypeListResponseDto.builder()
-//                    .modelTypes(List.of(powerTrains, wheelDrives, bodyTypes))
-//                    .build();
-//
-//            //when
-//            ModelTypeListResponseDto realResponse = modelController.searchModelType(1L).getBody();
-//
-//            //then
-//            assertThat(realResponse).isEqualTo(expectResponse);
+            Long modelId = 1L;
+            ModelTypeListResponseDto returnDto = mock(ModelTypeListResponseDto.class);
+            when(modelOptionQueryRepository.findByModelId(modelId)).thenReturn(returnDto);
+            when(returnDto.modelTypeSize()).thenReturn(1);
+
+            //when
+            ResponseEntity<ModelTypeListResponseDto> response = modelController.searchModelType(modelId);
+
+            //then
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getBody()).isNotNull();
+
         }
 
         @Test
         @DisplayName("존재하지 않는 모델의 식별자로 조회할 경우 404 상태를 반환해야 한다.")
         void returnStatusCode404WhenGetModelTypeByExistModelId() {
             //given
+            Long modelId = -1L;
+            ModelTypeListResponseDto returnDto = mock(ModelTypeListResponseDto.class);
+            when(modelOptionQueryRepository.findByModelId(modelId)).thenReturn(returnDto);
+            when(returnDto.modelTypeSize()).thenReturn(0);
+
             //when
-            ResponseEntity<ModelTypeListResponseDto> response = modelController.searchModelType(-1L);
+            ResponseEntity<ModelTypeListResponseDto> response = modelController.searchModelType(modelId);
 
             //then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);

@@ -1,9 +1,7 @@
 package softeer.wantcar.cartalog.model.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -11,7 +9,10 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Builder
+@ToString
+@Slf4j
 public class ModelTypeDto {
     private String type;
+    @Singular
     private List<OptionDto> options;
 }
