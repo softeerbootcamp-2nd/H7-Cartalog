@@ -41,6 +41,14 @@ export function StateProvider({ children }) {
         pickCarImageUrl: 'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade',
         rotate: false,
       };
+    } else if (key === 'interiorColor') {
+      acc[key] = {
+        dataFetch: [],
+        pick: 'A22',
+        pickName: '퀼팅천연(블랙)',
+        pickCarImageUrl:
+          'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade/le-blanc/options/10_driverseat_s.jpg',
+      };
     } else if (key === 'trimId') {
       acc[key] = 1;
     } else {
