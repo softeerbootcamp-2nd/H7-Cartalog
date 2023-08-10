@@ -27,7 +27,7 @@ class TrimFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = trimViewModel
-        binding.mainActivity = activity as MainActivity
+        binding.activity = activity as MainActivity
         binding.lifecycleOwner = viewLifecycleOwner
     }
 
