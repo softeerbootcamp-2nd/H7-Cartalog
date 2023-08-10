@@ -20,6 +20,7 @@ public class ModelTypeListResponseDto {
         return modelTypes.size();
     }
 
+    @TestMethod
     public boolean equalAndAllContain(List<String> expected, List<String> actual) {
         return expected.size() == actual.size() && new HashSet<>(expected).equals(new HashSet<>(actual));
     }
