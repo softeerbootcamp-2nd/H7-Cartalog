@@ -1,21 +1,14 @@
 import * as S from './style';
-import Button from '../../../components/Button';
+import NextButton from '../../../components/NextButton';
 
-const TYPE = 'buttonD';
-const STATE = 'active';
-const MAIN_TITLE = '다음';
-
-function Pick({ nextPage }) {
-  const buttonProps = {
-    nextPage,
-    type: TYPE,
-    state: STATE,
-    mainTitle: MAIN_TITLE,
-  };
-
+function Pick() {
   return (
     <S.Pick>
-      <Button {...buttonProps} />
+      <S.Footer>
+        <S.FooterEnd>
+          <NextButton />
+        </S.FooterEnd>
+      </S.Footer>
     </S.Pick>
   );
 }
