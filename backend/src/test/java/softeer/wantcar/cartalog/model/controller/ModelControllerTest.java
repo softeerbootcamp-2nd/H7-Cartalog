@@ -6,22 +6,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.internal.matchers.Any;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
 import softeer.wantcar.cartalog.model.dto.ModelPerformanceDto;
 import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepositoryImpl;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -48,7 +41,7 @@ class ModelControllerTest {
             //given
             Long modelId = 1L;
             ModelTypeListResponseDto returnDto = mock(ModelTypeListResponseDto.class);
-            when(modelOptionQueryRepository.findByModelId(modelId)).thenReturn(returnDto);
+            when(modelOptionQueryRepository.findByModelTypeOptionsById(modelId)).thenReturn(returnDto);
             when(returnDto.modelTypeSize()).thenReturn(1);
 
             //when
@@ -66,7 +59,7 @@ class ModelControllerTest {
             //given
             Long modelId = -1L;
             ModelTypeListResponseDto returnDto = mock(ModelTypeListResponseDto.class);
-            when(modelOptionQueryRepository.findByModelId(modelId)).thenReturn(returnDto);
+            when(modelOptionQueryRepository.findByModelTypeOptionsById(modelId)).thenReturn(returnDto);
             when(returnDto.modelTypeSize()).thenReturn(0);
 
             //when

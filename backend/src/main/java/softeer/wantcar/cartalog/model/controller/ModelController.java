@@ -25,7 +25,7 @@ public class ModelController {
     public ResponseEntity<ModelTypeListResponseDto> searchModelType(@PathVariable("modelId") Long modelId) {
         ModelTypeListResponseDto dto;
         try {
-            dto = modelOptionQueryRepository.findByModelId(modelId);
+            dto = modelOptionQueryRepository.findByModelTypeOptionsById(modelId);
         } catch (RuntimeException exception) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

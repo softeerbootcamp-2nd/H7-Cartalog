@@ -43,7 +43,7 @@ class ModelOptionQueryRepositoryImplTest {
             checkOptions.put("구동방식", List.of("2WD", "4WD"));
 
             //when
-            ModelTypeListResponseDto response = modelOptionQueryRepository.findByModelId(modelId);
+            ModelTypeListResponseDto response = modelOptionQueryRepository.findByModelTypeOptionsById(modelId);
 
             //then
             assertThat(response).isNotNull();
@@ -58,7 +58,7 @@ class ModelOptionQueryRepositoryImplTest {
         void findByModelIdWithIllegalId() {
             //given
             //when
-            ModelTypeListResponseDto response = modelOptionQueryRepository.findByModelId(-1L);
+            ModelTypeListResponseDto response = modelOptionQueryRepository.findByModelTypeOptionsById(-1L);
 
             //then
             assertThat(response).isNotNull();

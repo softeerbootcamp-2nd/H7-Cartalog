@@ -65,7 +65,7 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
 
     @Override
     @Transactional(readOnly = true)
-    public ModelTypeListResponseDto findByModelId(Long modelId) {
+    public ModelTypeListResponseDto findByModelTypeOptionsById(Long modelId) {
         String SQL = "SELECT " +
                 "  model_options.id AS model_option_id, " +
                 "  model_options.name, " +
