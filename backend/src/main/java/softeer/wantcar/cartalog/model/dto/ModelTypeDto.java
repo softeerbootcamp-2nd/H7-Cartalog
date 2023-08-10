@@ -8,9 +8,10 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-@Builder
-@EqualsAndHashCode
 @AllArgsConstructor
-public class ModelTypeListResponseDto {
-    private List<ModelTypeDto> modelTypes;
+@EqualsAndHashCode
+@Builder
+public class ModelTypeDto {
+    private String type;
+    private List<OptionDto> options;
 }

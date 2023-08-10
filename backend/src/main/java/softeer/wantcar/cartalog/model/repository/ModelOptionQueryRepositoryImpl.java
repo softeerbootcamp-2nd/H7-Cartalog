@@ -5,14 +5,13 @@ import lombok.Builder;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-import softeer.wantcar.cartalog.entity.HMGData;
+import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.global.dto.HMGDataDto;
+import softeer.wantcar.cartalog.global.dto.HMGDataDtoInterface;
+import softeer.wantcar.cartalog.global.dto.PowerTrainHMGDataDto;
 import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -20,8 +19,6 @@ import java.util.List;
 @Slf4j
 public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepository {
     private JdbcTemplate template;
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
 
     @Builder
     @AllArgsConstructor
@@ -30,60 +27,76 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
         private Long model_option_Id;
         private String name;
         private String childCategory;
-        private String ImageUrl;
+        private String imageUrl;
         private String description;
+        private String hmgDataName;
+        private String hmgDataValue;
+        private String hmgDataMeasure;
         private int price;
+
+        private HMGDataDtoInterface toHMGDataDto() {
+            HMGDataDtoInterface dto;
+            if("파워트레인/성능".equals(childCategory)) {
+                String[] valueAndRpm = hmgDataValue.split("/", 2);
+                dto = PowerTrainHMGDataDto.builder()
+                        .name(hmgDataName)
+                        .value(Float.parseFloat(valueAndRpm[0]))
+                        .rpm(valueAndRpm[1])
+                        .measure(hmgDataMeasure)
+                        .build();
+            } else {
+                dto = HMGDataDto.builder()
+                        .name(hmgDataName)
+                        .value(hmgDataValue)
+                        .measure(hmgDataMeasure)
+                        .build();
+            }
+            return dto;
+        }
     }
 
     @Override
+    @Transactional
     public ModelTypeListResponseDto findByModelId(Long id) {
-
-        String selectSimpleModelOptionSQL = "SELECT B.model_option_Id, name, child_category, image_url, description, price FROM " +
-                "(SELECT id, name, child_category, image_url, description FROM model_options WHERE id IN " +
-                "(SELECT DISTINCT model_option_id FROM detail_model_decision_options WHERE detail_model_id IN " +
-                "(SELECT id FROM detail_models WHERE basic_model_id = ?))) AS A " +
-                "LEFT JOIN " +
-                "(SELECT model_option_id, max(price) AS price FROM detail_model_decision_options GROUP BY model_option_id) AS B " +
-                "ON A.id = B.model_option_ID";
+        String selectSimpleModelOptionSQL = "SELECT model_options.id AS model_option_id, " +
+                "       model_options.name, " +
+                "       child_category, " +
+                "       image_url, " +
+                "       description, " +
+                "       hmg_data.name    AS hmg_data_name, " +
+                "       hmg_data.`value` AS hmg_data_value, " +
+                "       hmg_data.measure AS hmg_data_measure, " +
+                "       price " +
+                "FROM   model_options " +
+                "       LEFT JOIN hmg_data " +
+                "              ON model_options.id = hmg_data.model_option_id " +
+                "       INNER JOIN (SELECT model_option_id, " +
+                "                          Max(price) AS price " +
+                "                   FROM   detail_model_decision_options " +
+                "                   WHERE  detail_model_id IN (SELECT id " +
+                "                                              FROM   detail_models " +
+                "                                              WHERE  basic_model_id = ?) " +
+                "                   GROUP  BY model_option_id) AS " +
+                "                  MAX_PRICE_IN_TARGET_MODEL_TYPE_OPION " +
+                "               ON model_options.id = MAX_PRICE_IN_TARGET_MODEL_TYPE_OPION.model_option_id; ";
 
         List<SimpleModelOptionMapper> simpleModelOptionMapperList = template.query(selectSimpleModelOptionSQL, (rs, rowNum) ->
                 SimpleModelOptionMapper.builder()
                         .model_option_Id(rs.getLong("model_option_Id"))
                         .name(rs.getString("name"))
                         .childCategory(rs.getString("child_category"))
-                        .ImageUrl(rs.getString("image_url"))
+                        .imageUrl(rs.getString("image_url"))
                         .description(rs.getString("description"))
+                        .hmgDataName(rs.getString("hmg_data_name"))
+                        .hmgDataValue(rs.getString("hmg_data_value"))
+                        .hmgDataMeasure(rs.getString("hmg_data_measure"))
                         .price(rs.getInt("price"))
                         .build(), 1);
 
-        List<Long> modelOptionIds = new ArrayList<>();
-
-        for (SimpleModelOptionMapper s : simpleModelOptionMapperList) {
-            modelOptionIds.add(s.model_option_Id);
-            log.info(s.toString());
+        for (SimpleModelOptionMapper mapper : simpleModelOptionMapperList) {
+            HMGDataDtoInterface hmgDataDto = mapper.toHMGDataDto();
+            log.info(mapper.toString());
         }
-
-        modelOptionIds.add(14L);
-        modelOptionIds.add(15L);
-        modelOptionIds.add(16L);
-        modelOptionIds.add(17L);
-
-        MapSqlParameterSource inQueryParams = new MapSqlParameterSource();
-        inQueryParams.addValue("ids", modelOptionIds);
-
-        String SQL = "SELECT `value`, measure, name FROM hmg_data WHERE model_option_id IN (:ids)";
-        List<HMGDataDto> hmgData = namedParameterJdbcTemplate.query(SQL, inQueryParams, (rs, rowNum) ->
-                HMGDataDto.builder()
-                        .value(rs.getString("value"))
-                        .measure(rs.getString("measure"))
-                        .name(rs.getString("name"))
-                        .build());
-
-        for (HMGDataDto hmgDatum : hmgData) {
-            log.info(hmgDatum.toString());
-        }
-
-
         return null;
     }
 }
