@@ -33,19 +33,14 @@ public class QueryString {
 
             "LEFT OUTER JOIN " +
             "( " +
-            "  SELECT tb.trim_id, tb.name, tb.val, tb.measure, tb.unit " +
+            "  SELECT tb.trim_id, (SELECT name FROM model_options WHERE id=model_option_id) AS name, tb.val, tb.measure, tb.unit " +
             "  FROM ( " +
-            "    SELECT trim_id, name, val, measure, unit, " +
-            "      ROW_NUMBER() OVER(PARTITION BY trim_id ORDER BY val DESC) AS row_num " +
-            "    FROM ( " +
-            "      SELECT DISTINCT trim_id, name, val, measure, unit " +
-            "      FROM hmg_data AS hmg " +
-            "      JOIN detail_trim_options AS dto ON hmg.model_option_id = dto.model_option_id " +
-            "      JOIN detail_trims AS dt ON dto.detail_trim_id = dt.id " +
-            "      WHERE trim_id IN ( select id from trims where basic_model_id= ? ) " +
-            "    ) AS sub_tb " +
+            "    SELECT DISTINCT trim_id, dto.model_option_id, val, measure, unit " +
+            "    FROM hmg_data AS hmg " +
+            "    JOIN detail_trim_options AS dto ON hmg.model_option_id = dto.model_option_id " +
+            "    JOIN detail_trims AS dt ON dto.detail_trim_id = dt.id " +
+            "    WHERE measure='15,000km 당' AND trim_id IN ( select id from trims where basic_model_id= ? ) " +
             "  ) AS tb " +
-            "  WHERE tb.row_num <= 3 " +
             "  ORDER BY tb.trim_id, tb.val desc " +
             ") AS tb " +
             "ON t.id=tb.trim_id " +

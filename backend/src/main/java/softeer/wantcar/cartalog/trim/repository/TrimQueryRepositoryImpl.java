@@ -95,20 +95,15 @@ public class TrimQueryRepositoryImpl implements TrimQueryRepository {
     }
 
     private static void getTrimHMGData(List<TrimListQueryResult> trimInfos, TrimListResponseDto.TrimDto.TrimDtoBuilder trimDtoBuilder) {
-        List<TrimListQueryResult> hmgInfos = trimInfos.stream()
-                .filter(r -> r.getHmgVal() != null)
-                .filter(r -> r.getHmgVal().matches("[-+]?\\d*\\.?\\d+"))
-                .sorted(Comparator.comparingDouble(r -> Double.parseDouble(r.getHmgVal())))
+        List<HMGDataDto> hmgInfos = trimInfos.stream()
+                .filter(r -> r.getHmgVal() != null && isStringRealNumber(r))
+                .sorted(Comparator.comparing(r -> Double.parseDouble(r.getHmgVal()), Comparator.reverseOrder()))
+                .map(r -> new HMGDataDto(r.getHmgName(), r.getHmgVal() + r.getHmgUnit(), r.getHmgMeasure()))
+                .distinct()
                 .limit(3)
                 .collect(Collectors.toList());
 
-        for (TrimListQueryResult hmgInfo : hmgInfos) {
-            trimDtoBuilder.eachHMGData(HMGDataDto.builder()
-                    .name(hmgInfo.getHmgName())
-                    .value(hmgInfo.getHmgVal() + hmgInfo.getHmgUnit())
-                    .measure(hmgInfo.getHmgMeasure())
-                    .build());
-        }
+        trimDtoBuilder.hmgData(hmgInfos);
     }
 
     private static void getTrimDefaultModelTypes(List<TrimListQueryResult> trimInfos, TrimListQueryResult trimInfo, TrimListResponseDto.TrimDto.TrimDtoBuilder trimDtoBuilder) {
@@ -151,5 +146,9 @@ public class TrimQueryRepositoryImpl implements TrimQueryRepository {
                 .defaultExteriorColorCode(rs.getString("defaultExteriorColorCode"))
                 .defaultInteriorColorCode(rs.getString("defaultInteriorColorCode"))
                 .build();
+    }
+
+    private static boolean isStringRealNumber(TrimListQueryResult r) {
+        return r.getHmgVal().matches("[-+]?\\d*\\.?\\d+");
     }
 }
