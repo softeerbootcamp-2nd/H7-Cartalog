@@ -8,7 +8,7 @@ import com.softeer.cartalog.databinding.ItemOptionDefaultCardBinding
 import com.softeer.cartalog.viewmodel.OptionViewModel
 
 class OptionDefaultAdapter(private val viewModel: OptionViewModel) :
-    RecyclerView.Adapter<OptionDefaultAdapter.OptionDefaultViewHolder>(), OptionAdapter{
+    RecyclerView.Adapter<OptionDefaultAdapter.OptionDefaultViewHolder>(), OptionAdapter {
 
     var selectedItem = 0
 
