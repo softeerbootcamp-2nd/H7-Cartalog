@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useData } from '../../utils/Context';
-import { TYPE } from './constants';
+import { EXTERIOR_COLOR } from './constants';
 import Section from '../../components/Section';
 import Info from './Info';
 import Pick from './Pick';
@@ -28,7 +28,7 @@ function ExteriorColor() {
   }, []);
 
   const SectionProps = {
-    type: TYPE,
+    type: EXTERIOR_COLOR.TYPE,
     Info: <Info />,
     Pick: <Pick />,
   };

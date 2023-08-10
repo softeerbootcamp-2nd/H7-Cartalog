@@ -1,29 +1,44 @@
-import { useState } from 'react';
+import { useData } from '../../../utils/Context';
+import { INFO } from '../constants';
 import * as S from './style';
 import Title from '../../../components/Title';
 import TrimImage from './TrimImage';
 import TrimStand from './TrimStand';
 
-const TYPE = 'dark';
-const SUB_TITLE = '외장색상';
-const MAIN_TITLE = '어비스블랙펄';
-
 function Info() {
-  const [start, setStart] = useState(false);
-  document.addEventListener('mouseup', () => setStart(false));
+  const { setTrimState, exteriorColor } = useData();
 
-  const TrimImageProps = { start };
   const TitleProps = {
-    type: TYPE,
-    subTitle: SUB_TITLE,
-    mainTitle: MAIN_TITLE,
+    type: INFO.TYPE,
+    subTitle: INFO.SUB_TITLE,
+    mainTitle: exteriorColor.pickName,
   };
 
+  document.addEventListener('mouseup', () => {
+    setTrimState((prevState) => ({
+      ...prevState,
+      exteriorColor: {
+        ...prevState.exteriorColor,
+        rotate: false,
+      },
+    }));
+  });
+
   return (
-    <S.Info onMouseDown={() => setStart(true)}>
+    <S.Info
+      onMouseDown={() => {
+        setTrimState((prevState) => ({
+          ...prevState,
+          exteriorColor: {
+            ...prevState.exteriorColor,
+            rotate: true,
+          },
+        }));
+      }}
+    >
       <Title {...TitleProps} />
       <TrimStand />
-      <TrimImage {...TrimImageProps} />
+      <TrimImage />
     </S.Info>
   );
 }

@@ -36,7 +36,10 @@ export function StateProvider({ children }) {
     } else if (key === 'exteriorColor') {
       acc[key] = {
         dataFetch: [],
-        pick: null,
+        pick: 'A2B',
+        pickName: '어비스 블랙 펄',
+        pickCarImageUrl: 'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade',
+        rotate: false,
       };
     } else if (key === 'trimId') {
       acc[key] = 1;
