@@ -12,6 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:minHeight="760dp"
         android:background="@drawable/shape_bottomsheet_corner">
 
         <androidx.constraintlayout.widget.Guideline
@@ -79,6 +80,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/selector_radio_exterior_interior"
                 android:button="@null"
+                android:checked="true"
                 android:fontFamily="@font/hyndaisans_text"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
