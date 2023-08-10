@@ -6,8 +6,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.jdbc.Sql;
 import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
 
 import java.util.HashMap;
@@ -16,17 +17,19 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@AutoConfigureTestDatabase
-@SpringBootTest
+@JdbcTest
+@Sql({"classpath:schema.sql"})
 @DisplayName("모델 옵션 쿼리 Repository 테스트")
 class ModelOptionQueryRepositoryImplTest {
     SoftAssertions softAssertions;
     @Autowired
-    ModelOptionQueryRepositoryImpl modelOptionQueryRepository;
+    JdbcTemplate jdbcTemplate;
+    ModelOptionQueryRepository modelOptionQueryRepository;
 
     @BeforeEach
     void setUp() {
         softAssertions = new SoftAssertions();
+        modelOptionQueryRepository = new ModelOptionQueryRepositoryImpl(jdbcTemplate);
     }
 
     @Nested
