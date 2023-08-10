@@ -66,22 +66,23 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
     @Override
     @Transactional(readOnly = true)
     public ModelTypeListResponseDto findByModelId(Long modelId) {
-        String selectSimpleModelOptionSQL = "SELECT model_options.id AS model_option_id, " +
-                "       model_options.name, " +
-                "       child_category, " +
-                "       image_url, " +
-                "       description, " +
-                "       hmg_data.name              AS hmg_data_name, " +
-                "       hmg_data.`value`           AS hmg_data_value, " +
-                "       hmg_data.measure           AS hmg_data_measure, " +
-                "       price_if_model_type_option AS price " +
-                "FROM   model_options " +
-                "       LEFT JOIN hmg_data " +
-                "              ON model_options.id = hmg_data.model_option_id " +
-                "WHERE  model_id = ? " +
-                "       AND price_if_model_type_option IS NOT NULL";
+        String SQL = "SELECT " +
+                "  model_options.id AS model_option_id, " +
+                "  model_options.name, " +
+                "  child_category, " +
+                "  image_url, " +
+                "  description, " +
+                "  hmg_data.name AS hmg_data_name, " +
+                "  hmg_data.`value` AS hmg_data_value, " +
+                "  hmg_data.measure AS hmg_data_measure, " +
+                "  price_if_model_type_option AS price " +
+                "FROM model_options " +
+                "LEFT JOIN hmg_data " +
+                "ON model_options.id = hmg_data.model_option_id " +
+                "WHERE model_id = ? " +
+                "  AND price_if_model_type_option IS NOT NULL";
 
-        List<SimpleModelOptionMapper> simpleModelOptionMapperList = template.query(selectSimpleModelOptionSQL, (rs, rowNum) ->
+        List<SimpleModelOptionMapper> simpleModelOptionMapperList = template.query(SQL, (rs, rowNum) ->
                 SimpleModelOptionMapper.builder()
                         .model_option_Id(rs.getLong("model_option_Id"))
                         .name(rs.getString("name"))
