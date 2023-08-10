@@ -2,6 +2,8 @@ package softeer.wantcar.cartalog.model.repository;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,8 +19,11 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepository {
+    @Value("${env.imageServerPath}")
+    private String imageServerPath = "example-url";
+
     private final JdbcTemplate template;
 
     @Builder
@@ -111,7 +116,7 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
                             .id(mapper.model_option_Id)
                             .name(mapper.name)
                             .price(mapper.price)
-                            .imageUrl(mapper.imageUrl)
+                            .imageUrl(imageServerPath + "/" + mapper.imageUrl)
                             .description(mapper.description));
             HMGDataDtoInterface hmgDataDto = mapper.toHMGDataDto();
             if (hmgDataDto != null) {

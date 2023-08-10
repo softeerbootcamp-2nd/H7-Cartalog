@@ -1,6 +1,7 @@
 package softeer.wantcar.cartalog.model.dto;
 
 import lombok.*;
+import softeer.wantcar.cartalog.global.annotation.TestMethod;
 import softeer.wantcar.cartalog.global.dto.HMGDataDtoInterface;
 
 import java.util.List;
@@ -17,4 +18,9 @@ public class OptionDto {
     private String description;
     @Singular("hmgDatum")
     private List<HMGDataDtoInterface> hmgData;
+
+    @TestMethod
+    public boolean startWithUrl(String url) {
+        return imageUrl.startsWith(url);
+    }
 }

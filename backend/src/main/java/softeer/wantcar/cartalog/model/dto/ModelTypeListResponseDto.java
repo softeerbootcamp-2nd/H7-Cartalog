@@ -46,4 +46,11 @@ public class ModelTypeListResponseDto {
                     return equalAndAllContain(checkOptionMap.getValue(), actualOptionNames);
                 });
     }
+
+    @TestMethod
+    public boolean startWithUrl(String url) {
+        return modelTypes.stream()
+                .flatMap(modelTypeDto -> modelTypeDto.getOptions().stream())
+                .allMatch(optionDto -> optionDto.startWithUrl(url));
+    }
 }

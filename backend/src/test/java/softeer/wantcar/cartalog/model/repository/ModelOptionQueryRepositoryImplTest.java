@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
@@ -25,6 +26,8 @@ class ModelOptionQueryRepositoryImplTest {
     @Autowired
     JdbcTemplate jdbcTemplate;
     ModelOptionQueryRepository modelOptionQueryRepository;
+    @Value("${env.imageServerPath}")
+    private String imageServerPath = "example-url";
 
     @BeforeEach
     void setUp() {
@@ -54,6 +57,8 @@ class ModelOptionQueryRepositoryImplTest {
             softAssertions.assertThat(response.modelTypeSize()).isEqualTo(3);
             softAssertions.assertThat(response.equalAndAllContainTypes(checkTypes)).isTrue();
             softAssertions.assertThat(response.hasOptions(checkOptions)).isTrue();
+            softAssertions.assertThat(response.startWithUrl(imageServerPath)).isTrue();
+
             softAssertions.assertAll();
         }
 
