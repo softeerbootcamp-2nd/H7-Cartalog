@@ -1,21 +1,33 @@
-import { useEffect } from 'react';
-import Info from './Info';
-import Pick from './Pick';
-import Storage from '../../utils/Storage';
-
-const API_LINK = 'http://3.36.126.30/models/';
-const TRIM_ID = 1;
+import { useEffect, useState } from 'react';
+import PriceStaticBar from '../../components/PriceStaticBar';
+import Preview from './Preview';
+import * as S from './style';
 
 function EstimateFinish() {
+  const [collapsed, setCollapsed] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 500) {
+      setCollapsed(true);
+    } else {
+      setCollapsed(false);
+    }
+  };
+
   useEffect(() => {
-    Storage({ dataName: 'initData', dataLink: `${API_LINK}trims?modelId=${TRIM_ID}`, trimId: 1 });
-    Storage({ dataName: 'modelType', dataLink: `${API_LINK}${TRIM_ID}/types`, trimId: 1 });
-    // Storage({
-    //   dataName: 'exteriorColor',
-    //   dataLink: `${API_LINK}/trims/exterior-colors?id=${TRIM_ID}`,
-    //   trimId: 1,
-    // });
-  });
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <>
+      <Preview collapsed={collapsed} />
+      <S.EstimateFinish onScroll={handleScroll}>
+        <div style={{ height: '3000px', width: '30px', backgroundColor: 'pink' }}>a</div>
+        <PriceStaticBar min={10000000} max={50000000} price={25000000} />
+      </S.EstimateFinish>
+    </>
+  );
 }
 
 export default EstimateFinish;

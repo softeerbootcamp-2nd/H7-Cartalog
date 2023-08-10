@@ -1,3 +1,4 @@
+import PriceStaticBar from '../PriceStaticBar';
 import * as S from './style';
 
 /**
@@ -8,7 +9,7 @@ import * as S from './style';
  * @param Pick {Comment} 'Pick' 구역에 안에 넣을 컴포넌트
  * @returns
  */
-function Section({ type, url, Info, Pick }) {
+function Section({ type, url, Info, Pick, showPriceStatic = true }) {
   const SectionProps = { type, $url: url };
 
   return (
@@ -17,6 +18,7 @@ function Section({ type, url, Info, Pick }) {
         <S.Contents>{Info}</S.Contents>
       </S.Background>
       <S.Contents>{Pick}</S.Contents>
+      {showPriceStatic && <PriceStaticBar min={10000000} max={50000000} price={25000000} />}
     </S.Section>
   );
 }
