@@ -23,7 +23,6 @@ import java.util.Map;
 @Slf4j
 public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepository {
     private final JdbcTemplate template;
-    private static final int CHOSEN_MOCK = 38;
 
     @Builder
     @AllArgsConstructor
@@ -39,6 +38,10 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
         private String hmgDataMeasure;
         private int price;
 
+        /**
+         * @throws AssertionError            HMGData가 존재하나 value 값이 존재하지 않을 경우 발생한다.
+         * @throws IndexOutOfBoundsException 엔진의 HMGData의 값이 number/number 형식이 아닐 경우 발생한다.
+         */
         private HMGDataDtoInterface toHMGDataDto() {
             HMGDataDtoInterface hmgDataDto;
             if (hmgDataName == null && hmgDataValue == null && hmgDataMeasure == null) {
@@ -95,6 +98,11 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
                         .price(rs.getInt("price"))
                         .build(), modelId);
 
+
+        return buildModelTypeListResponseDto(simpleModelOptionMapperList);
+    }
+
+    private ModelTypeListResponseDto buildModelTypeListResponseDto(List<SimpleModelOptionMapper> simpleModelOptionMapperList) {
         Map<String, Map<Long, OptionDto.OptionDtoBuilder>> dtoBuilderMap = new HashMap<>();
         for (SimpleModelOptionMapper mapper : simpleModelOptionMapperList) {
             Map<Long, OptionDto.OptionDtoBuilder> optionDtoBuilderMap = dtoBuilderMap.getOrDefault(mapper.childCategory, new HashMap<>());
@@ -103,7 +111,6 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
                             .id(mapper.model_option_Id)
                             .name(mapper.name)
                             .price(mapper.price)
-                            .chosen(CHOSEN_MOCK)
                             .imageUrl(mapper.imageUrl)
                             .description(mapper.description));
 
@@ -121,7 +128,7 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
             optionDtoBuilderMap.forEach((modelOptionId, optionDtoBuilder) -> modelTypeDtoBuilder.option(optionDtoBuilder.build()));
             builder.modelType(modelTypeDtoBuilder.build());
         });
-
         return builder.build();
     }
+
 }
