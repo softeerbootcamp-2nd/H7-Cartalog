@@ -35,6 +35,7 @@
         <item name="android:fontFamily">@font/hyndaisans_head_bold</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/active_blue2</item>
+        <item name="tabBackground">@color/white</item>
     </style>
 
     <style name="HmgDataTag">

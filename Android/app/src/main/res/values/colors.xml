@@ -36,4 +36,5 @@
 
     <color name="card_bg_color">#F7F7F9</color>
     <color name="excess_bg_color">#000B19</color>
+    <color name="light_blue">#E3EEF8</color>
 </resources>

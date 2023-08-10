@@ -12,8 +12,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:minHeight="760dp"
-        android:background="@drawable/shape_bottomsheet_corner">
+        android:background="@drawable/shape_bottomsheet_corner"
+        android:minHeight="760dp">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_title"
@@ -67,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/shape_toggle_background"
+            android:background="@drawable/shape_radio_background"
             android:orientation="horizontal"
             android:padding="5dp"
             app:layout_constraintBottom_toTopOf="@id/vw_divider_1"
@@ -415,7 +415,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="20dp"
-                android:text="@string/title_price_summary"
+                android:text="@string/summary_now_price"
                 android:textColor="@color/gray_700"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
