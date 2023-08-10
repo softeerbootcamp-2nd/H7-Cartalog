@@ -99,7 +99,7 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
 
     private ModelTypeListResponseDto buildModelTypeListResponseDto(List<SimpleModelOptionMapper> simpleModelOptionMapperList) {
         Map<String, Map<Long, OptionDto.OptionDtoBuilder>> dtoBuilderMap = new HashMap<>();
-        for (SimpleModelOptionMapper mapper : simpleModelOptionMapperList) {
+        simpleModelOptionMapperList.forEach(mapper -> {
             Map<Long, OptionDto.OptionDtoBuilder> optionDtoBuilderMap = dtoBuilderMap.getOrDefault(mapper.childCategory, new HashMap<>());
             OptionDto.OptionDtoBuilder optionDtoBuilder = optionDtoBuilderMap.getOrDefault(mapper.model_option_Id,
                     OptionDto.builder()
@@ -108,14 +108,13 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
                             .price(mapper.price)
                             .imageUrl(mapper.imageUrl)
                             .description(mapper.description));
-
             HMGDataDtoInterface hmgDataDto = mapper.toHMGDataDto();
             if (hmgDataDto != null) {
                 optionDtoBuilder.hmgDatum(mapper.toHMGDataDto());
             }
             optionDtoBuilderMap.put(mapper.model_option_Id, optionDtoBuilder);
             dtoBuilderMap.put(mapper.childCategory, optionDtoBuilderMap);
-        }
+        });
 
         ModelTypeListResponseDto.ModelTypeListResponseDtoBuilder builder = ModelTypeListResponseDto.builder();
         dtoBuilderMap.forEach((type, optionDtoBuilderMap) -> {
