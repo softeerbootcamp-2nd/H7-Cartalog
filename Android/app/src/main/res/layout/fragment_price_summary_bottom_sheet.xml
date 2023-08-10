@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="fragment"
+            type="com.softeer.cartalog.ui.dialog.PriceSummaryBottomSheetFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:minHeight="760dp"
+        android:background="@drawable/shape_bottomsheet_corner">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_contents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="96dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="264dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <ImageButton
+            android:id="@+id/btn_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/icon_close"
+            app:fragment="@{fragment}"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/im_car_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tmp_img_summary_car"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_close" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/shape_toggle_background"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            app:layout_constraintBottom_toTopOf="@id/vw_divider_1"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_title">
+
+            <RadioButton
+                android:id="@+id/rb_exterior"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_radio_exterior_interior"
+                android:button="@null"
+                android:checked="true"
+                android:fontFamily="@font/hyndaisans_text"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingHorizontal="23dp"
+                android:paddingVertical="6dp"
+                android:text="@string/tab_exterior"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_radio_text_exterior_interior" />
+
+            <RadioButton
+                android:id="@+id/rb_interior"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_radio_exterior_interior"
+                android:button="@null"
+                android:fontFamily="@font/hyndaisans_text"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingHorizontal="23dp"
+                android:paddingVertical="6dp"
+                android:text="@string/tab_interior"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_radio_text_exterior_interior" />
+        </RadioGroup>
+
+        <View
+            android:id="@+id/vw_divider_1"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/gray_300"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_title"
+            app:layout_constraintTop_toBottomOf="@id/im_car_result" />
+
+        <TextView
+            android:id="@+id/tv_title_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/summary_model"
+            android:textColor="@color/gray_500"
+            app:layout_constraintEnd_toStartOf="@id/gl_contents"
+            app:layout_constraintStart_toStartOf="@id/gl_title"
+            app:layout_constraintTop_toBottomOf="@id/vw_divider_1" />
+
+        <TextView
+            android:id="@+id/tv_contents_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="팰리세이드"
+            android:textColor="@color/gray_900"
+            app:layout_constraintEnd_toStartOf="@id/gl_price"
+            app:layout_constraintStart_toStartOf="@id/gl_contents"
+            app:layout_constraintTop_toTopOf="@id/tv_title_1" />
+
+        <TextView
+            android:id="@+id/tv_price_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="+3,880,000원"
+            android:textColor="@color/gray_900"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_price"
+            app:layout_constraintTop_toTopOf="@id/tv_title_1" />
+
+        <TextView
+            android:id="@+id/tv_title_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/tab_trim"
+            android:textColor="@color/gray_500"
+            app:layout_constraintEnd_toStartOf="@id/gl_contents"
+            app:layout_constraintStart_toStartOf="@id/gl_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_1" />
+
+        <TextView
+            android:id="@+id/tv_contents_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="팰리세이드"
+            android:textColor="@color/gray_900"
+            app:layout_constraintEnd_toStartOf="@id/gl_price"
+            app:layout_constraintStart_toStartOf="@id/gl_contents"
+            app:layout_constraintTop_toTopOf="@id/tv_title_2" />
+
+        <TextView
+            android:id="@+id/tv_price_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="+3,880,000원"
+            android:textColor="@color/gray_900"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_price"
+            app:layout_constraintTop_toTopOf="@id/tv_title_2" />
+
+        <View
+            android:id="@+id/vw_item_divider_1"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/blue_bg"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_2" />
+
+        <TextView
+            android:id="@+id/tv_title_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/type_powertrain"
+            android:textColor="@color/gray_500"
+            app:layout_constraintEnd_toStartOf="@id/gl_contents"
+            app:layout_constraintStart_toStartOf="@id/gl_title"
+            app:layout_constraintTop_toBottomOf="@id/vw_item_divider_1" />
+
+        <TextView
+            android:id="@+id/tv_contents_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="팰리세이드"
+            android:textColor="@color/gray_900"
+            app:layout_constraintEnd_toStartOf="@id/gl_price"
+            app:layout_constraintStart_toStartOf="@id/gl_contents"
+            app:layout_constraintTop_toTopOf="@id/tv_title_3" />
+
+        <TextView
+            android:id="@+id/tv_price_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="+3,880,000원"
+            android:textColor="@color/gray_900"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_price"
+            app:layout_constraintTop_toTopOf="@id/tv_title_3" />
+
+
+        <TextView
+            android:id="@+id/tv_title_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/type_bodytype"
+            android:textColor="@color/gray_500"
+            app:layout_constraintEnd_toStartOf="@id/gl_contents"
+            app:layout_constraintStart_toStartOf="@id/gl_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_3" />
+
+        <TextView
+            android:id="@+id/tv_contents_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="팰리세이드"
+            android:textColor="@color/gray_900"
+            app:layout_constraintEnd_toStartOf="@id/gl_price"
+            app:layout_constraintStart_toStartOf="@id/gl_contents"
+            app:layout_constraintTop_toTopOf="@id/tv_title_4" />
+
+        <TextView
+            android:id="@+id/tv_price_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="+3,880,000원"
+            android:textColor="@color/gray_900"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_price"
+            app:layout_constraintTop_toTopOf="@id/tv_title_4" />
+
+
+        <TextView
+            android:id="@+id/tv_title_5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/type_wheeldrive"
+            android:textColor="@color/gray_500"
+            app:layout_constraintEnd_toStartOf="@id/gl_contents"
+            app:layout_constraintStart_toStartOf="@id/gl_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_4" />
+
+        <TextView
+            android:id="@+id/tv_contents_5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="팰리세이드"
+            android:textColor="@color/gray_900"
+            app:layout_constraintEnd_toStartOf="@id/gl_price"
+            app:layout_constraintStart_toStartOf="@id/gl_contents"
+            app:layout_constraintTop_toTopOf="@id/tv_title_5" />
+
+        <TextView
+            android:id="@+id/tv_price_5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="+3,880,000원"
+            android:textColor="@color/gray_900"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_price"
+            app:layout_constraintTop_toTopOf="@id/tv_title_5" />
+
+
+        <View
+            android:id="@+id/vw_item_divider_2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/blue_bg"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_5" />
+
+
+        <TextView
+            android:id="@+id/tv_title_6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/summary_exterior"
+            android:textColor="@color/gray_500"
+            app:layout_constraintEnd_toStartOf="@id/gl_contents"
+            app:layout_constraintStart_toStartOf="@id/gl_title"
+            app:layout_constraintTop_toBottomOf="@id/vw_item_divider_2" />
+
+        <TextView
+            android:id="@+id/tv_contents_6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="팰리세이드"
+            android:textColor="@color/gray_900"
+            app:layout_constraintEnd_toStartOf="@id/gl_price"
+            app:layout_constraintStart_toStartOf="@id/gl_contents"
+            app:layout_constraintTop_toTopOf="@id/tv_title_6" />
+
+        <TextView
+            android:id="@+id/tv_price_6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="+3,880,000원"
+            android:textColor="@color/gray_900"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_price"
+            app:layout_constraintTop_toTopOf="@id/tv_title_6" />
+
+
+        <TextView
+            android:id="@+id/tv_title_7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/summary_interior"
+            android:textColor="@color/gray_500"
+            app:layout_constraintEnd_toStartOf="@id/gl_contents"
+            app:layout_constraintStart_toStartOf="@id/gl_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_6" />
+
+        <TextView
+            android:id="@+id/tv_contents_7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="팰리세이드"
+            android:textColor="@color/gray_900"
+            app:layout_constraintEnd_toStartOf="@id/gl_price"
+            app:layout_constraintStart_toStartOf="@id/gl_contents"
+            app:layout_constraintTop_toTopOf="@id/tv_title_7" />
+
+        <TextView
+            android:id="@+id/tv_price_7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="+3,880,000원"
+            android:textColor="@color/gray_900"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_price"
+            app:layout_constraintTop_toTopOf="@id/tv_title_7" />
+
+        <View
+            android:id="@+id/vw_item_divider_3"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/blue_bg"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_7" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rc_option_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@id/cl_price_summary"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_title"
+            app:layout_constraintTop_toBottomOf="@id/vw_item_divider_3" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_price_summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:elevation="10dp"
+            app:layout_constraintBottom_toTopOf="@id/btn_complete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_price_summary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/selector_btn_price_summary"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingHorizontal="17dp"
+                android:paddingVertical="7dp"
+                android:text="@string/btn_close_price_summary"
+                android:textColor="@drawable/selector_text_price_summary"
+                app:fragment="@{fragment}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_price_summary_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="20dp"
+                android:text="@string/title_price_summary"
+                android:textColor="@color/gray_700"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/hyndaisans_head_medium"
+                android:text="43,560,000 원"
+                android:textColor="@color/primary_color_500"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_price_summary_title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_complete"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="@color/primary_color_700"
+            android:elevation="11dp"
+            android:fontFamily="@font/hyndaisans_head_medium"
+            android:text="@string/summary_complete"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
