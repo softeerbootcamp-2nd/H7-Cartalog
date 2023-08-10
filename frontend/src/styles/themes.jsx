@@ -56,6 +56,7 @@ const theme = {
       MediumC2: '500 12px/24px HyundaiSansTextMedium',
     },
     headKR: {
+      Bold150: '700 150px/200px HyundaiSansHeadBold',
       Bold32: '700 32px/36px HyundaiSansHeadKRBold',
       Bold26: '700 26px/36px HyundaiSansHeadKRBold',
       Bold24: '700 24px/32px HyundaiSansHeadKRBold',
