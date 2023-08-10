@@ -133,7 +133,7 @@
                 android:id="@+id/tv_selected_percent_guide"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="가 선택했어요"
+                android:text="@string/option_item_select_guide"
                 android:textColor="@{position == optionAdapter.selectedItem ? @color/gray_700 : @color/gray_600}"
                 android:textSize="12sp"
                 app:layout_constraintStart_toEndOf="@id/tv_selected_percent"

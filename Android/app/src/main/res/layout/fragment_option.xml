@@ -18,8 +18,8 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="60dp"
         android:fillViewport="true"
+        android:paddingBottom="60dp"
         tools:context=".ui.fragment.OptionFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -97,7 +97,7 @@
                         android:checked="true"
                         android:paddingHorizontal="18dp"
                         android:paddingVertical="8dp"
-                        android:text="전체" />
+                        android:text="@string/option_all" />
 
                     <RadioButton
                         android:id="@+id/rb_select_detail"
@@ -105,7 +105,7 @@
                         android:layout_marginEnd="10dp"
                         android:paddingHorizontal="18dp"
                         android:paddingVertical="8dp"
-                        android:text="상세품목" />
+                        android:text="@string/option_detail" />
 
                     <RadioButton
                         android:id="@+id/rb_select_acc"
@@ -113,7 +113,7 @@
                         android:layout_marginEnd="10dp"
                         android:paddingHorizontal="18dp"
                         android:paddingVertical="8dp"
-                        android:text="악세서리" />
+                        android:text="@string/option_acc" />
 
                     <RadioButton
                         android:id="@+id/rb_select_wheel"
@@ -121,7 +121,7 @@
                         android:layout_marginEnd="10dp"
                         android:paddingHorizontal="18dp"
                         android:paddingVertical="8dp"
-                        android:text="휠" />
+                        android:text="@string/option_wheel" />
                 </RadioGroup>
             </HorizontalScrollView>
 
@@ -149,7 +149,7 @@
                         android:checked="true"
                         android:paddingHorizontal="18dp"
                         android:paddingVertical="8dp"
-                        android:text="전체" />
+                        android:text="@string/option_all" />
 
                     <RadioButton
                         android:id="@+id/rb_default_powertrain"
@@ -157,7 +157,7 @@
                         android:layout_marginEnd="10dp"
                         android:paddingHorizontal="18dp"
                         android:paddingVertical="8dp"
-                        android:text="파워트레인/성능" />
+                        android:text="@string/option_powertrain" />
 
                     <RadioButton
                         android:id="@+id/rb_default_safetech"
@@ -165,7 +165,7 @@
                         android:layout_marginEnd="10dp"
                         android:paddingHorizontal="18dp"
                         android:paddingVertical="8dp"
-                        android:text="지능형 안전기술" />
+                        android:text="@string/option_safetech" />
 
                     <RadioButton
                         android:id="@+id/rb_default_safe"
@@ -173,7 +173,7 @@
                         android:layout_marginEnd="10dp"
                         android:paddingHorizontal="18dp"
                         android:paddingVertical="8dp"
-                        android:text="안전" />
+                        android:text="@string/option_safe" />
 
                     <RadioButton
                         android:id="@+id/rb_default_exterior"
@@ -181,7 +181,7 @@
                         android:layout_marginEnd="10dp"
                         android:paddingHorizontal="18dp"
                         android:paddingVertical="8dp"
-                        android:text="외관" />
+                        android:text="@string/option_exterior" />
 
                     <RadioButton
                         android:id="@+id/rb_default_interior"
@@ -189,7 +189,7 @@
                         android:layout_marginEnd="10dp"
                         android:paddingHorizontal="18dp"
                         android:paddingVertical="8dp"
-                        android:text="내관" />
+                        android:text="@string/option_interior" />
 
                     <RadioButton
                         android:id="@+id/rb_default_seat"
@@ -197,7 +197,7 @@
                         android:layout_marginEnd="10dp"
                         android:paddingHorizontal="18dp"
                         android:paddingVertical="8dp"
-                        android:text="시트" />
+                        android:text="@string/option_seat" />
 
                     <RadioButton
                         android:id="@+id/rb_default_convenience"
@@ -205,7 +205,7 @@
                         android:layout_marginEnd="10dp"
                         android:paddingHorizontal="18dp"
                         android:paddingVertical="8dp"
-                        android:text="편의" />
+                        android:text="@string/option_convenience" />
 
                     <RadioButton
                         android:id="@+id/rb_default_multimedia"
@@ -213,7 +213,7 @@
                         android:layout_marginEnd="10dp"
                         android:paddingHorizontal="18dp"
                         android:paddingVertical="8dp"
-                        android:text="멀티미디어" />
+                        android:text="@string/option_multimedia" />
                 </RadioGroup>
 
             </HorizontalScrollView>
@@ -223,8 +223,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="vertical"
                 android:nestedScrollingEnabled="false"
+                android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="@id/gl_end"
                 app:layout_constraintStart_toStartOf="@id/gl_start"
