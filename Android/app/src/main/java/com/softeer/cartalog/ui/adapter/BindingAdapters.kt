@@ -1,5 +1,6 @@
 package com.softeer.cartalog.ui.adapter
 
+import android.util.Log
 import android.view.Gravity
 import android.widget.ImageView
 import android.widget.SeekBar
@@ -14,11 +15,13 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.softeer.cartalog.R
+import com.softeer.cartalog.data.enums.OptionMode
 import com.softeer.cartalog.ui.dialog.TypeDetailPopupActivity
 import com.softeer.cartalog.util.UtilManager
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import com.softeer.cartalog.viewmodel.InteriorViewModel
 import com.softeer.cartalog.viewmodel.MainViewModel
+import com.softeer.cartalog.viewmodel.OptionViewModel
 import com.softeer.cartalog.viewmodel.TypeViewModel
 import com.softeer.cartalog.viewmodel.TrimViewModel
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
@@ -160,6 +163,25 @@ fun setInteriorColorRecyclerView(
 ) {
     val adapter = InteriorColorAdapter(viewModel)
     recyclerView.adapter = adapter
+}
+
+@BindingAdapter("viewModel")
+fun setOptionRecyclerView(
+    recyclerView: RecyclerView,
+    viewModel: OptionViewModel
+) {
+    when (viewModel.nowOptionMode.value) {
+        OptionMode.SELECT_OPTION -> {
+            recyclerView.adapter = OptionSelectAdapter(viewModel)
+            recyclerView.adapter?.notifyDataSetChanged()
+        }
+        OptionMode.DEFAULT_OPTION -> {
+            recyclerView.adapter = OptionDefaultAdapter(viewModel)
+            recyclerView.adapter?.notifyDataSetChanged()
+        }
+
+        else -> {}
+    }
 }
 
 @BindingAdapter("bottomSeekBar")

@@ -14,5 +14,7 @@
     <string name="type_powertrain">파워트레인</string>
     <string name="type_bodytype">바디타입</string>
     <string name="type_wheeldrive">구동방식</string>
+    <string name="tab_option_not_default">추가옵션</string>
+    <string name="tab_option_default">기본옵션</string>
 
 </resources>
