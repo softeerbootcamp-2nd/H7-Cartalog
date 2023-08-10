@@ -14,6 +14,27 @@
     <string name="type_powertrain">파워트레인</string>
     <string name="type_bodytype">바디타입</string>
     <string name="type_wheeldrive">구동방식</string>
+    <string name="tab_option_not_default">추가옵션</string>
+    <string name="tab_option_default">기본옵션</string>
+
+    <string name="option_all">전체</string>
+    <string name="option_detail">상세품목</string>
+    <string name="option_acc">악세서리</string>
+    <string name="option_wheel">휠</string>
+    <string name="option_powertrain">파워트레인/성능</string>
+    <string name="option_safetech">지능형 안전기술</string>
+    <string name="option_safe">안전</string>
+    <string name="option_exterior">외관</string>
+    <string name="option_interior">내관</string>
+    <string name="option_seat">시트</string>
+    <string name="option_convenience">편의</string>
+    <string name="option_multimedia">멀티미디어</string>
+    <string name="interior_header">내장 색상을 선택해주세요</string>
+    <string name="exterior_header">외장 색상을 선택해주세요</string>
+    <string name="exterior_360">360°</string>
+    <string name="option_item_default_price">기본포함</string>
+    <string name="option_item_select_guide">가 선택했어요</string>
+
     <string name="btn_price_summary">견적 요약</string>
     <string name="title_price_summary">현재 견적 가격</string>
     <string name="summary_model">모델</string>
