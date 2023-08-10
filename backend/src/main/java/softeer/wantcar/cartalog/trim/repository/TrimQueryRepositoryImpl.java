@@ -84,9 +84,9 @@ public class TrimQueryRepositoryImpl implements TrimQueryRepository {
                 .description(trimInfo.getDescription())
                 .maxPrice(trimInfo.getMaxPrice())
                 .minPrice(trimInfo.getMinPrice())
-                .exteriorImageUrl(imageServerPath + trimInfo.getExteriorImageUrl())
-                .interiorImageUrl(imageServerPath + trimInfo.getInteriorImageUrl())
-                .wheelImageUrl(imageServerPath + trimInfo.getWheelImageUrl());
+                .exteriorImageUrl(imageServerPath + "/" + trimInfo.getExteriorImageUrl())
+                .interiorImageUrl(imageServerPath + "/" + trimInfo.getInteriorImageUrl())
+                .wheelImageUrl(imageServerPath + "/" + trimInfo.getWheelImageUrl());
 
         getTrimDefaultModelTypes(trimInfos, trimInfo, trimDtoBuilder);
         getTrimHMGData(trimInfos, trimDtoBuilder);
