@@ -1,9 +1,10 @@
 import * as S from './style';
+import { TRIM_STAND } from '../../constants';
 
 function TrimStand() {
   return (
     <S.TrimStand>
-      <S.Stand>360°</S.Stand>
+      <S.Stand>{TRIM_STAND.DEGREE}</S.Stand>
     </S.TrimStand>
   );
 }

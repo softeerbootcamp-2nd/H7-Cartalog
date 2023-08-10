@@ -22,4 +22,5 @@ export const Stand = styled.div`
   left: 50%;
   transform: translate(-50%, 50%);
   background-color: ${({ theme }) => theme.color.blueBG};
+  color: ${({ theme }) => theme.color.gray['900']};
 `;
