@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings({"SqlNoDataSourceInspection", "SqlResolve"})
 @Repository
 @RequiredArgsConstructor
 public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepository {
@@ -78,7 +79,7 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
                 "  image_url, " +
                 "  description, " +
                 "  hmg_data.name AS hmg_data_name, " +
-                "  hmg_data.`value` AS hmg_data_value, " +
+                "  hmg_data.val AS hmg_data_value, " +
                 "  hmg_data.measure AS hmg_data_measure, " +
                 "  price_if_model_type_option AS price " +
                 "FROM model_options " +

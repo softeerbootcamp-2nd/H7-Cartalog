@@ -1,5 +1,5 @@
 id|model_id|name|parent_category|child_category|image_url|description|price_if_model_type_option
-1|1|디젤 2.2|\N|파워트레인/성능|palisade/le-blanc/options/dieselengine2.2_s|높은 토크로 파워풀한 드라이빙이 가능하며, 차급대비 연비 효율이 우수합니다.|1480000
+1|1|디젤 2.2|\N|파워트레인/성능|palisade/le-blanc/options/dieselengine2.2_s.jpg|높은 토크로 파워풀한 드라이빙이 가능하며, 차급대비 연비 효율이 우수합니다.|1480000
 2|1|가솔린 3.8|\N|파워트레인/성능|palisade/le-blanc/options/gasoline3.8_s.jpg|고마력의 우수한 가속 성능을 확보하여, 넉넉하고 안정감 있는 주행이 가능합니다. \n엔진의 진동이 적어 편안하고 조용한 드라이빙 감성을 제공합니다.|0
 3|1|2WD|\N|구동방식|palisade/le-blanc/options/2wd.jpg|엔진에서 전달되는 동력이 전/후륜 바퀴 중 한쪽으로만 전달되어 차량을 움직이는 방식입니다.\n차체가 가벼워 연료 효율이 높습니다.|0
 4|1|4WD|\N|구동방식|palisade/le-blanc/options/4wd.jpg|전자식 상시 4륜 구동 시스템 입니다.\n도로의 상황이나 주행 환경에 맞춰 전후륜 구동력을 자동배분하여 주행 안전성을 높여줍니다.|2370000
