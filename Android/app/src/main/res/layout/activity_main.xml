@@ -321,7 +321,8 @@
                 android:paddingHorizontal="17dp"
                 android:paddingVertical="7dp"
                 android:text="@string/btn_price_summary"
-                android:textColor="@drawable/selector_btn_text_price_summary"
+                android:textColor="@drawable/selector_text_price_summary"
+                app:activity="@{activity}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import com.softeer.cartalog.R
 import com.softeer.cartalog.databinding.ActivityMainBinding
+import com.softeer.cartalog.ui.dialog.PriceSummaryBottomSheetFragment
 import com.softeer.cartalog.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -26,5 +27,9 @@ class MainActivity : AppCompatActivity() {
 
     fun changeTab(idx: Int){
         binding.tlStep.selectTab(binding.tlStep.getTabAt(idx))
+    }
+
+    fun openSummaryPage(fragment: PriceSummaryBottomSheetFragment){
+        fragment.show(supportFragmentManager,fragment.tag)
     }
 }
