@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import softeer.wantcar.cartalog.entity.model.BasicModel;
 import softeer.wantcar.cartalog.global.dto.HMGDataDto;
@@ -17,8 +16,7 @@ import softeer.wantcar.cartalog.model.repository.ModelQueryRepository;
 import softeer.wantcar.cartalog.trim.dto.DetailTrimInfoDto;
 import softeer.wantcar.cartalog.trim.dto.TrimListResponseDto;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,7 +29,7 @@ class TrimQueryRepositoryTest {
     String imageServerPath = "example-url";
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    NamedParameterJdbcTemplate jdbcTemplate;
 
     ModelQueryRepository modelQueryRepository;
     TrimQueryRepository trimQueryRepository;
@@ -103,10 +101,13 @@ class TrimQueryRepositoryTest {
         @DisplayName("적절한 트림 식별자와 모델 타입 식별자들을 전달할 경우 이에 맞는 세부 트림 정보를 반환한다.")
         void returnDetailTrimInfos() {
             //given
-            Long trimId = jdbcTemplate.queryForObject("SELECT id FROM trims WHERE name = 'Le Blanc'", Long.TYPE);
-            Long powerTrainId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name = '디젤 2.2'", Long.TYPE);
-            Long wdId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name = '2WD'", Long.TYPE);
-            Long bodyTypeId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name = '7인승'", Long.TYPE);
+            Long trimId = jdbcTemplate.queryForObject("SELECT id FROM trims WHERE name = 'Le Blanc' ;", new HashMap<>(), Long.TYPE);
+            Long powerTrainId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name = '디젤 2.2' ;", new HashMap<>(), Long.TYPE);
+            Long wdId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name = '2WD' ;", new HashMap<>(), Long.TYPE);
+            Long bodyTypeId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name = '7인승' ;", new HashMap<>(), Long.TYPE);
+            if (trimId == null || powerTrainId == null || wdId == null || bodyTypeId == null) {
+                throw new RuntimeException();
+            }
 
             //when
             DetailTrimInfoDto detailTrimInfoDto = trimQueryRepository.findDetailTrimInfoByTrimIdAndModelTypeIds(
@@ -116,6 +117,23 @@ class TrimQueryRepositoryTest {
             softAssertions.assertThat(detailTrimInfoDto.getDisplacement()).isEqualTo(2199.0);
             softAssertions.assertThat(detailTrimInfoDto.getFuelEfficiency()).isEqualTo(12.16);
             softAssertions.assertAll();
+        }
+        
+        @Test
+        @DisplayName("존재하지 않는 식별자일 경우 null을 반환해야 한다")
+        void returnNullWhenIdIsNotExist() {
+            //given
+            Long trimId = jdbcTemplate.queryForObject("SELECT id FROM trims WHERE name = 'Le Blanc' ;", new HashMap<>(), Long.TYPE);
+            Long powerTrainId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name = '디젤 2.2' ;", new HashMap<>(), Long.TYPE);
+            Long wdId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name = '2WD' ;", new HashMap<>(), Long.TYPE);
+            Long bodyTypeId = -1L;
+
+            //when
+            DetailTrimInfoDto detailTrimInfoDto = trimQueryRepository.findDetailTrimInfoByTrimIdAndModelTypeIds(
+                    trimId, List.of(powerTrainId, wdId, bodyTypeId));
+
+            //then
+            assertThat(detailTrimInfoDto).isNull();
         }
     }
 
