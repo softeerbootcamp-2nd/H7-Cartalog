@@ -63,15 +63,15 @@ CREATE TABLE detail_models
 
 CREATE TABLE trims
 (
-    id                      BIGINT PRIMARY KEY AUTO_INCREMENT,
-    basic_model_id          BIGINT       NOT NULL,
-    name                    VARCHAR(255) NOT NULL,
-    description             TEXT         NOT NULL,
-    max_price               INT          NOT NULL,
-    min_price               INT          NOT NULL,
-    exterior_image_url      VARCHAR(255) NOT NULL ,
-    interior_image_url      VARCHAR(255) NOT NULL ,
-    wheel_image_url         VARCHAR(255) NOT NULL ,
+    id                 BIGINT PRIMARY KEY AUTO_INCREMENT,
+    basic_model_id     BIGINT       NOT NULL,
+    name               VARCHAR(255) NOT NULL,
+    description        TEXT         NOT NULL,
+    max_price          INT          NOT NULL,
+    min_price          INT          NOT NULL,
+    exterior_image_url VARCHAR(255) NOT NULL,
+    interior_image_url VARCHAR(255) NOT NULL,
+    wheel_image_url    VARCHAR(255) NOT NULL,
     CONSTRAINT fk_trims_basic_models FOREIGN KEY (basic_model_id) REFERENCES basic_models (id) ON UPDATE CASCADE
 );
 
@@ -175,7 +175,7 @@ CREATE TABLE hmg_data
     name            VARCHAR(255) NOT NULL,
     val             VARCHAR(255) NOT NULL,
     measure         VARCHAR(255) NOT NULL,
-    unit            VARCHAR(10)  ,
+    unit            VARCHAR(10),
     CONSTRAINT fk_hmg_tags_model_options FOREIGN KEY (model_option_id) REFERENCES model_options (id) ON UPDATE CASCADE
 );
 
@@ -188,21 +188,23 @@ CREATE TABLE colors
 
 CREATE TABLE model_exterior_colors
 (
-    id         BIGINT PRIMARY KEY AUTO_INCREMENT,
-    model_id   BIGINT       NOT NULL,
-    color_code VARCHAR(255) NOT NULL,
-    price      INT          NOT NULL,
+    id                 BIGINT PRIMARY KEY AUTO_INCREMENT,
+    model_id           BIGINT       NOT NULL,
+    color_code         VARCHAR(255) NOT NULL,
+    price              INT          NOT NULL,
+    exterior_image_url VARCHAR(255) NOT NULL,
     CONSTRAINT fk_model_exterior_colors_basic_models FOREIGN KEY (model_id) REFERENCES basic_models (id) ON UPDATE CASCADE,
     CONSTRAINT fk_model_exterior_colors_colors FOREIGN KEY (color_code) REFERENCES colors (code) ON UPDATE CASCADE
 );
 
 CREATE TABLE model_interior_colors
 (
-    code           VARCHAR(255) PRIMARY KEY,
-    basic_model_id BIGINT       NOT NULL,
-    name           VARCHAR(255) NOT NULL,
-    price          INT          NOT NULL,
-    image_url      VARCHAR(255) NOT NULL,
+    code               VARCHAR(255) PRIMARY KEY,
+    basic_model_id     BIGINT       NOT NULL,
+    name               VARCHAR(255) NOT NULL,
+    price              INT          NOT NULL,
+    image_url          VARCHAR(255) NOT NULL,
+    interior_image_url VARCHAR(255) NOT NULL,
     CONSTRAINT fk_model_interior_colors_basic_models FOREIGN KEY (basic_model_id) REFERENCES basic_models (id) ON UPDATE CASCADE
 );
 
@@ -266,7 +268,8 @@ INSERT INTO detail_models (id, basic_model_id, displacement, fuel_efficiency)
 SELECT *
 FROM CSVREAD('classpath:csv/detail_models.csv', null, 'fieldSeparator=|');
 
-INSERT INTO trims (id, basic_model_id, name, description, max_price, min_price, exterior_image_url, interior_image_url, wheel_image_url)
+INSERT INTO trims (id, basic_model_id, name, description, max_price, min_price, exterior_image_url, interior_image_url,
+                   wheel_image_url)
 SELECT *
 FROM CSVREAD('classpath:csv/trims.csv', null, 'fieldSeparator=|');
 
@@ -275,7 +278,8 @@ SELECT *
 FROM CSVREAD('classpath:csv/detail_trims.csv', null, 'fieldSeparator=|');
 
 -- noinspection SqlResolve
-INSERT INTO model_options (id, model_id, name, parent_category, child_category, image_url, description, price_if_model_type_option)
+INSERT INTO model_options (id, model_id, name, parent_category, child_category, image_url, description,
+                           price_if_model_type_option)
 SELECT id,
        model_id,
        name,
@@ -283,7 +287,9 @@ SELECT id,
        child_category,
        image_url,
        description,
-       case when price_if_model_type_option = '\N' then null else price_if_model_type_option end as price_if_model_type_option
+       case
+           when price_if_model_type_option = '\N' then null
+           else price_if_model_type_option end                             as price_if_model_type_option
 FROM CSVREAD('classpath:csv/model_options.csv', null, 'fieldSeparator=|');
 
 INSERT INTO detail_model_decision_options (id, detail_model_id, model_option_id)
@@ -324,11 +330,11 @@ INSERT INTO colors (code, name, image_url)
 SELECT *
 FROM CSVREAD('classpath:csv/colors.csv', null, 'fieldSeparator=|');
 
-INSERT INTO model_exterior_colors (id, model_id, color_code, price)
+INSERT INTO model_exterior_colors (id, model_id, color_code, price, exterior_image_url)
 SELECT *
 FROM CSVREAD('classpath:csv/model_exterior_colors.csv', null, 'fieldSeparator=|');
 
-INSERT INTO model_interior_colors (code, basic_model_id, name, price, image_url)
+INSERT INTO model_interior_colors (code, basic_model_id, name, price, image_url, interior_image_url)
 SELECT *
 FROM CSVREAD('classpath:csv/model_interior_colors.csv', null, 'fieldSeparator=|');
 
