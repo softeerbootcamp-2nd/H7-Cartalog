@@ -98,7 +98,9 @@ public class TrimQueryRepositoryImpl implements TrimQueryRepository {
         List<HMGDataDto> hmgInfos = trimInfos.stream()
                 .filter(r -> r.getHmgVal() != null && isStringRealNumber(r))
                 .sorted(Comparator.comparing(r -> Double.parseDouble(r.getHmgVal()), Comparator.reverseOrder()))
-                .map(r -> new HMGDataDto(r.getHmgName(), r.getHmgVal() + r.getHmgUnit(), r.getHmgMeasure()))
+                .map(r -> new HMGDataDto(r.getHmgName(),
+                        ((int) Double.parseDouble(r.getHmgVal())) + r.getHmgUnit(),
+                        r.getHmgMeasure()))
                 .distinct()
                 .limit(3)
                 .collect(Collectors.toList());
