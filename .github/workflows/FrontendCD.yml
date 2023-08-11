@@ -32,11 +32,15 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
+            
       - name: Install Dependencies # 의존 파일 설치
         run: npm install # npm install을 실행할 경로로 설정
 
       - name: Build # React Build
         run: npm run build # npm run build를 실행할 경로로 설정
+      
+      - name: ls directory
+        run: ls -al
         
       - name: aws 세팅
         uses: aws-actions/configure-aws-credentials@v1
@@ -46,4 +50,4 @@ jobs:
           aws-region: ap-northeast-2
           
       - name: Upload to S3
-        run: aws s3 cp --recursive --region ap-northeast-2 build s3://want-car-front
+        run: aws s3 cp --recursive --region ap-northeast-2 dist s3://want-car-front
