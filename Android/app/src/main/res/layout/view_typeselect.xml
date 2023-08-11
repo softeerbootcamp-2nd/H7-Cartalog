@@ -23,7 +23,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/shape_round_box"
+        android:background="@drawable/shape_view_background_round"
         android:backgroundTint="@color/card_bg_color">
 
 
@@ -135,7 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            android:src="@drawable/selector_check_btn"
+            android:src="@drawable/selector_btn_check"
             android:tint="@{type == ModelTypeSubject.POWERTRAIN ? (viewModel.powertrain1Selected ? @color/active_blue : @color/gray_200) : type == ModelTypeSubject.BODYTYPE ? (viewModel.bodytype1Selected ? @color/active_blue : @color/gray_200) : (viewModel.wheeldrive1Selected ? @color/active_blue : @color/gray_200)}"
             app:layout_constraintBottom_toBottomOf="@id/cv_btn1"
             app:layout_constraintEnd_toEndOf="@id/cv_btn1" />
@@ -207,7 +207,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            android:src="@drawable/selector_check_btn"
+            android:src="@drawable/selector_btn_check"
             android:tint="@{type == ModelTypeSubject.POWERTRAIN ? (viewModel.powertrain1Selected ? @color/gray_200 : @color/active_blue) : type == ModelTypeSubject.BODYTYPE ? (viewModel.bodytype1Selected ? @color/gray_200 : @color/active_blue) : (viewModel.wheeldrive1Selected ? @color/gray_200 : @color/active_blue)}"
             app:layout_constraintBottom_toBottomOf="@id/cv_btn2"
             app:layout_constraintEnd_toEndOf="@id/cv_btn2" />

@@ -176,7 +176,7 @@
                     android:id="@+id/btn_check"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/selector_check_btn"
+                    android:src="@drawable/selector_btn_check"
                     android:padding="5dp"
                     android:tint="@{position == optionAdapter.selectedItem ? @color/white : @color/gray_400}"
                     />
