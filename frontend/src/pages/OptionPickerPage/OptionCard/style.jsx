@@ -66,7 +66,12 @@ export const UpperInfo = styled.div`
 export const LowerInfo = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
   width: 100%;
+
+  & > label {
+    cursor: pointer;
+  }
 
   & .iconWrapper {
     display: flex;
@@ -76,10 +81,15 @@ export const LowerInfo = styled.div`
     height: 40px;
     border-radius: 2px;
     border: 1px solid ${({ theme }) => theme.color.gray['100']};
+    background-color: ${({ theme }) => theme.color.white};
     box-sizing: border-box;
     transition: all 0.2s ease;
 
-    .selected & {
+    .selected & > svg {
+      fill: ${({ theme }) => theme.color.gray['200']};
+    }
+
+    .checked & {
       border: none;
       background-color: ${({ theme }) => theme.color.activeBlue};
 
