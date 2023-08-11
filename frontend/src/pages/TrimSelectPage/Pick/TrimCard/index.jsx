@@ -23,10 +23,16 @@ function TrimCard({ name, description, price, defaultInfo, active, onClick }) {
           wheelDriveId: defaultInfo.modelTypes.map((model) => model.option.id[2]),
         },
         exteriorColor: {
+          ...prevState.exteriorColor,
           exteriorColorId: defaultInfo.exteriorColorId,
         },
         interiorColor: {
+          ...prevState.interiorColor,
           interiorColorId: defaultInfo.interiorColorId,
+        },
+        price: {
+          ...prevState.price,
+          trimPrice: price,
         },
       }));
     },
