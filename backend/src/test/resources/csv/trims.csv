@@ -1,5 +1,5 @@
 id|basic_model_id|name|description|max_price|min_price|exterior_image_url|interior_image_url|wheel_image_url
-1|1|Exclusive|기본에 충실한 팰리세이드|50880000|41980000|palisade/exclusive/exterior/A2B/001.png|palisade/exclusive/interior/I50/img.png|palisade/le-blanc/options/20alloywheel_s.jpg
-2|1|Le Blanc|합리적인 조합의 절정|56770000|38960000|palisade/le-blanc/exterior/A2B/001.png|palisade/le-blanc/interior/I49/img.png|palisade/le-blanc/options/20alloywheel_s.jpg
-3|1|Prestige|프리미엄한 차량경험|63160000|46240000|palisade/prestige/exterior/A2B/001.png|palisade/prestige/interior/WDN/img.png|palisade/le-blanc/options/20alloywheel_s.jpg
-4|1|Calligraphy|모두가 선망하는 이동경험|64720000|51060000|palisade/calligraphy/exterior/A2B/001.png|palisade/calligraphy/interior/NBX/img.png|palisade/le-blanc/options/20alloywheel_s.jpg
+1|1|Exclusive|기본에 충실한 팰리세이드|50880000|41980000|palisade/exclusive/default/exterior.png|palisade/exclusive/default/interior.png|palisade/exclusive/default/wheel.png
+2|1|Le Blanc|합리적인 조합의 절정|56770000|38960000|palisade/le-blanc/default/exterior.png|palisade/le-blanc/default/interior.png|palisade/le-blanc/default/wheel.png
+3|1|Prestige|프리미엄한 차량경험|63160000|46240000|palisade/prestige/default/exterior.png|palisade/prestige/default/interior.png|palisade/palisade/prestige/default/wheel.png
+4|1|Calligraphy|모두가 선망하는 이동경험|64720000|51060000|palisade/calligraphy/default/exterior.png|palisade/calligraphy/default/interior.png|palisade/calligraphy/default/wheel.png
