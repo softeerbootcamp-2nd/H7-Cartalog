@@ -37,6 +37,9 @@ export function StateProvider({ children }) {
         powerTrainId: 1,
         bodyTypeId: 5,
         wheelDriveId: 3,
+        powerTrainOption: null,
+        bodyTypeOption: null,
+        wheelDriveOption: null,
       };
     } else if (key === 'exteriorColor') {
       acc[key] = {

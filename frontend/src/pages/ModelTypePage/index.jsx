@@ -13,8 +13,6 @@ function ModelType() {
       if (!modelType.isModelTypeFetch) {
         const response = await fetch('http://3.36.126.30/models/types?basicModelId=1');
         const dataFetch = await response.json();
-
-        console.log(dataFetch.modelTypes);
         setTrimState((prevState) => ({
           ...prevState,
           modelType: {

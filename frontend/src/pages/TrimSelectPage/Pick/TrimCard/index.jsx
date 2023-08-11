@@ -18,9 +18,12 @@ function TrimCard({ name, description, price, defaultInfo, active, onClick }) {
         ...prevState,
         modelType: {
           ...prevState.modelType,
-          powerTrainId: defaultInfo.modelTypes.map((model) => model.option.id[0]),
-          bodyTypeId: defaultInfo.modelTypes.map((model) => model.option.id[1]),
-          wheelDriveId: defaultInfo.modelTypes.map((model) => model.option.id[2]),
+          powerTrainId: defaultInfo.modelTypes[0].option.id,
+          bodyTypeId: defaultInfo.modelTypes[1].option.id,
+          wheelDriveId: defaultInfo.modelTypes[2].option.id,
+          powerTrainOption: defaultInfo.modelTypes[0].option,
+          bodyTypeOption: defaultInfo.modelTypes[1].option,
+          wheelDriveOption: defaultInfo.modelTypes[2].option,
         },
         exteriorColor: {
           ...prevState.exteriorColor,

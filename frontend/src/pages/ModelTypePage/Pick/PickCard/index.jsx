@@ -6,13 +6,14 @@ import TypeCard from '../../../../components/TypeCard';
 function PickCard({ data }) {
   const { setTrimState, modelType } = useData();
 
-  const updateTrimState = (key, idKey, priceKey, option) => {
+  const updateTrimState = (idKey, optionKey, priceKey, option) => {
     if (modelType[idKey] === option.id) return;
     setTrimState((prevState) => ({
       ...prevState,
       modelType: {
         ...prevState.modelType,
         [idKey]: option.id,
+        [optionKey]: option,
       },
       price: {
         ...prevState.price,
@@ -39,12 +40,12 @@ function PickCard({ data }) {
             }
             onClick={() => {
               if (data.type === PICK_CARD.POWER_TRAIN)
-                updateTrimState('powerTrainId', 'powerTrainId', 'powerTrainPrice', option);
+                updateTrimState('powerTrainId', 'powerTrainOption', 'powerTrainPrice', option);
               if (data.type === PICK_CARD.BODY_TYPE) {
-                updateTrimState('bodyTypeId', 'bodyTypeId', 'bodyTypePrice', option);
+                updateTrimState('bodyTypeId', 'bodyTypeOption', 'bodyTypePrice', option);
               }
               if (data.type === PICK_CARD.WHEEL_DRIVE) {
-                updateTrimState('wheelDriveId', 'wheelDriveId', 'wheelDrivePrice', option);
+                updateTrimState('wheelDriveId', 'wheelDriveOption', 'wheelDrivePrice', option);
               }
             }}
           />
