@@ -4,7 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.global.dto.HMGDataDto;
@@ -14,6 +17,8 @@ import softeer.wantcar.cartalog.model.dto.ModelTypeDto;
 import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
 import softeer.wantcar.cartalog.model.dto.OptionDto;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +30,7 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
     @Value("${env.imageServerPath}")
     private String imageServerPath = "example-url";
 
-    private final JdbcTemplate template;
+    private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Builder
     @AllArgsConstructor
@@ -88,8 +93,11 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
                 "WHERE model_id = ? " +
                 "  AND price_if_model_type_option IS NOT NULL";
 
-        List<SimpleModelOptionMapper> simpleModelOptionMapperList = template.query(SQL, (rs, rowNum) ->
-                SimpleModelOptionMapper.builder()
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                                               .addValue("basicModelId", basicModelId);
+
+        List<SimpleModelOptionMapper> simpleModelOptionMapperList = jdbcTemplate.query(SQL, parameters,
+                (rs, rowNum) -> SimpleModelOptionMapper.builder()
                         .model_option_Id(rs.getLong("model_option_Id"))
                         .name(rs.getString("name"))
                         .childCategory(rs.getString("child_category"))
@@ -99,7 +107,7 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
                         .hmgDataValue(rs.getString("hmg_data_value"))
                         .hmgDataMeasure(rs.getString("hmg_data_measure"))
                         .price(rs.getInt("price"))
-                        .build(), basicModelId);
+                        .build());
 
         if (simpleModelOptionMapperList.isEmpty()) {
             return null;
