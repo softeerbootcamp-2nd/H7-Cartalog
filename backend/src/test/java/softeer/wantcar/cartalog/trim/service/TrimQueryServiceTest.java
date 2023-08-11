@@ -77,11 +77,11 @@ class TrimQueryServiceTest {
         }
 
         @Test
-        @DisplayName("같은 유형의 모델 타입을 전달할 경우 IllegalArgumentException 에러 발생")
-        void throwIllegalArgumentException() {
+        @DisplayName("모델 타입의 개수와 카테고리의 개수가 다를 경우 IllegalArgumentException 에러 발생")
+        void throwIllegalArgumentExceptionWhenCountMisMatch() {
             //given
             when(modelOptionQueryRepository.findModelTypeCategoriesByIds(List.of(1L, 2L, 3L)))
-                    .thenReturn(List.of("A", "B", "B"));
+                    .thenReturn(List.of("A", "B"));
 
             //when
             //then

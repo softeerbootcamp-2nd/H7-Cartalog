@@ -22,17 +22,13 @@ public class TrimQueryService {
         if (categories == null) {
             return null;
         }
-        checkCategoryOverlaped(categories);
+        checkCategoryOverlapped(categories, modelTypeIds);
 
         return trimQueryRepository.findDetailTrimInfoByTrimIdAndModelTypeIds(trimId, modelTypeIds);
     }
 
-    private static void checkCategoryOverlaped(List<String> categories) {
-        long overlapNumber = categories.stream()
-                .map(c -> Collections.frequency(categories, c))
-                .filter(r -> r > 1)
-                .count();
-        if (overlapNumber > 1) {
+    private static void checkCategoryOverlapped(List<String> categories, List<Long> modelTypeIds) {
+        if(categories.size() != modelTypeIds.size()) {
             throw new IllegalArgumentException();
         }
     }
