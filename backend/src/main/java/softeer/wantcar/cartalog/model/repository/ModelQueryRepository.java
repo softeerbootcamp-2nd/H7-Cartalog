@@ -1,25 +1,27 @@
 package softeer.wantcar.cartalog.model.repository;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import softeer.wantcar.cartalog.entity.model.BasicModel;
 import softeer.wantcar.cartalog.trim.repository.QueryString;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 
 @SuppressWarnings({"SqlResolve", "SqlNoDataSourceInspection"})
 @Repository
 @RequiredArgsConstructor
 public class ModelQueryRepository {
-    private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate jdbcTemplate;
 
     public BasicModel findBasicModelByName(String name) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("name", name);
         return jdbcTemplate.queryForObject(QueryString.findBasicModelByName,
-                new Object[]{name},
-                new int[]{Types.VARCHAR},
+                parameters,
                 (rs, rowNum) -> getBasicModel(rs));
     }
 

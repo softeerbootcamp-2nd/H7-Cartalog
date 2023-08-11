@@ -1,6 +1,9 @@
 package softeer.wantcar.cartalog.model.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Singular;
 import softeer.wantcar.cartalog.global.annotation.TestMethod;
 
 import java.util.Collection;

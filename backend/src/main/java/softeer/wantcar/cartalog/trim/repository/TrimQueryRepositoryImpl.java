@@ -5,14 +5,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import softeer.wantcar.cartalog.global.dto.HMGDataDto;
+import softeer.wantcar.cartalog.trim.dto.DetailTrimInfoDto;
 import softeer.wantcar.cartalog.trim.dto.TrimListResponseDto;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -25,7 +28,7 @@ public class TrimQueryRepositoryImpl implements TrimQueryRepository {
     @Value("${env.imageServerPath}")
     private String imageServerPath = "example-url";
 
-    private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @AllArgsConstructor
     @Builder
@@ -54,11 +57,11 @@ public class TrimQueryRepositoryImpl implements TrimQueryRepository {
     @Override
     public TrimListResponseDto findTrimsByBasicModelId(Long basicModelId) {
         TrimListResponseDto.TrimListResponseDtoBuilder trimListResponseDtoBuilder = TrimListResponseDto.builder();
+        SqlParameterSource parameters = new MapSqlParameterSource("basicModelId", basicModelId);
 
         List<TrimListQueryResult> trimListQueryResults = jdbcTemplate.query(
-                QueryString.findTrimsByBasicModelIdQuery,
-                new Object[]{basicModelId, basicModelId, basicModelId, basicModelId},
-                new int[]{Types.BIGINT, Types.BIGINT, Types.BIGINT, Types.BIGINT},
+                QueryString.findTrimsByBasicModelId,
+                parameters,
                 (rs, rowNum) -> getTrimListQueryResult(rs, trimListResponseDtoBuilder));
 
         if (trimListQueryResults.isEmpty()) {
@@ -73,6 +76,31 @@ public class TrimQueryRepositoryImpl implements TrimQueryRepository {
         }
 
         return trimListResponseDtoBuilder.build();
+    }
+
+    @Override
+    public DetailTrimInfoDto findDetailTrimInfoByTrimIdAndModelTypeIds(Long trimId, List<Long> modelTypeIds) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("trimId", trimId)
+                .addValue("modelTypeIds", modelTypeIds)
+                .addValue("modelTypeCount", modelTypeIds.size());
+
+        try {
+            return jdbcTemplate.queryForObject(
+                    QueryString.findDetailTrimInfoByTrimIdAndModelTypes,
+                    parameters,
+                    (rs, rowNum) -> getDetailTrimInfoDto(rs));
+        } catch (DataAccessException e) {
+            return null;
+        }
+    }
+
+    private DetailTrimInfoDto getDetailTrimInfoDto(ResultSet rs) throws SQLException {
+        return DetailTrimInfoDto.builder()
+                .detailTrimId(rs.getLong("detailTrimId"))
+                .displacement(rs.getDouble("displacement"))
+                .fuelEfficiency(rs.getDouble("fuelEfficiency"))
+                .build();
     }
 
     private TrimListResponseDto.TrimDto getTrimDto(Map<Long, List<TrimListQueryResult>> queryResultsGroupByTrimId, Long trimId) {
