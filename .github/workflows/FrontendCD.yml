@@ -4,10 +4,7 @@ name: Frontend CD
 # events but only for the dev branch
 on:
   push:
-    branches: [ main, dev, FE_dev, FE_feature/* ]
-#  pull_request:
-#    types: [ closed ]
-#    branches: [ main, dev, FE_dev ]
+    branches: [ main, dev, FE_dev]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
