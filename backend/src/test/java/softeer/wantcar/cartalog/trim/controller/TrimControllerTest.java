@@ -19,6 +19,7 @@ import softeer.wantcar.cartalog.trim.service.TrimQueryService;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -36,7 +37,7 @@ class TrimControllerTest {
         softAssertions = new SoftAssertions();
         trimQueryRepository = mock(TrimQueryRepositoryImpl.class);
         trimQueryService = mock(TrimQueryService.class);
-        trimController = new TrimController(trimQueryRepository);
+        trimController = new TrimController(trimQueryRepository, trimQueryService);
     }
 
     @Nested
@@ -133,8 +134,8 @@ class TrimControllerTest {
 
             //when
             //then
-            Assertions.assertThatThrownBy(() -> trimController.getDetailTrimInfo(1L, List.of(1L, 2L, 3L)))
-                    .isInstanceOf(IllegalArgumentException.class)
+            assertThatThrownBy(() -> trimController.getDetailTrimInfo(1L, List.of(1L, 2L, 3L)))
+                    .isInstanceOf(IllegalArgumentException.class);
         }
     }
 }

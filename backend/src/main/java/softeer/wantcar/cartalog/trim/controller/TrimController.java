@@ -9,10 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import softeer.wantcar.cartalog.trim.dto.DetailTrimInfoDto;
 import softeer.wantcar.cartalog.trim.dto.TrimListResponseDto;
 import softeer.wantcar.cartalog.trim.repository.TrimQueryRepository;
+import softeer.wantcar.cartalog.trim.service.TrimQueryService;
 
 import javax.websocket.server.PathParam;
+import java.util.List;
 
 @Slf4j
 @Api(tags = {"트림 관련 API"})
@@ -21,6 +24,7 @@ import javax.websocket.server.PathParam;
 @RequiredArgsConstructor
 public class TrimController {
     private final TrimQueryRepository trimQueryRepository;
+    private final TrimQueryService trimQueryService;
 
     @ApiOperation(
             value = "트림 목록 조회",
@@ -38,5 +42,14 @@ public class TrimController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(trimListResponseDto, HttpStatus.OK);
+    }
+
+    public ResponseEntity<DetailTrimInfoDto> getDetailTrimInfo(@PathParam("trimId") Long trimId,
+                                                               @PathParam("modelTypeIds") List<Long> modelTypeIds) {
+        DetailTrimInfoDto detailTrimInfo = trimQueryService.getDetailTrimInfo(trimId, modelTypeIds);
+        if(detailTrimInfo == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(detailTrimInfo, HttpStatus.OK);
     }
 }
