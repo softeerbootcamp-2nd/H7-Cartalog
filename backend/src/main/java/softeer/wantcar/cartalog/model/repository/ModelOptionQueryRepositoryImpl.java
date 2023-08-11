@@ -51,7 +51,7 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
             if (hmgDataName == null && hmgDataValue == null && hmgDataMeasure == null) {
                 return null;
             }
-            if ("파워트레인/성능" .equals(childCategory)) {
+            if ("파워트레인/성능".equals(childCategory)) {
                 assert hmgDataValue != null;
                 String[] valueAndRpm = hmgDataValue.split("/", 2);
                 hmgDataDto = PowerTrainHMGDataDto.builder()
