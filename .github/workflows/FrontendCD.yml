@@ -35,9 +35,6 @@ jobs:
 
       - name: Build # React Build
         run: npm run build # npm run build를 실행할 경로로 설정
-      
-      - name: ls directory
-        run: ls -al
         
       - name: aws 세팅
         uses: aws-actions/configure-aws-credentials@v1
