@@ -5,11 +5,11 @@ public class QueryString {
     }
 
     public static final String findBasicModelByName =
-            "SELECT id, name, category FROM basic_models WHERE name=?";
+            "SELECT id, name, category FROM basic_models WHERE name=:name";
 
     public static final String findTrimsByBasicModelId =
             "SELECT  " +
-            "(SELECT name FROM basic_models where id= ?) AS modelName,  " +
+            "(SELECT name FROM basic_models where id= :basicModelId) AS modelName,  " +
             "t.id AS trimId,  " +
             "t.name AS trimName,  " +
             "t.description AS description,  " +
@@ -39,7 +39,7 @@ public class QueryString {
             "    FROM hmg_data AS hmg  " +
             "    JOIN detail_trim_options AS dto ON hmg.model_option_id = dto.model_option_id  " +
             "    JOIN detail_trims AS dt ON dto.detail_trim_id = dt.id  " +
-            "    WHERE measure='15,000km 당' AND trim_id IN ( select id from trims where basic_model_id= ?)  " +
+            "    WHERE measure='15,000km 당' AND trim_id IN ( select id from trims where basic_model_id= :basicModelId)  " +
             "  ) AS sub_tb  " +
             "  ORDER BY sub_tb.trim_id, sub_tb.val desc  " +
             ") AS tb  " +
@@ -77,14 +77,17 @@ public class QueryString {
             "      SELECT distinct model_option_id  " +
             "      FROM detail_model_decision_options  " +
             "      WHERE detail_model_id IN  " +
-            "        (SELECT id FROM detail_models WHERE basic_model_id= ?)  " +
+            "        (SELECT id FROM detail_models WHERE basic_model_id= :basicModelId)  " +
             "    ) " +
             "  ) AS mt" +
             ") AS mt  " +
-            "ON t.basic_model_id= ?;";
+            "ON t.basic_model_id= :basicModelId;";
 
-    public static String findDetailTrimInfoByTrimIdAndModelTypesQuery =
-            "SELECT dt.id, dm.displacement, dm.fuel_efficiency " +
+    public static String findDetailTrimInfoByTrimIdAndModelTypes =
+            "SELECT " +
+            "  dt.id AS detailTrimId, " +
+            "  dm.displacement AS displacement, " +
+            "  dm.fuel_efficiency AS fuelEfficiency " +
             "FROM detail_trims AS dt " +
             "JOIN " +
             "  ( " +
