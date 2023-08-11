@@ -83,7 +83,7 @@ public class QueryString {
             ") AS mt  " +
             "ON t.basic_model_id= :basicModelId;";
 
-    public static String findDetailTrimInfoByTrimIdAndModelTypes =
+    public static final String findDetailTrimInfoByTrimIdAndModelTypes =
             "SELECT " +
             "  dt.id AS detailTrimId, " +
             "  dm.displacement AS displacement, " +

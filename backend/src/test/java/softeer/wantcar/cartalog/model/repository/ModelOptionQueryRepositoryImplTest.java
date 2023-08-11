@@ -87,7 +87,7 @@ class ModelOptionQueryRepositoryImplTest {
             Long powerTrainId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name='디젤 2.2'", new HashMap<>(), Long.TYPE);
             Long wdId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name='2WD'", new HashMap<>(), Long.TYPE);
             Long bodyTypeId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name='7인승'", new HashMap<>(), Long.TYPE);
-            if(powerTrainId == null || wdId == null || bodyTypeId == null) {
+            if (powerTrainId == null || wdId == null || bodyTypeId == null) {
                 throw new RuntimeException();
             }
 

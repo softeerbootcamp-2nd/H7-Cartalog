@@ -19,7 +19,7 @@ public class TrimQueryService {
 
     public DetailTrimInfoDto getDetailTrimInfo(Long trimId, List<Long> modelTypeIds) {
         List<String> categories = modelOptionQueryRepository.findModelTypeCategoriesByIds(modelTypeIds);
-        if(categories == null) {
+        if (categories == null) {
             return null;
         }
         checkCategoryOverlaped(categories);
@@ -32,7 +32,7 @@ public class TrimQueryService {
                 .map(c -> Collections.frequency(categories, c))
                 .filter(r -> r > 1)
                 .count();
-        if(overlapNumber > 1) {
+        if (overlapNumber > 1) {
             throw new IllegalArgumentException();
         }
     }

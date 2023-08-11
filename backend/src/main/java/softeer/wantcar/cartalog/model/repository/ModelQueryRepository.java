@@ -1,7 +1,6 @@
 package softeer.wantcar.cartalog.model.repository;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -11,7 +10,6 @@ import softeer.wantcar.cartalog.trim.repository.QueryString;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 
 @SuppressWarnings({"SqlResolve", "SqlNoDataSourceInspection"})
 @Repository

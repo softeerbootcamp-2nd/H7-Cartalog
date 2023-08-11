@@ -47,7 +47,7 @@ public class TrimController {
     public ResponseEntity<DetailTrimInfoDto> getDetailTrimInfo(@PathParam("trimId") Long trimId,
                                                                @PathParam("modelTypeIds") List<Long> modelTypeIds) {
         DetailTrimInfoDto detailTrimInfo = trimQueryService.getDetailTrimInfo(trimId, modelTypeIds);
-        if(detailTrimInfo == null) {
+        if (detailTrimInfo == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(detailTrimInfo, HttpStatus.OK);

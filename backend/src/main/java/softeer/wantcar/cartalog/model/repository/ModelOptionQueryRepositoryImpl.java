@@ -51,7 +51,7 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
             if (hmgDataName == null && hmgDataValue == null && hmgDataMeasure == null) {
                 return null;
             }
-            if ("파워트레인/성능".equals(childCategory)) {
+            if ("파워트레인/성능" .equals(childCategory)) {
                 assert hmgDataValue != null;
                 String[] valueAndRpm = hmgDataValue.split("/", 2);
                 hmgDataDto = PowerTrainHMGDataDto.builder()
@@ -75,23 +75,23 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
     @Transactional(readOnly = true)
     public ModelTypeListResponseDto findByModelTypeOptionsByBasicModelId(Long basicModelId) {
         String SQL = "SELECT " +
-                "  model_options.id AS model_option_id, " +
-                "  model_options.name, " +
-                "  child_category, " +
-                "  image_url, " +
-                "  description, " +
-                "  hmg_data.name AS hmg_data_name, " +
-                "  hmg_data.val AS hmg_data_value, " +
-                "  hmg_data.measure AS hmg_data_measure, " +
-                "  price_if_model_type_option AS price " +
-                "FROM model_options " +
-                "LEFT JOIN hmg_data " +
-                "ON model_options.id = hmg_data.model_option_id " +
-                "WHERE model_id = :basicModelId " +
-                "  AND price_if_model_type_option IS NOT NULL";
+                     "  model_options.id AS model_option_id, " +
+                     "  model_options.name, " +
+                     "  child_category, " +
+                     "  image_url, " +
+                     "  description, " +
+                     "  hmg_data.name AS hmg_data_name, " +
+                     "  hmg_data.val AS hmg_data_value, " +
+                     "  hmg_data.measure AS hmg_data_measure, " +
+                     "  price_if_model_type_option AS price " +
+                     "FROM model_options " +
+                     "LEFT JOIN hmg_data " +
+                     "ON model_options.id = hmg_data.model_option_id " +
+                     "WHERE model_id = :basicModelId " +
+                     "  AND price_if_model_type_option IS NOT NULL";
 
         SqlParameterSource parameters = new MapSqlParameterSource()
-                                               .addValue("basicModelId", basicModelId);
+                .addValue("basicModelId", basicModelId);
 
         List<SimpleModelOptionMapper> simpleModelOptionMapperList = jdbcTemplate.query(SQL, parameters,
                 (rs, rowNum) -> SimpleModelOptionMapper.builder()
