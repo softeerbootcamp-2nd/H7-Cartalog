@@ -21,10 +21,6 @@ function ModelType() {
             ...prevState.modelType,
             modelTypeFetch: [...dataFetch.modelTypes],
             isModelTypeFetch: true,
-
-            powerTrainId: 1,
-            bodyTypeId: 5,
-            wheelDriveId: 3,
           },
         }));
       }

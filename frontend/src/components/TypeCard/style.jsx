@@ -19,4 +19,5 @@ export const TypeCard = styled.button`
 export const Info = styled.div`
   display: flex;
   justify-content: space-between;
+  width: 100%;
 `;
