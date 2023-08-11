@@ -119,7 +119,7 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
                 .addValue("modelTypeIds", modelTypeIds);
 
         List<String> categories = jdbcTemplate.query("SELECT child_category AS childCategory FROM model_options WHERE id IN (:modelTypeIds)",
-                parameters, (rs, rowNum) -> rs.getString("child_category"));
+                parameters, (rs, rowNum) -> rs.getString("childCategory"));
 
         return categories.isEmpty() ? null : categories;
     }
