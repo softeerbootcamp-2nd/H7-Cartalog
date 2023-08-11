@@ -50,12 +50,9 @@
         <item name="android:paddingEnd">10dp</item>
     </style>
 
-    <style name="HmgDataButton">
-        <item name="fontFamily">@font/hyndaisans_head_bold</item>
-        <item name="android:textSize">10sp</item>
-        <item name="android:text">HMG Data</item>
-        <item name="android:background">@color/active_blue2</item>
-        <item name="android:textColor">@color/white</item>
+    <style name="HmgDataButton" parent="HmgDataTag">
+        <item name="android:paddingTop">9dp</item>
+        <item name="android:paddingBottom">9dp</item>
     </style>
 
     <style name="DetailViewTag">
