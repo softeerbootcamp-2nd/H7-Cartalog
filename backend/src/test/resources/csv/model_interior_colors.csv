@@ -1,11 +1,11 @@
-code|basic_model_id|name|price|image_url
-I49|1|퀼팅천연(블랙)|0|colors/interior/I49.png
-YJY|1|쿨그레이|0|colors/interior/YJY.png
-I50|1|인조가죽(블랙)|0|colors/interior/I50.png
-NBX|1|블랙(고급)|0|colors/interior/NBX.png
-NKE|1|블랙원톤(블랙에디션 전용)|0|colors/interior/NKE.png
-RNT|1|브라운|0|colors/interior/RNT.png
-WDX|1|네이비/웜그레이 투톤|0|colors/interior/WDX.png
-WDN|1|네이비|0|colors/interior/WDN.png
-WFW|1|블랙|0|colors/interior/WFW.png
-WNX|1|버건디|0|colors/interior/WNX.png
+code|basic_model_id|name|price|image_url|interior_image_url
+I49|1|퀼팅천연(블랙)|0|colors/interior/I49.png|palisade/interior/I49.png
+YJY|1|쿨그레이|0|colors/interior/YJY.png|palisade/interior/YJY.png
+I50|1|인조가죽(블랙)|0|colors/interior/I50.png|palisade/interior/I50.png
+NBX|1|블랙(고급)|0|colors/interior/NBX.png|palisade/interior/NBX.png
+NKE|1|블랙원톤(블랙에디션 전용)|0|colors/interior/NKE.png|palisade/interior/NKE.png
+RNT|1|브라운|0|colors/interior/RNT.png|palisade/interior/RNT.png
+WDX|1|네이비/웜그레이 투톤|0|colors/interior/WDX.png|palisade/interior/WDX.png
+WDN|1|네이비|0|colors/interior/WDN.png|palisade/interior/WDN.png
+WFW|1|블랙|0|colors/interior/WFW.png|palisade/interior/WFW.png
+WNX|1|버건디|0|colors/interior/WNX.png|palisade/interior/WNX.png
