@@ -27,9 +27,9 @@ function TrimImage() {
   return (
     <S.TrimImage>
       <S.RotateImage
-        src={`${exteriorColor.pickCarImageUrl}/${trimSelect}/exterior/${exteriorColor.pick}/${image
-          .toString()
-          .padStart(3, '0')}.png`}
+        src={`${exteriorColor.pickCarImageUrl}/${trimSelect}/exterior/${
+          exteriorColor.exteriorColorId
+        }/${image.toString().padStart(3, '0')}.png`}
         onMouseMove={startSwipe}
       />
     </S.TrimImage>
