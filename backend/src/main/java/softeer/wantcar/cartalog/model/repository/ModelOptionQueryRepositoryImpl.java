@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -17,8 +16,6 @@ import softeer.wantcar.cartalog.model.dto.ModelTypeDto;
 import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
 import softeer.wantcar.cartalog.model.dto.OptionDto;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +32,7 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
     @Builder
     @AllArgsConstructor
     private static class SimpleModelOptionMapper {
-        private Long model_option_Id;
+        private Long modelOptionId;
         private String name;
         private String childCategory;
         private String imageUrl;
@@ -90,7 +87,7 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
                 "FROM model_options " +
                 "LEFT JOIN hmg_data " +
                 "ON model_options.id = hmg_data.model_option_id " +
-                "WHERE model_id = ? " +
+                "WHERE model_id = :basicModelId " +
                 "  AND price_if_model_type_option IS NOT NULL";
 
         SqlParameterSource parameters = new MapSqlParameterSource()
@@ -98,7 +95,7 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
 
         List<SimpleModelOptionMapper> simpleModelOptionMapperList = jdbcTemplate.query(SQL, parameters,
                 (rs, rowNum) -> SimpleModelOptionMapper.builder()
-                        .model_option_Id(rs.getLong("model_option_Id"))
+                        .modelOptionId(rs.getLong("model_option_Id"))
                         .name(rs.getString("name"))
                         .childCategory(rs.getString("child_category"))
                         .imageUrl(rs.getString("image_url"))
@@ -116,13 +113,24 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
         return buildModelTypeListResponseDto(simpleModelOptionMapperList);
     }
 
+    @Override
+    public List<String> findModelTypeCategoriesByIds(List<Long> modelTypeIds) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("modelTypeIds", modelTypeIds);
+
+        List<String> categories = jdbcTemplate.query("SELECT child_category AS childCategory FROM model_options WHERE id IN (:modelTypeIds)",
+                parameters, (rs, rowNum) -> rs.getString("child_category"));
+
+        return categories.isEmpty() ? null : categories;
+    }
+
     private ModelTypeListResponseDto buildModelTypeListResponseDto(List<SimpleModelOptionMapper> simpleModelOptionMapperList) {
         Map<String, Map<Long, OptionDto.OptionDtoBuilder>> dtoBuilderMap = new HashMap<>();
         simpleModelOptionMapperList.forEach(mapper -> {
             Map<Long, OptionDto.OptionDtoBuilder> optionDtoBuilderMap = dtoBuilderMap.getOrDefault(mapper.childCategory, new HashMap<>());
-            OptionDto.OptionDtoBuilder optionDtoBuilder = optionDtoBuilderMap.getOrDefault(mapper.model_option_Id,
+            OptionDto.OptionDtoBuilder optionDtoBuilder = optionDtoBuilderMap.getOrDefault(mapper.modelOptionId,
                     OptionDto.builder()
-                            .id(mapper.model_option_Id)
+                            .id(mapper.modelOptionId)
                             .name(mapper.name)
                             .price(mapper.price)
                             .imageUrl(imageServerPath + "/" + mapper.imageUrl)
@@ -131,7 +139,7 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
             if (hmgDataDto != null) {
                 optionDtoBuilder.hmgDatum(mapper.toHMGDataDto());
             }
-            optionDtoBuilderMap.put(mapper.model_option_Id, optionDtoBuilder);
+            optionDtoBuilderMap.put(mapper.modelOptionId, optionDtoBuilder);
             dtoBuilderMap.put(mapper.childCategory, optionDtoBuilderMap);
         });
 

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
 
@@ -24,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ModelOptionQueryRepositoryImplTest {
     SoftAssertions softAssertions;
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    NamedParameterJdbcTemplate jdbcTemplate;
     ModelOptionQueryRepository modelOptionQueryRepository;
     @Value("${env.imageServerPath}")
     private String imageServerPath = "example-url";
@@ -84,9 +85,9 @@ class ModelOptionQueryRepositoryImplTest {
         @DisplayName("존재하는 식별자로 조회시 모델 타입의 카테고리를 반환한다.")
         void findByModelTypeOptionsByBasicModelIdWithCollectId() {
             //given
-            Long powerTrainId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name='디젤 2.2'", Long.TYPE);
-            Long wdId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name='2WD'", Long.TYPE);
-            Long bodyTypeId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name='7인승'", Long.TYPE);
+            Long powerTrainId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name='디젤 2.2'", new HashMap<>(), Long.TYPE);
+            Long wdId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name='2WD'", new HashMap<>(), Long.TYPE);
+            Long bodyTypeId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name='7인승'", new HashMap<>(), Long.TYPE);
             if(powerTrainId == null || wdId == null || bodyTypeId == null) {
                 throw new RuntimeException();
             }
@@ -104,7 +105,7 @@ class ModelOptionQueryRepositoryImplTest {
         void findByModelTypeOptionsByBasicModelIdWithIllegalId() {
             //given
             //when
-            List<String> categories = modelOptionQueryRepository.findByModelTypeOptionsByBasicModelId(
+            List<String> categories = modelOptionQueryRepository.findModelTypeCategoriesByIds(
                     List.of(-1L));
 
             //then
