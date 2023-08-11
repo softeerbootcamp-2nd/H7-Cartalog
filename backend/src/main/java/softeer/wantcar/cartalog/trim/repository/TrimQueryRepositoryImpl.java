@@ -56,7 +56,7 @@ public class TrimQueryRepositoryImpl implements TrimQueryRepository {
         TrimListResponseDto.TrimListResponseDtoBuilder trimListResponseDtoBuilder = TrimListResponseDto.builder();
 
         List<TrimListQueryResult> trimListQueryResults = jdbcTemplate.query(
-                QueryString.findTrimsByBasicModelIdQuery,
+                QueryString.findTrimsByBasicModelId,
                 new Object[]{basicModelId, basicModelId, basicModelId, basicModelId},
                 new int[]{Types.BIGINT, Types.BIGINT, Types.BIGINT, Types.BIGINT},
                 (rs, rowNum) -> getTrimListQueryResult(rs, trimListResponseDtoBuilder));

@@ -7,7 +7,7 @@ public class QueryString {
     public static final String findBasicModelByName =
             "SELECT id, name, category FROM basic_models WHERE name=?";
 
-    public static final String findTrimsByBasicModelIdQuery =
+    public static final String findTrimsByBasicModelId =
             "SELECT  " +
             "(SELECT name FROM basic_models where id= ?) AS modelName,  " +
             "t.id AS trimId,  " +
@@ -82,4 +82,18 @@ public class QueryString {
             "  ) AS mt" +
             ") AS mt  " +
             "ON t.basic_model_id= ?;";
+
+    public static String findDetailTrimInfoByTrimIdAndModelTypesQuery =
+            "SELECT dt.id, dm.displacement, dm.fuel_efficiency " +
+            "FROM detail_trims AS dt " +
+            "JOIN " +
+            "  ( " +
+            "    SELECT dm.id, dm.displacement, dm.fuel_efficiency " +
+            "    FROM detail_models AS dm " +
+            "    JOIN detail_model_decision_options AS dmdo ON dm.id = dmdo.detail_model_id " +
+            "    WHERE dmdo.model_option_id IN (:modelTypeIds) " +
+            "    GROUP BY dm.id " +
+            "    HAVING COUNT(DISTINCT dmdo.model_option_id) = :modelTypeCount " +
+            ") AS dm ON dt.detail_model_id=dm.id " +
+            "WHERE dt.trim_id = :trimId;";
 }
