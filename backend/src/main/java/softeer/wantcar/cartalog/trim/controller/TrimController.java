@@ -1,10 +1,7 @@
 package softeer.wantcar.cartalog.trim.controller;
 
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,6 +15,7 @@ import softeer.wantcar.cartalog.trim.repository.TrimQueryRepository;
 import javax.websocket.server.PathParam;
 
 @Slf4j
+@Api(tags = {"트림 관련 API"})
 @RestController
 @RequestMapping("/models/trims")
 @RequiredArgsConstructor
