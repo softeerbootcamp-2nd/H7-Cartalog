@@ -1,26 +1,35 @@
 import * as S from './style';
 import TypeCard from '../../../../components/TypeCard';
 
-function PickCard() {
+function PickCard({ data }) {
+  console.log(data);
   return (
     <S.PickCard>
-      <S.TypeCardName>파워트레인</S.TypeCardName>
+      <S.TypeCardName>{data.type}</S.TypeCardName>
 
       <S.SelectCard>
-        <TypeCard
-          name="가솔린 3.8"
-          pickRatio={29}
-          price={280000}
-          // selected={active === 0}
-          // onClick={() => setActive(0)}
-        />
-        <TypeCard
-          name="가솔린 3.8"
-          pickRatio={29}
-          price={280000}
-          // selected={active === 0}
-          // onClick={() => setActive(0)}
-        />
+        {data.options.map((option) => (
+          <TypeCard
+            key={option.id}
+            name={option.name}
+            pickRatio={option.chosen}
+            price={option.price}
+            // selected={active === option.id}
+            // onClick={() => setActive(0)}
+
+            // active={trimData.id === trim.trimId}
+            // onClick={() => {
+            //   if (trimData.id === trim.trimId) return;
+            //   setTrimState((prevState) => ({
+            //     ...prevState,
+            //     trim: {
+            //       ...prevState.trim,
+            //       trimId: trimData.id,
+            //     },
+            //   }));
+            // }}
+          />
+        ))}
       </S.SelectCard>
     </S.PickCard>
   );

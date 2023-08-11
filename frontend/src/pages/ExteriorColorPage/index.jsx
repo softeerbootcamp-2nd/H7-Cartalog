@@ -7,11 +7,13 @@ import Pick from './Pick';
 
 function ExteriorColor() {
   const [isFetched, setIsFetched] = useState(false);
-  const { setTrimState, trimId } = useData();
+  const { setTrimState, trim } = useData();
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`http://3.36.126.30/models/trims/exterior-colors?id=${trimId}`);
+      const response = await fetch(
+        `http://3.36.126.30/models/trims/exterior-colors?id=${trim.trimId}`,
+      );
       const dataFetch = await response.json();
 
       setTrimState((prevState) => ({

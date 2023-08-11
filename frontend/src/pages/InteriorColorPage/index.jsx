@@ -8,12 +8,12 @@ import Pick from './Pick';
 // !FIX 내장색상 API는 아직 완성 전
 function InteriorColor() {
   const [isFetched, setIsFetched] = useState(false);
-  const { setTrimState, trimId, interiorColor } = useData();
+  const { setTrimState, trim, interiorColor } = useData();
 
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
-        `http://3.36.126.30/models/trims/interior-colors?exteriorColorId=1&trimId=${trimId}`,
+        `http://3.36.126.30/models/trims/interior-colors?exteriorColorId=1&trimId=${trim.trimId}`,
       );
       const dataFetch = await response.json();
       setTrimState((prevState) => ({
