@@ -28,7 +28,7 @@ export function StateProvider({ children }) {
       acc[key] = {
         trimFetch: [],
         isTrimFetch: false,
-        trimId: 1,
+        trimId: 2,
       };
     } else if (key === 'modelType') {
       acc[key] = {
