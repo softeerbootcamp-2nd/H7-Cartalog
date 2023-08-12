@@ -16,11 +16,7 @@ public class TrimTestRepository {
     @TestMethod
     @Transactional(readOnly = true)
     public Long findTrimIdByModelNameAndTrimName(String modelName, String trimName) {
-        String SQL = "SELECT trims.id " +
-                "FROM       basic_models " +
-                "INNER JOIN trims " +
-                "where      basic_models.name = :modelName " +
-                "AND        trims.name = :trimName";
+        String SQL = QueryString.findTrimIdByModelNameAndTrimName;
 
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("modelName", modelName)
