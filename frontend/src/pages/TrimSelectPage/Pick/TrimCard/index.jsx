@@ -26,6 +26,7 @@ function TrimCard({ name, description, price, defaultInfo, active, onClick }) {
       ...prevState,
       modelType: {
         ...prevState.modelType,
+        pickId: powerTrainType.option.id,
         powerTrainId: powerTrainType.option.id,
         bodyTypeId: bodyType.option.id,
         wheelDriveId: wheelDriveType.option.id,
