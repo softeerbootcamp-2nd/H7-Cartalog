@@ -10,8 +10,8 @@ function ModelType() {
 
   useEffect(() => {
     async function fetchData() {
-      if (!modelType.isModelTypeFetch) {
-        const response = await fetch(`http://3.36.126.30/models/types?basicModelId=${trim.trimId}`);
+      if (!modelType.isFetch) {
+        const response = await fetch(`http://3.36.126.30/models/types?basicModelId=${trim.Id}`);
         const dataFetch = await response.json();
 
         const findOptionByTypeAndId = (typeName, typeId) => {
@@ -21,8 +21,8 @@ function ModelType() {
 
         const updatedModelType = {
           ...modelType,
-          modelTypeFetch: [...dataFetch.modelTypes],
-          isModelTypeFetch: true,
+          fetchData: [...dataFetch.modelTypes],
+          isFetch: true,
           powerTrainOption: findOptionByTypeAndId(modelType.powerTrainType, modelType.powerTrainId),
           bodyTypeOption: findOptionByTypeAndId(modelType.bodyTypeType, modelType.bodyTypeId),
           wheelDriveOption: findOptionByTypeAndId(modelType.wheelDriveType, modelType.wheelDriveId),
@@ -43,7 +43,7 @@ function ModelType() {
     Info: <Info />,
     Pick: <Pick />,
   };
-  return modelType.isModelTypeFetch ? <Section {...SectionProps} /> : <>Loding</>;
+  return modelType.isFetch ? <Section {...SectionProps} /> : <>Loding</>;
 }
 
 export default ModelType;

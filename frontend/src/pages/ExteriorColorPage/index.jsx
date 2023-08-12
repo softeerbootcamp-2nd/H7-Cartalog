@@ -10,9 +10,9 @@ function ExteriorColor() {
 
   useEffect(() => {
     async function fetchData() {
-      if (!exteriorColor.isExteriorColorFetch) {
+      if (!exteriorColor.isFetch) {
         const response = await fetch(
-          `http://3.36.126.30/models/trims/exterior-colors?trimId=${trim.trimId}`,
+          `http://3.36.126.30/models/trims/exterior-colors?trimId=${trim.Id}`,
         );
         const dataFetch = await response.json();
 
@@ -20,9 +20,9 @@ function ExteriorColor() {
           ...prevState,
           exteriorColor: {
             ...exteriorColor,
-            exteriorColorFetch: [...dataFetch.exteriorColors],
+            fetchData: [...dataFetch.exteriorColors],
             page: dataFetch.exteriorColors.length - 3,
-            isExteriorColorFetch: true,
+            isFetch: true,
           },
         }));
       }
@@ -37,7 +37,7 @@ function ExteriorColor() {
     Pick: <Pick />,
   };
 
-  return exteriorColor.isExteriorColorFetch ? <Section {...SectionProps} /> : <>Loding</>;
+  return exteriorColor.isFetch ? <Section {...SectionProps} /> : <>Loding</>;
 }
 
 export default ExteriorColor;

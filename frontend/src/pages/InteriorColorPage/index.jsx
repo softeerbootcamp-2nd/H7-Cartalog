@@ -13,7 +13,7 @@ function InteriorColor() {
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
-        `http://3.36.126.30/models/trims/interior-colors?exteriorColorId=1&trimId=${trim.trimId}`,
+        `http://3.36.126.30/models/trims/interior-colors?exteriorColorId=1&trimId=${trim.Id}`,
       );
       const dataFetch = await response.json();
       setTrimState((prevState) => ({

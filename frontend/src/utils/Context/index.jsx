@@ -28,15 +28,15 @@ export function StateProvider({ children }) {
         break;
       case 'trim':
         acc[key] = {
-          trimFetch: [],
-          isTrimFetch: false,
-          trimId: 2,
+          fetchData: [],
+          isFetch: false,
+          Id: 2,
         };
         break;
       case 'modelType':
         acc[key] = {
-          modelTypeFetch: [],
-          isModelTypeFetch: false,
+          fetchData: [],
+          isFetch: false,
           pickId: 1,
           powerTrainType: '파워트레인/성능',
           bodyTypeType: '바디타입',
@@ -51,13 +51,13 @@ export function StateProvider({ children }) {
         break;
       case 'exteriorColor':
         acc[key] = {
-          exteriorColorFetch: [],
-          isExteriorColorFetch: false,
-          exteriorColorCode: null,
-          exteriorColorName: null,
-          exteriorColorCarImageUrl: null,
-          page: null,
+          fetchData: [],
+          isFetch: false,
+          code: null,
+          name: null,
+          carImageUrl: null,
           count: 1,
+          page: null,
           position: null,
           rotate: false,
         };
