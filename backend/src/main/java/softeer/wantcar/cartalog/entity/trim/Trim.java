@@ -1,12 +1,10 @@
 package softeer.wantcar.cartalog.entity.trim;
 
-import lombok.Builder;
 import softeer.wantcar.cartalog.entity.model.ModelExteriorColor;
 import softeer.wantcar.cartalog.entity.model.ModelInteriorColor;
 
 import java.util.List;
 
-@Builder
 public class Trim {
     private Long id;
     private String name;
