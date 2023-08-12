@@ -1,40 +1,48 @@
 package softeer.wantcar.cartalog.trim.controller;
 
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import softeer.wantcar.cartalog.entity.model.ModelExteriorColor;
 import softeer.wantcar.cartalog.entity.model.ModelInteriorColor;
+import softeer.wantcar.cartalog.global.ServerPaths;
 import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimInteriorColorListResponseDto;
+import softeer.wantcar.cartalog.trim.repository.TrimColorQueryRepository;
 import softeer.wantcar.cartalog.trim.service.TrimColorService;
 
 import javax.websocket.server.PathParam;
 import java.util.Map;
 
-@Slf4j
+@Api(tags = {"트림 색상 API"})
 @RestController
 @RequestMapping("/models/trims")
 @RequiredArgsConstructor
+@Slf4j
 public class TrimColorController {
-    @Value("${env.imageServerPath}")
-    private String imageServerPath = "example-url";
-
     private final TrimColorService trimColorService;
+    private final TrimColorQueryRepository trimColorQueryRepository;
+    private final ServerPaths serverPaths;
 
+    @ApiOperation(
+            value = "트림 외부 색상 조회",
+            notes = "해당 트림이 선택 가능한 외부 색상을 조회한다.")
+    @ApiImplicitParam(
+            name = "trimId", value = "트림 식별자", required = true,
+            dataType = "Long", paramType = "query", defaultValue = "None", example = "1")
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "존재하지 않는 식별자입니다.")})
     @GetMapping(value = "/exterior-colors")
-    public ResponseEntity<TrimExteriorColorListResponseDto> trimExteriorColorList(@PathParam("trimId") Long id) {
-        try {
-            Map<ModelExteriorColor, Integer> exteriorColorInfo = trimColorService.findTrimExteriorColorListByTrimId(id);
-            return new ResponseEntity<>(TrimExteriorColorListResponseDto.from(exteriorColorInfo, imageServerPath), HttpStatus.OK);
-        } catch (RuntimeException exception) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    public ResponseEntity<TrimExteriorColorListResponseDto> searchTrimExteriorColorList(@PathParam("trimId") Long trimId) {
+        TrimExteriorColorListResponseDto trimExteriorColorListResponseDto = trimColorQueryRepository.findTrimExteriorColorByTrimId(trimId);
+        if (trimExteriorColorListResponseDto == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>(trimExteriorColorListResponseDto, HttpStatus.OK);
     }
 
     @GetMapping(value = "/interior-colors")
@@ -42,9 +50,9 @@ public class TrimColorController {
                                                                                   @PathParam("exteriorColorId") Long exteriorColorId) {
         try {
             Map<ModelInteriorColor, Integer> interiorColorInfo = trimColorService.findTrimInteriorColorListByTrimId(trimId, exteriorColorId);
-            return new ResponseEntity<>(TrimInteriorColorListResponseDto.from(interiorColorInfo, imageServerPath), HttpStatus.OK);
+            return new ResponseEntity<>(TrimInteriorColorListResponseDto.from(interiorColorInfo, serverPaths.IMAGE_SERVER_PATH), HttpStatus.OK);
         } catch (RuntimeException exception) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }

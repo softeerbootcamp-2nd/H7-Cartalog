@@ -27,7 +27,8 @@ public class ModelController {
             value = "모델 타입 조회",
             notes = "모델에서 사용가능한 모델 옵션과 세부 정보를 조회한다.")
     @ApiImplicitParam(
-            name = "basicModelId", value = "기초 모델 식별자", required = true, dataType = "Long", paramType = "query", defaultValue = "None")
+            name = "basicModelId", value = "기초 모델 식별자", required = true,
+            dataType = "Long", paramType = "query", defaultValue = "None", example = "1")
     @ApiResponses({
             @ApiResponse(code = 404, message = "존재하지 않는 식별자입니다."),
             @ApiResponse(code = 500, message = "적절하지 않은 데이터가 있어 요청을 처리할 수 없습니다. 관리자에게 문의하세요.")})

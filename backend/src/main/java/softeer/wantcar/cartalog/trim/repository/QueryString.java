@@ -99,4 +99,25 @@ public class QueryString {
             "    HAVING COUNT(DISTINCT dmdo.model_option_id) = :modelTypeCount " +
             ") AS dm ON dt.detail_model_id=dm.id " +
             "WHERE dt.trim_id = :trimId;";
+
+    protected static final String findTrimExteriorColorByTrimId =
+            "SELECT " +
+            "  code, " +
+            "  name, " +
+            "  image_url, " +
+            "  price, " +
+            "  exterior_image_url " +
+            "FROM trim_exterior_colors " +
+            "INNER JOIN model_exterior_colors " +
+            "ON trim_exterior_colors.model_exterior_color_id = model_exterior_colors.id " +
+            "INNER JOIN colors " +
+            "  ON model_exterior_colors.color_code = colors.code " +
+            "WHERE trim_id = :trimId";
+
+    protected static final String findTrimIdByModelNameAndTrimName =
+            "SELECT trims.id " +
+            "FROM       basic_models " +
+            "INNER JOIN trims " +
+            "where      basic_models.name = :modelName " +
+            "AND        trims.name = :trimName";
 }
