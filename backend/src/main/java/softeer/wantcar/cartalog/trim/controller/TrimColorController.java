@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import softeer.wantcar.cartalog.entity.model.ModelExteriorColor;
 import softeer.wantcar.cartalog.entity.model.ModelInteriorColor;
 import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimInteriorColorListResponseDto;
@@ -29,12 +28,7 @@ public class TrimColorController {
 
     @GetMapping(value = "/exterior-colors")
     public ResponseEntity<TrimExteriorColorListResponseDto> trimExteriorColorList(@PathParam("trimId") Long id) {
-        try {
-            Map<ModelExteriorColor, Integer> exteriorColorInfo = trimColorService.findTrimExteriorColorListByTrimId(id);
-            return new ResponseEntity<>(TrimExteriorColorListResponseDto.from(exteriorColorInfo, imageServerPath), HttpStatus.OK);
-        } catch (RuntimeException exception) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        return null;
     }
 
     @GetMapping(value = "/interior-colors")

@@ -1,20 +1,18 @@
 package softeer.wantcar.cartalog.model.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Singular;
 import softeer.wantcar.cartalog.global.annotation.TestMethod;
+import softeer.wantcar.cartalog.global.utils.CompareUtils;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Getter
 @Builder
-@AllArgsConstructor
 public class ModelTypeListResponseDto {
     @Singular
     private List<ModelTypeDto> modelTypes;
@@ -24,16 +22,11 @@ public class ModelTypeListResponseDto {
     }
 
     @TestMethod
-    public boolean equalAndAllContain(List<String> expected, List<String> actual) {
-        return expected.size() == actual.size() && new HashSet<>(expected).equals(new HashSet<>(actual));
-    }
-
-    @TestMethod
     public boolean equalAndAllContainTypes(List<String> type) {
         List<String> types = modelTypes.stream()
                 .map(ModelTypeDto::getType).collect(Collectors.toUnmodifiableList());
 
-        return equalAndAllContain(type, types);
+        return CompareUtils.equalAndAllContain(type, types);
     }
 
     @TestMethod
@@ -46,7 +39,7 @@ public class ModelTypeListResponseDto {
                             .flatMap(Collection::stream)
                             .map(OptionDto::getName)
                             .collect(Collectors.toUnmodifiableList());
-                    return equalAndAllContain(checkOptionMap.getValue(), actualOptionNames);
+                    return CompareUtils.equalAndAllContain(checkOptionMap.getValue(), actualOptionNames);
                 });
     }
 

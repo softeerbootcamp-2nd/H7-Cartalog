@@ -1,54 +1,42 @@
 package softeer.wantcar.cartalog.trim.dto;
 
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import softeer.wantcar.cartalog.entity.model.ModelExteriorColor;
+import lombok.Singular;
+import softeer.wantcar.cartalog.global.annotation.TestMethod;
+import softeer.wantcar.cartalog.global.utils.CompareUtils;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Getter
 @Builder
-@EqualsAndHashCode
 public class TrimExteriorColorListResponseDto {
-
+    @Singular("trimExteriorColorDto")
     List<TrimExteriorColorDto> trimExteriorColorDtoList;
+
+    @TestMethod
+    public boolean hasColor(List<String> selectableLeBlancExteriorColors) {
+        List<String> codes = trimExteriorColorDtoList.stream()
+                .map(TrimExteriorColorDto::getCode)
+                .collect(Collectors.toUnmodifiableList());
+        return CompareUtils.equalAndAllContain(selectableLeBlancExteriorColors, codes);
+    }
+
+    @TestMethod
+    public boolean startWithUrl(String url) {
+        return trimExteriorColorDtoList.stream()
+                .allMatch(trimExteriorColorDto -> trimExteriorColorDto.carImageUrl.startsWith(url));
+    }
 
     @Getter
     @Builder
-    @EqualsAndHashCode
     public static class TrimExteriorColorDto {
-        private String id;
+        private String code;
         private String name;
         private String colorImageUrl;
         private String carImageUrl;
         private int price;
         private int chosen;
-
-        public static TrimExteriorColorDto from(ModelExteriorColor exteriorColor, int chosen, String carImageUrl) {
-            return TrimExteriorColorDto.builder()
-                    .id(exteriorColor.getColor().getId())
-                    .name(exteriorColor.getColor().getName())
-                    .price(exteriorColor.getPrice())
-                    .colorImageUrl(exteriorColor.getColor().getImageUrl())
-                    .carImageUrl(carImageUrl)
-                    .chosen(chosen)
-                    .build();
-        }
-    }
-
-    public static TrimExteriorColorListResponseDto from(Map<ModelExteriorColor, Integer> exteriorColors, String imageServerPath) {
-        List<TrimExteriorColorDto> exteriorColorDtoList = exteriorColors.entrySet().stream()
-                .map(entry -> TrimExteriorColorDto.from(
-                        entry.getKey(),
-                        entry.getValue(),
-                        imageServerPath + "/image.jpg"))
-                .collect(Collectors.toList());
-
-        return TrimExteriorColorListResponseDto.builder()
-                .trimExteriorColorDtoList(exteriorColorDtoList)
-                .build();
     }
 }
