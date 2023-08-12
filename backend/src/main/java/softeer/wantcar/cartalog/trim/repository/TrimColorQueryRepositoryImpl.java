@@ -41,7 +41,7 @@ public class TrimColorQueryRepositoryImpl implements TrimColorQueryRepository {
         }
     }
 
-    private TrimExteriorColorQueryResult mapping(final ResultSet rs, int rowNumber) throws SQLException {
+    private TrimExteriorColorQueryResult mappingTrimExteriorColorQueryResult(final ResultSet rs, int rowNumber) throws SQLException {
         return TrimExteriorColorQueryResult.builder()
                 .code(rs.getString("code"))
                 .name(rs.getString("name"))
@@ -58,7 +58,7 @@ public class TrimColorQueryRepositoryImpl implements TrimColorQueryRepository {
                 .addValue("trimId", trimId);
 
         List<TrimExteriorColorQueryResult> results = jdbcTemplate.query(
-                QueryString.findTrimExteriorColorByTrimId, parameters, this::mapping);
+                QueryString.findTrimExteriorColorByTrimId, parameters, this::mappingTrimExteriorColorQueryResult);
 
         if (results.isEmpty()) {
             return null;
