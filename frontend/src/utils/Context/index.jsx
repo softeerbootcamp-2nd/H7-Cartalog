@@ -54,9 +54,11 @@ export function StateProvider({ children }) {
           exteriorColorFetch: [],
           isExteriorColorFetch: false,
           exteriorColorCode: null,
-          exteriorColorName: '어비스 블랙 펄',
-          exteriorColorCarImageUrl:
-            'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade',
+          exteriorColorName: null,
+          exteriorColorCarImageUrl: null,
+          page: null,
+          count: 1,
+          position: null,
           rotate: false,
         };
         break;

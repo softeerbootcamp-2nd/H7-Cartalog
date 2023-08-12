@@ -5,10 +5,12 @@ import PickTitle from '../../../components/PickTitle';
 import ColorCard from '../../../components/ColorCard';
 import ColorChip from '../../../components/ColorChip';
 import NextButton from '../../../components/NextButton';
+import NextColor from '../../../components/NextColor';
 
 function Pick() {
   const { setTrimState, exteriorColor } = useData();
   const pickTitleProps = { mainTitle: PICK.TITLE };
+  const colorProps = { $position: exteriorColor.position };
 
   const handleColorCardClick = (exterior) => {
     setTrimState((prevState) => ({
@@ -28,25 +30,31 @@ function Pick() {
 
   return (
     <S.Pick>
-      <PickTitle {...pickTitleProps} />
-      <S.Color>
-        {exteriorColor.exteriorColorFetch.map((exterior) => (
-          <ColorCard
-            key={exterior.code}
-            pickRatio={exterior.chosen}
-            name={exterior.name}
-            price={exterior.price}
-            selected={exteriorColor.exteriorColorCode === exterior.code}
-            onClick={() => handleColorCardClick(exterior)}
-          >
-            <ColorChip
+      <S.Header>
+        <PickTitle {...pickTitleProps} />
+        <NextColor />
+      </S.Header>
+
+      <S.ColorSet>
+        <S.Color {...colorProps}>
+          {exteriorColor.exteriorColorFetch.map((exterior) => (
+            <ColorCard
+              key={exterior.code}
+              pickRatio={exterior.chosen}
+              name={exterior.name}
+              price={exterior.price}
               selected={exteriorColor.exteriorColorCode === exterior.code}
-              src={exterior.colorImageUrl}
-              type={EXTERIOR_COLOR.TYPE}
-            />
-          </ColorCard>
-        ))}
-      </S.Color>
+              onClick={() => handleColorCardClick(exterior)}
+            >
+              <ColorChip
+                selected={exteriorColor.exteriorColorCode === exterior.code}
+                src={exterior.colorImageUrl}
+                type={EXTERIOR_COLOR.TYPE}
+              />
+            </ColorCard>
+          ))}
+        </S.Color>
+      </S.ColorSet>
 
       <S.Footer>
         <S.FooterEnd>

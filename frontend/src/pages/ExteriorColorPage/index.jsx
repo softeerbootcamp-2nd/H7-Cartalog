@@ -21,6 +21,7 @@ function ExteriorColor() {
           exteriorColor: {
             ...exteriorColor,
             exteriorColorFetch: [...dataFetch.exteriorColors],
+            page: dataFetch.exteriorColors.length - 3,
             isExteriorColorFetch: true,
           },
         }));
