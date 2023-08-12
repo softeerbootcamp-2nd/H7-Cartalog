@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useData } from '../../utils/Context';
+import { useData, TotalPrice } from '../../utils/Context';
 import PriceStaticBar from '../../components/PriceStaticBar';
 import Preview from './Preview';
 import * as S from './style';
 
 function Estimation() {
   const [isFetched, setIsFetched] = useState(false);
-  const { setTrimState } = useData();
+  const { setTrimState, trim, price } = useData();
+  const SelectModel = trim.trimFetch.find((model) => model.id === trim.trimId);
 
   useEffect(() => {
     async function fetchData() {
@@ -40,7 +41,11 @@ function Estimation() {
       <Preview collapsed={collapsed} />
       <S.EstimateFinish onScroll={handleScroll}>
         <div style={{ height: '3000px', width: '30px', backgroundColor: 'pink' }}>a</div>
-        <PriceStaticBar min={10000000} max={50000000} price={25000000} />
+        <PriceStaticBar
+          min={SelectModel.minPrice}
+          max={SelectModel.maxPrice}
+          price={TotalPrice(price)}
+        />
       </S.EstimateFinish>
     </>
   ) : (
