@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useData } from '../../utils/Context';
 import { MODEL_TYPE } from './constants';
 import Section from '../../components/Section';
@@ -6,20 +6,31 @@ import Info from './Info';
 import Pick from './Pick';
 
 function ModelType() {
-  const { setTrimState, modelType } = useData();
+  const { setTrimState, trim, modelType } = useData();
 
   useEffect(() => {
     async function fetchData() {
       if (!modelType.isModelTypeFetch) {
-        const response = await fetch('http://3.36.126.30/models/types?basicModelId=1');
+        const response = await fetch(`http://3.36.126.30/models/types?basicModelId=${trim.trimId}`);
         const dataFetch = await response.json();
+
+        const findOptionByTypeAndId = (typeName, typeId) => {
+          const type = dataFetch.modelTypes.find((data) => data.type === typeName);
+          return type.options.find((name) => name.id === typeId);
+        };
+
+        const updatedModelType = {
+          ...modelType,
+          modelTypeFetch: [...dataFetch.modelTypes],
+          isModelTypeFetch: true,
+          powerTrainOption: findOptionByTypeAndId(modelType.powerTrainType, modelType.powerTrainId),
+          bodyTypeOption: findOptionByTypeAndId(modelType.bodyTypeType, modelType.bodyTypeId),
+          wheelDriveOption: findOptionByTypeAndId(modelType.wheelDriveType, modelType.wheelDriveId),
+        };
+
         setTrimState((prevState) => ({
           ...prevState,
-          modelType: {
-            ...prevState.modelType,
-            modelTypeFetch: [...dataFetch.modelTypes],
-            isModelTypeFetch: true,
-          },
+          modelType: updatedModelType,
         }));
       }
       setTrimState((prevState) => ({ ...prevState, page: 2 }));
@@ -29,7 +40,7 @@ function ModelType() {
 
   const SectionProps = {
     type: MODEL_TYPE.TYPE,
-    // Info: <Info {...InfoProps} />,
+    Info: <Info />,
     Pick: <Pick />,
   };
   return modelType.isModelTypeFetch ? <Section {...SectionProps} /> : <>Loding</>;

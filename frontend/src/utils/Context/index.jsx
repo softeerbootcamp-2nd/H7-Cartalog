@@ -16,13 +16,13 @@ export function StateProvider({ children }) {
   const initialState = stateKeys.reduce((acc, key) => {
     if (key === 'price') {
       acc[key] = {
-        trimPrice: 38960000,
-        powerTrainPrice: 100000,
-        bodyTypePrice: 100000,
-        wheelDrivePrice: 100000,
-        exteriorColorPrice: 100000,
-        interiorColorPrice: 100000,
-        optionPrice: 100000,
+        trimPrice: 0,
+        powerTrainPrice: 0,
+        bodyTypePrice: 0,
+        wheelDrivePrice: 0,
+        exteriorColorPrice: 0,
+        interiorColorPrice: 0,
+        optionPrice: 0,
       };
     } else if (key === 'trim') {
       acc[key] = {
@@ -34,9 +34,13 @@ export function StateProvider({ children }) {
       acc[key] = {
         modelTypeFetch: [],
         isModelTypeFetch: false,
-        powerTrainId: 1,
-        bodyTypeId: 5,
-        wheelDriveId: 3,
+        pickId: 1,
+        powerTrainType: '파워트레인/성능',
+        bodyTypeType: '바디타입',
+        wheelDriveType: '구동방식',
+        powerTrainId: null,
+        bodyTypeId: null,
+        wheelDriveId: null,
         powerTrainOption: null,
         bodyTypeOption: null,
         wheelDriveOption: null,
