@@ -45,9 +45,9 @@ public class TrimColorQueryRepositoryImpl implements TrimColorQueryRepository {
         return TrimExteriorColorQueryResult.builder()
                 .code(rs.getString("code"))
                 .name(rs.getString("name"))
-                .imageUrl(serverPaths.IMAGE_SERVER_PATH + "/" + rs.getString("image_url"))
+                .imageUrl(serverPaths.attachImageServerPath(rs.getString("image_url")))
                 .price(rs.getInt("price"))
-                .exteriorImageUrl(serverPaths.IMAGE_SERVER_PATH + "/" + rs.getString("exterior_image_url"))
+                .exteriorImageUrl(serverPaths.attachImageServerPath(rs.getString("exterior_image_url")))
                 .build();
     }
 
