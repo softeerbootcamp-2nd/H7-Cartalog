@@ -182,7 +182,7 @@ class TrimQueryRepositoryTest {
         TrimListResponseDto.DefaultTrimInfoDto defaultInfo = exclusive.getDefaultInfo();
         softAssertions.assertThat(defaultInfo).isNotNull();
         softAssertions.assertThat(defaultInfo.getExteriorColorCode()).isEqualTo("A2B");
-        softAssertions.assertThat(defaultInfo.getInteriorColorCode()    ).isEqualTo(interiorColorId);
+        softAssertions.assertThat(defaultInfo.getInteriorColorCode()).isEqualTo(interiorColorId);
         List<TrimListResponseDto.ModelTypeDto> defaultModeTypes = defaultInfo.getModelTypes();
         softAssertions.assertThat(defaultModeTypes).isNotNull();
         softAssertions.assertThat(defaultModeTypes.size()).isEqualTo(3);
