@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import * as S from './style';
 import { ReactComponent as ArrowDown } from '../../../assets/icons/arrow_down.svg';
+import * as S from './style';
 import Description from './Description';
 import Slider from './Slider';
 import SliderMark from './SliderMark';
