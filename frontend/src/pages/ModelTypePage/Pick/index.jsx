@@ -1,6 +1,6 @@
-import * as S from './style';
 import { useData } from '../../../utils/Context';
 import { PICK } from '../constants';
+import * as S from './style';
 import PickTitle from '../../../components/PickTitle';
 import NextButton from '../../../components/NextButton';
 import PickCard from './PickCard';

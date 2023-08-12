@@ -1,5 +1,4 @@
 import { useData } from '../../../../utils/Context';
-import { PICK_CARD } from '../../constants';
 import * as S from './style';
 import TypeCard from '../../../../components/TypeCard';
 
@@ -8,17 +7,22 @@ function PickCard({ data }) {
 
   const updateTrimState = (idKey, optionKey, priceKey, option) => {
     if (modelType[idKey] === option.id) return;
+    const updatedModelType = {
+      ...modelType,
+      pickId: option.id,
+      [idKey]: option.id,
+      [optionKey]: option,
+    };
+
+    const updatedPrice = {
+      ...setTrimState.price,
+      [priceKey]: option.price,
+    };
+
     setTrimState((prevState) => ({
       ...prevState,
-      modelType: {
-        ...prevState.modelType,
-        [idKey]: option.id,
-        [optionKey]: option,
-      },
-      price: {
-        ...prevState.price,
-        [priceKey]: option.price,
-      },
+      modelType: updatedModelType,
+      price: updatedPrice,
     }));
   };
 
@@ -39,12 +43,12 @@ function PickCard({ data }) {
               modelType.wheelDriveId === option.id
             }
             onClick={() => {
-              if (data.type === PICK_CARD.POWER_TRAIN)
+              if (data.type === modelType.powerTrainType)
                 updateTrimState('powerTrainId', 'powerTrainOption', 'powerTrainPrice', option);
-              if (data.type === PICK_CARD.BODY_TYPE) {
+              if (data.type === modelType.bodyTypeType) {
                 updateTrimState('bodyTypeId', 'bodyTypeOption', 'bodyTypePrice', option);
               }
-              if (data.type === PICK_CARD.WHEEL_DRIVE) {
+              if (data.type === modelType.wheelDriveType) {
                 updateTrimState('wheelDriveId', 'wheelDriveOption', 'wheelDrivePrice', option);
               }
             }}
