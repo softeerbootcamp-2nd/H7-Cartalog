@@ -13,11 +13,11 @@ import java.util.stream.Collectors;
 @Builder
 public class TrimExteriorColorListResponseDto {
     @Singular("trimExteriorColorDto")
-    List<TrimExteriorColorDto> trimExteriorColorDtoList;
+    List<TrimExteriorColorDto> exteriorColors;
 
     @TestMethod
     public boolean hasColor(List<String> selectableLeBlancExteriorColors) {
-        List<String> codes = trimExteriorColorDtoList.stream()
+        List<String> codes = exteriorColors.stream()
                 .map(TrimExteriorColorDto::getCode)
                 .collect(Collectors.toUnmodifiableList());
         return CompareUtils.equalAndAllContain(selectableLeBlancExteriorColors, codes);
@@ -25,7 +25,7 @@ public class TrimExteriorColorListResponseDto {
 
     @TestMethod
     public boolean startWithUrl(String url) {
-        return trimExteriorColorDtoList.stream()
+        return exteriorColors.stream()
                 .allMatch(trimExteriorColorDto -> trimExteriorColorDto.carImageUrl.startsWith(url));
     }
 

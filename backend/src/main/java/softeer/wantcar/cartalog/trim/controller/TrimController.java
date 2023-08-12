@@ -15,7 +15,6 @@ import softeer.wantcar.cartalog.trim.dto.TrimListResponseDto;
 import softeer.wantcar.cartalog.trim.repository.TrimQueryRepository;
 import softeer.wantcar.cartalog.trim.service.TrimQueryService;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @Slf4j
@@ -32,7 +31,7 @@ public class TrimController {
             notes = "모델의 트림 목록과 트림의 기본 정보를 조회한다")
     @ApiImplicitParam(
             name = "basicModelId", value = "기초 모델 식별자", required = true,
-            dataType = "Long", paramType = "query", defaultValue = "None")
+            dataType = "Long", paramType = "query", defaultValue = "None", example = "1")
     @ApiResponses({
             @ApiResponse(code = 404, message = "존재하지 않는 식별자입니다."),
             @ApiResponse(code = 500, message = "서버에서 처리하지 못했습니다. 관리자에게 문의하세요.")})
@@ -51,10 +50,10 @@ public class TrimController {
     @ApiImplicitParams({
             @ApiImplicitParam(
                     name = "trimId", value = "트림 식별자", required = true,
-                    dataType = "Long", paramType = "query", defaultValue = "None"),
+                    dataType = "Long", paramType = "query", defaultValue = "None", example = "1"),
             @ApiImplicitParam(
                     name = "modelTypeIds", value = "모델 타입 식별자 리스트", required = true,
-                    dataType = "List<Long>", paramType = "query", defaultValue = "None")
+                    dataType = "List<Long>", paramType = "query", defaultValue = "None", example = "1, 2, 3")
     })
 
     @ApiResponses({

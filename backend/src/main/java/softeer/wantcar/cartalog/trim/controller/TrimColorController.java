@@ -1,7 +1,7 @@
 package softeer.wantcar.cartalog.trim.controller;
 
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,24 +11,37 @@ import org.springframework.web.bind.annotation.RestController;
 import softeer.wantcar.cartalog.entity.model.ModelInteriorColor;
 import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimInteriorColorListResponseDto;
+import softeer.wantcar.cartalog.trim.repository.TrimColorQueryRepository;
 import softeer.wantcar.cartalog.trim.service.TrimColorService;
 
 import javax.websocket.server.PathParam;
 import java.util.Map;
 
-@Slf4j
+@Api(tags = {"트림 색상 API"})
 @RestController
 @RequestMapping("/models/trims")
 @RequiredArgsConstructor
 public class TrimColorController {
     @Value("${env.imageServerPath}")
     private String imageServerPath = "example-url";
-
     private final TrimColorService trimColorService;
+    private final TrimColorQueryRepository trimColorQueryRepository;
 
+    @ApiOperation(
+            value = "트림 외부 색상 조회",
+            notes = "해당 트림이 선택 가능한 외부 색상을 조회한다.")
+    @ApiImplicitParam(
+            name = "trimId", value = "트림 식별자", required = true,
+            dataType = "Long", paramType = "query", defaultValue = "None", example = "1")
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "존재하지 않는 식별자입니다.")})
     @GetMapping(value = "/exterior-colors")
-    public ResponseEntity<TrimExteriorColorListResponseDto> trimExteriorColorList(@PathParam("trimId") Long id) {
-        return null;
+    public ResponseEntity<TrimExteriorColorListResponseDto> searchTrimExteriorColorList(@PathParam("trimId") Long trimId) {
+        TrimExteriorColorListResponseDto trimExteriorColorListResponseDto = trimColorQueryRepository.findTrimExteriorColorByTrimId(trimId);
+        if (trimExteriorColorListResponseDto == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(trimExteriorColorListResponseDto, HttpStatus.OK);
     }
 
     @GetMapping(value = "/interior-colors")

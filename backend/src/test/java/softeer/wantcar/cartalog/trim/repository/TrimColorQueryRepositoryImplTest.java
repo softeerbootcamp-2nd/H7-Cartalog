@@ -49,7 +49,7 @@ class TrimColorQueryRepositoryImplTest {
             TrimExteriorColorListResponseDto result = trimColorQueryRepository.findTrimExteriorColorByTrimId(LeBlancTrimId);
 
             //then
-            softAssertions.assertThat(result.getTrimExteriorColorDtoList().size()).isEqualTo(6);
+            softAssertions.assertThat(result.getExteriorColors().size()).isEqualTo(6);
             softAssertions.assertThat(result.hasColor(selectableLeBlancExteriorColors)).isTrue();
             softAssertions.assertThat(result.startWithUrl(imageServerPath)).isTrue();
             softAssertions.assertAll();

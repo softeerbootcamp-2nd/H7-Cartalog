@@ -5,66 +5,57 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import softeer.wantcar.cartalog.entity.model.ModelExteriorColor;
 import softeer.wantcar.cartalog.entity.model.ModelInteriorColor;
 import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimInteriorColorListResponseDto;
+import softeer.wantcar.cartalog.trim.repository.TrimColorQueryRepository;
 import softeer.wantcar.cartalog.trim.service.MockTrimColorService;
 import softeer.wantcar.cartalog.trim.service.TrimColorService;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @DisplayName("색상 도메인 컨트롤러 테스트")
 class TrimColorControllerTest {
-
     SoftAssertions softAssertions;
+    TrimColorQueryRepository trimColorQueryRepository;
     TrimColorService trimColorService;
     TrimColorController trimColorController;
 
-
     @BeforeEach
     void setUp() {
+        trimColorService = new MockTrimColorService();
         softAssertions = new SoftAssertions();
+        trimColorQueryRepository = mock(TrimColorQueryRepository.class);
+        trimColorController = new TrimColorController(trimColorService, trimColorQueryRepository);
     }
 
     @Nested
     @DisplayName("트림 외장 색상 목록 조회 테스트")
     class searchTrimExteriorColor {
-
-        @BeforeEach
-        void setUp() {
-            trimColorService = new MockTrimColorService();
-            trimColorController = new TrimColorController(trimColorService);
-        }
-
         @Test
         @DisplayName("올바른 요청시 200 상태와 함께 트림 외장 색상 리스트를 반환해야 한다.")
         void success() {
             //given
-            Long trimId = 1L;
-            ModelExteriorColor mockData = ((MockTrimColorService) trimColorService).getMockModelExteriorColor();
+            TrimExteriorColorListResponseDto expected = mock (TrimExteriorColorListResponseDto.class);
+            when(trimColorQueryRepository.findTrimExteriorColorByTrimId(anyLong())).thenReturn(expected);
 
             //when
-            ResponseEntity<TrimExteriorColorListResponseDto> responseEntity = trimColorController.trimExteriorColorList(trimId);
+            ResponseEntity<TrimExteriorColorListResponseDto> actual = trimColorController.searchTrimExteriorColorList(anyLong());
 
             //then
-            TrimExteriorColorListResponseDto responseDto = responseEntity.getBody();
-            assertThat(responseDto).isNotNull();
-            List<TrimExteriorColorListResponseDto.TrimExteriorColorDto> trimExteriorColorDtoList = responseDto.getTrimExteriorColorDtoList();
-            assertThat(trimExteriorColorDtoList.size()).isEqualTo(1);
-
-            TrimExteriorColorListResponseDto.TrimExteriorColorDto trimExteriorColorDto = trimExteriorColorDtoList.get(0);
-
-            softAssertions.assertThat(trimExteriorColorDto.getCode()).isEqualTo(mockData.getColor().getId());
-            softAssertions.assertThat(trimExteriorColorDto.getName()).isEqualTo(mockData.getColor().getName());
-            softAssertions.assertThat(trimExteriorColorDto.getColorImageUrl()).isEqualTo(mockData.getColor().getImageUrl());
-            softAssertions.assertThat(trimExteriorColorDto.getPrice()).isEqualTo(mockData.getPrice());
-            softAssertions.assertThat(trimExteriorColorDto.getChosen()).isEqualTo(38);
+            softAssertions.assertThat(actual.getStatusCode()).isEqualTo(HttpStatus.OK);
+            softAssertions.assertThat(actual.getBody()).isEqualTo(expected);
             softAssertions.assertAll();
         }
 
@@ -72,8 +63,10 @@ class TrimColorControllerTest {
         @DisplayName("존재하지 않는 트림 식별자로 색상 요청시 404 상태를 반환해야 한다.")
         void notFound() {
             //given
+            when(trimColorQueryRepository.findTrimExteriorColorByTrimId(anyLong())).thenReturn(null);
+
             //when
-            ResponseEntity<TrimExteriorColorListResponseDto> responseEntity = trimColorController.trimExteriorColorList(100L);
+            ResponseEntity<TrimExteriorColorListResponseDto> responseEntity = trimColorController.searchTrimExteriorColorList(anyLong());
 
             //then
             softAssertions.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
@@ -86,12 +79,6 @@ class TrimColorControllerTest {
     @Nested
     @DisplayName("트림 내장 색상 목록 조회 테스트")
     class searchTrimInteriorColor {
-        @BeforeEach
-        void setUp() {
-            trimColorService = new MockTrimColorService();
-            trimColorController = new TrimColorController(trimColorService);
-        }
-
         @Test
         @DisplayName("올바른 요청시 200 상태와 함께 트림 내장 색상 리스트를 반환해야 한다.")
         void success() {
