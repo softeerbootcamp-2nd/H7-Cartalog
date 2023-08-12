@@ -1,6 +1,6 @@
-import * as S from './style';
 import { useData } from '../../../utils/Context';
-import { PICK_CARD } from '../constants';
+import { PICK } from '../constants';
+import * as S from './style';
 import PickTitle from '../../../components/PickTitle';
 import NextButton from '../../../components/NextButton';
 import PickCard from './PickCard';
@@ -8,7 +8,7 @@ import HMGData from './HMGData';
 
 function Pick() {
   const { modelType } = useData();
-  const pickTitleProps = { mainTitle: PICK_CARD.TITLE };
+  const pickTitleProps = { mainTitle: PICK.TITLE };
 
   return (
     <S.Pick>

@@ -1,8 +1,31 @@
+import { useData } from '../../../../utils/Context';
 import * as S from './style';
 import TypeCard from '../../../../components/TypeCard';
 
 function PickCard({ data }) {
-  console.log(data);
+  const { setTrimState, modelType, price } = useData();
+
+  const updateTrimState = (idKey, optionKey, priceKey, option) => {
+    if (modelType[idKey] === option.id) return;
+    const updatedModelType = {
+      ...modelType,
+      pickId: option.id,
+      [idKey]: option.id,
+      [optionKey]: option,
+    };
+
+    const updatedPrice = {
+      ...price,
+      [priceKey]: option.price,
+    };
+
+    setTrimState((prevState) => ({
+      ...prevState,
+      modelType: updatedModelType,
+      price: updatedPrice,
+    }));
+  };
+
   return (
     <S.PickCard>
       <S.TypeCardName>{data.type}</S.TypeCardName>
@@ -14,20 +37,21 @@ function PickCard({ data }) {
             name={option.name}
             pickRatio={option.chosen}
             price={option.price}
-            // selected={active === option.id}
-            // onClick={() => setActive(0)}
-
-            // active={trimData.id === trim.trimId}
-            // onClick={() => {
-            //   if (trimData.id === trim.trimId) return;
-            //   setTrimState((prevState) => ({
-            //     ...prevState,
-            //     trim: {
-            //       ...prevState.trim,
-            //       trimId: trimData.id,
-            //     },
-            //   }));
-            // }}
+            selected={
+              modelType.powerTrainId === option.id ||
+              modelType.bodyTypeId === option.id ||
+              modelType.wheelDriveId === option.id
+            }
+            onClick={() => {
+              if (data.type === modelType.powerTrainType)
+                updateTrimState('powerTrainId', 'powerTrainOption', 'powerTrainPrice', option);
+              if (data.type === modelType.bodyTypeType) {
+                updateTrimState('bodyTypeId', 'bodyTypeOption', 'bodyTypePrice', option);
+              }
+              if (data.type === modelType.wheelDriveType) {
+                updateTrimState('wheelDriveId', 'wheelDriveOption', 'wheelDrivePrice', option);
+              }
+            }}
           />
         ))}
       </S.SelectCard>

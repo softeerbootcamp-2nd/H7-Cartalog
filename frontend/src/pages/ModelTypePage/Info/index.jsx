@@ -1,35 +1,74 @@
+import { useState, useEffect } from 'react';
+import { useData } from '../../../utils/Context';
+import { INFO } from '../constants';
 import * as S from './style';
 import Title from '../../../components/Title';
 import HMGTag from '../../../components/HMGTag';
 import HMGData from './HMGData';
 
-const TYPE = 'dark';
-const SUB_TITLE = '파워트레인';
-const MAIN_TITLE = '디젤 2.2';
-const INFO = '높은 토크로 파워풀한 드라이빙이 가능하며,\n 차급대비 연비 효율이 우수합니다';
+function Info() {
+  const { modelType } = useData();
+  const HMGTagProps = { type: INFO.HMGTAG_TYPE };
+  const [HMGDataProps, setHMGDataProps] = useState({ hmgData: modelType.powerTrainOption.hmgData });
+  const [imageProps, setImageProps] = useState(modelType.powerTrainOption.imageUrl);
+  const [titleProps, setTitleProps] = useState({
+    type: INFO.TYPE,
+    subTitle: '',
+    mainTitle: '',
+    info: '',
+  });
 
-const HMGTAG_TYPE = 'tag20';
+  useEffect(() => {
+    switch (modelType.pickId) {
+      case modelType.powerTrainId:
+        setTitleProps(() => ({
+          type: INFO.TYPE,
+          subTitle: modelType.powerTrainType,
+          mainTitle: modelType.powerTrainOption.name,
+          info: modelType.powerTrainOption.description,
+        }));
+        setImageProps(modelType.powerTrainOption.imageUrl);
+        setHMGDataProps({ hmgData: modelType.powerTrainOption.hmgData });
+        break;
 
-function Info({ imageUrl }) {
-  const TitleProps = {
-    type: TYPE,
-    subTitle: SUB_TITLE,
-    mainTitle: MAIN_TITLE,
-    info: INFO,
-  };
+      case modelType.bodyTypeId:
+        setTitleProps(() => ({
+          type: INFO.TYPE,
+          subTitle: modelType.bodyTypeType,
+          mainTitle: modelType.bodyTypeOption.name,
+          info: modelType.bodyTypeOption.description,
+        }));
+        setImageProps(modelType.bodyTypeOption.imageUrl);
+        setHMGDataProps({ hmgData: modelType.bodyTypeOption.hmgData });
+        break;
 
-  const HMGTagProps = { type: HMGTAG_TYPE };
+      case modelType.wheelDriveId:
+        setTitleProps(() => ({
+          type: INFO.TYPE,
+          subTitle: modelType.wheelDriveType,
+          mainTitle: modelType.wheelDriveOption.name,
+          info: modelType.wheelDriveOption.description,
+        }));
+        setImageProps(modelType.wheelDriveOption.imageUrl);
+        setHMGDataProps({ hmgData: modelType.wheelDriveOption.hmgData });
+        break;
+
+      default:
+        console.error('Invalid pickId:', modelType.pickId);
+        break;
+    }
+  }, [modelType.pickId]);
 
   return (
     <S.Info>
       <S.ModelText>
-        <Title {...TitleProps} />
+        <Title {...titleProps} />
         <S.HMG>
-          <HMGTag {...HMGTagProps} />
-          <HMGData />
+          {modelType.pickId === modelType.powerTrainId && <HMGTag {...HMGTagProps} />}
+          <HMGData {...HMGDataProps} />
         </S.HMG>
       </S.ModelText>
-      <S.ModelImage src={imageUrl} />
+      <S.ModelImage src={imageProps} />
     </S.Info>
   );
 }

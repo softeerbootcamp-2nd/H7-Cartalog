@@ -1,23 +1,39 @@
-import * as S from './style';
+import { useState, useEffect } from 'react';
 import { useData } from '../../../../utils/Context';
-import { HMG_DATA, HMG_TAG } from './constants';
+import { HMG_DATA, HMG_TAG } from '../../constants';
+import * as S from './style';
 import HMGTag from '../../../../components/HMGTag';
 import HMGUnit from './HMGUnit';
 
-// ! API 연결 후 수정 필요
-const cc = 2199;
-const km = 12;
-
 function HMGData() {
-  const { modelType } = useData();
+  const { trim, modelType } = useData();
+  const [hmgData, setHmgData] = useState({
+    displacement: '',
+    fuelEfficiency: '',
+  });
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(
+        `http://3.36.126.30/models/trims/detail?modelTypeIds=${modelType.powerTrainId}&modelTypeIds=${modelType.bodyTypeId}&modelTypeIds=${modelType.wheelDriveId}&trimId=${trim.trimId}`,
+      );
+      const dataFetch = await response.json();
+      setHmgData({
+        displacement: dataFetch.displacement,
+        fuelEfficiency: dataFetch.fuelEfficiency,
+      });
+    }
+    fetchData();
+  }, [modelType.pickId]);
+
   const tagProps = { type: HMG_TAG.TYPE };
   const displacementProps = {
     title: HMG_DATA.DISPLACEMENT,
-    unit: cc.toLocaleString('ko-KR') + HMG_DATA.DISPLACEMENT_UNIT,
+    unit: `${hmgData.displacement.toLocaleString('ko-KR')}${HMG_DATA.DISPLACEMENT_UNIT}`,
   };
   const fuelEfficiencyProps = {
     title: HMG_DATA.FUELEFFICIENCY,
-    unit: km + HMG_DATA.FUELEFFICIENCY_UNIT,
+    unit: `${hmgData.fuelEfficiency}${HMG_DATA.FUELEFFICIENCY_UNIT}`,
   };
 
   return (
@@ -25,9 +41,9 @@ function HMGData() {
       <S.Info>
         <HMGTag {...tagProps} />
         <S.InfoText>
-          <S.InfoHighlight>디젤2.2</S.InfoHighlight>
+          <S.InfoHighlight>{modelType.powerTrainOption.name}</S.InfoHighlight>
           {HMG_DATA.AND}&nbsp;
-          <S.InfoHighlight>2WD</S.InfoHighlight>
+          <S.InfoHighlight>{modelType.wheelDriveOption.name}</S.InfoHighlight>
           {HMG_DATA.OF}
         </S.InfoText>
         <S.InfoText>{HMG_DATA.INFO}</S.InfoText>
