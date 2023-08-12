@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
+import softeer.wantcar.cartalog.global.ServerPaths;
 import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
 
 import java.util.List;
@@ -19,18 +20,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 @JdbcTest
 @Sql({"classpath:schema.sql"})
 class TrimColorQueryRepositoryImplTest {
-    @Value("${env.imageServerPath}")
-    String imageServerPath = "example-url";
-
     @Autowired
     NamedParameterJdbcTemplate jdbcTemplate;
     TrimTestRepository trimQueryRepository;
     TrimColorQueryRepository trimColorQueryRepository;
+    ServerPaths serverPaths = new ServerPaths();
     SoftAssertions softAssertions;
 
     @BeforeEach
     void setUp() {
-        trimColorQueryRepository = new TrimColorQueryRepositoryImpl(jdbcTemplate);
+        trimColorQueryRepository = new TrimColorQueryRepositoryImpl(serverPaths, jdbcTemplate);
         trimQueryRepository = new TrimTestRepository(jdbcTemplate);
         softAssertions = new SoftAssertions();
     }
@@ -51,7 +50,7 @@ class TrimColorQueryRepositoryImplTest {
             //then
             softAssertions.assertThat(result.getExteriorColors().size()).isEqualTo(6);
             softAssertions.assertThat(result.hasColor(selectableLeBlancExteriorColors)).isTrue();
-            softAssertions.assertThat(result.startWithUrl(imageServerPath)).isTrue();
+            softAssertions.assertThat(result.startWithUrl(serverPaths.IMAGE_SERVER_PATH)).isTrue();
             softAssertions.assertAll();
         }
 

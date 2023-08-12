@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import softeer.wantcar.cartalog.entity.model.ModelExteriorColor;
 import softeer.wantcar.cartalog.entity.model.ModelInteriorColor;
+import softeer.wantcar.cartalog.global.ServerPaths;
 import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimInteriorColorListResponseDto;
 import softeer.wantcar.cartalog.trim.repository.TrimColorQueryRepository;
@@ -27,6 +28,7 @@ import static org.mockito.Mockito.when;
 
 @DisplayName("색상 도메인 컨트롤러 테스트")
 class TrimColorControllerTest {
+    ServerPaths serverPaths = new ServerPaths();
     SoftAssertions softAssertions;
     TrimColorQueryRepository trimColorQueryRepository;
     TrimColorService trimColorService;
@@ -37,7 +39,7 @@ class TrimColorControllerTest {
         trimColorService = new MockTrimColorService();
         softAssertions = new SoftAssertions();
         trimColorQueryRepository = mock(TrimColorQueryRepository.class);
-        trimColorController = new TrimColorController(trimColorService, trimColorQueryRepository);
+        trimColorController = new TrimColorController(trimColorService, trimColorQueryRepository, serverPaths);
     }
 
     @Nested

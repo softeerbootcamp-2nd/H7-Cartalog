@@ -3,12 +3,12 @@ package softeer.wantcar.cartalog.trim.repository;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import softeer.wantcar.cartalog.global.ServerPaths;
 import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
 
 import java.sql.ResultSet;
@@ -19,9 +19,7 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class TrimColorQueryRepositoryImpl implements TrimColorQueryRepository {
-    @Value("${env.imageServerPath}")
-    private static String imageServerPath = "example-url";
-
+    private final ServerPaths serverPaths;
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Builder
@@ -41,16 +39,16 @@ public class TrimColorQueryRepositoryImpl implements TrimColorQueryRepository {
                     .carImageUrl(exteriorImageUrl)
                     .build();
         }
+    }
 
-        private static TrimExteriorColorQueryResult mapping(final ResultSet rs, int rowNumber) throws SQLException {
-            return TrimExteriorColorQueryResult.builder()
-                    .code(rs.getString("code"))
-                    .name(rs.getString("name"))
-                    .imageUrl(imageServerPath + "/" + rs.getString("image_url"))
-                    .price(rs.getInt("price"))
-                    .exteriorImageUrl(imageServerPath + "/" + rs.getString("exterior_image_url"))
-                    .build();
-        }
+    private TrimExteriorColorQueryResult mapping(final ResultSet rs, int rowNumber) throws SQLException {
+        return TrimExteriorColorQueryResult.builder()
+                .code(rs.getString("code"))
+                .name(rs.getString("name"))
+                .imageUrl(serverPaths.IMAGE_SERVER_PATH + "/" + rs.getString("image_url"))
+                .price(rs.getInt("price"))
+                .exteriorImageUrl(serverPaths.IMAGE_SERVER_PATH + "/" + rs.getString("exterior_image_url"))
+                .build();
     }
 
     @Override
@@ -61,7 +59,7 @@ public class TrimColorQueryRepositoryImpl implements TrimColorQueryRepository {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("trimId", trimId);
 
-        List<TrimExteriorColorQueryResult> results = jdbcTemplate.query(SQL, parameters, TrimExteriorColorQueryResult::mapping);
+        List<TrimExteriorColorQueryResult> results = jdbcTemplate.query(SQL, parameters, this::mapping);
         if (results.isEmpty()) {
             return null;
         }
