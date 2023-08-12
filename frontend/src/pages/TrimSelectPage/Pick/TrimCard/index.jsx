@@ -33,11 +33,11 @@ function TrimCard({ name, description, price, defaultInfo, active, onClick }) {
       },
       exteriorColor: {
         ...prevState.exteriorColor,
-        exteriorColorId,
+        code: exteriorColorId,
       },
       interiorColor: {
         ...prevState.interiorColor,
-        interiorColorId,
+        code: interiorColorId,
       },
       price: {
         ...prevState.price,

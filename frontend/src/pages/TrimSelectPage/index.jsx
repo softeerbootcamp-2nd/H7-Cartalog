@@ -10,7 +10,7 @@ function TrimSelect() {
 
   useEffect(() => {
     async function fetchData() {
-      if (!trim.isTrimFetch) {
+      if (!trim.isFetch) {
         const response = await fetch('http://3.36.126.30/models/trims?basicModelId=1');
         const dataFetch = await response.json();
 
@@ -18,8 +18,8 @@ function TrimSelect() {
           ...prevState,
           trim: {
             ...prevState.trim,
-            trimFetch: [...dataFetch.trims],
-            isTrimFetch: true,
+            fetchData: [...dataFetch.trims],
+            isFetch: true,
           },
         }));
       }
@@ -30,7 +30,7 @@ function TrimSelect() {
       ...prevState,
       modelType: {
         ...prevState.modelType,
-        isModelTypeFetch: false,
+        isFetch: false,
       },
     }));
   }, []);
@@ -42,7 +42,7 @@ function TrimSelect() {
     showPriceStatic: false,
   };
 
-  return trim.isTrimFetch ? <Section {...SectionProps} /> : <div>loading...</div>;
+  return trim.isFetch ? <Section {...SectionProps} /> : <div>loading...</div>;
 }
 
 export default TrimSelect;

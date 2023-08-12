@@ -14,7 +14,7 @@ function Pick() {
     <S.Pick>
       <PickTitle {...pickTitleProps} />
       <S.PickModel>
-        {modelType.modelTypeFetch.map((data) => (
+        {modelType.fetchData.map((data) => (
           <PickCard key={data.type} data={data} />
         ))}
       </S.PickModel>

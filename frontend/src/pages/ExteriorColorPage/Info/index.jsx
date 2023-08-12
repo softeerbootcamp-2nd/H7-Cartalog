@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useData } from '../../../utils/Context';
 import { INFO } from '../constants';
 import * as S from './style';
@@ -11,10 +12,20 @@ function Info() {
   const TitleProps = {
     type: INFO.TYPE,
     subTitle: INFO.SUB_TITLE,
-    mainTitle: exteriorColor.pickName,
+    mainTitle: exteriorColor.name,
   };
 
-  document.addEventListener('mouseup', () => {
+  const handleMouseDown = () => {
+    setTrimState((prevState) => ({
+      ...prevState,
+      exteriorColor: {
+        ...prevState.exteriorColor,
+        rotate: true,
+      },
+    }));
+  };
+
+  const handleMouseUp = () => {
     setTrimState((prevState) => ({
       ...prevState,
       exteriorColor: {
@@ -22,20 +33,17 @@ function Info() {
         rotate: false,
       },
     }));
-  });
+  };
+
+  useEffect(() => {
+    document.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, []);
 
   return (
-    <S.Info
-      onMouseDown={() => {
-        setTrimState((prevState) => ({
-          ...prevState,
-          exteriorColor: {
-            ...prevState.exteriorColor,
-            rotate: true,
-          },
-        }));
-      }}
-    >
+    <S.Info onMouseDown={handleMouseDown}>
       <Title {...TitleProps} />
       <TrimStand />
       <TrimImage />

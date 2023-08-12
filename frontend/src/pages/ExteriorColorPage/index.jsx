@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useData } from '../../utils/Context';
 import { EXTERIOR_COLOR } from './constants';
 import Section from '../../components/Section';
@@ -6,25 +6,32 @@ import Info from './Info';
 import Pick from './Pick';
 
 function ExteriorColor() {
-  const [isFetched, setIsFetched] = useState(false);
-  const { setTrimState, trim } = useData();
+  const { setTrimState, trim, exteriorColor } = useData();
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(
-        `http://3.36.126.30/models/trims/exterior-colors?id=${trim.trimId}`,
-      );
-      const dataFetch = await response.json();
+      if (!exteriorColor.isFetch) {
+        const response = await fetch(
+          `http://3.36.126.30/models/trims/exterior-colors?trimId=${trim.Id}`,
+        );
+        const dataFetch = await response.json();
+        const defaultData = dataFetch.exteriorColors.find(
+          (data) => data.code === exteriorColor.code,
+        );
 
-      setTrimState((prevState) => ({
-        ...prevState,
-        page: 3,
-        exteriorColor: {
-          ...prevState.exteriorColor,
-          dataFetch: [...dataFetch.trimExteriorColorDtoList],
-        },
-      }));
-      setIsFetched(true);
+        setTrimState((prevState) => ({
+          ...prevState,
+          exteriorColor: {
+            ...exteriorColor,
+            fetchData: [...dataFetch.exteriorColors],
+            page: dataFetch.exteriorColors.length - 3,
+            isFetch: true,
+            name: defaultData.name,
+            carImageUrl: defaultData.carImageUrl,
+          },
+        }));
+      }
+      setTrimState((prevState) => ({ ...prevState, page: 3 }));
     }
     fetchData();
   }, []);
@@ -35,7 +42,7 @@ function ExteriorColor() {
     Pick: <Pick />,
   };
 
-  return isFetched ? <Section {...SectionProps} /> : <>Loding</>;
+  return exteriorColor.isFetch ? <Section {...SectionProps} /> : <>Loding</>;
 }
 
 export default ExteriorColor;
