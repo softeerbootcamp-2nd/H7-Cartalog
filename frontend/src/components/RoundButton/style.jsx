@@ -50,8 +50,10 @@ export const Title = styled.div`
       if (type === 'price' && $state === 'active') {
         return `background-color: ${theme.color.skyBlue}4c`;
       }
-      if (type === 'option' && $state === 'active') {
-        return `background-color: ${theme.color.white}`;
+      if (type === 'option') {
+        return `border: 1px solid ${theme.color.skyBlue};
+        color: ${theme.color.primary['500']};
+        `;
       }
     }}
   }
