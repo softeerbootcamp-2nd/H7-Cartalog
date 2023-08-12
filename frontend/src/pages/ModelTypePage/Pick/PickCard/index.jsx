@@ -3,7 +3,7 @@ import * as S from './style';
 import TypeCard from '../../../../components/TypeCard';
 
 function PickCard({ data }) {
-  const { setTrimState, modelType } = useData();
+  const { setTrimState, modelType, price } = useData();
 
   const updateTrimState = (idKey, optionKey, priceKey, option) => {
     if (modelType[idKey] === option.id) return;
@@ -15,7 +15,7 @@ function PickCard({ data }) {
     };
 
     const updatedPrice = {
-      ...setTrimState.price,
+      ...price,
       [priceKey]: option.price,
     };
 
