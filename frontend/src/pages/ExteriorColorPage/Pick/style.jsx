@@ -9,6 +9,7 @@ export const Color = styled.div`
   display: flex;
   margin-top: 12px;
   gap: 16px;
+  overflow: hidden;
 `;
 
 export const Footer = styled.div`

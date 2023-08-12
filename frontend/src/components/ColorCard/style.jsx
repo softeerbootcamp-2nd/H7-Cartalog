@@ -4,6 +4,7 @@ import { CardCss } from '../../styles/GlobalStyle';
 export const ColorCard = styled.button`
   ${CardCss}
   display: flex;
+  flex-shrink: 0;
   width: 244px;
   height: 110px;
   padding: 0;
