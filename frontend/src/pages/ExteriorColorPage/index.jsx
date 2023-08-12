@@ -15,6 +15,9 @@ function ExteriorColor() {
           `http://3.36.126.30/models/trims/exterior-colors?trimId=${trim.Id}`,
         );
         const dataFetch = await response.json();
+        const defaultData = dataFetch.exteriorColors.find(
+          (data) => data.code === exteriorColor.code,
+        );
 
         setTrimState((prevState) => ({
           ...prevState,
@@ -23,6 +26,8 @@ function ExteriorColor() {
             fetchData: [...dataFetch.exteriorColors],
             page: dataFetch.exteriorColors.length - 3,
             isFetch: true,
+            name: defaultData.name,
+            carImageUrl: defaultData.carImageUrl,
           },
         }));
       }
@@ -33,7 +38,7 @@ function ExteriorColor() {
 
   const SectionProps = {
     type: EXTERIOR_COLOR.TYPE,
-    // Info: <Info />,
+    Info: <Info />,
     Pick: <Pick />,
   };
 

@@ -3,7 +3,8 @@ import { useData } from '../../../../utils/Context';
 import * as S from './style';
 
 // !FIX : API완성되면 상수 없애기
-const trimSelect = 'le-blanc';
+const mockData =
+  'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade/le-blanc/exterior/A2B';
 
 function TrimImage() {
   const { exteriorColor } = useData();
@@ -27,9 +28,7 @@ function TrimImage() {
   return (
     <S.TrimImage>
       <S.RotateImage
-        src={`${exteriorColor.pickCarImageUrl}/${trimSelect}/exterior/${
-          exteriorColor.exteriorColorId
-        }/${image.toString().padStart(3, '0')}.png`}
+        src={`${mockData}/${image.toString().padStart(3, '0')}.png`}
         onMouseMove={startSwipe}
       />
     </S.TrimImage>
