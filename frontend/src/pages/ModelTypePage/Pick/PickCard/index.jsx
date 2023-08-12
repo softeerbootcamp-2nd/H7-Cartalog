@@ -43,13 +43,19 @@ function PickCard({ data }) {
               modelType.wheelDriveId === option.id
             }
             onClick={() => {
-              if (data.type === modelType.powerTrainType)
-                updateTrimState('powerTrainId', 'powerTrainOption', 'powerTrainPrice', option);
-              if (data.type === modelType.bodyTypeType) {
-                updateTrimState('bodyTypeId', 'bodyTypeOption', 'bodyTypePrice', option);
-              }
-              if (data.type === modelType.wheelDriveType) {
-                updateTrimState('wheelDriveId', 'wheelDriveOption', 'wheelDrivePrice', option);
+              switch (data.type) {
+                case modelType.powerTrainType:
+                  updateTrimState('powerTrainId', 'powerTrainOption', 'powerTrainPrice', option);
+                  break;
+                case modelType.bodyTypeType:
+                  updateTrimState('bodyTypeId', 'bodyTypeOption', 'bodyTypePrice', option);
+                  break;
+                case modelType.wheelDriveType:
+                  updateTrimState('wheelDriveId', 'wheelDriveOption', 'wheelDrivePrice', option);
+                  break;
+                default:
+                  console.error('Unhandled data type:', data.type);
+                  break;
               }
             }}
           />

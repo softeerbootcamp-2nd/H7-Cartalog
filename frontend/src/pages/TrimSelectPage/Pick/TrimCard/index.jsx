@@ -8,36 +8,54 @@ function TrimCard({ name, description, price, defaultInfo, active, onClick }) {
   const { setTrimState, page } = useData();
   const navigate = useNavigate();
 
+  const goToNextPage = () => {
+    const nextPage = PAGE.find((type) => type.page === page + 1);
+    if (nextPage) {
+      navigate(nextPage.to);
+    }
+  };
+
+  const updateState = () => {
+    const {
+      modelTypes: [powerTrainType, bodyType, wheelDriveType],
+      exteriorColorId,
+      interiorColorId,
+    } = defaultInfo;
+
+    setTrimState((prevState) => ({
+      ...prevState,
+      modelType: {
+        ...prevState.modelType,
+        pickId: powerTrainType.option.id,
+        powerTrainId: powerTrainType.option.id,
+        bodyTypeId: bodyType.option.id,
+        wheelDriveId: wheelDriveType.option.id,
+      },
+      exteriorColor: {
+        ...prevState.exteriorColor,
+        exteriorColorId,
+      },
+      interiorColor: {
+        ...prevState.interiorColor,
+        interiorColorId,
+      },
+      price: {
+        ...prevState.price,
+        trimPrice: price,
+        powerTrainPrice: powerTrainType.option.price,
+        bodyTypePrice: bodyType.option.price,
+        wheelDrivePrice: wheelDriveType.option.price,
+      },
+    }));
+  };
+
   const buttonProps = {
     type: TRIM_CARD.TYPE,
     state: TRIM_CARD.STATE,
     mainTitle: TRIM_CARD.MAIN_TITLE,
     event: () => {
-      navigate(PAGE.find((type) => type.page === page + 1).to);
-      setTrimState((prevState) => ({
-        ...prevState,
-        modelType: {
-          ...prevState.modelType,
-          powerTrainId: defaultInfo.modelTypes[0].option.id,
-          bodyTypeId: defaultInfo.modelTypes[1].option.id,
-          wheelDriveId: defaultInfo.modelTypes[2].option.id,
-          powerTrainOption: defaultInfo.modelTypes[0].option,
-          bodyTypeOption: defaultInfo.modelTypes[1].option,
-          wheelDriveOption: defaultInfo.modelTypes[2].option,
-        },
-        exteriorColor: {
-          ...prevState.exteriorColor,
-          exteriorColorId: defaultInfo.exteriorColorId,
-        },
-        interiorColor: {
-          ...prevState.interiorColor,
-          interiorColorId: defaultInfo.interiorColorId,
-        },
-        price: {
-          ...prevState.price,
-          trimPrice: price,
-        },
-      }));
+      goToNextPage();
+      updateState();
     },
   };
 

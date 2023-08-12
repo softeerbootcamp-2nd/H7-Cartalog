@@ -5,7 +5,7 @@ import HMGChart from './HMGChart';
 function HMGData({ hmgData }) {
   return (
     <S.HMGData>
-      {hmgData.map((data, index) => (
+      {hmgData?.map((data, index) => (
         <React.Fragment key={data.name}>
           <HMGChart {...data} />
           {index === 0 && <S.Divide />}

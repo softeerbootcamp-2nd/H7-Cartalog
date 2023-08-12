@@ -1,3 +1,4 @@
+import { useData, TotalPrice } from '../../utils/Context';
 import PriceStaticBar from '../PriceStaticBar';
 import * as S from './style';
 
@@ -10,15 +11,22 @@ import * as S from './style';
  * @returns
  */
 function Section({ type, url, Info, Pick, showPriceStatic = true }) {
+  const { trim, price } = useData();
   const SectionProps = { type, $url: url };
-
+  const SelectModel = trim.trimFetch.find((model) => model.id === trim.trimId);
   return (
     <S.Section>
       <S.Background {...SectionProps}>
         <S.Contents>{Info}</S.Contents>
       </S.Background>
       <S.Contents>{Pick}</S.Contents>
-      {showPriceStatic && <PriceStaticBar min={10000000} max={50000000} price={25000000} />}
+      {showPriceStatic && (
+        <PriceStaticBar
+          min={SelectModel.minPrice}
+          max={SelectModel.maxPrice}
+          price={TotalPrice(price)}
+        />
+      )}
     </S.Section>
   );
 }

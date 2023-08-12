@@ -1,6 +1,5 @@
+import { HMG_CHART } from '../../../constants';
 import * as S from './style';
-
-const OUTPUT_DIVIDE = '/';
 
 /**
  * HMGChart를 그려주는 컴포넌트
@@ -21,7 +20,7 @@ function HMGChart({ name, measure, rpm, value }) {
       </S.Title>
       <S.Output>
         {value}
-        {OUTPUT_DIVIDE}
+        {HMG_CHART.DIVIDE}
         {rpm}
       </S.Output>
       <S.Chart>

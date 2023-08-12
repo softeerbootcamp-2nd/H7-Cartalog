@@ -24,3 +24,7 @@ export const HMG_DATA = {
 export const HMG_TAG = {
   TYPE: 'tag20',
 };
+
+export const HMG_CHART = {
+  DIVIDE: '/',
+};

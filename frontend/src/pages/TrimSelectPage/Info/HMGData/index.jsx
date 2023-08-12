@@ -3,7 +3,7 @@ import * as S from './style';
 function HMGData({ data }) {
   return (
     <S.HMGData>
-      {data.map((item) => (
+      {data?.map((item) => (
         <S.Item key={item.name}>
           <S.Title>{item.name}</S.Title>
           <S.Divide />
