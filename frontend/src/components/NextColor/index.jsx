@@ -3,10 +3,12 @@ import * as S from './style';
 
 function NextColor() {
   const { setTrimState, exteriorColor } = useData();
+  const arrowProps = { count: exteriorColor.count, page: exteriorColor.page };
 
   return (
     <S.NextColor>
       <S.ArrowLeftButton
+        {...arrowProps}
         onClick={() => {
           if (exteriorColor.count > 1) {
             setTrimState((prevState) => ({
@@ -24,6 +26,7 @@ function NextColor() {
         {exteriorColor.count}/{exteriorColor.page}
       </S.Page>
       <S.ArrowRightButton
+        {...arrowProps}
         onClick={() => {
           if (exteriorColor.count < exteriorColor.page) {
             setTrimState((prevState) => ({

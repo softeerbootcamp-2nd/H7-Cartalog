@@ -9,11 +9,14 @@ export const NextColor = styled.div`
 `;
 
 export const ArrowLeftButton = styled(ArrowLeft)`
+  fill: ${({ count, theme }) => (count === 1 ? theme.color.gray['200'] : theme.color.gray['600'])};
   cursor: pointer;
   padding: 8px;
 `;
 
 export const ArrowRightButton = styled(ArrowRight)`
+  fill: ${({ count, page, theme }) =>
+    count === page ? theme.color.gray['200'] : theme.color.gray['600']};
   cursor: pointer;
   padding: 8px;
 `;
