@@ -1,4 +1,4 @@
-category
-상세품목
-악세사리
-휠
+category|multiple_select
+상세품목|true
+악세사리|true
+휠|false
