@@ -2,7 +2,9 @@ package com.softeer.cartalog.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.softeer.cartalog.R
 import com.softeer.cartalog.data.model.Option
 import com.softeer.cartalog.databinding.ItemOptionSelectCardBinding
 import com.softeer.cartalog.viewmodel.OptionViewModel
@@ -39,6 +41,10 @@ class OptionSelectAdapter(private val viewModel: OptionViewModel) :
             binding.position = position
             binding.optionAdapter = this@OptionSelectAdapter
             binding.option = item
+
+            binding.btnHmgData.setOnClickListener {
+                it.findNavController().navigate(R.id.optionDetailDialog)
+            }
         }
     }
 }

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.softeer.cartalog.data.enums.ModelTypeSubject" />
+
+        <variable
+            name="selected"
+            type="Integer" />
+
+        <variable
+            name="type"
+            type="ModelTypeSubject" />
+
+        <variable
+            name="viewModel"
+            type="com.softeer.cartalog.viewmodel.TypeViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="24dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="24dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.6" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_hmg_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/hyndaisans_head_bold"
+            android:gravity="center"
+            android:text="2열 통풍시트"
+            android:paddingBottom="10dp"
+            android:textColor="@color/gray_900"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_start"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btn_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_close"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintTop_toTopOf="@id/tv_title"
+            app:tint="@color/gray_800" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_option"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:tabBackground="@color/white"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/gray_900"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/gray_900"
+            app:tabTextAppearance="@style/TabOptionDetailTextStyle"
+            app:tabTextColor="@color/gray_200"/>
+
+
+        <ImageView
+            android:id="@+id/iv_detail"
+            android:layout_width="0dp"
+            android:layout_height="140dp"
+            android:background="@color/card_bg_color"
+            android:scaleType="centerCrop"
+            android:src="@drawable/tmp_img_option_item"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tl_option" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/cg_hashtag"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_start"
+            app:layout_constraintTop_toTopOf="@id/iv_detail"/>
+
+
+        <TextView
+            android:id="@+id/tv_detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:lineSpacingExtra="1.8dp"
+            android:text="시동이 걸린 상태에서 해당 좌석의 통풍 스위치를 누르면 표시등이 켜지면서 해당 좌석에 바람이 나오는 편의장치입니다. 시동이 걸린 상태에서 해당 좌석의 통풍 스위치를 누르면 표시등이 켜지면서 해당 좌석에 바람이 나오는 편의장치입니다."
+            android:textColor="@color/gray_800"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_start"
+            app:layout_constraintTop_toBottomOf="@id/iv_detail" />
+
+        <View
+            android:id="@+id/v_gray_bgr"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/gray_50"
+            app:layout_constraintBottom_toTopOf="@id/btn_complete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gl_bottom" />
+
+        <TextView
+            android:id="@+id/tv_hmg_tag"
+            style="@style/HmgDataTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/gl_start"
+            app:layout_constraintTop_toBottomOf="@id/gl_bottom" />
+
+        <TextView
+            android:id="@+id/tv_hmg_data_1_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="12dp"
+            android:gravity="start"
+            android:lineSpacingExtra="6sp"
+            android:text="안전 하차 보조\n"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/gl_hmg_center"
+            app:layout_constraintStart_toStartOf="@+id/gl_start"
+            app:layout_constraintTop_toBottomOf="@id/tv_hmg_tag" />
+
+        <View
+            android:id="@+id/tv_hmg_data_1_divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="12dp"
+            android:background="@color/gray_400"
+            app:layout_constraintEnd_toEndOf="@id/gl_hmg_center"
+            app:layout_constraintStart_toStartOf="@id/gl_start"
+            app:layout_constraintTop_toBottomOf="@id/tv_hmg_data_1_title" />
+
+        <TextView
+            android:id="@+id/tv_hmg_data_1_times"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/hyndaisans_head_medium"
+            android:paddingBottom="4dp"
+            android:text="2,384개"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@id/tv_hmg_data_1_divider"
+            app:layout_constraintStart_toStartOf="@+id/gl_start"
+            app:layout_constraintTop_toBottomOf="@id/tv_hmg_data_1_divider" />
+
+        <TextView
+            android:id="@+id/tv_hmg_data_1_km"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:gravity="start"
+            android:text="최근 90일 동안"
+            android:textColor="@color/gray_600"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="@id/gl_hmg_center"
+            app:layout_constraintStart_toStartOf="@id/gl_start"
+            app:layout_constraintTop_toBottomOf="@id/tv_hmg_data_1_times" />
+
+        <TextView
+            android:id="@+id/tv_hmg_data_2_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:lineSpacingExtra="6sp"
+            android:text="주행 중 실제로\n이만큼 사용해요."
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/gl_hmg_center"
+            app:layout_constraintTop_toBottomOf="@id/tv_hmg_tag" />
+
+        <View
+            android:id="@+id/tv_hmg_data_2_divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="6dp"
+            android:background="@color/gray_400"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_hmg_center"
+            app:layout_constraintTop_toBottomOf="@id/tv_hmg_data_2_title" />
+
+        <TextView
+            android:id="@+id/tv_hmg_data_2_times"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/hyndaisans_head_medium"
+            android:paddingBottom="4dp"
+            android:text="73.2번"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@id/tv_hmg_data_2_divider"
+            app:layout_constraintStart_toStartOf="@id/gl_hmg_center"
+            app:layout_constraintTop_toBottomOf="@id/tv_hmg_data_2_divider" />
+
+        <TextView
+            android:id="@+id/tv_hmg_data_2_km"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="1.5만km 당"
+            android:textColor="@color/gray_600"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="@id/tv_hmg_data_2_times"
+            app:layout_constraintStart_toStartOf="@id/gl_hmg_center"
+            app:layout_constraintTop_toBottomOf="@id/tv_hmg_data_2_times" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_complete"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="@color/primary_color_700"
+            android:elevation="11dp"
+            android:fontFamily="@font/hyndaisans_head_medium"
+            android:text="@string/summary_complete"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/v_gray_bgr"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

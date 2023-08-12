@@ -8,8 +8,8 @@ class UtilManager {
 
         fun getViewPagerGap(viewPager: ViewPager2): Int {
             val pageMarginPx =
-                viewPager.context.resources.getDimensionPixelOffset(R.dimen.pageMargin)
-            val pagerWidth = viewPager.context.resources.getDimensionPixelOffset(R.dimen.pagerWidth)
+                viewPager.context.resources.getDimensionPixelOffset(R.dimen.page_margin)
+            val pagerWidth = viewPager.context.resources.getDimensionPixelOffset(R.dimen.pager_width)
             val screenWidth = viewPager.context.resources.displayMetrics.widthPixels
             val offsetPx = screenWidth - pageMarginPx - pagerWidth
 
