@@ -26,7 +26,7 @@ export const Chart = styled.div`
 
 export const Bar = styled.div`
   position: absolute;
-  width: ${({ width }) => width};
+  width: ${({ value }) => `${value}px`};
   height: 4px;
   background-color: ${({ theme }) => theme.color.activeBlue2};
 `;
