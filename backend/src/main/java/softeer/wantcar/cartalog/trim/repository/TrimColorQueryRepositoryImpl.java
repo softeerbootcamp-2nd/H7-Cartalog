@@ -54,12 +54,12 @@ public class TrimColorQueryRepositoryImpl implements TrimColorQueryRepository {
     @Override
     @Transactional(readOnly = true)
     public TrimExteriorColorListResponseDto findTrimExteriorColorByTrimId(Long trimId) {
-        String SQL = QueryString.findTrimExteriorColorByTrimId;
-
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("trimId", trimId);
 
-        List<TrimExteriorColorQueryResult> results = jdbcTemplate.query(SQL, parameters, this::mapping);
+        List<TrimExteriorColorQueryResult> results = jdbcTemplate.query(
+                QueryString.findTrimExteriorColorByTrimId, parameters, this::mapping);
+
         if (results.isEmpty()) {
             return null;
         }

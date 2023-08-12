@@ -16,12 +16,12 @@ public class TrimTestRepository {
     @TestMethod
     @Transactional(readOnly = true)
     public Long findTrimIdByModelNameAndTrimName(String modelName, String trimName) {
-        String SQL = QueryString.findTrimIdByModelNameAndTrimName;
 
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("modelName", modelName)
                 .addValue("trimName", trimName);
 
-        return jdbcTemplate.queryForObject(SQL, parameters, Long.class);
+        return jdbcTemplate.queryForObject(
+                QueryString.findTrimIdByModelNameAndTrimName, parameters, Long.class);
     }
 }
