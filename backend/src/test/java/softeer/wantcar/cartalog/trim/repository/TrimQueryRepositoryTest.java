@@ -136,6 +136,25 @@ class TrimQueryRepositoryTest {
             //then
             assertThat(detailTrimInfoDto).isNull();
         }
+
+        @Test
+        @DisplayName("동일한 유형의 모델 타입 식별자를 전달할 경우 null을 반환한다")
+        void returnNullWhenModelTypeIdOverlapped() {
+            //given
+            Long trimId = jdbcTemplate.queryForObject("SELECT id FROM trims WHERE name = 'Le Blanc' ;", new HashMap<>(), Long.TYPE);
+            Long powerTrainId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name = '디젤 2.2' ;", new HashMap<>(), Long.TYPE);
+            Long bodyTypeId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name = '7인승' ;", new HashMap<>(), Long.TYPE);
+            assert trimId != null;
+            assert powerTrainId != null;
+            assert bodyTypeId != null;
+
+            //when
+            DetailTrimInfoDto detailTrimInfoDto = trimQueryRepository.findDetailTrimInfoByTrimIdAndModelTypeIds(
+                    trimId, List.of(powerTrainId, powerTrainId, bodyTypeId));
+
+            //then
+            assertThat(detailTrimInfoDto).isNull();
+        }
     }
 
     private void verifyPalisadeTrimDto(TrimListResponseDto.TrimDto exclusive,
