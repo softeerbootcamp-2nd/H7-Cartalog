@@ -1,6 +1,17 @@
 import styled from 'styled-components';
 
-export const Pick = styled.div``;
+export const Pick = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+`;
+
+export const OptionGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+`;
 
 export const Footer = styled.div`
   display: flex;
