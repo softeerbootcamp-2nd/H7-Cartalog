@@ -41,8 +41,8 @@ public class TrimListResponseDto {
     public static class DefaultTrimInfoDto {
         @Singular(value = "modelType")
         private List<ModelTypeDto> modelTypes;
-        private String exteriorColorId;
-        private String interiorColorId;
+        private String exteriorColorCode;
+        private String interiorColorCode;
     }
 
     @Getter
