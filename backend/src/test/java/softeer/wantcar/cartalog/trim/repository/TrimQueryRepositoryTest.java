@@ -149,7 +149,6 @@ class TrimQueryRepositoryTest {
             assert bodyTypeId != null;
 
             //when
-
             DetailTrimInfoDto detailTrimInfoDto = trimQueryRepository.findDetailTrimInfoByTrimIdAndModelTypeIds(
                     trimId, List.of(powerTrainId, powerTrainId, bodyTypeId));
 
