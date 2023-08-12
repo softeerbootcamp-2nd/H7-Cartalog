@@ -51,10 +51,12 @@ export function StateProvider({ children }) {
         break;
       case 'exteriorColor':
         acc[key] = {
-          dataFetch: [],
-          exteriorColorId: 'A2B',
-          pickName: '어비스 블랙 펄',
-          pickCarImageUrl: 'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade',
+          exteriorColorFetch: [],
+          isExteriorColorFetch: false,
+          exteriorColorCode: null,
+          exteriorColorName: '어비스 블랙 펄',
+          exteriorColorCarImageUrl:
+            'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade',
           rotate: false,
         };
         break;
