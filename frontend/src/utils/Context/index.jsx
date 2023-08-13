@@ -9,7 +9,7 @@ export function StateProvider({ children }) {
     'modelType',
     'exteriorColor',
     'interiorColor',
-    'selectedOptions',
+    'optionPicker',
     'price',
   ];
 
@@ -85,7 +85,7 @@ export function StateProvider({ children }) {
             'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade/le-blanc/options/10_driverseat_s.jpg',
         };
         break;
-      case 'selectedOptions':
+      case 'optionPicker':
         acc[key] = {};
         break;
       default:
