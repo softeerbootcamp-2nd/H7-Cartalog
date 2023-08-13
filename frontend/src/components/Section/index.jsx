@@ -13,7 +13,7 @@ import * as S from './style';
 function Section({ type, url, Info, Pick, showPriceStatic = true }) {
   const { trim, price } = useData();
   const SectionProps = { type, $url: url };
-  const SelectModel = trim.fetchData.find((model) => model.id === trim.Id);
+  const SelectModel = trim.fetchData.find((model) => model.id === trim.id);
   return (
     <S.Section>
       <S.Background {...SectionProps}>

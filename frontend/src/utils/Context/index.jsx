@@ -30,7 +30,7 @@ export function StateProvider({ children }) {
         acc[key] = {
           fetchData: [],
           isFetch: false,
-          Id: 2,
+          id: 2,
         };
         break;
       case 'modelType':
