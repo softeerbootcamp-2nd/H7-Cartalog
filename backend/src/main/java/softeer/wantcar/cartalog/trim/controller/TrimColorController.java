@@ -27,7 +27,7 @@ public class TrimColorController {
             notes = "해당 트림이 선택 가능한 외부 색상을 조회한다.")
     @ApiImplicitParam(
             name = "trimId", value = "트림 식별자", required = true,
-            dataType = "java.lang.Long", paramType = "query", defaultValue = "None", example = "1")
+            dataType = "java.lang.Long", paramType = "query", example = "2")
     @ApiResponses({
             @ApiResponse(code = 404, message = "존재하지 않는 식별자입니다.")})
     @GetMapping(value = "/exterior-colors")
@@ -45,10 +45,10 @@ public class TrimColorController {
     @ApiImplicitParams({
             @ApiImplicitParam(
                     name = "trimId", value = "트림 식별자", required = true,
-                    dataType = "java.lang.Long", paramType = "query", defaultValue = "None", example = "2"),
+                    dataType = "java.lang.Long", paramType = "query", example = "2"),
             @ApiImplicitParam(
                     name = "exteriorColorCode", value = "트림 식별자", required = true,
-                    dataType = "java.lang.String", paramType = "query", defaultValue = "None", example = "A2B")
+                    dataType = "java.lang.String", paramType = "query", example = "A2B")
     })
     @ApiResponses({
             @ApiResponse(code = 404, message = "존재하지 않는 식별자입니다.")})
