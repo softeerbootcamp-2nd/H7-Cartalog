@@ -9,11 +9,28 @@ function Pick() {
   const pickTitleProps = { mainTitle: PICK.TITLE };
   const handleTrimCardClick = (trimData) => {
     if (trimData.id === trim.Id) return;
+
     setTrimState((prevState) => ({
       ...prevState,
       trim: {
         ...prevState.trim,
         Id: trimData.id,
+      },
+      modelType: {
+        ...prevState.modelType,
+        isFetch: false,
+      },
+      exteriorColor: {
+        ...prevState.exteriorColor,
+        isFetch: false,
+      },
+      interiorColor: {
+        ...prevState.interiorColor,
+        isFetch: false,
+      },
+      optionPicker: {
+        ...prevState.optionPicker,
+        isFetch: false,
       },
     }));
   };
