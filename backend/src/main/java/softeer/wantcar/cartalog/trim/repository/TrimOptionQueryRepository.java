@@ -1,34 +1,29 @@
-package softeer.wantcar.cartalog.trim.dto;
+package softeer.wantcar.cartalog.trim.repository;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import softeer.wantcar.cartalog.trim.dto.TrimOptionListResponseDto;
 
 import java.util.List;
 
-@Getter
-@Builder
-@AllArgsConstructor
-@EqualsAndHashCode
-public class TrimOptionListResponseDto {
-    private List<String> multipleSelectParentCategory;
-    private List<TrimOptionDto> selectOptions;
-    private List<TrimOptionDto> defaultOptions;
-
+public interface TrimOptionQueryRepository {
     @Getter
     @Builder
     @AllArgsConstructor
-    @EqualsAndHashCode
-    public static class TrimOptionDto {
+    public static class TrimOptionInfo {
         private Long id;
         private String name;
         private String parentCategory;
         private String childCategory;
         private String imageUrl;
         private int price;
-        private int chosen;
+        private boolean basic;
+        private boolean colorCondition;
+        private List<Long> trimInteriorColorIds;
         private List<String> hashTags;
         private boolean hasHMGData;
     }
+
+    List<TrimOptionInfo> findOptionsByDetailTrimId(Long detailTrimId);
 }

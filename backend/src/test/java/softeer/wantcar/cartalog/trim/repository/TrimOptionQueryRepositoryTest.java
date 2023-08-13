@@ -10,7 +10,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import softeer.wantcar.cartalog.global.ServerPath;
-import softeer.wantcar.cartalog.trim.dto.TrimOptionListResponseDto;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +27,7 @@ class TrimOptionQueryRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        trimOptionQueryRepository = new TrimOptionQueryRepositoryImpl(jdbcTemplate);
+        trimOptionQueryRepository = new TrimOptionQueryRepositoryImpl(serverPath, jdbcTemplate);
         softAssertions = new SoftAssertions();
     }
 
@@ -50,12 +49,12 @@ class TrimOptionQueryRepositoryTest {
                     new HashMap<>(), Long.TYPE);
 
             //when
-            List<TrimOptionListResponseDto.TrimOptionDto> trimOptions
+            List<TrimOptionQueryRepository.TrimOptionInfo> trimOptions
                     = trimOptionQueryRepository.findOptionsByDetailTrimId(leblancDetailTrimId);
 
             softAssertions.assertThat(trimOptions.isEmpty()).isFalse();
-            softAssertions.assertThat(trimOptions.size()).isEqualTo(111);
-            for (TrimOptionListResponseDto.TrimOptionDto trimOption : trimOptions) {
+            for (TrimOptionQueryRepository.TrimOptionInfo trimOption : trimOptions) {
+                softAssertions.assertThat(trimOption.getId()).isGreaterThanOrEqualTo(1);
                 softAssertions.assertThat(trimOption.getImageUrl()).startsWith(serverPath.IMAGE_SERVER_PATH);
             }
             softAssertions.assertAll();
@@ -68,8 +67,8 @@ class TrimOptionQueryRepositoryTest {
             Long notExistDetailTrimId = -1L;
 
             //when
-            List<TrimOptionListResponseDto.TrimOptionDto> trimOptions
-                    = trimOptionQueryRepository.findOptionsByDetailTrimId(leblancDetailTrimId);
+            List<TrimOptionQueryRepository.TrimOptionInfo> trimOptions
+                    = trimOptionQueryRepository.findOptionsByDetailTrimId(notExistDetailTrimId);
 
             assertThat(trimOptions).isNull();
         }

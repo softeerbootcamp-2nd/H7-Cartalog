@@ -105,19 +105,19 @@ public class QueryString {
             "WHERE dt.trim_id = :trimId " +
             ";";
 
-    public static String findOptionsByTrimIdAndInteriorColorId =
+    public static String findOptionsByDetailTrimId =
             "SELECT DISTINCT " +
             "   dto.id AS id, " +
-            "   dto.price AS price, " +
-            "   dto.color_condition AS colorCondition, " +
-            "   dto.basic AS basic, " +
             "   mo.name AS name, " +
             "   mo.parent_category AS parentCategory, " +
             "   mo.child_category AS childCategory, " +
             "   mo.image_url AS imageUrl, " +
+            "   dto.price AS price, " +
+            "   dto.basic AS basic, " +
+            "   dto.color_condition AS colorCondition, " +
             "   dtoicc.trim_interior_color_id AS trimInteriorColorId, " +
             "   moht.hash_tag AS hashTag, " +
-            "   hmg.model_option_id AS modelOptionId" +
+            "   hmg.model_option_id AS hmgModelOptionId " +
 
             "FROM detail_trim_options AS dto " +
 
