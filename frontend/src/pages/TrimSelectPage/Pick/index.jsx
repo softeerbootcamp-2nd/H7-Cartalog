@@ -15,6 +15,7 @@ function Pick() {
       trim: {
         ...prevState.trim,
         id: trimData.id,
+        isDefault: false,
       },
       modelType: {
         ...prevState.modelType,
