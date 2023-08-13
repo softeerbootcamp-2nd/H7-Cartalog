@@ -9,7 +9,7 @@ import { useData } from '../../../utils/Context';
 const MOCK_CATEGORY = ['상세품목', '액세서리', '휠'];
 
 function Pick({ data, selected, setSelected }) {
-  const { setTrimState, price, selectedOptions } = useData();
+  const { setTrimState, price, optionPicker } = useData();
   const [showDefault, setShowDefault] = useState(false);
   const options = showDefault ? data.defaultOptions : data.selectOptions;
 
@@ -17,19 +17,19 @@ function Pick({ data, selected, setSelected }) {
     setSelected(id);
   }
   function handleCheck(option) {
-    const updatedSelectedOptions = {
-      ...selectedOptions,
-      [option.id]: !selectedOptions[option.id],
+    const updatedOptionPicker = {
+      ...optionPicker,
+      [option.id]: !optionPicker[option.id],
     };
 
     const updatedPrice = {
       ...price,
-      optionPrice: price.optionPrice + (selectedOptions[option.id] ? -option.price : option.price),
+      optionPrice: price.optionPrice + (optionPicker[option.id] ? -option.price : option.price),
     };
 
     setTrimState((prevState) => ({
       ...prevState,
-      selectedOptions: updatedSelectedOptions,
+      optionPicker: updatedOptionPicker,
       price: updatedPrice,
     }));
   }
@@ -49,7 +49,7 @@ function Pick({ data, selected, setSelected }) {
             imgSrc={option.imageUrl}
             hasHmgData
             selected={selected === option.id}
-            checked={selectedOptions[option.id]}
+            checked={optionPicker[option.id]}
             select={() => handleSelect(option.id)}
             check={() => handleCheck(option)}
             isDefault={showDefault}
