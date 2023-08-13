@@ -1,8 +1,8 @@
 id|model_id|color_code|price|exterior_image_url
-1|1|A2B|0|palisade/interior/A2B.png
-2|1|R2T|0|palisade/interior/R2T.png
-3|1|R8N|0|palisade/interior/R8N.png
-4|1|UB7|0|palisade/interior/UB7.png
-5|1|D2S|0|palisade/interior/D2S.png
-6|1|P7V|0|palisade/interior/P7V.png
-7|1|WC9|100000|palisade/interior/WC9.png
+1|1|A2B|0|palisade/exterior/A2B.png
+2|1|R2T|0|palisade/exterior/R2T.png
+3|1|R8N|0|palisade/exterior/R8N.png
+4|1|UB7|0|palisade/exterior/UB7.png
+5|1|D2S|0|palisade/exterior/D2S.png
+6|1|P7V|0|palisade/exterior/P7V.png
+7|1|WC9|100000|palisade/exterior/WC9.png
