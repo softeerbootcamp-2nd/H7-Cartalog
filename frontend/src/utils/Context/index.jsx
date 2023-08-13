@@ -55,7 +55,8 @@ export function StateProvider({ children }) {
           isFetch: false,
           code: null,
           name: null,
-          carImageUrl: null,
+          carImageDirectory: null,
+          carImageList: [],
           count: 1,
           page: null,
           position: null,
@@ -64,7 +65,19 @@ export function StateProvider({ children }) {
         break;
       case 'interiorColor':
         acc[key] = {
-          dataFetch: [],
+          fetchData: [],
+          isFetch: false,
+          interiorColorId: 'I49',
+          pick: 'A22',
+          pickName: '퀼팅천연(블랙)',
+          pickCarImageUrl:
+            'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade/le-blanc/options/10_driverseat_s.jpg',
+        };
+        break;
+      case 'optionPicker':
+        acc[key] = {
+          fetchData: [],
+          isFetch: false,
           interiorColorId: 'I49',
           pick: 'A22',
           pickName: '퀼팅천연(블랙)',

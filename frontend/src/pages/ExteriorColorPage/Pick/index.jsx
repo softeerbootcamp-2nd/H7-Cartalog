@@ -19,7 +19,11 @@ function Pick() {
         ...prevState.exteriorColor,
         code: exterior.code,
         name: exterior.name,
-        carImageUrl: exterior.carImageUrl,
+        carImageDirectory: exterior.carImageDirectory,
+        carImageList: Array.from({ length: 60 }, (_, index) => {
+          const imageNumber = (index + 1).toString().padStart(3, '0');
+          return `${exterior.carImageDirectory}${imageNumber}.png`;
+        }),
       },
       price: {
         ...prevState.price,
