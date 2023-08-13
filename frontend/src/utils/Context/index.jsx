@@ -72,6 +72,9 @@ export function StateProvider({ children }) {
             'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade/le-blanc/options/10_driverseat_s.jpg',
         };
         break;
+      case 'optionPicker':
+        acc[key] = {};
+        break;
       default:
         acc[key] = null; // 다른 키들은 null로 초기화
     }
