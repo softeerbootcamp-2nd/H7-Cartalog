@@ -101,6 +101,7 @@ public class TrimColorQueryRepositoryImpl implements TrimColorQueryRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public TrimInteriorColorListResponseDto findTrimInteriorColorByTrimIdAndExteriorColorCode(Long trimId, String colorCode) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("trimId", trimId)
