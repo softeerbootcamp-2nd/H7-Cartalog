@@ -46,8 +46,12 @@ public class TrimColorController {
     }
 
     @GetMapping(value = "/interior-colors")
-    public ResponseEntity<TrimInteriorColorListResponseDto> trimInteriorColorList(@PathParam("trimId") Long trimId,
-                                                                                  @PathParam("exteriorColorId") Long exteriorColorId) {
-        return null;
+    public ResponseEntity<TrimInteriorColorListResponseDto> searchTrimInteriorColorList(@PathParam("trimId") Long trimId,
+                                                                                  @PathParam("exteriorColorCode") String exteriorColorCode) {
+        TrimInteriorColorListResponseDto trimInteriorColorListResponseDto = trimColorQueryRepository.findTrimInteriorColorByTrimIdAndExteriorColorCode(trimId, exteriorColorCode);
+        if (trimInteriorColorListResponseDto == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(trimInteriorColorListResponseDto, HttpStatus.OK);
     }
 }
