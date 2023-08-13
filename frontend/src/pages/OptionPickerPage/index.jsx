@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Section from '../../components/Section';
 import Info from './Info';
 import Pick from './Pick';
+import { useData } from '../../utils/Context';
 
 const TYPE = 'OptionPicker';
 const IMAGE_URL = '../../../../../assets/images/TrimSelect/interior.png';
@@ -59,7 +60,15 @@ const MOCK_DATA = {
 };
 
 function OptionPicker() {
+  const { setTrimState } = useData();
   const [selectedId, setSelectedId] = useState(11);
+
+  useEffect(() => {
+    setTrimState((prevState) => ({
+      ...prevState,
+      page: 5,
+    }));
+  }, [setTrimState]);
 
   const InfoProps = { imageUrl: IMAGE_URL };
   const SectionProps = {

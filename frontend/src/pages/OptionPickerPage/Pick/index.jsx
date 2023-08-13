@@ -4,28 +4,34 @@ import TypeSelector from './TypeSelector';
 import CategorySelector from './CategorySelector';
 import OptionCard from '../OptionCard';
 import NextButton from '../../../components/NextButton';
+import { useData } from '../../../utils/Context';
 
 const MOCK_CATEGORY = ['상세품목', '액세서리', '휠'];
 
-function initData(data) {
-  const result = {};
-
-  data.forEach((item) => {
-    result[item] = false;
-  });
-  return result;
-}
-
 function Pick({ data, selected, setSelected }) {
+  const { setTrimState, price, selectedOptions } = useData();
   const [showDefault, setShowDefault] = useState(false);
   const options = showDefault ? data.defaultOptions : data.selectOptions;
-  const [selectedOptions, setSelectedOptions] = useState(initData(options));
 
   function handleSelect(id) {
     setSelected(id);
   }
-  function handleCheck(id) {
-    setSelectedOptions((prev) => ({ ...prev, [id]: !prev[id] }));
+  function handleCheck(option) {
+    const updatedSelectedOptions = {
+      ...selectedOptions,
+      [option.id]: !selectedOptions[option.id],
+    };
+
+    const updatedPrice = {
+      ...price,
+      optionPrice: price.optionPrice + (selectedOptions[option.id] ? -option.price : option.price),
+    };
+
+    setTrimState((prevState) => ({
+      ...prevState,
+      selectedOptions: updatedSelectedOptions,
+      price: updatedPrice,
+    }));
   }
 
   return (
@@ -45,7 +51,7 @@ function Pick({ data, selected, setSelected }) {
             selected={selected === option.id}
             checked={selectedOptions[option.id]}
             select={() => handleSelect(option.id)}
-            check={() => handleCheck(option.id)}
+            check={() => handleCheck(option)}
             isDefault={showDefault}
           />
         ))}
