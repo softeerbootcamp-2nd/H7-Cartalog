@@ -67,11 +67,12 @@ export function StateProvider({ children }) {
         acc[key] = {
           fetchData: [],
           isFetch: false,
-          interiorColorId: 'I49',
-          pick: 'A22',
-          pickName: '퀼팅천연(블랙)',
-          pickCarImageUrl:
-            'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade/le-blanc/options/10_driverseat_s.jpg',
+          code: null,
+          name: null,
+          carImageUrl: null,
+          count: 1,
+          page: null,
+          position: null,
         };
         break;
       case 'optionPicker':
@@ -84,9 +85,6 @@ export function StateProvider({ children }) {
           pickCarImageUrl:
             'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade/le-blanc/options/10_driverseat_s.jpg',
         };
-        break;
-      case 'optionPicker':
-        acc[key] = {};
         break;
       default:
         acc[key] = null; // 다른 키들은 null로 초기화

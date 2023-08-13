@@ -1,42 +1,49 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useData } from '../../utils/Context';
 import { INTERIOR_COLOR } from './constants';
 import Section from '../../components/Section';
 import Info from './Info';
 import Pick from './Pick';
 
-// !FIX 내장색상 API는 아직 완성 전
 function InteriorColor() {
-  const [isFetched, setIsFetched] = useState(false);
-  const { setTrimState, trim, interiorColor } = useData();
+  const { setTrimState, trim, exteriorColor, interiorColor } = useData();
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(
-        `http://3.36.126.30/models/trims/interior-colors?exteriorColorId=1&trimId=${trim.Id}`,
-      );
-      const dataFetch = await response.json();
-      setTrimState((prevState) => ({
-        ...prevState,
-        page: 4,
-        interiorColor: {
-          ...prevState.interiorColor,
-          dataFetch: [...dataFetch.trimInteriorColorDtoList],
-        },
-      }));
-      setIsFetched(true);
+      if (!interiorColor.isFetch) {
+        const response = await fetch(
+          `http://3.36.126.30/models/trims/interior-colors?exteriorColorCode=${exteriorColor.code}&trimId=${trim.id}`,
+        );
+        const dataFetch = await response.json();
+        const defaultData = dataFetch.interiorColors.find(
+          (data) => data.code === interiorColor.code,
+        );
+
+        setTrimState((prevState) => ({
+          ...prevState,
+          interiorColor: {
+            ...interiorColor,
+            fetchData: [...dataFetch.interiorColors],
+            page: dataFetch.interiorColors.length - 3,
+            isFetch: true,
+            name: defaultData.name,
+            carImageUrl: defaultData.carImageUrl,
+          },
+        }));
+      }
+      setTrimState((prevState) => ({ ...prevState, page: 4 }));
     }
     fetchData();
   }, []);
 
   const SectionProps = {
     type: INTERIOR_COLOR.TYPE,
-    url: interiorColor.pickCarImageUrl,
+    url: interiorColor.carImageUrl,
     Info: <Info />,
     Pick: <Pick />,
   };
 
-  return isFetched ? <Section {...SectionProps} /> : <>Loding</>;
+  return interiorColor.isFetch ? <Section {...SectionProps} /> : <>Loding</>;
 }
 
 export default InteriorColor;

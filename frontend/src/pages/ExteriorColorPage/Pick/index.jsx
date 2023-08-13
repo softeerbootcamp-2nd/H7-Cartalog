@@ -13,6 +13,8 @@ function Pick() {
   const colorProps = { $position: exteriorColor.position };
 
   const handleColorCardClick = (exterior) => {
+    if (exterior.code === exteriorColor.code) return;
+
     setTrimState((prevState) => ({
       ...prevState,
       exteriorColor: {
@@ -24,6 +26,10 @@ function Pick() {
           const imageNumber = (index + 1).toString().padStart(3, '0');
           return `${exterior.carImageDirectory}${imageNumber}.png`;
         }),
+      },
+      interiorColor: {
+        ...prevState.interiorColor,
+        isFetch: false,
       },
       price: {
         ...prevState.price,
