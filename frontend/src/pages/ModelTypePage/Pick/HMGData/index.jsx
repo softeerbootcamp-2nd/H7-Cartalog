@@ -15,7 +15,7 @@ function HMGData() {
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
-        `http://3.36.126.30/models/trims/detail?modelTypeIds=${modelType.powerTrainId}&modelTypeIds=${modelType.bodyTypeId}&modelTypeIds=${modelType.wheelDriveId}&trimId=${trim.Id}`,
+        `http://3.36.126.30/models/trims/detail?modelTypeIds=${modelType.powerTrainId}&modelTypeIds=${modelType.bodyTypeId}&modelTypeIds=${modelType.wheelDriveId}&trimId=${trim.id}`,
       );
       const dataFetch = await response.json();
       setHmgData({

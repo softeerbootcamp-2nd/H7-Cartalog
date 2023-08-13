@@ -12,7 +12,7 @@ function ExteriorColor() {
     async function fetchData() {
       if (!exteriorColor.isFetch) {
         const response = await fetch(
-          `http://3.36.126.30/models/trims/exterior-colors?trimId=${trim.Id}`,
+          `http://3.36.126.30/models/trims/exterior-colors?trimId=${trim.id}`,
         );
         const dataFetch = await response.json();
         const defaultData = dataFetch.exteriorColors.find(

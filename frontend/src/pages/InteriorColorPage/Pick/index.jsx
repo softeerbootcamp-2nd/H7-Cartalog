@@ -1,7 +1,6 @@
 import { useData } from '../../../utils/Context';
 import { INTERIOR_COLOR, PICK } from '../constants';
 import * as S from './style';
-
 import PickTitle from '../../../components/PickTitle';
 import ColorCard from '../../../components/ColorCard';
 import ColorChip from '../../../components/ColorChip';
@@ -11,37 +10,39 @@ function Pick() {
   const { setTrimState, interiorColor } = useData();
   const pickTitleProps = { mainTitle: PICK.TITLE };
 
+  const handleColorCardClick = (interior) => {
+    setTrimState((prevState) => ({
+      ...prevState,
+      interiorColor: {
+        ...prevState.interiorColor,
+        code: interior.code,
+        name: interior.name,
+        carImageUrl: interior.carImageUrl,
+      },
+      price: {
+        ...prevState.price,
+        interiorColorPrice: interior.price,
+      },
+    }));
+  };
+
   return (
     <S.Pick>
       <PickTitle {...pickTitleProps} />
 
       <S.Color>
-        {interiorColor.dataFetch.map((color) => (
+        {interiorColor.fetchData.map((interior) => (
           <ColorCard
-            key={color.id}
-            pickRatio={color.chosen}
-            name={color.name}
-            price={color.price}
-            selected={interiorColor.pick === color.id}
-            onClick={() =>
-              setTrimState((prevState) => ({
-                ...prevState,
-                interiorColor: {
-                  ...prevState.interiorColor,
-                  pick: color.id,
-                  pickName: color.name,
-                  pickCarImageUrl: color.carImageUrl,
-                },
-                price: {
-                  ...prevState.price,
-                  interiorColorPrice: color.price,
-                },
-              }))
-            }
+            key={interior.code}
+            pickRatio={interior.chosen}
+            name={interior.name}
+            price={interior.price}
+            selected={interiorColor.code === interior.code}
+            onClick={() => handleColorCardClick(interior)}
           >
             <ColorChip
-              selected={interiorColor.pick === color.id}
-              src={color.colorImageUrl}
+              selected={interiorColor.code === interior.code}
+              src={interior.colorImageUrl}
               type={INTERIOR_COLOR.TYPE}
             />
           </ColorCard>

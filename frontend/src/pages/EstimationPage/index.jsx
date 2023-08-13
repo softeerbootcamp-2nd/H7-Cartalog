@@ -7,7 +7,7 @@ import * as S from './style';
 function Estimation() {
   const [isFetched, setIsFetched] = useState(false);
   const { setTrimState, trim, price } = useData();
-  const SelectModel = trim.fetchData.find((model) => model.id === trim.Id);
+  const SelectModel = trim.fetchData.find((model) => model.id === trim.id);
 
   useEffect(() => {
     async function fetchData() {

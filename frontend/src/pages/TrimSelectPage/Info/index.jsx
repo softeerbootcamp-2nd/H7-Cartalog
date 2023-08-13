@@ -9,7 +9,7 @@ import TrimImage from './TrimImage';
 function Info() {
   const { trim } = useData();
 
-  const selectedTrim = trim.fetchData?.find((trimData) => trimData.id === trim.Id);
+  const selectedTrim = trim.fetchData?.find((trimData) => trimData.id === trim.id);
   const hmgTagProps = { type: INFO.HMGTAG };
   const titleProps = {
     type: INFO.TYPE,

@@ -8,7 +8,7 @@ function Info() {
   const TitleProps = {
     type: INFO.TYPE,
     subTitle: INFO.SUB_TITLE,
-    mainTitle: interiorColor.pickName,
+    mainTitle: interiorColor.name,
   };
 
   return (

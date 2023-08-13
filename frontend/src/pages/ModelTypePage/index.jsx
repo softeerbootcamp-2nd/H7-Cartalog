@@ -11,7 +11,7 @@ function ModelType() {
   useEffect(() => {
     async function fetchData() {
       if (!modelType.isFetch) {
-        const response = await fetch(`http://3.36.126.30/models/types?basicModelId=${trim.Id}`);
+        const response = await fetch(`http://3.36.126.30/models/types?basicModelId=${trim.id}`);
         const dataFetch = await response.json();
 
         const findOptionByTypeAndId = (typeName, typeId) => {

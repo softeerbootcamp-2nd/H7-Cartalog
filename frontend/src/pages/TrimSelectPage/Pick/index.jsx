@@ -8,13 +8,13 @@ function Pick() {
   const { setTrimState, trim } = useData();
   const pickTitleProps = { mainTitle: PICK.TITLE };
   const handleTrimCardClick = (trimData) => {
-    if (trimData.id === trim.Id) return;
+    if (trimData.id === trim.id) return;
 
     setTrimState((prevState) => ({
       ...prevState,
       trim: {
         ...prevState.trim,
-        Id: trimData.id,
+        id: trimData.id,
       },
       modelType: {
         ...prevState.modelType,
@@ -47,7 +47,7 @@ function Pick() {
               description={trimData.description}
               price={trimData.minPrice}
               defaultInfo={trimData.defaultInfo}
-              active={trimData.id === trim.Id}
+              active={trimData.id === trim.id}
               onClick={() => handleTrimCardClick(trimData)}
             />
           );
