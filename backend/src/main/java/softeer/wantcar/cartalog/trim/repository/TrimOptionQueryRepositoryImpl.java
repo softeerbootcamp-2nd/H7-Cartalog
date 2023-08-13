@@ -42,15 +42,27 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
     }
 
     @Override
+    public List<TrimOptionInfo> findPackagesByDetailTrimId(Long detailTrimId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("detailTrimId", detailTrimId);
+        List<TrimOptionQueryResult> queryResults = jdbcTemplate.query(QueryString.findPackagesByTrimId,
+                parameters, (rs, rowNum) -> getTrimOptionQueryResult(rs, false));
+        return getTrimOptionInfos(detailTrimId, queryResults);
+    }
+
+    @Override
     public List<TrimOptionInfo> findOptionsByDetailTrimId(Long detailTrimId) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("detailTrimId", detailTrimId);
         List<TrimOptionQueryResult> queryResults = jdbcTemplate.query(QueryString.findOptionsByDetailTrimId,
-                parameters, (rs, rowNum) -> getTrimOptionQueryResult(rs));
+                parameters, (rs, rowNum) -> getTrimOptionQueryResult(rs, true));
+        return getTrimOptionInfos(detailTrimId, queryResults);
+    }
+
+    private List<TrimOptionInfo> getTrimOptionInfos(Long detailTrimId, List<TrimOptionQueryResult> queryResults) {
         if(queryResults.isEmpty()) {
             return null;
         }
-
         Map<Long, List<TrimOptionQueryResult>> trimOptionQueryResults = queryResults.stream()
                 .collect(Collectors.groupingBy(TrimOptionQueryResult::getId));
 
@@ -98,19 +110,25 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
                 .anyMatch(Objects::nonNull);
     }
 
-    private static TrimOptionQueryResult getTrimOptionQueryResult(ResultSet rs) throws SQLException {
-        return TrimOptionQueryResult.builder()
+    private static TrimOptionQueryResult getTrimOptionQueryResult(ResultSet rs, boolean isOption) throws SQLException {
+        TrimOptionQueryResult.TrimOptionQueryResultBuilder builder = TrimOptionQueryResult.builder()
                 .id(rs.getLong("id"))
                 .name(rs.getString("name"))
                 .parentCategory(rs.getString("parentCategory"))
-                .childCategory(rs.getString("childCategory"))
+                .childCategory(null)
                 .imageUrl(rs.getString("imageUrl"))
                 .price(rs.getInt("price"))
-                .basic(rs.getBoolean("basic"))
+                .basic(false)
                 .colorCondition(rs.getBoolean("colorCondition"))
                 .trimInteriorColorId(rs.getLong("trimInteriorColorId"))
                 .hashTag(rs.getString("hashTag"))
-                .hmgModelOptionId(rs.getLong("hmgModelOptionId"))
-                .build();
+                .hmgModelOptionId(rs.getLong("hmgModelOptionId"));
+
+        if(isOption) {
+            builder.basic(rs.getBoolean("basic"));
+            builder.childCategory(rs.getString("childCategory"));
+        }
+
+        return builder.build();
     }
 }

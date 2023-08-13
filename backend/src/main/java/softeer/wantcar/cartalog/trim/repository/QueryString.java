@@ -132,13 +132,14 @@ public class QueryString {
             "SELECT DISTINCT " +
             "   dtp.id AS id, " +
             "   dtp.name AS name, " +
-            "   dtp.price AS price, " +
             "   dtp.parent_category AS parentCategory, " +
             "   dtp.color_condition AS colorCondition, " +
             "   dtp.image_url AS imageUrl, " +
+            "   dtp.price AS price, " +
+            "   dto.color_condition AS colorCondition, " +
             "   dtpicc.trim_interior_color_id AS trimInteriorColorId, " +
             "   pht.hash_tag AS hashTag, " +
-            "   hmg.model_option_id AS modelOptionId" +
+            "   hmg.model_option_id AS hmgModelOptionId " +
 
             "FROM detail_trim_packages AS dtp " +
 
@@ -147,7 +148,7 @@ public class QueryString {
             "JOIN trim_package_options AS tpo ON tpo.trim_package_id=dtp.id " +
             "JOIN detail_trim_options AS dto ON dto.id=tpo.detail_trim_option_id " +
             "JOIN hmg_data AS hmg ON hmg.model_option_id=dto.model_option_id " +
-            "WHERE dtp.detail_trim_id=: detailTrimId " +
+            "WHERE dtp.detail_trim_id= :detailTrimId " +
             ";";
 
     protected static final String findTrimExteriorColorByTrimId =

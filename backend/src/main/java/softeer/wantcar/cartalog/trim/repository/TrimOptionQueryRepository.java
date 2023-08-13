@@ -7,6 +7,8 @@ import lombok.Getter;
 import java.util.List;
 
 public interface TrimOptionQueryRepository {
+    List<TrimOptionInfo> findPackagesByDetailTrimId(Long detailTrimId);
+
     @Getter
     @Builder
     @AllArgsConstructor
