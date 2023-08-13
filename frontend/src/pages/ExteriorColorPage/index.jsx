@@ -27,7 +27,7 @@ function ExteriorColor() {
             page: dataFetch.exteriorColors.length - 3,
             isFetch: true,
             name: defaultData.name,
-            carImageUrl: defaultData.carImageUrl,
+            carImageDirectory: defaultData.carImageDirectory,
           },
         }));
       }

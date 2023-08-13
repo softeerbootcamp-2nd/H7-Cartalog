@@ -55,7 +55,7 @@ export function StateProvider({ children }) {
           isFetch: false,
           code: null,
           name: null,
-          carImageUrl: null,
+          carImageDirectory: null,
           count: 1,
           page: null,
           position: null,
