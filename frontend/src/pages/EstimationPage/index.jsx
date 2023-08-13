@@ -42,14 +42,14 @@ function Estimation() {
       <S.EstimateFinish onScroll={handleScroll}>
         <div style={{ height: '3000px', width: '30px', backgroundColor: 'pink' }}>a</div>
         <PriceStaticBar
-          min={SelectModel.minPrice}
-          max={SelectModel.maxPrice}
+          min={SelectModel?.minPrice}
+          max={SelectModel?.maxPrice}
           price={TotalPrice(price)}
         />
       </S.EstimateFinish>
     </>
   ) : (
-    <>Loding...</>
+    <>Loading...</>
   );
 }
 
