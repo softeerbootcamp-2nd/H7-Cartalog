@@ -22,8 +22,8 @@ function Section({ type, url, Info, Pick, showPriceStatic = true }) {
       <S.Contents>{Pick}</S.Contents>
       {showPriceStatic && (
         <PriceStaticBar
-          min={SelectModel.minPrice}
-          max={SelectModel.maxPrice}
+          min={SelectModel?.minPrice}
+          max={SelectModel?.maxPrice}
           price={TotalPrice(price)}
         />
       )}
