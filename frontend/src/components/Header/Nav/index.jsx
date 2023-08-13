@@ -1,11 +1,26 @@
 import { Link } from 'react-router-dom';
 import { useData } from '../../../utils/Context';
 import { NAV } from '../constants';
-import NavToggle from '../../NavToggle';
 import * as S from './style';
+import NavToggle from '../../NavToggle';
+
+function isLinkEnabled(item, modelType, exteriorColor, interiorColor, optionPicker) {
+  switch (item.to) {
+    case '/modelType':
+      return modelType.isFetch;
+    case '/exteriorColor':
+      return exteriorColor.isFetch;
+    case '/interiorColor':
+      return interiorColor.isFetch;
+    case '/optionPicker':
+      return optionPicker.isFetch;
+    default:
+      return true;
+  }
+}
 
 function Nav() {
-  const { page } = useData();
+  const { page, modelType, exteriorColor, interiorColor, optionPicker } = useData();
 
   return (
     <S.Nav>
@@ -13,7 +28,11 @@ function Nav() {
         {NAV.map((item) => (
           <S.Step key={item.label}>
             <S.Text className={item.page === page ? 'selected' : null}>
-              <Link to={item.to}>{item.label}</Link>
+              {isLinkEnabled(item, modelType, exteriorColor, interiorColor, optionPicker) ? (
+                <Link to={item.to}>{item.label}</Link>
+              ) : (
+                <span>{item.label}</span>
+              )}
             </S.Text>
             <S.Bar>
               <NavToggle selected={item.page === page} />
