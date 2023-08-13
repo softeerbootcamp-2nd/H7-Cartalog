@@ -56,6 +56,7 @@ export function StateProvider({ children }) {
           code: null,
           name: null,
           carImageDirectory: null,
+          carImageList: [],
           count: 1,
           page: null,
           position: null,

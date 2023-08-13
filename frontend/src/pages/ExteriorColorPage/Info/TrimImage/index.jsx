@@ -4,7 +4,7 @@ import * as S from './style';
 
 function TrimImage() {
   const { exteriorColor } = useData();
-  const [image, setImage] = useState(1);
+  const [count, setCount] = useState(0);
   const [prevX, setPrevX] = useState(0);
 
   const startSwipe = (event) => {
@@ -14,19 +14,23 @@ function TrimImage() {
     setPrevX(currentX);
 
     if (diffX > 0) {
-      setImage((prevImage) => (prevImage === 1 ? 60 : prevImage - 1));
+      setCount((prevImage) => (prevImage === 0 ? 59 : prevImage - 1));
     }
     if (diffX < 0) {
-      setImage((prevImage) => (prevImage === 60 ? 1 : prevImage + 1));
+      setCount((prevImage) => (prevImage === 59 ? 0 : prevImage + 1));
     }
   };
 
   return (
     <S.TrimImage>
-      <S.RotateImage
-        src={`${exteriorColor.carImageDirectory}${image.toString().padStart(3, '0')}.png`}
-        onMouseMove={startSwipe}
-      />
+      {exteriorColor.carImageList.map((imagePath, index) => (
+        <S.RotateImage
+          key={imagePath}
+          src={imagePath}
+          style={{ display: index === count ? 'block' : 'none' }}
+          onMouseMove={startSwipe}
+        />
+      ))}
     </S.TrimImage>
   );
 }
