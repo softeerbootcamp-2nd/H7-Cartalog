@@ -26,13 +26,6 @@ function TrimSelect() {
       setTrimState((prevState) => ({ ...prevState, page: 1 }));
     }
     fetchData();
-    setTrimState((prevState) => ({
-      ...prevState,
-      modelType: {
-        ...prevState.modelType,
-        isFetch: false,
-      },
-    }));
   }, []);
 
   const SectionProps = {
