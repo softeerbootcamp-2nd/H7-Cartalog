@@ -30,6 +30,10 @@ function ModelType() {
 
         setTrimState((prevState) => ({
           ...prevState,
+          trim: {
+            ...prevState.trim,
+            isDefault: true,
+          },
           modelType: updatedModelType,
         }));
       }
