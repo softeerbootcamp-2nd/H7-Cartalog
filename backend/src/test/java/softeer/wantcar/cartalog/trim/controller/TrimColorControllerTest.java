@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import softeer.wantcar.cartalog.global.ServerPaths;
 import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimInteriorColorListResponseDto;
 import softeer.wantcar.cartalog.trim.repository.TrimColorQueryRepository;

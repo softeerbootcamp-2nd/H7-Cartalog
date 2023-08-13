@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
-import softeer.wantcar.cartalog.global.ServerPaths;
+import softeer.wantcar.cartalog.global.ServerPath;
 import softeer.wantcar.cartalog.trim.dto.TrimOptionListResponseDto;
 
 import java.util.HashMap;
@@ -23,7 +23,7 @@ class TrimOptionQueryRepositoryTest {
     @Autowired
     NamedParameterJdbcTemplate jdbcTemplate;
     TrimOptionQueryRepository trimOptionQueryRepository;
-    ServerPaths serverPaths = new ServerPaths();
+    ServerPath serverPath = new ServerPath();
     SoftAssertions softAssertions;
 
     @BeforeEach
@@ -56,7 +56,7 @@ class TrimOptionQueryRepositoryTest {
             softAssertions.assertThat(trimOptions.isEmpty()).isFalse();
             softAssertions.assertThat(trimOptions.size()).isEqualTo(111);
             for (TrimOptionListResponseDto.TrimOptionDto trimOption : trimOptions) {
-                softAssertions.assertThat(trimOption.getImageUrl()).startsWith(serverPaths.IMAGE_SERVER_PATH);
+                softAssertions.assertThat(trimOption.getImageUrl()).startsWith(serverPath.IMAGE_SERVER_PATH);
             }
             softAssertions.assertAll();
         }

@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import softeer.wantcar.cartalog.global.ServerPaths;
+import softeer.wantcar.cartalog.global.ServerPath;
 import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimInteriorColorListResponseDto;
 
@@ -18,7 +18,7 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class TrimColorQueryRepositoryImpl implements TrimColorQueryRepository {
-    private final ServerPaths serverPaths;
+    private final ServerPath serverPath;
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Builder
@@ -63,9 +63,9 @@ public class TrimColorQueryRepositoryImpl implements TrimColorQueryRepository {
         return TrimExteriorColorQueryResult.builder()
                 .code(rs.getString("code"))
                 .name(rs.getString("name"))
-                .imageUrl(serverPaths.attachImageServerPath(rs.getString("image_url")))
+                .imageUrl(serverPath.attachImageServerPath(rs.getString("image_url")))
                 .price(rs.getInt("price"))
-                .exteriorImageDirectory(serverPaths.attachImageServerPath(rs.getString("exterior_image_directory")))
+                .exteriorImageDirectory(serverPath.attachImageServerPath(rs.getString("exterior_image_directory")))
                 .build();
     }
 
@@ -73,9 +73,9 @@ public class TrimColorQueryRepositoryImpl implements TrimColorQueryRepository {
         return TrimInteriorColorQueryResult.builder()
                 .code(rs.getString("code"))
                 .name(rs.getString("name"))
-                .imageUrl(serverPaths.attachImageServerPath(rs.getString("image_url")))
+                .imageUrl(serverPath.attachImageServerPath(rs.getString("image_url")))
                 .price(rs.getInt("price"))
-                .interiorImageUrl(serverPaths.attachImageServerPath(rs.getString("interior_image_url")))
+                .interiorImageUrl(serverPath.attachImageServerPath(rs.getString("interior_image_url")))
                 .build();
     }
 

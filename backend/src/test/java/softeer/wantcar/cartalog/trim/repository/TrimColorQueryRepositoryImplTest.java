@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
-import softeer.wantcar.cartalog.global.ServerPaths;
+import softeer.wantcar.cartalog.global.ServerPath;
 import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimInteriorColorListResponseDto;
 
@@ -24,12 +24,12 @@ class TrimColorQueryRepositoryImplTest {
     NamedParameterJdbcTemplate jdbcTemplate;
     TrimTestRepository trimQueryRepository;
     TrimColorQueryRepository trimColorQueryRepository;
-    ServerPaths serverPaths = new ServerPaths();
+    ServerPath serverPath = new ServerPath();
     SoftAssertions softAssertions;
 
     @BeforeEach
     void setUp() {
-        trimColorQueryRepository = new TrimColorQueryRepositoryImpl(serverPaths, jdbcTemplate);
+        trimColorQueryRepository = new TrimColorQueryRepositoryImpl(serverPath, jdbcTemplate);
         trimQueryRepository = new TrimTestRepository(jdbcTemplate);
         softAssertions = new SoftAssertions();
     }
@@ -50,7 +50,7 @@ class TrimColorQueryRepositoryImplTest {
             //then
             softAssertions.assertThat(result.getExteriorColors().size()).isEqualTo(6);
             softAssertions.assertThat(result.hasColor(selectableLeBlancExteriorColors)).isTrue();
-            softAssertions.assertThat(result.startWithUrl(serverPaths.IMAGE_SERVER_PATH)).isTrue();
+            softAssertions.assertThat(result.startWithUrl(serverPath.IMAGE_SERVER_PATH)).isTrue();
             softAssertions.assertAll();
         }
 
@@ -85,7 +85,7 @@ class TrimColorQueryRepositoryImplTest {
             //then
             softAssertions.assertThat(result.getInteriorColors().size()).isEqualTo(2);
             softAssertions.assertThat(result.hasColor(selectableInteriorColors)).isTrue();
-            softAssertions.assertThat(result.startWithUrl(serverPaths.IMAGE_SERVER_PATH)).isTrue();
+            softAssertions.assertThat(result.startWithUrl(serverPath.IMAGE_SERVER_PATH)).isTrue();
             softAssertions.assertAll();
         }
 
