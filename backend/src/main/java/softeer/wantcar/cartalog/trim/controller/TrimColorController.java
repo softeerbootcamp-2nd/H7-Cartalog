@@ -48,11 +48,6 @@ public class TrimColorController {
     @GetMapping(value = "/interior-colors")
     public ResponseEntity<TrimInteriorColorListResponseDto> trimInteriorColorList(@PathParam("trimId") Long trimId,
                                                                                   @PathParam("exteriorColorId") Long exteriorColorId) {
-        try {
-            Map<ModelInteriorColor, Integer> interiorColorInfo = trimColorService.findTrimInteriorColorListByTrimId(trimId, exteriorColorId);
-            return new ResponseEntity<>(TrimInteriorColorListResponseDto.from(interiorColorInfo, serverPaths.IMAGE_SERVER_PATH), HttpStatus.OK);
-        } catch (RuntimeException exception) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return null;
     }
 }

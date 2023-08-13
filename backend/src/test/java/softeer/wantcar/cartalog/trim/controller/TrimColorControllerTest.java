@@ -95,12 +95,12 @@ class TrimColorControllerTest {
             //then
             TrimInteriorColorListResponseDto responseDto = responseEntity.getBody();
             assertThat(responseDto).isNotNull();
-            List<TrimInteriorColorListResponseDto.TrimInteriorColorDto> trimInteriorColorDtoList = responseDto.getTrimInteriorColorDtoList();
+            List<TrimInteriorColorListResponseDto.TrimInteriorColorDto> trimInteriorColorDtoList = responseDto.getInteriorColors();
             assertThat(trimInteriorColorDtoList.size()).isEqualTo(1);
 
             TrimInteriorColorListResponseDto.TrimInteriorColorDto trimInteriorColorDto = trimInteriorColorDtoList.get(0);
 
-            softAssertions.assertThat(trimInteriorColorDto.getId()).isEqualTo(mockData.getId());
+            softAssertions.assertThat(trimInteriorColorDto.getCode()).isEqualTo(mockData.getId());
             softAssertions.assertThat(trimInteriorColorDto.getName()).isEqualTo(mockData.getName());
             softAssertions.assertThat(trimInteriorColorDto.getColorImageUrl()).isEqualTo(mockData.getImageUrl());
             softAssertions.assertThat(trimInteriorColorDto.getPrice()).isEqualTo(mockData.getPrice());
