@@ -73,4 +73,47 @@ class TrimOptionQueryRepositoryTest {
             assertThat(trimOptions).isNull();
         }
     }
+
+    @SuppressWarnings({"SqlNoDataSourceInspection", "SqlResolve"})
+    @Nested
+    @DisplayName("트림 패키지 목록 조회 테스트")
+    class getTrimPackageListTest {
+        @Test
+        @DisplayName("존재하는 세부 트림 식별자라면 트림 패키지 목록을 리스트로 반환한다")
+        void returnTrimPackageListWhenDetailTrimIdExist() {
+            //given
+            Long leblancDetailTrimId = jdbcTemplate.queryForObject(
+                    "SELECT " +
+                    "   dt.id " +
+                    "   FROM detail_trims AS dt " +
+                    "   JOIN trims AS t ON t.id=dt.trim_id " +
+                    "   WHERE t.name= 'Le Blanc' " +
+                    "   LIMIT 1",
+                    new HashMap<>(), Long.TYPE);
+
+            //when
+            List<TrimOptionQueryRepository.TrimOptionInfo> trimPackages
+                    = trimOptionQueryRepository.findPackagesByDetailTrimId(leblancDetailTrimId);
+
+            softAssertions.assertThat(trimPackages.isEmpty()).isFalse();
+            for (TrimOptionQueryRepository.TrimOptionInfo trimPackage : trimPackages) {
+                softAssertions.assertThat(trimPackage.getId()).isGreaterThanOrEqualTo(1);
+                softAssertions.assertThat(trimPackage.getImageUrl()).startsWith(serverPath.IMAGE_SERVER_PATH);
+            }
+            softAssertions.assertAll();
+        }
+
+        @Test
+        @DisplayName("존재하지 않는 세부 트림 식별자라면 null을 반환한다")
+        void returnNullWhenDetailTrimIdNotExist() {
+            //given
+            Long notExistDetailTrimId = -1L;
+
+            //when
+            List<TrimOptionQueryRepository.TrimOptionInfo> trimPackages
+                    = trimOptionQueryRepository.findPackagesByDetailTrimId(notExistDetailTrimId);
+
+            assertThat(trimPackages).isNull();
+        }
+    }
 }
