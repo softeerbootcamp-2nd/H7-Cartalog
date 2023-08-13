@@ -107,7 +107,7 @@ class TrimColorQueryRepositoryImplTest {
             Long LeBlancTrimId = trimQueryRepository.findTrimIdByModelNameAndTrimName("팰리세이드", "Le Blanc");
 
             //when
-            TrimInteriorColorListResponseDto result = trimColorQueryRepository.findTrimInteriorColorByTrimIdAndExteriorColorCode(2L, "AAA");
+            TrimInteriorColorListResponseDto result = trimColorQueryRepository.findTrimInteriorColorByTrimIdAndExteriorColorCode(LeBlancTrimId, "AAA");
 
             //then
             assertThat(result).isNull();
