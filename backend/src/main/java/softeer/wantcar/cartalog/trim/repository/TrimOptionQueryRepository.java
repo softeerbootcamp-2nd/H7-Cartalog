@@ -3,7 +3,6 @@ package softeer.wantcar.cartalog.trim.repository;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import softeer.wantcar.cartalog.trim.dto.TrimOptionListResponseDto;
 
 import java.util.List;
 
@@ -11,7 +10,7 @@ public interface TrimOptionQueryRepository {
     @Getter
     @Builder
     @AllArgsConstructor
-    public static class TrimOptionInfo {
+    class TrimOptionInfo {
         private Long id;
         private String name;
         private String parentCategory;
