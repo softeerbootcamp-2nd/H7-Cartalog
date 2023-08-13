@@ -21,7 +21,6 @@ import static org.mockito.Mockito.when;
 
 @DisplayName("색상 도메인 컨트롤러 테스트")
 class TrimColorControllerTest {
-    ServerPaths serverPaths = new ServerPaths();
     SoftAssertions softAssertions;
     TrimColorQueryRepository trimColorQueryRepository;
     TrimColorService trimColorService;
@@ -32,7 +31,7 @@ class TrimColorControllerTest {
         trimColorService = new MockTrimColorService();
         softAssertions = new SoftAssertions();
         trimColorQueryRepository = mock(TrimColorQueryRepository.class);
-        trimColorController = new TrimColorController(trimColorService, trimColorQueryRepository, serverPaths);
+        trimColorController = new TrimColorController(trimColorQueryRepository);
     }
 
     @Nested
