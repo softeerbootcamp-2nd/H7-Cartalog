@@ -106,7 +106,7 @@ public class QueryString {
             "  name, " +
             "  image_url, " +
             "  price, " +
-            "  exterior_image_url " +
+            "  exterior_image_directory " +
             "FROM trim_exterior_colors " +
             "INNER JOIN model_exterior_colors " +
             "ON trim_exterior_colors.model_exterior_color_id = model_exterior_colors.id " +

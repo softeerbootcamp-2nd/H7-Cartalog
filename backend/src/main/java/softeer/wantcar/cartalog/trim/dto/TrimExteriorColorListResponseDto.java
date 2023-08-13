@@ -26,7 +26,7 @@ public class TrimExteriorColorListResponseDto {
     @TestMethod
     public boolean startWithUrl(String url) {
         return exteriorColors.stream()
-                .allMatch(trimExteriorColorDto -> trimExteriorColorDto.carImageUrl.startsWith(url));
+                .allMatch(trimExteriorColorDto -> trimExteriorColorDto.carImageDirectory.startsWith(url));
     }
 
     @Getter
@@ -35,7 +35,7 @@ public class TrimExteriorColorListResponseDto {
         private String code;
         private String name;
         private String colorImageUrl;
-        private String carImageUrl;
+        private String carImageDirectory;
         private int price;
         private int chosen;
     }
