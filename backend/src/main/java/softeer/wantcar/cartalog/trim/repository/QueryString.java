@@ -120,4 +120,22 @@ public class QueryString {
             "INNER JOIN trims " +
             "where      basic_models.name = :modelName " +
             "AND        trims.name = :trimName";
+
+    protected static final String findTrimInteriorColorByTrimIdAndExteriorColorCode =
+            "SELECT " +
+            "  model_interior_colors.code, " +
+            "  model_interior_colors.name, " +
+            "  model_interior_colors.price, " +
+            "  model_interior_colors.image_url, " +
+            "  model_interior_colors.interior_image_url " +
+            "FROM model_interior_colors " +
+            "INNER JOIN trim_interior_colors " +
+            "ON model_interior_colors.code = trim_interior_colors.model_interior_color_code " +
+            "WHERE trim_exterior_color_id = " +
+            "  (SELECT trim_exterior_colors.id " +
+            "  FROM trim_exterior_colors " +
+            "  INNER JOIN model_exterior_colors " +
+            "  ON trim_exterior_colors.model_exterior_color_id = model_exterior_colors.id " +
+            "  WHERE trim_exterior_colors.trim_id = :trimId " +
+            "    AND model_exterior_colors.color_code = :colorCode)";
 }

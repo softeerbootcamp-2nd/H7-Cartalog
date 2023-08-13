@@ -2,8 +2,6 @@ package softeer.wantcar.cartalog.trim.repository;
 
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -17,7 +15,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class TrimColorQueryRepositoryImpl implements TrimColorQueryRepository {
@@ -44,7 +41,6 @@ public class TrimColorQueryRepositoryImpl implements TrimColorQueryRepository {
     }
 
     @Builder
-    @ToString
     private static class TrimInteriorColorQueryResult {
         private String code;
         private String name;
@@ -110,33 +106,12 @@ public class TrimColorQueryRepositoryImpl implements TrimColorQueryRepository {
                 .addValue("trimId", trimId)
                 .addValue("colorCode", colorCode);
 
-        String SQL = "SELECT " +
-                "  model_interior_colors.code, " +
-                "  model_interior_colors.name, " +
-                "  model_interior_colors.price, " +
-                "  model_interior_colors.image_url, " +
-                "  model_interior_colors.interior_image_url " +
-                "FROM model_interior_colors " +
-                "INNER JOIN trim_interior_colors " +
-                "ON model_interior_colors.code = trim_interior_colors.model_interior_color_code " +
-                "WHERE trim_exterior_color_id = " +
-                "  (SELECT trim_exterior_colors.id " +
-                "  FROM trim_exterior_colors " +
-                "  INNER JOIN model_exterior_colors " +
-                "  ON trim_exterior_colors.model_exterior_color_id = model_exterior_colors.id " +
-                "  WHERE trim_exterior_colors.trim_id = :trimId " +
-                "    AND model_exterior_colors.color_code = :colorCode)";
-
         List<TrimInteriorColorQueryResult> results = jdbcTemplate.query(
-                SQL, parameters, this::mappingTrimInteriorColorQueryResult
+                QueryString.findTrimInteriorColorByTrimIdAndExteriorColorCode, parameters, this::mappingTrimInteriorColorQueryResult
         );
 
         if (results.isEmpty()) {
             return null;
-        }
-
-        for (TrimInteriorColorQueryResult result : results) {
-            log.info(result.toString());
         }
 
         TrimInteriorColorListResponseDto.TrimInteriorColorListResponseDtoBuilder builder = TrimInteriorColorListResponseDto.builder();
