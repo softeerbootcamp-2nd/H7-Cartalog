@@ -128,7 +128,7 @@ public class QueryString {
             "WHERE visibility=true AND detail_trim_id= :detailTrimId  " +
             "; ";
 
-    public static String findPackagesByTrimIdAndInteriorColorId =
+    public static String findPackagesByTrimId =
             "SELECT DISTINCT " +
             "   dtp.id AS id, " +
             "   dtp.name AS name, " +
