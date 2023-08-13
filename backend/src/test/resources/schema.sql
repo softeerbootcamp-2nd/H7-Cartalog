@@ -192,7 +192,7 @@ CREATE TABLE model_exterior_colors
     model_id           BIGINT       NOT NULL,
     color_code         VARCHAR(255) NOT NULL,
     price              INT          NOT NULL,
-    exterior_image_url VARCHAR(255) NOT NULL,
+    exterior_image_directory VARCHAR(255) NOT NULL,
     CONSTRAINT fk_model_exterior_colors_basic_models FOREIGN KEY (model_id) REFERENCES basic_models (id) ON UPDATE CASCADE,
     CONSTRAINT fk_model_exterior_colors_colors FOREIGN KEY (color_code) REFERENCES colors (code) ON UPDATE CASCADE
 );
@@ -330,7 +330,7 @@ INSERT INTO colors (code, name, image_url)
 SELECT *
 FROM CSVREAD('classpath:csv/colors.csv', null, 'fieldSeparator=|');
 
-INSERT INTO model_exterior_colors (id, model_id, color_code, price, exterior_image_url)
+INSERT INTO model_exterior_colors (id, model_id, color_code, price, exterior_image_directory)
 SELECT *
 FROM CSVREAD('classpath:csv/model_exterior_colors.csv', null, 'fieldSeparator=|');
 

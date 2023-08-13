@@ -28,7 +28,7 @@ public class TrimColorQueryRepositoryImpl implements TrimColorQueryRepository {
         private String name;
         private String imageUrl;
         private int price;
-        private String exteriorImageUrl;
+        private String exteriorImageDirectory;
 
         private TrimExteriorColorListResponseDto.TrimExteriorColorDto toTrimExteriorColorDto() {
             return TrimExteriorColorListResponseDto.TrimExteriorColorDto.builder()
@@ -36,7 +36,7 @@ public class TrimColorQueryRepositoryImpl implements TrimColorQueryRepository {
                     .name(name)
                     .colorImageUrl(imageUrl)
                     .price(price)
-                    .carImageUrl(exteriorImageUrl)
+                    .carImageDirectory(exteriorImageDirectory)
                     .build();
         }
     }
@@ -47,7 +47,7 @@ public class TrimColorQueryRepositoryImpl implements TrimColorQueryRepository {
                 .name(rs.getString("name"))
                 .imageUrl(serverPaths.attachImageServerPath(rs.getString("image_url")))
                 .price(rs.getInt("price"))
-                .exteriorImageUrl(serverPaths.attachImageServerPath(rs.getString("exterior_image_url")))
+                .exteriorImageDirectory(serverPaths.attachImageServerPath(rs.getString("exterior_image_directory")))
                 .build();
     }
 
