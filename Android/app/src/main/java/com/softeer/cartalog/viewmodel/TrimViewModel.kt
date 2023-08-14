@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.softeer.cartalog.data.model.Trim
-import com.softeer.cartalog.data.model.TrimOption
 
 class TrimViewModel : ViewModel() {
 
@@ -17,11 +16,9 @@ class TrimViewModel : ViewModel() {
     val selectedTrim = _selectedTrim
 
     private fun setTrimData(): List<Trim>{
-        // 임시 데이터 설정
-        val tmpOption = listOf(TrimOption("a",12))
-        val tmpData = Trim("Le Blanc","desc",10,tmpOption)
-        val tmpData2 = Trim("Car ","desc",10,tmpOption)
-        return listOf(tmpData,tmpData2,tmpData,tmpData2)
+        // 나중에 defaultInfo non-null로 설정하기
+        val tmpTrim = Trim(1,"Exclusive","기본에 충실한 팰리세이드",41980000,41980000,"","","",null,null)
+        return listOf(tmpTrim)
     }
 
     fun changeSelectedTrim(idx: Int){
