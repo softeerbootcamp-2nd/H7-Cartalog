@@ -81,9 +81,10 @@ public class TrimOptionController {
     }
 
     private boolean isPackage(String optionId) {
-        if ((optionId.charAt(0) != 'O' && optionId.charAt(0) != 'P')) {
+        char packageCharacter = optionId.charAt(0);
+        if ((packageCharacter != 'O' && packageCharacter != 'P')) {
             throw new IllegalArgumentException();
         }
-        return optionId.charAt(0) == 'P';
+        return packageCharacter == 'P';
     }
 }
