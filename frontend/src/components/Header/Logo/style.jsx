@@ -17,6 +17,10 @@ export const CarType = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
+
+  & > svg {
+    fill: ${({ theme }) => theme.color.gray['800']};
+  }
 `;
 
 export const Type = styled.div`

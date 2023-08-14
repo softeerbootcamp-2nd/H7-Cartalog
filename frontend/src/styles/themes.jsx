@@ -28,6 +28,7 @@ const theme = {
     activeBlue: '#00AAD2',
     activeBlue2: '#00C3F0',
     skyBlue: '#A2C7E7',
+    skyBlueCardBG: '#A2C7E74c',
     cardBG: '#00AAD21A',
     blueBG: '#F4F5F7',
     sand: '#B67B5E',
@@ -56,7 +57,7 @@ const theme = {
       MediumC2: '500 12px/24px HyundaiSansTextMedium',
     },
     headKR: {
-      Bold150: '700 150px/200px HyundaiSansHeadBold',
+      Bold150: '700 150px/1.25 HyundaiSansHeadBold',
       Bold32: '700 32px/36px HyundaiSansHeadKRBold',
       Bold26: '700 26px/36px HyundaiSansHeadKRBold',
       Bold24: '700 24px/32px HyundaiSansHeadKRBold',

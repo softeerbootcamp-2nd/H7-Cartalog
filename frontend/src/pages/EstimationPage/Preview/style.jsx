@@ -1,44 +1,70 @@
-import { styled } from 'styled-components';
+import { keyframes, styled } from 'styled-components';
+
+const CarInfoAnimation = keyframes`
+  0% {
+    height: 640px;
+  }
+
+  100% {
+    height: 232px;
+  }
+`;
+
+const TitleAnimation = keyframes`
+  0% {
+    top: 72px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  100% {
+    top: 0;
+    left: 70px;
+    transform: translateX(-20%) scale(0.6);
+  }
+`;
+
+const PreviewAnimation = keyframes`
+  0% {
+    top: 203px;
+    right: 50%;
+    transform: translateX(50%);
+  }
+
+  100% {
+    top: 0;
+    right: 0;
+    transform: none;
+  }
+`;
+
+const ImageAnimation = keyframes`
+  0% {
+    width: 760px;
+    height: 360px;
+  }
+
+  100% {
+    width: 280px;
+    height: 180px;
+  }
+`;
 
 export const Preview = styled.div`
   position: fixed;
   top: 60px;
   width: 100%;
-  height: 640px;
-  transition: height 0.5s ease;
-  background: ${({ theme }) => theme.color.finishGrad};
-
-  &.collapsed {
-    height: 342px;
-  }
+  background-color: ${({ theme }) => theme.color.white};
 `;
 
 export const CarInfo = styled.div`
   position: relative;
   width: 100%;
   max-width: 1142px;
-  height: 100%;
   margin: 0 auto;
-  transition: all 0.5s ease;
-
-  .collapsed & {
-    height: 342px;
-
-    & > .title {
-      left: 70px;
-      transform: translateX(-20%) scale(0.6);
-    }
-
-    & > .preview {
-      top: 72px;
-      right: 0px;
-      transform: none;
-
-      & > img {
-        height: 206px;
-      }
-    }
-  }
+  background: ${({ theme }) => theme.color.finishGrad};
+  animation: ${CarInfoAnimation} 1s linear forwards;
+  animation-play-state: paused;
 
   & > .title {
     position: absolute;
@@ -49,7 +75,8 @@ export const CarInfo = styled.div`
 
     font: ${({ theme }) => theme.font.headKR.Bold150};
     color: ${({ theme }) => theme.color.white};
-    transition: all 0.5s ease;
+    animation: ${TitleAnimation} 1s linear forwards;
+    animation-play-state: paused;
   }
 
   & > .preview {
@@ -61,15 +88,15 @@ export const CarInfo = styled.div`
     top: 203px;
     right: 50%;
     transform: translateX(50%);
-    transition: all 0.5s ease;
+    animation: ${PreviewAnimation} 1s linear forwards;
+    animation-play-state: paused;
 
     & > img {
-      /* width: 764px;
-      height: 360px; */
-
-      height: 412px;
+      width: 760px;
+      height: 360px;
       object-fit: contain;
-      transition: all 0.5s ease;
+      animation: ${ImageAnimation} 1s linear forwards;
+      animation-play-state: paused;
     }
   }
 `;
