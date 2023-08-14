@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/shape_view_background_round"
-        android:backgroundTint="@color/card_bg_color">
+        android:backgroundTint="@color/card_bg">
 
 
         <androidx.constraintlayout.widget.Guideline

@@ -25,19 +25,17 @@
     <color name="gray_900">#212122</color>
 
     <color name="active_blue">#00AAD2</color>
-    <color name="active_blue_card_bg">#1A00AAD2</color>
     <color name="active_blue2">#00C3F0</color>
     <color name="sky_blue">#A2C7E7</color>
-    <color name="card_bg">#00AAD21A</color>
     <color name="blue_bg">#F4F5F7</color>
+    <color name="card_bg">#F7F7F9</color>
     <color name="sand">#B67B5E</color>
     <color name="sand2">#E4DCD3</color>
-    <color name="light_sand">#F6F3F2</color>
 
-    <color name="card_bg_color">#F7F7F9</color>
+    <color name="active_blue_card_bg">#1A00AAD2</color>
+    <color name="light_sand">#F6F3F2</color>
     <color name="excess_bg_color">#000B19</color>
     <color name="light_blue">#E3EEF8</color>
-    <color name="end_color">#E59CCAFF</color>
     <color name="center_color">#E5C9E2FF</color>
     <color name="sky_blue_30">#4DA2C7E7</color>
 </resources>

@@ -101,7 +101,7 @@
             android:id="@+id/iv_detail"
             android:layout_width="0dp"
             android:layout_height="140dp"
-            android:background="@color/card_bg_color"
+            android:background="@color/card_bg"
             android:scaleType="centerCrop"
             android:src="@drawable/tmp_img_option_item"
             app:layout_constraintEnd_toEndOf="parent"
