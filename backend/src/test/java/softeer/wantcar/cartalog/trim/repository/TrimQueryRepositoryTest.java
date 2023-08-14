@@ -24,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @JdbcTest
 @Sql({"classpath:schema.sql"})
+@DisplayName("트림 Repository 테스트")
 class TrimQueryRepositoryTest {
     @Value("${env.imageServerPath}")
     String imageServerPath = "example-url";

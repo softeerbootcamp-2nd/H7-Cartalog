@@ -18,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @JdbcTest
 @Sql({"classpath:schema.sql"})
+@DisplayName("트림 옵션 Repository 테스트")
 class TrimOptionQueryRepositoryTest {
     @Autowired
     NamedParameterJdbcTemplate jdbcTemplate;
@@ -54,7 +55,7 @@ class TrimOptionQueryRepositoryTest {
 
             softAssertions.assertThat(trimOptions.isEmpty()).isFalse();
             for (TrimOptionQueryRepository.TrimOptionInfo trimOption : trimOptions) {
-                softAssertions.assertThat(trimOption.getId()).isGreaterThanOrEqualTo(1);
+                softAssertions.assertThat(trimOption.getId()).startsWith("O");
                 softAssertions.assertThat(trimOption.getImageUrl()).startsWith(serverPath.IMAGE_SERVER_PATH);
             }
             softAssertions.assertAll();
@@ -97,7 +98,7 @@ class TrimOptionQueryRepositoryTest {
 
             softAssertions.assertThat(trimPackages.isEmpty()).isFalse();
             for (TrimOptionQueryRepository.TrimOptionInfo trimPackage : trimPackages) {
-                softAssertions.assertThat(trimPackage.getId()).isGreaterThanOrEqualTo(1);
+                softAssertions.assertThat(trimPackage.getId()).startsWith("P");
                 softAssertions.assertThat(trimPackage.getImageUrl()).startsWith(serverPath.IMAGE_SERVER_PATH);
             }
             softAssertions.assertAll();
