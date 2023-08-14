@@ -1,4 +1,5 @@
 import HMGCard from '../../../../components/HMGCard';
+import Graph from './Graph';
 
 function PriceCard({ data }) {
   return (
@@ -11,7 +12,7 @@ function PriceCard({ data }) {
         </>
       }
     >
-      {}
+      <Graph price={data.price} />
     </HMGCard>
   );
 }
