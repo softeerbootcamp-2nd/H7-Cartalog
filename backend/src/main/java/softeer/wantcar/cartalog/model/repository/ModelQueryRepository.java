@@ -20,9 +20,8 @@ public class ModelQueryRepository {
     public BasicModel findBasicModelByName(String name) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("name", name);
-        return jdbcTemplate.queryForObject(QueryString.findBasicModelByName,
-                parameters,
-                (rs, rowNum) -> getBasicModel(rs));
+        return jdbcTemplate.queryForObject("SELECT id, name, category FROM basic_models WHERE name=:name ",
+                parameters, (rs, rowNum) -> getBasicModel(rs));
     }
 
     private static BasicModel getBasicModel(ResultSet rs) throws SQLException {

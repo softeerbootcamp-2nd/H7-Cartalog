@@ -4,9 +4,6 @@ public class QueryString {
     private QueryString() {
     }
 
-    protected static final String findBasicModelByName =
-            "SELECT id, name, category FROM basic_models WHERE name=:name ";
-
     protected static final String findTrimsByBasicModelId =
             "SELECT  " +
             "(SELECT name FROM basic_models where id= :basicModelId) AS modelName,  " +
