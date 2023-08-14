@@ -58,8 +58,4 @@ export const ToggleButton = styled.div`
   &.checked {
     color: ${({ theme }) => theme.color.gray['50']};
   }
-
-  &.expand {
-    transition: transform 0.1s ease;
-  }
 `;
