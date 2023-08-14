@@ -12,7 +12,6 @@ import com.softeer.cartalog.viewmodel.TypeViewModel
 
 class TypeFragment: Fragment() {
     private val typeViewModel: TypeViewModel by viewModels()
-
     private var _binding: FragmentTypeBinding? = null
     private val binding get() = _binding!!
 

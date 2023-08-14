@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 style="@style/FragmentHeader"
                 android:layout_marginTop="60dp"
-                android:text="@string/type_select_header"
+                android:text="@string/type_header"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@id/gl_start"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -118,7 +118,7 @@
                 android:layout_width="0dp"
                 android:layout_height="200dp"
                 android:layout_marginTop="38dp"
-                android:background="@color/card_bg_color"
+                android:background="@color/card_bg"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

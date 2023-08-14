@@ -38,7 +38,7 @@
             style="@style/FragmentHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/trim_select_header"
+            android:text="@string/trim_header"
             android:layout_marginTop="20dp"
             app:layout_constraintStart_toStartOf="@id/gl_start"
             app:layout_constraintTop_toTopOf="parent" />

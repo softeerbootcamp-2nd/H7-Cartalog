@@ -8,7 +8,6 @@ import com.softeer.cartalog.data.model.CarColor
 class ExteriorViewModel : ViewModel() {
 
     private val _colorList = MutableLiveData<List<CarColor>>()
-
     val colorList: LiveData<List<CarColor>> = _colorList
 
     private val _selectedColor = MutableLiveData<Int>(0)

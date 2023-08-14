@@ -13,7 +13,6 @@ import com.softeer.cartalog.viewmodel.OptionViewModel
 
 class OptionFragment: Fragment() {
     private val optionViewModel: OptionViewModel by viewModels()
-
     private var _binding: FragmentOptionBinding? = null
     private val binding get() = _binding!!
 

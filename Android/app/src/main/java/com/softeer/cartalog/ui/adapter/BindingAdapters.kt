@@ -6,6 +6,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatSeekBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -189,7 +190,7 @@ fun setOptionRecyclerView(
 
 @BindingAdapter("bottomSeekBar")
 fun setHideSeekBar(
-    topSeekBar: SeekBar,
+    topSeekBar: AppCompatSeekBar,
     bottomSeekBar: AppCompatSeekBar
 ) {
     topSeekBar.setOnTouchListener { _, event ->
@@ -245,11 +246,11 @@ fun setRangeBarVisibility(
     }
     if (idx == 5 && layout.visibility == View.GONE) {
         layout.visibility = View.VISIBLE
-        layout.alpha = 0f
         layout.animate()
-            .alpha(1f).duration = 300
+            .alpha(1f)
+            .setDuration(300)
+            .withEndAction { fragmentContainer.setPadding(0, 250, 0, 0) }
         button.animate().rotation(180f).start()
-        fragmentContainer.setPadding(0, 250, 0, 0)
     }
 }
 
@@ -262,12 +263,12 @@ fun setRangeBarVisibility(
     if (idx == 5) {
         seekBar.isEnabled = false
         seekBar.thumb =
-            ContextCompat.getDrawable(seekBar.context, R.drawable.shape_seekbar_transparent)
+            AppCompatResources.getDrawable(seekBar.context, R.drawable.shape_seekbar_transparent)
     } else {
         seekBar.thumb = if (isExcess) {
-            ContextCompat.getDrawable(seekBar.context, R.drawable.shape_seekbar_thumb_excess)
+            AppCompatResources.getDrawable(seekBar.context, R.drawable.shape_seekbar_thumb_excess)
         } else {
-            ContextCompat.getDrawable(seekBar.context, R.drawable.shape_seekbar_thumb)
+            AppCompatResources.getDrawable(seekBar.context, R.drawable.shape_seekbar_thumb)
         }
         seekBar.isEnabled = true
     }

@@ -1,21 +1,30 @@
 <resources>
     <string name="app_name">CarTaLog</string>
+
     <string name="btn_exit">종료</string>
+    <string name="btn_prev">이전</string>
+    <string name="btn_next">다음</string>
+    <string name="btn_price_summary">견적 요약</string>
+    <string name="btn_close_price_summary">요약닫기</string>
+    <string name="btn_open_similar_estimate">유사 출고 견적 확인하기</string>
+    <string name="btn_share">공유하기</string>
+    <string name="btn_consult">상담신청</string>
+
     <string name="tab_trim">트림</string>
     <string name="tab_type">타입</string>
     <string name="tab_exterior">외장</string>
     <string name="tab_interior">내장</string>
     <string name="tab_option">옵션</string>
     <string name="tab_confirm">완료</string>
-    <string name="trim_select_header">트림을 선택해주세요.</string>
-    <string name="btn_prev">이전</string>
-    <string name="btn_next">다음</string>
-    <string name="type_select_header">모델타입을 선택해주세요.</string>
+    <string name="tab_option_not_default">추가옵션</string>
+    <string name="tab_option_default">기본옵션</string>
+
+    <string name="trim_header">트림을 선택해주세요.</string>
+
+    <string name="type_header">모델타입을 선택해주세요.</string>
     <string name="type_powertrain">파워트레인</string>
     <string name="type_bodytype">바디타입</string>
     <string name="type_wheeldrive">구동방식</string>
-    <string name="tab_option_not_default">추가옵션</string>
-    <string name="tab_option_default">기본옵션</string>
 
     <string name="option_all">전체</string>
     <string name="option_detail">상세품목</string>
@@ -29,27 +38,26 @@
     <string name="option_seat">시트</string>
     <string name="option_convenience">편의</string>
     <string name="option_multimedia">멀티미디어</string>
-    <string name="interior_header">내장 색상을 선택해주세요.</string>
-    <string name="exterior_header">외장 색상을 선택해주세요.</string>
-    <string name="exterior_360">360°</string>
     <string name="option_item_default_price">기본포함</string>
     <string name="option_item_select_guide">가 선택했어요</string>
 
-    <string name="btn_price_summary">견적 요약</string>
+    <string name="interior_header">내장 색상을 선택해주세요.</string>
+
+    <string name="exterior_header">외장 색상을 선택해주세요.</string>
+    <string name="exterior_360">360°</string>
+    <string name="exterior_item_select">의 선택</string>
+
     <string name="summary_now_price">현재 견적 가격</string>
     <string name="summary_model">모델</string>
     <string name="summary_exterior">외장 색상</string>
     <string name="summary_interior">내장 색상</string>
     <string name="summary_complete">견적 완료하기</string>
-    <string name="btn_close_price_summary">요약닫기</string>
-    <string name="btn_open_similar_estimate">유사 출고 견적 확인하기</string>
-    <string name="btn_share">공유하기</string>
-    <string name="btn_consult">상담신청</string>
-    <string name="confirm_complete_msg">합리적인 가격으로 완성된\n나만의 팰리세이드가 탄생했어요!</string>
     <string name="summary_total_price">최종 견적 가격</string>
-    <string name="confirm_car_model">Le Blanc</string>
     <string name="summary_title_2">평균 연비</string>
     <string name="summary_title_3">배기량</string>
+
+    <string name="confirm_complete_msg">합리적인 가격으로 완성된\n나만의 팰리세이드가 탄생했어요!</string>
+    <string name="confirm_car_model">Le Blanc</string>
     <string name="confirm_title_summary">요약견적</string>
     <string name="confirm_title_detail">상세견적</string>
 </resources>
