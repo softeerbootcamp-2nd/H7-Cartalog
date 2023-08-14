@@ -6,6 +6,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatSeekBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -262,7 +263,7 @@ fun setRangeBarVisibility(
     if (idx == 5) {
         seekBar.isEnabled = false
         seekBar.thumb =
-            ContextCompat.getDrawable(seekBar.context, R.drawable.shape_seekbar_transparent)
+            AppCompatResources.getDrawable(seekBar.context, R.drawable.shape_seekbar_transparent)
     } else {
         seekBar.thumb = if (isExcess) {
             ContextCompat.getDrawable(seekBar.context, R.drawable.shape_seekbar_thumb_excess)

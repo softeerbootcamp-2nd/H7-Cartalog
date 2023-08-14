@@ -31,7 +31,6 @@ import java.lang.NullPointerException
 
 class ExteriorFragment : Fragment() {
     private val exteriorViewModel: ExteriorViewModel by viewModels()
-
     private var _binding: FragmentExteriorBinding? = null
     private val binding get() = _binding!!
 

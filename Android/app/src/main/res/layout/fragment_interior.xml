@@ -38,7 +38,7 @@
             app:layout_constraintGuide_percent="0.45" />
 
         <ImageView
-            android:id="@+id/iv_360"
+            android:id="@+id/iv_interior_img"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="60dp"
@@ -60,7 +60,7 @@
             android:text="@string/interior_header"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@id/gl_start"
-            app:layout_constraintTop_toBottomOf="@id/iv_360" />
+            app:layout_constraintTop_toBottomOf="@id/iv_interior_img" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="0dp"
