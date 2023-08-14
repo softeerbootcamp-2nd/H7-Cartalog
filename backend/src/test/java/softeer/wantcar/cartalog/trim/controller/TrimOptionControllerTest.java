@@ -46,11 +46,11 @@ public class TrimOptionControllerTest {
                     .defaultOptions(List.of(getTrimOptionDto("O1"), getTrimOptionDto("O2")))
                     .selectOptions(List.of(getTrimOptionDto("O3"), getTrimOptionDto("P1")))
                     .build();
-            when(trimOptionService.getTrimOptionList(1L, 1L))
+            when(trimOptionService.getTrimOptionList(1L, "AAA"))
                     .thenReturn(expectResponse);
 
             //when
-            ResponseEntity<TrimOptionListResponseDto> realResponse = trimOptionController.getOptionInfos(1L, 1L);
+            ResponseEntity<TrimOptionListResponseDto> realResponse = trimOptionController.getOptionInfos(1L, "AAA");
 
             //then
             assert realResponse != null;
@@ -63,10 +63,10 @@ public class TrimOptionControllerTest {
         @DisplayName("존재하지 않는 트림 식별자로 옵션 정보 목록 요청시 404 상태를 반환해야 한다")
         void returnStatusCode404WhenGetOptionInfoListBy() {
             //given
-            when(trimOptionService.getTrimOptionList(-1L, 1L))
+            when(trimOptionService.getTrimOptionList(-1L, "AAA"))
                     .thenReturn(null);
             //when
-            ResponseEntity<TrimOptionListResponseDto> response = trimOptionController.getOptionInfos(-1L, 1L);
+            ResponseEntity<TrimOptionListResponseDto> response = trimOptionController.getOptionInfos(-1L, "AAA");
 
             //then
             softAssertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);

@@ -21,7 +21,7 @@ public interface TrimOptionQueryRepository {
         private int price;
         private boolean basic;
         private boolean colorCondition;
-        private List<Long> trimInteriorColorIds;
+        private List<String> trimInteriorColorIds;
         private List<String> hashTags;
         private boolean hasHMGData;
     }

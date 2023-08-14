@@ -29,8 +29,8 @@ public class TrimOptionController {
 
     @GetMapping("")
     public ResponseEntity<TrimOptionListResponseDto> getOptionInfos(@PathParam("detailTrimId") Long detailTrimId,
-                                                                    @PathParam("interiorColorId") Long interiorColorId) {
-        TrimOptionListResponseDto trimOptionList = trimOptionService.getTrimOptionList(detailTrimId, interiorColorId);
+                                                                    @PathParam("interiorColorCode") String interiorColorCode) {
+        TrimOptionListResponseDto trimOptionList = trimOptionService.getTrimOptionList(detailTrimId, interiorColorCode);
         if (Objects.isNull(trimOptionList)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

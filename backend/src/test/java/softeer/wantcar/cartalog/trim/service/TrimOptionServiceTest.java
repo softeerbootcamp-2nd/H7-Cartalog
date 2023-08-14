@@ -40,13 +40,13 @@ class TrimOptionServiceTest {
                     .thenReturn(List.of("A", "B", "C"));
             when(trimOptionQueryRepository.findOptionsByDetailTrimId(1L))
                     .thenReturn(List.of(
-                            getTrimOptionInfo("O1", true, 1L),
+                            getTrimOptionInfo("O1", true, "AAA"),
                             getTrimOptionInfo("O2", false, null)));
             when(trimOptionQueryRepository.findPackagesByDetailTrimId(1L))
-                    .thenReturn(List.of(getTrimOptionInfo("P1", false, 1L)));
+                    .thenReturn(List.of(getTrimOptionInfo("P1", false, "AAA")));
 
             //when
-            TrimOptionListResponseDto responseDto = trimOptionService.getTrimOptionList(1L, 1L);
+            TrimOptionListResponseDto responseDto = trimOptionService.getTrimOptionList(1L, "AAA");
 
             //then
             softAssertions.assertThat(responseDto.getMultipleSelectParentCategory())
@@ -64,13 +64,13 @@ class TrimOptionServiceTest {
                     .thenReturn(List.of("A", "B", "C"));
             when(trimOptionQueryRepository.findOptionsByDetailTrimId(1L))
                     .thenReturn(List.of(
-                            getTrimOptionInfo("O1", true, 1L),
-                            getTrimOptionInfo("O2", false, 1L)));
+                            getTrimOptionInfo("O1", true, "BBB"),
+                            getTrimOptionInfo("O2", false, "BBB")));
             when(trimOptionQueryRepository.findPackagesByDetailTrimId(1L))
-                    .thenReturn(List.of(getTrimOptionInfo("P1", false, 1L)));
+                    .thenReturn(List.of(getTrimOptionInfo("P1", false, "BBB")));
 
             //when
-            TrimOptionListResponseDto responseDto = trimOptionService.getTrimOptionList(-1L, 2L);
+            TrimOptionListResponseDto responseDto = trimOptionService.getTrimOptionList(-1L, "AAA");
 
             //then
             softAssertions.assertThat(responseDto.getDefaultOptions().isEmpty()).isTrue();
@@ -90,14 +90,14 @@ class TrimOptionServiceTest {
                     .thenReturn(null);
 
             //when
-            TrimOptionListResponseDto responseDto = trimOptionService.getTrimOptionList(-1L, 1L);
+            TrimOptionListResponseDto responseDto = trimOptionService.getTrimOptionList(-1L, "AAA");
 
             //then
             assertThat(responseDto).isNull();
         }
     }
 
-    private static TrimOptionQueryRepository.TrimOptionInfo getTrimOptionInfo(String id, boolean basic, Long trimInteriorColorId) {
+    private static TrimOptionQueryRepository.TrimOptionInfo getTrimOptionInfo(String id, boolean basic, String trimInteriorColorId) {
         return TrimOptionQueryRepository.TrimOptionInfo.builder()
                 .id(id)
                 .name(id)

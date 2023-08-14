@@ -36,7 +36,7 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
         private int price;
         private boolean basic;
         private boolean colorCondition;
-        private Long trimInteriorColorId;
+        private String trimInteriorColorCode;
         private String hashTag;
         private Long hmgModelOptionId;
     }
@@ -97,9 +97,9 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
                 .build();
     }
 
-    private static List<Long> getTrimInteriorColorIds(List<TrimOptionQueryResult> trimOptionInfos) {
+    private static List<String> getTrimInteriorColorIds(List<TrimOptionQueryResult> trimOptionInfos) {
         return trimOptionInfos.stream()
-                .map(TrimOptionQueryResult::getTrimInteriorColorId)
+                .map(TrimOptionQueryResult::getTrimInteriorColorCode)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
@@ -126,7 +126,7 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
                 .price(rs.getInt("price"))
                 .basic(false)
                 .colorCondition(rs.getBoolean("colorCondition"))
-                .trimInteriorColorId(rs.getLong("trimInteriorColorId"))
+                .trimInteriorColorCode(rs.getString("trimInteriorColorCode"))
                 .hashTag(rs.getString("hashTag"))
                 .hmgModelOptionId(rs.getLong("hmgModelOptionId"));
 

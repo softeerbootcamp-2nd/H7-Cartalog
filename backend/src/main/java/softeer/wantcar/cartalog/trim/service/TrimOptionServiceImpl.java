@@ -17,7 +17,7 @@ public class TrimOptionServiceImpl implements TrimOptionService {
     private final TrimOptionQueryRepository trimOptionQueryRepository;
 
     @Override
-    public TrimOptionListResponseDto getTrimOptionList(Long detailTrimId, Long interiorColorId) {
+    public TrimOptionListResponseDto getTrimOptionList(Long detailTrimId, String interiorColorCode) {
         List<String> multipleSelectableCategories = trimOptionQueryRepository.findMultipleSelectableCategories();
         List<TrimOptionQueryRepository.TrimOptionInfo> options = trimOptionQueryRepository.findOptionsByDetailTrimId(detailTrimId);
         List<TrimOptionQueryRepository.TrimOptionInfo> packages = trimOptionQueryRepository.findPackagesByDetailTrimId(detailTrimId);
@@ -26,7 +26,7 @@ public class TrimOptionServiceImpl implements TrimOptionService {
         }
 
         Map<Boolean, List<TrimOptionQueryRepository.TrimOptionInfo>> collectedOptions = options.stream()
-                .filter(option -> filterColorCondition(interiorColorId, option))
+                .filter(option -> filterColorCondition(interiorColorCode, option))
                 .collect(Collectors.groupingBy(TrimOptionQueryRepository.TrimOptionInfo::isBasic));
 
         return TrimOptionListResponseDto.builder()
@@ -36,8 +36,8 @@ public class TrimOptionServiceImpl implements TrimOptionService {
                 .build();
     }
 
-    private boolean filterColorCondition(Long interiorColorId, TrimOptionQueryRepository.TrimOptionInfo option) {
-        return !option.isColorCondition() || option.getTrimInteriorColorIds().contains(interiorColorId);
+    private boolean filterColorCondition(String interiorColorCode, TrimOptionQueryRepository.TrimOptionInfo option) {
+        return !option.isColorCondition() || option.getTrimInteriorColorIds().contains(interiorColorCode);
     }
 
     private List<TrimOptionListResponseDto.TrimOptionDto> getDefaultOptions(Map<Boolean, List<TrimOptionQueryRepository.TrimOptionInfo>> collectedOptions) {
