@@ -37,4 +37,7 @@
     <color name="card_bg_color">#F7F7F9</color>
     <color name="excess_bg_color">#000B19</color>
     <color name="light_blue">#E3EEF8</color>
+    <color name="end_color">#E59CCAFF</color>
+    <color name="center_color">#E5C9E2FF</color>
+    <color name="sky_blue_30">#4DA2C7E7</color>
 </resources>

@@ -45,6 +45,11 @@
     <string name="btn_open_similar_estimate">유사 출고 견적 확인하기</string>
     <string name="btn_share">공유하기</string>
     <string name="btn_consult">상담신청</string>
-    <string name="msg_complete">합리적인 가격으로 완성된\n나만의 팰리세이드가 탄생했어요!</string>
+    <string name="confirm_complete_msg">합리적인 가격으로 완성된\n나만의 팰리세이드가 탄생했어요!</string>
     <string name="summary_total_price">최종 견적 가격</string>
+    <string name="confirm_car_model">Le Blanc</string>
+    <string name="summary_title_2">평균 연비</string>
+    <string name="summary_title_3">배기량</string>
+    <string name="confirm_title_summary">요약견적</string>
+    <string name="confirm_title_detail">상세견적</string>
 </resources>

@@ -67,7 +67,7 @@
             app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintStart_toStartOf="@id/gl_start"
             app:layout_constraintTop_toTopOf="@id/gl_top"
-            app:srcCompat="@drawable/logo_main" />
+            app:srcCompat="@drawable/img_main_logo" />
 
         <TextView
             android:id="@+id/btn_exit"
@@ -135,12 +135,12 @@
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="@{viewModel.stepIndex == 5 ? @color/center_color : @color/white}"
             app:defaultNavHost="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tl_step"
-            app:layout_constraintVertical_bias="0.0"
             app:navGraph="@navigation/nav_graph" />
 
 
@@ -224,6 +224,7 @@
                     android:scaleType="fitCenter"
                     android:src="@drawable/icon_arrow_down_big"
                     app:fragmentContainer="@{fcContainer}"
+                    app:idx="@{viewModel.stepIndex}"
                     app:layout="@{clRangeBarContainer}"
                     app:layout_constraintBottom_toBottomOf="@id/tv_budget_range_text_2"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -359,7 +360,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:text="@string/msg_complete"
+                android:text="@string/confirm_complete_msg"
                 android:textSize="12sp"
                 android:visibility="@{viewModel.stepIndex == 5 ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"

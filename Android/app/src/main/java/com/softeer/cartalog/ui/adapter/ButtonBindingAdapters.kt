@@ -63,11 +63,12 @@ fun setInteriorItemClickListener(
     }
 }
 
-@BindingAdapter("layout", "fragmentContainer")
+@BindingAdapter("layout", "fragmentContainer", "idx")
 fun setOnClickToggle(
     button: ImageButton,
     layout: ConstraintLayout,
-    fragmentContainer: FragmentContainerView
+    fragmentContainer: FragmentContainerView,
+    idx: Int
 ) {
 
     button.setOnClickListener {
@@ -87,7 +88,11 @@ fun setOnClickToggle(
             layout.animate()
                 .alpha(1f).duration = 300
             button.animate().rotation(180f).start()
-            fragmentContainer.setPadding(0, 150, 0, 0)
+            if (idx == 5) {
+                fragmentContainer.setPadding(0, 250, 0, 0)
+            } else {
+                fragmentContainer.setPadding(0, 150, 0, 0)
+            }
         }
     }
 }
@@ -136,12 +141,14 @@ fun setOptionTabSelected(
                 0 -> {
                     Log.d("TEST", viewModel.nowOptionMode.value.toString())
                     viewModel.nowOptionMode.value = OptionMode.SELECT_OPTION
-                    recyclerView.adapter = OptionSelectAdapter(viewModel).apply { notifyDataSetChanged() }
+                    recyclerView.adapter =
+                        OptionSelectAdapter(viewModel).apply { notifyDataSetChanged() }
                 }
 
                 1 -> {
                     viewModel.nowOptionMode.value = OptionMode.DEFAULT_OPTION
-                    recyclerView.adapter = OptionDefaultAdapter(viewModel).apply { notifyDataSetChanged() }
+                    recyclerView.adapter =
+                        OptionDefaultAdapter(viewModel).apply { notifyDataSetChanged() }
                 }
             }
         }
@@ -166,7 +173,7 @@ fun setOnClickSummaryBtn(
 fun setOnClickSummaryCloseBtn(
     button: ImageButton,
     fragment: PriceSummaryBottomSheetFragment
-){
+) {
     button.setOnClickListener {
         fragment.dismiss()
     }
@@ -176,7 +183,7 @@ fun setOnClickSummaryCloseBtn(
 fun setOnClickSummaryCloseBtn(
     button: AppCompatButton,
     fragment: PriceSummaryBottomSheetFragment
-){
+) {
     button.setOnClickListener {
         fragment.dismiss()
     }
