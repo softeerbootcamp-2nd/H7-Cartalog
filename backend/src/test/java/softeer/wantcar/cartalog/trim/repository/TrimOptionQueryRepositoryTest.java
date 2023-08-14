@@ -128,7 +128,7 @@ class TrimOptionQueryRepositoryTest {
             List<String> multipleSelectableCategories = trimOptionQueryRepository.findMultipleSelectCategories();
 
             //then
-            assertThat(multipleSelectableCategories).containsAll(List.of("상세품목", "악세서리"));
+            assertThat(multipleSelectableCategories).containsAll(List.of("상세품목", "악세사리"));
         }
     }
 }

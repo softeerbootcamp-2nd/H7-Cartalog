@@ -26,5 +26,6 @@ public interface TrimOptionQueryRepository {
         private boolean hasHMGData;
     }
 
+    List<String> findMultipleSelectCategories();
     List<TrimOptionInfo> findOptionsByDetailTrimId(Long detailTrimId);
 }
