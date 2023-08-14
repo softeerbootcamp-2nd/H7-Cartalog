@@ -50,6 +50,16 @@ public class TrimOptionController {
         return new ResponseEntity<>(trimOptionList, HttpStatus.OK);
     }
 
+    @ApiOperation(
+            value = "트림 옵션, 패키지 상세 조회",
+            notes = "옵션, 패키지의 상세 내용을 조회한다.")
+    @ApiImplicitParam(
+            name = "optionId", value = "옵션 혹은 패키지 식별자", required = true,
+            dataType = "java.lang.String", paramType = "query", example = "O1")
+    @ApiResponses({
+            @ApiResponse(code = 400, message = "허용되지 않은 입력입니다. 옵션 조회시 'O#', 패키지 조회시 'P#'을 입력하세요."),
+            @ApiResponse(code = 404, message = "존재하지 않는 세부 트림 식별자입니다."),
+            @ApiResponse(code = 500, message = "서버에서 처리하지 못했습니다. 관리자에게 문의하세요.")})
     @GetMapping("/detail")
     public ResponseEntity<OptionDetailResponseDto> getOptionDetail(@RequestParam("optionId") String optionId) {
         boolean isPackage;
