@@ -1,27 +1,37 @@
 package com.softeer.cartalog.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.softeer.cartalog.data.model.Trim
+import com.softeer.cartalog.data.remote.api.RetrofitClient
+import com.softeer.cartalog.data.repository.CarRepository
+import com.softeer.cartalog.data.repository.CarRepositoryImpl
+import com.softeer.cartalog.data.repository.local.CarLocalDataSource
+import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
+import kotlinx.coroutines.launch
 
-class TrimViewModel : ViewModel() {
+class TrimViewModel(private val repository: CarRepository) : ViewModel() {
 
-    private val _trimList: MutableLiveData<List<Trim>> by lazy {
-        MutableLiveData<List<Trim>>(setTrimData())
-    }
+    private val _trimList: MutableLiveData<List<Trim>> = MutableLiveData(emptyList())
     val trimList: LiveData<List<Trim>> = _trimList
 
     private val _selectedTrim = MutableLiveData<Int>(0)
     val selectedTrim = _selectedTrim
 
-    private fun setTrimData(): List<Trim>{
-        // 나중에 defaultInfo non-null로 설정하기
-        val tmpTrim = Trim(1,"Exclusive","기본에 충실한 팰리세이드",41980000,41980000,"","","",null,null)
-        return listOf(tmpTrim)
+    init {
+        setTrimData()
     }
 
-    fun changeSelectedTrim(idx: Int){
+    private fun setTrimData() {
+        viewModelScope.launch {
+            _trimList.value = repository.getTrims().trims
+        }
+    }
+
+    fun changeSelectedTrim(idx: Int) {
         _selectedTrim.value = idx
     }
 }

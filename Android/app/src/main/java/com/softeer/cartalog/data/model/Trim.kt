@@ -9,7 +9,7 @@ data class Trim(
     val exteriorImageUrl: String,
     val interiorImageUrl: String,
     val wheelImageUrl: String,
-    val hmgData: ArrayList<String>?,
+    val hmgData: ArrayList<TrimHmgData?>?,
     val defaultInfo: DefaultInfo?
 ) {
 

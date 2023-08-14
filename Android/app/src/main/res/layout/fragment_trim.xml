@@ -85,7 +85,7 @@
             android:paddingBottom="20dp"
             android:textColor="@color/gray_50"
             android:textSize="16sp"
-            android:text='@{String.format("%s %s",viewModel.trimList.get(viewModel.selectedTrim).name, "선택하기")}'
+            android:text="@{viewModel.trimList.size() > 0 ? String.format(`%s %s`, viewModel.trimList.get(viewModel.selectedTrim).name, `선택하기`) : ``}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
