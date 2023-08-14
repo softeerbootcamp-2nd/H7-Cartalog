@@ -8,14 +8,6 @@
         <import type="android.view.View" />
 
         <variable
-            name="activity"
-            type="com.softeer.cartalog.ui.activity.MainActivity" />
-
-        <variable
-            name="navController"
-            type="androidx.navigation.NavController" />
-
-        <variable
             name="viewModel"
             type="com.softeer.cartalog.viewmodel.MainViewModel" />
     </data>
@@ -91,12 +83,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_logo"
-            app:tabChange="@{navController}"
             app:tabIndicatorColor="@color/primary_color_500"
             app:tabSelectedTextColor="@color/primary_color_500"
             app:tabTextAppearance="@style/TabTextStyle"
-            app:tabTextColor="@color/gray_200"
-            app:viewModel="@{viewModel}">
+            app:tabTextColor="@color/gray_200">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
@@ -234,8 +224,8 @@
                     android:id="@+id/cl_range_bar_container"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:alpha="0.0"
+                    android:visibility="gone"
                     app:button="@{btnBudgetRangeToggle}"
                     app:fragment="@{fcContainer}"
                     app:idx="@{viewModel.stepIndex}"
@@ -349,7 +339,6 @@
                 android:text="@string/btn_price_summary"
                 android:textColor="@drawable/selector_text_price_summary"
                 android:visibility="@{viewModel.stepIndex == 5 ? View.GONE : View.VISIBLE}"
-                app:activity="@{activity}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -406,8 +395,6 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             android:visibility="@{viewModel.stepIndex == 0 ? View.GONE : View.VISIBLE}"
-            app:activity="@{activity}"
-            app:index="@{(viewModel.stepIndex-1)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_next"
             app:layout_constraintStart_toStartOf="parent" />
@@ -423,8 +410,6 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             android:visibility="@{viewModel.stepIndex == 0 ? View.GONE : View.VISIBLE}"
-            app:activity="@{activity}"
-            app:index="@{(viewModel.stepIndex+1)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_prev" />
