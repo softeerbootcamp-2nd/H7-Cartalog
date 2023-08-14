@@ -5,6 +5,7 @@ import Preview from './Preview';
 import * as S from './style';
 import Info from './Info';
 import Detail from './Detail';
+import HMGArea from './HMGArea';
 
 const MOCK_DATA = [
   {
@@ -89,6 +90,33 @@ const MOCK_DATA = [
   },
 ];
 
+const MOCK_HMGDATA = {
+  trim: '르블랑',
+  price: {
+    min: 43460000,
+    max: 47650000,
+    current: 45800000,
+  },
+  similar: [
+    {
+      id: 1,
+      value: 3422,
+    },
+    {
+      id: 2,
+      value: 3200,
+    },
+    {
+      id: 3,
+      value: 3000,
+    },
+    {
+      id: 4,
+      value: 2800,
+    },
+  ],
+};
+
 function Estimation() {
   const [isFetched, setIsFetched] = useState(false);
   const { setTrimState, trim, price } = useData();
@@ -124,6 +152,7 @@ function Estimation() {
         <Info />
         <S.PageContents>
           <Detail data={MOCK_DATA} />
+          <HMGArea data={MOCK_HMGDATA} />
         </S.PageContents>
       </S.Estimation>
       <PriceStaticBar
