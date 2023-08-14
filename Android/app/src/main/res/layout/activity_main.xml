@@ -235,6 +235,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
+                    android:alpha="0.0"
                     app:button="@{btnBudgetRangeToggle}"
                     app:fragment="@{fcContainer}"
                     app:idx="@{viewModel.stepIndex}"
@@ -257,7 +258,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:viewModel="@{viewModel}" />
 
-                    <SeekBar
+                    <androidx.appcompat.widget.AppCompatSeekBar
                         android:id="@+id/sb_user_total_price"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"

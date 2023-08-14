@@ -189,7 +189,7 @@ fun setOptionRecyclerView(
 
 @BindingAdapter("bottomSeekBar")
 fun setHideSeekBar(
-    topSeekBar: SeekBar,
+    topSeekBar: AppCompatSeekBar,
     bottomSeekBar: AppCompatSeekBar
 ) {
     topSeekBar.setOnTouchListener { _, event ->
@@ -245,11 +245,11 @@ fun setRangeBarVisibility(
     }
     if (idx == 5 && layout.visibility == View.GONE) {
         layout.visibility = View.VISIBLE
-        layout.alpha = 0f
         layout.animate()
-            .alpha(1f).duration = 300
+            .alpha(1f)
+            .setDuration(300)
+            .withEndAction { fragmentContainer.setPadding(0, 250, 0, 0) }
         button.animate().rotation(180f).start()
-        fragmentContainer.setPadding(0, 250, 0, 0)
     }
 }
 

@@ -84,15 +84,17 @@ fun setOnClickToggle(
             button.animate().rotation(0f).start()
         } else {
             layout.visibility = View.VISIBLE
-            layout.alpha = 0f
             layout.animate()
-                .alpha(1f).duration = 300
+                .alpha(1f)
+                .setDuration(300)
+                .withEndAction {
+                    if (idx == 5) {
+                        fragmentContainer.setPadding(0, 250, 0, 0)
+                    } else {
+                        fragmentContainer.setPadding(0, 150, 0, 0)
+                    }
+                }
             button.animate().rotation(180f).start()
-            if (idx == 5) {
-                fragmentContainer.setPadding(0, 250, 0, 0)
-            } else {
-                fragmentContainer.setPadding(0, 150, 0, 0)
-            }
         }
     }
 }
