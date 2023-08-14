@@ -86,10 +86,10 @@ class TrimOptionQueryRepositoryTest {
             Long leblancDetailTrimId = jdbcTemplate.queryForObject(
                     "SELECT " +
                     "   dt.id " +
-                    "   FROM detail_trims AS dt " +
-                    "   JOIN trims AS t ON t.id=dt.trim_id " +
-                    "   WHERE t.name= 'Le Blanc' " +
-                    "   LIMIT 1",
+                    "FROM detail_trims AS dt " +
+                    "JOIN trims AS t ON t.id=dt.trim_id " +
+                    "WHERE t.name= 'Le Blanc' " +
+                    "LIMIT 1",
                     new HashMap<>(), Long.TYPE);
 
             //when
