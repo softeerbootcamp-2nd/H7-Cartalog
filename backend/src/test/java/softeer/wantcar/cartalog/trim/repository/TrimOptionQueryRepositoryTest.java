@@ -116,4 +116,19 @@ class TrimOptionQueryRepositoryTest {
             assertThat(trimPackages).isNull();
         }
     }
+
+    @Nested
+    @DisplayName("복수 선택 가능 카테고리 목록 조회 테스트")
+    class getMultipleSelectableCategoryListTest {
+        @Test
+        @DisplayName("복수 선택 가능 카테고리 목록을 반환한다")
+        void returnMultipleSelectableCategoryList() {
+            //given
+            //when
+            List<String> multipleSelectableCategories = trimOptionQueryRepository.findMultipleSelectCategories();
+
+            //then
+            assertThat(multipleSelectableCategories).containsAll(List.of("상세품목", "악세서리"));
+        }
+    }
 }
