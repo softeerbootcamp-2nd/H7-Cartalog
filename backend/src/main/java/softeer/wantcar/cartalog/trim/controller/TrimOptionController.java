@@ -1,5 +1,6 @@
 package softeer.wantcar.cartalog.trim.controller;
 
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,12 +22,26 @@ import java.util.Objects;
 
 
 @Slf4j
+@Api(tags = {"트림 옵션 관련 API"})
 @RestController
 @RequestMapping("/models/trims/options")
 @RequiredArgsConstructor
 public class TrimOptionController {
     private final TrimOptionService trimOptionService;
 
+    @ApiOperation(
+            value = "트림 옵션 목록 조회",
+            notes = "트림의 옵션 목록과 복수 선택 가능 카테고리 목록을 조회한다")
+    @ApiImplicitParams({
+            @ApiImplicitParam(
+                    name = "detailTrimId", value = "세부 트림 식별자", required = true,
+                    dataType = "java.lang.Long", paramType = "query", example = "9"),
+            @ApiImplicitParam(
+                    name = "interiorColorCode", value = "내부 색상 코드", required = true,
+                    dataType = "java.lang.String", paramType = "query", example = "I50")})
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "존재하지 않는 세부 트림 식별자입니다."),
+            @ApiResponse(code = 500, message = "서버에서 처리하지 못했습니다. 관리자에게 문의하세요.")})
     @GetMapping("")
     public ResponseEntity<TrimOptionListResponseDto> getOptionInfos(@PathParam("detailTrimId") Long detailTrimId,
                                                                     @PathParam("interiorColorCode") String interiorColorCode) {
