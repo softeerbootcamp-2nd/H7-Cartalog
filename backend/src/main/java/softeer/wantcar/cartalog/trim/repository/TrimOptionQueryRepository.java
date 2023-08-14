@@ -13,7 +13,7 @@ public interface TrimOptionQueryRepository {
     @Builder
     @AllArgsConstructor
     class TrimOptionInfo {
-        private Long id;
+        private String id;
         private String name;
         private String parentCategory;
         private String childCategory;

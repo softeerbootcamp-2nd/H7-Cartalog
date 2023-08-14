@@ -28,7 +28,7 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
     @Builder
     @Getter
     private static class TrimOptionQueryResult {
-        private Long id;
+        private String id;
         private String name;
         private String parentCategory;
         private String childCategory;
@@ -47,7 +47,7 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
                 .addValue("detailTrimId", detailTrimId);
         List<TrimOptionQueryResult> queryResults = jdbcTemplate.query(QueryString.findPackagesByTrimId,
                 parameters, (rs, rowNum) -> getTrimOptionQueryResult(rs, false));
-        return getTrimOptionInfos(detailTrimId, queryResults);
+        return getTrimOptionInfos(queryResults);
     }
 
     @Override
@@ -62,28 +62,28 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
                 .addValue("detailTrimId", detailTrimId);
         List<TrimOptionQueryResult> queryResults = jdbcTemplate.query(QueryString.findOptionsByDetailTrimId,
                 parameters, (rs, rowNum) -> getTrimOptionQueryResult(rs, true));
-        return getTrimOptionInfos(detailTrimId, queryResults);
+        return getTrimOptionInfos(queryResults);
     }
 
-    private List<TrimOptionInfo> getTrimOptionInfos(Long detailTrimId, List<TrimOptionQueryResult> queryResults) {
+    private List<TrimOptionInfo> getTrimOptionInfos(List<TrimOptionQueryResult> queryResults) {
         if(queryResults.isEmpty()) {
             return null;
         }
-        Map<Long, List<TrimOptionQueryResult>> trimOptionQueryResults = queryResults.stream()
+        Map<String, List<TrimOptionQueryResult>> trimOptionQueryResults = queryResults.stream()
                 .collect(Collectors.groupingBy(TrimOptionQueryResult::getId));
 
         List<TrimOptionInfo> trimOptionInfos = new ArrayList<>();
-        for (Long detailTrimOptionId : trimOptionQueryResults.keySet()) {
-            trimOptionInfos.add(getTrimOptionInfo(detailTrimId, trimOptionQueryResults, detailTrimOptionId));
+        for (String optionId : trimOptionQueryResults.keySet()) {
+            trimOptionInfos.add(getTrimOptionInfo(trimOptionQueryResults, optionId));
         }
         return trimOptionInfos;
     }
 
-    private TrimOptionInfo getTrimOptionInfo(Long detailTrimId, Map<Long, List<TrimOptionQueryResult>> trimOptionQueryResults, Long detailTrimOptionId) {
-        List<TrimOptionQueryResult> optionQueryResults = trimOptionQueryResults.get(detailTrimOptionId);
+    private TrimOptionInfo getTrimOptionInfo(Map<String, List<TrimOptionQueryResult>> trimOptionQueryResults, String optionId) {
+        List<TrimOptionQueryResult> optionQueryResults = trimOptionQueryResults.get(optionId);
         TrimOptionQueryResult optionQueryResult = optionQueryResults.get(0);
         return TrimOptionInfo.builder()
-                .id(detailTrimId)
+                .id(optionId)
                 .name(optionQueryResult.getName())
                 .parentCategory(optionQueryResult.parentCategory)
                 .childCategory(optionQueryResult.getChildCategory())
@@ -118,7 +118,7 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
 
     private static TrimOptionQueryResult getTrimOptionQueryResult(ResultSet rs, boolean isOption) throws SQLException {
         TrimOptionQueryResult.TrimOptionQueryResultBuilder builder = TrimOptionQueryResult.builder()
-                .id(rs.getLong("id"))
+                .id((isOption ? "O" : "P") + rs.getLong("id"))
                 .name(rs.getString("name"))
                 .parentCategory(rs.getString("parentCategory"))
                 .childCategory(null)
