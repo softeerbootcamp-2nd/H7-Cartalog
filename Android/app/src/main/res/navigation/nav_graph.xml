@@ -81,6 +81,9 @@
             app:destination="@id/interiorFragment"
             app:enterAnim="@anim/slide_in_from_left"
             app:exitAnim="@anim/slide_out_to_right" />
+        <action
+            android:id="@+id/action_optionFragment_to_optionDetailDialog"
+            app:destination="@id/optionDetailDialog" />
     </fragment>
     <fragment
         android:id="@+id/confirmFragment"
@@ -97,4 +100,12 @@
         android:name="com.softeer.cartalog.ui.dialog.TypeDetailPopupActivity"
         android:label="TypeDetailPopup" >
     </activity>
+    <dialog
+        android:id="@+id/optionDetailDialog"
+        android:name="com.softeer.cartalog.ui.dialog.OptionDetailDialog"
+        android:label="OptionDetailDialog" >
+        <action
+            android:id="@+id/action_optionDetailDialog_to_optionFragment"
+            app:destination="@id/optionFragment" />
+    </dialog>
 </navigation>

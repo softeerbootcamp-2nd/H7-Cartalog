@@ -88,7 +88,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.chip.ChipGroup
-                android:id="@+id/cg_category"
+                android:id="@+id/cg_hashtag"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@id/iv_option"
@@ -108,7 +108,7 @@
 
             <TextView
                 android:id="@+id/btn_hmg_data"
-                style="@style/HmgDataTag"
+                style="@style/HmgDataButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="8dp"
@@ -176,7 +176,7 @@
                     android:id="@+id/btn_check"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/selector_check_btn"
+                    android:src="@drawable/selector_btn_check"
                     android:padding="5dp"
                     android:tint="@{position == optionAdapter.selectedItem ? @color/white : @color/gray_400}"
                     />

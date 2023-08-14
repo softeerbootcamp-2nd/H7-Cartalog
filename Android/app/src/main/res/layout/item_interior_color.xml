@@ -129,7 +129,7 @@
                 android:id="@+id/btn_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/selector_check_btn"
+                android:src="@drawable/selector_btn_check"
                 android:tint="@{position == adapter.selectedItem ? @color/active_blue : @color/gray_600}"
                 app:layout_constraintBottom_toBottomOf="@id/gl_bottom"
                 app:layout_constraintEnd_toEndOf="@id/gl_end" />
