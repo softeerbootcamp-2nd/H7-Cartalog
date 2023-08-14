@@ -5,8 +5,7 @@ public class QueryString {
     }
 
     protected static final String findBasicModelByName =
-            "SELECT id, name, category FROM basic_models WHERE name=:name " +
-            ";";
+            "SELECT id, name, category FROM basic_models WHERE name=:name ";
 
     protected static final String findTrimsByBasicModelId =
             "SELECT  " +
@@ -82,8 +81,7 @@ public class QueryString {
             "    ) " +
             "  ) AS mt" +
             ") AS mt  " +
-            "ON t.basic_model_id= :basicModelId " +
-            ";";
+            "ON t.basic_model_id= :basicModelId ";
 
     protected static final String findDetailTrimInfoByTrimIdAndModelTypes =
             "SELECT " +
@@ -102,8 +100,7 @@ public class QueryString {
             "    GROUP BY dm.id " +
             "    HAVING COUNT(DISTINCT dmdo.model_option_id) = :modelTypeCount " +
             ") AS dm ON dt.detail_model_id=dm.id " +
-            "WHERE dt.trim_id = :trimId " +
-            ";";
+            "WHERE dt.trim_id = :trimId ";
 
     protected static String findOptionsByDetailTrimId =
             "SELECT DISTINCT " +
@@ -125,8 +122,7 @@ public class QueryString {
             "LEFT OUTER JOIN detail_trim_option_interior_color_condition AS dtoicc ON dtoicc.detail_trim_option_id=dto.id " +
             "LEFT OUTER JOIN model_option_hash_tags AS moht ON moht.model_option_id = dto.model_option_id " +
             "LEFT OUTER JOIN hmg_data AS hmg ON hmg.model_option_id=dto.model_option_id " +
-            "WHERE visibility=true AND detail_trim_id= :detailTrimId  " +
-            "; ";
+            "WHERE visibility=true AND detail_trim_id= :detailTrimId  ";
 
     public static String findPackagesByTrimId =
             "SELECT DISTINCT " +
@@ -148,8 +144,7 @@ public class QueryString {
             "JOIN trim_package_options AS tpo ON tpo.trim_package_id=dtp.id " +
             "JOIN detail_trim_options AS dto ON dto.id=tpo.detail_trim_option_id " +
             "JOIN hmg_data AS hmg ON hmg.model_option_id=dto.model_option_id " +
-            "WHERE dtp.detail_trim_id= :detailTrimId " +
-            ";";
+            "WHERE dtp.detail_trim_id= :detailTrimId ";
 
     protected static final String findTrimExteriorColorByTrimId =
             "SELECT " +
@@ -188,5 +183,11 @@ public class QueryString {
             "  INNER JOIN model_exterior_colors " +
             "  ON trim_exterior_colors.model_exterior_color_id = model_exterior_colors.id " +
             "  WHERE trim_exterior_colors.trim_id = :trimId " +
-            "    AND model_exterior_colors.color_code = :colorCode)";
+            "    AND model_exterior_colors.color_code = :colorCode);";
+
+    protected static final String findMultipleSelectableCategories =
+            "SELECT " +
+            "   category " +
+            "FROM model_option_parent_categories " +
+            "WHERE multiple_select=true";
 }
