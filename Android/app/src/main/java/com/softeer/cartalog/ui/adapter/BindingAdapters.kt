@@ -2,20 +2,16 @@ package com.softeer.cartalog.ui.adapter
 
 import android.view.View
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.SeekBar
-import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatSeekBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentContainerView
-import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.softeer.cartalog.R
 import com.softeer.cartalog.data.enums.OptionMode
-import com.softeer.cartalog.ui.dialog.TypeDetailPopupActivity
 import com.softeer.cartalog.util.UtilManager
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import com.softeer.cartalog.viewmodel.InteriorViewModel
@@ -24,21 +20,6 @@ import com.softeer.cartalog.viewmodel.OptionViewModel
 import com.softeer.cartalog.viewmodel.TrimViewModel
 import com.softeer.cartalog.viewmodel.TypeViewModel
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-
-
-@BindingAdapter("navController")
-fun setShowDialog(view: TextView, navController: NavController) {
-    view.setOnClickListener {
-        navController.navigate(R.id.typeDetailPopup)
-    }
-}
-
-@BindingAdapter("activity")
-fun setCloseDialog(view: ImageView, activity: TypeDetailPopupActivity) {
-    view.setOnClickListener {
-        activity.finish()
-    }
-}
 
 @BindingAdapter("viewModel", "indicator")
 fun setTypeDetailViewPager(

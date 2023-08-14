@@ -14,7 +14,6 @@ import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import com.softeer.cartalog.viewmodel.InteriorViewModel
 import com.softeer.cartalog.viewmodel.OptionViewModel
 
-
 @BindingAdapter("adapter", "viewModel", "position")
 fun setExteriorItemClickListener(
     cardView: MaterialCardView,
