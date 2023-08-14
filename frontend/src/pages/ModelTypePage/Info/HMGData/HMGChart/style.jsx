@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import { EASE_OUT_CUBIC } from '../../../../../constants';
 
 export const HMGChart = styled.div`
   display: flex;
@@ -24,9 +25,23 @@ export const Chart = styled.div`
   background: ${({ theme }) => theme.color.gray['200']};
 `;
 
+const BarAnimation = keyframes`
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+`;
+
 export const Bar = styled.div`
   position: absolute;
+  left: 0;
   width: ${({ value }) => `${value}px`};
   height: 4px;
   background-color: ${({ theme }) => theme.color.activeBlue2};
+  transform-origin: left;
+  animation: ${BarAnimation} 0.5s ${EASE_OUT_CUBIC} forwards;
+  transition: width 0.5s ${EASE_OUT_CUBIC};
 `;
