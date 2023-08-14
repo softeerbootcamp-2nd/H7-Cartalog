@@ -7,6 +7,8 @@ export const Info = styled.div`
 export const ModelText = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 52px;
 `;
 
 export const ModelImage = styled.img`
