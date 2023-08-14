@@ -4,9 +4,6 @@
 
     <data>
 
-        <variable
-            name="fragment"
-            type="com.softeer.cartalog.ui.dialog.PriceSummaryBottomSheetFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,7 +46,6 @@
             android:layout_marginTop="16dp"
             android:background="@android:color/transparent"
             android:src="@drawable/icon_close"
-            app:fragment="@{fragment}"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -404,7 +400,6 @@
                 android:fontFamily="@font/hyndaisans_text"
                 android:text="@string/btn_close_price_summary"
                 android:textColor="@drawable/selector_text_price_summary"
-                app:fragment="@{fragment}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

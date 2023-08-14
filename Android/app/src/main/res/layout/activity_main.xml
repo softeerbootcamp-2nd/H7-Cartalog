@@ -227,7 +227,7 @@
                     android:alpha="0.0"
                     android:visibility="gone"
                     app:button="@{btnBudgetRangeToggle}"
-                    app:fragment="@{fcContainer}"
+                    app:fragmentContainer="@{fcContainer}"
                     app:idx="@{viewModel.stepIndex}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

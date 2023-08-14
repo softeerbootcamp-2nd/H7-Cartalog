@@ -3,7 +3,6 @@ package com.softeer.cartalog.ui.adapter
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
-import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentContainerView
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.tabs.TabLayout
 import com.softeer.cartalog.data.enums.OptionMode
-import com.softeer.cartalog.ui.dialog.PriceSummaryBottomSheetFragment
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import com.softeer.cartalog.viewmodel.InteriorViewModel
 import com.softeer.cartalog.viewmodel.OptionViewModel
@@ -148,24 +146,4 @@ fun setOptionTabSelected(
         override fun onTabUnselected(tab: TabLayout.Tab?) {}
         override fun onTabReselected(tab: TabLayout.Tab?) {}
     })
-}
-
-@BindingAdapter("fragment")
-fun setOnClickSummaryCloseBtn(
-    button: ImageButton,
-    fragment: PriceSummaryBottomSheetFragment
-) {
-    button.setOnClickListener {
-        fragment.dismiss()
-    }
-}
-
-@BindingAdapter("fragment")
-fun setOnClickSummaryCloseBtn(
-    button: AppCompatButton,
-    fragment: PriceSummaryBottomSheetFragment
-) {
-    button.setOnClickListener {
-        fragment.dismiss()
-    }
 }

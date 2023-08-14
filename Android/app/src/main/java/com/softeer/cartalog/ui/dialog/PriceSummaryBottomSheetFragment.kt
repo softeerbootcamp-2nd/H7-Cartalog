@@ -8,7 +8,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.softeer.cartalog.databinding.FragmentPriceSummaryBottomSheetBinding
 
-class PriceSummaryBottomSheetFragment(): BottomSheetDialogFragment() {
+class PriceSummaryBottomSheetFragment() : BottomSheetDialogFragment() {
 
     private var _binding: FragmentPriceSummaryBottomSheetBinding? = null
     private val binding get() = _binding!!
@@ -24,9 +24,14 @@ class PriceSummaryBottomSheetFragment(): BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.fragment = this
         val bottomSheetBehavior = BottomSheetBehavior.from(view.parent as View)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        binding.btnClose.setOnClickListener {
+            dismiss()
+        }
+        binding.btnPriceSummary.setOnClickListener {
+            dismiss()
+        }
     }
 
     override fun onDestroyView() {

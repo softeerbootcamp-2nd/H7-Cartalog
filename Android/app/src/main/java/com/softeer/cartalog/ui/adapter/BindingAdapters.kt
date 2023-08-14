@@ -13,7 +13,6 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
 import com.softeer.cartalog.R
 import com.softeer.cartalog.data.enums.OptionMode
 import com.softeer.cartalog.ui.dialog.TypeDetailPopupActivity
@@ -26,14 +25,6 @@ import com.softeer.cartalog.viewmodel.TrimViewModel
 import com.softeer.cartalog.viewmodel.TypeViewModel
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 
-@BindingAdapter("tabChange", "viewModel")
-fun setOnTabChanged(
-    tabLayout: TabLayout,
-    navController: NavController,
-    viewModel: MainViewModel
-) {
-
-}
 
 @BindingAdapter("navController")
 fun setShowDialog(view: TextView, navController: NavController) {
@@ -176,7 +167,7 @@ fun setBudgetLimit(
     })
 }
 
-@BindingAdapter("idx", "button", "fragment")
+@BindingAdapter("idx", "button", "fragmentContainer")
 fun setRangeBarVisibility(
     layout: ConstraintLayout,
     idx: Int,
