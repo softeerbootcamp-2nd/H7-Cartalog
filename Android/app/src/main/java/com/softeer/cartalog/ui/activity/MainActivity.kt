@@ -32,14 +32,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding.viewModel = mainViewModel
         binding.lifecycleOwner = this
-        changeTab()
+        setTabSelected()
 
         binding.btnNext.setOnClickListener(this)
         binding.btnPrev.setOnClickListener(this)
         binding.btnPriceSummary.setOnClickListener(this)
     }
 
-    private fun changeTab() {
+    private fun setTabSelected() {
         val font = ResourcesCompat.getFont(this, R.font.hyndaisans_head_bold)
         val tabLayout = binding.tlStep
 
@@ -92,14 +92,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         })
     }
 
+    fun changeTab(idx: Int){
+        binding.tlStep.selectTab(binding.tlStep.getTabAt(idx))
+    }
+
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.btn_next -> {
-                binding.tlStep.selectTab(binding.tlStep.getTabAt(mainViewModel.stepIndex.value!! + 1))
+                changeTab(mainViewModel.stepIndex.value!! + 1)
             }
 
             R.id.btn_prev -> {
-                binding.tlStep.selectTab(binding.tlStep.getTabAt(mainViewModel.stepIndex.value!! - 1))
+                changeTab(mainViewModel.stepIndex.value!! - 1)
             }
 
             R.id.btn_price_summary -> {
