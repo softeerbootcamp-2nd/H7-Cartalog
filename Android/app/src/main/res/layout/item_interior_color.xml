@@ -23,7 +23,7 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cv_card"
+        android:id="@+id/cv_root"
         android:layout_width="150dp"
         android:layout_height="190dp"
         android:layout_marginStart="16dp"
