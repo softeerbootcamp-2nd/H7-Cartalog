@@ -19,9 +19,9 @@
     <string name="tab_option_not_default">추가옵션</string>
     <string name="tab_option_default">기본옵션</string>
 
-    <string name="trim_select_header">트림을 선택해주세요.</string>
+    <string name="trim_header">트림을 선택해주세요.</string>
 
-    <string name="type_select_header">모델타입을 선택해주세요.</string>
+    <string name="type_header">모델타입을 선택해주세요.</string>
     <string name="type_powertrain">파워트레인</string>
     <string name="type_bodytype">바디타입</string>
     <string name="type_wheeldrive">구동방식</string>
