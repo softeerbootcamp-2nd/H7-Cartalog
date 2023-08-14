@@ -14,9 +14,11 @@ import softeer.wantcar.cartalog.trim.dto.OptionDetailResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimOptionDetailResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimOptionListResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimPackageDetailResponseDto;
+import softeer.wantcar.cartalog.trim.service.TrimOptionService;
 
 import javax.websocket.server.PathParam;
 import java.util.List;
+import java.util.Objects;
 
 
 @Slf4j
@@ -26,28 +28,16 @@ import java.util.List;
 public class TrimOptionController {
     @Value("${env.imageServerPath}")
     private String imageServerPath = "example-url";
+    private final TrimOptionService trimOptionService;
 
     @GetMapping("")
-    public ResponseEntity<TrimOptionListResponseDto> getOptionInfos(@PathParam("trimId") Long trimId) {
-        if (trimId < 0) {
+    public ResponseEntity<TrimOptionListResponseDto> getOptionInfos(@PathParam("detailTrimId") Long detailTrimId,
+                                                                    @PathParam("interiorColorId") Long interiorColorId) {
+        TrimOptionListResponseDto trimOptionList = trimOptionService.getTrimOptionList(detailTrimId, interiorColorId);
+        if (Objects.isNull(trimOptionList)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        TrimOptionListResponseDto trimOptionListResponseDto = TrimOptionListResponseDto.builder()
-                .multipleSelectParentCategory(List.of("상세 품목", "악세사리"))
-                .selectOptions(List.of(getTrimOptionDto("O11",
-                        "2열 통풍시트",
-                        "상세품목",
-                        "시트",
-                        "2_cool_seat.jpg",
-                        350000)))
-                .defaultOptions(List.of(getTrimOptionDto("O5",
-                        "디젤 2.2 엔진",
-                        null,
-                        "파워트레인/성능",
-                        "/palisade/le-blanc/options/dieselengine2.2_s.jpg",
-                        0)))
-                .build();
-        return new ResponseEntity<>(trimOptionListResponseDto, HttpStatus.OK);
+        return new ResponseEntity<>(trimOptionList, HttpStatus.OK);
     }
 
     //TODO: NumberFormatException 처리 필요

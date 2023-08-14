@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import softeer.wantcar.cartalog.global.dto.HMGDataDto;
@@ -18,7 +17,8 @@ import softeer.wantcar.cartalog.trim.service.TrimOptionService;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 @DisplayName("트림 옵션 도메인 테스트")
@@ -56,7 +56,7 @@ public class TrimOptionControllerTest {
             //then
             assert realResponse != null;
             softAssertions.assertThat(realResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-            softAssertions.assertThat(realResponse).isEqualTo(expectResponse);
+            softAssertions.assertThat(realResponse.getBody()).isEqualTo(expectResponse);
             softAssertions.assertAll();
         }
 
@@ -189,20 +189,6 @@ public class TrimOptionControllerTest {
             //then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         }
-    }
-
-    private static TrimOptionListResponseDto.TrimOptionDto getTrimOptionDto(
-            String id, String name, String parentCategory, String childCategory, String imageUrl, int price) {
-        return TrimOptionListResponseDto.TrimOptionDto.builder()
-                .id(id)
-                .name(name)
-                .parentCategory(parentCategory)
-                .childCategory(childCategory)
-                .imageUrl(imageServerPath + imageUrl)
-                .price(price)
-                .chosen(38)
-                .hashTags(List.of("장거리 운전"))
-                .build();
     }
 
     private static TrimOptionListResponseDto.TrimOptionDto getTrimOptionDto(String id) {
