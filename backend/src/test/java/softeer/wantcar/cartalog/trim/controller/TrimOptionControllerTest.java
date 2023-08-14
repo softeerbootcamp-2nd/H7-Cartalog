@@ -150,6 +150,7 @@ public class TrimOptionControllerTest {
                     .contains(new TrimPackageDetailResponseDto.PackageOptionDetailDto(
                             "패키지 이름",
                             "패키지 설명",
+                            "패키지 주소",
                             List.of("장거리 운전"),
                             List.of(new HMGDataDto("구매자 절반 이상이", "2384", "최근 90일 동안"))
                     ));

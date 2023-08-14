@@ -68,7 +68,6 @@ public class TrimOptionController {
         boolean isPackage = optionId.charAt(0) == 'P';
         if (isPackage) {
             TrimPackageDetailResponseDto trimPackageDetail = TrimPackageDetailResponseDto.builder()
-                    .isPackage(true)
                     .options(List.of(TrimPackageDetailResponseDto.PackageOptionDetailDto.builder()
                             .name("패키지 이름")
                             .description("패키지 설명")
@@ -80,7 +79,6 @@ public class TrimOptionController {
         }
 
         TrimOptionDetailResponseDto trimOptionDetail = TrimOptionDetailResponseDto.builder()
-                .isPackage(false)
                 .name("2열 통풍시트")
                 .description("대강 좋다는 내용")
                 .hashTags(List.of("장거리 운전"))
