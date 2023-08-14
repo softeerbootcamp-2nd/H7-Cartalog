@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.softeer.cartalog.databinding.FragmentConfirmBinding
-import com.softeer.cartalog.databinding.FragmentExteriorBinding
 
 class ConfirmFragment: Fragment() {
     private var _binding: FragmentConfirmBinding? = null
@@ -22,7 +21,6 @@ class ConfirmFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
 
     override fun onDestroyView() {

@@ -12,6 +12,7 @@ import com.softeer.cartalog.data.repository.CarRepositoryImpl
 import com.softeer.cartalog.data.repository.local.CarLocalDataSource
 import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
 import com.softeer.cartalog.databinding.FragmentTypeBinding
+import com.softeer.cartalog.ui.activity.MainActivity
 import com.softeer.cartalog.viewmodel.CommonViewModelFactory
 import com.softeer.cartalog.viewmodel.TypeViewModel
 
@@ -40,7 +41,12 @@ class TypeFragment : Fragment() {
 
         binding.viewModel = typeViewModel
         binding.lifecycleOwner = viewLifecycleOwner
-
+        binding.btnNext.setOnClickListener {
+            (activity as MainActivity).changeTab(2)
+        }
+        binding.btnPrev.setOnClickListener {
+            (activity as MainActivity).changeTab(0)
+        }
     }
 
     override fun onDestroyView() {
