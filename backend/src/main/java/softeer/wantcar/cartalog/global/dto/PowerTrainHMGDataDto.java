@@ -1,6 +1,8 @@
 package softeer.wantcar.cartalog.global.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
 @Getter
 @AllArgsConstructor

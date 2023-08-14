@@ -11,8 +11,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static softeer.wantcar.cartalog.trim.dto.TrimOptionListResponseDto.*;
-
 @Service
 @RequiredArgsConstructor
 public class TrimOptionServiceImpl implements TrimOptionService {
@@ -23,7 +21,7 @@ public class TrimOptionServiceImpl implements TrimOptionService {
         List<String> multipleSelectableCategories = trimOptionQueryRepository.findMultipleSelectableCategories();
         List<TrimOptionQueryRepository.TrimOptionInfo> options = trimOptionQueryRepository.findOptionsByDetailTrimId(detailTrimId);
         List<TrimOptionQueryRepository.TrimOptionInfo> packages = trimOptionQueryRepository.findPackagesByDetailTrimId(detailTrimId);
-        if(Objects.isNull(options) || Objects.isNull(packages)) {
+        if (Objects.isNull(options) || Objects.isNull(packages)) {
             return null;
         }
 
@@ -31,7 +29,7 @@ public class TrimOptionServiceImpl implements TrimOptionService {
                 .filter(option -> filterColorCondition(interiorColorId, option))
                 .collect(Collectors.groupingBy(TrimOptionQueryRepository.TrimOptionInfo::isBasic));
 
-        return builder()
+        return TrimOptionListResponseDto.builder()
                 .multipleSelectParentCategory(multipleSelectableCategories)
                 .defaultOptions(getDefaultOptions(collectedOptions))
                 .selectOptions(getSelectableOptions(packages, collectedOptions))
@@ -42,21 +40,21 @@ public class TrimOptionServiceImpl implements TrimOptionService {
         return !option.isColorCondition() || option.getTrimInteriorColorIds().contains(interiorColorId);
     }
 
-    private List<TrimOptionDto> getDefaultOptions(Map<Boolean, List<TrimOptionQueryRepository.TrimOptionInfo>> collectedOptions) {
+    private List<TrimOptionListResponseDto.TrimOptionDto> getDefaultOptions(Map<Boolean, List<TrimOptionQueryRepository.TrimOptionInfo>> collectedOptions) {
         return getOptions(collectedOptions.getOrDefault(true, new ArrayList<>()));
     }
 
-    private List<TrimOptionDto> getSelectableOptions(List<TrimOptionQueryRepository.TrimOptionInfo> packages,
-                                                     Map<Boolean, List<TrimOptionQueryRepository.TrimOptionInfo>> collectedOptions) {
-        List<TrimOptionDto> selectableOptions = getOptions(collectedOptions.getOrDefault(false, new ArrayList<>()));
-        List<TrimOptionDto> selectablePackages = getOptions(packages);
+    private List<TrimOptionListResponseDto.TrimOptionDto> getSelectableOptions(List<TrimOptionQueryRepository.TrimOptionInfo> packages,
+                                                                               Map<Boolean, List<TrimOptionQueryRepository.TrimOptionInfo>> collectedOptions) {
+        List<TrimOptionListResponseDto.TrimOptionDto> selectableOptions = getOptions(collectedOptions.getOrDefault(false, new ArrayList<>()));
+        List<TrimOptionListResponseDto.TrimOptionDto> selectablePackages = getOptions(packages);
         selectablePackages.addAll(selectableOptions);
         return selectablePackages;
     }
 
-    private List<TrimOptionDto> getOptions(List<TrimOptionQueryRepository.TrimOptionInfo> collectedOptions) {
+    private List<TrimOptionListResponseDto.TrimOptionDto> getOptions(List<TrimOptionQueryRepository.TrimOptionInfo> collectedOptions) {
         return collectedOptions.stream()
-                .map(option -> new TrimOptionDto(option, 0))
+                .map(option -> new TrimOptionListResponseDto.TrimOptionDto(option, 0))
                 .collect(Collectors.toList());
     }
 }

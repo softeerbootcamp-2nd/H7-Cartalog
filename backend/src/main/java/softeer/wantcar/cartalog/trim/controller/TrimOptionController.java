@@ -2,7 +2,6 @@ package softeer.wantcar.cartalog.trim.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,8 +25,6 @@ import java.util.Objects;
 @RequestMapping("/models/trims/options")
 @RequiredArgsConstructor
 public class TrimOptionController {
-    @Value("${env.imageServerPath}")
-    private String imageServerPath = "example-url";
     private final TrimOptionService trimOptionService;
 
     @GetMapping("")
@@ -75,19 +72,5 @@ public class TrimOptionController {
                 .hmgData(List.of(new HMGDataDto("주행 중 실제로", "73.2", "15,000km 당")))
                 .build();
         return new ResponseEntity<>(trimOptionDetail, HttpStatus.OK);
-    }
-
-    private TrimOptionListResponseDto.TrimOptionDto getTrimOptionDto(
-            String id, String name, String parentCategory, String childCategory, String imageUrl, int price) {
-        return TrimOptionListResponseDto.TrimOptionDto.builder()
-                .id(id)
-                .name(name)
-                .parentCategory(parentCategory)
-                .childCategory(childCategory)
-                .imageUrl(imageServerPath + imageUrl)
-                .price(price)
-                .chosen(38)
-                .hashTags(List.of("장거리 운전"))
-                .build();
     }
 }

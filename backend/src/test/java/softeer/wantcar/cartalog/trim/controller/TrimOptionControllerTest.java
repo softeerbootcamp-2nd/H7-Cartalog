@@ -26,7 +26,6 @@ public class TrimOptionControllerTest {
     SoftAssertions softAssertions;
     TrimOptionController trimOptionController;
     TrimOptionService trimOptionService;
-    static String imageServerPath = "example-url";
 
     @BeforeEach
     void setUp() {

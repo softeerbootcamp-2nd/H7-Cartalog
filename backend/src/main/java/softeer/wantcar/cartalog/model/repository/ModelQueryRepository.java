@@ -6,7 +6,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import softeer.wantcar.cartalog.entity.model.BasicModel;
-import softeer.wantcar.cartalog.trim.repository.QueryString;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

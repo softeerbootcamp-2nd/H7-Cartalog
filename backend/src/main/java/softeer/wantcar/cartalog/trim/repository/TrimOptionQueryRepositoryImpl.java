@@ -66,7 +66,7 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
     }
 
     private List<TrimOptionInfo> getTrimOptionInfos(List<TrimOptionQueryResult> queryResults) {
-        if(queryResults.isEmpty()) {
+        if (queryResults.isEmpty()) {
             return null;
         }
         Map<String, List<TrimOptionQueryResult>> trimOptionQueryResults = queryResults.stream()
@@ -130,7 +130,7 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
                 .hashTag(rs.getString("hashTag"))
                 .hmgModelOptionId(rs.getLong("hmgModelOptionId"));
 
-        if(isOption) {
+        if (isOption) {
             builder.basic(rs.getBoolean("basic"));
             builder.childCategory(rs.getString("childCategory"));
         }

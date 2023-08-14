@@ -27,5 +27,6 @@ public interface TrimOptionQueryRepository {
     }
 
     List<String> findMultipleSelectableCategories();
+
     List<TrimOptionInfo> findOptionsByDetailTrimId(Long detailTrimId);
 }
