@@ -55,6 +55,10 @@ export const Preview = styled.div`
   top: 60px;
   width: 100%;
   background-color: ${({ theme }) => theme.color.white};
+
+  & > div {
+    background: ${({ theme }) => theme.color.finishGrad};
+  }
 `;
 
 export const CarInfo = styled.div`
@@ -62,7 +66,6 @@ export const CarInfo = styled.div`
   width: 100%;
   max-width: 1142px;
   margin: 0 auto;
-  background: ${({ theme }) => theme.color.finishGrad};
   animation: ${CarInfoAnimation} 1s linear forwards;
   animation-play-state: paused;
 

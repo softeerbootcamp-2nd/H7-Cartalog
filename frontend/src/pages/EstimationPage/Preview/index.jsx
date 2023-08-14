@@ -15,24 +15,26 @@ function Preview({ scrollY }) {
 
   return (
     <S.Preview>
-      <S.CarInfo style={delayStyle}>
-        <div className="title" style={delayStyle}>
-          Le Blanc
-        </div>
-        <div className="preview" style={delayStyle}>
-          <img
-            src={INTERIOR_IMAGE_SRC}
-            alt="interior"
-            style={toggle ? delayStyle : { display: 'none', ...delayStyle }}
-          />
-          <img
-            src={EXTERIOR_IMAGE_SRC}
-            alt="exterior"
-            style={toggle ? { display: 'none', ...delayStyle } : delayStyle}
-          />
-          <Toggle state={toggle} setState={setToggle} big />
-        </div>
-      </S.CarInfo>
+      <div>
+        <S.CarInfo style={delayStyle}>
+          <div className="title" style={delayStyle}>
+            Le Blanc
+          </div>
+          <div className="preview" style={delayStyle}>
+            <img
+              src={INTERIOR_IMAGE_SRC}
+              alt="interior"
+              style={toggle ? delayStyle : { display: 'none', ...delayStyle }}
+            />
+            <img
+              src={EXTERIOR_IMAGE_SRC}
+              alt="exterior"
+              style={toggle ? { display: 'none', ...delayStyle } : delayStyle}
+            />
+            <Toggle state={toggle} setState={setToggle} big />
+          </div>
+        </S.CarInfo>
+      </div>
     </S.Preview>
   );
 }
