@@ -32,7 +32,7 @@ export const DetailContents = styled.div`
     transition:
       height 0.5s ease,
       margin-top 0.5s ease;
-    height: ${({ $n }) => 64 * $n}px;
+    height: ${({ $n }) => 72 * $n}px;
     margin-top: 12px;
   }
 `;

@@ -97,6 +97,7 @@ const MOCK_HMGDATA = {
     max: 47650000,
     current: 45800000,
   },
+  value: 2500,
   similar: [
     {
       id: 1,
