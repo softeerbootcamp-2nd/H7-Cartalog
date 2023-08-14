@@ -1,6 +1,9 @@
 package softeer.wantcar.cartalog.trim.repository;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -117,14 +120,19 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
 
     @Override
     public TrimOptionDetailResponseDto findTrimOptionDetailByDetailTrimOptionId(Long detailTrimOptionId) {
-        SqlParameterSource parameters;
+        Long optionId;
         try {
-            parameters = new MapSqlParameterSource()
-                    .addValue("optionId", transformModelOptionId(detailTrimOptionId));
+            optionId = transformModelOptionId(detailTrimOptionId);
         } catch (EmptyResultDataAccessException exception) {
             return null;
         }
 
+        return findTrimOptionDetailResponseDto(optionId);
+    }
+
+    private TrimOptionDetailResponseDto findTrimOptionDetailResponseDto(Long optionId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("optionId", optionId);
 
         String getTrimOptionSQL = "SELECT name, description, image_url FROM model_options WHERE id = :optionId";
         ModelOptionDetailQueryResult modelOptionDetailQueryResult;
@@ -178,7 +186,7 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
 
         List<TrimOptionDetailResponseDto> trimOptionDetailResponseDtoList = modelPackageOptionQueryResults.stream()
                 .map(ModelPackageOptionQueryResult::getOptionId)
-                .map(this::findTrimOptionDetailByDetailTrimOptionId)
+                .map(this::findTrimOptionDetailResponseDto)
                 .collect(Collectors.toUnmodifiableList());
 
         return TrimPackageDetailResponseDto.builder()
