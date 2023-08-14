@@ -4,11 +4,11 @@ public class QueryString {
     private QueryString() {
     }
 
-    public static final String findBasicModelByName =
+    protected static final String findBasicModelByName =
             "SELECT id, name, category FROM basic_models WHERE name=:name " +
             ";";
 
-    public static final String findTrimsByBasicModelId =
+    protected static final String findTrimsByBasicModelId =
             "SELECT  " +
             "(SELECT name FROM basic_models where id= :basicModelId) AS modelName,  " +
             "t.id AS trimId,  " +
@@ -85,7 +85,7 @@ public class QueryString {
             "ON t.basic_model_id= :basicModelId " +
             ";";
 
-    public static final String findDetailTrimInfoByTrimIdAndModelTypes =
+    protected static final String findDetailTrimInfoByTrimIdAndModelTypes =
             "SELECT " +
             "  dt.id AS detailTrimId, " +
             "  dm.displacement AS displacement, " +
@@ -105,7 +105,7 @@ public class QueryString {
             "WHERE dt.trim_id = :trimId " +
             ";";
 
-    public static String findOptionsByDetailTrimId =
+    protected static String findOptionsByDetailTrimId =
             "SELECT DISTINCT " +
             "   dto.id AS id, " +
             "   mo.name AS name, " +
