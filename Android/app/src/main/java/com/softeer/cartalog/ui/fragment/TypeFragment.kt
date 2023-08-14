@@ -8,9 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.softeer.cartalog.databinding.FragmentTypeBinding
+import com.softeer.cartalog.ui.activity.MainActivity
 import com.softeer.cartalog.viewmodel.TypeViewModel
 
-class TypeFragment: Fragment() {
+class TypeFragment : Fragment() {
     private val typeViewModel: TypeViewModel by viewModels()
     private var _binding: FragmentTypeBinding? = null
     private val binding get() = _binding!!
@@ -30,7 +31,12 @@ class TypeFragment: Fragment() {
 
         binding.viewModel = typeViewModel
         binding.lifecycleOwner = viewLifecycleOwner
-
+        binding.btnNext.setOnClickListener {
+            (activity as MainActivity).changeTab(2)
+        }
+        binding.btnPrev.setOnClickListener {
+            (activity as MainActivity).changeTab(0)
+        }
     }
 
     override fun onDestroyView() {

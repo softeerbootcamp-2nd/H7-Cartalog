@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.softeer.cartalog.databinding.FragmentOptionBinding
-import com.softeer.cartalog.databinding.FragmentTrimBinding
-import com.softeer.cartalog.viewmodel.InteriorViewModel
+import com.softeer.cartalog.ui.activity.MainActivity
 import com.softeer.cartalog.viewmodel.OptionViewModel
 
 class OptionFragment: Fragment() {
@@ -29,6 +28,12 @@ class OptionFragment: Fragment() {
 
         binding.viewModel = optionViewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.btnNext.setOnClickListener {
+            (activity as MainActivity).changeTab(5)
+        }
+        binding.btnPrev.setOnClickListener {
+            (activity as MainActivity).changeTab(3)
+        }
     }
 
     override fun onDestroyView() {
