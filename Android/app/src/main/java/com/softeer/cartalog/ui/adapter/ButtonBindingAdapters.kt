@@ -37,11 +37,12 @@ fun setExteriorItemClickListener(
 ) {
     cardView.setOnClickListener {
 
+        adapter.notifyItemChanged(adapter.selectedItem)
         if (adapter.selectedItem != position) {
             adapter.selectedItem = position
             viewModel.selectedColor.value = position
         }
-        adapter.notifyDataSetChanged()
+        adapter.notifyItemChanged(position)
     }
 }
 
@@ -54,12 +55,12 @@ fun setInteriorItemClickListener(
 ) {
     cardView.setOnClickListener {
 
+        adapter.notifyItemChanged(adapter.selectedItem)
         if (adapter.selectedItem != position) {
             adapter.selectedItem = position
             viewModel.selectedColor.value = position
         }
-
-        adapter.notifyDataSetChanged()
+        adapter.notifyItemChanged(position)
     }
 }
 
