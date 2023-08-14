@@ -12,20 +12,25 @@ import softeer.wantcar.cartalog.trim.dto.OptionDetailResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimOptionDetailResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimOptionListResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimPackageDetailResponseDto;
+import softeer.wantcar.cartalog.trim.service.TrimOptionService;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 @DisplayName("트림 옵션 도메인 테스트")
 public class TrimOptionControllerTest {
     SoftAssertions softAssertions;
-    TrimOptionController trimOptionController = new TrimOptionController();
-    static String imageServerPath = "example-url";
+    TrimOptionController trimOptionController;
+    TrimOptionService trimOptionService;
 
     @BeforeEach
     void setUp() {
+        trimOptionService = mock(TrimOptionService.class);
+        trimOptionController = new TrimOptionController(trimOptionService);
         softAssertions = new SoftAssertions();
     }
 
@@ -36,27 +41,21 @@ public class TrimOptionControllerTest {
         @DisplayName("올바른 요청시 200 상태와 함께 옵션 정보 리스트를 반환한다.")
         void returnOptionInfoListWithStatusCode200() {
             //given
+            TrimOptionListResponseDto expectResponse = TrimOptionListResponseDto.builder()
+                    .multipleSelectParentCategory(List.of("A", "B", "C"))
+                    .defaultOptions(List.of(getTrimOptionDto("O1"), getTrimOptionDto("O2")))
+                    .selectOptions(List.of(getTrimOptionDto("O3"), getTrimOptionDto("P1")))
+                    .build();
+            when(trimOptionService.getTrimOptionList(1L, "AAA"))
+                    .thenReturn(expectResponse);
+
             //when
-            TrimOptionListResponseDto realResponse = trimOptionController.getOptionInfos(1L).getBody();
+            ResponseEntity<TrimOptionListResponseDto> realResponse = trimOptionController.getOptionInfos(1L, "AAA");
 
             //then
             assert realResponse != null;
-            softAssertions.assertThat(realResponse.getMultipleSelectParentCategory())
-                    .containsAll(List.of("상세 품목", "악세사리"));
-            softAssertions.assertThat(realResponse.getDefaultOptions())
-                    .contains(getTrimOptionDto(5L,
-                            "디젤 2.2 엔진",
-                            null,
-                            "파워트레인/성능",
-                            "/palisade/le-blanc/options/dieselengine2.2_s.jpg",
-                            0));
-            softAssertions.assertThat(realResponse.getSelectOptions())
-                    .contains(getTrimOptionDto(11L,
-                            "2열 통풍시트",
-                            "상세품목",
-                            "시트",
-                            "2_cool_seat.jpg",
-                            350000));
+            softAssertions.assertThat(realResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+            softAssertions.assertThat(realResponse.getBody()).isEqualTo(expectResponse);
             softAssertions.assertAll();
         }
 
@@ -64,11 +63,15 @@ public class TrimOptionControllerTest {
         @DisplayName("존재하지 않는 트림 식별자로 옵션 정보 목록 요청시 404 상태를 반환해야 한다")
         void returnStatusCode404WhenGetOptionInfoListBy() {
             //given
+            when(trimOptionService.getTrimOptionList(-1L, "AAA"))
+                    .thenReturn(null);
             //when
-            ResponseEntity<TrimOptionListResponseDto> response = trimOptionController.getOptionInfos(-1L);
+            ResponseEntity<TrimOptionListResponseDto> response = trimOptionController.getOptionInfos(-1L, "AAA");
 
             //then
-            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            softAssertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            softAssertions.assertThat(response.getBody()).isNull();
+            softAssertions.assertAll();
         }
     }
 
@@ -187,17 +190,17 @@ public class TrimOptionControllerTest {
         }
     }
 
-    private static TrimOptionListResponseDto.TrimOptionDto getTrimOptionDto(
-            Long id, String name, String parentCategory, String childCategory, String imageUrl, int price) {
+    private static TrimOptionListResponseDto.TrimOptionDto getTrimOptionDto(String id) {
         return TrimOptionListResponseDto.TrimOptionDto.builder()
                 .id(id)
-                .name(name)
-                .parentCategory(parentCategory)
-                .childCategory(childCategory)
-                .imageUrl(imageServerPath + imageUrl)
-                .price(price)
-                .chosen(38)
-                .hashTags(List.of("장거리 운전"))
+                .name(id)
+                .parentCategory("A")
+                .childCategory("a")
+                .imageUrl("image")
+                .price(0)
+                .chosen(0)
+                .hashTags(List.of("A", "B", "C"))
+                .hasHMGData(false)
                 .build();
     }
 }

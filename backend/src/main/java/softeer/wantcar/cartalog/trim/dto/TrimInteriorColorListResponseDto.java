@@ -3,12 +3,10 @@ package softeer.wantcar.cartalog.trim.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Singular;
-import softeer.wantcar.cartalog.entity.model.ModelInteriorColor;
 import softeer.wantcar.cartalog.global.annotation.TestMethod;
 import softeer.wantcar.cartalog.global.utils.CompareUtils;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Getter

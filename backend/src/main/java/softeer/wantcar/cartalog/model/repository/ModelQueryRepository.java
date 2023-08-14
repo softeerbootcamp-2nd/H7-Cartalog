@@ -6,7 +6,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import softeer.wantcar.cartalog.entity.model.BasicModel;
-import softeer.wantcar.cartalog.trim.repository.QueryString;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,9 +19,8 @@ public class ModelQueryRepository {
     public BasicModel findBasicModelByName(String name) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("name", name);
-        return jdbcTemplate.queryForObject(QueryString.findBasicModelByName,
-                parameters,
-                (rs, rowNum) -> getBasicModel(rs));
+        return jdbcTemplate.queryForObject("SELECT id, name, category FROM basic_models WHERE name=:name ",
+                parameters, (rs, rowNum) -> getBasicModel(rs));
     }
 
     private static BasicModel getBasicModel(ResultSet rs) throws SQLException {

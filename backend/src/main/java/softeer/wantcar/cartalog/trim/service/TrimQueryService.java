@@ -7,7 +7,6 @@ import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 import softeer.wantcar.cartalog.trim.dto.DetailTrimInfoDto;
 import softeer.wantcar.cartalog.trim.repository.TrimQueryRepository;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -28,7 +27,7 @@ public class TrimQueryService {
     }
 
     private static void checkCategoryOverlapped(List<String> categories, List<Long> modelTypeIds) {
-        if(categories.size() != modelTypeIds.size()) {
+        if (categories.size() != modelTypeIds.size()) {
             throw new IllegalArgumentException();
         }
     }

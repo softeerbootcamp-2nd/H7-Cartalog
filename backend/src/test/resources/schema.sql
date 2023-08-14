@@ -31,7 +31,8 @@ CREATE TABLE basic_model_categories
 
 CREATE TABLE model_option_parent_categories
 (
-    category VARCHAR(255) PRIMARY KEY
+    category VARCHAR(255) PRIMARY KEY,
+    multiple_select BOOLEAN NOT NULL
 );
 
 CREATE TABLE model_option_child_categories
@@ -248,7 +249,7 @@ INSERT INTO basic_model_categories (category)
 SELECT *
 FROM CSVREAD('classpath:csv/basic_model_categories.csv', null, 'fieldSeparator=|');
 
-INSERT INTO model_option_parent_categories (category)
+INSERT INTO model_option_parent_categories (category, multiple_select)
 SELECT *
 FROM CSVREAD('classpath:csv/model_option_parent_categories.csv', null, 'fieldSeparator=|');
 
