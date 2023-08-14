@@ -1,6 +1,5 @@
 package com.softeer.cartalog.ui.adapter
 
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageButton
@@ -178,6 +177,7 @@ fun setOptionRecyclerView(
             recyclerView.adapter = OptionSelectAdapter(viewModel)
             recyclerView.adapter?.notifyDataSetChanged()
         }
+
         OptionMode.DEFAULT_OPTION -> {
             recyclerView.adapter = OptionDefaultAdapter(viewModel)
             recyclerView.adapter?.notifyDataSetChanged()
@@ -249,7 +249,7 @@ fun setRangeBarVisibility(
         layout.animate()
             .alpha(1f).duration = 300
         button.animate().rotation(180f).start()
-        fragmentContainer.setPadding(0, 150, 0, 0)
+        fragmentContainer.setPadding(0, 250, 0, 0)
     }
 }
 
