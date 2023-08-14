@@ -401,6 +401,7 @@
                 android:minHeight="0dp"
                 android:paddingHorizontal="17dp"
                 android:paddingVertical="7dp"
+                android:fontFamily="@font/hyndaisans_text"
                 android:text="@string/btn_close_price_summary"
                 android:textColor="@drawable/selector_text_price_summary"
                 app:fragment="@{fragment}"
