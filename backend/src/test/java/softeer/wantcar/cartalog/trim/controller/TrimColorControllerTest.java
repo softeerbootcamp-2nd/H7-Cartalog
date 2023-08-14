@@ -10,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimInteriorColorListResponseDto;
 import softeer.wantcar.cartalog.trim.repository.TrimColorQueryRepository;
-import softeer.wantcar.cartalog.trim.service.MockTrimColorService;
-import softeer.wantcar.cartalog.trim.service.TrimColorService;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -22,12 +20,10 @@ import static org.mockito.Mockito.when;
 class TrimColorControllerTest {
     SoftAssertions softAssertions;
     TrimColorQueryRepository trimColorQueryRepository;
-    TrimColorService trimColorService;
     TrimColorController trimColorController;
 
     @BeforeEach
     void setUp() {
-        trimColorService = new MockTrimColorService();
         softAssertions = new SoftAssertions();
         trimColorQueryRepository = mock(TrimColorQueryRepository.class);
         trimColorController = new TrimColorController(trimColorQueryRepository);
