@@ -45,9 +45,12 @@ class TypeSelectView(context: Context, attrs: AttributeSet) : ConstraintLayout(c
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         binding.lifecycleOwner = findViewTreeLifecycleOwner()
-        binding.navController = findNavController()
         binding.viewModel = viewModel
         binding.type = modelType
+
+        binding.btnHmgData.setOnClickListener {
+            findNavController().navigate(R.id.typeDetailPopup)
+        }
     }
 
     fun setInit(){

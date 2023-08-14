@@ -1,11 +1,11 @@
 package com.softeer.cartalog.ui.adapter
 
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.softeer.cartalog.databinding.ItemTypeDetailPopupBinding
 import com.softeer.cartalog.data.model.Type
-import com.softeer.cartalog.ui.dialog.TypeDetailPopupActivity
+import com.softeer.cartalog.databinding.ItemTypeDetailPopupBinding
 import com.softeer.cartalog.viewmodel.TypeViewModel
 
 class TypeDetailPopupAdapter(private val viewModel: TypeViewModel) :
@@ -35,7 +35,9 @@ class TypeDetailPopupAdapter(private val viewModel: TypeViewModel) :
             isSelected = position == viewModel.selectedType.value
             binding.isSelected = isSelected
             binding.typeItem = item
-            binding.activity = binding.root.context as TypeDetailPopupActivity
+            binding.btnClose.setOnClickListener {
+                (it.context as Activity).finish()
+            }
         }
     }
 }

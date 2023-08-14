@@ -27,8 +27,11 @@ class TrimFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = trimViewModel
-        binding.activity = activity as MainActivity
         binding.lifecycleOwner = viewLifecycleOwner
+
+        binding.btnChoose.setOnClickListener {
+            (activity as MainActivity).changeTab(1)
+        }
     }
 
     override fun onDestroyView() {

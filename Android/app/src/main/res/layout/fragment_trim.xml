@@ -8,10 +8,6 @@
         <variable
             name="viewModel"
             type="com.softeer.cartalog.viewmodel.TrimViewModel" />
-
-        <variable
-            name="activity"
-            type="com.softeer.cartalog.ui.activity.MainActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -90,8 +86,6 @@
             android:textColor="@color/gray_50"
             android:textSize="16sp"
             android:text='@{String.format("%s %s",viewModel.trimList.get(viewModel.selectedTrim).trimName, "선택하기")}'
-            app:activity="@{activity}"
-            app:index="@{1}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
