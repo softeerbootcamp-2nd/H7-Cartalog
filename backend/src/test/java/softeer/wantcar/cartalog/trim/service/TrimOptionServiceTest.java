@@ -36,7 +36,7 @@ class TrimOptionServiceTest {
         @DisplayName("존재하는 세부 트림 식별자와 내부 색상 아이디를 전달한다면 그에 맞는 옵션 목록 Dto를 반환한다")
         void returnOptionListDto() {
             //given
-            when(trimOptionQueryRepository.findMultipleSelectCategories())
+            when(trimOptionQueryRepository.findMultipleSelectableCategories())
                     .thenReturn(List.of("A", "B", "C"));
             when(trimOptionQueryRepository.findOptionsByDetailTrimId(1L))
                     .thenReturn(List.of(
@@ -60,7 +60,7 @@ class TrimOptionServiceTest {
         @DisplayName("적합한 입력일 때 주어진 색상이 옵션의 색상 조건에 해당되지 않는다면 해당 옵션을 목록에서 제외한다")
         void excludeOptionByColorCondition() {
             //given
-            when(trimOptionQueryRepository.findMultipleSelectCategories())
+            when(trimOptionQueryRepository.findMultipleSelectableCategories())
                     .thenReturn(List.of("A", "B", "C"));
             when(trimOptionQueryRepository.findOptionsByDetailTrimId(1L))
                     .thenReturn(List.of(
@@ -82,7 +82,7 @@ class TrimOptionServiceTest {
         @DisplayName("세부 트림 식별자가 존재하지 않는 경우 null을 반환한다")
         void returnNull() {
             //given
-            when(trimOptionQueryRepository.findMultipleSelectCategories())
+            when(trimOptionQueryRepository.findMultipleSelectableCategories())
                     .thenReturn(List.of("A", "B", "C"));
             when(trimOptionQueryRepository.findOptionsByDetailTrimId(-1L))
                     .thenReturn(null);
@@ -107,7 +107,7 @@ class TrimOptionServiceTest {
                 .price(0)
                 .basic(basic)
                 .colorCondition(!Objects.isNull(trimInteriorColorId))
-                .trimInteriorColorIds(List.of(trimInteriorColorId))
+                .trimInteriorColorIds(Objects.isNull(trimInteriorColorId) ? new ArrayList<>() : List.of(trimInteriorColorId))
                 .hashTags(new ArrayList<>())
                 .hasHMGData(false)
                 .build();

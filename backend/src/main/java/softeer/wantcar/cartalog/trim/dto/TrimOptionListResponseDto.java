@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import softeer.wantcar.cartalog.trim.repository.TrimOptionQueryRepository;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class TrimOptionListResponseDto {
     @AllArgsConstructor
     @EqualsAndHashCode
     public static class TrimOptionDto {
-        private Long id;
+        private String id;
         private String name;
         private String parentCategory;
         private String childCategory;
@@ -30,5 +31,17 @@ public class TrimOptionListResponseDto {
         private int chosen;
         private List<String> hashTags;
         private boolean hasHMGData;
+
+        public TrimOptionDto(TrimOptionQueryRepository.TrimOptionInfo trimOptionInfo, int chosen) {
+            this.id = trimOptionInfo.getId();
+            this.name = trimOptionInfo.getName();
+            this.parentCategory = trimOptionInfo.getParentCategory();
+            this.childCategory = trimOptionInfo.getChildCategory();
+            this.imageUrl = trimOptionInfo.getImageUrl();
+            this.price = trimOptionInfo.getPrice();
+            this.chosen = chosen;
+            this.hashTags = trimOptionInfo.getHashTags();
+            this.hasHMGData = trimOptionInfo.isHasHMGData();
+        }
     }
 }

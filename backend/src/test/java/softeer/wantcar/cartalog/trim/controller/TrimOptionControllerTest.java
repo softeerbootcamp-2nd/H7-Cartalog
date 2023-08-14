@@ -44,14 +44,14 @@ public class TrimOptionControllerTest {
             softAssertions.assertThat(realResponse.getMultipleSelectParentCategory())
                     .containsAll(List.of("상세 품목", "악세사리"));
             softAssertions.assertThat(realResponse.getDefaultOptions())
-                    .contains(getTrimOptionDto(5L,
+                    .contains(getTrimOptionDto("O5",
                             "디젤 2.2 엔진",
                             null,
                             "파워트레인/성능",
                             "/palisade/le-blanc/options/dieselengine2.2_s.jpg",
                             0));
             softAssertions.assertThat(realResponse.getSelectOptions())
-                    .contains(getTrimOptionDto(11L,
+                    .contains(getTrimOptionDto("O11",
                             "2열 통풍시트",
                             "상세품목",
                             "시트",
@@ -188,7 +188,7 @@ public class TrimOptionControllerTest {
     }
 
     private static TrimOptionListResponseDto.TrimOptionDto getTrimOptionDto(
-            Long id, String name, String parentCategory, String childCategory, String imageUrl, int price) {
+            String id, String name, String parentCategory, String childCategory, String imageUrl, int price) {
         return TrimOptionListResponseDto.TrimOptionDto.builder()
                 .id(id)
                 .name(name)
