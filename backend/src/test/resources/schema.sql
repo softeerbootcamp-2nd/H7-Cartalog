@@ -324,7 +324,12 @@ FROM CSVREAD('classpath:csv/package_hash_tags.csv', null, 'fieldSeparator=|');
 
 -- noinspection SqlResolve
 INSERT INTO hmg_data (id, model_option_id, name, val, measure, unit)
-SELECT *
+SELECT id,
+       model_option_id,
+       name,
+       val,
+       measure,
+       case when unit = '\N' then null else unit end as unit
 FROM CSVREAD('classpath:csv/hmg_data.csv', null, 'fieldSeparator=|');
 
 INSERT INTO colors (code, name, image_url)
