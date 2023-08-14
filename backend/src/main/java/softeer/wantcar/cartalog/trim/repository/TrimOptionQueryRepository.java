@@ -3,6 +3,8 @@ package softeer.wantcar.cartalog.trim.repository;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import softeer.wantcar.cartalog.trim.dto.TrimOptionDetailResponseDto;
+import softeer.wantcar.cartalog.trim.dto.TrimPackageDetailResponseDto;
 
 import java.util.List;
 
@@ -29,4 +31,8 @@ public interface TrimOptionQueryRepository {
     List<String> findMultipleSelectableCategories();
 
     List<TrimOptionInfo> findOptionsByDetailTrimId(Long detailTrimId);
+
+    TrimOptionDetailResponseDto findTrimOptionDetailByDetailTrimOptionId(Long optionId);
+
+    TrimPackageDetailResponseDto findTrimPackageDetailByPackageId(Long packageId);
 }
