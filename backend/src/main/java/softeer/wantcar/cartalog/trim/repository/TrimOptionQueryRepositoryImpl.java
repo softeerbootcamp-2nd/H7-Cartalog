@@ -51,7 +51,7 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
     }
 
     @Override
-    public List<String> findMultipleSelectCategories() {
+    public List<String> findMultipleSelectableCategories() {
         return jdbcTemplate.query(QueryString.findMultipleSelectableCategories,
                 (rs, rowNum) -> rs.getString("category"));
     }
