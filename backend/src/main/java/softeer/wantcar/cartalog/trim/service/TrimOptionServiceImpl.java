@@ -3,6 +3,7 @@ package softeer.wantcar.cartalog.trim.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.global.dto.HMGDataDto;
 import softeer.wantcar.cartalog.trim.dto.TrimOptionDetailResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimOptionListResponseDto;
@@ -42,9 +43,10 @@ public class TrimOptionServiceImpl implements TrimOptionService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public TrimOptionDetailResponseDto getTrimOptionDetail(Long detailTrimOptionId) {
         Long optionId = trimOptionQueryRepository.findModelOptionIdByDetailTrimOptionId(detailTrimOptionId);
-        return getTrimOptionDetailResponseDto(optionId);
+        return optionId != null ? getTrimOptionDetailResponseDto(optionId) : null;
     }
 
     private TrimOptionDetailResponseDto getTrimOptionDetailResponseDto(Long optionId) {
@@ -63,8 +65,13 @@ public class TrimOptionServiceImpl implements TrimOptionService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public TrimPackageDetailResponseDto getTrimPackageDetail(Long packageId) {
         TrimOptionQueryRepository.DetailTrimPackageInfo detailTrimPackageInfos = trimOptionQueryRepository.findDetailTrimPackageInfoByPackageId(packageId);
+        if (detailTrimPackageInfos == null) {
+            return null;
+        }
+
         List<String> hashTags = trimOptionQueryRepository.findPackageHashTagByPackageId(packageId);
         List<Long> modelOptionIds = trimOptionQueryRepository.findModelOptionIdsByPackageId(packageId);
 
