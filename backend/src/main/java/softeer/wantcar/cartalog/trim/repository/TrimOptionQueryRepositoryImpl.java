@@ -90,7 +90,7 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
 
         try {
             return jdbcTemplate.queryForObject(
-                    "SELECT name, description, image_url, FROM model_options WHERE id = :optionId",
+                    "SELECT name, description, image_url FROM model_options WHERE id = :optionId",
                     parameters, RowMapperUtils.mapping(ModelOptionInfo.class, List.of(serverPath.getImageServerPathRowMapperStrategy())));
         } catch (EmptyResultDataAccessException exception) {
             return null;
