@@ -16,7 +16,6 @@ import java.lang.reflect.Type
 
 class TypeDetailPopupActivity : AppCompatActivity() {
 
-    private val typeViewModel: TypeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +23,5 @@ class TypeDetailPopupActivity : AppCompatActivity() {
         val binding: ActivityTypeDetailPopupBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_type_detail_popup)
 
-        binding.viewModel = typeViewModel
     }
 }

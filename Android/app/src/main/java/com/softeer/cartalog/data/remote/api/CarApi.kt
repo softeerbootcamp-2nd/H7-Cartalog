@@ -8,9 +8,10 @@ import retrofit2.http.Query
 
 interface CarApi {
 
-    @GET("models/1/types")
-    suspend fun getTypes(): Response<Types>
+    @GET("models/types")
+    suspend fun getTypes(@Query("basicModelId") basicModelId: Int): Response<Types>
 
     @GET("/models/trims")
     suspend fun getTrims(@Query("basicModelId") basicModelId: Int): Response<Trims>
+
 }
