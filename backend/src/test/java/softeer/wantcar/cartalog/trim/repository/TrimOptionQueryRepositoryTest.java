@@ -29,6 +29,48 @@ class TrimOptionQueryRepositoryTest {
     TrimOptionQueryRepository trimOptionQueryRepository;
     ServerPath serverPath = new ServerPath();
     SoftAssertions softAssertions;
+    String palisadeLeBlancDiesel2WD7SeatOptionSQL = "SELECT detail_trim_options.id " +
+            "FROM basic_models " +
+            "       INNER JOIN model_options AS mo1 " +
+            "               ON basic_models.id = mo1.model_id " +
+            "       INNER JOIN detail_trim_options " +
+            "               ON mo1.id = detail_trim_options.model_option_id " +
+            "       INNER JOIN detail_trims " +
+            "               ON detail_trim_options.detail_trim_id = detail_trims.id " +
+            "       INNER JOIN trims " +
+            "               ON detail_trims.trim_id = trims.id " +
+            "       INNER JOIN detail_models " +
+            "               ON detail_trims.detail_model_id = detail_models.id " +
+            "       INNER JOIN detail_model_decision_options " +
+            "               ON detail_models.id = detail_model_decision_options.detail_model_id " +
+            "       INNER JOIN model_options AS mo2 " +
+            "               ON detail_model_decision_options.model_option_id = mo2.id " +
+            "WHERE  basic_models.name = '팰리세이드' " +
+            "       AND mo1.name = :optionName " +
+            "       AND trims.name = 'Le Blanc' " +
+            "       AND mo2.name IN ( '디젤 2.2', '2WD', '7인승' ) " +
+            "GROUP  BY detail_trim_options.id " +
+            "HAVING Count(detail_trim_options.id) = 3";
+    String palisadeLeBlancDiesel2WD7SeatPackageSQL = "SELECT detail_trim_packages.id " +
+            "FROM   detail_trim_packages " +
+            "       INNER JOIN detail_trims " +
+            "               ON detail_trim_packages.detail_trim_id = detail_trims.id " +
+            "       INNER JOIN detail_models " +
+            "               ON detail_trims.detail_model_id = detail_models.id " +
+            "       INNER JOIN detail_model_decision_options " +
+            "               ON detail_models.id = detail_model_decision_options.detail_model_id " +
+            "       INNER JOIN model_options " +
+            "               ON detail_model_decision_options.model_option_id = model_options.id " +
+            "       INNER JOIN basic_models " +
+            "               ON basic_models.id = detail_models.basic_model_id " +
+            "       INNER JOIN trims " +
+            "               ON detail_trims.trim_id = trims.id " +
+            "WHERE  detail_trim_packages.name = :packageName" +
+            "       AND basic_models.name = '팰리세이드' " +
+            "       AND trims.name = 'Le Blanc' " +
+            "       AND model_options.name IN ( '디젤 2.2', '2WD', '7인승' ) " +
+            "GROUP  BY detail_trim_packages.id " +
+            "HAVING Count(detail_trim_packages.id) = 3";
 
     @BeforeEach
     void setUp() {
@@ -135,33 +177,10 @@ class TrimOptionQueryRepositoryTest {
         }
     }
 
-
     @SuppressWarnings({"SqlNoDataSourceInspection", "SqlResolve"})
     @Nested
     @DisplayName("모델 옵션 상세 정보 보기 테스트")
     class findModelOptionDetailByOptionIdTest {
-        String palisadeLeBlancDiesel2WD7SeatSQL = "SELECT detail_trim_options.id " +
-                "FROM basic_models " +
-                "       INNER JOIN model_options AS mo1 " +
-                "               ON basic_models.id = mo1.model_id " +
-                "       INNER JOIN detail_trim_options " +
-                "               ON mo1.id = detail_trim_options.model_option_id " +
-                "       INNER JOIN detail_trims " +
-                "               ON detail_trim_options.detail_trim_id = detail_trims.id " +
-                "       INNER JOIN trims " +
-                "               ON detail_trims.trim_id = trims.id " +
-                "       INNER JOIN detail_models " +
-                "               ON detail_trims.detail_model_id = detail_models.id " +
-                "       INNER JOIN detail_model_decision_options " +
-                "               ON detail_models.id = detail_model_decision_options.detail_model_id " +
-                "       INNER JOIN model_options AS mo2 " +
-                "               ON detail_model_decision_options.model_option_id = mo2.id " +
-                "WHERE  basic_models.name = '팰리세이드' " +
-                "       AND mo1.name = :optionName " +
-                "       AND trims.name = 'Le Blanc' " +
-                "       AND mo2.name IN ( '디젤 2.2', '2WD', '7인승' ) " +
-                "GROUP  BY detail_trim_options.id " +
-                "HAVING Count(detail_trim_options.id) = 3";
 
         @Test
         @DisplayName("존재하는 모델 옵션 식별자를 전달하면 모델 옵션 정보를 반환한다.")
@@ -169,7 +188,7 @@ class TrimOptionQueryRepositoryTest {
             //given
             SqlParameterSource parameters = new MapSqlParameterSource()
                     .addValue("optionName", "디젤 2.2");
-            Long dieselDetailTrimOptionId = jdbcTemplate.queryForObject(palisadeLeBlancDiesel2WD7SeatSQL,
+            Long dieselDetailTrimOptionId = jdbcTemplate.queryForObject(palisadeLeBlancDiesel2WD7SeatOptionSQL,
                     parameters,
                     Long.class
             );
@@ -201,7 +220,7 @@ class TrimOptionQueryRepositoryTest {
             //given
             SqlParameterSource parameters = new MapSqlParameterSource()
                     .addValue("optionName", "빌트인 캠(보조배터리 포함)");
-            Long builtInCampModelOptionId = jdbcTemplate.queryForObject(palisadeLeBlancDiesel2WD7SeatSQL,
+            Long builtInCampModelOptionId = jdbcTemplate.queryForObject(palisadeLeBlancDiesel2WD7SeatOptionSQL,
                     parameters,
                     Long.class
             );
@@ -233,7 +252,7 @@ class TrimOptionQueryRepositoryTest {
             //given
             SqlParameterSource parameters = new MapSqlParameterSource()
                     .addValue("optionName", "디젤 2.2");
-            Long dieselDetailTrimOptionId = jdbcTemplate.queryForObject(palisadeLeBlancDiesel2WD7SeatSQL,
+            Long dieselDetailTrimOptionId = jdbcTemplate.queryForObject(palisadeLeBlancDiesel2WD7SeatOptionSQL,
                     parameters,
                     Long.class
             );
@@ -267,34 +286,13 @@ class TrimOptionQueryRepositoryTest {
     @Nested
     @DisplayName("모델 패키지 상세 정보 보기 테스트")
     class findTrimPackageDetailByPackageId {
-        String palisadeLeBlancDiesel2WD7SeatSQL = "SELECT detail_trim_packages.id " +
-                "FROM   detail_trim_packages " +
-                "       INNER JOIN detail_trims " +
-                "               ON detail_trim_packages.detail_trim_id = detail_trims.id " +
-                "       INNER JOIN detail_models " +
-                "               ON detail_trims.detail_model_id = detail_models.id " +
-                "       INNER JOIN detail_model_decision_options " +
-                "               ON detail_models.id = detail_model_decision_options.detail_model_id " +
-                "       INNER JOIN model_options " +
-                "               ON detail_model_decision_options.model_option_id = model_options.id " +
-                "       INNER JOIN basic_models " +
-                "               ON basic_models.id = detail_models.basic_model_id " +
-                "       INNER JOIN trims " +
-                "               ON detail_trims.trim_id = trims.id " +
-                "WHERE  detail_trim_packages.name = :packageName" +
-                "       AND basic_models.name = '팰리세이드' " +
-                "       AND trims.name = 'Le Blanc' " +
-                "       AND model_options.name IN ( '디젤 2.2', '2WD', '7인승' ) " +
-                "GROUP  BY detail_trim_packages.id " +
-                "HAVING Count(detail_trim_packages.id) = 3";
-
         @Test
         @DisplayName("존재하는 패키지 식별자를 전달하면 패키지 정보를 반환한다.")
         void findDetailTrimPackageInfoByPackageId() {
             //given
             SqlParameterSource parameters = new MapSqlParameterSource()
                     .addValue("packageName", "컴포트 Ⅱ");
-            Long compose2PackageId = jdbcTemplate.queryForObject(palisadeLeBlancDiesel2WD7SeatSQL,
+            Long compose2PackageId = jdbcTemplate.queryForObject(palisadeLeBlancDiesel2WD7SeatPackageSQL,
                     parameters,
                     Long.TYPE
             );
@@ -327,7 +325,7 @@ class TrimOptionQueryRepositoryTest {
             //given
             SqlParameterSource parameters = new MapSqlParameterSource()
                     .addValue("packageName", "컴포트 Ⅱ");
-            Long compose2PackageId = jdbcTemplate.queryForObject(palisadeLeBlancDiesel2WD7SeatSQL,
+            Long compose2PackageId = jdbcTemplate.queryForObject(palisadeLeBlancDiesel2WD7SeatPackageSQL,
                     parameters,
                     Long.TYPE
             );
@@ -357,7 +355,7 @@ class TrimOptionQueryRepositoryTest {
             //given
             SqlParameterSource parameters = new MapSqlParameterSource()
                     .addValue("packageName", "컴포트 Ⅱ");
-            Long compose2PackageId = jdbcTemplate.queryForObject(palisadeLeBlancDiesel2WD7SeatSQL,
+            Long compose2PackageId = jdbcTemplate.queryForObject(palisadeLeBlancDiesel2WD7SeatPackageSQL,
                     parameters,
                     Long.TYPE
             );
