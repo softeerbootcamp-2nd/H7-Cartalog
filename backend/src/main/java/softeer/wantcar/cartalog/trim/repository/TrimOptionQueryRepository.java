@@ -29,4 +29,42 @@ public interface TrimOptionQueryRepository {
     List<String> findMultipleSelectableCategories();
 
     List<TrimOptionInfo> findOptionsByDetailTrimId(Long detailTrimId);
+
+    Long findModelOptionIdByDetailTrimOptionId(Long detailTrimOptionId);
+
+    @Getter
+    @AllArgsConstructor
+    class ModelOptionInfo {
+        private String name;
+        private String description;
+        private String imageUrl;
+    }
+
+    ModelOptionInfo findModelOptionInfoByOptionId(Long optionId);
+
+    List<String> findHashTagsByOptionId(Long optionId);
+
+    @Getter
+    @AllArgsConstructor
+    class HMGDataInfo {
+        private String name;
+        private String val;
+        private String measure;
+        private String unit;
+    }
+
+    List<HMGDataInfo> findHMGDataInfoListByOptionId(Long optionId);
+
+    @Getter
+    @AllArgsConstructor
+    class DetailTrimPackageInfo {
+        private String name;
+        private String imageUrl;
+    }
+
+    DetailTrimPackageInfo findDetailTrimPackageInfoByPackageId(Long packageId);
+
+    List<String> findPackageHashTagByPackageId(Long packageId);
+
+    List<Long> findModelOptionIdsByPackageId(Long packageId);
 }

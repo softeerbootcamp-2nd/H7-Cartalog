@@ -4,11 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.global.ServerPath;
+import softeer.wantcar.cartalog.global.utils.RowMapperUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -63,6 +66,101 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
         List<TrimOptionQueryResult> queryResults = jdbcTemplate.query(QueryString.findOptionsByDetailTrimId,
                 parameters, (rs, rowNum) -> getTrimOptionQueryResult(rs, true));
         return getTrimOptionInfos(queryResults);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long findModelOptionIdByDetailTrimOptionId(Long detailTrimOptionId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("detailTrimOptionId", detailTrimOptionId);
+
+        String getModelOptionIdSQL = "SELECT model_options.id " +
+                "FROM model_options INNER JOIN detail_trim_options " +
+                "ON model_options.id = detail_trim_options.model_option_id " +
+                "WHERE detail_trim_options.id = :detailTrimOptionId";
+
+        return jdbcTemplate.queryForObject(getModelOptionIdSQL, parameters, Long.TYPE);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ModelOptionInfo findModelOptionInfoByOptionId(Long optionId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("optionId", optionId);
+
+        try {
+            return jdbcTemplate.queryForObject(
+                    "SELECT name, description, image_url, FROM model_options WHERE id = :optionId",
+                    parameters, RowMapperUtils.mapping(ModelOptionInfo.class, List.of(serverPath.getImageServerPathRowMapperStrategy())));
+        } catch (EmptyResultDataAccessException exception) {
+            return null;
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<String> findHashTagsByOptionId(Long optionId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("optionId", optionId);
+
+        return jdbcTemplate.queryForList(
+                "SELECT hash_tag FROM model_option_hash_tags where model_option_id = :optionId",
+                parameters, String.class);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<HMGDataInfo> findHMGDataInfoListByOptionId(Long optionId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("optionId", optionId);
+
+        return jdbcTemplate.query(
+                "SELECT * FROM hmg_data WHERE model_option_id = :optionId",
+                parameters, RowMapperUtils.mapping(HMGDataInfo.class));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public DetailTrimPackageInfo findDetailTrimPackageInfoByPackageId(Long packageId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("packageId", packageId);
+
+        try {
+            return jdbcTemplate.queryForObject(
+                    "SELECT name, image_url FROM detail_trim_packages WHERE id = :packageId",
+                    parameters, RowMapperUtils.mapping(DetailTrimPackageInfo.class, serverPath.getImageServerPathRowMapperStrategy()));
+        } catch (EmptyResultDataAccessException exception) {
+            return null;
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<String> findPackageHashTagByPackageId(Long packageId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("packageId", packageId);
+
+        return jdbcTemplate.queryForList(
+                "SELECT hash_tag FROM package_hash_tags where package_id = :packageId",
+                parameters, String.class);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Long> findModelOptionIdsByPackageId(Long packageId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("packageId", packageId);
+
+        String getTrimOptionsSQL = "SELECT " +
+                "   model_option_id " +
+                "FROM detail_trim_options INNER JOIN trim_package_options " +
+                "   ON detail_trim_options.id = trim_package_options.detail_trim_option_id " +
+                "INNER JOIN model_options " +
+                "   ON detail_trim_options.model_option_id = model_options.id " +
+                "WHERE  trim_package_options.trim_package_id = :packageId";
+
+        return jdbcTemplate.queryForList(getTrimOptionsSQL, parameters, Long.class);
+
     }
 
     private List<TrimOptionInfo> getTrimOptionInfos(List<TrimOptionQueryResult> queryResults) {

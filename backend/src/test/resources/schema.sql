@@ -31,7 +31,7 @@ CREATE TABLE basic_model_categories
 
 CREATE TABLE model_option_parent_categories
 (
-    category VARCHAR(255) PRIMARY KEY,
+    category        VARCHAR(255) PRIMARY KEY,
     multiple_select BOOLEAN NOT NULL
 );
 
@@ -189,10 +189,10 @@ CREATE TABLE colors
 
 CREATE TABLE model_exterior_colors
 (
-    id                 BIGINT PRIMARY KEY AUTO_INCREMENT,
-    model_id           BIGINT       NOT NULL,
-    color_code         VARCHAR(255) NOT NULL,
-    price              INT          NOT NULL,
+    id                       BIGINT PRIMARY KEY AUTO_INCREMENT,
+    model_id                 BIGINT       NOT NULL,
+    color_code               VARCHAR(255) NOT NULL,
+    price                    INT          NOT NULL,
     exterior_image_directory VARCHAR(255) NOT NULL,
     CONSTRAINT fk_model_exterior_colors_basic_models FOREIGN KEY (model_id) REFERENCES basic_models (id) ON UPDATE CASCADE,
     CONSTRAINT fk_model_exterior_colors_colors FOREIGN KEY (color_code) REFERENCES colors (code) ON UPDATE CASCADE
@@ -324,7 +324,12 @@ FROM CSVREAD('classpath:csv/package_hash_tags.csv', null, 'fieldSeparator=|');
 
 -- noinspection SqlResolve
 INSERT INTO hmg_data (id, model_option_id, name, val, measure, unit)
-SELECT *
+SELECT id,
+       model_option_id,
+       name,
+       val,
+       measure,
+       case when unit = '\N' then null else unit end as unit
 FROM CSVREAD('classpath:csv/hmg_data.csv', null, 'fieldSeparator=|');
 
 INSERT INTO colors (code, name, image_url)

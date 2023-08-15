@@ -5,7 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import softeer.wantcar.cartalog.trim.dto.TrimOptionDetailResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimOptionListResponseDto;
+import softeer.wantcar.cartalog.trim.dto.TrimPackageDetailResponseDto;
 import softeer.wantcar.cartalog.trim.repository.TrimOptionQueryRepository;
 
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -94,6 +97,105 @@ class TrimOptionServiceTest {
 
             //then
             assertThat(responseDto).isNull();
+        }
+    }
+
+    @Nested
+    @DisplayName("트림 옵션 상세 조회 테스트")
+    class getTrimOptionDetailTest {
+        @Test
+        @DisplayName("적절한 트림 옵션 식별자를 전달했을 때 옵션 상세 정보를 가진 dto를 반환해야 한다.")
+        void returnTrimOptionDetailResponseDto() {
+            //given
+            Long optionId = 0L;
+            when(trimOptionQueryRepository.findModelOptionIdByDetailTrimOptionId(anyLong())).thenReturn(optionId);
+
+            TrimOptionQueryRepository.ModelOptionInfo modelOptionInfo = mock(TrimOptionQueryRepository.ModelOptionInfo.class);
+            when(trimOptionQueryRepository.findModelOptionInfoByOptionId(optionId)).thenReturn(modelOptionInfo);
+
+            List<String> hashTags = List.of("해시 태그1", "해시 태그2", "해시 태그3");
+            when(trimOptionQueryRepository.findHashTagsByOptionId(optionId)).thenReturn(hashTags);
+
+            TrimOptionQueryRepository.HMGDataInfo hmgDataInfo1 = mock(TrimOptionQueryRepository.HMGDataInfo.class);
+            TrimOptionQueryRepository.HMGDataInfo hmgDataInfo2 = mock(TrimOptionQueryRepository.HMGDataInfo.class);
+            List<TrimOptionQueryRepository.HMGDataInfo> hmgDataInfos = List.of(hmgDataInfo1, hmgDataInfo2);
+            when(trimOptionQueryRepository.findHMGDataInfoListByOptionId(optionId)).thenReturn(hmgDataInfos);
+
+            //when
+            TrimOptionDetailResponseDto trimOptionDetail = trimOptionService.getTrimOptionDetail(anyLong());
+
+            //then
+            assertThat(trimOptionDetail.getName()).isEqualTo(modelOptionInfo.getName());
+            assertThat(trimOptionDetail.getDescription()).isEqualTo(modelOptionInfo.getDescription());
+            assertThat(trimOptionDetail.getImageUrl()).isEqualTo(modelOptionInfo.getImageUrl());
+            assertThat(trimOptionDetail.getHashTags()).isEqualTo(hashTags);
+            assertThat(trimOptionDetail.getHmgData().size()).isEqualTo(2);
+        }
+
+        @Test
+        @DisplayName("적절하지 않은 트림 옵션 식별자를 전달했을 때 null을 반환해야 한다.")
+        void returnNullWhenModelOptionIdByNonexistenceDetailTrimOptionId() {
+            //given
+            when(trimOptionQueryRepository.findModelOptionIdByDetailTrimOptionId(anyLong())).thenReturn(null);
+
+            //when
+            TrimOptionDetailResponseDto trimOptionDetail = trimOptionService.getTrimOptionDetail(anyLong());
+
+            //then
+            assertThat(trimOptionDetail).isNull();
+        }
+
+        @Test
+        @DisplayName("적절한 패키지 식별자를 전달했을 때 패키지 상세 정보를 가진 dto를 반환해야 한다.")
+        void returnTrimPackageDetailResponseDto() {
+            //given
+            TrimOptionQueryRepository.DetailTrimPackageInfo detailTrimPackageInfo = mock(TrimOptionQueryRepository.DetailTrimPackageInfo.class);
+            when(trimOptionQueryRepository.findDetailTrimPackageInfoByPackageId(anyLong())).thenReturn(detailTrimPackageInfo);
+
+            List<String> hashTags = List.of("해시 태그1", "해시 태그2", "해시 태그3");
+            when(trimOptionQueryRepository.findPackageHashTagByPackageId(anyLong())).thenReturn(hashTags);
+
+            List<Long> modelOptionIds = List.of(1L, 2L);
+            when(trimOptionQueryRepository.findModelOptionIdsByPackageId(anyLong())).thenReturn(modelOptionIds);
+
+            TrimOptionQueryRepository.ModelOptionInfo modelOptionInfo1 = mock(TrimOptionQueryRepository.ModelOptionInfo.class);
+            TrimOptionQueryRepository.ModelOptionInfo modelOptionInfo2 = mock(TrimOptionQueryRepository.ModelOptionInfo.class);
+            when(trimOptionQueryRepository.findModelOptionInfoByOptionId(1L)).thenReturn(modelOptionInfo1);
+            when(trimOptionQueryRepository.findModelOptionInfoByOptionId(2L)).thenReturn(modelOptionInfo2);
+
+            List<String> optionHashTags1 = List.of("해시 태그1", "해시 태그2", "해시 태그3");
+            List<String> optionHashTags2 = List.of("해시 태그1", "해시 태그2", "해시 태그3");
+            when(trimOptionQueryRepository.findHashTagsByOptionId(1L)).thenReturn(optionHashTags1);
+            when(trimOptionQueryRepository.findHashTagsByOptionId(2L)).thenReturn(optionHashTags2);
+
+            TrimOptionQueryRepository.HMGDataInfo hmgDataInfo1 = mock(TrimOptionQueryRepository.HMGDataInfo.class);
+            TrimOptionQueryRepository.HMGDataInfo hmgDataInfo2 = mock(TrimOptionQueryRepository.HMGDataInfo.class);
+            List<TrimOptionQueryRepository.HMGDataInfo> hmgDataInfos1 = List.of(hmgDataInfo1, hmgDataInfo2);
+            List<TrimOptionQueryRepository.HMGDataInfo> hmgDataInfos2 = List.of();
+            when(trimOptionQueryRepository.findHMGDataInfoListByOptionId(1L)).thenReturn(hmgDataInfos1);
+            when(trimOptionQueryRepository.findHMGDataInfoListByOptionId(2L)).thenReturn(hmgDataInfos2);
+
+            //when
+            TrimPackageDetailResponseDto trimPackageDetail = trimOptionService.getTrimPackageDetail(anyLong());
+
+            //then
+            assertThat(trimPackageDetail.getName()).isEqualTo(detailTrimPackageInfo.getName());
+            assertThat(trimPackageDetail.getImageUrl()).isEqualTo(detailTrimPackageInfo.getImageUrl());
+            assertThat(trimPackageDetail.getHashTags()).isEqualTo(hashTags);
+            assertThat(trimPackageDetail.getOptions().size()).isEqualTo(2);
+        }
+
+        @Test
+        @DisplayName("적절하지 않은 패키지 식별자를 전달했을 때 null을 반환해야 한다.")
+        void returnNullWhenTrimOptionDetailResponseDtoByNonexistenceTrimPackageId() {
+            //given
+            when(trimOptionQueryRepository.findDetailTrimPackageInfoByPackageId(anyLong())).thenReturn(null);
+
+            //when
+            TrimPackageDetailResponseDto trimPackageDetail = trimOptionService.getTrimPackageDetail(anyLong());
+
+            //then
+            assertThat(trimPackageDetail).isNull();
         }
     }
 

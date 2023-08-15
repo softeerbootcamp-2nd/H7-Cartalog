@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
+import softeer.wantcar.cartalog.global.ServerPath;
 import softeer.wantcar.cartalog.global.dto.HMGDataDto;
 import softeer.wantcar.cartalog.trim.dto.DetailTrimInfoDto;
 import softeer.wantcar.cartalog.trim.dto.TrimListResponseDto;
@@ -25,9 +25,7 @@ import java.util.stream.Collectors;
 @Repository
 @RequiredArgsConstructor
 public class TrimQueryRepositoryImpl implements TrimQueryRepository {
-    @Value("${env.imageServerPath}")
-    private String imageServerPath = "example-url";
-
+    private final ServerPath serverPath;
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @AllArgsConstructor
@@ -112,9 +110,9 @@ public class TrimQueryRepositoryImpl implements TrimQueryRepository {
                 .description(trimInfo.getDescription())
                 .maxPrice(trimInfo.getMaxPrice())
                 .minPrice(trimInfo.getMinPrice())
-                .exteriorImageUrl(imageServerPath + "/" + trimInfo.getExteriorImageUrl())
-                .interiorImageUrl(imageServerPath + "/" + trimInfo.getInteriorImageUrl())
-                .wheelImageUrl(imageServerPath + "/" + trimInfo.getWheelImageUrl());
+                .exteriorImageUrl(serverPath.attachImageServerPath(trimInfo.getExteriorImageUrl()))
+                .interiorImageUrl(serverPath.attachImageServerPath(trimInfo.getInteriorImageUrl()))
+                .wheelImageUrl(serverPath.attachImageServerPath(trimInfo.getWheelImageUrl()));
 
         getTrimDefaultModelTypes(trimInfos, trimInfo, trimDtoBuilder);
         getTrimHMGData(trimInfos, trimDtoBuilder);
