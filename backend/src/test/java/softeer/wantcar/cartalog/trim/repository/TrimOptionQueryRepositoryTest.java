@@ -317,7 +317,6 @@ class TrimOptionQueryRepositoryTest {
                     trimOptionQueryRepository.findDetailTrimPackageInfoByPackageId(-1L);
 
             //then
-            System.out.println(detailTrimPackageInfo);
             assertThat(detailTrimPackageInfo).isNull();
         }
 

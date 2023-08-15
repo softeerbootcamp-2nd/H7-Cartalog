@@ -1,7 +1,6 @@
 package softeer.wantcar.cartalog.trim.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.global.dto.HMGDataDto;
@@ -16,7 +15,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TrimOptionServiceImpl implements TrimOptionService {
@@ -46,10 +44,10 @@ public class TrimOptionServiceImpl implements TrimOptionService {
     @Transactional(readOnly = true)
     public TrimOptionDetailResponseDto getTrimOptionDetail(Long detailTrimOptionId) {
         Long optionId = trimOptionQueryRepository.findModelOptionIdByDetailTrimOptionId(detailTrimOptionId);
-        return optionId != null ? getTrimOptionDetailResponseDto(optionId) : null;
+        return optionId != null ? getTrimOptionDetailByOptionId(optionId) : null;
     }
 
-    private TrimOptionDetailResponseDto getTrimOptionDetailResponseDto(Long optionId) {
+    private TrimOptionDetailResponseDto getTrimOptionDetailByOptionId(Long optionId) {
         TrimOptionQueryRepository.ModelOptionInfo modelOption = trimOptionQueryRepository.findModelOptionInfoByOptionId(optionId);
         List<String> hashTags = trimOptionQueryRepository.findHashTagsByOptionId(optionId);
         List<TrimOptionQueryRepository.HMGDataInfo> hmgDataList = trimOptionQueryRepository.findHMGDataInfoListByOptionId(optionId);
@@ -68,15 +66,15 @@ public class TrimOptionServiceImpl implements TrimOptionService {
     @Transactional(readOnly = true)
     public TrimPackageDetailResponseDto getTrimPackageDetail(Long packageId) {
         TrimOptionQueryRepository.DetailTrimPackageInfo detailTrimPackageInfos = trimOptionQueryRepository.findDetailTrimPackageInfoByPackageId(packageId);
-        if (detailTrimPackageInfos == null) {
+        if (Objects.isNull(detailTrimPackageInfos)) {
             return null;
         }
 
         List<String> hashTags = trimOptionQueryRepository.findPackageHashTagByPackageId(packageId);
-        List<Long> modelOptionIds = trimOptionQueryRepository.findModelOptionIdsByPackageId(packageId);
 
+        List<Long> modelOptionIds = trimOptionQueryRepository.findModelOptionIdsByPackageId(packageId);
         List<TrimOptionDetailResponseDto> trimOptionDetailResponseDtoList = modelOptionIds.stream()
-                .map(this::getTrimOptionDetailResponseDto)
+                .map(this::getTrimOptionDetailByOptionId)
                 .collect(Collectors.toUnmodifiableList());
 
         return TrimPackageDetailResponseDto.builder()

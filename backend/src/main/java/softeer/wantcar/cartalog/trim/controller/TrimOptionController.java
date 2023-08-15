@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import softeer.wantcar.cartalog.trim.dto.OptionDetailResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimOptionListResponseDto;
-import softeer.wantcar.cartalog.trim.repository.TrimOptionQueryRepository;
 import softeer.wantcar.cartalog.trim.service.TrimOptionService;
 
 import javax.websocket.server.PathParam;
