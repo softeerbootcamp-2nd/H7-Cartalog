@@ -8,8 +8,9 @@ import com.softeer.cartalog.data.model.Type
 import com.softeer.cartalog.data.model.TypeHmgData
 import com.softeer.cartalog.data.model.TypeOption
 import com.softeer.cartalog.data.enums.ModelTypeSubject
+import com.softeer.cartalog.data.repository.CarRepository
 
-class TypeViewModel : ViewModel() {
+class TypeViewModel(private val repository: CarRepository) : ViewModel() {
 
     private val _powertrain1Selected = MutableLiveData(true)
     val powertrain1Selected = _powertrain1Selected

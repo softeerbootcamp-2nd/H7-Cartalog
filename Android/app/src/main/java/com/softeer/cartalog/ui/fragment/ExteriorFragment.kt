@@ -1,10 +1,7 @@
 package com.softeer.cartalog.ui.fragment
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -13,21 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import coil.ImageLoader
-import coil.decode.DecodeResult
-import coil.decode.Decoder
 import coil.disk.DiskCache
-import coil.imageLoader
-import coil.load
 import coil.memory.MemoryCache
-import coil.request.CachePolicy
 import coil.request.ImageRequest
-import coil.size.ViewSizeResolver
-import coil.transition.Transition
-import com.softeer.cartalog.R
 import com.softeer.cartalog.databinding.FragmentExteriorBinding
+import com.softeer.cartalog.ui.activity.MainActivity
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import kotlinx.coroutines.launch
-import java.lang.NullPointerException
 
 class ExteriorFragment : Fragment() {
     private val exteriorViewModel: ExteriorViewModel by viewModels()
@@ -49,6 +38,12 @@ class ExteriorFragment : Fragment() {
 
         binding.viewModel = exteriorViewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.btnNext.setOnClickListener {
+            (activity as MainActivity).changeTab(3)
+        }
+        binding.btnPrev.setOnClickListener {
+            (activity as MainActivity).changeTab(1)
+        }
 
         // 360img test
         val img360List = mutableListOf<Drawable>()

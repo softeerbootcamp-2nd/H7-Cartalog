@@ -1,10 +1,16 @@
 package com.softeer.cartalog.data.model
 
 data class Trim(
-    val trimName: String,
+    val id: Int,
+    val name: String,
     val description: String,
-    val startPrice: Int,
-    val options: List<TrimOption>
+    val minPrice: Int,
+    val maxPrice: Int,
+    val exteriorImageUrl: String,
+    val interiorImageUrl: String,
+    val wheelImageUrl: String,
+    val hmgData: ArrayList<TrimHmgData?>?,
+    val defaultInfo: DefaultInfo?
 ) {
 
 }

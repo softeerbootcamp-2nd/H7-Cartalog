@@ -63,6 +63,7 @@
             app:layout_constraintTop_toBottomOf="@id/iv_interior_img" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_color_options"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -73,6 +74,93 @@
             app:layout_constraintTop_toBottomOf="@id/tv_header"
             app:viewModel="@{viewModel}"
             tools:listitem="@layout/item_interior_color" />
+
+        <View
+            android:id="@+id/vw_summary_bgr"
+            android:layout_width="0dp"
+            android:layout_height="58dp"
+            android:background="@color/white"
+            android:elevation="8dp"
+            app:layout_constraintBottom_toTopOf="@id/vw_summary_bgr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_color_options" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_price_summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/selector_btn_price_summary"
+            android:elevation="8dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingHorizontal="17dp"
+            android:paddingVertical="7dp"
+            android:text="@string/btn_price_summary"
+            android:textColor="@drawable/selector_text_price_summary"
+            app:layout_constraintBottom_toBottomOf="@id/vw_summary_bgr"
+            app:layout_constraintStart_toStartOf="@id/vw_summary_bgr"
+            app:layout_constraintTop_toTopOf="@id/vw_summary_bgr" />
+
+        <TextView
+            android:id="@+id/tv_price_summary_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="20dp"
+            android:elevation="8dp"
+            android:text="@string/summary_now_price"
+            android:textColor="@color/gray_700"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/vw_summary_bgr"
+            app:layout_constraintTop_toTopOf="@id/vw_summary_bgr" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="8dp"
+            android:elevation="8dp"
+            android:fontFamily="@font/hyndaisans_head_medium"
+            android:text="43,560,000 원"
+            android:textColor="@color/primary_color_500"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/vw_summary_bgr"
+            app:layout_constraintEnd_toEndOf="@id/vw_summary_bgr"
+            app:layout_constraintTop_toBottomOf="@id/tv_price_summary_title" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_prev"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="@color/gray_300"
+            android:elevation="11dp"
+            android:fontFamily="@font/hyndaisans_head_medium"
+            android:text="@string/btn_prev"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_next"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vw_summary_bgr" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_next"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="@color/primary_color_700"
+            android:elevation="11dp"
+            android:fontFamily="@font/hyndaisans_head_medium"
+            android:text="@string/btn_next"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_prev"
+            app:layout_constraintTop_toBottomOf="@id/vw_summary_bgr" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,10 +33,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.viewModel = mainViewModel
         binding.lifecycleOwner = this
         setTabSelected()
-
-        binding.btnNext.setOnClickListener(this)
-        binding.btnPrev.setOnClickListener(this)
-        binding.btnPriceSummary.setOnClickListener(this)
     }
 
     private fun setTabSelected() {
