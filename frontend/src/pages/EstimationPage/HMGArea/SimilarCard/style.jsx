@@ -7,6 +7,10 @@ export const ChartWrapper = styled.div`
   align-items: flex-end;
   width: 100%;
 
+  &.stop * {
+    animation: none;
+  }
+
   ${({ $n }) =>
     [...Array($n).keys()]
       .map(

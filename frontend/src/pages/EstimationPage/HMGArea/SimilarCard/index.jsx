@@ -1,8 +1,12 @@
+import { useRef } from 'react';
 import * as S from './style';
 import Chart from '../../../../components/Chart';
 import HMGCard from '../../../../components/HMGCard';
+import useIntersectionObserver from '../../../../hooks/useIntersectionObserver';
 
 function SimilarCard({ data }) {
+  const targetRef = useRef();
+  const isInViewport = useIntersectionObserver(targetRef);
   const max = data?.similar?.reduce((acc, cur) => Math.max(acc, cur.value), 0);
 
   return (
@@ -16,7 +20,11 @@ function SimilarCard({ data }) {
       }
       description="유사 출고 견적이란, 내 견적과 해시태그 유사도가 높은 다른 사람들의 실제 출고 견적이에요."
     >
-      <S.ChartWrapper $n={(data?.similar?.length ?? 0) + 1}>
+      <S.ChartWrapper
+        className={isInViewport ? null : 'stop'}
+        ref={targetRef}
+        $n={(data?.similar?.length ?? 0) + 1}
+      >
         <Chart active value={data?.value} max={max} />
         {data?.similar?.map((item) => (
           <Chart key={item.id} value={item.value} max={max} />
@@ -24,6 +32,12 @@ function SimilarCard({ data }) {
       </S.ChartWrapper>
     </HMGCard>
   );
+}
+
+function SampleComponent() {
+  const targetRef = useRef();
+  const isInViewport = useIntersectionObserver(targetRef);
+  return <div></div>;
 }
 
 export default SimilarCard;
