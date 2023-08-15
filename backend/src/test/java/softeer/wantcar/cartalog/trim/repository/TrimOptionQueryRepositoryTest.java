@@ -44,14 +44,13 @@ class TrimOptionQueryRepositoryTest {
         @DisplayName("존재하는 세부 트림 식별자라면 트림 옵션 목록을 리스트로 반환한다")
         void returnTrimOptionListWhenDetailTrimIdExist() {
             //given
-            Long leblancDetailTrimId = jdbcTemplate.queryForObject(
-                    "SELECT " +
-                            "   dt.id " +
-                            "FROM detail_trims AS dt " +
-                            "JOIN trims AS t ON t.id=dt.trim_id " +
-                            "WHERE t.name= 'Le Blanc' " +
-                            "LIMIT 1",
-                    new HashMap<>(), Long.TYPE);
+            String SQL = "SELECT " +
+                    "   dt.id " +
+                    "FROM detail_trims AS dt " +
+                    "JOIN trims AS t ON t.id=dt.trim_id " +
+                    "WHERE t.name= 'Le Blanc' " +
+                    "LIMIT 1";
+            Long leblancDetailTrimId = jdbcTemplate.queryForObject(SQL, new HashMap<>(), Long.TYPE);
 
             //when
             List<TrimOptionQueryRepository.TrimOptionInfo> trimOptions
@@ -87,14 +86,13 @@ class TrimOptionQueryRepositoryTest {
         @DisplayName("존재하는 세부 트림 식별자라면 트림 패키지 목록을 리스트로 반환한다")
         void returnTrimPackageListWhenDetailTrimIdExist() {
             //given
-            Long leblancDetailTrimId = jdbcTemplate.queryForObject(
-                    "SELECT " +
-                            "   dt.id " +
-                            "FROM detail_trims AS dt " +
-                            "JOIN trims AS t ON t.id=dt.trim_id " +
-                            "WHERE t.name= 'Le Blanc' " +
-                            "LIMIT 1",
-                    new HashMap<>(), Long.TYPE);
+            String SQL = "SELECT " +
+                    "   dt.id " +
+                    "FROM detail_trims AS dt " +
+                    "JOIN trims AS t ON t.id=dt.trim_id " +
+                    "WHERE t.name= 'Le Blanc' " +
+                    "LIMIT 1";
+            Long leblancDetailTrimId = jdbcTemplate.queryForObject(SQL, new HashMap<>(), Long.TYPE);
 
             //when
             List<TrimOptionQueryRepository.TrimOptionInfo> trimPackages
@@ -137,6 +135,8 @@ class TrimOptionQueryRepositoryTest {
         }
     }
 
+
+    @SuppressWarnings({"SqlNoDataSourceInspection", "SqlResolve"})
     @Nested
     @DisplayName("모델 옵션 상세 정보 보기 테스트")
     class findModelOptionDetailByOptionIdTest {
@@ -263,6 +263,7 @@ class TrimOptionQueryRepositoryTest {
         }
     }
 
+    @SuppressWarnings({"SqlNoDataSourceInspection", "SqlResolve"})
     @Nested
     @DisplayName("모델 패키지 상세 정보 보기 테스트")
     class findTrimPackageDetailByPackageId {
