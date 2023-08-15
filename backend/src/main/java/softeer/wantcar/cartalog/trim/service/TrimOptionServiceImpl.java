@@ -72,6 +72,7 @@ public class TrimOptionServiceImpl implements TrimOptionService {
 
         List<String> hashTags = trimOptionQueryRepository.findPackageHashTagByPackageId(packageId);
 
+        //TODO: batch를 통해 조회 연산을 최적화 할 수 있다.
         List<Long> modelOptionIds = trimOptionQueryRepository.findModelOptionIdsByPackageId(packageId);
         List<TrimOptionDetailResponseDto> trimOptionDetailResponseDtoList = modelOptionIds.stream()
                 .map(this::getTrimOptionDetailByOptionId)
