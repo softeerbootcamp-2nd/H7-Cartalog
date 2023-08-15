@@ -11,8 +11,6 @@ import softeer.wantcar.cartalog.trim.dto.OptionDetailResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimOptionDetailResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimOptionListResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimPackageDetailResponseDto;
-import softeer.wantcar.cartalog.trim.repository.TrimOptionQueryRepository;
-import softeer.wantcar.cartalog.trim.repository.TrimOptionQueryRepositoryImpl;
 import softeer.wantcar.cartalog.trim.service.TrimOptionService;
 
 import java.util.List;
@@ -28,13 +26,11 @@ public class TrimOptionControllerTest {
     SoftAssertions softAssertions;
     TrimOptionController trimOptionController;
     TrimOptionService trimOptionService;
-    TrimOptionQueryRepository trimOptionQueryRepository;
 
     @BeforeEach
     void setUp() {
         trimOptionService = mock(TrimOptionService.class);
-        trimOptionQueryRepository = mock(TrimOptionQueryRepositoryImpl.class);
-        trimOptionController = new TrimOptionController(trimOptionService, trimOptionQueryRepository);
+        trimOptionController = new TrimOptionController(trimOptionService);
         softAssertions = new SoftAssertions();
     }
 
@@ -87,7 +83,7 @@ public class TrimOptionControllerTest {
         void returnOptionDetailWithStatusCode200() {
             //given
             TrimOptionDetailResponseDto expect = mock(TrimOptionDetailResponseDto.class);
-            when(trimOptionQueryRepository.findTrimOptionDetailByDetailTrimOptionId(anyLong())).thenReturn(expect);
+            when(trimOptionService.getTrimOptionDetail(anyLong())).thenReturn(expect);
 
 
             //when
@@ -106,7 +102,7 @@ public class TrimOptionControllerTest {
         void returnPackageDetailWithStatusCode200() {
             //given
             TrimPackageDetailResponseDto expect = mock(TrimPackageDetailResponseDto.class);
-            when(trimOptionQueryRepository.findTrimPackageDetailByPackageId(anyLong())).thenReturn(expect);
+            when(trimOptionService.getTrimPackageDetail(anyLong())).thenReturn(expect);
 
 
             //when

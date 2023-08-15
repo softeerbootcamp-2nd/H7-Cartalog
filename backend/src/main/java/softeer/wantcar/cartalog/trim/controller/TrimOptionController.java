@@ -25,7 +25,6 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class TrimOptionController {
     private final TrimOptionService trimOptionService;
-    private final TrimOptionQueryRepository trimOptionQueryRepository;
 
     @ApiOperation(
             value = "트림 옵션 목록 조회",
@@ -72,8 +71,8 @@ public class TrimOptionController {
         }
 
         OptionDetailResponseDto responseDto = isPackage ?
-                trimOptionQueryRepository.findTrimPackageDetailByPackageId(id) :
-                trimOptionQueryRepository.findTrimOptionDetailByDetailTrimOptionId(id);
+                trimOptionService.getTrimPackageDetail(id) :
+                trimOptionService.getTrimOptionDetail(id);
 
         return Objects.isNull(responseDto) ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :

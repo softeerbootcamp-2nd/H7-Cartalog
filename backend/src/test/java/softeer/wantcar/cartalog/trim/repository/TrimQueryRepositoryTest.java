@@ -6,11 +6,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import softeer.wantcar.cartalog.entity.model.BasicModel;
+import softeer.wantcar.cartalog.global.ServerPath;
 import softeer.wantcar.cartalog.global.dto.HMGDataDto;
 import softeer.wantcar.cartalog.model.repository.ModelQueryRepository;
 import softeer.wantcar.cartalog.trim.dto.DetailTrimInfoDto;
@@ -26,12 +26,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Sql({"classpath:schema.sql"})
 @DisplayName("트림 Repository 테스트")
 class TrimQueryRepositoryTest {
-    @Value("${env.imageServerPath}")
-    String imageServerPath = "example-url";
-
+    ServerPath serverPath = new ServerPath();
     @Autowired
     NamedParameterJdbcTemplate jdbcTemplate;
-
     ModelQueryRepository modelQueryRepository;
     TrimQueryRepository trimQueryRepository;
     SoftAssertions softAssertions;
@@ -39,7 +36,7 @@ class TrimQueryRepositoryTest {
     @BeforeEach
     void setUp() {
         modelQueryRepository = new ModelQueryRepository(jdbcTemplate);
-        trimQueryRepository = new TrimQueryRepositoryImpl(jdbcTemplate);
+        trimQueryRepository = new TrimQueryRepositoryImpl(serverPath, jdbcTemplate);
         softAssertions = new SoftAssertions();
     }
 
@@ -168,9 +165,9 @@ class TrimQueryRepositoryTest {
         softAssertions.assertThat(exclusive.getDescription()).isEqualTo(description);
         softAssertions.assertThat(exclusive.getMinPrice()).isEqualTo(minPrice);
         softAssertions.assertThat(exclusive.getMaxPrice()).isEqualTo(maxPrice);
-        softAssertions.assertThat(exclusive.getExteriorImageUrl()).startsWith(imageServerPath + "/");
-        softAssertions.assertThat(exclusive.getInteriorImageUrl()).startsWith(imageServerPath + "/");
-        softAssertions.assertThat(exclusive.getWheelImageUrl()).startsWith(imageServerPath + "/");
+        softAssertions.assertThat(exclusive.getExteriorImageUrl()).startsWith(serverPath.IMAGE_SERVER_PATH + "/");
+        softAssertions.assertThat(exclusive.getInteriorImageUrl()).startsWith(serverPath.IMAGE_SERVER_PATH + "/");
+        softAssertions.assertThat(exclusive.getWheelImageUrl()).startsWith(serverPath.IMAGE_SERVER_PATH + "/");
 
         List<HMGDataDto> hmgData = exclusive.getHmgData();
         softAssertions.assertThat(hmgData).isNotNull();
