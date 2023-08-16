@@ -42,7 +42,7 @@ class ModelOptionQueryRepositoryImplTest {
         @DisplayName("존재하는 식별자로 조회시 모델 타입 옵션을 포함한 dto를 반환해야 한다.")
         void findByModelTypeOptionsByBasicModelIdWithCollectId() {
             //given
-            Long basicModelId = 1L;
+            Long trimId = 2L;
             List<String> checkTypes = List.of("파워트레인/성능", "바디타입", "구동방식");
             Map<String, List<String>> checkOptions = new HashMap<>();
             checkOptions.put("파워트레인/성능", List.of("디젤 2.2", "가솔린 3.8"));
@@ -50,7 +50,7 @@ class ModelOptionQueryRepositoryImplTest {
             checkOptions.put("구동방식", List.of("2WD", "4WD"));
 
             //when
-            ModelTypeListResponseDto response = modelOptionQueryRepository.findByModelTypeOptionsByBasicModelId(basicModelId);
+            ModelTypeListResponseDto response = modelOptionQueryRepository.findByModelTypeOptionsByTrimId(trimId);
 
             //then
             assertThat(response).isNotNull();
@@ -69,7 +69,7 @@ class ModelOptionQueryRepositoryImplTest {
             Long basicModelId = -1L;
 
             //when
-            ModelTypeListResponseDto response = modelOptionQueryRepository.findByModelTypeOptionsByBasicModelId(basicModelId);
+            ModelTypeListResponseDto response = modelOptionQueryRepository.findByModelTypeOptionsByTrimId(basicModelId);
 
             //then
             assertThat(response).isNull();

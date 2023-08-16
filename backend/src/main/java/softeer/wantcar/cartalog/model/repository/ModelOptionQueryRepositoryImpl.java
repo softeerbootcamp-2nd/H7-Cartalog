@@ -73,25 +73,29 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
 
     @Override
     @Transactional(readOnly = true)
-    public ModelTypeListResponseDto findByModelTypeOptionsByBasicModelId(Long basicModelId) {
-        String SQL = "SELECT " +
-                     "  model_options.id AS model_option_id, " +
-                     "  model_options.name, " +
-                     "  child_category, " +
-                     "  image_url, " +
-                     "  description, " +
-                     "  hmg_data.name AS hmg_data_name, " +
-                     "  hmg_data.val AS hmg_data_value, " +
-                     "  hmg_data.measure AS hmg_data_measure, " +
-                     "  price_if_model_type_option AS price " +
-                     "FROM model_options " +
-                     "LEFT JOIN hmg_data " +
-                     "ON model_options.id = hmg_data.model_option_id " +
-                     "WHERE model_id = :basicModelId " +
-                     "  AND price_if_model_type_option IS NOT NULL";
+    public ModelTypeListResponseDto findByModelTypeOptionsByTrimId(Long trimId) {
+        String SQL = "SELECT DISTINCT mo.id                         AS model_option_id, " +
+                     "                mo.name                       AS name, " +
+                     "                mo.child_category             AS child_category, " +
+                     "                mo.image_url                  AS image_url, " +
+                     "                mo.description                AS description, " +
+                     "                mo.price_if_model_type_option AS price, " +
+                     "                hmg.name                      AS hmg_data_name, " +
+                     "                hmg.val                       AS hmg_data_value, " +
+                     "                hmg.measure                   AS hmg_data_measure " +
+                     "FROM   detail_model_decision_options AS dmdo " +
+                     "       JOIN detail_models AS dm " +
+                     "         ON dm.id = dmdo.detail_model_id " +
+                     "       JOIN detail_trims AS dt " +
+                     "         ON dt.detail_model_id = dm.id " +
+                     "       JOIN model_options AS mo " +
+                     "         ON mo.id = dmdo.model_option_id " +
+                     "       LEFT OUTER JOIN hmg_data AS hmg " +
+                     "                    ON mo.id = hmg.model_option_id " +
+                     "WHERE  dt.trim_id = :trimId; ";
 
         SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("basicModelId", basicModelId);
+                .addValue("trimId", trimId);
 
         List<SimpleModelOptionMapper> simpleModelOptionMapperList = jdbcTemplate.query(SQL, parameters,
                 (rs, rowNum) -> SimpleModelOptionMapper.builder()

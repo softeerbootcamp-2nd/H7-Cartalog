@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ModelOptionQueryRepository {
 
-    ModelTypeListResponseDto findByModelTypeOptionsByBasicModelId(Long id);
+    ModelTypeListResponseDto findByModelTypeOptionsByTrimId(Long trimId);
 
     List<String> findModelTypeCategoriesByIds(List<Long> modelTypeIds);
 }
