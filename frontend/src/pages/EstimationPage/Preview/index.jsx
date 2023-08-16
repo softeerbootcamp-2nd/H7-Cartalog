@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Toggle from '../../../components/Toggle';
 import * as S from './style';
 
@@ -7,29 +7,24 @@ const INTERIOR_IMAGE_SRC =
 const EXTERIOR_IMAGE_SRC =
   'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade/exterior/A2B/001.png';
 
-function Preview({ scrollY }) {
+function Preview() {
   const [toggle, setToggle] = useState(false);
-  const delayStyle = {
-    animationDelay: `${-scrollY / 440}s`,
-  };
 
   return (
     <S.Preview>
       <div>
-        <S.CarInfo style={delayStyle}>
-          <div className="title" style={delayStyle}>
-            Le Blanc
-          </div>
-          <div className="preview" style={delayStyle}>
+        <S.CarInfo>
+          <div className="title">Le Blanc</div>
+          <div className="preview">
             <img
               src={INTERIOR_IMAGE_SRC}
               alt="interior"
-              style={toggle ? delayStyle : { display: 'none', ...delayStyle }}
+              style={toggle ? null : { display: 'none' }}
             />
             <img
               src={EXTERIOR_IMAGE_SRC}
               alt="exterior"
-              style={toggle ? { display: 'none', ...delayStyle } : delayStyle}
+              style={toggle ? { display: 'none' } : null}
             />
             <Toggle state={toggle} setState={setToggle} big />
           </div>

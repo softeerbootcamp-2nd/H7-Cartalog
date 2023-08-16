@@ -135,21 +135,10 @@ function Estimation() {
     fetchData();
   }, [setTrimState]);
 
-  const [scrollY, setScrollY] = useState(window.scrollY);
-
-  const handleScroll = () => {
-    setScrollY(window.scrollY);
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return isFetched ? (
     <>
-      <Preview scrollY={scrollY} />
-      <S.Estimation onScroll={handleScroll}>
+      <Preview />
+      <S.Estimation>
         <Info />
         <S.PageContents>
           <Detail data={MOCK_DATA} />

@@ -34,10 +34,4 @@ function SimilarCard({ data }) {
   );
 }
 
-function SampleComponent() {
-  const targetRef = useRef();
-  const isInViewport = useIntersectionObserver(targetRef);
-  return <div></div>;
-}
-
 export default SimilarCard;
