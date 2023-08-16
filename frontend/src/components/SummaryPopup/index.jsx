@@ -58,7 +58,6 @@ function SummaryPopup({ show, close, onClick }) {
             </S.LeftArea>
             <InfoPanel data={MOCK_DATA} />
           </S.Contents>
-          <S.PopupButton onClick={onClick}>견적 완료하기</S.PopupButton>
         </S.SummaryPopup>
       </>,
       document.querySelector('#modal'),

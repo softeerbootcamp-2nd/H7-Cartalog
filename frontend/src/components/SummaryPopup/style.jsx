@@ -78,13 +78,3 @@ export const LeftArea = styled.div`
     object-fit: cover;
   }
 `;
-
-export const PopupButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 52px;
-  background-color: ${({ theme }) => theme.color.primary['700']};
-  color: ${({ theme }) => theme.color.white};
-`;
