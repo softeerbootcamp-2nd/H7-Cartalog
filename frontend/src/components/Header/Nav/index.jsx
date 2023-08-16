@@ -45,7 +45,7 @@ function Nav() {
                     const nextPath = item.to;
                     StartAnimation(nowPath, nextPath, navigate, setTrimState, pagePath);
                   }}
-                  className={item.page === page ? 'selected' : null}
+                  className={item.page === page ? 'selected' : 'unSelected'}
                 >
                   {item.label}
                 </S.Button>
