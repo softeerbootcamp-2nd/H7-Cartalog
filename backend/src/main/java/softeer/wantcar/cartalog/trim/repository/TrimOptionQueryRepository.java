@@ -30,8 +30,6 @@ public interface TrimOptionQueryRepository {
 
     List<TrimOptionInfo> findOptionsByDetailTrimId(Long detailTrimId);
 
-    Long findModelOptionIdByDetailTrimOptionId(Long detailTrimOptionId);
-
     @Getter
     @AllArgsConstructor
     class ModelOptionInfo {

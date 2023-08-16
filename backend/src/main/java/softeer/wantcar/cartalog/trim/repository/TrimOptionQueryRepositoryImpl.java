@@ -70,20 +70,6 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
 
     @Override
     @Transactional(readOnly = true)
-    public Long findModelOptionIdByDetailTrimOptionId(Long detailTrimOptionId) {
-        SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("detailTrimOptionId", detailTrimOptionId);
-
-        String getModelOptionIdSQL = "SELECT model_options.id " +
-                "FROM model_options INNER JOIN detail_trim_options " +
-                "ON model_options.id = detail_trim_options.model_option_id " +
-                "WHERE detail_trim_options.id = :detailTrimOptionId";
-
-        return jdbcTemplate.queryForObject(getModelOptionIdSQL, parameters, Long.TYPE);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public ModelOptionInfo findModelOptionInfoByOptionId(Long optionId) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("optionId", optionId);
@@ -141,7 +127,7 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
                 .addValue("packageId", packageId);
 
         return jdbcTemplate.queryForList(
-                "SELECT hash_tag FROM model_package_hash_tags where package_id = :packageId",
+                "SELECT hash_tag FROM model_package_hash_tags where model_package_id = :packageId",
                 parameters, String.class);
     }
 
