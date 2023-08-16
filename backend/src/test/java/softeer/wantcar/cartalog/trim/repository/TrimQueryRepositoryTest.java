@@ -35,7 +35,7 @@ class TrimQueryRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        modelQueryRepository = new ModelQueryRepository(jdbcTemplate);
+        modelQueryRepository = new ModelQueryRepository(jdbcTemplate, serverPath);
         trimQueryRepository = new TrimQueryRepositoryImpl(serverPath, jdbcTemplate);
         softAssertions = new SoftAssertions();
     }

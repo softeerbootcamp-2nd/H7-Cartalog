@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import softeer.wantcar.cartalog.global.ServerPath;
 import softeer.wantcar.cartalog.model.dto.EstimateImageDto;
 
 import java.util.HashMap;
@@ -27,7 +28,7 @@ class ModelQueryRepositoryTest {
     @BeforeEach
     void setUp() {
         softAssertions = new SoftAssertions();
-        modelQueryRepository = new ModelQueryRepository(jdbcTemplate);
+        modelQueryRepository = new ModelQueryRepository(jdbcTemplate, new ServerPath());
     }
 
     @SuppressWarnings({"SqlNoDataSourceInspection", "SqlResolve"})
@@ -65,11 +66,11 @@ class ModelQueryRepositoryTest {
 
             //when
             EstimateImageDto wrongExteriorColorCode =
-                    modelQueryRepository.findCarSideExteriorAndInteriorImage(exterior_color_code, interior_color_code);
+                    modelQueryRepository.findCarSideExteriorAndInteriorImage(notExistColorCode, interior_color_code);
             EstimateImageDto wrongInteriorColorCode =
-                    modelQueryRepository.findCarSideExteriorAndInteriorImage(exterior_color_code, interior_color_code);
+                    modelQueryRepository.findCarSideExteriorAndInteriorImage(exterior_color_code, notExistColorCode);
             EstimateImageDto wrongExteriorInteriorColorCode =
-                    modelQueryRepository.findCarSideExteriorAndInteriorImage(exterior_color_code, interior_color_code);
+                    modelQueryRepository.findCarSideExteriorAndInteriorImage(notExistColorCode, notExistColorCode);
 
             //then
             softAssertions.assertThat(wrongExteriorColorCode).isNull();
