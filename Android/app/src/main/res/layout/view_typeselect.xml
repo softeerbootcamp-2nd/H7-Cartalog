@@ -11,6 +11,10 @@
             type="ModelTypeSubject" />
 
         <variable
+            name="typeList"
+            type="com.softeer.cartalog.data.model.Types" />
+
+        <variable
             name="viewModel"
             type="com.softeer.cartalog.viewmodel.TypeViewModel" />
 
@@ -58,20 +62,20 @@
                 app:drawableEndCompat="@drawable/icon_arrow_end_small"
                 app:drawableTint="@color/white" />
 
+            <TextView
+                android:id="@+id/btn_detail_view"
+                style="@style/DetailViewTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|top"
+                android:drawablePadding="10dp"
+                android:visibility="gone"
+                app:drawableEndCompat="@drawable/icon_arrow_end_small"
+                app:drawableTint="@color/gray_800" />
+
+
         </androidx.cardview.widget.CardView>
 
-
-        <TextView
-            android:id="@+id/btn_detail_view"
-            style="@style/DetailViewTag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawablePadding="10dp"
-            android:visibility="gone"
-            app:drawableEndCompat="@drawable/icon_arrow_end_small"
-            app:drawableTint="@color/gray_800"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/cv_btn1"

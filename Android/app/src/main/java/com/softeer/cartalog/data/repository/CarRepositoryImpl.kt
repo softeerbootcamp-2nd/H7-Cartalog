@@ -1,5 +1,6 @@
 package com.softeer.cartalog.data.repository
 
+import android.util.Log
 import com.softeer.cartalog.data.model.Trim
 import com.softeer.cartalog.data.model.TrimDetail
 import com.softeer.cartalog.data.model.Type

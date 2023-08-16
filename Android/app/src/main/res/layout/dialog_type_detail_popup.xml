@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="selectedType"
+            type="Integer" />
+
+        <variable
             name="viewModel"
             type="com.softeer.cartalog.viewmodel.TypeViewModel" />
 
@@ -14,9 +18,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#79000000"
         tools:context=".ui.dialog.TypeDetailPopupActivity">
-
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vp_slide_container"
@@ -29,11 +31,12 @@
             android:paddingEnd="25dp"
             android:paddingBottom="0dp"
             app:indicator="@{dotsIndicator}"
+            app:selectedType="@{selectedType}"
             app:layout_constraintBottom_toTopOf="@id/dots_indicator"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:viewModel="@{viewModel}" />
+            app:viewModel="@{viewModel}"/>
 
 
         <com.tbuonomo.viewpagerdotsindicator.DotsIndicator

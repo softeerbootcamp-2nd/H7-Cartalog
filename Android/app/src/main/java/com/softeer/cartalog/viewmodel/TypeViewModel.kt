@@ -49,7 +49,7 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
         }
     }
 
-    fun changeSelectedTrim(idx: Int) {
+    fun changeSelectedType(idx: Int) {
         _selectedType.value = idx
     }
 
@@ -66,9 +66,9 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
     }
 
     fun setHmgData(trimId: Int) {
-        val selectPowerTrain = if(_powertrain1Selected.value!!) 1 else 2
-        val selectBodyType = if(_bodytype1Selected.value!!) 5 else 6
-        val selectWheelDrive = if(_wheeldrive1Selected.value!!) 3 else 4
+        val selectPowerTrain = if (_powertrain1Selected.value!!) 1 else 2
+        val selectBodyType = if (_bodytype1Selected.value!!) 5 else 6
+        val selectWheelDrive = if (_wheeldrive1Selected.value!!) 3 else 4
 
         val modelTypeIds = "$selectPowerTrain,$selectBodyType,$selectWheelDrive"
         viewModelScope.launch {

@@ -22,7 +22,7 @@ class TypeFragment : Fragment() {
 
     private val carRepositoryImpl =
         CarRepositoryImpl(CarLocalDataSource(), CarRemoteDataSource(RetrofitClient.carApi))
-    private val typeViewModel: TypeViewModel by viewModels {
+    val typeViewModel: TypeViewModel by viewModels {
         CommonViewModelFactory(carRepositoryImpl)
     }
 
