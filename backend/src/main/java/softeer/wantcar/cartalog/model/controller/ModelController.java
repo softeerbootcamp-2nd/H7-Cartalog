@@ -1,9 +1,6 @@
 package softeer.wantcar.cartalog.model.controller;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,10 +13,11 @@ import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 
 import javax.websocket.server.PathParam;
 
-@Slf4j
+@Api(tags = {"모델 관련 API"})
 @RestController
 @RequestMapping("/models")
 @RequiredArgsConstructor
+@Slf4j
 public class ModelController {
     private final ModelOptionQueryRepository modelOptionQueryRepository;
 
