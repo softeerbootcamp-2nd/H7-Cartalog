@@ -1,4 +1,4 @@
-package com.softeer.cartalog.data.model
+package com.softeer.cartalog.data.model.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -8,10 +8,11 @@ import com.softeer.cartalog.data.enums.PriceDataType
 data class PriceData(
     val carId: Int,
     val optionType: PriceDataType,
-    val optionId: Int,
+    val optionId: Int?,
     val name: String,
     val price: Int,
-    val imgUrl: String?
+    val imgUrl: String?,
+    val colorCode: String?
 ) {
     @PrimaryKey (autoGenerate = true) var id: Int = 0
 }

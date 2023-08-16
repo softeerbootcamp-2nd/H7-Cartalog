@@ -1,4 +1,4 @@
-package com.softeer.cartalog.data.model
+package com.softeer.cartalog.data.model.db
 
 import androidx.room.Embedded
 import androidx.room.Relation
@@ -6,7 +6,7 @@ import androidx.room.Relation
 data class MyCarWithPriceData(
     @Embedded val myCar: MyCar,
     @Relation(
-        parentColumn = "modelId",
+        parentColumn = "id",
         entityColumn = "carId"
     )
     val priceDataList: List<PriceData>
