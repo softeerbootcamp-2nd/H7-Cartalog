@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, cloneElement } from 'react';
 import { useData } from '../../utils/Context';
 import { INTERIOR_COLOR } from './constants';
 import Section from '../../components/Section';
@@ -29,9 +29,24 @@ function InteriorColor() {
             name: defaultData.name,
             carImageUrl: defaultData.carImageUrl,
           },
+          clonePage: {
+            ...prevState.clonePage,
+            4: cloneElement(<InteriorColor />),
+          },
         }));
       }
       setTrimState((prevState) => ({ ...prevState, page: 4 }));
+      setTimeout(() => {
+        setTrimState((prevState) => ({
+          ...prevState,
+          movePage: {
+            ...prevState.movePage,
+            clonePage: 4,
+            nowContentRef: 'nowUnload',
+            nextContentRef: 'nextUnload',
+          },
+        }));
+      }, 1000);
     }
     fetchData();
   }, []);

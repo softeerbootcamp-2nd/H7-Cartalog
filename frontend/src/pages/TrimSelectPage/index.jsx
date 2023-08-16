@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, cloneElement } from 'react';
 import { useData } from '../../utils/Context';
 import { TRIM_SELECT } from './constants';
 import Section from '../../components/Section';
@@ -21,9 +21,24 @@ function TrimSelect() {
             fetchData: [...dataFetch.trims],
             isFetch: true,
           },
+          clonePage: {
+            ...prevState.clonePage,
+            1: cloneElement(<TrimSelect />),
+          },
         }));
       }
       setTrimState((prevState) => ({ ...prevState, page: 1 }));
+      setTimeout(() => {
+        setTrimState((prevState) => ({
+          ...prevState,
+          movePage: {
+            ...prevState.movePage,
+            clonePage: 1,
+            nowContentRef: 'nowUnload',
+            nextContentRef: 'nextUnload',
+          },
+        }));
+      }, 1000);
     }
     fetchData();
   }, []);

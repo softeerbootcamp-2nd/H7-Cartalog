@@ -1,0 +1,73 @@
+.nowUnload {
+  display: none;
+}
+
+.leftNextLoad {
+  animation: 1s ease leftNextLoad forwards;
+  position: absolute;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+@keyframes leftNextLoad {
+  0% {
+    left: 100%;
+  }
+  100% {
+    left: 0;
+  }
+}
+
+.leftNowLoad {
+  animation: 1s ease leftNowLoad forwards;
+  position: absolute;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+@keyframes leftNowLoad {
+  0% {
+    left: 0%;
+  }
+
+  100% {
+    left: -100%;
+  }
+}
+
+.rightNextLoad {
+  animation: 1s ease rightNextLoad forwards;
+  position: absolute;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+@keyframes rightNextLoad {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 0;
+  }
+}
+
+.rightNowLoad {
+  animation: 1s ease rightNowLoad forwards;
+  position: absolute;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+@keyframes rightNowLoad {
+  0% {
+    left: 0;
+  }
+
+  100% {
+    left: 100%;
+  }
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

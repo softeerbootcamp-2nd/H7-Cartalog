@@ -1,7 +1,7 @@
 import { useData, TotalPrice } from '../../utils/Context';
-import PriceStaticBar from '../PriceStaticBar';
 import * as S from './style';
-
+import PriceStaticBar from '../PriceStaticBar';
+import Footer from '../Footer';
 /**
  * Section 구역을 분리하는 컴포넌트
  * @param type {string} TrimSelect || ModelType || ExteriorColor || InteriorColor || AddOption
@@ -27,6 +27,7 @@ function Section({ type, url, Info, Pick, showPriceStatic = true }) {
           price={TotalPrice(price)}
         />
       )}
+      <Footer />
     </S.Section>
   );
 }

@@ -1,20 +1,22 @@
 import { useNavigate } from 'react-router-dom';
-import { useData, TotalPrice } from '../../utils/Context';
+import { useData, TotalPrice, StartAnimation } from '../../utils/Context';
 import { TOTAL, BUTTON, ROUND_BUTTON, PAGE } from './constants';
 import * as S from './style';
 import RoundButton from '../RoundButton';
 import Button from '../Button';
 
 function NextButton() {
-  const { page, price } = useData();
   const navigate = useNavigate();
+  const { setTrimState, page, price, pagePath } = useData();
 
   const buttonProps = {
     type: BUTTON.TYPE,
     state: BUTTON.STATE,
     mainTitle: BUTTON.MAIN_TITLE,
     event: () => {
-      navigate(PAGE.find((type) => type.page === page + 1).to);
+      const nowPath = PAGE.find((type) => type.page === page).to;
+      const nextPath = PAGE.find((type) => type.page === page + 1).to;
+      StartAnimation(nowPath, nextPath, navigate, setTrimState, pagePath);
     },
   };
 

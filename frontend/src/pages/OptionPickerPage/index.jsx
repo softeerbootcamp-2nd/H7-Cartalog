@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, cloneElement } from 'react';
 import Section from '../../components/Section';
 import Info from './Info';
 import Pick from './Pick';
@@ -67,7 +67,23 @@ function OptionPicker() {
     setTrimState((prevState) => ({
       ...prevState,
       page: 5,
+      clonePage: {
+        ...prevState.clonePage,
+        5: cloneElement(<OptionPicker />),
+      },
     }));
+    setTimeout(() => {
+      setTrimState((prevState) => ({
+        ...prevState,
+        page: 5,
+        movePage: {
+          ...prevState.movePage,
+          clonePage: 5,
+          nowContentRef: 'nowUnload',
+          nextContentRef: 'nextUnload',
+        },
+      }));
+    }, 1000);
   }, [setTrimState]);
 
   const InfoProps = { imageUrl: IMAGE_URL };
