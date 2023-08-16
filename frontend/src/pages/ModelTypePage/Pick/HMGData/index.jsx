@@ -6,7 +6,7 @@ import HMGTag from '../../../../components/HMGTag';
 import HMGUnit from './HMGUnit';
 
 function HMGData() {
-  const { trim, modelType } = useData();
+  const { setTrimState, trim, modelType } = useData();
   const [hmgData, setHmgData] = useState({
     displacement: '',
     fuelEfficiency: '',
@@ -18,6 +18,15 @@ function HMGData() {
         `http://3.36.126.30/models/trims/detail?modelTypeIds=${modelType.powerTrainId}&modelTypeIds=${modelType.bodyTypeId}&modelTypeIds=${modelType.wheelDriveId}&trimId=${trim.id}`,
       );
       const dataFetch = await response.json();
+
+      setTrimState((prevState) => ({
+        ...prevState,
+        modelType: {
+          ...prevState.modelType,
+          detailTrimId: dataFetch.detailTrimId,
+        },
+      }));
+
       setHmgData({
         displacement: dataFetch.displacement,
         fuelEfficiency: dataFetch.fuelEfficiency,

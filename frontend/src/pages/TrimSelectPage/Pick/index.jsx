@@ -33,6 +33,10 @@ function Pick() {
         ...prevState.optionPicker,
         isFetch: false,
       },
+      estimation: {
+        ...prevState.estimation,
+        isFetch: false,
+      },
     }));
   };
 

@@ -4,7 +4,7 @@ import { NAV } from '../constants';
 import * as S from './style';
 import NavToggle from '../../NavToggle';
 
-function isLinkEnabled(item, modelType, exteriorColor, interiorColor, optionPicker) {
+function isLinkEnabled(item, modelType, exteriorColor, interiorColor, optionPicker, estimation) {
   switch (item.to) {
     case '/modelType':
       return modelType.isFetch;
@@ -14,6 +14,8 @@ function isLinkEnabled(item, modelType, exteriorColor, interiorColor, optionPick
       return interiorColor.isFetch;
     case '/optionPicker':
       return optionPicker.isFetch;
+    case '/estimation':
+      return estimation.isFetch;
     default:
       return true;
   }
@@ -28,6 +30,7 @@ function Nav() {
     exteriorColor,
     interiorColor,
     optionPicker,
+    estimation,
     pageNum,
     pagePath,
   } = useData();
@@ -38,7 +41,14 @@ function Nav() {
         {NAV.map((item) => (
           <S.Step key={item.label}>
             <S.Text>
-              {isLinkEnabled(item, modelType, exteriorColor, interiorColor, optionPicker) ? (
+              {isLinkEnabled(
+                item,
+                modelType,
+                exteriorColor,
+                interiorColor,
+                optionPicker,
+                estimation,
+              ) ? (
                 <S.Button
                   onClick={() => {
                     const nowPath = pageNum[page];
