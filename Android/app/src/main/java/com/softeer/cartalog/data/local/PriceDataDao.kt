@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.softeer.cartalog.data.enums.PriceDataType
-import com.softeer.cartalog.data.model.PriceData
+import com.softeer.cartalog.data.model.db.PriceData
 
 @Dao
 interface PriceDataDao {
@@ -18,4 +18,7 @@ interface PriceDataDao {
 
     @Query("SELECT * FROM PriceData WHERE PriceData.optionType = :type")
     suspend fun getTypeData(type: PriceDataType): PriceData
+
+    @Query("SELECT COUNT(*) FROM PriceData WHERE carId = :carId")
+    suspend fun getPriceDataCountByCarId(carId: Int): Int
 }

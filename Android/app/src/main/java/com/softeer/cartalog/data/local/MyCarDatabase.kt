@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.softeer.cartalog.data.model.MyCar
-import com.softeer.cartalog.data.model.PriceData
+import com.softeer.cartalog.data.model.db.MyCar
+import com.softeer.cartalog.data.model.db.PriceData
 
 @Database(entities = [MyCar::class, PriceData::class], version = 1)
 abstract class MyCarDatabase : RoomDatabase() {

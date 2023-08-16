@@ -1,8 +1,8 @@
 package com.softeer.cartalog.data.repository.local
 
 import com.softeer.cartalog.data.local.MyCarDatabase
-import com.softeer.cartalog.data.model.MyCar
-import com.softeer.cartalog.data.model.PriceData
+import com.softeer.cartalog.data.model.db.MyCar
+import com.softeer.cartalog.data.model.db.PriceData
 
 class CarLocalDataSource(
     private val myCarDb: MyCarDatabase
@@ -16,5 +16,9 @@ class CarLocalDataSource(
 
     suspend fun setInitialPriceData(inputs: List<PriceData>) {
         priceDataDao.insertPriceDataList(inputs)
+    }
+
+    suspend fun isEmpty(carId: Int): Boolean {
+        return priceDataDao.getPriceDataCountByCarId(carId) == 0
     }
 }

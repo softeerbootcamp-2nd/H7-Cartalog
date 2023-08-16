@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.softeer.cartalog.data.local.MyCarDatabase
 import com.softeer.cartalog.data.remote.api.RetrofitClient
 import com.softeer.cartalog.data.repository.CarRepositoryImpl
 import com.softeer.cartalog.data.repository.local.CarLocalDataSource
@@ -20,8 +21,12 @@ class TypeFragment : Fragment() {
     private var _binding: FragmentTypeBinding? = null
     private val binding get() = _binding!!
 
-    private val carRepositoryImpl =
-        CarRepositoryImpl(CarLocalDataSource(), CarRemoteDataSource(RetrofitClient.carApi))
+    private val carRepositoryImpl by lazy {
+        CarRepositoryImpl(
+            CarLocalDataSource(MyCarDatabase.getInstance(requireContext())!!),
+            CarRemoteDataSource(RetrofitClient.carApi)
+        )
+    }
     private val typeViewModel: TypeViewModel by viewModels {
         CommonViewModelFactory(carRepositoryImpl)
     }
