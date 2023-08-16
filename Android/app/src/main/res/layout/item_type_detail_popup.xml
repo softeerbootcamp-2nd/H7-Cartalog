@@ -5,6 +5,7 @@
     <data>
 
         <import type="com.softeer.cartalog.data.enums.ModelTypeSubject" />
+        <import type="android.view.View" />
 
         <variable
             name="selectedType"
@@ -65,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_end="210dp" />
+                app:layout_constraintGuide_percent="0.7" />
 
             <TextView
                 android:id="@+id/tv_title"
@@ -248,13 +249,12 @@
                 app:trackColor="@color/gray_200" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_select_price"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@color/primary_color_700"
+                android:background="@color/gray_50"
                 android:gravity="center"
-                android:paddingTop="5dp"
-                android:text='@{String.format("+ %,d 원", viewModel.typeList[selectedType].options[position].price)}'
                 android:textColor="@color/white"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@id/tv_select_guide"
@@ -263,19 +263,25 @@
                 app:layout_constraintTop_toBottomOf="@id/pi_hmgdata_2" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_select_guide"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@color/primary_color_700"
+                android:background="@color/gray_50"
                 android:gravity="center"
-                android:paddingBottom="10dp"
-                android:text="선택하기"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_select_price" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="v_gray_bgr, tv_hmg_tag, tv_hmgdata_1_guide, tv_hmgdata_1, pi_hmgdata_1, tv_hmgdata_2_guide, tv_hmgdata_2, pi_hmgdata_2, tv_select_price, tv_select_guide"
+                android:visibility="@{viewModel.typeList[selectedType].options[position].hmgData.size > 0 ? View.VISIBLE : View.GONE}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

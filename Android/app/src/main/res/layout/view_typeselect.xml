@@ -203,7 +203,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/hyndaisans_text"
-            android:text="- 280,000 원"
+            android:text='@{String.format("+ %,d 원", type == ModelTypeSubject.POWERTRAIN ? viewModel.typeList[0].options[1].price : type == ModelTypeSubject.BODYTYPE ? viewModel.typeList[1].options[1].price : viewModel.typeList[2].options[1].price)}'
             android:textColor="@{type == ModelTypeSubject.POWERTRAIN ? (viewModel.powertrain1Selected ? @color/gray_600 : @color/gray_900) : type == ModelTypeSubject.BODYTYPE ? (viewModel.bodytype1Selected ? @color/gray_600 : @color/gray_900) : (viewModel.wheeldrive1Selected ? @color/gray_600 : @color/gray_900)}"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/cv_btn2"

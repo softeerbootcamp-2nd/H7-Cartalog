@@ -56,5 +56,6 @@ class TypeDetailDialog : DialogFragment() {
 
         binding.viewModel = viewModel
         binding.selectedType = viewModel.selectedType.value
+
     }
 }
