@@ -1,33 +1,33 @@
-id|detail_trim_id|name|price|parent_category|color_condition|image_url
-1|9|컴포트 Ⅱ|1090000|상세품목|0|palisade/le-blanc/options/roa_s.jpg
-2|10|컴포트 Ⅱ|1090000|상세품목|0|palisade/le-blanc/options/roa_s.jpg
-3|11|컴포트 Ⅱ|1090000|상세품목|0|palisade/le-blanc/options/roa_s.jpg
-4|12|컴포트 Ⅱ|1090000|상세품목|0|palisade/le-blanc/options/roa_s.jpg
-5|13|컴포트 Ⅱ|1090000|상세품목|0|palisade/le-blanc/options/roa_s.jpg
-6|14|컴포트 Ⅱ|1090000|상세품목|0|palisade/le-blanc/options/roa_s.jpg
-7|15|컴포트 Ⅱ|1090000|상세품목|0|palisade/le-blanc/options/roa_s.jpg
-8|16|컴포트 Ⅱ|1090000|상세품목|0|palisade/le-blanc/options/roa_s.jpg
-9|9|현대스마트센스 Ⅰ|790000|상세품목|0|palisade/le-blanc/options/fca2_s.jpg
-10|10|현대스마트센스 Ⅰ|790000|상세품목|0|palisade/le-blanc/options/fca2_s.jpg
-11|11|현대스마트센스 Ⅰ|790000|상세품목|0|palisade/le-blanc/options/fca2_s.jpg
-12|12|현대스마트센스 Ⅰ|790000|상세품목|0|palisade/le-blanc/options/fca2_s.jpg
-13|13|현대스마트센스 Ⅰ|790000|상세품목|0|palisade/le-blanc/options/fca2_s.jpg
-14|14|현대스마트센스 Ⅰ|790000|상세품목|0|palisade/le-blanc/options/fca2_s.jpg
-15|15|현대스마트센스 Ⅰ|790000|상세품목|0|palisade/le-blanc/options/fca2_s.jpg
-16|16|현대스마트센스 Ⅰ|790000|상세품목|0|palisade/le-blanc/options/fca2_s.jpg
-17|9|주차보조 시스템 Ⅱ|690000|상세품목|0|palisade/le-blanc/options/pca_s.jpg
-18|10|주차보조 시스템 Ⅱ|690000|상세품목|0|palisade/le-blanc/options/pca_s.jpg
-19|11|주차보조 시스템 Ⅱ|690000|상세품목|0|palisade/le-blanc/options/pca_s.jpg
-20|12|주차보조 시스템 Ⅱ|690000|상세품목|0|palisade/le-blanc/options/pca_s.jpg
-21|13|주차보조 시스템 Ⅱ|690000|상세품목|0|palisade/le-blanc/options/pca_s.jpg
-22|14|주차보조 시스템 Ⅱ|690000|상세품목|0|palisade/le-blanc/options/pca_s.jpg
-23|15|주차보조 시스템 Ⅱ|690000|상세품목|0|palisade/le-blanc/options/pca_s.jpg
-24|16|주차보조 시스템 Ⅱ|690000|상세품목|0|palisade/le-blanc/options/pca_s.jpg
-25|9|프로텍션 매트 패키지 I|250000|악세사리|0|palisade/le-blanc/options/luggageprotectmat_s.jpg
-26|10|프로텍션 매트 패키지 I|250000|악세사리|0|palisade/le-blanc/options/luggageprotectmat_s.jpg
-27|11|프로텍션 매트 패키지 I|250000|악세사리|0|palisade/le-blanc/options/luggageprotectmat_s.jpg
-28|12|프로텍션 매트 패키지 I|250000|악세사리|0|palisade/le-blanc/options/luggageprotectmat_s.jpg
-29|13|프로텍션 매트 패키지 I|250000|악세사리|0|palisade/le-blanc/options/luggageprotectmat_s.jpg
-30|14|프로텍션 매트 패키지 I|250000|악세사리|0|palisade/le-blanc/options/luggageprotectmat_s.jpg
-31|15|프로텍션 매트 패키지 I|250000|악세사리|0|palisade/le-blanc/options/luggageprotectmat_s.jpg
-32|16|프로텍션 매트 패키지 I|250000|악세사리|0|palisade/le-blanc/options/luggageprotectmat_s.jpg
+id|detail_trim_id|model_package_id|price|color_condition
+1|9|1|1090000|0
+2|10|1|1090000|0
+3|11|1|1090000|0
+4|12|1|1090000|0
+5|13|1|1090000|0
+6|14|1|1090000|0
+7|15|1|1090000|0
+8|16|1|1090000|0
+9|9|2|790000|0
+10|10|2|790000|0
+11|11|2|790000|0
+12|12|2|790000|0
+13|13|2|790000|0
+14|14|2|790000|0
+15|15|2|790000|0
+16|16|2|790000|0
+17|9|3|690000|0
+18|10|3|690000|0
+19|11|3|690000|0
+20|12|3|690000|0
+21|13|3|690000|0
+22|14|3|690000|0
+23|15|3|690000|0
+24|16|3|690000|0
+25|9|4|250000|0
+26|10|4|250000|0
+27|11|4|250000|0
+28|12|4|250000|0
+29|13|4|250000|0
+30|14|4|250000|0
+31|15|4|250000|0
+32|16|4|250000|0

@@ -20,6 +20,7 @@ DROP TABLE IF EXISTS trim_package_options;
 DROP TABLE IF EXISTS detail_trim_packages;
 DROP TABLE IF EXISTS detail_trim_options;
 DROP TABLE IF EXISTS detail_model_decision_options;
+DROP TABLE IF EXISTS model_packages;
 DROP TABLE IF EXISTS model_options;
 DROP TABLE IF EXISTS detail_trims;
 DROP TABLE IF EXISTS trims;
@@ -106,6 +107,17 @@ CREATE TABLE model_options
     FOREIGN KEY (child_category) REFERENCES model_option_child_categories (category) ON UPDATE CASCADE
 );
 
+CREATE TABLE model_packages
+(
+    id              BIGINT PRIMARY KEY AUTO_INCREMENT,
+    model_id        BIGINT       NOT NULL,
+    name            VARCHAR(255) NOT NULL,
+    parent_category VARCHAR(255),
+    image_url       VARCHAR(255) NOT NULL,
+    FOREIGN KEY (model_id) REFERENCES basic_models (id) ON UPDATE CASCADE,
+    FOREIGN KEY (parent_category) REFERENCES model_option_parent_categories (category) ON UPDATE CASCADE
+);
+
 CREATE TABLE detail_model_decision_options
 (
     id              BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -130,15 +142,13 @@ CREATE TABLE detail_trim_options
 
 CREATE TABLE detail_trim_packages
 (
-    id              BIGINT PRIMARY KEY AUTO_INCREMENT,
-    detail_trim_id  BIGINT       NOT NULL,
-    name            VARCHAR(255) NOT NULL,
-    price           INT          NOT NULL,
-    parent_category VARCHAR(255),
-    color_condition BOOLEAN      NOT NULL,
-    image_url       VARCHAR(255) NOT NULL,
+    id                BIGINT PRIMARY KEY AUTO_INCREMENT,
+    detail_trim_id    BIGINT  NOT NULL,
+    model_package_id BIGINT  NOT NULL,
+    price             INT     NOT NULL,
+    color_condition   BOOLEAN NOT NULL,
     FOREIGN KEY (detail_trim_id) REFERENCES detail_trims (id) ON UPDATE CASCADE,
-    FOREIGN KEY (parent_category) REFERENCES model_option_parent_categories (category) ON UPDATE CASCADE
+    FOREIGN KEY (model_package_id) REFERENCES model_packages (id) ON UPDATE CASCADE
 );
 
 CREATE TABLE trim_package_options
@@ -266,20 +276,20 @@ CREATE TABLE estimates
 
 CREATE TABLE estimate_options
 (
-    estimate_id           BIGINT,
-    detail_trim_option_id BIGINT,
-    PRIMARY KEY (estimate_id, detail_trim_option_id),
+    estimate_id     BIGINT,
+    model_option_id BIGINT,
+    PRIMARY KEY (estimate_id, model_option_id),
     FOREIGN KEY (estimate_id) REFERENCES estimates (id) ON UPDATE CASCADE,
-    FOREIGN KEY (detail_trim_option_id) REFERENCES detail_trim_options (id) ON UPDATE CASCADE
+    FOREIGN KEY (model_option_id) REFERENCES model_options (id) ON UPDATE CASCADE
 );
 
 CREATE TABLE estimate_packages
 (
-    estimate_id            BIGINT,
-    detail_trim_package_id BIGINT,
-    PRIMARY KEY (estimate_id, detail_trim_package_id),
+    estimate_id      BIGINT,
+    model_package_id BIGINT,
+    PRIMARY KEY (estimate_id, model_package_id),
     FOREIGN KEY (estimate_id) REFERENCES estimates (id) ON UPDATE CASCADE,
-    FOREIGN KEY (detail_trim_package_id) REFERENCES detail_trim_packages (id) ON UPDATE CASCADE
+    FOREIGN KEY (model_package_id) REFERENCES model_packages (id) ON UPDATE CASCADE
 );
 
 CREATE TABLE similar_estimates
@@ -357,6 +367,15 @@ SELECT id,
            else price_if_model_type_option end                             as price_if_model_type_option
 FROM CSVREAD('classpath:csv/model_options.csv', null, 'fieldSeparator=|');
 
+-- noinspection SqlResolve
+INSERT INTO model_packages (id, model_id, name, parent_category, image_url)
+SELECT id,
+       model_id,
+       name,
+       case when parent_category = '\N' then null else parent_category end as parent_category,
+       image_url
+FROM CSVREAD('classpath:csv/model_packages.csv', null, 'fieldSeparator=|');
+
 INSERT INTO detail_model_decision_options (id, detail_model_id, model_option_id)
 SELECT *
 FROM CSVREAD('classpath:csv/detail_model_decision_options.csv', null, 'fieldSeparator=|');
@@ -365,7 +384,7 @@ INSERT INTO detail_trim_options (id, detail_trim_id, model_option_id, price, col
 SELECT *
 FROM CSVREAD('classpath:csv/detail_trim_options.csv', null, 'fieldSeparator=|');
 
-INSERT INTO detail_trim_packages (id, detail_trim_id, name, price, parent_category, color_condition, image_url)
+INSERT INTO detail_trim_packages (id, detail_trim_id, model_package_id, price, color_condition)
 SELECT *
 FROM CSVREAD('classpath:csv/detail_trim_packages.csv', null, 'fieldSeparator=|');
 
@@ -428,11 +447,11 @@ INSERT INTO estimates (id, create_date, detail_trim_id, trim_exterior_color_id, 
 SELECT *
 FROM CSVREAD('classpath:csv/estimates.csv', null, 'fieldSeparator=|');
 
-INSERT INTO estimate_options (estimate_id, detail_trim_option_id)
+INSERT INTO estimate_options (estimate_id, model_option_id)
 SELECT *
 FROM CSVREAD('classpath:csv/estimate_options.csv', null, 'fieldSeparator=|');
 
-INSERT INTO estimate_packages (estimate_id, detail_trim_package_id)
+INSERT INTO estimate_packages (estimate_id, model_package_id)
 SELECT *
 FROM CSVREAD('classpath:csv/estimate_packages.csv', null, 'fieldSeparator=|');
 
