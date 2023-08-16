@@ -1,4 +1,10 @@
 -- noinspection SqlInsertValuesForFile
+DROP TABLE IF EXISTS pending_hash_tag_similarities;
+DROP TABLE IF EXISTS hash_tag_similarities;
+DROP TABLE IF EXISTS similar_estimates;
+DROP TABLE IF EXISTS estimate_packages;
+DROP TABLE IF EXISTS estimate_options;
+DROP TABLE IF EXISTS estimates;
 DROP TABLE IF EXISTS detail_trim_package_interior_color_condition;
 DROP TABLE IF EXISTS detail_trim_option_interior_color_condition;
 DROP TABLE IF EXISTS trim_interior_colors;
@@ -245,6 +251,63 @@ CREATE TABLE detail_trim_package_interior_color_condition
     CONSTRAINT fk_detail_trim_package_interior_color_condition_color FOREIGN KEY (trim_interior_color_id) REFERENCES trim_interior_colors (id) ON UPDATE CASCADE
 );
 
+CREATE TABLE estimates
+(
+    id                     BIGINT PRIMARY KEY,
+    create_date            TIMESTAMP NOT NULL,
+    detail_trim_id         BIGINT    NOT NULL,
+    trim_exterior_color_id BIGINT    NOT NULL,
+    trim_interior_color_id BIGINT    NOT NULL,
+    CONSTRAINT fk_estimates_detail_trim_id FOREIGN KEY (detail_trim_id) REFERENCES detail_trims (id) ON UPDATE CASCADE,
+    CONSTRAINT fk_estimates_trim_exterior_color_id FOREIGN KEY (trim_exterior_color_id) REFERENCES trim_exterior_colors (id) ON UPDATE CASCADE,
+    CONSTRAINT fk_estimates_trim_interior_color_id FOREIGN KEY (trim_interior_color_id) REFERENCES trim_interior_colors (id) ON UPDATE CASCADE
+);
+
+CREATE TABLE estimate_options
+(
+    estimate_id           BIGINT,
+    detail_trim_option_id BIGINT,
+    PRIMARY KEY (estimate_id, detail_trim_option_id),
+    FOREIGN KEY (estimate_id) REFERENCES estimates (id) ON UPDATE CASCADE,
+    FOREIGN KEY (detail_trim_option_id) REFERENCES detail_trim_options (id) ON UPDATE CASCADE
+);
+
+CREATE TABLE estimate_packages
+(
+    estimate_id            BIGINT,
+    detail_trim_package_id BIGINT,
+    PRIMARY KEY (estimate_id, detail_trim_package_id),
+    FOREIGN KEY (estimate_id) REFERENCES estimates (id) ON UPDATE CASCADE,
+    FOREIGN KEY (detail_trim_package_id) REFERENCES detail_trim_packages (id) ON UPDATE CASCADE
+);
+
+CREATE TABLE similar_estimates
+(
+    hash_tag_key VARCHAR,
+    estimate_id  BIGINT,
+    PRIMARY KEY (hash_tag_key, estimate_id),
+    FOREIGN KEY (estimate_id) REFERENCES estimates (id) ON UPDATE CASCADE
+);
+
+CREATE TABLE hash_tag_similarities
+(
+    hash_tag_left_key VARCHAR,
+    hash_tag_key      VARCHAR,
+    trim_id           LONG,
+    similarity        FLOAT NOT NULL,
+    PRIMARY KEY (hash_tag_left_key, hash_tag_key, trim_id),
+    FOREIGN KEY (trim_id) REFERENCES trims (id) ON UPDATE CASCADE
+);
+
+CREATE TABLE pending_hash_tag_similarities
+(
+    pending_hash_tag_left_key VARCHAR,
+    hash_tag_key              VARCHAR,
+    trim_id                   LONG,
+    PRIMARY KEY (pending_hash_tag_left_key, hash_tag_key, trim_id),
+    FOREIGN KEY (trim_id) REFERENCES trims (id) ON UPDATE CASCADE
+);
+
 INSERT INTO basic_model_categories (category)
 SELECT *
 FROM CSVREAD('classpath:csv/basic_model_categories.csv', null, 'fieldSeparator=|');
@@ -359,3 +422,27 @@ FROM CSVREAD('classpath:csv/detail_trim_option_interior_color_condition.csv', nu
 INSERT INTO detail_trim_package_interior_color_condition (id, detail_trim_package_id, trim_interior_color_id)
 SELECT *
 FROM CSVREAD('classpath:csv/detail_trim_package_interior_color_condition.csv', null, 'fieldSeparator=|');
+
+INSERT INTO estimates (id, create_date, detail_trim_id, trim_exterior_color_id, trim_interior_color_id)
+SELECT *
+FROM CSVREAD('classpath:csv/estimates.csv', null, 'fieldSeparator=|');
+
+INSERT INTO estimate_options (estimate_id, detail_trim_option_id)
+SELECT *
+FROM CSVREAD('classpath:csv/estimate_options.csv', null, 'fieldSeparator=|');
+
+INSERT INTO estimate_packages (estimate_id, detail_trim_package_id)
+SELECT *
+FROM CSVREAD('classpath:csv/estimate_packages.csv', null, 'fieldSeparator=|');
+
+INSERT INTO similar_estimates (hash_tag_key, estimate_id)
+SELECT *
+FROM CSVREAD('classpath:csv/similar_estimates.csv', null, 'fieldSeparator=|');
+
+INSERT INTO hash_tag_similarities (hash_tag_left_key, hash_tag_key, trim_id, similarity)
+SELECT *
+FROM CSVREAD('classpath:csv/hash_tag_similarities.csv', null, 'fieldSeparator=|');
+
+INSERT INTO pending_hash_tag_similarities (pending_hash_tag_left_key, hash_tag_key, trim_id)
+SELECT *
+FROM CSVREAD('classpath:csv/pending_hash_tag_similarities.csv', null, 'fieldSeparator=|');
