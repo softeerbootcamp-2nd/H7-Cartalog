@@ -35,15 +35,15 @@ class ModelControllerTest {
     @DisplayName("모델타입 목록 조회 테스트")
     class getModelTypeListTest {
         @Test
-        @DisplayName("올바른 요청시 200 상태와 함께 모델 식별자에 해당하는 모델의 모델 타입 리스트를 반환한다.")
+        @DisplayName("올바른 요청시 200 상태와 함께 트림 식별자에 해당하는 모델의 모델 타입 리스트를 반환한다.")
         void returnDtoHasModelTypeOfBasicModelIdWhenGetModelTypeByExistBasicModelId() {
             //given
-            Long basicModelId = 1L;
+            Long trimId = 2L;
             ModelTypeListResponseDto returnDto = mock(ModelTypeListResponseDto.class);
-            when(modelOptionQueryRepository.findByModelTypeOptionsByBasicModelId(basicModelId)).thenReturn(returnDto);
+            when(modelOptionQueryRepository.findByModelTypeOptionsByBasicModelId(trimId)).thenReturn(returnDto);
 
             //when
-            ResponseEntity<ModelTypeListResponseDto> response = modelController.searchModelType(basicModelId);
+            ResponseEntity<ModelTypeListResponseDto> response = modelController.searchModelType(trimId);
 
             //then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -52,7 +52,7 @@ class ModelControllerTest {
         }
 
         @Test
-        @DisplayName("존재하지 않는 모델의 식별자로 조회할 경우 404 상태를 반환해야 한다.")
+        @DisplayName("존재하지 않는 트림 식별자로 조회할 경우 404 상태를 반환해야 한다.")
         void returnStatusCode404WhenGetModelTypeByExistModelId() {
             //given
             Long basicModelId = -1L;

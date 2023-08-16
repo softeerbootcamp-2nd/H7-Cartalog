@@ -10,4 +10,4 @@ class CartalogApplicationTests {
     @Test
     void contextLoads() {
     }
-}
+}   
