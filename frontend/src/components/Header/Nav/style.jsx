@@ -38,4 +38,7 @@ export const Button = styled.button`
   &.selected {
     color: ${({ theme }) => theme.color.primary.default};
   }
+  &.unSelected {
+    color: ${({ theme }) => theme.color.primary['200']};
+  }
 `;

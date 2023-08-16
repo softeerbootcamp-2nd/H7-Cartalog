@@ -1,11 +1,11 @@
 import { useEffect, useState, cloneElement } from 'react';
+import { useData } from '../../utils/Context';
 import Section from '../../components/Section';
 import Info from './Info';
 import Pick from './Pick';
-import { useData } from '../../utils/Context';
 
 const TYPE = 'OptionPicker';
-const IMAGE_URL = '../../../../../assets/images/TrimSelect/interior.png';
+const IMAGE_URL = '';
 
 const MOCK_DATA = {
   multipleSelectParentCategory: ['상세 품목', '악세사리'],
@@ -60,31 +60,47 @@ const MOCK_DATA = {
 };
 
 function OptionPicker() {
-  const { setTrimState } = useData();
+  const { setTrimState, modelType, interiorColor, optionPicker } = useData();
   const [selectedId, setSelectedId] = useState(11);
 
   useEffect(() => {
-    setTrimState((prevState) => ({
-      ...prevState,
-      page: 5,
-      clonePage: {
-        ...prevState.clonePage,
-        5: cloneElement(<OptionPicker />),
-      },
-    }));
-    setTimeout(() => {
-      setTrimState((prevState) => ({
-        ...prevState,
-        page: 5,
-        movePage: {
-          ...prevState.movePage,
-          clonePage: 5,
-          nowContentRef: 'nowUnload',
-          nextContentRef: 'nextUnload',
-        },
-      }));
-    }, 1000);
-  }, [setTrimState]);
+    async function fetchData() {
+      if (!optionPicker.isFetch) {
+        const response = await fetch(
+          `http://3.36.126.30/models/trims/options?detailTrimId=${modelType.detailTrimId}&interiorColorCode=${interiorColor.code}`,
+        );
+        const dataFetch = await response.json();
+
+        setTrimState((prevState) => ({
+          ...prevState,
+          optionPicker: {
+            ...prevState.optionPicker,
+            isFetch: true,
+            defaultOptions: [...dataFetch.defaultOptions],
+            selectOptions: [...dataFetch.selectOptions],
+            category: [...dataFetch.multipleSelectParentCategory],
+          },
+          clonePage: {
+            ...prevState.clonePage,
+            5: cloneElement(<OptionPicker />),
+          },
+        }));
+      }
+      setTrimState((prevState) => ({ ...prevState, page: 5 }));
+      setTimeout(() => {
+        setTrimState((prevState) => ({
+          ...prevState,
+          movePage: {
+            ...prevState.movePage,
+            clonePage: 5,
+            nowContentRef: 'nowUnload',
+            nextContentRef: 'nextUnload',
+          },
+        }));
+      }, 1000);
+    }
+    fetchData();
+  }, []);
 
   const InfoProps = { imageUrl: IMAGE_URL };
   const SectionProps = {

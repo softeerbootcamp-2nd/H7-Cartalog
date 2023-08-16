@@ -44,6 +44,7 @@ export function StateProvider({ children }) {
           fetchData: [],
           isFetch: false,
           pickId: 1,
+          detailTrimId: null,
           powerTrainType: '파워트레인/성능',
           bodyTypeType: '바디타입',
           wheelDriveType: '구동방식',
@@ -85,11 +86,9 @@ export function StateProvider({ children }) {
         acc[key] = {
           fetchData: [],
           isFetch: false,
-          interiorColorId: 'I49',
-          pick: 'A22',
-          pickName: '퀼팅천연(블랙)',
-          pickCarImageUrl:
-            'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade/le-blanc/options/10_driverseat_s.jpg',
+          defaultOptions: [],
+          selectOptions: [],
+          category: [],
         };
         break;
       case 'estimation':
