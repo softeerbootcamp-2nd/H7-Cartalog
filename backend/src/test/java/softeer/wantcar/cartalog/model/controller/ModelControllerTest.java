@@ -9,9 +9,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import softeer.wantcar.cartalog.model.dto.EstimateImageDto;
 import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepositoryImpl;
+import softeer.wantcar.cartalog.model.repository.ModelQueryRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -23,12 +25,14 @@ class ModelControllerTest {
     SoftAssertions softAssertions;
     ModelController modelController;
     ModelOptionQueryRepository modelOptionQueryRepository;
+    ModelQueryRepository modelQueryRepository;
 
     @BeforeEach
     void setUp() {
         softAssertions = new SoftAssertions();
         modelOptionQueryRepository = mock(ModelOptionQueryRepositoryImpl.class);
-        modelController = new ModelController(modelOptionQueryRepository);
+        modelQueryRepository = mock(ModelQueryRepository.class);
+        modelController = new ModelController(modelQueryRepository, modelOptionQueryRepository);
     }
 
     @Nested
@@ -63,6 +67,42 @@ class ModelControllerTest {
 
             //then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @Nested
+    @DisplayName("외/내장 색상을 통한 차량 외부 옆면 및 내부 사진 조회 테스트")
+    class findSideExteriorAndInteriorImageByExteriorAndInteriorColorCode {
+        @Test
+        @DisplayName("존재하는 식별자로 조회시 200 상태와 함께 외부 옆면 및 내부 사진을 담은 dto를 반환한다.")
+        void returnStatus200WithDtoHasSideExteriorAndInteriorImage() {
+            //given
+            EstimateImageDto expectResponseBody = new EstimateImageDto("sideExteriorImageUrl", "interiorImageUrl");
+            when(modelQueryRepository.findCarSideExteriorAndInteriorImage("A", "A"))
+                    .thenReturn(expectResponseBody);
+
+            //when
+            ResponseEntity<EstimateImageDto> actualResponse = modelController.findSideExteriorAndInteriorImage("A", "A");
+
+            //then
+            softAssertions.assertThat(actualResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+            softAssertions.assertThat(actualResponse.getBody()).isEqualTo(expectResponseBody);
+            softAssertions.assertAll();
+        }
+
+        @Test
+        @DisplayName("존재하지 않는 식별자로 조회시 404 상태를 반환한다.")
+        void returnStatusCode404() {
+            //given
+            when(modelQueryRepository.findCarSideExteriorAndInteriorImage("A", "A"))
+                    .thenReturn(null);
+
+            //when
+            ResponseEntity<EstimateImageDto> actualResponse = modelController.findSideExteriorAndInteriorImage("A", "A");
+
+            //then
+            softAssertions.assertThat(actualResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            softAssertions.assertThat(actualResponse.getBody()).isNull();
         }
     }
 }
