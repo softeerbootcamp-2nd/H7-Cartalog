@@ -16,17 +16,27 @@ class TrimViewModel(private val repository: CarRepository) : ViewModel() {
     private val _selectedTrim = MutableLiveData<Int>(0)
     val selectedTrim = _selectedTrim
 
+    private lateinit var modelName: String
+
     init {
         setTrimData()
     }
 
     private fun setTrimData() {
         viewModelScope.launch {
-            _trimList.value = repository.getTrims()
+            val response = repository.getTrims()
+            _trimList.value = response.trims
+            modelName = response.modelName
         }
     }
 
     fun changeSelectedTrim(idx: Int) {
         _selectedTrim.value = idx
+    }
+
+    fun setInitialMyCarData() {
+        viewModelScope.launch {
+            repository.setInitialMyCarData(modelName, _trimList.value!![_selectedTrim.value!!])
+        }
     }
 }
