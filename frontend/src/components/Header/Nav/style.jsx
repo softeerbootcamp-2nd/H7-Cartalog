@@ -25,12 +25,17 @@ export const Text = styled.li`
   height: 22px;
   color: ${({ theme }) => theme.color.gray['200']};
   font: ${({ theme }) => theme.font.headKR.Medium14};
-
-  &.selected {
-    color: ${({ theme }) => theme.color.primary.default};
-  }
 `;
 
 export const Bar = styled.div`
   margin: 6px 17px -8px 17px;
+`;
+
+export const Button = styled.button`
+  color: ${({ theme }) => theme.color.gray['200']};
+  font: ${({ theme }) => theme.font.headKR.Medium14};
+
+  &.selected {
+    color: ${({ theme }) => theme.color.primary.default};
+  }
 `;

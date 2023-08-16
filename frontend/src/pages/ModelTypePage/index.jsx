@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, cloneElement } from 'react';
 import { useData } from '../../utils/Context';
 import { MODEL_TYPE } from './constants';
 import Section from '../../components/Section';
@@ -27,7 +27,6 @@ function ModelType() {
           bodyTypeOption: findOptionByTypeAndId(modelType.bodyTypeType, modelType.bodyTypeId),
           wheelDriveOption: findOptionByTypeAndId(modelType.wheelDriveType, modelType.wheelDriveId),
         };
-
         setTrimState((prevState) => ({
           ...prevState,
           trim: {
@@ -35,9 +34,24 @@ function ModelType() {
             isDefault: true,
           },
           modelType: updatedModelType,
+          clonePage: {
+            ...prevState.clonePage,
+            2: cloneElement(<ModelType />),
+          },
         }));
       }
       setTrimState((prevState) => ({ ...prevState, page: 2 }));
+      setTimeout(() => {
+        setTrimState((prevState) => ({
+          ...prevState,
+          movePage: {
+            ...prevState.movePage,
+            clonePage: 2,
+            nowContentRef: 'nowUnload',
+            nextContentRef: 'nextUnload',
+          },
+        }));
+      }, 1000);
     }
     fetchData();
   }, []);

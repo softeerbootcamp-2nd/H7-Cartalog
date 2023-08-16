@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, cloneElement } from 'react';
 import { useData } from '../../utils/Context';
 import { EXTERIOR_COLOR } from './constants';
 import Section from '../../components/Section';
@@ -33,9 +33,24 @@ function ExteriorColor() {
               return `${defaultData.carImageDirectory}${imageNumber}.png`;
             }),
           },
+          clonePage: {
+            ...prevState.clonePage,
+            3: cloneElement(<ExteriorColor />),
+          },
         }));
       }
       setTrimState((prevState) => ({ ...prevState, page: 3 }));
+      setTimeout(() => {
+        setTrimState((prevState) => ({
+          ...prevState,
+          movePage: {
+            ...prevState.movePage,
+            clonePage: 3,
+            nowContentRef: 'nowUnload',
+            nextContentRef: 'nextUnload',
+          },
+        }));
+      }, 1000);
     }
     fetchData();
   }, []);
