@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import * as S from './style';
 import Toggle from '../Toggle';
 import InfoPanel from './InfoPanel';
@@ -30,7 +31,8 @@ function SummaryPopup({ show, close, onClick }) {
   const [toggle, setToggle] = useState(false);
 
   return (
-    show && (
+    show &&
+    createPortal(
       <>
         <S.Overlay />
         <S.SummaryPopup>
@@ -58,7 +60,8 @@ function SummaryPopup({ show, close, onClick }) {
           </S.Contents>
           <S.PopupButton onClick={onClick}>견적 완료하기</S.PopupButton>
         </S.SummaryPopup>
-      </>
+      </>,
+      document.querySelector('#modal'),
     )
   );
 }

@@ -1,11 +1,17 @@
 import { useNavigate } from 'react-router-dom';
+import { createPortal } from 'react-dom';
 import { useData, TotalPrice, StartAnimation } from '../../utils/Context';
 import { TOTAL, BUTTON, ROUND_BUTTON, PAGE } from './constants';
 import * as S from './style';
 import RoundButton from '../RoundButton';
 import Button from '../Button';
+import SummaryPopup from '../SummaryPopup';
+import { useState } from 'react';
 
 function NextButton() {
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
   const navigate = useNavigate();
   const { setTrimState, page, price, pagePath } = useData();
 
@@ -24,6 +30,7 @@ function NextButton() {
     type: ROUND_BUTTON.TYPE,
     state: ROUND_BUTTON.STATE,
     title: ROUND_BUTTON.TITLE,
+    clickEvent: handleShow,
   };
 
   return (
@@ -39,6 +46,7 @@ function NextButton() {
         </S.TotalPrice>
       </S.Estimate>
       <Button {...buttonProps} />
+      <SummaryPopup show={show} close={handleClose} onClick={() => {}} />
     </S.NextButton>
   );
 }
