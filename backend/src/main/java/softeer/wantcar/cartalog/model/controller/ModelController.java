@@ -7,9 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import softeer.wantcar.cartalog.model.dto.EstimateImageDto;
 import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
+import softeer.wantcar.cartalog.model.repository.ModelQueryRepository;
 
 import javax.websocket.server.PathParam;
 
@@ -19,6 +22,7 @@ import javax.websocket.server.PathParam;
 @RequiredArgsConstructor
 @Slf4j
 public class ModelController {
+    private final ModelQueryRepository modelQueryRepository;
     private final ModelOptionQueryRepository modelOptionQueryRepository;
 
     @ApiOperation(
@@ -39,5 +43,15 @@ public class ModelController {
         }
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    public ResponseEntity<EstimateImageDto> findSideExteriorAndInteriorImage(@RequestParam("exteriorColorCode") String exteriorColorCode,
+                                                                             @RequestParam("interiorColorCode") String interiorColorCode) {
+
+        EstimateImageDto estimateImageDto = modelQueryRepository.findCarSideExteriorAndInteriorImage(exteriorColorCode, interiorColorCode);
+        if(estimateImageDto == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(estimateImageDto, HttpStatus.OK);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.test.context.jdbc.Sql;
 import softeer.wantcar.cartalog.global.ServerPath;
 import softeer.wantcar.cartalog.model.dto.EstimateImageDto;
 
@@ -16,6 +17,8 @@ import java.util.HashMap;
 
 
 @JdbcTest
+@Sql({"classpath:schema.sql"})
+@DisplayName("모델 쿼리 Repository 테스트")
 class ModelQueryRepositoryTest {
     SoftAssertions softAssertions;
 
