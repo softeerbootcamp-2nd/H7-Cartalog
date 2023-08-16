@@ -283,7 +283,7 @@ CREATE TABLE estimate_packages
 
 CREATE TABLE similar_estimates
 (
-    hash_tag_key VARCHAR,
+    hash_tag_key VARCHAR(255),
     estimate_id  BIGINT,
     PRIMARY KEY (hash_tag_key, estimate_id),
     FOREIGN KEY (estimate_id) REFERENCES estimates (id) ON UPDATE CASCADE
@@ -291,9 +291,9 @@ CREATE TABLE similar_estimates
 
 CREATE TABLE hash_tag_similarities
 (
-    hash_tag_left_key VARCHAR,
-    hash_tag_key      VARCHAR,
-    trim_id           LONG,
+    hash_tag_left_key VARCHAR(255),
+    hash_tag_key      VARCHAR(255),
+    trim_id           BIGINT,
     similarity        FLOAT NOT NULL,
     PRIMARY KEY (hash_tag_left_key, hash_tag_key, trim_id),
     FOREIGN KEY (trim_id) REFERENCES trims (id) ON UPDATE CASCADE
@@ -301,9 +301,9 @@ CREATE TABLE hash_tag_similarities
 
 CREATE TABLE pending_hash_tag_similarities
 (
-    pending_hash_tag_left_key VARCHAR,
-    hash_tag_key              VARCHAR,
-    trim_id                   LONG,
+    pending_hash_tag_left_key VARCHAR(255),
+    hash_tag_key              VARCHAR(255),
+    trim_id                   BIGINT,
     PRIMARY KEY (pending_hash_tag_left_key, hash_tag_key, trim_id),
     FOREIGN KEY (trim_id) REFERENCES trims (id) ON UPDATE CASCADE
 );
