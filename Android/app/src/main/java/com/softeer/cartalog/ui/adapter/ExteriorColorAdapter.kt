@@ -3,8 +3,8 @@ package com.softeer.cartalog.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.softeer.cartalog.databinding.ItemExteriorColorBinding
 import com.softeer.cartalog.data.model.CarColor
+import com.softeer.cartalog.databinding.ItemExteriorColorBinding
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
 
 class ExteriorColorAdapter(private val viewModel: ExteriorViewModel) :

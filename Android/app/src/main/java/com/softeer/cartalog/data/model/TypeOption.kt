@@ -1,5 +1,7 @@
 package com.softeer.cartalog.data.model
 
+import java.io.Serializable
+
 data class TypeOption(
     val id: Int,
     val name: String,
@@ -8,4 +10,4 @@ data class TypeOption(
     val imageUrl: String,
     val description: String,
     val hmgData: List<TypeHmgData>?
-)
+) : Serializable

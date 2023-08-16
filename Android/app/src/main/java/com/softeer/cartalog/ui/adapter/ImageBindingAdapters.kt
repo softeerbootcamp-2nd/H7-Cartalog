@@ -7,7 +7,7 @@ import coil.load
 @BindingAdapter("imgUrl")
 fun setImageWithUrl(
     imageView: ImageView,
-    imgUrl: String
+    imgUrl: String?
 ) {
     imageView.load(imgUrl)
 }

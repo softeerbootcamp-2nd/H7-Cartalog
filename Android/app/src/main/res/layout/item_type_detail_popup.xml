@@ -5,10 +5,15 @@
     <data>
 
         <import type="com.softeer.cartalog.data.enums.ModelTypeSubject" />
+        <import type="android.view.View" />
 
         <variable
-            name="type"
-            type="ModelTypeSubject" />
+            name="selectedType"
+            type="Integer" />
+
+        <variable
+            name="position"
+            type="Integer" />
 
         <variable
             name="isSelected"
@@ -61,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_end="210dp" />
+                app:layout_constraintGuide_percent="0.7" />
 
             <TextView
                 android:id="@+id/tv_title"
@@ -70,7 +75,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/hyndaisans_head_bold"
                 android:gravity="center"
-                android:text="파워트레인"
+                android:text='@{selectedType == 0 ? "파워트레인" : selectedType == 1 ? "바디타입" : "구동방식"}'
                 android:textColor="@color/gray_900"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/gl_end"
@@ -89,11 +94,13 @@
 
             <ImageView
                 android:id="@+id/iv_detail"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="140dp"
                 android:layout_marginTop="12dp"
                 android:background="@color/card_bg"
                 android:src="@drawable/tmp_img_engine"
+                android:scaleType="centerCrop"
+                app:imgUrl="@{viewModel.typeList[selectedType].options[position].imageUrl}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_title" />
@@ -104,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/hyndaisans_head_bold"
-                android:text="디젤 2.2"
+                android:text="@{viewModel.typeList[selectedType].options[position].name}"
                 android:textColor="@color/gray_900"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@id/gl_start"
@@ -115,8 +122,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="13dp"
-                android:text="38%"
-                android:textColor="@{type == ModelTypeSubject.POWERTRAIN ? (viewModel.powertrain1Selected ? @color/active_blue : @color/gray_600) : type == ModelTypeSubject.BODYTYPE ? (viewModel.bodytype1Selected ? @color/active_blue : @color/gray_600) : (viewModel.wheeldrive1Selected ? @color/active_blue : @color/gray_600)}"
+                android:text='@{viewModel.typeList[selectedType].options[position].chosen + "%"}'
+                android:textColor="@color/gray_600"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toStartOf="@id/tv_selected_percent_guide"
                 app:layout_constraintTop_toTopOf="@id/tv_option_title" />
@@ -126,7 +133,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="의 선택"
-                android:textColor="@{type == ModelTypeSubject.POWERTRAIN ? (viewModel.powertrain1Selected ? @color/gray_700 : @color/gray_600) : type == ModelTypeSubject.BODYTYPE ? (viewModel.bodytype1Selected ? @color/gray_700 : @color/gray_600) : (viewModel.wheeldrive1Selected ? @color/gray_700 : @color/gray_600)}"
+                android:textColor="@color/gray_600"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_selected_percent"
                 app:layout_constraintEnd_toEndOf="@id/gl_end"
@@ -137,7 +144,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="높은 토크로 파워풀한 드라이빙이 가능하며, 차급대비 연비 효율이 우수합니다"
+                android:text="@{viewModel.typeList[selectedType].options[position].description}"
                 android:textColor="@color/gray_800"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="@id/gl_end"
@@ -181,7 +188,7 @@
                 android:layout_marginTop="17dp"
                 android:fontFamily="@font/hyndaisans_head_medium"
                 android:gravity="end"
-                android:text="202/3,800"
+                android:text='@{String.format("%.0f/%s", viewModel.typeList[selectedType].options[position].hmgData[0].value, viewModel.typeList[selectedType].options[position].hmgData[0].rpm)}'
                 android:textColor="@color/gray_800"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toTopOf="@id/pi_hmgdata_1"
@@ -194,7 +201,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:progress="80"
+                android:progress="@{(int) (viewModel.typeList[selectedType].options[position].hmgData[0].value/300*100)}"
                 app:indicatorColor="@color/active_blue2"
                 app:layout_constraintEnd_toEndOf="@id/gl_end"
                 app:layout_constraintStart_toStartOf="@id/gl_start"
@@ -220,7 +227,7 @@
                 android:layout_marginTop="17dp"
                 android:fontFamily="@font/hyndaisans_head_medium"
                 android:gravity="end"
-                android:text="36.2/5,200"
+                android:text='@{String.format("%.0f/%s", viewModel.typeList[selectedType].options[position].hmgData[1].value, viewModel.typeList[selectedType].options[position].hmgData[1].rpm)}'
                 android:textColor="@color/gray_800"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toTopOf="@id/pi_hmgdata_2"
@@ -233,7 +240,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20sp"
-                android:progress="80"
+                android:progress="@{(int) (viewModel.typeList[selectedType].options[position].hmgData[1].value/50*100)}"
                 app:indicatorColor="@color/active_blue2"
                 app:layout_constraintBottom_toTopOf="@id/tv_select_price"
                 app:layout_constraintEnd_toEndOf="@id/gl_end"
@@ -242,13 +249,12 @@
                 app:trackColor="@color/gray_200" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_select_price"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@color/primary_color_700"
+                android:background="@color/gray_50"
                 android:gravity="center"
-                android:paddingTop="5dp"
-                android:text="+ 0 원"
                 android:textColor="@color/white"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@id/tv_select_guide"
@@ -257,19 +263,25 @@
                 app:layout_constraintTop_toBottomOf="@id/pi_hmgdata_2" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_select_guide"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@color/primary_color_700"
+                android:background="@color/gray_50"
                 android:gravity="center"
-                android:paddingBottom="10dp"
-                android:text="선택하기"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_select_price" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="v_gray_bgr, tv_hmg_tag, tv_hmgdata_1_guide, tv_hmgdata_1, pi_hmgdata_1, tv_hmgdata_2_guide, tv_hmgdata_2, pi_hmgdata_2, tv_select_price, tv_select_guide"
+                android:visibility="@{viewModel.typeList[selectedType].options[position].hmgData.size > 0 ? View.VISIBLE : View.GONE}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

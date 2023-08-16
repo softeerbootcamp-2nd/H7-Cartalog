@@ -21,25 +21,25 @@ import com.softeer.cartalog.viewmodel.TrimViewModel
 import com.softeer.cartalog.viewmodel.TypeViewModel
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 
-@BindingAdapter("viewModel", "indicator")
+@BindingAdapter("viewModel", "indicator", "selectedType")
 fun setTypeDetailViewPager(
     viewPager: ViewPager2,
     viewModel: TypeViewModel,
-    indicator: DotsIndicator
+    indicator: DotsIndicator,
+    selectedType: Int
 ) {
     val adjustedOffsetPx = UtilManager.getViewPagerGap(viewPager)
-    val trimItemAdapter = TypeDetailPopupAdapter(viewModel)
+    val typeDetailItemAdapter = TypeDetailPopupAdapter(viewModel, selectedType)
     with(viewPager) {
         offscreenPageLimit = 2
-        adapter = trimItemAdapter
+        adapter = typeDetailItemAdapter
         setPageTransformer { page, position ->
             page.translationX = position * -adjustedOffsetPx
         }
         registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                viewModel.changeSelectedTrim(position)
-                trimItemAdapter.notifyItemRangeChanged(position - 1, 3)
+                typeDetailItemAdapter.notifyItemRangeChanged(position - 1, 3)
             }
         })
     }

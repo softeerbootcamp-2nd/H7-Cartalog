@@ -1,14 +1,16 @@
 package com.softeer.cartalog.ui.adapter
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.findFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.softeer.cartalog.data.model.Type
 import com.softeer.cartalog.databinding.ItemTypeDetailPopupBinding
+import com.softeer.cartalog.ui.dialog.TypeDetailDialog
 import com.softeer.cartalog.viewmodel.TypeViewModel
 
-class TypeDetailPopupAdapter(private val viewModel: TypeViewModel) :
+class TypeDetailPopupAdapter(private val viewModel: TypeViewModel, private val selectedType: Int) :
     RecyclerView.Adapter<TypeDetailPopupAdapter.TrimCardViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -25,18 +27,20 @@ class TypeDetailPopupAdapter(private val viewModel: TypeViewModel) :
     }
 
     override fun getItemCount(): Int {
-        return viewModel.typeList.value!!.size
+        return 2
     }
 
     inner class TrimCardViewHolder(val binding: ItemTypeDetailPopupBinding) :
         RecyclerView.ViewHolder(binding.root) {
         var isSelected = false
         fun bind(item: Type?, position: Int) {
-            isSelected = position == viewModel.selectedType.value
             binding.isSelected = isSelected
-            binding.typeItem = item
+            binding.viewModel = viewModel
+            binding.selectedType = selectedType
+            binding.position = position
+
             binding.btnClose.setOnClickListener {
-                (it.context as Activity).finish()
+                it.findFragment<TypeDetailDialog>().dismiss()
             }
         }
     }

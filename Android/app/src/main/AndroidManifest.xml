@@ -15,10 +15,7 @@
         android:theme="@style/Theme.CarTaLog"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name=".ui.dialog.TypeDetailPopupActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar" />
+
         <activity
             android:name=".ui.activity.MainActivity"
             android:exported="true">
