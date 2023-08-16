@@ -40,7 +40,7 @@ class ModelControllerTest {
             //given
             Long trimId = 2L;
             ModelTypeListResponseDto returnDto = mock(ModelTypeListResponseDto.class);
-            when(modelOptionQueryRepository.findByModelTypeOptionsByBasicModelId(trimId)).thenReturn(returnDto);
+            when(modelOptionQueryRepository.findByModelTypeOptionsByTrimId(trimId)).thenReturn(returnDto);
 
             //when
             ResponseEntity<ModelTypeListResponseDto> response = modelController.searchModelType(trimId);
@@ -56,7 +56,7 @@ class ModelControllerTest {
         void returnStatusCode404WhenGetModelTypeByExistModelId() {
             //given
             Long basicModelId = -1L;
-            when(modelOptionQueryRepository.findByModelTypeOptionsByBasicModelId(basicModelId)).thenReturn(null);
+            when(modelOptionQueryRepository.findByModelTypeOptionsByTrimId(basicModelId)).thenReturn(null);
 
             //when
             ResponseEntity<ModelTypeListResponseDto> response = modelController.searchModelType(basicModelId);

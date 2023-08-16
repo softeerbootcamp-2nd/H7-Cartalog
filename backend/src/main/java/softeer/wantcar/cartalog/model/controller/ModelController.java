@@ -32,7 +32,7 @@ public class ModelController {
             @ApiResponse(code = 500, message = "적절하지 않은 데이터가 있어 요청을 처리할 수 없습니다. 관리자에게 문의하세요.")})
     @GetMapping("/types")
     public ResponseEntity<ModelTypeListResponseDto> searchModelType(@PathParam("trimId") Long trimId) {
-        ModelTypeListResponseDto dto = modelOptionQueryRepository.findByModelTypeOptionsByBasicModelId(trimId);
+        ModelTypeListResponseDto dto = modelOptionQueryRepository.findByModelTypeOptionsByTrimId(trimId);
 
         if (dto == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

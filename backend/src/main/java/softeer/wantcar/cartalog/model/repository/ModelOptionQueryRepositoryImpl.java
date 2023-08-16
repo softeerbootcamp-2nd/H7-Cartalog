@@ -73,7 +73,7 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
 
     @Override
     @Transactional(readOnly = true)
-    public ModelTypeListResponseDto findByModelTypeOptionsByBasicModelId(Long trimId) {
+    public ModelTypeListResponseDto findByModelTypeOptionsByTrimId(Long trimId) {
         String SQL = "SELECT DISTINCT mo.id                         AS model_option_id, " +
                      "                mo.name                       AS name, " +
                      "                mo.child_category             AS child_category, " +

@@ -50,7 +50,7 @@ class ModelOptionQueryRepositoryImplTest {
             checkOptions.put("구동방식", List.of("2WD", "4WD"));
 
             //when
-            ModelTypeListResponseDto response = modelOptionQueryRepository.findByModelTypeOptionsByBasicModelId(trimId);
+            ModelTypeListResponseDto response = modelOptionQueryRepository.findByModelTypeOptionsByTrimId(trimId);
 
             //then
             assertThat(response).isNotNull();
@@ -69,7 +69,7 @@ class ModelOptionQueryRepositoryImplTest {
             Long basicModelId = -1L;
 
             //when
-            ModelTypeListResponseDto response = modelOptionQueryRepository.findByModelTypeOptionsByBasicModelId(basicModelId);
+            ModelTypeListResponseDto response = modelOptionQueryRepository.findByModelTypeOptionsByTrimId(basicModelId);
 
             //then
             assertThat(response).isNull();
