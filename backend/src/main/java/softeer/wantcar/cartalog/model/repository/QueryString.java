@@ -25,7 +25,7 @@ public class QueryString {
             "                    ON mo.id = hmg.model_option_id " +
             "WHERE  dt.trim_id = :trimId ";
 
-    protected static final String findCarExteriorSideAndInteriorImages =
+    protected static final String findCarSideExteriorAndInteriorImages =
             "SELECT " +
             "mec.side_exterior_image_url, " +
             "mic.interior_image_url " +
