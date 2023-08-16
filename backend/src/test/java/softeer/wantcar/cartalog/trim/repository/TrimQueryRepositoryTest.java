@@ -160,7 +160,7 @@ class TrimQueryRepositoryTest {
                                        String description,
                                        int minPrice,
                                        int maxPrice,
-                                       String interiorColorId) {
+                                       String interiorColorCode) {
         softAssertions.assertThat(exclusive.getName()).isEqualTo(modelName);
         softAssertions.assertThat(exclusive.getDescription()).isEqualTo(description);
         softAssertions.assertThat(exclusive.getMinPrice()).isEqualTo(minPrice);
@@ -179,8 +179,11 @@ class TrimQueryRepositoryTest {
 
         TrimListResponseDto.DefaultTrimInfoDto defaultInfo = exclusive.getDefaultInfo();
         softAssertions.assertThat(defaultInfo).isNotNull();
-        softAssertions.assertThat(defaultInfo.getExteriorColorCode()).isEqualTo("A2B");
-        softAssertions.assertThat(defaultInfo.getInteriorColorCode()).isEqualTo(interiorColorId);
+        softAssertions.assertThat(defaultInfo.getExteriorColor().getCode()).isEqualTo("A2B");
+        softAssertions.assertThat(defaultInfo.getExteriorColor().getPrice()).isEqualTo(0);
+        softAssertions.assertThat(defaultInfo.getInteriorColor().getCode()).isEqualTo(interiorColorCode);
+        softAssertions.assertThat(defaultInfo.getInteriorColor().getPrice()).isEqualTo(0);
+
         List<TrimListResponseDto.ModelTypeDto> defaultModeTypes = defaultInfo.getModelTypes();
         softAssertions.assertThat(defaultModeTypes).isNotNull();
         softAssertions.assertThat(defaultModeTypes.size()).isEqualTo(3);
