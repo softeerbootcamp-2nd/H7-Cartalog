@@ -5,6 +5,10 @@ export const Exit = styled.div`
   align-items: center;
   margin-bottom: 10px;
   gap: 8px;
+
+  & > svg {
+    fill: ${({ theme }) => theme.color.gray['800']};
+  }
 `;
 
 export const Text = styled.span`
