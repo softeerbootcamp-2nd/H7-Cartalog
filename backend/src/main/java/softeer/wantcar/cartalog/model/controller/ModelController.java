@@ -45,9 +45,22 @@ public class ModelController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
+    @ApiOperation(
+            value = "외부 옆면 및 내부 사진 조회",
+            notes = "외/내장 색상에 맞는 차량 외부 옆면 및 내부 사진을 조회한다.")
+    @ApiImplicitParams({
+            @ApiImplicitParam(
+                    name = "exteriorColorCode", value = "외부 색상 코드", required = true,
+                    dataType = "java.lang.String", paramType = "query", example = "A2B"),
+            @ApiImplicitParam(
+                    name = "interiorColorCode", value = "내부 색상 코드", required = true,
+                    dataType = "java.lang.String", paramType = "query", example = "I50")})
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "존재하지 않는 식별자입니다."),
+            @ApiResponse(code = 500, message = "적절하지 않은 데이터가 있어 요청을 처리할 수 없습니다. 관리자에게 문의하세요.")})
+    @GetMapping("/images")
     public ResponseEntity<EstimateImageDto> findSideExteriorAndInteriorImage(@RequestParam("exteriorColorCode") String exteriorColorCode,
                                                                              @RequestParam("interiorColorCode") String interiorColorCode) {
-
         EstimateImageDto estimateImageDto = modelQueryRepository.findCarSideExteriorAndInteriorImage(exteriorColorCode, interiorColorCode);
         if(estimateImageDto == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
