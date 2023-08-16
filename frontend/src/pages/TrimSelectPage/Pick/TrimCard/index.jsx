@@ -1,18 +1,10 @@
-import { useNavigate } from 'react-router-dom';
-import { useData, StartAnimation } from '../../../../utils/Context';
-import { PAGE, TRIM_CARD } from '../../constants';
+import { useData, NextPage } from '../../../../utils/Context';
+import { TRIM_CARD } from '../../constants';
 import * as S from './style';
 import Button from '../../../../components/Button';
 
 function TrimCard({ name, description, price, defaultInfo, active, onClick }) {
-  const navigate = useNavigate();
-  const { setTrimState, trim, page, pagePath } = useData();
-
-  const goToNextPage = () => {
-    const nowPath = PAGE.find((type) => type.page === page).to;
-    const nextPath = PAGE.find((type) => type.page === page + 1).to;
-    StartAnimation(nowPath, nextPath, navigate, setTrimState, pagePath);
-  };
+  const { setTrimState, trim } = useData();
 
   const updateState = () => {
     if (!trim.isDefault) {
@@ -55,7 +47,7 @@ function TrimCard({ name, description, price, defaultInfo, active, onClick }) {
     state: TRIM_CARD.STATE,
     mainTitle: TRIM_CARD.MAIN_TITLE,
     event: () => {
-      goToNextPage();
+      NextPage(setTrimState);
       updateState();
     },
   };
