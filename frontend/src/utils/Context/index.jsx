@@ -129,6 +129,7 @@ export function StateProvider({ children }) {
           startAnimation: null,
           nowContentRef: null,
           nextContentRef: null,
+          timeoutId: null,
         };
         break;
       default:
@@ -167,7 +168,6 @@ export function StartAnimation(nowPath, nextPath, navigate, setTrimState, pagePa
   navigate(nextPath);
 
   if (pagePath[nextPath] > pagePath[nowPath]) {
-    console.log('왼쪽');
     setTrimState((prevState) => ({
       ...prevState,
       movePage: {
@@ -178,7 +178,6 @@ export function StartAnimation(nowPath, nextPath, navigate, setTrimState, pagePa
     }));
   }
   if (pagePath[nextPath] < pagePath[nowPath]) {
-    console.log('오른쪽');
     setTrimState((prevState) => ({
       ...prevState,
       movePage: {
@@ -188,4 +187,15 @@ export function StartAnimation(nowPath, nextPath, navigate, setTrimState, pagePa
       },
     }));
   }
+}
+
+export function customSetTimeout(callback, delay, setTrimState, movePage) {
+  clearTimeout(movePage.timeoutId);
+  setTrimState((prevState) => ({
+    ...prevState,
+    movePage: {
+      ...prevState.movePage,
+      timeoutId: setTimeout(callback, delay),
+    },
+  }));
 }
