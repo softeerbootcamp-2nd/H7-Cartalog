@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, cloneElement } from 'react';
 import { useData, TotalPrice } from '../../utils/Context';
 import PriceStaticBar from '../../components/PriceStaticBar';
 import Preview from './Preview';
@@ -123,15 +123,30 @@ function Estimation() {
   const { setTrimState, trim, price } = useData();
   const SelectModel = trim.fetchData.find((model) => model.id === trim.id);
 
+  // !FIX API 데이터 받아오도록 수정해야함 유사견적 API
   useEffect(() => {
     async function fetchData() {
-      // !FIX API 데이터 받아오도록 수정해야함
       setTrimState((prevState) => ({
         ...prevState,
-        page: 6,
+        clonePage: {
+          ...prevState.clonePage,
+          6: cloneElement(<Estimation />),
+        },
       }));
       setIsFetched(true);
     }
+    setTrimState((prevState) => ({ ...prevState, page: 6 }));
+    setTimeout(() => {
+      setTrimState((prevState) => ({
+        ...prevState,
+        movePage: {
+          ...prevState.movePage,
+          clonePage: 6,
+          nowContentRef: 'nowUnload',
+          nextContentRef: 'nextUnload',
+        },
+      }));
+    }, 1000);
     fetchData();
   }, [setTrimState]);
 

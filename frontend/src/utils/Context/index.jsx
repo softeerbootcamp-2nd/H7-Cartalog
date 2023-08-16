@@ -10,6 +10,7 @@ export function StateProvider({ children }) {
     'exteriorColor',
     'interiorColor',
     'optionPicker',
+    'estimation',
     'price',
     'pagePath',
     'pageNum',
@@ -81,6 +82,17 @@ export function StateProvider({ children }) {
         };
         break;
       case 'optionPicker':
+        acc[key] = {
+          fetchData: [],
+          isFetch: false,
+          interiorColorId: 'I49',
+          pick: 'A22',
+          pickName: '퀼팅천연(블랙)',
+          pickCarImageUrl:
+            'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade/le-blanc/options/10_driverseat_s.jpg',
+        };
+        break;
+      case 'estimation':
         acc[key] = {
           fetchData: [],
           isFetch: false,
