@@ -51,7 +51,11 @@ public class TrimQueryRepositoryImpl implements TrimQueryRepository {
         private String defaultModelTypeOptionName;
         private int defaultModelTypeOptionPrice;
         private String defaultExteriorColorCode;
+        private String defaultExteriorColorName;
+        private int defaultExteriorColorPrice;
         private String defaultInteriorColorCode;
+        private String defaultInteriorColorName;
+        private int defaultInteriorColorPrice;
     }
 
     @Override
@@ -149,8 +153,25 @@ public class TrimQueryRepositoryImpl implements TrimQueryRepository {
                             modelTypeOption.getDefaultModelTypeOptionName(),
                             modelTypeOption.getDefaultModelTypeOptionPrice())));
         }
+
         trimDtoBuilder.defaultInfo(new TrimListResponseDto.DefaultTrimInfoDto(
-                modelTypeDtoList, trimInfo.getDefaultExteriorColorCode(), trimInfo.getDefaultInteriorColorCode()));
+                modelTypeDtoList, getDefaultExteriorColor(trimInfo), getDefaultInteriorColor(trimInfo)));
+    }
+
+    private static TrimListResponseDto.ColorDto getDefaultExteriorColor(TrimListQueryResult trimInfo) {
+        return TrimListResponseDto.ColorDto.builder()
+                .code(trimInfo.getDefaultExteriorColorCode())
+                .name(trimInfo.getDefaultExteriorColorName())
+                .price(trimInfo.getDefaultExteriorColorPrice())
+                .build();
+    }
+
+    private static TrimListResponseDto.ColorDto getDefaultInteriorColor(TrimListQueryResult trimInfo) {
+        return TrimListResponseDto.ColorDto.builder()
+                .code(trimInfo.getDefaultInteriorColorCode())
+                .name(trimInfo.getDefaultInteriorColorName())
+                .price(trimInfo.getDefaultInteriorColorPrice())
+                .build();
     }
 
     private static TrimListQueryResult getTrimListQueryResult(ResultSet rs,
@@ -174,7 +195,11 @@ public class TrimQueryRepositoryImpl implements TrimQueryRepository {
                 .defaultModelTypeOptionName(rs.getString("defaultModelTypeOptionName"))
                 .defaultModelTypeOptionPrice(rs.getInt("defaultModelTypeOptionPrice"))
                 .defaultExteriorColorCode(rs.getString("defaultExteriorColorCode"))
+                .defaultExteriorColorName(rs.getString("defaultExteriorColorName"))
+                .defaultExteriorColorPrice(rs.getInt("defaultExteriorColorPrice"))
                 .defaultInteriorColorCode(rs.getString("defaultInteriorColorCode"))
+                .defaultInteriorColorName(rs.getString("defaultInteriorColorName"))
+                .defaultInteriorColorPrice(rs.getInt("defaultinteriorColorPrice"))
                 .build();
     }
 

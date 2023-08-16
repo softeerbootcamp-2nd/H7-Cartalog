@@ -41,8 +41,8 @@ public class TrimListResponseDto {
     public static class DefaultTrimInfoDto {
         @Singular(value = "modelType")
         private List<ModelTypeDto> modelTypes;
-        private String exteriorColorCode;
-        private String interiorColorCode;
+        private ColorDto exteriorColor;
+        private ColorDto interiorColor;
     }
 
     @Getter
@@ -60,6 +60,16 @@ public class TrimListResponseDto {
     @EqualsAndHashCode
     public static class OptionDto {
         private Long id;
+        private String name;
+        private int price;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @Builder
+    @EqualsAndHashCode
+    public static class ColorDto {
+        private String code;
         private String name;
         private int price;
     }

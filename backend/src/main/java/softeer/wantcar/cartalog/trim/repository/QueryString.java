@@ -23,8 +23,12 @@ public class QueryString {
             "   mt.id AS defaultModelTypeOptionId,  " +
             "   mt.name AS defaultModelTypeOptionName,  " +
             "   mt.price AS defaultModelTypeOptionPrice,  " +
-            "   eic.model_exterior_color_code AS defaultExteriorColorCode,  " +
-            "   eic.model_interior_color_code AS defaultInteriorColorCode  " +
+            "   eic.exterior_color_code AS defaultExteriorColorCode, " +
+            "   eic.exterior_color_name AS defaultExteriorColorName, " +
+            "   eic.exterior_color_price AS defaultExteriorColorPrice, " +
+            "   eic.interior_color_code AS defaultInteriorColorCode, " +
+            "   eic.interior_color_name AS defaultInteriorColorName, " +
+            "   eic.interior_color_price AS defaultInteriorColorPrice " +
 
             "FROM trims AS t  " +
 
@@ -45,17 +49,29 @@ public class QueryString {
             "JOIN  " +
             "(  " +
             "   SELECT  " +
-            "   trim_id,  " +
-            "   color_code as model_exterior_color_code,  " +
-            "   model_interior_color_code,  " +
-            "   price  " +
+            "       trim_id,  " +
+            "       exterior_color_code, " +
+            "       exterior_color_name, " +
+            "       exterior_color_price, " +
+            "       interior_color_code, " +
+            "       interior_color_name, " +
+            "       interior_color_price" +
             "   FROM  " +
             "   (  " +
-            "       SELECT trim_id, mec.color_code, model_exterior_color_id, model_interior_color_code, mec.price,  " +
-            "       ROW_NUMBER() OVER (PARTITION BY trim_id) AS row_num  " +
-            "       FROM trim_exterior_colors AS ec  " +
-            "       JOIN trim_interior_colors AS ic ON ec.id=ic.trim_exterior_color_id  " +
-            "       JOIN model_exterior_colors AS mec ON mec.id=model_exterior_color_id  " +
+            "       SELECT " +
+            "           trim_id, " +
+            "           mec.color_code AS exterior_color_code, " +
+            "           c.name AS exterior_color_name, " +
+            "           mec.price AS exterior_color_price, " +
+            "           tic.model_interior_color_code AS interior_color_code, " +
+            "           mic.name AS interior_color_name, " +
+            "           mic.price interior_color_price, " +
+            "       ROW_NUMBER() OVER (PARTITION BY trim_id) AS row_num " +
+            "       FROM trim_exterior_colors AS tec " +
+            "       JOIN trim_interior_colors AS tic ON tec.id=tic.trim_exterior_color_id " +
+            "       JOIN model_exterior_colors AS mec ON mec.id=tec.model_exterior_color_id " +
+            "       JOIN model_interior_colors AS mic ON mic.code=tic.model_interior_color_code " +
+            "       JOIN colors AS c ON c.code=mec.color_code " +
             "       WHERE mec.price=0  " +
             "   ) AS eic  " +
             "   WHERE row_num=1  " +
