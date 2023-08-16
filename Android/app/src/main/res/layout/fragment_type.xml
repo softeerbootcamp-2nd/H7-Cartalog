@@ -208,7 +208,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
                     android:fontFamily="@font/hyndaisans_head_medium"
-                    android:text="2,199cc"
+                    android:text='@{String.format("%,dcc", viewModel.hmgData.displacement)}'
                     android:textSize="28sp"
                     app:layout_constraintBottom_toBottomOf="@id/vw_hmg_data"
                     app:layout_constraintEnd_toStartOf="@id/vw_divider"
@@ -233,7 +233,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
                     android:fontFamily="@font/hyndaisans_head_medium"
-                    android:text="12km/s"
+                    android:text='@{String.format("%.1fkm/s", viewModel.hmgData.fuelEfficiency)}'
                     android:textSize="28sp"
                     app:layout_constraintBottom_toBottomOf="@id/vw_hmg_data"
                     app:layout_constraintEnd_toEndOf="@id/gl_end"

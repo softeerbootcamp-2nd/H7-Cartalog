@@ -10,6 +10,7 @@ import com.softeer.cartalog.data.model.TypeHmgData
 import com.softeer.cartalog.data.model.TypeOption
 import com.softeer.cartalog.data.enums.ModelTypeSubject
 import com.softeer.cartalog.data.model.Trim
+import com.softeer.cartalog.data.model.TrimDetail
 import com.softeer.cartalog.data.repository.CarRepository
 import kotlinx.coroutines.launch
 
@@ -33,11 +34,16 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
     private val _selectedType = MutableLiveData(0)
     val selectedType = _selectedType
 
+    private val _hmgData: MutableLiveData<TrimDetail> = MutableLiveData()
+    val hmgData = _hmgData
+
     init {
-        setTrimData()
+        setTypeData()
+        // TODO - 트림 화면에서 넘어온 트림 id로 요청해야함
+        setHmgData(2)
     }
 
-    private fun setTrimData() {
+    private fun setTypeData() {
         viewModelScope.launch {
             _typeList.value = repository.getTypes()
         }
@@ -55,6 +61,18 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
             ModelTypeSubject.BODYTYPE -> _bodytype1Selected.value = !_bodytype1Selected.value!!
             ModelTypeSubject.WHEELDRIVE -> _wheeldrive1Selected.value =
                 !_wheeldrive1Selected.value!!
+        }
+        setHmgData(2)
+    }
+
+    fun setHmgData(trimId: Int) {
+        val selectPowerTrain = if(_powertrain1Selected.value!!) 1 else 2
+        val selectBodyType = if(_bodytype1Selected.value!!) 5 else 6
+        val selectWheelDrive = if(_wheeldrive1Selected.value!!) 3 else 4
+
+        val modelTypeIds = "$selectPowerTrain,$selectBodyType,$selectWheelDrive"
+        viewModelScope.launch {
+            _hmgData.value = repository.getTrimDetail(modelTypeIds, trimId)
         }
     }
 

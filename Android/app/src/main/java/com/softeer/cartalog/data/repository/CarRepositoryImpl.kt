@@ -1,7 +1,7 @@
 package com.softeer.cartalog.data.repository
 
-import android.util.Log
 import com.softeer.cartalog.data.model.Trim
+import com.softeer.cartalog.data.model.TrimDetail
 import com.softeer.cartalog.data.model.Type
 import com.softeer.cartalog.data.repository.local.CarLocalDataSource
 import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
@@ -18,7 +18,11 @@ class CarRepositoryImpl(
 
     override suspend fun getTypes(): List<Type> {
         val response = carRemoteDataSource.getTypes()
-        Log.d("TEST", response.body().toString())
         return if (response.isSuccessful) response.body()!!.modelTypes else arrayListOf()
+    }
+
+    override suspend fun getTrimDetail(modelTypeIds: String, trimId: Int): TrimDetail {
+        val response = carRemoteDataSource.getTrimsDetail(modelTypeIds, trimId)
+        return if (response.isSuccessful) response.body()!! else TrimDetail(0, 0, 0f)
     }
 }
