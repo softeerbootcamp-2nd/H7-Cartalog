@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.tabs.TabLayout
 import com.softeer.cartalog.R
+import com.softeer.cartalog.data.local.MyCarDatabase
 import com.softeer.cartalog.databinding.ActivityMainBinding
 import com.softeer.cartalog.ui.dialog.PriceSummaryBottomSheetFragment
 import com.softeer.cartalog.viewmodel.MainViewModel
@@ -33,6 +34,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.viewModel = mainViewModel
         binding.lifecycleOwner = this
         setTabSelected()
+
+        MyCarDatabase.getInstance(applicationContext)
     }
 
     private fun setTabSelected() {

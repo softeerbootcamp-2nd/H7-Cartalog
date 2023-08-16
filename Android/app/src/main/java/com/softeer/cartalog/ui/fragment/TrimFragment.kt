@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.softeer.cartalog.data.local.MyCarDatabase
 import com.softeer.cartalog.data.remote.api.RetrofitClient
-import com.softeer.cartalog.data.repository.CarRepository
 import com.softeer.cartalog.data.repository.CarRepositoryImpl
 import com.softeer.cartalog.data.repository.local.CarLocalDataSource
 import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
@@ -21,8 +21,9 @@ class TrimFragment : Fragment() {
     private var _binding: FragmentTrimBinding? = null
     private val binding get() = _binding!!
 
-    private val carRepositoryImpl =
-        CarRepositoryImpl(CarLocalDataSource(), CarRemoteDataSource(RetrofitClient.carApi))
+    private val carRepositoryImpl by lazy {
+        CarRepositoryImpl(CarLocalDataSource(MyCarDatabase.getInstance(requireContext())!!), CarRemoteDataSource(RetrofitClient.carApi))
+    }
     private val trimViewModel: TrimViewModel by viewModels {
         CommonViewModelFactory(carRepositoryImpl)
     }
@@ -41,6 +42,7 @@ class TrimFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.btnChoose.setOnClickListener {
+            trimViewModel.setInitialMyCarData()
             (activity as MainActivity).changeTab(1)
         }
     }
