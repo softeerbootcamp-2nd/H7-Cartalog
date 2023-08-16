@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS model_interior_colors;
 DROP TABLE IF EXISTS model_exterior_colors;
 DROP TABLE IF EXISTS colors;
 DROP TABLE IF EXISTS hmg_data;
-DROP TABLE IF EXISTS package_hash_tags;
+DROP TABLE IF EXISTS model_package_hash_tags;
 DROP TABLE IF EXISTS model_option_hash_tags;
 DROP TABLE IF EXISTS hash_tags;
 DROP TABLE IF EXISTS trim_package_options;
@@ -142,11 +142,11 @@ CREATE TABLE detail_trim_options
 
 CREATE TABLE detail_trim_packages
 (
-    id                BIGINT PRIMARY KEY AUTO_INCREMENT,
-    detail_trim_id    BIGINT  NOT NULL,
+    id               BIGINT PRIMARY KEY AUTO_INCREMENT,
+    detail_trim_id   BIGINT  NOT NULL,
     model_package_id BIGINT  NOT NULL,
-    price             INT     NOT NULL,
-    color_condition   BOOLEAN NOT NULL,
+    price            INT     NOT NULL,
+    color_condition  BOOLEAN NOT NULL,
     FOREIGN KEY (detail_trim_id) REFERENCES detail_trims (id) ON UPDATE CASCADE,
     FOREIGN KEY (model_package_id) REFERENCES model_packages (id) ON UPDATE CASCADE
 );
@@ -176,13 +176,13 @@ CREATE TABLE model_option_hash_tags
     FOREIGN KEY (model_option_id) REFERENCES model_options (id) ON UPDATE CASCADE
 );
 
-CREATE TABLE package_hash_tags
+CREATE TABLE model_package_hash_tags
 (
-    id         BIGINT PRIMARY KEY AUTO_INCREMENT,
-    hash_tag   VARCHAR(255) NOT NULL,
-    package_id BIGINT       NOT NULL,
+    id               BIGINT PRIMARY KEY AUTO_INCREMENT,
+    hash_tag         VARCHAR(255) NOT NULL,
+    model_package_id BIGINT       NOT NULL,
     FOREIGN KEY (hash_tag) REFERENCES hash_tags (name) ON UPDATE CASCADE,
-    FOREIGN KEY (package_id) REFERENCES detail_trim_packages (id) ON UPDATE CASCADE
+    FOREIGN KEY (model_package_id) REFERENCES model_packages (id) ON UPDATE CASCADE
 );
 
 CREATE TABLE hmg_data
@@ -401,9 +401,9 @@ INSERT INTO model_option_hash_tags (id, hash_tag, model_option_id)
 SELECT *
 FROM CSVREAD('classpath:csv/model_option_hash_tags.csv', null, 'fieldSeparator=|');
 
-INSERT INTO package_hash_tags (id, hash_tag, package_id)
+INSERT INTO model_package_hash_tags (id, hash_tag, model_package_id)
 SELECT *
-FROM CSVREAD('classpath:csv/package_hash_tags.csv', null, 'fieldSeparator=|');
+FROM CSVREAD('classpath:csv/model_package_hash_tags.csv', null, 'fieldSeparator=|');
 
 -- noinspection SqlResolve
 INSERT INTO hmg_data (id, model_option_id, name, val, measure, unit)

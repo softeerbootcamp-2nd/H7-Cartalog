@@ -140,16 +140,16 @@ public class QueryString {
 
     public static final String findPackagesByTrimId =
             "SELECT DISTINCT " +
-            "                mp.id                         AS id, " +
-            "                mp.name                       AS name, " +
-            "                mp.parent_category            AS parentCategory, " +
-            "                dtp.color_condition           AS colorCondition, " +
-            "                mp.image_url                  AS imageUrl, " +
-            "                dtp.price                     AS price, " +
-            "                dto.color_condition           AS colorCondition, " +
-            "                tic.model_interior_color_code AS trimInteriorColorCode, " +
-            "                pht.hash_tag                  AS hashTag, " +
-            "                hmg.model_option_id           AS hmgModelOptionId " +
+            "                mp.id                          AS id, " +
+            "                mp.name                        AS name, " +
+            "                mp.parent_category             AS parentCategory, " +
+            "                dtp.color_condition            AS colorCondition, " +
+            "                mp.image_url                   AS imageUrl, " +
+            "                dtp.price                      AS price, " +
+            "                dto.color_condition            AS colorCondition, " +
+            "                tic.model_interior_color_code  AS trimInteriorColorCode, " +
+            "                mpht.hash_tag                  AS hashTag, " +
+            "                hmg.model_option_id            AS hmgModelOptionId " +
             "FROM   detail_trim_packages AS dtp " +
             "       JOIN model_packages AS mp " +
             "         ON dtp.model_package_id = mp.id " +
@@ -157,8 +157,8 @@ public class QueryString {
             "                    ON dtpicc.detail_trim_package_id = dtp.id " +
             "       LEFT OUTER JOIN trim_interior_colors AS tic " +
             "                    ON tic.id = dtpicc.trim_interior_color_id " +
-            "       LEFT OUTER JOIN package_hash_tags AS pht " +
-            "                    ON pht.package_id = dtp.id " +
+            "       LEFT OUTER JOIN model_package_hash_tags AS mpht " +
+            "                    ON mpht.model_package_id = dtp.id " +
             "       JOIN trim_package_options AS tpo " +
             "         ON tpo.trim_package_id = dtp.id " +
             "       JOIN detail_trim_options AS dto " +

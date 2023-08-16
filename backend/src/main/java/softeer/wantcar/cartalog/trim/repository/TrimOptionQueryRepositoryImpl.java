@@ -127,7 +127,7 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
 
         try {
             return jdbcTemplate.queryForObject(
-                    "SELECT name, image_url FROM detail_trim_packages WHERE id = :packageId",
+                    "SELECT name, image_url FROM model_packages WHERE id = :packageId",
                     parameters, RowMapperUtils.mapping(DetailTrimPackageInfo.class, serverPath.getImageServerPathRowMapperStrategy()));
         } catch (EmptyResultDataAccessException exception) {
             return null;
@@ -141,7 +141,7 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
                 .addValue("packageId", packageId);
 
         return jdbcTemplate.queryForList(
-                "SELECT hash_tag FROM package_hash_tags where package_id = :packageId",
+                "SELECT hash_tag FROM model_package_hash_tags where package_id = :packageId",
                 parameters, String.class);
     }
 
