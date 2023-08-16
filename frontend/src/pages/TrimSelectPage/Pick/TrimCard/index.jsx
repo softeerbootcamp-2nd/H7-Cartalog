@@ -18,8 +18,8 @@ function TrimCard({ name, description, price, defaultInfo, active, onClick }) {
     if (!trim.isDefault) {
       const {
         modelTypes: [powerTrainType, bodyType, wheelDriveType],
-        exteriorColorCode,
-        interiorColorCode,
+        exteriorColor,
+        interiorColor,
       } = defaultInfo;
 
       setTrimState((prevState) => ({
@@ -33,11 +33,11 @@ function TrimCard({ name, description, price, defaultInfo, active, onClick }) {
         },
         exteriorColor: {
           ...prevState.exteriorColor,
-          code: exteriorColorCode,
+          code: exteriorColor.code,
         },
         interiorColor: {
           ...prevState.interiorColor,
-          code: interiorColorCode,
+          code: interiorColor.code,
         },
         price: {
           ...prevState.price,
