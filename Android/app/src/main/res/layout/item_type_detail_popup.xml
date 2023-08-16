@@ -75,7 +75,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/hyndaisans_head_bold"
                 android:gravity="center"
-                android:text='@{selectedType == 0 ? "파워트레인" : selectedType == 1 ? "바디타입" : "구동방식"}'
+                android:text='@{selectedType == 0 ? @string/type_powertrain : selectedType == 1 ? @string/type_bodytype : @string/type_wheeldrive}'
                 android:textColor="@color/gray_900"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/gl_end"
