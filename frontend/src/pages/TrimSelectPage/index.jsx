@@ -32,7 +32,6 @@ function TrimSelect() {
     type: TRIM_SELECT.TYPE,
     Info: <Info />,
     Pick: <Pick />,
-    showPriceStatic: false,
   };
 
   return trim.isFetch ? <Section {...SectionProps} /> : <div>loading...</div>;

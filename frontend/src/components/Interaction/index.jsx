@@ -3,6 +3,7 @@ import { useData } from '../../utils/Context';
 import * as S from './style';
 import Header from '../Header';
 import Footer from '../Footer';
+import PriceStaticBar from '../PriceStaticBar';
 import InteriorColor from '../../pages/InteriorColorPage';
 import TrimSelect from '../../pages/TrimSelectPage';
 import ModelType from '../../pages/ModelTypePage';
@@ -11,7 +12,7 @@ import OptionPicker from '../../pages/OptionPickerPage';
 import Estimation from '../../pages/EstimationPage';
 
 function Interaction() {
-  const { page } = useData();
+  const { page, trim, price, budget } = useData();
   const pageRef = useRef();
 
   useEffect(() => {
@@ -31,6 +32,12 @@ function Interaction() {
         <Estimation />
       </S.Page>
       <Footer />
+      <PriceStaticBar
+      // min={SelectModel?.minPrice}
+      // max={SelectModel?.maxPrice}
+      // price={TotalPrice(price)}
+      // budget={budget}
+      />
     </S.Interaction>
   );
 }

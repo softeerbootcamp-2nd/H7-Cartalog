@@ -33,6 +33,8 @@ export function StateProvider({ children }) {
           fetchData: [],
           isFetch: false,
           isDefault: false,
+          minPrice: null,
+          maxPrice: null,
           id: 2,
         };
         break;
