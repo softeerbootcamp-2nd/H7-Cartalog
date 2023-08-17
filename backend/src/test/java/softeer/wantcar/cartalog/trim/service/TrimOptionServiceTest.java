@@ -107,19 +107,16 @@ class TrimOptionServiceTest {
         @DisplayName("적절한 트림 옵션 식별자를 전달했을 때 옵션 상세 정보를 가진 dto를 반환해야 한다.")
         void returnTrimOptionDetailResponseDto() {
             //given
-            Long optionId = 0L;
-            when(trimOptionQueryRepository.findModelOptionIdByDetailTrimOptionId(anyLong())).thenReturn(optionId);
-
             TrimOptionQueryRepository.ModelOptionInfo modelOptionInfo = mock(TrimOptionQueryRepository.ModelOptionInfo.class);
-            when(trimOptionQueryRepository.findModelOptionInfoByOptionId(optionId)).thenReturn(modelOptionInfo);
+            when(trimOptionQueryRepository.findModelOptionInfoByOptionId(anyLong())).thenReturn(modelOptionInfo);
 
             List<String> hashTags = List.of("해시 태그1", "해시 태그2", "해시 태그3");
-            when(trimOptionQueryRepository.findHashTagsByOptionId(optionId)).thenReturn(hashTags);
+            when(trimOptionQueryRepository.findHashTagsByOptionId(anyLong())).thenReturn(hashTags);
 
             TrimOptionQueryRepository.HMGDataInfo hmgDataInfo1 = mock(TrimOptionQueryRepository.HMGDataInfo.class);
             TrimOptionQueryRepository.HMGDataInfo hmgDataInfo2 = mock(TrimOptionQueryRepository.HMGDataInfo.class);
             List<TrimOptionQueryRepository.HMGDataInfo> hmgDataInfos = List.of(hmgDataInfo1, hmgDataInfo2);
-            when(trimOptionQueryRepository.findHMGDataInfoListByOptionId(optionId)).thenReturn(hmgDataInfos);
+            when(trimOptionQueryRepository.findHMGDataInfoListByOptionId(anyLong())).thenReturn(hmgDataInfos);
 
             //when
             TrimOptionDetailResponseDto trimOptionDetail = trimOptionService.getTrimOptionDetail(anyLong());
@@ -136,7 +133,7 @@ class TrimOptionServiceTest {
         @DisplayName("적절하지 않은 트림 옵션 식별자를 전달했을 때 null을 반환해야 한다.")
         void returnNullWhenModelOptionIdByNonexistenceDetailTrimOptionId() {
             //given
-            when(trimOptionQueryRepository.findModelOptionIdByDetailTrimOptionId(anyLong())).thenReturn(null);
+            when(trimOptionQueryRepository.findModelOptionInfoByOptionId(anyLong())).thenReturn(null);
 
             //when
             TrimOptionDetailResponseDto trimOptionDetail = trimOptionService.getTrimOptionDetail(anyLong());

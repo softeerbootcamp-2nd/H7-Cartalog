@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SuppressWarnings({"SqlResolve", "SqlNoDataSourceInspection"})
 @JdbcTest
 @Sql({"classpath:schema.sql"})
 @DisplayName("트림 옵션 Repository 테스트")
@@ -29,48 +30,19 @@ class TrimOptionQueryRepositoryTest {
     TrimOptionQueryRepository trimOptionQueryRepository;
     ServerPath serverPath = new ServerPath();
     SoftAssertions softAssertions;
-    String palisadeLeBlancDiesel2WD7SeatOptionSQL = "SELECT detail_trim_options.id " +
+    String palisadeLeBlancOptionSQL = "SELECT model_options.id " +
             "FROM basic_models " +
-            "       INNER JOIN model_options AS mo1 " +
-            "               ON basic_models.id = mo1.model_id " +
-            "       INNER JOIN detail_trim_options " +
-            "               ON mo1.id = detail_trim_options.model_option_id " +
-            "       INNER JOIN detail_trims " +
-            "               ON detail_trim_options.detail_trim_id = detail_trims.id " +
-            "       INNER JOIN trims " +
-            "               ON detail_trims.trim_id = trims.id " +
-            "       INNER JOIN detail_models " +
-            "               ON detail_trims.detail_model_id = detail_models.id " +
-            "       INNER JOIN detail_model_decision_options " +
-            "               ON detail_models.id = detail_model_decision_options.detail_model_id " +
-            "       INNER JOIN model_options AS mo2 " +
-            "               ON detail_model_decision_options.model_option_id = mo2.id " +
-            "WHERE  basic_models.name = '팰리세이드' " +
-            "       AND mo1.name = :optionName " +
-            "       AND trims.name = 'Le Blanc' " +
-            "       AND mo2.name IN ( '디젤 2.2', '2WD', '7인승' ) " +
-            "GROUP  BY detail_trim_options.id " +
-            "HAVING Count(detail_trim_options.id) = 3";
-    String palisadeLeBlancDiesel2WD7SeatPackageSQL = "SELECT detail_trim_packages.id " +
-            "FROM   detail_trim_packages " +
-            "       INNER JOIN detail_trims " +
-            "               ON detail_trim_packages.detail_trim_id = detail_trims.id " +
-            "       INNER JOIN detail_models " +
-            "               ON detail_trims.detail_model_id = detail_models.id " +
-            "       INNER JOIN detail_model_decision_options " +
-            "               ON detail_models.id = detail_model_decision_options.detail_model_id " +
-            "       INNER JOIN model_options " +
-            "               ON detail_model_decision_options.model_option_id = model_options.id " +
+            "       INNER JOIN model_options" +
+            "               ON basic_models.id = model_options.model_id " +
+            "WHERE  model_options.name = :optionName" +
+            "       AND  basic_models.name = '팰리세이드'";
+
+    String palisadeLeBlancPackageSQL = "SELECT model_packages.id " +
+            "FROM model_packages " +
             "       INNER JOIN basic_models " +
-            "               ON basic_models.id = detail_models.basic_model_id " +
-            "       INNER JOIN trims " +
-            "               ON detail_trims.trim_id = trims.id " +
-            "WHERE  detail_trim_packages.name = :packageName" +
-            "       AND basic_models.name = '팰리세이드' " +
-            "       AND trims.name = 'Le Blanc' " +
-            "       AND model_options.name IN ( '디젤 2.2', '2WD', '7인승' ) " +
-            "GROUP  BY detail_trim_packages.id " +
-            "HAVING Count(detail_trim_packages.id) = 3";
+            "               ON model_packages.model_id = basic_models.id " +
+            "WHERE  model_packages.name = :packageName" +
+            "       AND basic_models.name = '팰리세이드' ";
 
     @BeforeEach
     void setUp() {
@@ -101,6 +73,8 @@ class TrimOptionQueryRepositoryTest {
             softAssertions.assertThat(trimOptions.isEmpty()).isFalse();
             for (TrimOptionQueryRepository.TrimOptionInfo trimOption : trimOptions) {
                 softAssertions.assertThat(trimOption.getId()).startsWith("O");
+                softAssertions.assertThat(trimOption.getName()).isNotBlank();
+                softAssertions.assertThat(trimOption.getHashTags()).doesNotContain((String) null);
                 softAssertions.assertThat(trimOption.getImageUrl()).startsWith(serverPath.IMAGE_SERVER_PATH);
             }
             softAssertions.assertAll();
@@ -143,6 +117,8 @@ class TrimOptionQueryRepositoryTest {
             softAssertions.assertThat(trimPackages.isEmpty()).isFalse();
             for (TrimOptionQueryRepository.TrimOptionInfo trimPackage : trimPackages) {
                 softAssertions.assertThat(trimPackage.getId()).startsWith("P");
+                softAssertions.assertThat(trimPackage.getName()).isNotBlank();
+                softAssertions.assertThat(trimPackage.getHashTags()).doesNotContain((String) null);
                 softAssertions.assertThat(trimPackage.getImageUrl()).startsWith(serverPath.IMAGE_SERVER_PATH);
             }
             softAssertions.assertAll();
@@ -188,11 +164,10 @@ class TrimOptionQueryRepositoryTest {
             //given
             SqlParameterSource parameters = new MapSqlParameterSource()
                     .addValue("optionName", "디젤 2.2");
-            Long dieselDetailTrimOptionId = jdbcTemplate.queryForObject(palisadeLeBlancDiesel2WD7SeatOptionSQL,
+            Long modelOptionId = jdbcTemplate.queryForObject(palisadeLeBlancOptionSQL,
                     parameters,
                     Long.class
             );
-            Long modelOptionId = trimOptionQueryRepository.findModelOptionIdByDetailTrimOptionId(dieselDetailTrimOptionId);
 
             //when
             TrimOptionQueryRepository.ModelOptionInfo modelOption = trimOptionQueryRepository.findModelOptionInfoByOptionId(modelOptionId);
@@ -220,12 +195,10 @@ class TrimOptionQueryRepositoryTest {
             //given
             SqlParameterSource parameters = new MapSqlParameterSource()
                     .addValue("optionName", "빌트인 캠(보조배터리 포함)");
-            Long builtInCampModelOptionId = jdbcTemplate.queryForObject(palisadeLeBlancDiesel2WD7SeatOptionSQL,
+            Long modelOptionId = jdbcTemplate.queryForObject(palisadeLeBlancOptionSQL,
                     parameters,
                     Long.class
             );
-            Long modelOptionId =
-                    trimOptionQueryRepository.findModelOptionIdByDetailTrimOptionId(builtInCampModelOptionId);
             List<String> expected = List.of("장거리 운전", "안전", "주차/출차");
 
             //when
@@ -252,13 +225,11 @@ class TrimOptionQueryRepositoryTest {
             //given
             SqlParameterSource parameters = new MapSqlParameterSource()
                     .addValue("optionName", "디젤 2.2");
-            Long dieselDetailTrimOptionId = jdbcTemplate.queryForObject(palisadeLeBlancDiesel2WD7SeatOptionSQL,
+            Long modelOptionId = jdbcTemplate.queryForObject(palisadeLeBlancOptionSQL,
                     parameters,
                     Long.class
             );
-            Long modelOptionId =
-                    trimOptionQueryRepository.findModelOptionIdByDetailTrimOptionId(dieselDetailTrimOptionId);
-            List<String> expected = List.of("최고출력", "최대토크");
+            List<String> expected = List.of("최대출력", "최대토크");
 
             //when
             List<TrimOptionQueryRepository.HMGDataInfo> hmgDataInfos = trimOptionQueryRepository.findHMGDataInfoListByOptionId(modelOptionId);
@@ -267,6 +238,7 @@ class TrimOptionQueryRepositoryTest {
             List<String> hmgDataNames = hmgDataInfos.stream()
                     .map(TrimOptionQueryRepository.HMGDataInfo::getName)
                     .collect(Collectors.toUnmodifiableList());
+
             assertThat(CompareUtils.equalAndAllContain(expected, hmgDataNames)).isTrue();
         }
 
@@ -292,7 +264,7 @@ class TrimOptionQueryRepositoryTest {
             //given
             SqlParameterSource parameters = new MapSqlParameterSource()
                     .addValue("packageName", "컴포트 Ⅱ");
-            Long compose2PackageId = jdbcTemplate.queryForObject(palisadeLeBlancDiesel2WD7SeatPackageSQL,
+            Long compose2PackageId = jdbcTemplate.queryForObject(palisadeLeBlancPackageSQL,
                     parameters,
                     Long.TYPE
             );
@@ -325,7 +297,7 @@ class TrimOptionQueryRepositoryTest {
             //given
             SqlParameterSource parameters = new MapSqlParameterSource()
                     .addValue("packageName", "컴포트 Ⅱ");
-            Long compose2PackageId = jdbcTemplate.queryForObject(palisadeLeBlancDiesel2WD7SeatPackageSQL,
+            Long compose2PackageId = jdbcTemplate.queryForObject(palisadeLeBlancPackageSQL,
                     parameters,
                     Long.TYPE
             );
@@ -355,7 +327,7 @@ class TrimOptionQueryRepositoryTest {
             //given
             SqlParameterSource parameters = new MapSqlParameterSource()
                     .addValue("packageName", "컴포트 Ⅱ");
-            Long compose2PackageId = jdbcTemplate.queryForObject(palisadeLeBlancDiesel2WD7SeatPackageSQL,
+            Long compose2PackageId = jdbcTemplate.queryForObject(palisadeLeBlancPackageSQL,
                     parameters,
                     Long.TYPE
             );

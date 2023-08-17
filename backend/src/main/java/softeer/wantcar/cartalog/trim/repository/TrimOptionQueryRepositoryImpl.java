@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@SuppressWarnings({"SqlResolve", "SqlNoDataSourceInspection"})
 @Repository
 @RequiredArgsConstructor
 public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository {
@@ -70,20 +71,6 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
 
     @Override
     @Transactional(readOnly = true)
-    public Long findModelOptionIdByDetailTrimOptionId(Long detailTrimOptionId) {
-        SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("detailTrimOptionId", detailTrimOptionId);
-
-        String getModelOptionIdSQL = "SELECT model_options.id " +
-                "FROM model_options INNER JOIN detail_trim_options " +
-                "ON model_options.id = detail_trim_options.model_option_id " +
-                "WHERE detail_trim_options.id = :detailTrimOptionId";
-
-        return jdbcTemplate.queryForObject(getModelOptionIdSQL, parameters, Long.TYPE);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public ModelOptionInfo findModelOptionInfoByOptionId(Long optionId) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("optionId", optionId);
@@ -127,7 +114,7 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
 
         try {
             return jdbcTemplate.queryForObject(
-                    "SELECT name, image_url FROM detail_trim_packages WHERE id = :packageId",
+                    "SELECT name, image_url FROM model_packages WHERE id = :packageId",
                     parameters, RowMapperUtils.mapping(DetailTrimPackageInfo.class, serverPath.getImageServerPathRowMapperStrategy()));
         } catch (EmptyResultDataAccessException exception) {
             return null;
@@ -141,7 +128,7 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
                 .addValue("packageId", packageId);
 
         return jdbcTemplate.queryForList(
-                "SELECT hash_tag FROM package_hash_tags where package_id = :packageId",
+                "SELECT hash_tag FROM model_package_hash_tags where model_package_id = :packageId",
                 parameters, String.class);
     }
 
@@ -205,13 +192,14 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
     private static List<String> getOptionHasTags(List<TrimOptionQueryResult> trimOptionInfos) {
         return trimOptionInfos.stream()
                 .map(TrimOptionQueryResult::getHashTag)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
     private static boolean isOptionHasHmgData(List<TrimOptionQueryResult> trimOptionInfos) {
         return trimOptionInfos.stream()
                 .map(TrimOptionQueryResult::getHmgModelOptionId)
-                .anyMatch(Objects::nonNull);
+                .anyMatch(id -> Objects.nonNull(id) && id != 0);
     }
 
     private static TrimOptionQueryResult getTrimOptionQueryResult(ResultSet rs, boolean isOption) throws SQLException {

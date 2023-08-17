@@ -80,7 +80,7 @@ public class QueryString {
 
             "JOIN  " +
             "(  " +
-            "   SELECT child_category, id, name, price_if_model_type_option AS price  " +
+            "   SELECT child_category, id, name, price  " +
             "   FROM  " +
             "   (  " +
             "       SELECT *, ROW_NUMBER() OVER (PARTITION BY child_category ORDER BY id) AS row_num  " +
@@ -115,51 +115,59 @@ public class QueryString {
             ") AS dm ON dt.detail_model_id=dm.id " +
             "WHERE dt.trim_id = :trimId ";
 
-    protected static String findOptionsByDetailTrimId =
-            "SELECT DISTINCT " +
-            "   dto.id AS id, " +
-            "   mo.name AS name, " +
-            "   mo.parent_category AS parentCategory, " +
-            "   mo.child_category AS childCategory, " +
-            "   mo.image_url AS imageUrl, " +
-            "   dto.price AS price, " +
-            "   dto.basic AS basic, " +
-            "   dto.color_condition AS colorCondition, " +
-            "   tic.model_interior_color_code AS trimInteriorColorCode, " +
-            "   moht.hash_tag AS hashTag, " +
-            "   hmg.model_option_id AS hmgModelOptionId " +
-
-            "FROM detail_trim_options AS dto " +
-
-            "JOIN model_options AS mo ON mo.id=dto.model_option_id " +
-            "LEFT OUTER JOIN detail_trim_option_interior_color_condition AS dtoicc ON dtoicc.detail_trim_option_id=dto.id " +
-            "LEFT OUTER JOIN trim_interior_colors AS tic ON tic.id = dtoicc.trim_interior_color_id " +
-            "LEFT OUTER JOIN model_option_hash_tags AS moht ON moht.model_option_id = dto.model_option_id " +
-            "LEFT OUTER JOIN hmg_data AS hmg ON hmg.model_option_id=dto.model_option_id " +
-            "WHERE visibility=true AND detail_trim_id= :detailTrimId  ";
+    protected static final String findOptionsByDetailTrimId =
+            "SELECT DISTINCT mo.id                         AS id, " +
+            "                mo.name                       AS name, " +
+            "                mo.parent_category            AS parentCategory, " +
+            "                mo.child_category             AS childCategory, " +
+            "                mo.image_url                  AS imageUrl, " +
+            "                mo.price                      AS price, " +
+            "                mo.basic                      AS basic, " +
+            "                dto.color_condition           AS colorCondition, " +
+            "                tic.model_interior_color_code AS trimInteriorColorCode, " +
+            "                moht.hash_tag                 AS hashTag, " +
+            "                hmg.model_option_id           AS hmgModelOptionId " +
+            "FROM   detail_trim_options AS dto " +
+            "       JOIN model_options AS mo " +
+            "         ON mo.id = dto.model_option_id " +
+            "       LEFT OUTER JOIN detail_trim_option_interior_color_condition AS dtoicc " +
+            "                    ON dtoicc.detail_trim_option_id = dto.id " +
+            "       LEFT OUTER JOIN trim_interior_colors AS tic " +
+            "                    ON tic.id = dtoicc.trim_interior_color_id " +
+            "       LEFT OUTER JOIN model_option_hash_tags AS moht " +
+            "                    ON moht.model_option_id = dto.model_option_id " +
+            "       LEFT OUTER JOIN hmg_data AS hmg " +
+            "                    ON hmg.model_option_id = dto.model_option_id " +
+            "WHERE  visibility = true " +
+            "       AND detail_trim_id = :detailTrimId";
 
     public static final String findPackagesByTrimId =
-            "SELECT DISTINCT " +
-            "   dtp.id AS id, " +
-            "   dtp.name AS name, " +
-            "   dtp.parent_category AS parentCategory, " +
-            "   dtp.color_condition AS colorCondition, " +
-            "   dtp.image_url AS imageUrl, " +
-            "   dtp.price AS price, " +
-            "   dto.color_condition AS colorCondition, " +
-            "   tic.model_interior_color_code AS trimInteriorColorCode, " +
-            "   pht.hash_tag AS hashTag, " +
-            "   hmg.model_option_id AS hmgModelOptionId " +
-
-            "FROM detail_trim_packages AS dtp " +
-
-            "LEFT OUTER JOIN detail_trim_package_interior_color_condition AS dtpicc ON dtpicc.detail_trim_package_id=dtp.id " +
-            "LEFT OUTER JOIN trim_interior_colors AS tic ON tic.id = dtpicc.trim_interior_color_id " +
-            "LEFT OUTER JOIN package_hash_tags AS pht ON pht.package_id=dtp.id " +
-            "JOIN trim_package_options AS tpo ON tpo.trim_package_id=dtp.id " +
-            "JOIN detail_trim_options AS dto ON dto.id=tpo.detail_trim_option_id " +
-            "JOIN hmg_data AS hmg ON hmg.model_option_id=dto.model_option_id " +
-            "WHERE dtp.detail_trim_id= :detailTrimId ";
+            "SELECT DISTINCT mp.id                         AS id, " +
+            "                mp.name                       AS name, " +
+            "                mp.parent_category            AS parentCategory, " +
+            "                dtp.color_condition           AS colorCondition, " +
+            "                mp.image_url                  AS imageUrl, " +
+            "                mp.price                      AS price, " +
+            "                dto.color_condition           AS colorCondition, " +
+            "                tic.model_interior_color_code AS trimInteriorColorCode, " +
+            "                mpht.hash_tag                 AS hashTag, " +
+            "                hmg.model_option_id           AS hmgModelOptionId " +
+            "FROM   detail_trim_packages AS dtp " +
+            "       JOIN model_packages AS mp " +
+            "         ON dtp.model_package_id = mp.id " +
+            "       LEFT OUTER JOIN detail_trim_package_interior_color_condition AS dtpicc " +
+            "                    ON dtpicc.detail_trim_package_id = dtp.id " +
+            "       LEFT OUTER JOIN trim_interior_colors AS tic " +
+            "                    ON tic.id = dtpicc.trim_interior_color_id " +
+            "       LEFT OUTER JOIN model_package_hash_tags AS mpht " +
+            "                    ON mpht.model_package_id = dtp.id " +
+            "       JOIN trim_package_options AS tpo " +
+            "         ON tpo.trim_package_id = dtp.id " +
+            "       JOIN detail_trim_options AS dto " +
+            "         ON dto.id = tpo.detail_trim_option_id " +
+            "       JOIN hmg_data AS hmg " +
+            "         ON hmg.model_option_id = dto.model_option_id " +
+            "WHERE  dtp.detail_trim_id = :detailTrimId ";
 
     protected static final String findTrimExteriorColorByTrimId =
             "SELECT " +

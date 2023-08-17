@@ -7,8 +7,6 @@ import lombok.Getter;
 import java.util.List;
 
 public interface TrimOptionQueryRepository {
-    List<TrimOptionInfo> findPackagesByDetailTrimId(Long detailTrimId);
-
     @Getter
     @Builder
     @AllArgsConstructor
@@ -26,11 +24,11 @@ public interface TrimOptionQueryRepository {
         private boolean hasHMGData;
     }
 
+    List<TrimOptionInfo> findPackagesByDetailTrimId(Long detailTrimId);
+
     List<String> findMultipleSelectableCategories();
 
     List<TrimOptionInfo> findOptionsByDetailTrimId(Long detailTrimId);
-
-    Long findModelOptionIdByDetailTrimOptionId(Long detailTrimOptionId);
 
     @Getter
     @AllArgsConstructor

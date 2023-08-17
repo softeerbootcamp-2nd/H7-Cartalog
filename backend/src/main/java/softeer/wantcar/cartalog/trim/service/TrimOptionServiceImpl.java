@@ -42,13 +42,12 @@ public class TrimOptionServiceImpl implements TrimOptionService {
 
     @Override
     @Transactional(readOnly = true)
-    public TrimOptionDetailResponseDto getTrimOptionDetail(Long detailTrimOptionId) {
-        Long optionId = trimOptionQueryRepository.findModelOptionIdByDetailTrimOptionId(detailTrimOptionId);
-        return optionId != null ? getTrimOptionDetailByOptionId(optionId) : null;
-    }
-
-    private TrimOptionDetailResponseDto getTrimOptionDetailByOptionId(Long optionId) {
+    public TrimOptionDetailResponseDto getTrimOptionDetail(Long optionId) {
         TrimOptionQueryRepository.ModelOptionInfo modelOption = trimOptionQueryRepository.findModelOptionInfoByOptionId(optionId);
+        if (modelOption == null) {
+            return null;
+        }
+
         List<String> hashTags = trimOptionQueryRepository.findHashTagsByOptionId(optionId);
         List<TrimOptionQueryRepository.HMGDataInfo> hmgDataList = trimOptionQueryRepository.findHMGDataInfoListByOptionId(optionId);
         List<HMGDataDto> hmgDataDtoList = buildHmgDataDtoList(hmgDataList);
@@ -75,7 +74,7 @@ public class TrimOptionServiceImpl implements TrimOptionService {
         //TODO: batch를 통해 조회 연산을 최적화 할 수 있다.
         List<Long> modelOptionIds = trimOptionQueryRepository.findModelOptionIdsByPackageId(packageId);
         List<TrimOptionDetailResponseDto> trimOptionDetailResponseDtoList = modelOptionIds.stream()
-                .map(this::getTrimOptionDetailByOptionId)
+                .map(this::getTrimOptionDetail)
                 .collect(Collectors.toUnmodifiableList());
 
         return TrimPackageDetailResponseDto.builder()
