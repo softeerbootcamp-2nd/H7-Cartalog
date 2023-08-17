@@ -26,7 +26,7 @@ class CarLocalDataSource(
         return myCarDao.getMyCar()
     }
 
-    suspend fun getPirceDataList(): List<PriceData>{
+    suspend fun getPriceDataList(): List<PriceData>{
         return priceDataDao.getPriceDataList()
     }
 }

@@ -100,7 +100,7 @@ class CarRepositoryImpl(
     }
 
     override suspend fun getPirceDataList(): List<PriceData> {
-        return carLocalDataSource.getPirceDataList()
+        return carLocalDataSource.getPriceDataList()
     }
 
     override suspend fun getSummaryCarImage(exterior: String, interior: String): SummaryCarImage {
