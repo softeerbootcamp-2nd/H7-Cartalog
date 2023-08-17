@@ -193,6 +193,7 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
         return trimOptionInfos.stream()
                 .map(TrimOptionQueryResult::getHashTag)
                 .filter(Objects::nonNull)
+                .distinct()
                 .collect(Collectors.toList());
     }
 
