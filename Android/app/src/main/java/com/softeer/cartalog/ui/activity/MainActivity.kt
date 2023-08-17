@@ -1,8 +1,10 @@
 package com.softeer.cartalog.ui.activity
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -38,9 +40,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         MyCarDatabase.getInstance(applicationContext)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun setTabSelected() {
         val font = ResourcesCompat.getFont(this, R.font.hyndaisans_head_bold)
         val tabLayout = binding.tlStep
+        val tabStrip = tabLayout.getChildAt(0) as? LinearLayout
+
+        (0..5).forEach {
+            tabStrip?.getChildAt(it)?.setOnTouchListener { _, _ ->
+                true
+            }
+        }
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
