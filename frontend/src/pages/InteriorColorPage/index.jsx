@@ -40,7 +40,6 @@ function InteriorColor() {
     url: interiorColor.carImageUrl,
     Info: <Info />,
     Pick: <Pick />,
-    showPriceStatic: true,
   };
 
   return interiorColor.isFetch ? <Section {...SectionProps} /> : <>Loding</>;

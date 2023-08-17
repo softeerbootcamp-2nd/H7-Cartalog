@@ -91,7 +91,6 @@ function OptionPicker() {
     type: TYPE,
     Info: <Info {...InfoProps} data={MOCK_DATA} selected={selectedId} />,
     Pick: <Pick data={MOCK_DATA} selected={selectedId} setSelected={setSelectedId} />,
-    showPriceStatic: true,
   };
 
   return <Section {...SectionProps} />;

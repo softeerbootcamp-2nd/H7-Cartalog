@@ -43,7 +43,6 @@ function ExteriorColor() {
     type: EXTERIOR_COLOR.TYPE,
     Info: <Info />,
     Pick: <Pick />,
-    showPriceStatic: true,
   };
 
   return exteriorColor.isFetch ? <Section {...SectionProps} /> : <>Loding</>;

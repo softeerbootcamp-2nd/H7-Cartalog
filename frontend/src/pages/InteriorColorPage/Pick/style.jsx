@@ -10,17 +10,3 @@ export const Color = styled.div`
   margin-top: 12px;
   gap: 16px;
 `;
-
-export const Footer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin-bottom: 16px;
-`;
-
-export const FooterEnd = styled.div`
-  position: fixed;
-  z-index: 2;
-  bottom: 0;
-  margin-bottom: 16px;
-`;

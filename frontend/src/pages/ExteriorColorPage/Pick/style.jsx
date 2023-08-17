@@ -23,17 +23,3 @@ export const Color = styled.div`
   transform: ${({ $position }) => `translateX(-${$position}px)`};
   transition: transform 0.5s ease-in-out;
 `;
-
-export const Footer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin-bottom: 16px;
-`;
-
-export const FooterEnd = styled.div`
-  position: fixed;
-  z-index: 2;
-  bottom: 0;
-  margin-bottom: 16px;
-`;

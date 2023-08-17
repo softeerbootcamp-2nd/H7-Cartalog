@@ -48,12 +48,6 @@ function Pick() {
           </ColorCard>
         ))}
       </S.Color>
-
-      <S.Footer>
-        <S.FooterEnd>
-          <NextButton />
-        </S.FooterEnd>
-      </S.Footer>
     </S.Pick>
   );
 }

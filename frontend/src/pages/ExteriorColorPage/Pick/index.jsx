@@ -4,7 +4,6 @@ import * as S from './style';
 import PickTitle from '../../../components/PickTitle';
 import ColorCard from '../../../components/ColorCard';
 import ColorChip from '../../../components/ColorChip';
-import NextButton from '../../../components/NextButton';
 import NextColor from '../../../components/NextColor';
 
 function Pick() {
@@ -65,12 +64,6 @@ function Pick() {
           ))}
         </S.Color>
       </S.ColorSet>
-
-      <S.Footer>
-        <S.FooterEnd>
-          <NextButton />
-        </S.FooterEnd>
-      </S.Footer>
     </S.Pick>
   );
 }

@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { useData } from '../../utils/Context';
 import * as S from './style';
 import Header from '../Header';
+import Footer from '../Footer';
+import PriceStaticBar from '../PriceStaticBar';
 import InteriorColor from '../../pages/InteriorColorPage';
 import TrimSelect from '../../pages/TrimSelectPage';
 import ModelType from '../../pages/ModelTypePage';
@@ -11,7 +13,7 @@ import Estimation from '../../pages/EstimationPage';
 import { EASE_OUT_CUBIC } from '../../constants';
 
 function Interaction() {
-  const { page } = useData();
+  const { page, trim, price, budget } = useData();
   const pageRef = useRef();
 
   useEffect(() => {
@@ -30,6 +32,13 @@ function Interaction() {
         <OptionPicker />
         <Estimation />
       </S.Page>
+      <Footer />
+      <PriceStaticBar
+      // min={SelectModel?.minPrice}
+      // max={SelectModel?.maxPrice}
+      // price={TotalPrice(price)}
+      // budget={budget}
+      />
     </S.Interaction>
   );
 }

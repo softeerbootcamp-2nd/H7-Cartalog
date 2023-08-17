@@ -3,7 +3,6 @@ import * as S from './style';
 import TypeSelector from './TypeSelector';
 import CategorySelector from './CategorySelector';
 import OptionCard from '../OptionCard';
-import NextButton from '../../../components/NextButton';
 import { useData } from '../../../utils/Context';
 
 const MOCK_CATEGORY = ['상세품목', '액세서리', '휠'];
@@ -56,11 +55,6 @@ function Pick({ data, selected, setSelected }) {
           />
         ))}
       </S.OptionGrid>
-      <S.Footer>
-        <S.FooterEnd>
-          <NextButton />
-        </S.FooterEnd>
-      </S.Footer>
     </S.Pick>
   );
 }
