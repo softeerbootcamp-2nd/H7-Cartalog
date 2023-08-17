@@ -32,7 +32,6 @@ export const Overlay = styled.div`
 
 export const Header = styled.div`
   display: flex;
-  position: relative;
 `;
 
 export const Title = styled.div`

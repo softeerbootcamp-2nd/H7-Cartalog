@@ -1,4 +1,4 @@
-import { useEffect, useState, cloneElement } from 'react';
+import { useEffect, useState } from 'react';
 import { useData } from '../../utils/Context';
 import Section from '../../components/Section';
 import Info from './Info';
@@ -60,12 +60,12 @@ const MOCK_DATA = {
 };
 
 function OptionPicker() {
-  const { setTrimState, modelType, interiorColor, optionPicker } = useData();
+  const { setTrimState, page, modelType, interiorColor, optionPicker } = useData();
   const [selectedId, setSelectedId] = useState(11);
 
   useEffect(() => {
     async function fetchData() {
-      if (!optionPicker.isFetch) {
+      if (!optionPicker.isFetch && page === 5) {
         const response = await fetch(
           `http://3.36.126.30/models/trims/options?detailTrimId=${modelType.detailTrimId}&interiorColorCode=${interiorColor.code}`,
         );
@@ -80,33 +80,18 @@ function OptionPicker() {
             selectOptions: [...dataFetch.selectOptions],
             category: [...dataFetch.multipleSelectParentCategory],
           },
-          clonePage: {
-            ...prevState.clonePage,
-            5: cloneElement(<OptionPicker />),
-          },
         }));
       }
-      setTrimState((prevState) => ({ ...prevState, page: 5 }));
-      setTimeout(() => {
-        setTrimState((prevState) => ({
-          ...prevState,
-          movePage: {
-            ...prevState.movePage,
-            clonePage: 5,
-            nowContentRef: 'nowUnload',
-            nextContentRef: 'nextUnload',
-          },
-        }));
-      }, 1000);
     }
     fetchData();
-  }, []);
+  }, [page]);
 
   const InfoProps = { imageUrl: IMAGE_URL };
   const SectionProps = {
     type: TYPE,
     Info: <Info {...InfoProps} data={MOCK_DATA} selected={selectedId} />,
     Pick: <Pick data={MOCK_DATA} selected={selectedId} setSelected={setSelectedId} />,
+    showPriceStatic: true,
   };
 
   return <Section {...SectionProps} />;

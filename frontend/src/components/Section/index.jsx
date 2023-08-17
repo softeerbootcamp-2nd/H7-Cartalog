@@ -10,10 +10,11 @@ import Footer from '../Footer';
  * @param Pick {Comment} 'Pick' 구역에 안에 넣을 컴포넌트
  * @returns
  */
-function Section({ type, url, Info, Pick, showPriceStatic = true }) {
-  const { trim, price } = useData();
+function Section({ type, url, Info, Pick, showPriceStatic }) {
+  const { trim, price, budget } = useData();
   const SectionProps = { type, $url: url };
   const SelectModel = trim.fetchData.find((model) => model.id === trim.id);
+
   return (
     <S.Section>
       <S.Background {...SectionProps}>
@@ -25,9 +26,9 @@ function Section({ type, url, Info, Pick, showPriceStatic = true }) {
           min={SelectModel?.minPrice}
           max={SelectModel?.maxPrice}
           price={TotalPrice(price)}
+          budget={budget}
         />
       )}
-      <Footer />
     </S.Section>
   );
 }

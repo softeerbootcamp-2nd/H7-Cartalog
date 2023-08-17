@@ -12,10 +12,7 @@ export function StateProvider({ children }) {
     'optionPicker',
     'estimation',
     'price',
-    'pagePath',
-    'pageNum',
-    'clonePage',
-    'movePage',
+    'budget',
   ];
 
   const initialState = stateKeys.reduce((acc, key) => {
@@ -102,47 +99,6 @@ export function StateProvider({ children }) {
             'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade/le-blanc/options/10_driverseat_s.jpg',
         };
         break;
-      case 'pagePath':
-        acc[key] = {
-          '/': 1,
-          '/modelType': 2,
-          '/exteriorColor': 3,
-          '/interiorColor': 4,
-          '/optionPicker': 5,
-          '/estimation': 6,
-        };
-        break;
-      case 'pageNum':
-        acc[key] = {
-          1: '/',
-          2: '/modelType',
-          3: '/exteriorColor',
-          4: '/interiorColor',
-          5: '/optionPicker',
-          6: '/estimation',
-        };
-        break;
-      case 'clonePage':
-        acc[key] = {
-          1: null,
-          2: null,
-          3: null,
-          4: null,
-          5: null,
-          6: null,
-        };
-        break;
-      case 'movePage':
-        acc[key] = {
-          path: [],
-          pathLength: null,
-          clonePage: null,
-          startAnimation: null,
-          nowContentRef: null,
-          nextContentRef: null,
-          timeoutId: null,
-        };
-        break;
       default:
         acc[key] = null; // 다른 키들은 null로 초기화
     }
@@ -175,38 +131,10 @@ export function TotalPrice(priceObj) {
   return totalPrice;
 }
 
-export function StartAnimation(nowPath, nextPath, navigate, setTrimState, pagePath) {
-  navigate(nextPath);
-
-  if (pagePath[nextPath] > pagePath[nowPath]) {
-    setTrimState((prevState) => ({
-      ...prevState,
-      movePage: {
-        ...prevState.movePage,
-        nowContentRef: 'leftNowLoad',
-        nextContentRef: 'leftNextLoad',
-      },
-    }));
-  }
-  if (pagePath[nextPath] < pagePath[nowPath]) {
-    setTrimState((prevState) => ({
-      ...prevState,
-      movePage: {
-        ...prevState.movePage,
-        nowContentRef: 'rightNowLoad',
-        nextContentRef: 'rightNextLoad',
-      },
-    }));
-  }
+export function NextPage(setTrimState) {
+  setTrimState((prevState) => ({ ...prevState, page: prevState.page + 1 }));
 }
 
-export function customSetTimeout(callback, delay, setTrimState, movePage) {
-  clearTimeout(movePage.timeoutId);
-  setTrimState((prevState) => ({
-    ...prevState,
-    movePage: {
-      ...prevState.movePage,
-      timeoutId: setTimeout(callback, delay),
-    },
-  }));
+export function SelectPage(setTrimState, selectPage) {
+  setTrimState((prevState) => ({ ...prevState, page: selectPage }));
 }

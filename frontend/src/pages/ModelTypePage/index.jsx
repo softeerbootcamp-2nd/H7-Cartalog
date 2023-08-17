@@ -1,4 +1,4 @@
-import { useEffect, cloneElement } from 'react';
+import { useEffect } from 'react';
 import { useData } from '../../utils/Context';
 import { MODEL_TYPE } from './constants';
 import Section from '../../components/Section';
@@ -6,11 +6,11 @@ import Info from './Info';
 import Pick from './Pick';
 
 function ModelType() {
-  const { setTrimState, trim, modelType } = useData();
+  const { setTrimState, page, trim, modelType } = useData();
 
   useEffect(() => {
     async function fetchData() {
-      if (!modelType.isFetch) {
+      if (!modelType.isFetch && page === 2) {
         const response = await fetch(`http://3.36.126.30/models/types?trimId=${trim.id}`);
         const dataFetch = await response.json();
 
@@ -34,32 +34,17 @@ function ModelType() {
             isDefault: true,
           },
           modelType: updatedModelType,
-          clonePage: {
-            ...prevState.clonePage,
-            2: cloneElement(<ModelType />),
-          },
         }));
       }
-      setTrimState((prevState) => ({ ...prevState, page: 2 }));
-      setTimeout(() => {
-        setTrimState((prevState) => ({
-          ...prevState,
-          movePage: {
-            ...prevState.movePage,
-            clonePage: 2,
-            nowContentRef: 'nowUnload',
-            nextContentRef: 'nextUnload',
-          },
-        }));
-      }, 1000);
     }
     fetchData();
-  }, []);
+  }, [page]);
 
   const SectionProps = {
     type: MODEL_TYPE.TYPE,
     Info: <Info />,
     Pick: <Pick />,
+    showPriceStatic: true,
   };
   return modelType.isFetch ? <Section {...SectionProps} /> : <>Loding</>;
 }

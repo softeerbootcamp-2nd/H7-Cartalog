@@ -1,20 +1,19 @@
-import { useNavigate } from 'react-router-dom';
-import { useData, StartAnimation } from '../../../utils/Context';
+import { useData, SelectPage } from '../../../utils/Context';
 import { NAV } from '../constants';
 import * as S from './style';
 import NavToggle from '../../NavToggle';
 
 function isLinkEnabled(item, modelType, exteriorColor, interiorColor, optionPicker, estimation) {
-  switch (item.to) {
-    case '/modelType':
+  switch (item.label) {
+    case '타입':
       return modelType.isFetch;
-    case '/exteriorColor':
+    case '외장':
       return exteriorColor.isFetch;
-    case '/interiorColor':
+    case '내장':
       return interiorColor.isFetch;
-    case '/optionPicker':
+    case '옵션':
       return optionPicker.isFetch;
-    case '/estimation':
+    case '완료':
       return estimation.isFetch;
     default:
       return true;
@@ -22,18 +21,8 @@ function isLinkEnabled(item, modelType, exteriorColor, interiorColor, optionPick
 }
 
 function Nav() {
-  const navigate = useNavigate();
-  const {
-    setTrimState,
-    page,
-    modelType,
-    exteriorColor,
-    interiorColor,
-    optionPicker,
-    estimation,
-    pageNum,
-    pagePath,
-  } = useData();
+  const { setTrimState, page, modelType, exteriorColor, interiorColor, optionPicker, estimation } =
+    useData();
 
   return (
     <S.Nav>
@@ -50,11 +39,7 @@ function Nav() {
                 estimation,
               ) ? (
                 <S.Button
-                  onClick={() => {
-                    const nowPath = pageNum[page];
-                    const nextPath = item.to;
-                    StartAnimation(nowPath, nextPath, navigate, setTrimState, pagePath);
-                  }}
+                  onClick={() => SelectPage(setTrimState, item.page)}
                   className={item.page === page ? 'selected' : 'unSelected'}
                 >
                   {item.label}

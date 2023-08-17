@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 
 export const Estimation = styled.div`
-  width: 100%;
+  min-width: 100%;
 `;
 
 export const PageContents = styled.div`

@@ -1,4 +1,4 @@
-import { useEffect, useState, cloneElement } from 'react';
+import { useEffect, useState } from 'react';
 import { useData, TotalPrice } from '../../utils/Context';
 import PriceStaticBar from '../../components/PriceStaticBar';
 import Preview from './Preview';
@@ -119,39 +119,28 @@ const MOCK_HMGDATA = {
 };
 
 function Estimation() {
-  const [isFetched, setIsFetched] = useState(false);
-  const { setTrimState, trim, price } = useData();
+  const { setTrimState, page, trim, price, estimation } = useData();
   const SelectModel = trim.fetchData.find((model) => model.id === trim.id);
 
   // !FIX API 데이터 받아오도록 수정해야함 유사견적 API
   useEffect(() => {
     async function fetchData() {
-      setTrimState((prevState) => ({
-        ...prevState,
-        clonePage: {
-          ...prevState.clonePage,
-          6: cloneElement(<Estimation />),
-        },
-      }));
-      setIsFetched(true);
+      if (!estimation.isFetch && page === 6) {
+        setTrimState((prevState) => ({
+          ...prevState,
+          estimation: {
+            ...prevState.estimation,
+            isFetch: true,
+          },
+        }));
+      }
     }
-    setTrimState((prevState) => ({ ...prevState, page: 6 }));
-    setTimeout(() => {
-      setTrimState((prevState) => ({
-        ...prevState,
-        movePage: {
-          ...prevState.movePage,
-          clonePage: 6,
-          nowContentRef: 'nowUnload',
-          nextContentRef: 'nextUnload',
-        },
-      }));
-    }, 1000);
-    fetchData();
-  }, [setTrimState]);
 
-  return isFetched ? (
-    <>
+    fetchData();
+  }, [page]);
+
+  return estimation.isFetch ? (
+    <S.Estimation>
       <Preview />
       <S.Estimation>
         <Info />
@@ -165,7 +154,7 @@ function Estimation() {
         max={SelectModel?.maxPrice}
         price={TotalPrice(price)}
       />
-    </>
+    </S.Estimation>
   ) : (
     <>Loading...</>
   );

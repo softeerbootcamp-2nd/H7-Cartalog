@@ -1,4 +1,4 @@
-import { useEffect, cloneElement } from 'react';
+import { useEffect } from 'react';
 import { useData } from '../../utils/Context';
 import { EXTERIOR_COLOR } from './constants';
 import Section from '../../components/Section';
@@ -6,11 +6,11 @@ import Info from './Info';
 import Pick from './Pick';
 
 function ExteriorColor() {
-  const { setTrimState, trim, exteriorColor } = useData();
+  const { setTrimState, page, trim, exteriorColor } = useData();
 
   useEffect(() => {
     async function fetchData() {
-      if (!exteriorColor.isFetch) {
+      if (!exteriorColor.isFetch && page === 3) {
         const response = await fetch(
           `http://3.36.126.30/models/trims/exterior-colors?trimId=${trim.id}`,
         );
@@ -33,32 +33,17 @@ function ExteriorColor() {
               return `${defaultData.carImageDirectory}${imageNumber}.png`;
             }),
           },
-          clonePage: {
-            ...prevState.clonePage,
-            3: cloneElement(<ExteriorColor />),
-          },
         }));
       }
-      setTrimState((prevState) => ({ ...prevState, page: 3 }));
-      setTimeout(() => {
-        setTrimState((prevState) => ({
-          ...prevState,
-          movePage: {
-            ...prevState.movePage,
-            clonePage: 3,
-            nowContentRef: 'nowUnload',
-            nextContentRef: 'nextUnload',
-          },
-        }));
-      }, 1000);
     }
     fetchData();
-  }, []);
+  }, [page]);
 
   const SectionProps = {
     type: EXTERIOR_COLOR.TYPE,
     Info: <Info />,
     Pick: <Pick />,
+    showPriceStatic: true,
   };
 
   return exteriorColor.isFetch ? <Section {...SectionProps} /> : <>Loding</>;
