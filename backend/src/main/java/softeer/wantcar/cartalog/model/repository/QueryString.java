@@ -10,7 +10,7 @@ public class QueryString {
             "                mo.child_category             AS child_category, " +
             "                mo.image_url                  AS image_url, " +
             "                mo.description                AS description, " +
-            "                mo.price_if_model_type_option AS price, " +
+            "                mo.price AS price, " +
             "                hmg.name                      AS hmg_data_name, " +
             "                hmg.val                       AS hmg_data_value, " +
             "                hmg.measure                   AS hmg_data_measure " +
