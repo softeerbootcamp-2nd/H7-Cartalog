@@ -52,7 +52,6 @@ const ImageAnimation = keyframes`
 
 export const Preview = styled.div`
   width: 100%;
-  margin-top: 60px;
   background-color: ${({ theme }) => theme.color.white};
 
   & > div {

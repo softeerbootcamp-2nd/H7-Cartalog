@@ -10,14 +10,15 @@ import ModelType from '../../pages/ModelTypePage';
 import ExteriorColor from '../../pages/ExteriorColorPage';
 import OptionPicker from '../../pages/OptionPickerPage';
 import Estimation from '../../pages/EstimationPage';
+import { EASE_OUT_CUBIC } from '../../constants';
 
 function Interaction() {
   const { page, trim, price, budget } = useData();
   const pageRef = useRef();
 
   useEffect(() => {
-    pageRef.current.style.transition = 'all 0.7s ease-in-out';
-    pageRef.current.style.transform = `translateX(-${page - 1}00%)`;
+    pageRef.current.style.transition = `all 0.5s ${EASE_OUT_CUBIC}`;
+    pageRef.current.style.transform = `translateX(min(-${page - 1}00%, -${(page - 1) * 1280}px))`;
   }, [page]);
 
   return (
