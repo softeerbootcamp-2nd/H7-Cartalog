@@ -5,6 +5,7 @@ export const Pick = styled.div`
   flex-direction: column;
   gap: 16px;
   margin-top: 16px;
+  margin-bottom: 120px;
 `;
 
 export const OptionGrid = styled.div`

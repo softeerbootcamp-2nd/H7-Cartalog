@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 export const Pick = styled.div`
-  height: 720px;
-  overflow: hidden;
+  width: 100%;
 `;
 
 export const PickModel = styled.div`
@@ -15,6 +14,6 @@ export const Footer = styled.div`
   position: fixed;
   display: flex;
   z-index: 2;
-  top: 800px;
+  bottom: 0;
   gap: 7px;
 `;
