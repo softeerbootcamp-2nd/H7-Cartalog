@@ -10,14 +10,14 @@ function Footer() {
   const [isHMGData, setIsHMGData] = useState(false);
 
   useEffect(() => {
-    setIsVisible(page !== 1);
-    setIsHMGData(page === 1 || page === 2);
+    setIsVisible(!!page && page !== 1);
+    setIsHMGData([1, 2].includes(page));
   }, [page]);
 
   return (
-    <S.Footer className={isVisible ? 'visible' : 'hidden'}>
+    <S.Footer className={isVisible ? 'visible' : ''}>
       <S.FooterEnd>
-        <S.HMGDataFade className={isHMGData ? 'visible' : 'hidden'}>
+        <S.HMGDataFade className={isHMGData ? 'visible' : ''}>
           <HMGData />
         </S.HMGDataFade>
         <NextButton />

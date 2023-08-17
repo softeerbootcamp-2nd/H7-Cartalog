@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 export const Pick = styled.div`
-  height: 720px;
-  overflow: hidden;
+  width: 100%;
 `;
 
 export const PickModel = styled.div`
