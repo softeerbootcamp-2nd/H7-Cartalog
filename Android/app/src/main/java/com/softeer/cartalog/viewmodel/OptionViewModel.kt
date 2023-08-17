@@ -93,4 +93,16 @@ class OptionViewModel : ViewModel() {
             _nowOptionMode.value = OptionMode.SELECT_OPTION
         }
     }
+
+    fun setSelectedDefaultOption(selectedOption: Int){
+        _selectedDefaultOption.value = selectedOption
+    }
+
+    fun setSelectedSelectOption(selectedOption: Int){
+        _selectedSelectOption.value = selectedOption
+    }
+
+    fun setNowOptionMode(selectedMode: OptionMode){
+        _nowOptionMode.value = selectedMode
+    }
 }

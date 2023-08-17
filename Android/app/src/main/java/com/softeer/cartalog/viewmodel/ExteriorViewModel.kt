@@ -34,4 +34,12 @@ class ExteriorViewModel(private val repository: CarRepository) : ViewModel() {
             Log.d("test", _colorList.value.toString())
         }
     }
+
+    fun setSelectedColor(selectedColor: Int) {
+        _selectedColor.value = selectedColor
+    }
+
+    fun setStart360X(startX: Float) {
+        _start360X.value = startX
+    }
 }

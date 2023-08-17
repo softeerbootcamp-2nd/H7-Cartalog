@@ -26,4 +26,8 @@ class InteriorViewModel(private val repository: CarRepository) : ViewModel() {
             _colorList.value = repository.getCarColors(false, 2, "A2B")
         }
     }
+
+    fun setSelectedColor(selectedColor: Int){
+        _selectedColor.value = selectedColor
+    }
 }
