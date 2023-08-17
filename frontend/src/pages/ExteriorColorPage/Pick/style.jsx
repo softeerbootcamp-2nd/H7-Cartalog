@@ -34,6 +34,6 @@ export const Footer = styled.div`
 export const FooterEnd = styled.div`
   position: fixed;
   z-index: 2;
-  top: 800px;
+  bottom: 0;
   margin-bottom: 16px;
 `;
