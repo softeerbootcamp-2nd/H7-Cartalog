@@ -13,8 +13,8 @@ class TrimViewModel(private val repository: CarRepository) : ViewModel() {
     private val _trimList: MutableLiveData<List<Trim>> = MutableLiveData(emptyList())
     val trimList: LiveData<List<Trim>> = _trimList
 
-    private val _selectedTrim = MutableLiveData<Int>(0)
-    val selectedTrim = _selectedTrim
+    private val _selectedTrim = MutableLiveData(0)
+    val selectedTrim: LiveData<Int> = _selectedTrim
 
     private lateinit var modelName: String
 

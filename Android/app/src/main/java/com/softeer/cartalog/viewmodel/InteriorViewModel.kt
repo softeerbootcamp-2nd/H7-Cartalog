@@ -1,6 +1,5 @@
 package com.softeer.cartalog.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,7 +14,7 @@ class InteriorViewModel(private val repository: CarRepository) : ViewModel() {
     val colorList: LiveData<List<CarColor>> = _colorList
 
     private val _selectedColor = MutableLiveData(0)
-    val selectedColor = _selectedColor
+    val selectedColor: LiveData<Int> = _selectedColor
 
     init {
         setInteriorColorData()
@@ -25,7 +24,6 @@ class InteriorViewModel(private val repository: CarRepository) : ViewModel() {
         viewModelScope.launch {
             // TODO : exteriorColorCode 부분 추후 RoomDB에서 불러온값으로 초기화 해야함
             _colorList.value = repository.getCarColors(false, 2, "A2B")
-            Log.d("test", _colorList.value.toString())
         }
     }
 }

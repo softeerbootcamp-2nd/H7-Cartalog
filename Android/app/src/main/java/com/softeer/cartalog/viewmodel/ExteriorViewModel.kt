@@ -16,13 +16,13 @@ class ExteriorViewModel(private val repository: CarRepository) : ViewModel() {
     val colorList: LiveData<List<CarColor>> = _colorList
 
     private val _img360List = MutableLiveData<MutableList<Drawable>>()
-    val img360List = _img360List
+    val img360List: LiveData<MutableList<Drawable>> = _img360List
 
     private val _selectedColor = MutableLiveData(0)
-    val selectedColor = _selectedColor
+    val selectedColor: LiveData<Int> = _selectedColor
 
     private val _start360X = MutableLiveData(0f)
-    val start360X = _start360X
+    val start360X: LiveData<Float> = _start360X
 
     init {
         setExteriorColorData()
