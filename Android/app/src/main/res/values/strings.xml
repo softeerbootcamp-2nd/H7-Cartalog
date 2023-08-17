@@ -5,7 +5,7 @@
     <string name="btn_prev">이전</string>
     <string name="btn_next">다음</string>
     <string name="btn_price_summary">견적 요약</string>
-    <string name="btn_close_price_summary">요약닫기</string>
+    <string name="btn_close_price_summary">견적 요약 닫기</string>
     <string name="btn_open_similar_estimate">유사 출고 견적 확인하기</string>
     <string name="btn_share">공유하기</string>
     <string name="btn_consult">상담신청</string>
@@ -51,7 +51,6 @@
     <string name="summary_model">모델</string>
     <string name="summary_exterior">외장 색상</string>
     <string name="summary_interior">내장 색상</string>
-    <string name="summary_complete">견적 완료하기</string>
     <string name="summary_total_price">최종 견적 가격</string>
     <string name="summary_title_2">평균 연비</string>
     <string name="summary_title_3">배기량</string>
