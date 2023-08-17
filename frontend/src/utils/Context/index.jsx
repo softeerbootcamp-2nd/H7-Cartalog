@@ -140,3 +140,7 @@ export function NextPage(setTrimState) {
 export function SelectPage(setTrimState, selectPage) {
   setTrimState((prevState) => ({ ...prevState, page: selectPage }));
 }
+
+export function SetBudget(setTrimState, budget) {
+  setTrimState((prevState) => ({ ...prevState, budget }));
+}

@@ -3,7 +3,7 @@ import { TRIM_CARD } from '../../constants';
 import * as S from './style';
 import Button from '../../../../components/Button';
 
-function TrimCard({ name, description, price, defaultInfo, active, onClick }) {
+function TrimCard({ name, description, minPrice, maxPrice, defaultInfo, active, onClick }) {
   const { setTrimState, trim } = useData();
 
   const updateState = () => {
@@ -16,6 +16,12 @@ function TrimCard({ name, description, price, defaultInfo, active, onClick }) {
 
       setTrimState((prevState) => ({
         ...prevState,
+        budget: (minPrice + maxPrice) / 2,
+        trim: {
+          ...prevState.trim,
+          minPrice,
+          maxPrice,
+        },
         modelType: {
           ...prevState.modelType,
           pickId: powerTrainType.option.id,
@@ -33,7 +39,7 @@ function TrimCard({ name, description, price, defaultInfo, active, onClick }) {
         },
         price: {
           ...prevState.price,
-          trimPrice: price,
+          trimPrice: minPrice,
           powerTrainPrice: powerTrainType.option.price,
           bodyTypePrice: bodyType.option.price,
           wheelDrivePrice: wheelDriveType.option.price,
@@ -58,7 +64,7 @@ function TrimCard({ name, description, price, defaultInfo, active, onClick }) {
         <S.Description>{description}</S.Description>
         <S.Name>{name}</S.Name>
       </S.Trim>
-      <S.Price>{price.toLocaleString('ko-KR')}</S.Price>
+      <S.Price>{minPrice.toLocaleString('ko-KR')}</S.Price>
       <S.SelectButton>
         <Button {...buttonProps} />
       </S.SelectButton>

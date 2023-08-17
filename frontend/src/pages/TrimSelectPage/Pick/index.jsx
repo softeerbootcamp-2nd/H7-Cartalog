@@ -50,7 +50,8 @@ function Pick() {
               key={trimData.id}
               name={trimData.name}
               description={trimData.description}
-              price={trimData.minPrice}
+              minPrice={trimData.minPrice}
+              maxPrice={trimData.maxPrice}
               defaultInfo={trimData.defaultInfo}
               active={trimData.id === trim.id}
               onClick={() => handleTrimCardClick(trimData)}
