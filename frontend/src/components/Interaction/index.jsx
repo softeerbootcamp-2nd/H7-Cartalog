@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useData } from '../../utils/Context';
 import * as S from './style';
 import Header from '../Header';
+import Footer from '../Footer';
 import InteriorColor from '../../pages/InteriorColorPage';
 import TrimSelect from '../../pages/TrimSelectPage';
 import ModelType from '../../pages/ModelTypePage';
@@ -14,7 +15,7 @@ function Interaction() {
   const pageRef = useRef();
 
   useEffect(() => {
-    pageRef.current.style.transition = 'all 1.5s ease-in-out';
+    pageRef.current.style.transition = 'all 0.7s ease-in-out';
     pageRef.current.style.transform = `translateX(-${page - 1}00%)`;
   }, [page]);
 
@@ -29,6 +30,7 @@ function Interaction() {
         <OptionPicker />
         <Estimation />
       </S.Page>
+      <Footer />
     </S.Interaction>
   );
 }

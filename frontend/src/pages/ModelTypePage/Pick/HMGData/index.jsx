@@ -14,26 +14,29 @@ function HMGData() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(
-        `http://3.36.126.30/models/trims/detail?modelTypeIds=${modelType.powerTrainId}&modelTypeIds=${modelType.bodyTypeId}&modelTypeIds=${modelType.wheelDriveId}&trimId=${trim.id}`,
-      );
-      const dataFetch = await response.json();
+      if (trim.isDefault) {
+        const response = await fetch(
+          `http://3.36.126.30/models/trims/detail?modelTypeIds=${modelType.powerTrainId}&modelTypeIds=${modelType.bodyTypeId}&modelTypeIds=${modelType.wheelDriveId}&trimId=${trim.id}`,
+        );
+        const dataFetch = await response.json();
 
-      setTrimState((prevState) => ({
-        ...prevState,
-        modelType: {
-          ...prevState.modelType,
-          detailTrimId: dataFetch.detailTrimId,
-        },
-      }));
+        setTrimState((prevState) => ({
+          ...prevState,
+          modelType: {
+            ...prevState.modelType,
+            detailTrimId: dataFetch.detailTrimId,
+          },
+        }));
 
-      setHmgData({
-        displacement: dataFetch.displacement,
-        fuelEfficiency: dataFetch.fuelEfficiency,
-      });
+        setHmgData({
+          displacement: dataFetch.displacement,
+          fuelEfficiency: dataFetch.fuelEfficiency,
+        });
+      }
     }
+
     fetchData();
-  }, [modelType.pickId]);
+  }, [trim.isDefault]);
 
   const tagProps = { type: HMG_TAG.TYPE };
   const displacementProps = {
@@ -45,7 +48,7 @@ function HMGData() {
     unit: `${hmgData.fuelEfficiency}${HMG_DATA.FUELEFFICIENCY_UNIT}`,
   };
 
-  return (
+  return trim.isDefault ? (
     <S.HMGData>
       <S.Info>
         <HMGTag {...tagProps} />
@@ -63,6 +66,8 @@ function HMGData() {
         <HMGUnit {...fuelEfficiencyProps} />
       </S.Detail>
     </S.HMGData>
+  ) : (
+    <>Loding..</>
   );
 }
 
