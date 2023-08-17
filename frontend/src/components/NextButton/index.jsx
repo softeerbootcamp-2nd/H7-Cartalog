@@ -39,7 +39,7 @@ function NextButton() {
         </S.TotalPrice>
       </S.Estimate>
       <Button {...buttonProps} />
-      <SummaryPopup show={show} close={handleClose} onClick={() => {}} />
+      <SummaryPopup show={show} close={handleClose} />
     </S.NextButton>
   );
 }
