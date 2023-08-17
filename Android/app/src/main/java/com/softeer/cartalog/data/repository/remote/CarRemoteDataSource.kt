@@ -1,5 +1,6 @@
 package com.softeer.cartalog.data.repository.remote
 
+import com.softeer.cartalog.data.model.SummaryCarImage
 import com.softeer.cartalog.data.model.ExteriorColors
 import com.softeer.cartalog.data.model.InteriorColors
 import com.softeer.cartalog.data.model.TrimDetail
@@ -26,6 +27,10 @@ class CarRemoteDataSource(
         return carApi.getTrimsDetail(modelTypeIds, trimId)
     }
 
+    suspend fun getSummaryCarImage(exterior: String, interior: String): Response<SummaryCarImage> {
+        return carApi.getCarSummaryImage(exterior, interior)
+    }
+    
     suspend fun getExteriorColors(trimId: Int): Response<ExteriorColors> {
         return carApi.getExteriorColors(trimId)
     }

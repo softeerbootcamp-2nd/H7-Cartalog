@@ -3,13 +3,19 @@ package com.softeer.cartalog.ui.adapter
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.RadioGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentContainerView
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.tabs.TabLayout
+import com.softeer.cartalog.R
 import com.softeer.cartalog.data.enums.OptionMode
+import com.softeer.cartalog.data.model.SummaryCarImage
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import com.softeer.cartalog.viewmodel.InteriorViewModel
 import com.softeer.cartalog.viewmodel.OptionViewModel
@@ -145,4 +151,22 @@ fun setOptionTabSelected(
         override fun onTabUnselected(tab: TabLayout.Tab?) {}
         override fun onTabReselected(tab: TabLayout.Tab?) {}
     })
+}
+
+@BindingAdapter("imageView","imgUrl")
+fun setCarImageSelected(
+    radioGroup: RadioGroup,
+    imageView: ImageView,
+    carImage: LiveData<SummaryCarImage>
+){
+    radioGroup.setOnCheckedChangeListener { _, checkedId ->
+        when(checkedId){
+            R.id.rb_exterior -> {
+                imageView.load(carImage.value?.sideExteriorImageUrl)
+            }
+            R.id.rb_interior -> {
+                imageView.load(carImage.value?.interiorImageUrl)
+            }
+        }
+    }
 }

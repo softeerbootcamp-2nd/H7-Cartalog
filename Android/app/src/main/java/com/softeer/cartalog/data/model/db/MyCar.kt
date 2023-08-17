@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 data class MyCar(
     val carName: String,
     val trim: String,
+    val minPrice: Int,
     val exteriorImg: String,
     val interiorImg: String,
     val fuelEfficiency: Float?,

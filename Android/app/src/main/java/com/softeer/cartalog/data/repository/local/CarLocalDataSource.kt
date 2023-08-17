@@ -21,4 +21,12 @@ class CarLocalDataSource(
     suspend fun isEmpty(carId: Int): Boolean {
         return priceDataDao.getPriceDataCountByCarId(carId) == 0
     }
+
+    suspend fun getMyCar(): MyCar{
+        return myCarDao.getMyCar()
+    }
+
+    suspend fun getPriceDataList(): List<PriceData>{
+        return priceDataDao.getPriceDataList()
+    }
 }

@@ -12,12 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.softeer.cartalog.R
 import com.softeer.cartalog.data.enums.OptionMode
+import com.softeer.cartalog.data.model.SummaryOptionPrice
 import com.softeer.cartalog.data.model.CarColor
 import com.softeer.cartalog.util.UtilManager
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import com.softeer.cartalog.viewmodel.InteriorViewModel
 import com.softeer.cartalog.viewmodel.MainViewModel
 import com.softeer.cartalog.viewmodel.OptionViewModel
+import com.softeer.cartalog.viewmodel.PriceSummaryViewModel
 import com.softeer.cartalog.viewmodel.TrimViewModel
 import com.softeer.cartalog.viewmodel.TypeViewModel
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
@@ -197,4 +199,18 @@ fun setRangeBarVisibility(
         }
         seekBar.isEnabled = true
     }
+}
+
+@BindingAdapter("viewModel")
+fun setSummaryOptionsRecyclerView(
+    recyclerView: RecyclerView,
+    viewModel: PriceSummaryViewModel
+) {
+    val optionList = viewModel.options.value!!
+    val adapter = if (optionList.isEmpty()) {
+        SummaryOptionsAdapter(listOf(SummaryOptionPrice("-", -1)))
+    } else {
+        SummaryOptionsAdapter(optionList)
+    }
+    recyclerView.adapter = adapter
 }

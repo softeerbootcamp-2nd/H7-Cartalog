@@ -1,6 +1,7 @@
 package com.softeer.cartalog.data.repository
 
 import com.softeer.cartalog.data.enums.PriceDataType
+import com.softeer.cartalog.data.model.SummaryCarImage
 import com.softeer.cartalog.data.model.CarColor
 import com.softeer.cartalog.data.model.Trim
 import com.softeer.cartalog.data.model.TrimDetail
@@ -24,7 +25,15 @@ class CarRepositoryImpl(
     override suspend fun setInitialMyCarData(carName: String, trim: Trim) {
 
         val myCar =
-            MyCar(carName, trim.name, trim.exteriorImageUrl, trim.interiorImageUrl, null, null)
+            MyCar(
+                carName,
+                trim.name,
+                trim.minPrice,
+                trim.exteriorImageUrl,
+                trim.interiorImageUrl,
+                null,
+                null
+            )
         val carId = carLocalDataSource.setInitialMyCar(myCar)
 
         if (carLocalDataSource.isEmpty(carId)) {
@@ -86,6 +95,18 @@ class CarRepositoryImpl(
         val response = carRemoteDataSource.getTrimsDetail(modelTypeIds, trimId)
         return if (response.isSuccessful) response.body()!! else TrimDetail(0, 0, 0f)
     }
+
+    override suspend fun getMyCarData(): MyCar {
+        return carLocalDataSource.getMyCar()
+    }
+
+    override suspend fun getPirceDataList(): List<PriceData> {
+        return carLocalDataSource.getPriceDataList()
+    }
+
+    override suspend fun getSummaryCarImage(exterior: String, interior: String): SummaryCarImage {
+        val response = carRemoteDataSource.getSummaryCarImage(exterior, interior)
+        return if (response.isSuccessful) response.body()!! else SummaryCarImage("","")
 
     override suspend fun getCarColors(
         isExterior: Boolean,
