@@ -2,6 +2,7 @@
 DROP TABLE IF EXISTS pending_hash_tag_similarities;
 DROP TABLE IF EXISTS hash_tag_similarities;
 DROP TABLE IF EXISTS similar_estimates;
+DROP TABLE IF EXISTS release_records;
 DROP TABLE IF EXISTS estimate_packages;
 DROP TABLE IF EXISTS estimate_options;
 DROP TABLE IF EXISTS estimates;
@@ -264,11 +265,10 @@ CREATE TABLE detail_trim_package_interior_color_condition
 
 CREATE TABLE estimates
 (
-    id                     BIGINT PRIMARY KEY,
-    create_date            TIMESTAMP NOT NULL,
-    detail_trim_id         BIGINT    NOT NULL,
-    trim_exterior_color_id BIGINT    NOT NULL,
-    trim_interior_color_id BIGINT    NOT NULL,
+    id                     BIGINT PRIMARY KEY AUTO_INCREMENT,
+    detail_trim_id         BIGINT NOT NULL,
+    trim_exterior_color_id BIGINT NOT NULL,
+    trim_interior_color_id BIGINT NOT NULL,
     FOREIGN KEY (detail_trim_id) REFERENCES detail_trims (id) ON UPDATE CASCADE,
     FOREIGN KEY (trim_exterior_color_id) REFERENCES trim_exterior_colors (id) ON UPDATE CASCADE,
     FOREIGN KEY (trim_interior_color_id) REFERENCES trim_interior_colors (id) ON UPDATE CASCADE
@@ -290,6 +290,14 @@ CREATE TABLE estimate_packages
     PRIMARY KEY (estimate_id, model_package_id),
     FOREIGN KEY (estimate_id) REFERENCES estimates (id) ON UPDATE CASCADE,
     FOREIGN KEY (model_package_id) REFERENCES model_packages (id) ON UPDATE CASCADE
+);
+
+CREATE TABLE release_records
+(
+    id          BIGINT PRIMARY KEY AUTO_INCREMENT,
+    estimate_id BIGINT    NOT NULL,
+    create_date TIMESTAMP NOT NULL,
+    FOREIGN KEY (estimate_id) REFERENCES estimates (id) ON UPDATE CASCADE
 );
 
 CREATE TABLE similar_estimates
@@ -353,7 +361,8 @@ SELECT *
 FROM CSVREAD('classpath:csv/detail_trims.csv', null, 'fieldSeparator=|');
 
 -- noinspection SqlResolve
-INSERT INTO model_options (id, model_id, name, parent_category, child_category, image_url, description, price, basic, model_type)
+INSERT INTO model_options (id, model_id, name, parent_category, child_category, image_url, description, price, basic,
+                           model_type)
 SELECT id,
        model_id,
        name,
@@ -443,7 +452,7 @@ INSERT INTO detail_trim_package_interior_color_condition (id, detail_trim_packag
 SELECT *
 FROM CSVREAD('classpath:csv/detail_trim_package_interior_color_condition.csv', null, 'fieldSeparator=|');
 
-INSERT INTO estimates (id, create_date, detail_trim_id, trim_exterior_color_id, trim_interior_color_id)
+INSERT INTO estimates (id, detail_trim_id, trim_exterior_color_id, trim_interior_color_id)
 SELECT *
 FROM CSVREAD('classpath:csv/estimates.csv', null, 'fieldSeparator=|');
 
@@ -454,6 +463,10 @@ FROM CSVREAD('classpath:csv/estimate_options.csv', null, 'fieldSeparator=|');
 INSERT INTO estimate_packages (estimate_id, model_package_id)
 SELECT *
 FROM CSVREAD('classpath:csv/estimate_packages.csv', null, 'fieldSeparator=|');
+
+INSERT INTO release_records (id, estimate_id, create_date)
+SELECT *
+FROM CSVREAD('classpath:csv/release_records.csv', null, 'fieldSeparator=|');
 
 INSERT INTO similar_estimates (hash_tag_key, estimate_id)
 SELECT *
