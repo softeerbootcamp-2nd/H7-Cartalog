@@ -15,7 +15,7 @@ function Interaction() {
 
   useEffect(() => {
     pageRef.current.style.transition = 'all 1.5s ease-in-out';
-    pageRef.current.style.transform = `translateX(-${page - 1}00%)`;
+    pageRef.current.style.transform = `translateX(min(-${page - 1}00%, -${(page - 1) * 1280}px))`;
   }, [page]);
 
   return (
