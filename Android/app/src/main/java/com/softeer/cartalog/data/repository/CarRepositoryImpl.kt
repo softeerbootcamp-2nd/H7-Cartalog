@@ -1,6 +1,7 @@
 package com.softeer.cartalog.data.repository
 
 import com.softeer.cartalog.data.enums.PriceDataType
+import com.softeer.cartalog.data.model.SummaryCarImage
 import com.softeer.cartalog.data.model.Trim
 import com.softeer.cartalog.data.model.TrimDetail
 import com.softeer.cartalog.data.model.Trims
@@ -100,5 +101,10 @@ class CarRepositoryImpl(
 
     override suspend fun getPirceDataList(): List<PriceData> {
         return carLocalDataSource.getPirceDataList()
+    }
+
+    override suspend fun getSummaryCarImage(exterior: String, interior: String): SummaryCarImage {
+        val response = carRemoteDataSource.getSummaryCarImage(exterior, interior)
+        return if (response.isSuccessful) response.body()!! else SummaryCarImage("","")
     }
 }

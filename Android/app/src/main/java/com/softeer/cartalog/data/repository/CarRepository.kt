@@ -1,5 +1,6 @@
 package com.softeer.cartalog.data.repository
 
+import com.softeer.cartalog.data.model.SummaryCarImage
 import com.softeer.cartalog.data.model.Trim
 import com.softeer.cartalog.data.model.TrimDetail
 import com.softeer.cartalog.data.model.Trims
@@ -16,4 +17,5 @@ interface CarRepository {
 
     suspend fun getMyCarData(): MyCar
     suspend fun getPirceDataList(): List<PriceData>
+    suspend fun getSummaryCarImage(exterior: String, interior: String): SummaryCarImage
 }

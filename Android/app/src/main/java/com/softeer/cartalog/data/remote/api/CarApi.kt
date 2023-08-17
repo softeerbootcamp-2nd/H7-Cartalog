@@ -1,5 +1,6 @@
 package com.softeer.cartalog.data.remote.api
 
+import com.softeer.cartalog.data.model.SummaryCarImage
 import com.softeer.cartalog.data.model.TrimDetail
 import com.softeer.cartalog.data.model.Trims
 import com.softeer.cartalog.data.model.Types
@@ -20,5 +21,11 @@ interface CarApi {
 
     @GET("/models/trims")
     suspend fun getTrims(@Query("basicModelId") basicModelId: Int): Response<Trims>
+
+    @GET("/models/images")
+    suspend fun getCarSummaryImage(
+        @Query("exteriorColorCode") exteriorColor: String,
+        @Query("interiorColorCode") interiorColor: String
+    ): Response<SummaryCarImage>
 
 }
