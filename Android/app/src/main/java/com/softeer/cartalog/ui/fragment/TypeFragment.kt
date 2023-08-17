@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.softeer.cartalog.R
 import com.softeer.cartalog.data.local.MyCarDatabase
 import com.softeer.cartalog.data.remote.api.RetrofitClient
 import com.softeer.cartalog.data.repository.CarRepositoryImpl
@@ -51,6 +52,9 @@ class TypeFragment : Fragment() {
         }
         binding.btnPrev.setOnClickListener {
             (activity as MainActivity).changeTab(0)
+        }
+        binding.btnPriceSummary.setOnClickListener {
+            findNavController().navigate(R.id.action_typeFragment_to_priceSummaryBottomSheetFragment)
         }
     }
 

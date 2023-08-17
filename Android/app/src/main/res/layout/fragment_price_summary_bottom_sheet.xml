@@ -4,6 +4,10 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.softeer.cartalog.viewmodel.PriceSummaryViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,7 +45,7 @@
             app:layout_constraintGuide_end="16dp" />
 
         <ImageButton
-            android:id="@+id/btn_close"
+            android:id="@+id/btn_close_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -52,12 +56,12 @@
 
         <ImageView
             android:id="@+id/im_car_result"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:src="@drawable/tmp_img_summary_car"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_close" />
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_title"
+            app:layout_constraintTop_toBottomOf="@id/btn_close_top" />
 
         <RadioGroup
             android:layout_width="wrap_content"
@@ -127,22 +131,12 @@
             android:id="@+id/tv_contents_1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="팰리세이드"
+            android:text="@{viewModel.myCar.carName}"
             android:textColor="@color/gray_900"
             app:layout_constraintEnd_toStartOf="@id/gl_price"
             app:layout_constraintStart_toStartOf="@id/gl_contents"
             app:layout_constraintTop_toTopOf="@id/tv_title_1" />
 
-        <TextView
-            android:id="@+id/tv_price_1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="+3,880,000원"
-            android:textAlignment="textEnd"
-            android:textColor="@color/gray_900"
-            app:layout_constraintEnd_toEndOf="@id/gl_end"
-            app:layout_constraintStart_toStartOf="@id/gl_price"
-            app:layout_constraintTop_toTopOf="@id/tv_title_1" />
 
         <TextView
             android:id="@+id/tv_title_2"
@@ -159,7 +153,7 @@
             android:id="@+id/tv_contents_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="팰리세이드"
+            android:text="@{viewModel.myCar.trim}"
             android:textColor="@color/gray_900"
             app:layout_constraintEnd_toStartOf="@id/gl_price"
             app:layout_constraintStart_toStartOf="@id/gl_contents"
@@ -169,7 +163,7 @@
             android:id="@+id/tv_price_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="+3,880,000원"
+            android:text="@{String.format(`+ %,d 원`, viewModel.myCar.minPrice)}"
             android:textAlignment="textEnd"
             android:textColor="@color/gray_900"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
@@ -201,7 +195,7 @@
             android:id="@+id/tv_contents_3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="팰리세이드"
+            android:text="@{viewModel.powerTrain.first}"
             android:textColor="@color/gray_900"
             app:layout_constraintEnd_toStartOf="@id/gl_price"
             app:layout_constraintStart_toStartOf="@id/gl_contents"
@@ -211,7 +205,7 @@
             android:id="@+id/tv_price_3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="+3,880,000원"
+            android:text="@{String.format(`+ %,d 원`, viewModel.powerTrain.second)}"
             android:textAlignment="textEnd"
             android:textColor="@color/gray_900"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
@@ -234,7 +228,7 @@
             android:id="@+id/tv_contents_4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="팰리세이드"
+            android:text="@{viewModel.bodyType.first}"
             android:textColor="@color/gray_900"
             app:layout_constraintEnd_toStartOf="@id/gl_price"
             app:layout_constraintStart_toStartOf="@id/gl_contents"
@@ -244,7 +238,7 @@
             android:id="@+id/tv_price_4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="+3,880,000원"
+            android:text="@{String.format(`+ %,d 원`, viewModel.bodyType.second)}"
             android:textAlignment="textEnd"
             android:textColor="@color/gray_900"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
@@ -267,7 +261,7 @@
             android:id="@+id/tv_contents_5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="팰리세이드"
+            android:text="@{viewModel.wheelDrive.first}"
             android:textColor="@color/gray_900"
             app:layout_constraintEnd_toStartOf="@id/gl_price"
             app:layout_constraintStart_toStartOf="@id/gl_contents"
@@ -277,7 +271,7 @@
             android:id="@+id/tv_price_5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="+3,880,000원"
+            android:text="@{String.format(`+ %,d 원`, viewModel.wheelDrive.second)}"
             android:textAlignment="textEnd"
             android:textColor="@color/gray_900"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
@@ -309,7 +303,7 @@
             android:id="@+id/tv_contents_6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="팰리세이드"
+            android:text="@{viewModel.exterior.first}"
             android:textColor="@color/gray_900"
             app:layout_constraintEnd_toStartOf="@id/gl_price"
             app:layout_constraintStart_toStartOf="@id/gl_contents"
@@ -319,7 +313,7 @@
             android:id="@+id/tv_price_6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="+3,880,000원"
+            android:text="@{String.format(`+ %,d 원`, viewModel.exterior.second)}"
             android:textAlignment="textEnd"
             android:textColor="@color/gray_900"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
@@ -342,7 +336,7 @@
             android:id="@+id/tv_contents_7"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="팰리세이드"
+            android:text="@{viewModel.interior.first}"
             android:textColor="@color/gray_900"
             app:layout_constraintEnd_toStartOf="@id/gl_price"
             app:layout_constraintStart_toStartOf="@id/gl_contents"
@@ -352,7 +346,7 @@
             android:id="@+id/tv_price_7"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="+3,880,000원"
+            android:text="@{String.format(`+ %,d 원`, viewModel.interior.second)}"
             android:textAlignment="textEnd"
             android:textColor="@color/gray_900"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
@@ -387,7 +381,7 @@
             android:layout_height="58dp"
             android:background="@color/white"
             android:elevation="8dp"
-            app:layout_constraintBottom_toTopOf="@id/btn_complete"
+            app:layout_constraintBottom_toTopOf="@id/btn_close_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -420,7 +414,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_price_summary_title" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_complete"
+            android:id="@+id/btn_close_bottom"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:background="@color/primary_color_700"

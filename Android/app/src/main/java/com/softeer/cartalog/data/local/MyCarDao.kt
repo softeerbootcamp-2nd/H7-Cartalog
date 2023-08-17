@@ -17,4 +17,7 @@ interface MyCarDao {
     @Transaction
     @Query("SELECT * FROM MyCar")
     suspend fun getAll(): MyCarWithPriceData
+
+    @Query("SELECT * FROM MyCar")
+    suspend fun getMyCar(): MyCar
 }

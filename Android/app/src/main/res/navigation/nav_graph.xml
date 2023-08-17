@@ -32,10 +32,12 @@
             app:destination="@id/trimFragment"
             app:enterAnim="@anim/slide_in_from_left"
             app:exitAnim="@anim/slide_out_to_right" />
-
         <action
             android:id="@+id/action_typeFragment_to_typeDetailDialog"
             app:destination="@id/typeDetailDialog" />
+        <action
+            android:id="@+id/action_typeFragment_to_priceSummaryBottomSheetFragment"
+            app:destination="@id/priceSummaryBottomSheetFragment" />
 
     </fragment>
     <fragment
@@ -114,4 +116,9 @@
             android:id="@+id/action_optionDetailDialog_to_optionFragment"
             app:destination="@id/optionFragment" />
     </dialog>
+    <dialog
+        android:id="@+id/priceSummaryBottomSheetFragment"
+        android:name="com.softeer.cartalog.ui.dialog.PriceSummaryBottomSheetFragment"
+        android:label="PriceSummaryBottomSheetFragment"
+        tools:layout="@layout/fragment_price_summary_bottom_sheet" />
 </navigation>

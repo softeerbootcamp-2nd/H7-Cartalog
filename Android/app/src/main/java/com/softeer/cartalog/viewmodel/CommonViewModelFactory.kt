@@ -9,6 +9,7 @@ class CommonViewModelFactory(private val repository: CarRepository) : ViewModelP
         return when {
             modelClass.isAssignableFrom(TrimViewModel::class.java) -> TrimViewModel(repository) as T
             modelClass.isAssignableFrom(TypeViewModel::class.java) -> TypeViewModel(repository) as T
+            modelClass.isAssignableFrom(PriceSummaryViewModel::class.java) -> PriceSummaryViewModel(repository) as T
             // ... 여러 뷰모델 추가
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }

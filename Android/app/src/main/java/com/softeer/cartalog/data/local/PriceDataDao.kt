@@ -21,4 +21,6 @@ interface PriceDataDao {
 
     @Query("SELECT COUNT(*) FROM PriceData WHERE carId = :carId")
     suspend fun getPriceDataCountByCarId(carId: Int): Int
+    @Query("SELECT * FROM PriceData")
+    suspend fun getPriceDataList(): List<PriceData>
 }
