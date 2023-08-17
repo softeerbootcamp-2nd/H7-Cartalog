@@ -139,9 +139,7 @@ fun setBudgetLimit(
         override fun onProgressChanged(seekbar: SeekBar?, progress: Int, fromUser: Boolean) {
             // progress 값으로 비교해 놓은 상태
             //val mappedValue = minValue + (maxValue - minValue) * progress / 100
-            viewModel.budgetRangeLimit.value = progress
-            viewModel.isExcess.value =
-                viewModel.budgetRangeLimit.value!! < viewModel.totalPrice.value!!
+            viewModel.setRangeLimit(progress)
         }
 
         override fun onStartTrackingTouch(p0: SeekBar?) {

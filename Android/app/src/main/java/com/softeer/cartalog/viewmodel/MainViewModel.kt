@@ -18,4 +18,9 @@ class MainViewModel : ViewModel() {
     fun setStepIndex(index: Int) {
         _stepIndex.value = index
     }
+
+    fun setRangeLimit(price: Int) {
+        _budgetRangeLimit.value = price
+        _isExcess.value = budgetRangeLimit.value!! < totalPrice.value!!
+    }
 }
