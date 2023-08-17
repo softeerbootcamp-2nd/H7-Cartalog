@@ -160,7 +160,7 @@ public class QueryString {
             "       LEFT OUTER JOIN trim_interior_colors AS tic " +
             "                    ON tic.id = dtpicc.trim_interior_color_id " +
             "       LEFT OUTER JOIN model_package_hash_tags AS mpht " +
-            "                    ON mpht.model_package_id = dtp.id " +
+            "                    ON mpht.model_package_id = mp.id " +
             "       JOIN trim_package_options AS tpo " +
             "         ON tpo.trim_package_id = dtp.id " +
             "       JOIN detail_trim_options AS dto " +
