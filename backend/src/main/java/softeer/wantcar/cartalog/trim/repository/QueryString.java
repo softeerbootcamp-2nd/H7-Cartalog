@@ -115,7 +115,7 @@ public class QueryString {
             ") AS dm ON dt.detail_model_id=dm.id " +
             "WHERE dt.trim_id = :trimId ";
 
-    protected static String findOptionsByDetailTrimId =
+    protected static final String findOptionsByDetailTrimId =
             "SELECT DISTINCT mo.id                         AS id, " +
             "                mo.name                       AS name, " +
             "                mo.parent_category            AS parentCategory, " +

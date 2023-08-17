@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@SuppressWarnings({"SqlResolve", "SqlNoDataSourceInspection"})
 @Repository
 @RequiredArgsConstructor
 public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository {
@@ -191,13 +192,14 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
     private static List<String> getOptionHasTags(List<TrimOptionQueryResult> trimOptionInfos) {
         return trimOptionInfos.stream()
                 .map(TrimOptionQueryResult::getHashTag)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
     private static boolean isOptionHasHmgData(List<TrimOptionQueryResult> trimOptionInfos) {
         return trimOptionInfos.stream()
                 .map(TrimOptionQueryResult::getHmgModelOptionId)
-                .anyMatch(Objects::nonNull);
+                .anyMatch(id -> Objects.nonNull(id) && id != 0);
     }
 
     private static TrimOptionQueryResult getTrimOptionQueryResult(ResultSet rs, boolean isOption) throws SQLException {

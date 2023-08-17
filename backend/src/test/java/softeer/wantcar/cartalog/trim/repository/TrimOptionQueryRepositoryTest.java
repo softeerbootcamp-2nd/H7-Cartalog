@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SuppressWarnings({"SqlResolve", "SqlNoDataSourceInspection"})
 @JdbcTest
 @Sql({"classpath:schema.sql"})
 @DisplayName("트림 옵션 Repository 테스트")
@@ -72,6 +73,8 @@ class TrimOptionQueryRepositoryTest {
             softAssertions.assertThat(trimOptions.isEmpty()).isFalse();
             for (TrimOptionQueryRepository.TrimOptionInfo trimOption : trimOptions) {
                 softAssertions.assertThat(trimOption.getId()).startsWith("O");
+                softAssertions.assertThat(trimOption.getName()).isNotBlank();
+                softAssertions.assertThat(trimOption.getHashTags()).doesNotContain((String) null);
                 softAssertions.assertThat(trimOption.getImageUrl()).startsWith(serverPath.IMAGE_SERVER_PATH);
             }
             softAssertions.assertAll();
@@ -114,6 +117,8 @@ class TrimOptionQueryRepositoryTest {
             softAssertions.assertThat(trimPackages.isEmpty()).isFalse();
             for (TrimOptionQueryRepository.TrimOptionInfo trimPackage : trimPackages) {
                 softAssertions.assertThat(trimPackage.getId()).startsWith("P");
+                softAssertions.assertThat(trimPackage.getName()).isNotBlank();
+                softAssertions.assertThat(trimPackage.getHashTags()).doesNotContain((String) null);
                 softAssertions.assertThat(trimPackage.getImageUrl()).startsWith(serverPath.IMAGE_SERVER_PATH);
             }
             softAssertions.assertAll();
