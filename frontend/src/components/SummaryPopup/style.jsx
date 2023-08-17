@@ -12,8 +12,8 @@ export const SummaryPopup = styled.div`
   transform: translate(-50%, -50%);
   z-index: 1000;
   width: 850px;
-  height: 520px;
-  border-radius: 4px;
+  height: 468px;
+  border-radius: 8px;
   background-color: ${({ theme }) => theme.color.white};
   overflow: hidden;
 `;
@@ -38,6 +38,7 @@ export const Title = styled.div`
   width: 100%;
   padding-top: 20px;
   font: ${({ theme }) => theme.font.headKR.Medium18};
+  color: ${({ theme }) => theme.color.gray['800']};
   text-align: center;
 `;
 
@@ -76,4 +77,22 @@ export const LeftArea = styled.div`
     height: 212px;
     object-fit: cover;
   }
+`;
+
+export const TotalPrice = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 24px 40px;
+  gap: 8px;
+`;
+
+export const TextTitle = styled.div`
+  font: ${({ theme }) => theme.font.headKR.Regular12};
+  color: ${({ theme }) => theme.color.gray['700']};
+`;
+
+export const PriceTitle = styled.div`
+  font: ${({ theme }) => theme.font.headKR.Medium24};
+  color: ${({ theme }) => theme.color.primary.default};
 `;

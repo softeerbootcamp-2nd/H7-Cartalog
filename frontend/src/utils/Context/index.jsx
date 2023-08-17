@@ -36,6 +36,7 @@ export function StateProvider({ children }) {
           minPrice: null,
           maxPrice: null,
           id: 2,
+          name: null,
         };
         break;
       case 'modelType':
@@ -50,6 +51,9 @@ export function StateProvider({ children }) {
           powerTrainId: null,
           bodyTypeId: null,
           wheelDriveId: null,
+          powerTrainName: null,
+          bodyTypeName: null,
+          wheelDriveName: null,
           powerTrainOption: null,
           bodyTypeOption: null,
           wheelDriveOption: null,
@@ -99,6 +103,12 @@ export function StateProvider({ children }) {
           pickName: '퀼팅천연(블랙)',
           pickCarImageUrl:
             'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade/le-blanc/options/10_driverseat_s.jpg',
+        };
+        break;
+      case 'summary':
+        acc[key] = {
+          sideImage: '',
+          interiorImage: '',
         };
         break;
       default:
