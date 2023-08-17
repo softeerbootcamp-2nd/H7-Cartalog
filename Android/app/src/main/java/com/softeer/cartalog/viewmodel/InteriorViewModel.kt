@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.softeer.cartalog.data.model.CarColor
+import com.softeer.cartalog.data.repository.CarRepository
 
-class InteriorViewModel : ViewModel() {
+class InteriorViewModel(private val repository: CarRepository) : ViewModel() {
 
     private val _colorList: MutableLiveData<List<CarColor>> by lazy {
         MutableLiveData<List<CarColor>>(setInteriorColorData())

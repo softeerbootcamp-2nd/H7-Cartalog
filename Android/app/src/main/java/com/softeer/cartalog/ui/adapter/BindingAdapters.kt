@@ -1,5 +1,6 @@
 package com.softeer.cartalog.ui.adapter
 
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.SeekBar
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.softeer.cartalog.R
 import com.softeer.cartalog.data.enums.OptionMode
+import com.softeer.cartalog.data.model.CarColor
 import com.softeer.cartalog.util.UtilManager
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import com.softeer.cartalog.viewmodel.InteriorViewModel
@@ -72,10 +74,11 @@ fun setTrimCardViewPager(
     indicator.attachTo(viewPager)
 }
 
-@BindingAdapter("viewModel")
+@BindingAdapter("viewModel", "colorList")
 fun setExteriorColorRecyclerView(
     recyclerView: RecyclerView,
-    viewModel: ExteriorViewModel
+    viewModel: ExteriorViewModel,
+    colorList: List<CarColor>?
 ) {
     val adapter = ExteriorColorAdapter(viewModel)
     recyclerView.adapter = adapter

@@ -1,7 +1,7 @@
 package com.softeer.cartalog.data.model
 
 data class CarColor(
-    val id: String,
+    val code: String,
     val name: String,
     val colorImageUrl: String,
     val carImageUrl: String,

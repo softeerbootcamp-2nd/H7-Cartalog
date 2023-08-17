@@ -1,5 +1,7 @@
 package com.softeer.cartalog.data.repository.remote
 
+import com.softeer.cartalog.data.model.ExteriorColors
+import com.softeer.cartalog.data.model.InteriorColors
 import com.softeer.cartalog.data.model.TrimDetail
 import com.softeer.cartalog.data.model.Trims
 import com.softeer.cartalog.data.model.Types
@@ -23,6 +25,14 @@ class CarRemoteDataSource(
         trimId: Int
     ): Response<TrimDetail> {
         return carApi.getTrimsDetail(modelTypeIds, trimId)
+    }
+
+    suspend fun getExteriorColors(trimId: Int): Response<ExteriorColors> {
+        return carApi.getExteriorColors(trimId)
+    }
+
+    suspend fun getInteriorColors(trimId: Int): Response<InteriorColors> {
+        return carApi.getInteriorColors(trimId)
     }
 
 }
