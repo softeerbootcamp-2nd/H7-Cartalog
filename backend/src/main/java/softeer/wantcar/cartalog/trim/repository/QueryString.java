@@ -80,7 +80,7 @@ public class QueryString {
 
             "JOIN  " +
             "(  " +
-            "   SELECT child_category, id, name, price_if_model_type_option AS price  " +
+            "   SELECT child_category, id, name, price  " +
             "   FROM  " +
             "   (  " +
             "       SELECT *, ROW_NUMBER() OVER (PARTITION BY child_category ORDER BY id) AS row_num  " +
