@@ -1,41 +1,24 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { css } from 'styled-components';
+import { EASE_OUT_CUBIC } from '../../constants';
 
-const slideUp = keyframes`
-  0% {
-    transform: translateY(120%);
-  }
-  100% {
+const slideCss = css`
+  transform: translateY(120%);
+  transition: transform 0.5s ${EASE_OUT_CUBIC};
+
+  &.visible {
     transform: translateY(0);
-  }
-`;
-const slideDown = keyframes`
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(120%);
   }
 `;
 
 export const Footer = styled.div`
-  position: fixed;
-  z-index: 1;
-  bottom: 0;
-
+  ${slideCss}
   display: flex;
   width: 100%;
-  height: 155px;
-
+  position: fixed;
+  bottom: 0;
+  z-index: 1;
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(6px);
-
-  &.visible {
-    animation: ${slideUp} 0.7s ease-in-out forwards;
-  }
-  &.hidden {
-    animation: ${slideDown} 0.7s ease-in-out forwards;
-    transform: translateY(100%);
-  }
 `;
 
 export const FooterEnd = styled.div`
@@ -44,16 +27,10 @@ export const FooterEnd = styled.div`
   justify-content: space-between;
   width: 1280px;
   margin: 0 auto;
-  padding: 16px 128px;
+  padding: 0 128px;
   box-sizing: border-box;
 `;
 
 export const HMGDataFade = styled.div`
-  &.visible {
-    animation: ${slideUp} 0.7s ease-in-out forwards;
-  }
-  &.hidden {
-    animation: ${slideDown} 0.7s ease-in-out forwards;
-    transform: translateY(100%);
-  }
+  ${slideCss}
 `;
