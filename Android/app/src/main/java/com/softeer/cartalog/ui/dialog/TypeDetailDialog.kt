@@ -18,7 +18,6 @@ import com.softeer.cartalog.ui.fragment.TypeFragment
 class TypeDetailDialog : DialogFragment() {
 
     private lateinit var binding: DialogTypeDetailPopupBinding
-    private val args: TypeDetailDialogArgs by navArgs()
     private val viewModel by lazy {
         val typeFragment =
             requireParentFragment().childFragmentManager.fragments.firstOrNull { it is TypeFragment } as TypeFragment
