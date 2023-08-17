@@ -44,6 +44,7 @@ function ModelType() {
     type: MODEL_TYPE.TYPE,
     Info: <Info />,
     Pick: <Pick />,
+    showPriceStatic: true,
   };
   return modelType.isFetch ? <Section {...SectionProps} /> : <>Loding</>;
 }

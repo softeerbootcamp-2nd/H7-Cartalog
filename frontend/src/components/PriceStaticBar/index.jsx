@@ -5,7 +5,7 @@ import Description from './Description';
 import Slider from './Slider';
 import SliderMark from './SliderMark';
 
-const TITLE = '예산범위';
+const TITLE = '예산 범위';
 
 function PriceStaticBar({ min, max, price }) {
   const [expanded, setExpanded] = useState(false);

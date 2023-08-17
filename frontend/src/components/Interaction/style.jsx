@@ -7,7 +7,3 @@ export const Interaction = styled.div`
 export const Page = styled.div`
   display: flex;
 `;
-
-export const Test = styled.div`
-  min-width: 100%;
-`;

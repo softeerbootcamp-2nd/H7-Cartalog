@@ -12,6 +12,7 @@ export function StateProvider({ children }) {
     'optionPicker',
     'estimation',
     'price',
+    'budget',
   ];
 
   const initialState = stateKeys.reduce((acc, key) => {

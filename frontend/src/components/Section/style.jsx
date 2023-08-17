@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const Section = styled.div`
   position: relative;
-  min-width: 100%;
+  min-width: max(1280px, 100%);
+  min-height: max(720px, 100%);
   margin-top: 60px;
 `;
 
@@ -36,6 +37,8 @@ export const Contents = styled.div`
   display: flex;
   flex-direction: column;
   width: 1280px;
+  min-height: 520px;
+
   margin: 0 auto;
   padding: 0 128px;
   box-sizing: border-box;
