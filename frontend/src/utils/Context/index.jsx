@@ -88,6 +88,7 @@ export function StateProvider({ children }) {
           defaultOptions: [],
           selectOptions: [],
           category: [],
+          chosenOptions: [],
         };
         break;
       case 'estimation':
