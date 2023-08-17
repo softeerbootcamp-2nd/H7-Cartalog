@@ -1,22 +1,32 @@
-import { styled } from 'styled-components';
+import { keyframes, styled } from 'styled-components';
+import { EASE_OUT_CUBIC } from '../../constants';
+
+const displayAnimation = keyframes`
+  to {
+    visibility: hidden;
+  }
+`;
 
 export const PriceStaticBar = styled.div.attrs(({ theme, $over }) => ({
   style: {
     backgroundColor: $over ? '#000b19e5' : theme.color.primary['700'],
   },
 }))`
-  position: absolute;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
+  position: absolute;
+  top: 76px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 343px;
   padding: 4px 16px;
   border-radius: 10px;
   backdrop-filter: blur(3px);
   user-select: none;
-  transition: background-color 0.5s ease;
+  transition:
+    background-color 0.5s ease,
+    transform 0.5s ${EASE_OUT_CUBIC},
+    opacity 0.5s ${EASE_OUT_CUBIC};
   overflow: hidden;
 
   &.over {
@@ -25,6 +35,12 @@ export const PriceStaticBar = styled.div.attrs(({ theme, $over }) => ({
 
   & svg.open {
     transform: rotate(-180deg);
+  }
+
+  &.hidden {
+    opacity: 0;
+    transform: translateX(-50%) translateY(5%);
+    animation: ${displayAnimation} 0.5s step-end forwards;
   }
 `;
 
