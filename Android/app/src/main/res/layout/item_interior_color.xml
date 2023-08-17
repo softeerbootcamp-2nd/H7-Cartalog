@@ -78,6 +78,7 @@
                 android:layout_height="70dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/tmp_img_interior"
+                app:imgUrl="@{carColor.colorImageUrl}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -87,7 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="38%"
+                android:text='@{carColor.chosen + "%"}'
                 android:textColor="@{position == adapter.selectedItem ? @color/active_blue : @color/gray_600}"
                 android:textSize="10sp"
                 app:layout_constraintStart_toStartOf="@id/gl_start"
@@ -108,7 +109,7 @@
                 style="@style/FragmentHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="퀼팅천연(블랙)"
+                android:text='@{carColor.name}'
                 android:textColor="@{position == adapter.selectedItem ? @color/gray_900 : @color/gray_600}"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@id/gl_start"
@@ -119,7 +120,7 @@
                 style="@style/FragmentHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+ 0 원"
+                android:text='@{String.format("+ %,d 원", carColor.price)}'
                 android:textColor="@{position == adapter.selectedItem ? @color/gray_900 : @color/gray_600}"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/gl_bottom"

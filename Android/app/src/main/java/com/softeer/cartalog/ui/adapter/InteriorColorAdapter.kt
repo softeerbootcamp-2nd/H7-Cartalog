@@ -27,12 +27,11 @@ class InteriorColorAdapter(private val viewModel: InteriorViewModel) :
     }
 
     override fun getItemCount(): Int {
-        return viewModel.colorList.value!!.size
+        return viewModel.colorList.value?.size ?: 0
     }
 
     inner class InteriorColorViewHolder(val binding: ItemInteriorColorBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        var isSelected = false
         fun bind(item: CarColor?, position: Int) {
             binding.lifecycleOwner = binding.lifecycleOwner
             binding.viewModel = viewModel

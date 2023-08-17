@@ -27,9 +27,10 @@ class ExteriorViewModel(private val repository: CarRepository) : ViewModel() {
     init {
         setExteriorColorData()
     }
+
     private fun setExteriorColorData() {
         viewModelScope.launch {
-            _colorList.value = repository.getCarColors(true, 2)
+            _colorList.value = repository.getCarColors(true, 2, "")
             Log.d("test", _colorList.value.toString())
         }
     }

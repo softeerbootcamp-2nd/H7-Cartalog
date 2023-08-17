@@ -1,6 +1,5 @@
 package com.softeer.cartalog.ui.adapter
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.SeekBar
@@ -84,10 +83,11 @@ fun setExteriorColorRecyclerView(
     recyclerView.adapter = adapter
 }
 
-@BindingAdapter("viewModel")
+@BindingAdapter("viewModel", "colorList")
 fun setInteriorColorRecyclerView(
     recyclerView: RecyclerView,
-    viewModel: InteriorViewModel
+    viewModel: InteriorViewModel,
+    colorList: List<CarColor>?
 ) {
     val adapter = InteriorColorAdapter(viewModel)
     recyclerView.adapter = adapter

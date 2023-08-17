@@ -1,18 +1,11 @@
 package com.softeer.cartalog.ui.fragment
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import coil.ImageLoader
-import coil.disk.DiskCache
-import coil.memory.MemoryCache
-import coil.request.ImageRequest
 import com.softeer.cartalog.data.local.MyCarDatabase
 import com.softeer.cartalog.data.remote.api.RetrofitClient
 import com.softeer.cartalog.data.repository.CarRepositoryImpl
@@ -22,8 +15,6 @@ import com.softeer.cartalog.databinding.FragmentExteriorBinding
 import com.softeer.cartalog.ui.activity.MainActivity
 import com.softeer.cartalog.viewmodel.CommonViewModelFactory
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
-import com.softeer.cartalog.viewmodel.TrimViewModel
-import kotlinx.coroutines.launch
 
 class ExteriorFragment : Fragment() {
     private var _binding: FragmentExteriorBinding? = null

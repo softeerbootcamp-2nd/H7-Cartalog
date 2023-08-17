@@ -7,7 +7,6 @@ import com.softeer.cartalog.data.model.Trims
 import com.softeer.cartalog.data.model.Types
 import com.softeer.cartalog.data.remote.api.CarApi
 import retrofit2.Response
-import retrofit2.http.Query
 
 class CarRemoteDataSource(
     private val carApi: CarApi
@@ -31,8 +30,11 @@ class CarRemoteDataSource(
         return carApi.getExteriorColors(trimId)
     }
 
-    suspend fun getInteriorColors(trimId: Int): Response<InteriorColors> {
-        return carApi.getInteriorColors(trimId)
+    suspend fun getInteriorColors(
+        exteriorColorCode: String,
+        trimId: Int
+    ): Response<InteriorColors> {
+        return carApi.getInteriorColors(exteriorColorCode, trimId)
     }
 
 }

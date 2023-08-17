@@ -27,5 +27,8 @@ interface CarApi {
     suspend fun getExteriorColors(@Query("trimId") trimId: Int): Response<ExteriorColors>
 
     @GET("/models/trims/interior-colors")
-    suspend fun getInteriorColors(@Query("trimId") trimId: Int): Response<InteriorColors>
+    suspend fun getInteriorColors(
+        @Query("exteriorColorCode") exteriorColorCode: String,
+        @Query("trimId") trimId: Int
+    ): Response<InteriorColors>
 }
