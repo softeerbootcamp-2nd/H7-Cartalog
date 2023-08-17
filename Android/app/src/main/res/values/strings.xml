@@ -44,7 +44,7 @@
     <string name="interior_header">내장 색상을 선택해주세요.</string>
 
     <string name="exterior_header">외장 색상을 선택해주세요.</string>
-    <string name="exterior_360">360°</string>
+    <string name="exterior_360">← - - - - - - - - 360° - - - - - - - - →</string>
     <string name="exterior_item_select">의 선택</string>
 
     <string name="summary_now_price">현재 견적 가격</string>

@@ -6,14 +6,30 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.softeer.cartalog.data.local.MyCarDatabase
+import com.softeer.cartalog.data.remote.api.RetrofitClient
+import com.softeer.cartalog.data.repository.CarRepositoryImpl
+import com.softeer.cartalog.data.repository.local.CarLocalDataSource
+import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
 import com.softeer.cartalog.databinding.FragmentInteriorBinding
 import com.softeer.cartalog.ui.activity.MainActivity
+import com.softeer.cartalog.viewmodel.CommonViewModelFactory
 import com.softeer.cartalog.viewmodel.InteriorViewModel
 
 class InteriorFragment : Fragment() {
-    private val interiorViewModel: InteriorViewModel by viewModels()
     private var _binding: FragmentInteriorBinding? = null
     private val binding get() = _binding!!
+
+    private val carRepositoryImpl by lazy {
+        CarRepositoryImpl(
+            CarLocalDataSource(MyCarDatabase.getInstance(requireContext())!!), CarRemoteDataSource(
+                RetrofitClient.carApi
+            )
+        )
+    }
+    private val interiorViewModel: InteriorViewModel by viewModels {
+        CommonViewModelFactory(carRepositoryImpl)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

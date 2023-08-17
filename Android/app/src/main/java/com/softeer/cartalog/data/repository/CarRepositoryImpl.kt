@@ -1,13 +1,13 @@
 package com.softeer.cartalog.data.repository
 
-import android.util.Log
+import com.softeer.cartalog.data.enums.PriceDataType
+import com.softeer.cartalog.data.model.CarColor
 import com.softeer.cartalog.data.model.Trim
 import com.softeer.cartalog.data.model.TrimDetail
+import com.softeer.cartalog.data.model.Trims
 import com.softeer.cartalog.data.model.Type
-import com.softeer.cartalog.data.enums.PriceDataType
 import com.softeer.cartalog.data.model.db.MyCar
 import com.softeer.cartalog.data.model.db.PriceData
-import com.softeer.cartalog.data.model.Trims
 import com.softeer.cartalog.data.repository.local.CarLocalDataSource
 import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
 
@@ -16,7 +16,7 @@ class CarRepositoryImpl(
     private val carRemoteDataSource: CarRemoteDataSource
 ) : CarRepository {
 
-        override suspend fun getTrims(): Trims {
+    override suspend fun getTrims(): Trims {
         val response = carRemoteDataSource.getTrims()
         return if (response.isSuccessful) response.body()!! else Trims("", arrayListOf())
     }
@@ -85,5 +85,19 @@ class CarRepositoryImpl(
     override suspend fun getTrimDetail(modelTypeIds: String, trimId: Int): TrimDetail {
         val response = carRemoteDataSource.getTrimsDetail(modelTypeIds, trimId)
         return if (response.isSuccessful) response.body()!! else TrimDetail(0, 0, 0f)
+    }
+
+    override suspend fun getCarColors(
+        isExterior: Boolean,
+        trimId: Int,
+        exteriorColorCode: String
+    ): List<CarColor> {
+        return if (isExterior) {
+            val response = carRemoteDataSource.getExteriorColors(trimId)
+            if (response.isSuccessful) response.body()!!.exteriorColors else listOf()
+        } else {
+            val response = carRemoteDataSource.getInteriorColors(exteriorColorCode, trimId)
+            if (response.isSuccessful) response.body()!!.interiorColors else listOf()
+        }
     }
 }

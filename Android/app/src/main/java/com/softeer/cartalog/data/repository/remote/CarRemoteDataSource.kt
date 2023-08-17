@@ -1,11 +1,12 @@
 package com.softeer.cartalog.data.repository.remote
 
+import com.softeer.cartalog.data.model.ExteriorColors
+import com.softeer.cartalog.data.model.InteriorColors
 import com.softeer.cartalog.data.model.TrimDetail
 import com.softeer.cartalog.data.model.Trims
 import com.softeer.cartalog.data.model.Types
 import com.softeer.cartalog.data.remote.api.CarApi
 import retrofit2.Response
-import retrofit2.http.Query
 
 class CarRemoteDataSource(
     private val carApi: CarApi
@@ -23,6 +24,17 @@ class CarRemoteDataSource(
         trimId: Int
     ): Response<TrimDetail> {
         return carApi.getTrimsDetail(modelTypeIds, trimId)
+    }
+
+    suspend fun getExteriorColors(trimId: Int): Response<ExteriorColors> {
+        return carApi.getExteriorColors(trimId)
+    }
+
+    suspend fun getInteriorColors(
+        exteriorColorCode: String,
+        trimId: Int
+    ): Response<InteriorColors> {
+        return carApi.getInteriorColors(exteriorColorCode, trimId)
     }
 
 }

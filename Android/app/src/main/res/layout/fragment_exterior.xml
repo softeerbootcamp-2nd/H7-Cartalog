@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="com.softeer.cartalog.util.UtilManager" />
+
         <variable
             name="viewModel"
             type="com.softeer.cartalog.viewmodel.ExteriorViewModel" />
@@ -43,10 +45,12 @@
             android:layout_marginTop="50dp"
             android:background="@color/blue_bg"
             android:src="@drawable/icon_360_default"
+            app:colorCode="@{viewModel.colorList[viewModel.selectedColor].code}"
             app:layout_constraintBottom_toBottomOf="@id/gl_center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:viewModel="@{viewModel}" />
 
         <TextView
             android:id="@+id/tv_cc_name"
@@ -54,7 +58,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:text="@string/exterior_360"
-            android:textSize="16sp"
+            android:textColor="@color/gray_500"
+            android:textSize="16dp"
             app:layout_constraintBottom_toBottomOf="@id/gl_center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -77,6 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:orientation="horizontal"
+            app:colorList="@{viewModel.colorList}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

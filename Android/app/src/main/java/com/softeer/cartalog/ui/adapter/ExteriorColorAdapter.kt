@@ -27,7 +27,7 @@ class ExteriorColorAdapter(private val viewModel: ExteriorViewModel) :
     }
 
     override fun getItemCount(): Int {
-        return viewModel.colorList.value!!.size
+        return viewModel.colorList.value?.size ?: 0
     }
 
     inner class ExteriorColorViewHolder(val binding: ItemExteriorColorBinding) :
