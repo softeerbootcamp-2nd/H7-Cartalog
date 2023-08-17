@@ -32,7 +32,7 @@ fun setExteriorItemClickListener(
         adapter.notifyItemChanged(adapter.selectedItem)
         if (adapter.selectedItem != position) {
             adapter.selectedItem = position
-            viewModel.selectedColor.value = position
+            viewModel.setSelectedColor(position)
         }
         adapter.notifyItemChanged(position)
     }
@@ -50,7 +50,7 @@ fun setInteriorItemClickListener(
         adapter.notifyItemChanged(adapter.selectedItem)
         if (adapter.selectedItem != position) {
             adapter.selectedItem = position
-            viewModel.selectedColor.value = position
+            viewModel.setSelectedColor(position)
         }
         adapter.notifyItemChanged(position)
     }
@@ -105,7 +105,7 @@ fun setOptionItemClickListener(
                 adapter as OptionSelectAdapter
                 if (adapter.selectedItem != position) {
                     adapter.selectedItem = position
-                    viewModel.selectedSelectOption.value = position
+                    viewModel.setSelectedSelectOption(position)
                 }
                 adapter.notifyDataSetChanged()
             }
@@ -114,7 +114,7 @@ fun setOptionItemClickListener(
                 adapter as OptionDefaultAdapter
                 if (adapter.selectedItem != position) {
                     adapter.selectedItem = position
-                    viewModel.selectedDefaultOption.value = position
+                    viewModel.setSelectedDefaultOption(position)
                 }
                 adapter.notifyDataSetChanged()
             }
@@ -135,13 +135,13 @@ fun setOptionTabSelected(
             when (tab?.position) {
                 0 -> {
                     Log.d("TEST", viewModel.nowOptionMode.value.toString())
-                    viewModel.nowOptionMode.value = OptionMode.SELECT_OPTION
+                    viewModel.setNowOptionMode(OptionMode.SELECT_OPTION)
                     recyclerView.adapter =
                         OptionSelectAdapter(viewModel).apply { notifyDataSetChanged() }
                 }
 
                 1 -> {
-                    viewModel.nowOptionMode.value = OptionMode.DEFAULT_OPTION
+                    viewModel.setNowOptionMode(OptionMode.DEFAULT_OPTION)
                     recyclerView.adapter =
                         OptionDefaultAdapter(viewModel).apply { notifyDataSetChanged() }
                 }

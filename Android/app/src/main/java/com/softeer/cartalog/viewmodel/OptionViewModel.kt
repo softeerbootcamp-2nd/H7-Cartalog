@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.softeer.cartalog.data.enums.OptionMode
-import com.softeer.cartalog.data.model.CarColor
 import com.softeer.cartalog.data.model.Option
 import com.softeer.cartalog.data.model.Options
 
@@ -17,14 +16,14 @@ class OptionViewModel : ViewModel() {
     val defaultOptions = _options.value?.defaultOptions
     val selectOptions = _options.value?.selectOptions
 
-    private val _nowOptionMode = MutableLiveData<OptionMode>(OptionMode.SELECT_OPTION)
-    val nowOptionMode = _nowOptionMode
+    private val _nowOptionMode = MutableLiveData(OptionMode.SELECT_OPTION)
+    val nowOptionMode: LiveData<OptionMode> = _nowOptionMode
 
-    private val _selectedDefaultOption = MutableLiveData<Int>(0)
-    val selectedDefaultOption = _selectedDefaultOption
+    private val _selectedDefaultOption = MutableLiveData(0)
+    val selectedDefaultOption: LiveData<Int> = _selectedDefaultOption
 
-    private val _selectedSelectOption = MutableLiveData<Int>(0)
-    val selectedSelectOption = _selectedSelectOption
+    private val _selectedSelectOption = MutableLiveData(0)
+    val selectedSelectOption: LiveData<Int> = _selectedSelectOption
 
     private fun setOptionsData(): Options {
         // 임시 데이터 설정
@@ -93,5 +92,17 @@ class OptionViewModel : ViewModel() {
         } else {
             _nowOptionMode.value = OptionMode.SELECT_OPTION
         }
+    }
+
+    fun setSelectedDefaultOption(selectedOption: Int){
+        _selectedDefaultOption.value = selectedOption
+    }
+
+    fun setSelectedSelectOption(selectedOption: Int){
+        _selectedSelectOption.value = selectedOption
+    }
+
+    fun setNowOptionMode(selectedMode: OptionMode){
+        _nowOptionMode.value = selectedMode
     }
 }

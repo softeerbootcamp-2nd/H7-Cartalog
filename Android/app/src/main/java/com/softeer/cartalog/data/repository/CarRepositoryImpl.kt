@@ -107,6 +107,7 @@ class CarRepositoryImpl(
     override suspend fun getSummaryCarImage(exterior: String, interior: String): SummaryCarImage {
         val response = carRemoteDataSource.getSummaryCarImage(exterior, interior)
         return if (response.isSuccessful) response.body()!! else SummaryCarImage("","")
+    }
 
     override suspend fun getCarColors(
         isExterior: Boolean,

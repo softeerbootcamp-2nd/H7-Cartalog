@@ -58,7 +58,7 @@ fun setImage360WithUrl(
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                viewModel.start360X.value = event.x
+                viewModel.setStart360X(event.x)
                 true
             }
 
