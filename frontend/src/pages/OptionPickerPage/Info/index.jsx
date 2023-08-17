@@ -1,32 +1,33 @@
+import { useEffect, useState } from 'react';
 import * as S from './style';
 import Title from '../../../components/Title';
 
 const TYPE = 'dark';
 
-function mockInfo(id) {
-  return {
-    category: '파워트레인',
-    name: `옵션이름${id}`,
-    description:
-      '시동이 걸린 상태에서 해당 좌석의 통풍 스위치를 누르면 표시등이 켜지면서 해당 좌석에 바람이 나오는 편의장치입니다.',
-  };
-}
-
-function Info({ imageUrl, data, selected }) {
-  const mockData = mockInfo(selected);
+function Info({ optionId }) {
+  const [optionInfo, setOptionInfo] = useState();
   const TitleProps = {
     type: TYPE,
-    subTitle: mockData.category,
-    mainTitle: mockData.name,
-    description: mockData.description,
+    subTitle: optionInfo?.category,
+    mainTitle: optionInfo?.name,
+    info: optionInfo?.description,
   };
+
+  useEffect(() => {
+    if (!optionId) return;
+    fetch(`http://3.36.126.30/models/trims/options/detail?optionId=${optionId}`)
+      .then((res) => res.json())
+      .then((data) => setOptionInfo(data));
+  }, [optionId]);
+
+  if (!optionInfo) return <div>loading...</div>;
 
   return (
     <S.Info>
       <S.ModelText>
         <Title {...TitleProps} />
       </S.ModelText>
-      <S.ModelImage src={imageUrl} />
+      <S.ModelImage src={optionInfo?.imageUrl} />
     </S.Info>
   );
 }

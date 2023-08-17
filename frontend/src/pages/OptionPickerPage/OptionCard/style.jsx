@@ -35,8 +35,10 @@ export const HashTags = styled.div`
   position: absolute;
   left: 12px;
   bottom: 8px;
+  overflow: hidden;
 
   & > div {
+    flex-shrink: 0;
     padding: 2px 6px;
     border-radius: 2px;
     font: ${({ theme }) => theme.font.textKR.Regular12};

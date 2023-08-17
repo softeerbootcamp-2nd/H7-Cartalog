@@ -29,7 +29,7 @@ function OptionCard({
         )}
         <img src={imgSrc} alt="option" />
         <S.HashTags>
-          {hashtags.map((hashtag) => (
+          {hashtags.slice(0, 5).map((hashtag) => (
             <div key={hashtag}>{hashtag}</div>
           ))}
         </S.HashTags>
