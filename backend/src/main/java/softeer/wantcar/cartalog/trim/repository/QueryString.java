@@ -142,17 +142,16 @@ public class QueryString {
             "       AND detail_trim_id = :detailTrimId";
 
     public static final String findPackagesByTrimId =
-            "SELECT DISTINCT " +
-            "                mp.id                          AS id, " +
-            "                mp.name                        AS name, " +
-            "                mp.parent_category             AS parentCategory, " +
-            "                dtp.color_condition            AS colorCondition, " +
-            "                mp.image_url                   AS imageUrl, " +
-            "                dtp.price                      AS price, " +
-            "                dto.color_condition            AS colorCondition, " +
-            "                tic.model_interior_color_code  AS trimInteriorColorCode, " +
-            "                mpht.hash_tag                  AS hashTag, " +
-            "                hmg.model_option_id            AS hmgModelOptionId " +
+            "SELECT DISTINCT mp.id                         AS id, " +
+            "                mp.name                       AS name, " +
+            "                mp.parent_category            AS parentCategory, " +
+            "                dtp.color_condition           AS colorCondition, " +
+            "                mp.image_url                  AS imageUrl, " +
+            "                mp.price                      AS price, " +
+            "                dto.color_condition           AS colorCondition, " +
+            "                tic.model_interior_color_code AS trimInteriorColorCode, " +
+            "                mpht.hash_tag                 AS hashTag, " +
+            "                hmg.model_option_id           AS hmgModelOptionId " +
             "FROM   detail_trim_packages AS dtp " +
             "       JOIN model_packages AS mp " +
             "         ON dtp.model_package_id = mp.id " +
@@ -168,7 +167,7 @@ public class QueryString {
             "         ON dto.id = tpo.detail_trim_option_id " +
             "       JOIN hmg_data AS hmg " +
             "         ON hmg.model_option_id = dto.model_option_id " +
-            "WHERE  dtp.detail_trim_id = :detailTrimId";
+            "WHERE  dtp.detail_trim_id = :detailTrimId ";
 
     protected static final String findTrimExteriorColorByTrimId =
             "SELECT " +
