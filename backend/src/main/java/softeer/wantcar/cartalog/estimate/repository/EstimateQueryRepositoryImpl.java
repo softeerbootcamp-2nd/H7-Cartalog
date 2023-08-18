@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionListDto;
 import softeer.wantcar.cartalog.global.utils.RowMapperUtils;
 import softeer.wantcar.cartalog.estimate.dto.EstimateRequestDto;
+import softeer.wantcar.cartalog.estimate.dto.EstimateSaveDto;
 
 import java.util.List;
 
@@ -111,7 +112,7 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
     }
 
     @Override
-    public Long findEstimateIdByRequestDto(EstimateCommandRepository.EstimateSaveDto estimateSaveDto) {
+    public Long findEstimateIdByRequestDto(EstimateSaveDto estimateSaveDto) {
         List<Long> selectPackages = estimateSaveDto.getModelPackageIds();
         List<Long> selectOptions = estimateSaveDto.getModelOptionIds();
 
