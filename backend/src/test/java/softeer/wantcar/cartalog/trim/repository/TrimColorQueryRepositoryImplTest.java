@@ -115,4 +115,60 @@ class TrimColorQueryRepositoryImplTest {
         }
     }
 
+    @Nested
+    @DisplayName("트림 식별자와 외장 색상 코드로 트림 외장 색상 식별자 조회 테스트")
+    class findTrimExteriorColorIdByTrimIdAndColorCodeTest {
+        @Test
+        @DisplayName("적절한 입력 시 성공하여야 한다.")
+        void success() {
+            //given
+
+            //when
+            Long a2B = trimColorQueryRepository.findTrimExteriorColorIdByTrimIdAndColorCode(2L, "A2B");
+
+            //then
+            assertThat(a2B).isEqualTo(7L);
+        }
+
+        @Test
+        @DisplayName("적절한 입력이 아니면 null 반환해야 한다.")
+        void returnNull() {
+            //given
+
+            //when
+            Long a2BB = trimColorQueryRepository.findTrimExteriorColorIdByTrimIdAndColorCode(2L, "A2BB");
+
+            //then
+            assertThat(a2BB).isNull();
+        }
+    }
+
+    @Nested
+    @DisplayName("트림 식별자와 외장 색상 코드, 내장 색상 코드로 트림 내장 색상 식별자 조회 테스트")
+    class findTrimInteriorColorIdByTrimIdAndExteriorColorCodeAndInteriorColorCodeTest {
+        @Test
+        @DisplayName("적절한 입력 시 성공해야 한다.")
+        void success() {
+            //given
+
+            //when
+            Long i49 = trimColorQueryRepository.findTrimInteriorColorIdByTrimIdAndExteriorColorCodeAndInteriorColorCode(2L, "A2B", "I49");
+
+            //then
+            assertThat(i49).isEqualTo(7L);
+        }
+
+        @Test
+        @DisplayName("적절한 입력이 아니면 null 반환해야 한다.")
+        void returnNull() {
+            //given
+
+            //when
+            Long i49 = trimColorQueryRepository.findTrimInteriorColorIdByTrimIdAndExteriorColorCodeAndInteriorColorCode(2L, "A2B1", "I491");
+
+            //then
+            assertThat(i49).isNull();
+        }
+    }
+
 }
