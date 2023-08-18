@@ -57,6 +57,10 @@ export function StateProvider({ children }) {
           powerTrainOption: null,
           bodyTypeOption: null,
           wheelDriveOption: null,
+          hmgData: {
+            diesel: { output: null, talk: null },
+            gasoline: { output: null, talk: null },
+          },
         };
         break;
       case 'exteriorColor':
@@ -112,6 +116,7 @@ export function StateProvider({ children }) {
           interiorImage: '',
         };
         break;
+
       default:
         acc[key] = null; // 다른 키들은 null로 초기화
     }
