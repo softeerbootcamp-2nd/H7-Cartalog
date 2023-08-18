@@ -1,16 +1,7 @@
 package softeer.wantcar.cartalog.estimate.repository;
 
-import lombok.Builder;
-import lombok.Getter;
+import softeer.wantcar.cartalog.estimate.dao.PendingHashTagSimilaritySaveDao;
 
 public interface SimilarityCommandRepository {
-    @Getter
-    @Builder
-    class PendingHashTagSimilaritySaveDto {
-        private String hashTagKey;
-        private String pendingHashTagLeftKey;
-        private Long trimId;
-    }
-
-    void savePendingHashTagSimilarity(PendingHashTagSimilaritySaveDto pendingHashTagSimilaritySaveDto);
+    void savePendingHashTagSimilarity(PendingHashTagSimilaritySaveDao pendingHashTagSimilaritySaveDao);
 }
