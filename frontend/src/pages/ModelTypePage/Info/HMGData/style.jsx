@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const HMGData = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+
   align-items: center;
   margin-top: 16px;
 `;

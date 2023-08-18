@@ -18,7 +18,6 @@ export const Title = styled.div`
         border-radius: 30px;
         border: 1px solid ${theme.color.primary['300']};
         color: ${theme.color.primary['500']};
-        background-color: ${theme.color.white};
         `;
     }
     if (type === 'option') {
@@ -37,7 +36,6 @@ export const Title = styled.div`
             border-radius: 20px;
             border: 1px solid ${theme.color.gray['200']};
             color: ${theme.color.gray['600']};
-            background-color: ${theme.color.white};
         `;
         default:
           throw new Error('active || inactive');
