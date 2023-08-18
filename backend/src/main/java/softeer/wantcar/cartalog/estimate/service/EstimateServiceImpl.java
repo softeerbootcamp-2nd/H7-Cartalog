@@ -26,10 +26,6 @@ public class EstimateServiceImpl implements EstimateService {
 
     @Override
     public Long saveOrFindEstimateId(EstimateRequestDto estimateRequestDto) {
-        Long estimateId = estimateQueryRepository.findEstimateIdByRequestDto(estimateRequestDto);
-        if (estimateId != null) {
-            return estimateId;
-        }
         List<Long> selectPackages = estimateRequestDto.getSelectOptionOrPackageIds().stream()
                 .filter(id -> id.charAt(0) == 'P')
                 .map(id -> Long.parseLong(id.substring(1)))
@@ -40,22 +36,34 @@ public class EstimateServiceImpl implements EstimateService {
                 .map(id -> Long.parseLong(id.substring(1)))
                 .collect(Collectors.toUnmodifiableList());
 
+        EstimateCommandRepository.EstimateSaveDto estimateSaveDto;
         try {
             Long trimId = trimQueryRepository.findTrimIdByDetailTrimId(estimateRequestDto.getDetailTrimId());
             Long trimExteriorColorId = trimColorQueryRepository.findTrimExteriorColorIdByTrimIdAndColorCode(trimId, estimateRequestDto.getExteriorColorCode());
             Long trimInteriorColorId = trimColorQueryRepository.findTrimInteriorColorIdByTrimIdAndExteriorColorCodeAndInteriorColorCode(trimId, estimateRequestDto.getExteriorColorCode(), estimateRequestDto.getInteriorColorCode());
-            EstimateCommandRepository.EstimateSaveDto estimateSaveDto = EstimateCommandRepository.EstimateSaveDto.builder()
+            estimateSaveDto = EstimateCommandRepository.EstimateSaveDto.builder()
                     .detailTrimId(estimateRequestDto.getDetailTrimId())
                     .trimExteriorColorId(trimExteriorColorId)
                     .trimInteriorColorId(trimInteriorColorId)
                     .modelOptionIds(selectOptions)
                     .modelPackageIds(selectPackages)
                     .build();
+
+        } catch (DataAccessException exception) {
+            throw new IllegalArgumentException();
+        }
+
+        Long estimateId = estimateQueryRepository.findEstimateIdByRequestDto(estimateSaveDto);
+        if (estimateId != null) {
+            return estimateId;
+        }
+
+        try {
             estimateCommandRepository.save(estimateSaveDto);
         } catch (DataAccessException exception) {
             throw new IllegalArgumentException();
         }
 
-        return estimateQueryRepository.findEstimateIdByRequestDto(estimateRequestDto);
+        return estimateQueryRepository.findEstimateIdByRequestDto(estimateSaveDto);
     }
 }
