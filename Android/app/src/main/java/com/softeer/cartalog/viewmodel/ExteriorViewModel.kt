@@ -1,12 +1,13 @@
 package com.softeer.cartalog.viewmodel
 
 import android.graphics.drawable.Drawable
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.softeer.cartalog.data.enums.PriceDataType
 import com.softeer.cartalog.data.model.CarColor
+import com.softeer.cartalog.data.model.db.PriceData
 import com.softeer.cartalog.data.repository.CarRepository
 import kotlinx.coroutines.launch
 
@@ -24,6 +25,8 @@ class ExteriorViewModel(private val repository: CarRepository) : ViewModel() {
     private val _start360X = MutableLiveData(0f)
     val start360X: LiveData<Float> = _start360X
 
+    private val _selectedColorByUser = MutableLiveData<PriceData>()
+
     init {
         setExteriorColorData()
     }
@@ -31,7 +34,10 @@ class ExteriorViewModel(private val repository: CarRepository) : ViewModel() {
     private fun setExteriorColorData() {
         viewModelScope.launch {
             _colorList.value = repository.getCarColors(true, 2, "")
-            Log.d("test", _colorList.value.toString())
+            _selectedColorByUser.value = repository.getTypeData(PriceDataType.EXTERIOR_COLOR)
+            _selectedColor.value = colorList.value?.indices?.find {
+                colorList.value?.get(it)?.code == _selectedColorByUser.value!!.colorCode
+            }
         }
     }
 
@@ -41,5 +47,15 @@ class ExteriorViewModel(private val repository: CarRepository) : ViewModel() {
 
     fun setStart360X(startX: Float) {
         _start360X.value = startX
+    }
+
+    suspend fun saveUserSelection() {
+        val selectedColor = _colorList.value?.get(_selectedColor.value!!)
+        val newColor = selectedColor?.let {
+            _selectedColorByUser.value?.copy(
+                name = it.name, price = it.price, colorCode = it.code, imgUrl = it.colorImageUrl
+            )
+        }
+        repository.saveUserColorData(newColor!!)
     }
 }

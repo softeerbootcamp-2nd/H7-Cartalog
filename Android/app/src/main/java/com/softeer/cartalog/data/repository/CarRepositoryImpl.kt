@@ -136,5 +136,9 @@ class CarRepositoryImpl(
         return carLocalDataSource.getPriceData(type)
     }
 
+    override suspend fun saveUserColorData(color: PriceData) {
+        carLocalDataSource.updatePriceData(color)
+    }
+
 
 }

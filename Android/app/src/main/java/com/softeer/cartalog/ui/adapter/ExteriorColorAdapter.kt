@@ -10,7 +10,7 @@ import com.softeer.cartalog.viewmodel.ExteriorViewModel
 class ExteriorColorAdapter(private val viewModel: ExteriorViewModel) :
     RecyclerView.Adapter<ExteriorColorAdapter.ExteriorColorViewHolder>() {
 
-    var selectedItem = 0
+    var selectedItem = viewModel.selectedColor.value!!
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

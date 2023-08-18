@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.softeer.cartalog.R
 import com.softeer.cartalog.data.local.MyCarDatabase
 import com.softeer.cartalog.data.remote.api.RetrofitClient
 import com.softeer.cartalog.data.repository.CarRepositoryImpl
@@ -15,6 +17,9 @@ import com.softeer.cartalog.databinding.FragmentExteriorBinding
 import com.softeer.cartalog.ui.activity.MainActivity
 import com.softeer.cartalog.viewmodel.CommonViewModelFactory
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ExteriorFragment : Fragment() {
     private var _binding: FragmentExteriorBinding? = null
@@ -45,10 +50,19 @@ class ExteriorFragment : Fragment() {
         binding.viewModel = exteriorViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         binding.btnNext.setOnClickListener {
-            (activity as MainActivity).changeTab(3)
+            CoroutineScope(Dispatchers.Main).launch {
+                exteriorViewModel.saveUserSelection()
+                (activity as MainActivity).changeTab(3)
+            }
         }
         binding.btnPrev.setOnClickListener {
             (activity as MainActivity).changeTab(1)
+        }
+        binding.btnPriceSummary.setOnClickListener {
+            CoroutineScope(Dispatchers.Main).launch {
+                exteriorViewModel.saveUserSelection()
+                findNavController().navigate(R.id.action_exteriorFragment_to_priceSummaryBottomSheetFragment)
+            }
         }
     }
 
