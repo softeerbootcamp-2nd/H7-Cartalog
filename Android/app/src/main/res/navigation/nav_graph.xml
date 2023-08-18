@@ -81,7 +81,8 @@
     <fragment
         android:id="@+id/optionFragment"
         android:name="com.softeer.cartalog.ui.fragment.OptionFragment"
-        android:label="OptionFragment">
+        android:label="OptionFragment"
+        tools:layout="@layout/fragment_option">
         <action
             android:id="@+id/action_optionFragment_to_confirmFragment"
             app:destination="@id/confirmFragment"
@@ -95,6 +96,9 @@
         <action
             android:id="@+id/action_optionFragment_to_optionDetailDialog"
             app:destination="@id/optionDetailDialog" />
+        <action
+            android:id="@+id/action_optionFragment_to_priceSummaryBottomSheetFragment"
+            app:destination="@id/priceSummaryBottomSheetFragment" />
     </fragment>
     <fragment
         android:id="@+id/confirmFragment"
