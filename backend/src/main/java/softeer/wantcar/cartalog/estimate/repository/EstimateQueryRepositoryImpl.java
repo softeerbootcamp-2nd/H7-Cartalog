@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import softeer.wantcar.cartalog.estimate.dto.EstimateSaveDto;
+import softeer.wantcar.cartalog.estimate.dao.EstimateDao;
 
 import java.util.List;
 
@@ -20,14 +20,14 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Override
-    public Long findEstimateIdByRequestDto(EstimateSaveDto estimateSaveDto) {
-        List<Long> selectPackages = estimateSaveDto.getModelPackageIds();
-        List<Long> selectOptions = estimateSaveDto.getModelOptionIds();
+    public Long findEstimateIdByRequestDto(EstimateDao estimateDao) {
+        List<Long> selectPackages = estimateDao.getModelPackageIds();
+        List<Long> selectOptions = estimateDao.getModelOptionIds();
 
         SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("detailTrimId", estimateSaveDto.getDetailTrimId())
-                .addValue("trimExteriorColorId", estimateSaveDto.getTrimExteriorColorId())
-                .addValue("trimInteriorColorId", estimateSaveDto.getTrimInteriorColorId())
+                .addValue("detailTrimId", estimateDao.getDetailTrimId())
+                .addValue("trimExteriorColorId", estimateDao.getTrimExteriorColorId())
+                .addValue("trimInteriorColorId", estimateDao.getTrimInteriorColorId())
                 .addValue("selectPackageIds", selectPackages)
                 .addValue("selectOptionIds", selectOptions)
                 .addValue("countOfPackages", selectPackages.size())
