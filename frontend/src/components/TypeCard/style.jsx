@@ -8,6 +8,7 @@ export const TypeCard = styled.button`
   width: 160px;
   height: 76px;
   padding: 8px 12px;
+  border-radius: 6px;
   box-sizing: border-box;
   background-color: ${({ theme }) => theme.color.skyBlue4c};
 
