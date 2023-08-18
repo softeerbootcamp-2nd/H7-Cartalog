@@ -6,6 +6,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.dto.EstimateRequestDto;
+import softeer.wantcar.cartalog.estimate.dto.EstimateSaveDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateCommandRepository;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
 import softeer.wantcar.cartalog.trim.repository.TrimColorQueryRepository;
@@ -36,12 +37,12 @@ public class EstimateServiceImpl implements EstimateService {
                 .map(id -> Long.parseLong(id.substring(1)))
                 .collect(Collectors.toUnmodifiableList());
 
-        EstimateCommandRepository.EstimateSaveDto estimateSaveDto;
+        EstimateSaveDto estimateSaveDto;
         try {
             Long trimId = trimQueryRepository.findTrimIdByDetailTrimId(estimateRequestDto.getDetailTrimId());
             Long trimExteriorColorId = trimColorQueryRepository.findTrimExteriorColorIdByTrimIdAndColorCode(trimId, estimateRequestDto.getExteriorColorCode());
             Long trimInteriorColorId = trimColorQueryRepository.findTrimInteriorColorIdByTrimIdAndExteriorColorCodeAndInteriorColorCode(trimId, estimateRequestDto.getExteriorColorCode(), estimateRequestDto.getInteriorColorCode());
-            estimateSaveDto = EstimateCommandRepository.EstimateSaveDto.builder()
+            estimateSaveDto = EstimateSaveDto.builder()
                     .detailTrimId(estimateRequestDto.getDetailTrimId())
                     .trimExteriorColorId(trimExteriorColorId)
                     .trimInteriorColorId(trimInteriorColorId)

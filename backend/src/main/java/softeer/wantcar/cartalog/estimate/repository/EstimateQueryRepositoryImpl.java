@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import softeer.wantcar.cartalog.estimate.dto.EstimateSaveDto;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Override
-    public Long findEstimateIdByRequestDto(EstimateCommandRepository.EstimateSaveDto estimateSaveDto) {
+    public Long findEstimateIdByRequestDto(EstimateSaveDto estimateSaveDto) {
         List<Long> selectPackages = estimateSaveDto.getModelPackageIds();
         List<Long> selectOptions = estimateSaveDto.getModelOptionIds();
 

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
+import softeer.wantcar.cartalog.estimate.dto.EstimateSaveDto;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ class EstimateCommandRepositoryImplTest {
         @DisplayName("생성 테스트")
         void createTest() {
             //given
-            EstimateCommandRepository.EstimateSaveDto request = EstimateCommandRepository.EstimateSaveDto.builder()
+            EstimateSaveDto request = EstimateSaveDto.builder()
                     .detailTrimId(9L)
                     .trimInteriorColorId(7L)
                     .trimExteriorColorId(7L)
