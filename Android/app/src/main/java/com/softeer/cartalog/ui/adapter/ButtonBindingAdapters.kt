@@ -92,6 +92,10 @@ fun setOnClickToggle(
     }
 }
 
+private fun toggleItemSelection(position: Int) {
+
+}
+
 @BindingAdapter("adapter", "viewModel", "position")
 fun setOptionItemClickListener(
     cardView: MaterialCardView,
@@ -103,11 +107,12 @@ fun setOptionItemClickListener(
         when (viewModel.nowOptionMode.value) {
             OptionMode.SELECT_OPTION -> {
                 adapter as OptionSelectAdapter
-                if (adapter.selectedItem != position) {
-                    adapter.selectedItem = position
-                    viewModel.setSelectedSelectOption(position)
+                if (adapter.selectedItems.contains(position)) {
+                    adapter.selectedItems.remove(position)
+                } else {
+                    adapter.selectedItems.add(position)
                 }
-                adapter.notifyDataSetChanged()
+                adapter.notifyItemChanged(position)
             }
 
             OptionMode.DEFAULT_OPTION -> {

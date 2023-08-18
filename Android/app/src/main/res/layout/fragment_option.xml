@@ -236,6 +236,7 @@
                     app:layout_constraintStart_toStartOf="@id/gl_start"
                     app:layout_constraintTop_toBottomOf="@id/sv_category_select"
                     app:viewModel="@{viewModel}"
+                    app:optionList="@{viewModel.options}"
                     tools:listitem="@layout/item_option_select_card" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

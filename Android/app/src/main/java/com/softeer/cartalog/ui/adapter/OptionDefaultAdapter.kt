@@ -31,7 +31,7 @@ class OptionDefaultAdapter(private val viewModel: OptionViewModel) :
     }
 
     override fun getItemCount(): Int {
-        return viewModel.defaultOptions!!.size
+        return viewModel.defaultOptions?.size ?: 0
     }
 
     inner class OptionDefaultViewHolder(val binding: ItemOptionDefaultCardBinding) :

@@ -6,15 +6,18 @@ import android.view.MotionEvent
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LifecycleCoroutineScope
+import coil.Coil
 import coil.ImageLoader
 import coil.disk.DiskCache
 import coil.load
 import coil.memory.MemoryCache
 import coil.request.ImageRequest
+import coil.transition.CrossfadeTransition
 import com.softeer.cartalog.util.UtilManager
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -25,13 +28,24 @@ fun setImageWithUrl(
 ) {
     imageView.load(imgUrl)
 }
+@BindingAdapter("imgUrlAnimation")
+fun setImageWithAnimation(
+    imageView: ImageView,
+    imgUrl: String?
+){
+    imageView.load(imgUrl) {
+        transitionFactory { target, result -> CrossfadeTransition(target, result, 400, false) }
+    }
+}
 
 @BindingAdapter("colorCode")
 fun setImage360Init(
     imageView: ImageView,
     colorCode: String?
 ) {
-    imageView.load(colorCode?.let { UtilManager.get360Image(it, 1) })
+    imageView.load(colorCode?.let { UtilManager.get360Image(it, 1) }) {
+        transitionFactory { target, result -> CrossfadeTransition(target, result, 400, false) }
+    }
 }
 
 @SuppressLint("ClickableViewAccessibility")

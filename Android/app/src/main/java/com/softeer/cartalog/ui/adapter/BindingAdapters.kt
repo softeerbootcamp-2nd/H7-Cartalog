@@ -1,5 +1,6 @@
 package com.softeer.cartalog.ui.adapter
 
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.SeekBar
@@ -12,8 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.softeer.cartalog.R
 import com.softeer.cartalog.data.enums.OptionMode
-import com.softeer.cartalog.data.model.SummaryOptionPrice
 import com.softeer.cartalog.data.model.CarColor
+import com.softeer.cartalog.data.model.Options
+import com.softeer.cartalog.data.model.SummaryOptionPrice
 import com.softeer.cartalog.util.UtilManager
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import com.softeer.cartalog.viewmodel.InteriorViewModel
@@ -95,10 +97,11 @@ fun setInteriorColorRecyclerView(
     recyclerView.adapter = adapter
 }
 
-@BindingAdapter("viewModel")
+@BindingAdapter("viewModel", "optionList")
 fun setOptionRecyclerView(
     recyclerView: RecyclerView,
-    viewModel: OptionViewModel
+    viewModel: OptionViewModel,
+    optionList: Options?
 ) {
     when (viewModel.nowOptionMode.value) {
         OptionMode.SELECT_OPTION -> {

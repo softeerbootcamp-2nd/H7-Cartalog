@@ -29,18 +29,19 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         app:adapter="@{optionAdapter}"
+        app:cardBackgroundColor="@{optionAdapter.selectedItems.contains(position) ? @color/active_blue_card_bg : @color/gray_50}"
         app:cardCornerRadius="5dp"
         app:cardElevation="0dp"
         app:position="@{position}"
-        app:cardBackgroundColor="@{position == optionAdapter.selectedItem ? @color/active_blue_card_bg : @color/gray_50}"
-        app:strokeColor="@{position == optionAdapter.selectedItem ?  @color/active_blue :  @color/gray_200}"
-        app:strokeWidth="@{position == optionAdapter.selectedItem ? 7 : 4}"
+        app:strokeColor="@{optionAdapter.selectedItems.contains(position) ?  @color/active_blue :  @color/gray_200}"
+        app:strokeWidth="@{optionAdapter.selectedItems.contains(position) ? 7 : 4}"
         app:viewModel="@{viewModel}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/gl_center"
                 android:layout_width="wrap_content"
@@ -81,7 +82,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/tmp_img_option_item"
+                app:imgUrl="@{option.imageUrl}"
                 app:layout_constraintBottom_toBottomOf="@id/gl_center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -92,17 +93,20 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@id/iv_option"
-                app:layout_constraintStart_toStartOf="@id/gl_start"
-                app:layout_constraintEnd_toEndOf="@id/gl_end">
+                app:layout_constraintEnd_toEndOf="@id/gl_end"
+                app:layout_constraintStart_toStartOf="@id/gl_start">
+
                 <com.google.android.material.chip.Chip
                     style="@style/ChipHashTagStyle"
-                    android:text="전체"/>
+                    android:text="전체" />
+
                 <com.google.android.material.chip.Chip
                     style="@style/ChipHashTagStyle"
-                    android:text="상세품목"/>
+                    android:text="상세품목" />
+
                 <com.google.android.material.chip.Chip
                     style="@style/ChipHashTagStyle"
-                    android:text="악세서리"/>
+                    android:text="악세서리" />
             </com.google.android.material.chip.ChipGroup>
 
 
@@ -124,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text='@{option.chosen + "%"}'
-                android:textColor="@{position == optionAdapter.selectedItem ? @color/active_blue : @color/gray_600}"
+                android:textColor="@{optionAdapter.selectedItems.contains(position) ? @color/active_blue : @color/gray_600}"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@id/gl_start"
                 app:layout_constraintTop_toBottomOf="@id/iv_option" />
@@ -134,7 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/option_item_select_guide"
-                android:textColor="@{position == optionAdapter.selectedItem ? @color/gray_700 : @color/gray_600}"
+                android:textColor="@{optionAdapter.selectedItems.contains(position) ? @color/gray_700 : @color/gray_600}"
                 android:textSize="12sp"
                 app:layout_constraintStart_toEndOf="@id/tv_selected_percent"
                 app:layout_constraintTop_toTopOf="@id/tv_selected_percent" />
@@ -145,7 +149,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{option.name}"
-                android:textColor="@{position == optionAdapter.selectedItem ? @color/gray_900 : @color/gray_600}"
+                android:textColor="@{optionAdapter.selectedItems.contains(position) ? @color/gray_900 : @color/gray_600}"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/gl_start"
                 app:layout_constraintTop_toBottomOf="@id/tv_selected_percent_guide" />
@@ -155,8 +159,8 @@
                 style="@style/FragmentHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+ 1,090,000 원"
-                android:textColor="@{position == optionAdapter.selectedItem ? @color/gray_900 : @color/gray_600}"
+                android:text='@{String.format("+ %,d 원", option.price)}'
+                android:textColor="@{optionAdapter.selectedItems.contains(position) ? @color/gray_900 : @color/gray_600}"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/gl_bottom"
                 app:layout_constraintStart_toStartOf="@id/gl_start" />
@@ -165,24 +169,22 @@
                 android:id="@+id/cv_check"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
+                app:cardBackgroundColor="@{optionAdapter.selectedItems.contains(position) ?  @color/active_blue :  @color/gray_50}"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="0dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@{position == optionAdapter.selectedItem ?  @color/active_blue :  @color/gray_200}"
-                app:cardBackgroundColor="@{position == optionAdapter.selectedItem ?  @color/active_blue :  @color/gray_50}"
                 app:layout_constraintBottom_toBottomOf="@id/gl_bottom"
-                app:layout_constraintEnd_toEndOf="@id/gl_end">
+                app:layout_constraintEnd_toEndOf="@id/gl_end"
+                app:strokeColor="@{optionAdapter.selectedItems.contains(position) ?  @color/active_blue :  @color/gray_200}"
+                app:strokeWidth="1dp">
+
                 <ImageView
                     android:id="@+id/btn_check"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/selector_btn_check"
                     android:padding="5dp"
-                    android:tint="@{position == optionAdapter.selectedItem ? @color/white : @color/gray_400}"
-                    />
+                    android:src="@drawable/selector_btn_check"
+                    android:tint="@{optionAdapter.selectedItems.contains(position) ? @color/white : @color/gray_400}" />
             </com.google.android.material.card.MaterialCardView>
-
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

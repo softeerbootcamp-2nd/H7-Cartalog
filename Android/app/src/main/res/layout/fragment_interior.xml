@@ -45,7 +45,7 @@
             android:background="@color/blue_bg"
             android:scaleType="centerCrop"
             android:src="@drawable/tmp_img_interior_main"
-            app:imgUrl="@{viewModel.colorList[viewModel.selectedColor].carImageUrl}"
+            app:imgUrlAnimation="@{viewModel.colorList[viewModel.selectedColor].carImageUrl}"
             app:layout_constraintBottom_toBottomOf="@id/gl_center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

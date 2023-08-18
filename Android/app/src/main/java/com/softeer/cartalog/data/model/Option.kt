@@ -1,7 +1,7 @@
 package com.softeer.cartalog.data.model
 
 data class Option(
-    val id: Int,
+    val id: String,
     val name: String,
     val parentCategory: String?,
     val childCategory: String?,

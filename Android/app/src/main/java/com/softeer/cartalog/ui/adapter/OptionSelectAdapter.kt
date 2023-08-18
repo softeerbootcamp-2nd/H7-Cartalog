@@ -12,7 +12,7 @@ import com.softeer.cartalog.viewmodel.OptionViewModel
 class OptionSelectAdapter(private val viewModel: OptionViewModel) :
     RecyclerView.Adapter<OptionSelectAdapter.OptionSelectViewHolder>(), OptionAdapter {
 
-    var selectedItem = 0
+    var selectedItems = mutableListOf<Int>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -29,12 +29,11 @@ class OptionSelectAdapter(private val viewModel: OptionViewModel) :
     }
 
     override fun getItemCount(): Int {
-        return viewModel.selectOptions!!.size
+        return viewModel.selectOptions?.size ?: 0
     }
 
     inner class OptionSelectViewHolder(val binding: ItemOptionSelectCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        var isSelected = false
         fun bind(item: Option?, position: Int) {
             binding.lifecycleOwner = binding.lifecycleOwner
             binding.viewModel = viewModel
@@ -47,4 +46,6 @@ class OptionSelectAdapter(private val viewModel: OptionViewModel) :
             }
         }
     }
+
+
 }
