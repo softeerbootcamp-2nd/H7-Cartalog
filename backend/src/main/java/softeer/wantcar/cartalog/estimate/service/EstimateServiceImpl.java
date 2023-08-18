@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import softeer.wantcar.cartalog.estimate.dao.EstimateDao;
+import softeer.wantcar.cartalog.estimate.service.dto.EstimateDto;
 import softeer.wantcar.cartalog.estimate.dto.EstimateRequestDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateCommandRepository;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
@@ -40,15 +40,15 @@ public class EstimateServiceImpl implements EstimateService {
                 .collect(Collectors.toUnmodifiableList());
 
         Long trimId = trimQueryRepository.findTrimIdByDetailTrimId(estimateRequestDto.getDetailTrimId());
-        EstimateDao estimateDao = buildEstimateDao(trimId, estimateRequestDto, selectPackages, selectOptions);
+        EstimateDto estimateDto = buildEstimateDao(trimId, estimateRequestDto, selectPackages, selectOptions);
 
-        Long estimateId = estimateQueryRepository.findEstimateIdByRequestDto(estimateDao);
+        Long estimateId = estimateQueryRepository.findEstimateIdByRequestDto(estimateDto);
         if (estimateId != null) {
             return estimateId;
         }
 
         try {
-            estimateCommandRepository.save(estimateDao);
+            estimateCommandRepository.save(estimateDto);
 //             TODO : 견적서 지연된 유사도 계산
 //             견적서 옵션, 패키지의 모든 해시 태그 조합을 계산하한 후 추가하면 됩니다.
 //            PendingHashTagSimilaritySaveDao pendingHashTagSimilaritySaveDao = PendingHashTagSimilaritySaveDao.builder()
@@ -61,16 +61,16 @@ public class EstimateServiceImpl implements EstimateService {
             throw new IllegalArgumentException();
         }
 
-        return estimateQueryRepository.findEstimateIdByRequestDto(estimateDao);
+        return estimateQueryRepository.findEstimateIdByRequestDto(estimateDto);
     }
 
-    private EstimateDao buildEstimateDao(Long trimId, EstimateRequestDto estimateRequestDto, List<Long> selectPackages, List<Long> selectOptions) {
+    private EstimateDto buildEstimateDao(Long trimId, EstimateRequestDto estimateRequestDto, List<Long> selectPackages, List<Long> selectOptions) {
         try {
             Long trimExteriorColorId = trimColorQueryRepository.findTrimExteriorColorIdByTrimIdAndColorCode(
                     trimId, estimateRequestDto.getExteriorColorCode());
             Long trimInteriorColorId = trimColorQueryRepository.findTrimInteriorColorIdByTrimIdAndExteriorColorCodeAndInteriorColorCode(
                     trimId, estimateRequestDto.getExteriorColorCode(), estimateRequestDto.getInteriorColorCode());
-            return EstimateDao.builder()
+            return EstimateDto.builder()
                     .detailTrimId(estimateRequestDto.getDetailTrimId())
                     .trimExteriorColorId(trimExteriorColorId)
                     .trimInteriorColorId(trimInteriorColorId)

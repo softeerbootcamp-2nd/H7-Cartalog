@@ -1,4 +1,4 @@
-package softeer.wantcar.cartalog.estimate.dao;
+package softeer.wantcar.cartalog.estimate.service.dto;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Builder
-public class EstimateDao {
+public class EstimateDto {
     private Long detailTrimId;
     private Long trimExteriorColorId;
     private Long trimInteriorColorId;
