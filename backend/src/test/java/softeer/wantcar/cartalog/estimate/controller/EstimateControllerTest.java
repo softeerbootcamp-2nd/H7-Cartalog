@@ -75,7 +75,7 @@ class EstimateControllerTest {
 
         @Test
         @DisplayName("유효하지 않은 견적서를 전달했을 경우 요청을 거부해야 한다.")
-        void test() {
+        void failure() {
             //given
             EstimateRequestDto requestDto = mock(EstimateRequestDto.class);
             when(estimateService.saveOrFindEstimateId(any())).thenThrow(IllegalArgumentException.class);

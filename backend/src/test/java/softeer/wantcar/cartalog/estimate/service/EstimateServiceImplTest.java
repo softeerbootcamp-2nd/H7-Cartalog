@@ -69,8 +69,8 @@ class EstimateServiceImplTest {
         }
 
         @Test
-        @DisplayName("잘못된 견적서가 없으면 IllegalException 에러를 발생해야 한다.")
-        void test() {
+        @DisplayName("유효하지 않은 견적서를 요청하면 IllegalException 에러를 발생해야 한다.")
+        void failureByWrongEstimate() {
             //given
             Long estimateId = 1L;
             EstimateRequestDto requestDto = mock(EstimateRequestDto.class);
