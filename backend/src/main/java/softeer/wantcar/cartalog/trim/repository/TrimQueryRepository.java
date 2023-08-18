@@ -9,4 +9,6 @@ public interface TrimQueryRepository {
     TrimListResponseDto findTrimsByBasicModelId(Long basicModelId);
 
     DetailTrimInfoDto findDetailTrimInfoByTrimIdAndModelTypeIds(Long trimId, List<Long> modelTypeIds);
+
+    Long findTrimIdByDetailTrimId(Long detailTrimId);
 }

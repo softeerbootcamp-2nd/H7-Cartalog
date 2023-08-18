@@ -2,6 +2,7 @@ package softeer.wantcar.cartalog.estimate.repository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -19,7 +20,7 @@ public class EstimateCommandRepositoryImpl implements EstimateCommandRepository 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Override
-    public void save(EstimateSaveDto estimateSaveDto) {
+    public void save(EstimateSaveDto estimateSaveDto) throws DataAccessException {
         Long nextId = jdbcTemplate.queryForObject("SELECT Max(id) FROM estimates", new HashMap<>(), Long.class) + 1;
 
 
@@ -42,7 +43,6 @@ public class EstimateCommandRepositoryImpl implements EstimateCommandRepository 
                         .addValue("nextId", nextId))
                 .toArray(SqlParameterSource[]::new);
         String SQL2 = "INSERT INTO estimate_packages ( estimate_id, model_package_id ) VALUES ( :nextId, :packageId ) ";
-
         jdbcTemplate.batchUpdate(SQL2, array);
 
         SqlParameterSource[] array2 = estimateSaveDto.getModelOptionIds().stream()
