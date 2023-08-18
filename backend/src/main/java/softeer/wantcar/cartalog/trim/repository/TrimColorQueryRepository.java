@@ -9,5 +9,6 @@ public interface TrimColorQueryRepository {
     TrimInteriorColorListResponseDto findTrimInteriorColorByTrimIdAndExteriorColorCode(Long trimId, String colorCode);
 
     Long findTrimExteriorColorIdByTrimIdAndColorCode(Long trimId, String colorCode);
+
     Long findTrimInteriorColorIdByTrimIdAndExteriorColorCodeAndInteriorColorCode(Long trimId, String exteriorColorCode, String interiorColorCode);
 }
