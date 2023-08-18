@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import softeer.wantcar.cartalog.estimate.dto.EstimateSaveDto;
+import softeer.wantcar.cartalog.estimate.dao.EstimateDao;
 
 import java.util.HashMap;
 
@@ -21,16 +21,16 @@ public class EstimateCommandRepositoryImpl implements EstimateCommandRepository 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Override
-    public void save(EstimateSaveDto estimateSaveDto) throws DataAccessException {
+    public void save(EstimateDao estimateDao) throws DataAccessException {
         Long nextId = jdbcTemplate.queryForObject("SELECT Max(id) FROM estimates", new HashMap<>(), Long.class) + 1;
 
 
         SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("detailTrimId", estimateSaveDto.getDetailTrimId())
-                .addValue("exteriorColorId", estimateSaveDto.getTrimExteriorColorId())
-                .addValue("exteriorColorId", estimateSaveDto.getTrimInteriorColorId())
-                .addValue("modelOptionIds", estimateSaveDto.getModelOptionIds())
-                .addValue("modelPackageIds", estimateSaveDto.getModelPackageIds())
+                .addValue("detailTrimId", estimateDao.getDetailTrimId())
+                .addValue("exteriorColorId", estimateDao.getTrimExteriorColorId())
+                .addValue("exteriorColorId", estimateDao.getTrimInteriorColorId())
+                .addValue("modelOptionIds", estimateDao.getModelOptionIds())
+                .addValue("modelPackageIds", estimateDao.getModelPackageIds())
                 .addValue("nextId", nextId);
 
         String SQL = "INSERT INTO estimates ( id, detail_trim_id, trim_exterior_color_id, trim_interior_color_id ) " +
@@ -38,7 +38,7 @@ public class EstimateCommandRepositoryImpl implements EstimateCommandRepository 
 
         jdbcTemplate.update(SQL, parameters);
 
-        SqlParameterSource[] array = estimateSaveDto.getModelPackageIds().stream()
+        SqlParameterSource[] array = estimateDao.getModelPackageIds().stream()
                 .map(id -> new MapSqlParameterSource()
                         .addValue("packageId", id)
                         .addValue("nextId", nextId))
@@ -46,7 +46,7 @@ public class EstimateCommandRepositoryImpl implements EstimateCommandRepository 
         String SQL2 = "INSERT INTO estimate_packages ( estimate_id, model_package_id ) VALUES ( :nextId, :packageId ) ";
         jdbcTemplate.batchUpdate(SQL2, array);
 
-        SqlParameterSource[] array2 = estimateSaveDto.getModelOptionIds().stream()
+        SqlParameterSource[] array2 = estimateDao.getModelOptionIds().stream()
                 .map(id -> new MapSqlParameterSource()
                         .addValue("optionId", id)
                         .addValue("nextId", nextId))

@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
-import softeer.wantcar.cartalog.estimate.dto.EstimateSaveDto;
+import softeer.wantcar.cartalog.estimate.dao.EstimateDao;
 
 import java.util.List;
 
@@ -70,7 +70,7 @@ class EstimateQueryRepositoryImplTest {
         @DisplayName("이미 존재하는 견적서 조회 테스트")
         void findAlreadyExists() {
             //given
-            EstimateSaveDto dto = EstimateSaveDto.builder()
+            EstimateDao dto = EstimateDao.builder()
                     .detailTrimId(12L)
                     .trimExteriorColorId(7L)
                     .trimInteriorColorId(7L)
@@ -89,7 +89,7 @@ class EstimateQueryRepositoryImplTest {
         @DisplayName("존재하지 않는 견적서 조회시 null 반환 테스트")
         void returnNull() {
             //given
-             EstimateSaveDto dto =  EstimateSaveDto.builder()
+             EstimateDao dto =  EstimateDao.builder()
                     .detailTrimId(12L)
                     .trimExteriorColorId(7L)
                     .trimInteriorColorId(7L)
@@ -108,7 +108,7 @@ class EstimateQueryRepositoryImplTest {
         @DisplayName("옵션 또는 패키지가 없을 때에도 정상적으로 견적서 조회가 가능해야 한다.")
         void findNoneData() {
             //given
-             EstimateSaveDto dto =  EstimateSaveDto.builder()
+             EstimateDao dto =  EstimateDao.builder()
                     .detailTrimId(9L)
                     .trimExteriorColorId(7L)
                     .trimInteriorColorId(7L)
@@ -127,7 +127,7 @@ class EstimateQueryRepositoryImplTest {
         @DisplayName("옵션이 없을 때에도 정상적으로 견적서 조회가 가능해야 한다.")
         void findUnbalancedOptionData() {
             //given
-             EstimateSaveDto dto =  EstimateSaveDto.builder()
+             EstimateDao dto =  EstimateDao.builder()
                     .detailTrimId(9L)
                     .trimExteriorColorId(7L)
                     .trimInteriorColorId(7L)
@@ -146,7 +146,7 @@ class EstimateQueryRepositoryImplTest {
         @DisplayName("패키지가 없을 때에도 정상적으로 견적서 조회가 가능해야 한다.")
         void findUnbalancedPackageData() {
             //given
-             EstimateSaveDto dto =  EstimateSaveDto.builder()
+             EstimateDao dto =  EstimateDao.builder()
                     .detailTrimId(9L)
                     .trimExteriorColorId(7L)
                     .trimInteriorColorId(7L)

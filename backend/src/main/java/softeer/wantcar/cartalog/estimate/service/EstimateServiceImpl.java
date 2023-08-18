@@ -6,7 +6,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.dto.EstimateRequestDto;
-import softeer.wantcar.cartalog.estimate.dto.EstimateSaveDto;
+import softeer.wantcar.cartalog.estimate.dao.EstimateDao;
 import softeer.wantcar.cartalog.estimate.repository.EstimateCommandRepository;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
 import softeer.wantcar.cartalog.trim.repository.TrimColorQueryRepository;
@@ -37,12 +37,12 @@ public class EstimateServiceImpl implements EstimateService {
                 .map(id -> Long.parseLong(id.substring(1)))
                 .collect(Collectors.toUnmodifiableList());
 
-        EstimateSaveDto estimateSaveDto;
+        EstimateDao estimateDao;
         try {
             Long trimId = trimQueryRepository.findTrimIdByDetailTrimId(estimateRequestDto.getDetailTrimId());
             Long trimExteriorColorId = trimColorQueryRepository.findTrimExteriorColorIdByTrimIdAndColorCode(trimId, estimateRequestDto.getExteriorColorCode());
             Long trimInteriorColorId = trimColorQueryRepository.findTrimInteriorColorIdByTrimIdAndExteriorColorCodeAndInteriorColorCode(trimId, estimateRequestDto.getExteriorColorCode(), estimateRequestDto.getInteriorColorCode());
-            estimateSaveDto = EstimateSaveDto.builder()
+            estimateDao = EstimateDao.builder()
                     .detailTrimId(estimateRequestDto.getDetailTrimId())
                     .trimExteriorColorId(trimExteriorColorId)
                     .trimInteriorColorId(trimInteriorColorId)
@@ -54,17 +54,17 @@ public class EstimateServiceImpl implements EstimateService {
             throw new IllegalArgumentException();
         }
 
-        Long estimateId = estimateQueryRepository.findEstimateIdByRequestDto(estimateSaveDto);
+        Long estimateId = estimateQueryRepository.findEstimateIdByRequestDto(estimateDao);
         if (estimateId != null) {
             return estimateId;
         }
 
         try {
-            estimateCommandRepository.save(estimateSaveDto);
+            estimateCommandRepository.save(estimateDao);
         } catch (DataAccessException exception) {
             throw new IllegalArgumentException();
         }
 
-        return estimateQueryRepository.findEstimateIdByRequestDto(estimateSaveDto);
+        return estimateQueryRepository.findEstimateIdByRequestDto(estimateDao);
     }
 }
