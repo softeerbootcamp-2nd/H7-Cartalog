@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import softeer.wantcar.cartalog.estimate.dto.EstimateRequestDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateCommandRepository;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
+import softeer.wantcar.cartalog.estimate.repository.SimilarityCommandRepository;
 import softeer.wantcar.cartalog.trim.repository.TrimColorQueryRepository;
 import softeer.wantcar.cartalog.trim.repository.TrimQueryRepository;
 
@@ -19,6 +20,7 @@ class EstimateServiceImplTest {
     EstimateCommandRepository estimateCommandRepository;
     TrimColorQueryRepository trimColorQueryRepository;
     TrimQueryRepository trimQueryRepository;
+    SimilarityCommandRepository similarityCommandRepository;
     EstimateService estimateService;
 
     @BeforeEach
@@ -27,7 +29,8 @@ class EstimateServiceImplTest {
         estimateCommandRepository = mock(EstimateCommandRepository.class);
         trimColorQueryRepository = mock(TrimColorQueryRepository.class);
         trimQueryRepository = mock(TrimQueryRepository.class);
-        estimateService = new EstimateServiceImpl(estimateQueryRepository, estimateCommandRepository, trimColorQueryRepository, trimQueryRepository);
+        similarityCommandRepository = mock(SimilarityCommandRepository.class);
+        estimateService = new EstimateServiceImpl(estimateQueryRepository, estimateCommandRepository, trimColorQueryRepository, trimQueryRepository, similarityCommandRepository);
     }
 
     @Nested
