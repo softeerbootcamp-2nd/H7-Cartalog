@@ -9,4 +9,6 @@ public interface SimilarityCommandRepository {
     void deletePending(Long trimId, String hashTagKey);
 
     void saveCalculatedHashTagKeys(Long trimId, String hashTagKey, Map<String, Double> similarities);
+
+    void savePendingHashTagSimilarity(PendingHashTagSimilaritySaveDto pendingHashTagSimilaritySaveDto);
 }
