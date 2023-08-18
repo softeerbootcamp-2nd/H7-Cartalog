@@ -97,6 +97,21 @@ public class TrimQueryRepositoryImpl implements TrimQueryRepository {
         }
     }
 
+    @Override
+    public Long findTrimIdByDetailTrimId(Long detailTrimId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("detailTrimId", detailTrimId);
+
+        try {
+            return jdbcTemplate.queryForObject(
+                    "Select trim_id FROM detail_trims WHERE id = :detailTrimId",
+                    parameters,
+                    Long.class);
+        } catch (DataAccessException e) {
+            return null;
+        }
+    }
+
     private DetailTrimInfoDto getDetailTrimInfoDto(ResultSet rs) throws SQLException {
         return DetailTrimInfoDto.builder()
                 .detailTrimId(rs.getLong("detailTrimId"))

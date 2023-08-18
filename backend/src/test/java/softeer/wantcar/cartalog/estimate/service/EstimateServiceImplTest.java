@@ -8,6 +8,7 @@ import softeer.wantcar.cartalog.estimate.dto.EstimateRequestDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateCommandRepository;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
 import softeer.wantcar.cartalog.trim.repository.TrimColorQueryRepository;
+import softeer.wantcar.cartalog.trim.repository.TrimQueryRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -17,6 +18,7 @@ class EstimateServiceImplTest {
     EstimateQueryRepository estimateQueryRepository;
     EstimateCommandRepository estimateCommandRepository;
     TrimColorQueryRepository trimColorQueryRepository;
+    TrimQueryRepository trimQueryRepository;
     EstimateService estimateService;
 
     @BeforeEach
@@ -24,7 +26,8 @@ class EstimateServiceImplTest {
         estimateQueryRepository = mock(EstimateQueryRepository.class);
         estimateCommandRepository = mock(EstimateCommandRepository.class);
         trimColorQueryRepository = mock(TrimColorQueryRepository.class);
-        estimateService = new EstimateServiceImpl(estimateQueryRepository, estimateCommandRepository, trimColorQueryRepository);
+        trimQueryRepository = mock(TrimQueryRepository.class);
+        estimateService = new EstimateServiceImpl(estimateQueryRepository, estimateCommandRepository, trimColorQueryRepository, trimQueryRepository);
     }
 
     @Nested
@@ -48,6 +51,23 @@ class EstimateServiceImplTest {
         @Test
         @DisplayName("등록된 견적서가 없으면 견적서를 등록하고 해당 견적서의 식별자를 반환한다.")
         void successAfterRegister() {
+            //given
+            Long estimateId = 1L;
+            EstimateRequestDto requestDto = mock(EstimateRequestDto.class);
+            when(estimateQueryRepository.findEstimateIdByRequestDto(requestDto)).thenReturn(null).thenReturn(estimateId);
+
+            //when
+            Long result = estimateService.saveOrFindEstimateId(requestDto);
+
+            //then
+            verify(estimateCommandRepository, times(1)).save(any());
+            verify(estimateQueryRepository, times(2)).findEstimateIdByRequestDto(requestDto);
+            assertThat(result).isEqualTo(estimateId);
+        }
+
+        @Test
+        @DisplayName("잘못된 견적서가 없으면 IllegalException 에러를 발생해야 한다.")
+        void test() {
             //given
             Long estimateId = 1L;
             EstimateRequestDto requestDto = mock(EstimateRequestDto.class);
