@@ -36,9 +36,9 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
     private val _hmgData: MutableLiveData<TrimDetail> = MutableLiveData()
     val hmgData: LiveData<TrimDetail> = _hmgData
 
-    private val selectedPowerTrain: MutableLiveData<PriceData> = MutableLiveData()
-    private val selectedBodyType: MutableLiveData<PriceData> = MutableLiveData()
-    private val selectedWheelDrive: MutableLiveData<PriceData> = MutableLiveData()
+    private val _selectedPowerTrain: MutableLiveData<PriceData> = MutableLiveData()
+    private val _selectedBodyType: MutableLiveData<PriceData> = MutableLiveData()
+    private val _selectedWheelDrive: MutableLiveData<PriceData> = MutableLiveData()
 
     init {
         setTypeData()
@@ -101,17 +101,17 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
         }
 
         val newPowerTrain = powerTrain?.let {
-            selectedPowerTrain.value?.copy(
+            _selectedPowerTrain.value?.copy(
                 optionId = it.id, name = it.name, price = it.price, imgUrl = it.imageUrl
             )
         }
         val newBodyType = bodyType?.let {
-            selectedBodyType.value?.copy(
+            _selectedBodyType.value?.copy(
                 optionId = it.id, name = it.name, price = it.price, imgUrl = it.imageUrl
             )
         }
         val newWheelDrive = wheelDrive?.let {
-            selectedWheelDrive.value?.copy(
+            _selectedWheelDrive.value?.copy(
                 optionId = it.id, name = it.name, price = it.price, imgUrl = it.imageUrl
             )
         }
@@ -120,13 +120,13 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
 
     private fun setSelectedType(){
         viewModelScope.launch {
-            selectedPowerTrain.value = repository.getTypeData(PriceDataType.POWERTRAIN)
-            selectedBodyType.value = repository.getTypeData(PriceDataType.BODYTYPE)
-            selectedWheelDrive.value = repository.getTypeData(PriceDataType.WHEELDRIVE)
+            _selectedPowerTrain.value = repository.getTypeData(PriceDataType.POWERTRAIN)
+            _selectedBodyType.value = repository.getTypeData(PriceDataType.BODYTYPE)
+            _selectedWheelDrive.value = repository.getTypeData(PriceDataType.WHEELDRIVE)
 
-            _powertrain1Selected.value = selectedPowerTrain.value?.optionId == 1 || selectedPowerTrain.value == null
-            _bodytype1Selected.value = selectedBodyType.value?.optionId == 5 || selectedPowerTrain.value == null
-            _wheeldrive1Selected.value = selectedWheelDrive.value?.optionId == 3 || selectedPowerTrain.value == null
+            _powertrain1Selected.value = _selectedPowerTrain.value?.optionId == 1 || _selectedPowerTrain.value == null
+            _bodytype1Selected.value = _selectedBodyType.value?.optionId == 5 || _selectedBodyType.value == null
+            _wheeldrive1Selected.value = _selectedWheelDrive.value?.optionId == 3 || _selectedWheelDrive.value == null
         }
     }
 }
