@@ -1,7 +1,7 @@
 package softeer.wantcar.cartalog.estimate.repository;
 
-import softeer.wantcar.cartalog.estimate.dao.EstimateDao;
+import softeer.wantcar.cartalog.estimate.service.dto.EstimateDto;
 
 public interface EstimateQueryRepository {
-    Long findEstimateIdByRequestDto(EstimateDao estimateDao);
+    Long findEstimateIdByRequestDto(EstimateDto estimateDto);
 }

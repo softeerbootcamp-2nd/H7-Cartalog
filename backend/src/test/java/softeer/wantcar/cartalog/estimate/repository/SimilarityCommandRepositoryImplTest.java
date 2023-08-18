@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.test.context.jdbc.Sql;
-import softeer.wantcar.cartalog.estimate.dao.PendingHashTagSimilaritySaveDao;
+import softeer.wantcar.cartalog.estimate.service.dto.PendingHashTagSimilaritySaveDto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -34,26 +34,26 @@ class SimilarityCommandRepositoryImplTest {
         @DisplayName("지연된 해시 테그 유사도 추가 테스트")
         void success() {
             //given
-            PendingHashTagSimilaritySaveDao pendingHashTagSimilaritySaveDao = PendingHashTagSimilaritySaveDao.builder()
+            PendingHashTagSimilaritySaveDto pendingHashTagSimilaritySaveDto = PendingHashTagSimilaritySaveDto.builder()
                     .pendingHashTagLeftKey("C:1|D:3")
                     .hashTagKey("A:1|B:2")
                     .trimId(2L)
                     .build();
 
             //when
-            similarityCommandRepository.savePendingHashTagSimilarity(pendingHashTagSimilaritySaveDao);
+            similarityCommandRepository.savePendingHashTagSimilarity(pendingHashTagSimilaritySaveDto);
 
             //then
             SqlParameterSource source = new MapSqlParameterSource()
-                    .addValue("hashTagKey", pendingHashTagSimilaritySaveDao.getHashTagKey())
-                    .addValue("pendingHashTagLeftKey", pendingHashTagSimilaritySaveDao.getPendingHashTagLeftKey())
-                    .addValue("trimId", pendingHashTagSimilaritySaveDao.getTrimId());
+                    .addValue("hashTagKey", pendingHashTagSimilaritySaveDto.getHashTagKey())
+                    .addValue("pendingHashTagLeftKey", pendingHashTagSimilaritySaveDto.getPendingHashTagLeftKey())
+                    .addValue("trimId", pendingHashTagSimilaritySaveDto.getTrimId());
 
             String hashTagKey = jdbcTemplate.queryForObject("SELECT hash_tag_key FROM pending_hash_tag_similarities " +
                     "WHERE hash_tag_key = :hashTagKey " +
                     "AND pending_hash_tag_left_key = :pendingHashTagLeftKey " +
                     "AND trim_id = :trimId ", source, String.class);
-            assertThat(hashTagKey).isEqualTo(pendingHashTagSimilaritySaveDao.getHashTagKey());
+            assertThat(hashTagKey).isEqualTo(pendingHashTagSimilaritySaveDto.getHashTagKey());
         }
 
     }
