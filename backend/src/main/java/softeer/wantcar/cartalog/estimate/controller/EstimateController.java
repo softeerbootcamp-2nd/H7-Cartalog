@@ -32,7 +32,6 @@ public class EstimateController {
     public ResponseEntity<Long> registerOrGetEstimate(@RequestBody EstimateRequestDto estimateRequestDto) {
         try {
             Long estimateId = estimateService.saveOrFindEstimateId(estimateRequestDto);
-            log.info(String.valueOf(estimateId));
             return ResponseEntity.ok().body(estimateId);
         } catch (IllegalArgumentException exception) {
             return ResponseEntity.badRequest().build();
