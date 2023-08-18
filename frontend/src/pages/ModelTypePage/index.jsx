@@ -19,6 +19,16 @@ function ModelType() {
           return type.options.find((name) => name.id === typeId);
         };
 
+        const findOutputAndTalk = (powerTrainId) => {
+          const powerTrain = dataFetch.modelTypes.find(
+            (data) => data.type === modelType.powerTrainType,
+          );
+          const type = powerTrain.options.find((data) => data.id === powerTrainId).hmgData;
+          const output = type.find((data) => data.name === '최대출력').value;
+          const talk = type.find((data) => data.name === '최대토크').value;
+          return { output, talk };
+        };
+
         const updatedModelType = {
           ...modelType,
           fetchData: [...dataFetch.modelTypes],
@@ -26,6 +36,10 @@ function ModelType() {
           powerTrainOption: findOptionByTypeAndId(modelType.powerTrainType, modelType.powerTrainId),
           bodyTypeOption: findOptionByTypeAndId(modelType.bodyTypeType, modelType.bodyTypeId),
           wheelDriveOption: findOptionByTypeAndId(modelType.wheelDriveType, modelType.wheelDriveId),
+          hmgData: {
+            diesel: { output: findOutputAndTalk(1).output, talk: findOutputAndTalk(1).talk },
+            gasoline: { output: findOutputAndTalk(2).output, talk: findOutputAndTalk(2).talk },
+          },
         };
         setTrimState((prevState) => ({
           ...prevState,
