@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useData } from '../../utils/Context';
+import { OPTION_PICKER } from './constants';
 import Section from '../../components/Section';
 import Info from './Info';
 import Pick from './Pick';
-
-const TYPE = 'OptionPicker';
-const IMAGE_URL = '';
 
 function OptionPicker() {
   const { setTrimState, page, modelType, interiorColor, optionPicker } = useData();
@@ -35,12 +33,12 @@ function OptionPicker() {
   }, [interiorColor.code, modelType.detailTrimId, optionPicker.isFetch, page, setTrimState]);
 
   const SectionProps = {
-    type: TYPE,
+    type: OPTION_PICKER.TYPE,
     Info: <Info optionId={selectedId} />,
     Pick: <Pick selected={selectedId} setSelected={setSelectedId} />,
   };
 
-  return <Section {...SectionProps} />;
+  return optionPicker.isFetch ? <Section {...SectionProps} /> : <div>loading...</div>;
 }
 
 export default OptionPicker;
