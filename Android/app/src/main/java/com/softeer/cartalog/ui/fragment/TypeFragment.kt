@@ -17,6 +17,9 @@ import com.softeer.cartalog.databinding.FragmentTypeBinding
 import com.softeer.cartalog.ui.activity.MainActivity
 import com.softeer.cartalog.viewmodel.CommonViewModelFactory
 import com.softeer.cartalog.viewmodel.TypeViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class TypeFragment : Fragment() {
     private var _binding: FragmentTypeBinding? = null
@@ -48,13 +51,19 @@ class TypeFragment : Fragment() {
         binding.viewModel = typeViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         binding.btnNext.setOnClickListener {
-            (activity as MainActivity).changeTab(2)
+            CoroutineScope(Dispatchers.Main).launch {
+                typeViewModel.saveUserSelection()
+                (activity as MainActivity).changeTab(2)
+            }
         }
         binding.btnPrev.setOnClickListener {
             (activity as MainActivity).changeTab(0)
         }
         binding.btnPriceSummary.setOnClickListener {
-            findNavController().navigate(R.id.action_typeFragment_to_priceSummaryBottomSheetFragment)
+            CoroutineScope(Dispatchers.Main).launch {
+                typeViewModel.saveUserSelection()
+                findNavController().navigate(R.id.action_typeFragment_to_priceSummaryBottomSheetFragment)
+            }
         }
     }
 

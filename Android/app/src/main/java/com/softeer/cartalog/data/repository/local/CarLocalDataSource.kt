@@ -1,5 +1,6 @@
 package com.softeer.cartalog.data.repository.local
 
+import com.softeer.cartalog.data.enums.PriceDataType
 import com.softeer.cartalog.data.local.MyCarDatabase
 import com.softeer.cartalog.data.model.db.MyCar
 import com.softeer.cartalog.data.model.db.PriceData
@@ -22,11 +23,19 @@ class CarLocalDataSource(
         return priceDataDao.getPriceDataCountByCarId(carId) == 0
     }
 
-    suspend fun getMyCar(): MyCar{
+    suspend fun getMyCar(): MyCar {
         return myCarDao.getMyCar()
     }
 
-    suspend fun getPriceDataList(): List<PriceData>{
+    suspend fun getPriceDataList(): List<PriceData> {
         return priceDataDao.getPriceDataList()
+    }
+
+    suspend fun getPriceData(type: PriceDataType): PriceData {
+        return priceDataDao.getTypeData(type)
+    }
+
+    suspend fun updatePriceData(input: PriceData){
+        priceDataDao.insertPriceData(input)
     }
 }

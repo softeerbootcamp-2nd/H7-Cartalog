@@ -44,7 +44,7 @@ class PriceSummaryViewModel(private val repository: CarRepository) : ViewModel()
     init {
         viewModelScope.launch {
             _myCar.value = repository.getMyCarData()
-            _priceData.value = repository.getPirceDataList()
+            _priceData.value = repository.getPriceDataList()
             val colorCode = setOptionValues()
             _carImage.value = repository.getSummaryCarImage(colorCode.first, colorCode.second)
         }

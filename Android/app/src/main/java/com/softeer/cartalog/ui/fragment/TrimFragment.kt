@@ -15,6 +15,9 @@ import com.softeer.cartalog.databinding.FragmentTrimBinding
 import com.softeer.cartalog.ui.activity.MainActivity
 import com.softeer.cartalog.viewmodel.CommonViewModelFactory
 import com.softeer.cartalog.viewmodel.TrimViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class TrimFragment : Fragment() {
 
@@ -22,7 +25,10 @@ class TrimFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val carRepositoryImpl by lazy {
-        CarRepositoryImpl(CarLocalDataSource(MyCarDatabase.getInstance(requireContext())!!), CarRemoteDataSource(RetrofitClient.carApi))
+        CarRepositoryImpl(
+            CarLocalDataSource(MyCarDatabase.getInstance(requireContext())!!),
+            CarRemoteDataSource(RetrofitClient.carApi)
+        )
     }
     private val trimViewModel: TrimViewModel by viewModels {
         CommonViewModelFactory(carRepositoryImpl)
@@ -42,8 +48,10 @@ class TrimFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.btnChoose.setOnClickListener {
-            trimViewModel.setInitialMyCarData()
-            (activity as MainActivity).changeTab(1)
+            CoroutineScope(Dispatchers.Main).launch {
+                trimViewModel.setInitialMyCarData()
+                (activity as MainActivity).changeTab(1)
+            }
         }
     }
 

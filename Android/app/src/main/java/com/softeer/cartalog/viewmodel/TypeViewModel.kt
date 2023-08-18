@@ -6,8 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.softeer.cartalog.data.enums.ModelTypeSubject
+import com.softeer.cartalog.data.enums.PriceDataType
 import com.softeer.cartalog.data.model.TrimDetail
 import com.softeer.cartalog.data.model.Type
+import com.softeer.cartalog.data.model.db.PriceData
 import com.softeer.cartalog.data.repository.CarRepository
 import kotlinx.coroutines.launch
 
@@ -34,10 +36,17 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
     private val _hmgData: MutableLiveData<TrimDetail> = MutableLiveData()
     val hmgData: LiveData<TrimDetail> = _hmgData
 
+    private val selectedPowerTrain: MutableLiveData<PriceData> = MutableLiveData()
+    private val selectedBodyType: MutableLiveData<PriceData> = MutableLiveData()
+    private val selectedWheelDrive: MutableLiveData<PriceData> = MutableLiveData()
+
     init {
         setTypeData()
         // TODO - 트림 화면에서 넘어온 트림 id로 요청해야함
         setHmgData(2)
+
+        // 선택된 데이터 불러오기
+        setSelectedType()
     }
 
     private fun setTypeData() {
@@ -73,4 +82,51 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
         }
     }
 
+    suspend fun saveUserSelection() {
+
+        val powerTrain = if (powertrain1Selected.value == true) {
+            typeList.value?.get(0)?.options?.get(0)
+        } else {
+            typeList.value?.get(0)?.options?.get(1)
+        }
+        val bodyType = if (bodytype1Selected.value == true) {
+            typeList.value?.get(1)?.options?.get(0)
+        } else {
+            typeList.value?.get(1)?.options?.get(1)
+        }
+        val wheelDrive = if (wheeldrive1Selected.value == true) {
+            typeList.value?.get(2)?.options?.get(0)
+        } else {
+            typeList.value?.get(2)?.options?.get(1)
+        }
+
+        val newPowerTrain = powerTrain?.let {
+            selectedPowerTrain.value?.copy(
+                optionId = it.id, name = it.name, price = it.price, imgUrl = it.imageUrl
+            )
+        }
+        val newBodyType = bodyType?.let {
+            selectedBodyType.value?.copy(
+                optionId = it.id, name = it.name, price = it.price, imgUrl = it.imageUrl
+            )
+        }
+        val newWheelDrive = wheelDrive?.let {
+            selectedWheelDrive.value?.copy(
+                optionId = it.id, name = it.name, price = it.price, imgUrl = it.imageUrl
+            )
+        }
+        repository.saveUserTypeData(newPowerTrain!!,newBodyType!!,newWheelDrive!!)
+    }
+
+    private fun setSelectedType(){
+        viewModelScope.launch {
+            selectedPowerTrain.value = repository.getTypeData(PriceDataType.POWERTRAIN)
+            selectedBodyType.value = repository.getTypeData(PriceDataType.BODYTYPE)
+            selectedWheelDrive.value = repository.getTypeData(PriceDataType.WHEELDRIVE)
+
+            _powertrain1Selected.value = selectedPowerTrain.value?.optionId == 1 || selectedPowerTrain.value == null
+            _bodytype1Selected.value = selectedBodyType.value?.optionId == 5 || selectedPowerTrain.value == null
+            _wheeldrive1Selected.value = selectedWheelDrive.value?.optionId == 3 || selectedPowerTrain.value == null
+        }
+    }
 }

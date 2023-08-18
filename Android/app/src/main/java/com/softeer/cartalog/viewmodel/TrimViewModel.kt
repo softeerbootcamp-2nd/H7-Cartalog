@@ -34,9 +34,7 @@ class TrimViewModel(private val repository: CarRepository) : ViewModel() {
         _selectedTrim.value = idx
     }
 
-    fun setInitialMyCarData() {
-        viewModelScope.launch {
-            repository.setInitialMyCarData(modelName, _trimList.value!![_selectedTrim.value!!])
-        }
+    suspend fun setInitialMyCarData() {
+        repository.setInitialMyCarData(modelName, _trimList.value!![_selectedTrim.value!!])
     }
 }
