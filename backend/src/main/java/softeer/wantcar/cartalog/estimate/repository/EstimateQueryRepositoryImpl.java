@@ -1,7 +1,6 @@
 package softeer.wantcar.cartalog.estimate.repository;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -12,7 +11,6 @@ import softeer.wantcar.cartalog.estimate.dao.EstimateDao;
 
 import java.util.List;
 
-@Slf4j
 @Repository
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -35,7 +33,7 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
                 .addValue("countOfSumPackages", selectPackages.size() * Math.max(selectOptions.size(), 1))
                 .addValue("countOfSumOptions", Math.max(selectPackages.size(), 1) * selectOptions.size());
 
-        String SQL = "SELECT estimates.id " +
+        String findEstimateIdQuery = "SELECT estimates.id " +
                 "FROM   estimates " +
                 "       LEFT JOIN estimate_packages " +
                 "              ON estimates.id = estimate_packages.estimate_id " +
@@ -57,7 +55,7 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
                 "               end) = :countOfSumOptions ";
 
         try {
-            return jdbcTemplate.queryForObject(SQL, parameters, Long.class);
+            return jdbcTemplate.queryForObject(findEstimateIdQuery, parameters, Long.class);
         } catch (EmptyResultDataAccessException exception) {
             return null;
         }
