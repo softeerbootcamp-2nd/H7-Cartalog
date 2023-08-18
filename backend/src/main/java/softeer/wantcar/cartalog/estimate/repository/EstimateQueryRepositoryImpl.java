@@ -38,7 +38,10 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
                 .addValue("interiorColorCode", estimateRequestDto.getInteriorColorCode())
                 .addValue("selectPackageIds", selectPackages)
                 .addValue("selectOptionIds", selectOptions)
-                .addValue("countValue", selectPackages.size() * selectOptions.size());
+                .addValue("countOfPackages", selectPackages.size())
+                .addValue("countOfOptions", selectOptions.size())
+                .addValue("countOfSumPackages", selectPackages.size() * Math.max(selectOptions.size(), 1))
+                .addValue("countOfSumOptions", Math.max(selectPackages.size(), 1) * selectOptions.size());
 
         String SQL = "SELECT estimates.id " +
                 "FROM   estimates " +
@@ -49,17 +52,24 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
                 "                  model_exterior_colors.id " +
                 "       INNER JOIN trim_interior_colors " +
                 "               ON estimates.trim_interior_color_id = trim_interior_colors.id " +
-                "       INNER JOIN estimate_packages " +
-                "               ON estimates.id = estimate_packages.estimate_id " +
-                "       INNER JOIN estimate_options " +
-                "               ON estimates.id = estimate_options.estimate_id " +
+                "       LEFT JOIN estimate_packages " +
+                "              ON estimates.id = estimate_packages.estimate_id " +
+                "       LEFT JOIN estimate_options " +
+                "              ON estimates.id = estimate_options.estimate_id " +
                 "WHERE  detail_trim_id = :detailTrimId " +
                 "       AND model_exterior_colors.color_code = :exteriorColorCode " +
                 "       AND trim_interior_colors.model_interior_color_code = :interiorColorCode " +
-                "       AND model_package_id IN ( :selectPackageIds ) " +
-                "       AND model_option_id IN ( :selectOptionIds ) " +
                 "GROUP  BY estimates.id " +
-                "HAVING Count(estimates.id) = :countValue ";
+                "HAVING Count(DISTINCT model_package_id) = :countOfPackages " +
+                "       AND Sum(CASE " +
+                "                 WHEN model_package_id IN ( :selectPackageIds ) THEN 1 " +
+                "                 ELSE 0 " +
+                "               end) = :countOfSumPackages " +
+                "       AND Count (DISTINCT model_option_id) = :countOfOptions " +
+                "       AND Sum(CASE " +
+                "                 WHEN model_option_id IN ( :selectOptionIds ) THEN 1 " +
+                "                 ELSE 0 " +
+                "               end) = :countOfSumOptions ";
 
         try {
             return jdbcTemplate.queryForObject(SQL, parameters, Long.class);
