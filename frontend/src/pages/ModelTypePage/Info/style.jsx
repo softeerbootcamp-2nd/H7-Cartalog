@@ -15,6 +15,7 @@ export const ModelImage = styled.img`
   width: 632px;
   height: 360px;
   margin-left: 72px;
+  mix-blend-mode: darken;
 `;
 
 export const HMG = styled.div`
