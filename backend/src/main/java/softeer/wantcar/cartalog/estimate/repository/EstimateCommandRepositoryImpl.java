@@ -1,7 +1,6 @@
 package softeer.wantcar.cartalog.estimate.repository;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -11,9 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.dao.EstimateDao;
 
 import java.util.HashMap;
+import java.util.List;
 
 
-@Slf4j
 @Repository
 @RequiredArgsConstructor
 @Transactional
@@ -24,7 +23,13 @@ public class EstimateCommandRepositoryImpl implements EstimateCommandRepository 
     public void save(EstimateDao estimateDao) throws DataAccessException {
         Long nextId = jdbcTemplate.queryForObject("SELECT Max(id) FROM estimates", new HashMap<>(), Long.class) + 1;
 
+        addEstimate(estimateDao, nextId);
 
+        addEstimateSubTable(estimateDao.getModelPackageIds(), "packageId", nextId, "INSERT INTO estimate_packages VALUES ( :nextId, :packageId ) ");
+        addEstimateSubTable(estimateDao.getModelOptionIds(), "optionId", nextId, "INSERT INTO estimate_options VALUES ( :nextId, :optionId ) ");
+    }
+
+    private void addEstimate(EstimateDao estimateDao, Long nextId) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("detailTrimId", estimateDao.getDetailTrimId())
                 .addValue("exteriorColorId", estimateDao.getTrimExteriorColorId())
@@ -33,26 +38,19 @@ public class EstimateCommandRepositoryImpl implements EstimateCommandRepository 
                 .addValue("modelPackageIds", estimateDao.getModelPackageIds())
                 .addValue("nextId", nextId);
 
-        String SQL = "INSERT INTO estimates ( id, detail_trim_id, trim_exterior_color_id, trim_interior_color_id ) " +
+        String addEstimateQuery = "INSERT INTO estimates ( id, detail_trim_id, trim_exterior_color_id, trim_interior_color_id ) " +
                 "VALUES ( :nextId, :detailTrimId, :exteriorColorId, :exteriorColorId )";
 
-        jdbcTemplate.update(SQL, parameters);
+        jdbcTemplate.update(addEstimateQuery, parameters);
+    }
 
-        SqlParameterSource[] array = estimateDao.getModelPackageIds().stream()
+    private void addEstimateSubTable(List<Long> estimateDao, String valueName, Long nextId, String query) {
+        SqlParameterSource[] estimatePackageQuerySources = estimateDao.stream()
                 .map(id -> new MapSqlParameterSource()
-                        .addValue("packageId", id)
+                        .addValue(valueName, id)
                         .addValue("nextId", nextId))
                 .toArray(SqlParameterSource[]::new);
-        String SQL2 = "INSERT INTO estimate_packages ( estimate_id, model_package_id ) VALUES ( :nextId, :packageId ) ";
-        jdbcTemplate.batchUpdate(SQL2, array);
 
-        SqlParameterSource[] array2 = estimateDao.getModelOptionIds().stream()
-                .map(id -> new MapSqlParameterSource()
-                        .addValue("optionId", id)
-                        .addValue("nextId", nextId))
-                .toArray(SqlParameterSource[]::new);
-        String SQL3 = "INSERT INTO estimate_options VALUES ( :nextId, :optionId ) ";
-
-        jdbcTemplate.batchUpdate(SQL3, array2);
+        jdbcTemplate.batchUpdate(query, estimatePackageQuerySources);
     }
 }

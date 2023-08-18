@@ -5,13 +5,11 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import softeer.wantcar.cartalog.estimate.dto.EstimateRequestDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
 
-@Slf4j
 @Api(tags = {"견적서 API"})
 @RestController
 @RequestMapping("/estimates")

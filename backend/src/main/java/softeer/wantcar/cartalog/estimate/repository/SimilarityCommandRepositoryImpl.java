@@ -70,7 +70,9 @@ public class SimilarityCommandRepositoryImpl implements SimilarityCommandReposit
                 .addValue("hash_tag_key", pendingHashTagSimilaritySaveDto.getHashTagKey())
                 .addValue("trim_id", pendingHashTagSimilaritySaveDto.getTrimId());
 
-        String SQL = "INSERT INTO pending_hash_tag_similarities VALUES ( :pending_hash_tag_left_key, :hash_tag_key, :trim_id )";
-        jdbcTemplate.update(SQL, parameters);
+        String addPendingHashTagSimilaritiesQuery =
+                "INSERT INTO pending_hash_tag_similarities VALUES ( :pending_hash_tag_left_key, :hash_tag_key, :trim_id )";
+
+        jdbcTemplate.update(addPendingHashTagSimilaritiesQuery, parameters);
     }
 }
