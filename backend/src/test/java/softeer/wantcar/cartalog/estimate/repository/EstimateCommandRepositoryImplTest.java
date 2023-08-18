@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
-import softeer.wantcar.cartalog.estimate.dto.EstimateRequestDto;
 
 import java.util.List;
 
@@ -44,18 +43,11 @@ class EstimateCommandRepositoryImplTest {
                     .modelPackageIds(List.of(1L, 2L, 4L))
                     .build();
 
-            EstimateRequestDto expected = EstimateRequestDto.builder()
-                    .detailTrimId(9L)
-                    .exteriorColorCode("A2B")
-                    .interiorColorCode("I49")
-                    .selectOptionOrPackageIds(List.of("O103", "O106", "P1", "P2", "P4"))
-                    .build();
-
             //when
             estimateCommandRepository.save(request);
 
             //then
-            Long estimateId = estimateQueryRepository.findEstimateIdByRequestDto(expected);
+            Long estimateId = estimateQueryRepository.findEstimateIdByRequestDto(request);
             assertThat(estimateId).isNotNull();
         }
     }
