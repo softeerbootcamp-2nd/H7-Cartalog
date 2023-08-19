@@ -64,7 +64,7 @@ public class SimilarityServiceImpl implements SimilarityService {
     private Map<Long, List<EstimateOptionInfoDto>> getEstimateOptionInfos(List<Long> similarEstimateIds) {
         List<EstimateOptionInfoDto> totalEstimateOptions = new ArrayList<>();
         totalEstimateOptions.addAll(similarityQueryRepository.findSimilarEstimateOptionsByEstimateIds(similarEstimateIds));
-        totalEstimateOptions.addAll(similarityQueryRepository.findSimilarEstimatePackagesBtEstimateIds(similarEstimateIds));
+        totalEstimateOptions.addAll(similarityQueryRepository.findSimilarEstimatePackagesByEstimateIds(similarEstimateIds));
         return totalEstimateOptions.stream()
                 .collect(Collectors.groupingBy(EstimateOptionInfoDto::getEstimateId));
     }

@@ -68,7 +68,7 @@ public class SimilarityQueryRepositoryImpl implements SimilarityQueryRepository 
     }
 
     @Override
-    public List<EstimateOptionInfoDto> findSimilarEstimatePackagesBtEstimateIds(List<Long> similarEstimateIds) {
+    public List<EstimateOptionInfoDto> findSimilarEstimatePackagesByEstimateIds(List<Long> similarEstimateIds) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("similarEstimateIds", similarEstimateIds);
         return jdbcTemplate.query(QueryString.findSimilarEstimatePackagesByEstimateIds,

@@ -28,6 +28,6 @@ public interface SimilarityQueryRepository {
 
     List<EstimateOptionInfoDto> findSimilarEstimateOptionsByEstimateIds(List<Long> similarEstimateIds);
 
-    List<EstimateOptionInfoDto> findSimilarEstimatePackagesBtEstimateIds(List<Long> similarEstimateIds);
+    List<EstimateOptionInfoDto> findSimilarEstimatePackagesByEstimateIds(List<Long> similarEstimateIds);
 
 }
