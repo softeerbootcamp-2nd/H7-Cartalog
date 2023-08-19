@@ -10,7 +10,7 @@ import com.softeer.cartalog.viewmodel.InteriorViewModel
 class InteriorColorAdapter(private val viewModel: InteriorViewModel) :
     RecyclerView.Adapter<InteriorColorAdapter.InteriorColorViewHolder>() {
 
-    var selectedItem = viewModel.selectedColor.value!!
+    var selectedItem = viewModel.selectedColorIdx.value!!
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

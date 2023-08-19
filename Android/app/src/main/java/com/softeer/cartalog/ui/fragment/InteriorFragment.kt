@@ -1,5 +1,6 @@
 package com.softeer.cartalog.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.softeer.cartalog.data.repository.local.CarLocalDataSource
 import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
 import com.softeer.cartalog.databinding.FragmentInteriorBinding
 import com.softeer.cartalog.ui.activity.MainActivity
+import com.softeer.cartalog.util.PriceDataCallback
 import com.softeer.cartalog.viewmodel.CommonViewModelFactory
 import com.softeer.cartalog.viewmodel.InteriorViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -35,12 +37,25 @@ class InteriorFragment : Fragment() {
     private val interiorViewModel: InteriorViewModel by viewModels {
         CommonViewModelFactory(carRepositoryImpl)
     }
+    private var dataCallback: PriceDataCallback? = null
+    private var totalPrice: Int = 0
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        totalPrice = (activity as MainActivity).getUserTotalPrice()
+        if (context is PriceDataCallback) {
+            dataCallback = context
+        } else {
+            throw RuntimeException("$context must implement DataCallback")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentInteriorBinding.inflate(inflater, container, false)
+        interiorViewModel.setUserTotalPrice(totalPrice)
         return binding.root
     }
 
@@ -63,6 +78,9 @@ class InteriorFragment : Fragment() {
                 interiorViewModel.saveUserSelection()
                 findNavController().navigate(R.id.action_interiorFragment_to_priceSummaryBottomSheetFragment)
             }
+        }
+        interiorViewModel.userTotalPrice.observe(viewLifecycleOwner) { price ->
+            dataCallback?.changeUserTotalPrice(price)
         }
     }
 
