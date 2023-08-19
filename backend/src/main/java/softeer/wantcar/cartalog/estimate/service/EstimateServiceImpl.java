@@ -29,15 +29,8 @@ public class EstimateServiceImpl implements EstimateService {
 
     @Override
     public Long saveOrFindEstimateId(EstimateRequestDto estimateRequestDto) {
-        List<Long> selectPackages = estimateRequestDto.getSelectOptionOrPackageIds().stream()
-                .filter(id -> id.charAt(0) == 'P')
-                .map(id -> Long.parseLong(id.substring(1)))
-                .collect(Collectors.toUnmodifiableList());
-
-        List<Long> selectOptions = estimateRequestDto.getSelectOptionOrPackageIds().stream()
-                .filter(id -> id.charAt(0) == 'O')
-                .map(id -> Long.parseLong(id.substring(1)))
-                .collect(Collectors.toUnmodifiableList());
+        List<Long> selectPackages = estimateRequestDto.getSelectPackageIds();
+        List<Long> selectOptions = estimateRequestDto.getSelectOptionIds();
 
         Long trimId = trimQueryRepository.findTrimIdByDetailTrimId(estimateRequestDto.getDetailTrimId());
         EstimateDto estimateDto = buildEstimateDao(trimId, estimateRequestDto, selectPackages, selectOptions);
