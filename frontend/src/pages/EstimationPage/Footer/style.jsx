@@ -5,6 +5,7 @@ export const Footer = styled.div`
   flex-direction: column;
   width: 1024px;
   margin: 0 auto;
+  margin-bottom: 16px;
 `;
 
 export const ImageViewButtonWrapper = styled.div`
