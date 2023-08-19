@@ -136,4 +136,17 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
         return builder.build();
     }
 
+    @Override
+    public List<String> findHashTagFromOptionsByOptionIds(List<Long> optionIds) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("optionIds", optionIds);
+        return jdbcTemplate.queryForList(QueryString.findHashTagFromOptionsByOptionIds, parameters, String.class);
+    }
+
+    @Override
+    public List<String> findHashTagFromPackagesByPackageIds(List<Long> packageIds) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("packageIds", packageIds);
+        return jdbcTemplate.queryForList(QueryString.findHashTagFromPackagesByPackageIds, parameters, String.class);
+    }
 }
