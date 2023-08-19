@@ -21,7 +21,9 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
         String findAveragePriceQuery = "SELECT ROUND(COALESCE(AVG(price), 0)) AS average_price " +
                 "FROM ( " +
                 "    SELECT COALESCE(estimates_price.price, 0) + COALESCE(package_price.price, 0) + COALESCE(option_price.price, 0) AS price " +
-                "    FROM estimates " +
+                "    FROM release_records " +
+                "    INNER JOIN estimates " +
+                "    ON estimates.id = release_records.estimate_id " +
                 "    LEFT JOIN ( " +
                 "        SELECT estimates.id, trims.min_price + model_exterior_colors.price + model_interior_colors.price AS price " +
                 "        FROM estimates " +

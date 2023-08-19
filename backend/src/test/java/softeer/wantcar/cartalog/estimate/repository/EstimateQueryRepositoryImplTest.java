@@ -38,7 +38,7 @@ class EstimateQueryRepositoryImplTest {
         @DisplayName("트림 평균 가격을 반환해야 한다.")
         void success() {
             //given
-            double expect = 41802718.6761229314;
+            double expect = 41395410.0000000000;
 
             //when
             long averagePrice = estimateQueryRepository.findAveragePrice(2L);
