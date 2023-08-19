@@ -52,28 +52,25 @@ function Estimation() {
   const SelectExterior = exteriorColor.fetchData.find((data) => exteriorColor.code === data.code);
   const SelectInterior = interiorColor.fetchData.find((data) => interiorColor.code === data.code);
 
-  console.log(optionPicker);
+  console.log(optionPicker.isExpend);
   const DATA = [
     {
       title: ESTIMATION.DATA.MODEL_TYPE,
       expand: true,
       data: [
         {
-          id: 1,
           title: ESTIMATION.DATA.POWER_TRAIN,
           name: modelType.powerTrainOption?.name,
           image: modelType.powerTrainOption?.imageUrl,
           price: modelType.powerTrainOption?.price,
         },
         {
-          id: 2,
           title: ESTIMATION.DATA.BODY_TYPE,
           name: modelType.bodyTypeOption?.name,
           image: modelType.bodyTypeOption?.imageUrl,
           price: modelType.bodyTypeOption?.price,
         },
         {
-          id: 3,
           title: ESTIMATION.DATA.WHEEL_DRIVE,
           name: modelType.wheelDriveOption?.name,
           image: modelType.wheelDriveOption?.imageUrl,
@@ -86,14 +83,12 @@ function Estimation() {
       expand: true,
       data: [
         {
-          id: 4,
           title: ESTIMATION.DATA.EXTERIOR_COLOR,
           name: SelectExterior?.name,
           image: SelectExterior?.colorImageUrl,
           price: SelectExterior?.price,
         },
         {
-          id: 5,
           title: ESTIMATION.DATA.INTERIOR_COLOR,
           name: SelectInterior?.name,
           image: SelectInterior?.colorImageUrl,
@@ -103,6 +98,7 @@ function Estimation() {
     },
     {
       title: ESTIMATION.DATA.OPTION,
+      expand: optionPicker.isExpend,
       data: [
         ...optionPicker.chosenOptionsData.map((optionData, index) => ({
           id: index,
@@ -112,6 +108,11 @@ function Estimation() {
         })),
       ],
     },
+    { title: ESTIMATION.DATA.CONSIGNMENT },
+    { title: ESTIMATION.DATA.DISCOUNT_AND_POINT },
+    { title: ESTIMATION.DATA.PAYMENT },
+    { title: ESTIMATION.DATA.TAX_AND_ENROLL },
+    { title: ESTIMATION.DATA.INFO },
   ];
 
   useEffect(() => {

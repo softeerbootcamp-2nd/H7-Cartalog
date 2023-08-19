@@ -7,7 +7,12 @@ export const ESTIMATION = {
     COLOR: '색상',
     EXTERIOR_COLOR: '외장색상',
     INTERIOR_COLOR: '내장색상',
-    OPTION: '옵션',
+    OPTION: '추가옵션',
+    CONSIGNMENT: '탁송',
+    DISCOUNT_AND_POINT: '할인 및 포인트',
+    PAYMENT: '결제',
+    TAX_AND_ENROLL: '면세 구분 및 등록비',
+    INFO: '안내사항',
   },
 };
 
