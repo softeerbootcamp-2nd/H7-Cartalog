@@ -45,10 +45,10 @@ public class SimilarityServiceImpl implements SimilarityService {
                                                                             Map<Long, List<EstimateOptionInfoDto>> estimateOptionInfos) {
         EstimateInfoDto similarEstimateInfo = similarEstimateInfos.get(0);
 
-        List<String> existOptionInfos = estimateOptionInfos.get(estimateId).stream()
+        List<String> existOptionInfos = estimateOptionInfos.getOrDefault(estimateId, new ArrayList<>()).stream()
                 .map(EstimateOptionInfoDto::getOptionId)
                 .collect(Collectors.toList());
-        List<EstimateOptionInfoDto> similarEstimateOptionInfos = estimateOptionInfos.get(similarEstimateId);
+        List<EstimateOptionInfoDto> similarEstimateOptionInfos = estimateOptionInfos.getOrDefault(similarEstimateId, new ArrayList<>());
 
         return SimilarEstimateResponseDto.builder()
                 .trimName(similarEstimateInfo.getTrimName())
