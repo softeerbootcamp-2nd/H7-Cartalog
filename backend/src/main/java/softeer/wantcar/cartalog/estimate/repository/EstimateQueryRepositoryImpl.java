@@ -9,10 +9,14 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateCountDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateInfoDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionInfoDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionListDto;
 import softeer.wantcar.cartalog.estimate.service.dto.EstimateDto;
 import softeer.wantcar.cartalog.global.utils.RowMapperUtils;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +27,30 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
+
+    @Override
+    public List<EstimateInfoDto> findEstimateInfoBydEstimateIds(List<Long> similarEstimateIds) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("similarEstimateIds", similarEstimateIds);
+        return jdbcTemplate.query(QueryString.findSimilarEstimateInfoByEstimateIds,
+                parameters, RowMapperUtils.mapping(EstimateInfoDto.class));
+    }
+
+    @Override
+    public List<EstimateOptionInfoDto> findEstimateOptionsByEstimateIds(List<Long> estimateIds) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("similarEstimateIds", estimateIds);
+        return jdbcTemplate.query(QueryString.findSimilarEstimateOptionsByEstimateIds,
+                parameters, (rs, rowNum) -> getEstimateOptionInfoDto(rs, true));
+    }
+
+    @Override
+    public List<EstimateOptionInfoDto> findEstimatePackagesByEstimateIds(List<Long> estimateIds) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("similarEstimateIds", estimateIds);
+        return jdbcTemplate.query(QueryString.findSimilarEstimatePackagesByEstimateIds,
+                parameters, (rs, rowNum) -> getEstimateOptionInfoDto(rs, false));
+    }
 
     @Override
     public EstimateOptionListDto findEstimateOptionIdsByEstimateId(Long estimateId) {
@@ -83,5 +111,16 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
         } catch (EmptyResultDataAccessException exception) {
             return null;
         }
+    }
+
+    private EstimateOptionInfoDto getEstimateOptionInfoDto(ResultSet rs, boolean isOption) throws SQLException {
+        String optionPrefix = isOption ? "O" : "P";
+        return EstimateOptionInfoDto.builder()
+                .estimateId(rs.getLong("estimate_id"))
+                .optionId(optionPrefix + rs.getLong("option_id"))
+                .name(rs.getString("name"))
+                .price(rs.getInt("price"))
+                .imageUrl(rs.getString("image_url"))
+                .build();
     }
 }

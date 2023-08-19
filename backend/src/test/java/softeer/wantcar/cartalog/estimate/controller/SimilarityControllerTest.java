@@ -38,13 +38,12 @@ class SimilarityControllerTest {
         void returnStatus200AndSimilarEstimates() {
             //given
             SimilarEstimateResponseDto expectResponse = SimilarEstimateResponseDto.builder()
-                    .similarEstimates(List.of())
                     .build();
-            when(similarityService.getSimilarEstimateDtoList(anyLong()))
+            when(similarityService.getSimilarEstimateInfo(anyLong(), anyLong()))
                     .thenReturn(expectResponse);
 
             //when
-            ResponseEntity<SimilarEstimateResponseDto> actualResponse = similarityController.findSimilarEstimates(1L);
+            ResponseEntity<SimilarEstimateResponseDto> actualResponse = similarityController.findSimilarEstimates(1L, 2L);
 
             //then
             softAssertions.assertThat(actualResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -56,11 +55,11 @@ class SimilarityControllerTest {
         @DisplayName("존재하지 않는 견적 식별자를 전달하면 404 상태를 반환한다")
         void return404() {
             //given
-            when(similarityService.getSimilarEstimateDtoList(anyLong()))
+            when(similarityService.getSimilarEstimateInfo(anyLong(), anyLong()))
                     .thenReturn(null);
 
             //when
-            ResponseEntity<SimilarEstimateResponseDto> actualResponse = similarityController.findSimilarEstimates(1L);
+            ResponseEntity<SimilarEstimateResponseDto> actualResponse = similarityController.findSimilarEstimates(1L, 1L);
 
             //then
             softAssertions.assertThat(actualResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);

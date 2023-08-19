@@ -4,7 +4,7 @@ import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateCountResponseDto;
 import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateResponseDto;
 
 public interface SimilarityService {
-    SimilarEstimateResponseDto getSimilarEstimateDtoList(Long estimateId);
+    SimilarEstimateResponseDto getSimilarEstimateInfo(Long estimateId, Long similarEstimateId);
 
     SimilarEstimateCountResponseDto getSimilarEstimateCounts(Long estimateId);
 }
