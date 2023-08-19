@@ -2,6 +2,7 @@ package com.softeer.cartalog.ui.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
@@ -17,9 +18,10 @@ import com.softeer.cartalog.R
 import com.softeer.cartalog.data.local.MyCarDatabase
 import com.softeer.cartalog.databinding.ActivityMainBinding
 import com.softeer.cartalog.ui.dialog.PriceSummaryBottomSheetFragment
+import com.softeer.cartalog.util.PriceDataCallback
 import com.softeer.cartalog.viewmodel.MainViewModel
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallback {
     private val mainViewModel: MainViewModel by viewModels()
     private val binding: ActivityMainBinding by lazy {
         DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -119,5 +121,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
             }
         }
+    }
+
+    override fun onInitPriceDataReceived(priceList: List<Int>) {
+        Log.d("PRICE","min : ${priceList[0]} , max: ${priceList[1]}, user: ${priceList[2]}")
+        mainViewModel.setMinMaxPrice(priceList[0], priceList[1])
+        mainViewModel.setTotalPriceProgress(priceList[2])
     }
 }

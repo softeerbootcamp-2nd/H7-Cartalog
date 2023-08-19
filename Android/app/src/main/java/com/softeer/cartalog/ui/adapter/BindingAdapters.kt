@@ -1,5 +1,6 @@
 package com.softeer.cartalog.ui.adapter
 
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.SeekBar
@@ -131,14 +132,10 @@ fun setBudgetLimit(
     seekBar: AppCompatSeekBar,
     viewModel: MainViewModel
 ) {
-    // 받아온 데이터로 설정
-    //val minValue = 3850
-    //val maxValue = 4300
 
     seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(seekbar: SeekBar?, progress: Int, fromUser: Boolean) {
-            // progress 값으로 비교해 놓은 상태
-            //val mappedValue = minValue + (maxValue - minValue) * progress / 100
+            Log.d("PRICE","progress int = $progress")
             viewModel.setRangeLimit(progress)
         }
 
