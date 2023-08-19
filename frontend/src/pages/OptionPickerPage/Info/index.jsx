@@ -1,16 +1,22 @@
 import { useEffect, useState } from 'react';
 import * as S from './style';
 import Title from '../../../components/Title';
+import PackageInfo from './PackageInfo';
 
 const TYPE = 'dark';
+const CATEGORY = '파워트레인/성능';
 
 function Info({ optionId }) {
   const [optionInfo, setOptionInfo] = useState();
   const TitleProps = {
     type: TYPE,
-    subTitle: optionInfo?.category,
+    subTitle: optionInfo?.category ?? CATEGORY,
     mainTitle: optionInfo?.name,
-    info: optionInfo?.description,
+    info: optionInfo?.package ? (
+      <PackageInfo options={optionInfo?.options} />
+    ) : (
+      optionInfo?.description
+    ),
   };
 
   useEffect(() => {
