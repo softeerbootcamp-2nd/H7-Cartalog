@@ -10,7 +10,7 @@ function Footer() {
   const [isHMGData, setIsHMGData] = useState(false);
 
   useEffect(() => {
-    setIsVisible(!!page && page !== 1);
+    setIsVisible(page && page !== 1 && page !== 6);
     setIsHMGData([1, 2].includes(page));
   }, [page]);
 
