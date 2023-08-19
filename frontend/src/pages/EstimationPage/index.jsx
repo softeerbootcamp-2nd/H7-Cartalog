@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 import { useData, TotalPrice } from '../../utils/Context';
-import { ESTIMATION } from './constants';
+import { ESTIMATION, TYPE } from './constants';
+import * as S from './style';
 import PriceStaticBar from '../../components/PriceStaticBar';
 import Preview from './Preview';
-import * as S from './style';
 import Info from './Info';
 import Detail from './Detail';
 import HMGArea from './HMGArea';
+import Footer from './Footer';
 
 const MOCK_HMGDATA = {
   trim: '르블랑',
@@ -55,6 +56,7 @@ function Estimation() {
   const DATA = [
     {
       title: ESTIMATION.DATA.MODEL_TYPE,
+      type: TYPE.PLUS,
       expand: true,
       data: [
         {
@@ -79,6 +81,7 @@ function Estimation() {
     },
     {
       title: ESTIMATION.DATA.COLOR,
+      type: TYPE.PLUS,
       expand: true,
       data: [
         {
@@ -97,6 +100,7 @@ function Estimation() {
     },
     {
       title: ESTIMATION.DATA.OPTION,
+      type: TYPE.PLUS,
       expand: optionPicker.isExpend,
       data: [
         ...optionPicker.chosenOptionsData.map((optionData, index) => ({
@@ -107,10 +111,10 @@ function Estimation() {
         })),
       ],
     },
-    { title: ESTIMATION.DATA.CONSIGNMENT },
-    { title: ESTIMATION.DATA.DISCOUNT_AND_POINT },
-    { title: ESTIMATION.DATA.PAYMENT },
-    { title: ESTIMATION.DATA.TAX_AND_ENROLL },
+    { title: ESTIMATION.DATA.CONSIGNMENT, type: TYPE.MINUS },
+    { title: ESTIMATION.DATA.DISCOUNT_AND_POINT, type: TYPE.MINUS },
+    { title: ESTIMATION.DATA.PAYMENT, type: TYPE.PAYMENT },
+    { title: ESTIMATION.DATA.TAX_AND_ENROLL, type: TYPE.TAX },
     { title: ESTIMATION.DATA.INFO },
   ];
 
@@ -139,7 +143,9 @@ function Estimation() {
           <Detail data={DATA} />
           <HMGArea data={MOCK_HMGDATA} />
         </S.PageContents>
+        <Footer />
       </S.Estimation>
+
       <PriceStaticBar
         min={SelectModel?.minPrice}
         max={SelectModel?.maxPrice}

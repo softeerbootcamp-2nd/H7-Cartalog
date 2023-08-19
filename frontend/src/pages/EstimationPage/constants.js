@@ -33,3 +33,26 @@ export const INFO = {
   DISPLACEMENT_UNIT: 'cc',
   FUELEFFICIENCY_UNIT: 'km/s',
 };
+
+export const TYPE = {
+  PLUS: 'plus',
+  MINUS: 'minus',
+  TEXT: 'text',
+  NONE: 'none',
+  PAYMENT: 'payment',
+  PAYMENT_TEXT: '결제수단을 선택하고 지불조건 및 납입사항을 확인하세요.',
+  TAX: 'tax',
+  TAX_MENT: '할인/포인트 및 결제 방법 선택 후 확인 가능해요.',
+};
+
+export const FOOTER = {
+  TYPE: 'buttonD',
+  ACTIVE: 'active',
+  INACTIVE: 'inactive',
+  SHARE_TITLE: '공유하기',
+  PDF_TITLE: 'PDF 다운로드',
+  COUNSULT_TITLE: '상담신청',
+  FINAL_PRICE: '최종 견적 가격',
+  CHECK_IMAGE: '이미지 확인',
+  WON: '원',
+};

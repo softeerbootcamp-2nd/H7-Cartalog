@@ -6,6 +6,10 @@ export const Estimation = styled.div`
   height: 100vh;
   box-sizing: border-box;
   overflow: scroll;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const PageContents = styled.div`
