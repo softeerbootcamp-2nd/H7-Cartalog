@@ -12,7 +12,8 @@ data class PriceData(
     val name: String,
     val price: Int,
     val imgUrl: String?,
-    val colorCode: String?
-) {
+    val colorCode: String?,
     @PrimaryKey (autoGenerate = true) var id: Int = 0
+) {
+
 }

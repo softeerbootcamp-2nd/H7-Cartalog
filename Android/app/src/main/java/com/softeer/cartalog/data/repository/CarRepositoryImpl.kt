@@ -35,9 +35,9 @@ class CarRepositoryImpl(
                 null
             )
         val carId = carLocalDataSource.setInitialMyCar(myCar)
+        val priceDataList = mutableListOf<PriceData>()
 
         if (carLocalDataSource.isEmpty(carId)) {
-            val priceDataList = mutableListOf<PriceData>()
             trim.defaultInfo?.run {
                 modelTypes.forEach {
                     priceDataList.add(
@@ -100,7 +100,7 @@ class CarRepositoryImpl(
         return carLocalDataSource.getMyCar()
     }
 
-    override suspend fun getPirceDataList(): List<PriceData> {
+    override suspend fun getPriceDataList(): List<PriceData> {
         return carLocalDataSource.getPriceDataList()
     }
 
@@ -122,4 +122,23 @@ class CarRepositoryImpl(
             if (response.isSuccessful) response.body()!!.interiorColors else listOf()
         }
     }
+    override suspend fun saveUserTypeData(
+        powerTrain: PriceData,
+        bodyType: PriceData,
+        wheelDrive: PriceData
+    ) {
+        carLocalDataSource.updatePriceData(powerTrain)
+        carLocalDataSource.updatePriceData(bodyType)
+        carLocalDataSource.updatePriceData(wheelDrive)
+    }
+
+    override suspend fun getTypeData(type: PriceDataType): PriceData {
+        return carLocalDataSource.getPriceData(type)
+    }
+
+    override suspend fun saveUserColorData(color: PriceData) {
+        carLocalDataSource.updatePriceData(color)
+    }
+
+
 }

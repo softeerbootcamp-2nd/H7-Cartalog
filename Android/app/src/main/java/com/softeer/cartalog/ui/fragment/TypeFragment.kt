@@ -1,5 +1,6 @@
 package com.softeer.cartalog.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,8 +16,12 @@ import com.softeer.cartalog.data.repository.local.CarLocalDataSource
 import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
 import com.softeer.cartalog.databinding.FragmentTypeBinding
 import com.softeer.cartalog.ui.activity.MainActivity
+import com.softeer.cartalog.util.PriceDataCallback
 import com.softeer.cartalog.viewmodel.CommonViewModelFactory
 import com.softeer.cartalog.viewmodel.TypeViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class TypeFragment : Fragment() {
     private var _binding: FragmentTypeBinding? = null
@@ -31,30 +36,46 @@ class TypeFragment : Fragment() {
     val typeViewModel: TypeViewModel by viewModels {
         CommonViewModelFactory(carRepositoryImpl)
     }
+    private var dataCallback: PriceDataCallback? = null
+    private var totalPrice: Int = 0
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        totalPrice = (activity as MainActivity).getUserTotalPrice()
+        dataCallback = context as PriceDataCallback
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTypeBinding.inflate(inflater, container, false)
-        typeViewModel.navController.value = findNavController()
-
+        typeViewModel.setNavController(findNavController())
+        typeViewModel.setUserTotalPrice(totalPrice)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.viewModel = typeViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         binding.btnNext.setOnClickListener {
-            (activity as MainActivity).changeTab(2)
+            CoroutineScope(Dispatchers.Main).launch {
+                typeViewModel.saveUserSelection()
+                (activity as MainActivity).changeTab(2)
+            }
         }
         binding.btnPrev.setOnClickListener {
             (activity as MainActivity).changeTab(0)
         }
         binding.btnPriceSummary.setOnClickListener {
-            findNavController().navigate(R.id.action_typeFragment_to_priceSummaryBottomSheetFragment)
+            CoroutineScope(Dispatchers.Main).launch {
+                typeViewModel.saveUserSelection()
+                findNavController().navigate(R.id.action_typeFragment_to_priceSummaryBottomSheetFragment)
+            }
+        }
+        typeViewModel.userTotalPrice.observe(viewLifecycleOwner) { price ->
+            dataCallback?.changeUserTotalPrice(price)
         }
     }
 

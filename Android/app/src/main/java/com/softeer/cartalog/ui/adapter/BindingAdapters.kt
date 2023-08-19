@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.softeer.cartalog.R
 import com.softeer.cartalog.data.enums.OptionMode
-import com.softeer.cartalog.data.model.SummaryOptionPrice
 import com.softeer.cartalog.data.model.CarColor
+import com.softeer.cartalog.data.model.SummaryOptionPrice
 import com.softeer.cartalog.util.UtilManager
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import com.softeer.cartalog.viewmodel.InteriorViewModel
@@ -131,14 +131,9 @@ fun setBudgetLimit(
     seekBar: AppCompatSeekBar,
     viewModel: MainViewModel
 ) {
-    // 받아온 데이터로 설정
-    //val minValue = 3850
-    //val maxValue = 4300
 
     seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(seekbar: SeekBar?, progress: Int, fromUser: Boolean) {
-            // progress 값으로 비교해 놓은 상태
-            //val mappedValue = minValue + (maxValue - minValue) * progress / 100
             viewModel.setRangeLimit(progress)
         }
 
@@ -170,11 +165,13 @@ fun setRangeBarVisibility(
         button.animate().rotation(0f).start()
     }
     if (idx == 5 && layout.visibility == View.GONE) {
-        layout.visibility = View.VISIBLE
         layout.animate()
             .alpha(1f)
             .setDuration(300)
-            .withEndAction { fragmentContainer.setPadding(0, 250, 0, 0) }
+            .withEndAction {
+                layout.visibility = View.VISIBLE
+                fragmentContainer.setPadding(0, 250, 0, 0)
+            }
         button.animate().rotation(180f).start()
     }
 }

@@ -1,5 +1,6 @@
 package com.softeer.cartalog.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,19 +14,31 @@ import com.softeer.cartalog.data.repository.local.CarLocalDataSource
 import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
 import com.softeer.cartalog.databinding.FragmentTrimBinding
 import com.softeer.cartalog.ui.activity.MainActivity
+import com.softeer.cartalog.util.PriceDataCallback
 import com.softeer.cartalog.viewmodel.CommonViewModelFactory
 import com.softeer.cartalog.viewmodel.TrimViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class TrimFragment : Fragment() {
 
     private var _binding: FragmentTrimBinding? = null
     private val binding get() = _binding!!
-
     private val carRepositoryImpl by lazy {
-        CarRepositoryImpl(CarLocalDataSource(MyCarDatabase.getInstance(requireContext())!!), CarRemoteDataSource(RetrofitClient.carApi))
+        CarRepositoryImpl(
+            CarLocalDataSource(MyCarDatabase.getInstance(requireContext())!!),
+            CarRemoteDataSource(RetrofitClient.carApi)
+        )
     }
     private val trimViewModel: TrimViewModel by viewModels {
         CommonViewModelFactory(carRepositoryImpl)
+    }
+    private var dataCallback: PriceDataCallback? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        dataCallback = context as PriceDataCallback
     }
 
     override fun onCreateView(
@@ -42,8 +55,11 @@ class TrimFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.btnChoose.setOnClickListener {
-            trimViewModel.setInitialMyCarData()
-            (activity as MainActivity).changeTab(1)
+            dataCallback?.onInitPriceDataReceived(trimViewModel.getPriceData())
+            CoroutineScope(Dispatchers.Main).launch {
+                trimViewModel.setInitialMyCarData()
+                (activity as MainActivity).changeTab(1)
+            }
         }
     }
 

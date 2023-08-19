@@ -19,6 +19,8 @@
     <string name="tab_option_not_default">추가옵션</string>
     <string name="tab_option_default">기본옵션</string>
 
+    <string name="range_bar_title">예산 범위</string>
+
     <string name="trim_header">트림을 선택해주세요.</string>
 
     <string name="type_header">모델타입을 선택해주세요.</string>

@@ -8,19 +8,56 @@ class MainViewModel : ViewModel() {
 
     private val _stepIndex = MutableLiveData(0)
     val stepIndex: LiveData<Int> = _stepIndex
-    private val _budgetRangeLimit = MutableLiveData(50)
+    private val _budgetRangeLimit = MutableLiveData(0)
     val budgetRangeLimit: LiveData<Int> = _budgetRangeLimit
-    private val _totalPrice = MutableLiveData(30)
+    private val _budgetRangeLimitProgress = MutableLiveData(50)
+    val budgetRangeLimitProgress: LiveData<Int> = _budgetRangeLimitProgress
+    private val _totalPrice = MutableLiveData(0)
     val totalPrice: LiveData<Int> = _totalPrice
+    private val _totalPriceProgress = MutableLiveData<Int>(0)
+    val totalPriceProgress: LiveData<Int> = _totalPriceProgress
     private val _isExcess = MutableLiveData(false)
     val isExcess: LiveData<Boolean> = _isExcess
+
+    private val _minPrice = MutableLiveData(0)
+    val minPrice: LiveData<Int> = _minPrice
+    private val _maxPrice = MutableLiveData(0)
+    val maxPrice: LiveData<Int> = _maxPrice
+    private val _priceRange = MutableLiveData(0)
 
     fun setStepIndex(index: Int) {
         _stepIndex.value = index
     }
 
-    fun setRangeLimit(price: Int) {
-        _budgetRangeLimit.value = price
+    fun setRangeLimit(progress: Int) {
+        _budgetRangeLimitProgress.value = progress
+        _budgetRangeLimit.value = calculatePriceFromProgress(progress)
         _isExcess.value = budgetRangeLimit.value!! < totalPrice.value!!
+    }
+
+    fun setMinMaxPrice(minPrice: Int, maxPrice: Int){
+        _minPrice.value = minPrice
+        _maxPrice.value = maxPrice
+        _priceRange.value = maxPrice - minPrice
+    }
+
+    fun setTotalPriceProgress(total : Int){
+        _totalPrice.value = total
+        _totalPriceProgress.value = calculateProgressFromPrice(totalPrice.value!!)
+    }
+
+    private fun calculateProgressFromPrice(price: Int): Int {
+        val adjustedValue = price - minPrice.value!!
+        return (adjustedValue.toFloat() / _priceRange.value!!.toFloat() * 100).toInt()
+    }
+
+    private fun calculatePriceFromProgress(progress: Int): Int {
+        return minPrice.value!! + (_priceRange.value!! * progress / 100)
+    }
+
+    fun setInitPriceData(total: Int){
+        _totalPrice.value = total
+        _totalPriceProgress.value = calculateProgressFromPrice(totalPrice.value!!)
+        _budgetRangeLimit.value = calculatePriceFromProgress(50)
     }
 }

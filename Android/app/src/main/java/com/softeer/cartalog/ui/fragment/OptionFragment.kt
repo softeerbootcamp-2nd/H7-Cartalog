@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.softeer.cartalog.R
 import com.softeer.cartalog.databinding.FragmentOptionBinding
 import com.softeer.cartalog.ui.activity.MainActivity
 import com.softeer.cartalog.viewmodel.OptionViewModel
@@ -33,6 +35,9 @@ class OptionFragment: Fragment() {
         }
         binding.btnPrev.setOnClickListener {
             (activity as MainActivity).changeTab(3)
+        }
+        binding.btnPriceSummary.setOnClickListener {
+            findNavController().navigate(R.id.action_optionFragment_to_priceSummaryBottomSheetFragment)
         }
     }
 

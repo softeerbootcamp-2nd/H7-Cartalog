@@ -8,7 +8,6 @@ import android.widget.RadioGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentContainerView
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.google.android.material.card.MaterialCardView
@@ -76,11 +75,11 @@ fun setOnClickToggle(
                 }
             button.animate().rotation(0f).start()
         } else {
-            layout.visibility = View.VISIBLE
             layout.animate()
                 .alpha(1f)
                 .setDuration(300)
                 .withEndAction {
+                    layout.visibility = View.VISIBLE
                     if (idx == 5) {
                         fragmentContainer.setPadding(0, 250, 0, 0)
                     } else {
@@ -157,15 +156,15 @@ fun setOptionTabSelected(
 fun setCarImageSelected(
     radioGroup: RadioGroup,
     imageView: ImageView,
-    carImage: LiveData<SummaryCarImage>
+    carImage: SummaryCarImage?
 ){
     radioGroup.setOnCheckedChangeListener { _, checkedId ->
         when(checkedId){
             R.id.rb_exterior -> {
-                imageView.load(carImage.value?.sideExteriorImageUrl)
+                imageView.load(carImage?.sideExteriorImageUrl)
             }
             R.id.rb_interior -> {
-                imageView.load(carImage.value?.interiorImageUrl)
+                imageView.load(carImage?.interiorImageUrl)
             }
         }
     }

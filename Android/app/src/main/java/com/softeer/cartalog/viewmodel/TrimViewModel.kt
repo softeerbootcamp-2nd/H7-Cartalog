@@ -34,9 +34,13 @@ class TrimViewModel(private val repository: CarRepository) : ViewModel() {
         _selectedTrim.value = idx
     }
 
-    fun setInitialMyCarData() {
-        viewModelScope.launch {
-            repository.setInitialMyCarData(modelName, _trimList.value!![_selectedTrim.value!!])
-        }
+    suspend fun setInitialMyCarData() {
+        repository.setInitialMyCarData(modelName, _trimList.value!![_selectedTrim.value!!])
+    }
+
+    fun getPriceData(): List<Int>{
+        val selected = trimList.value!![selectedTrim.value!!]
+        val initTotalPrice = selected.minPrice + selected.defaultInfo!!.modelTypes.sumOf { it.option.price }
+        return listOf(selected.minPrice, selected.maxPrice, initTotalPrice)
     }
 }
