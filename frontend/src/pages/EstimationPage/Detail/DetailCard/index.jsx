@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import DetailItem from './DetailItem';
 import * as S from './style';
+import DetailItem from './DetailItem';
 import DetailTitle from './DetailTitle';
 
 function DetailCard({ data }) {
