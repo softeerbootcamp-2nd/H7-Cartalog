@@ -90,6 +90,7 @@ export function StateProvider({ children }) {
         acc[key] = {
           fetchData: [],
           isFetch: false,
+          isExpend: false,
           defaultOptions: [],
           selectOptions: [],
           category: [],
