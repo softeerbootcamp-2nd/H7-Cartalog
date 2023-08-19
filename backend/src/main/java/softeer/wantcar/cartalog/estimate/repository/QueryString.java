@@ -120,11 +120,11 @@ public class QueryString {
             "    ) " +
             ") AS combined_price ";
 
-    protected static String findSimilarEstimateCounts =
+    public static final String findEstimateCounts =
             "SELECT " +
-            "   hash_tag_key, " +
+            "   estimate_id, " +
             "   count(estimate_id) AS count " +
             "FROM similar_estimates " +
-            "WHERE hash_tag_key IN (:hashTagKeys) " +
-            "GROUP BY hash_tag_key ";
+            "WHERE estimate_id IN (:estimateIds) " +
+            "GROUP BY estimate_id ";
 }
