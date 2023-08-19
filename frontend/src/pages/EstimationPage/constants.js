@@ -44,3 +44,15 @@ export const TYPE = {
   TAX: 'tax',
   TAX_MENT: '할인/포인트 및 결제 방법 선택 후 확인 가능해요.',
 };
+
+export const FOOTER = {
+  TYPE: 'buttonD',
+  ACTIVE: 'active',
+  INACTIVE: 'inactive',
+  SHARE_TITLE: '공유하기',
+  PDF_TITLE: 'PDF 다운로드',
+  COUNSULT_TITLE: '상담신청',
+  FINAL_PRICE: '최종 견적 가격',
+  CHECK_IMAGE: '이미지 확인',
+  WON: '원',
+};

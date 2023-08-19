@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 import { useData, TotalPrice } from '../../utils/Context';
 import { ESTIMATION, TYPE } from './constants';
+import * as S from './style';
 import PriceStaticBar from '../../components/PriceStaticBar';
 import Preview from './Preview';
-import * as S from './style';
 import Info from './Info';
 import Detail from './Detail';
 import HMGArea from './HMGArea';
+import Footer from './Footer';
 
 const MOCK_HMGDATA = {
   trim: '르블랑',
@@ -142,7 +143,9 @@ function Estimation() {
           <Detail data={DATA} />
           <HMGArea data={MOCK_HMGDATA} />
         </S.PageContents>
+        <Footer />
       </S.Estimation>
+
       <PriceStaticBar
         min={SelectModel?.minPrice}
         max={SelectModel?.maxPrice}
