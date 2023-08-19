@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import softeer.wantcar.cartalog.estimate.dto.EstimateRequestDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
+import softeer.wantcar.cartalog.estimate.service.EstimateService;
 
 @Api(tags = {"견적서 API"})
 @RestController
@@ -32,11 +33,7 @@ public class EstimateController {
 
     @PostMapping("")
     public ResponseEntity<Long> registerOrGetEstimate(@RequestBody EstimateRequestDto estimateRequestDto) {
-        try{
-            Long estimateId = estimateService.saveOrFindEstimateId(estimateRequestDto);
-            return ResponseEntity.ok().body(estimateId);
-        } catch (IllegalArgumentException exception) {
-            return ResponseEntity.badRequest().build();
-        }
+        Long estimateId = estimateService.saveOrFindEstimateId(estimateRequestDto);
+        return ResponseEntity.ok().body(estimateId);
     }
 }
