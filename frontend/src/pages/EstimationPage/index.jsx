@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useData, TotalPrice } from '../../utils/Context';
-import { ESTIMATION } from './constants';
+import { ESTIMATION, TYPE } from './constants';
 import PriceStaticBar from '../../components/PriceStaticBar';
 import Preview from './Preview';
 import * as S from './style';
@@ -55,6 +55,7 @@ function Estimation() {
   const DATA = [
     {
       title: ESTIMATION.DATA.MODEL_TYPE,
+      type: TYPE.PLUS,
       expand: true,
       data: [
         {
@@ -79,6 +80,7 @@ function Estimation() {
     },
     {
       title: ESTIMATION.DATA.COLOR,
+      type: TYPE.PLUS,
       expand: true,
       data: [
         {
@@ -97,6 +99,7 @@ function Estimation() {
     },
     {
       title: ESTIMATION.DATA.OPTION,
+      type: TYPE.PLUS,
       expand: optionPicker.isExpend,
       data: [
         ...optionPicker.chosenOptionsData.map((optionData, index) => ({
@@ -107,10 +110,10 @@ function Estimation() {
         })),
       ],
     },
-    { title: ESTIMATION.DATA.CONSIGNMENT },
-    { title: ESTIMATION.DATA.DISCOUNT_AND_POINT },
-    { title: ESTIMATION.DATA.PAYMENT },
-    { title: ESTIMATION.DATA.TAX_AND_ENROLL },
+    { title: ESTIMATION.DATA.CONSIGNMENT, type: TYPE.MINUS },
+    { title: ESTIMATION.DATA.DISCOUNT_AND_POINT, type: TYPE.MINUS },
+    { title: ESTIMATION.DATA.PAYMENT, type: TYPE.PAYMENT },
+    { title: ESTIMATION.DATA.TAX_AND_ENROLL, type: TYPE.TAX },
     { title: ESTIMATION.DATA.INFO },
   ];
 

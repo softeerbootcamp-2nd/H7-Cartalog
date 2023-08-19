@@ -12,7 +12,7 @@ function DetailCard({ data }) {
 
   return (
     <S.DetailCard className={expanded ? 'expanded' : null}>
-      <DetailTitle expanded={expanded} setExpanded={setExpanded} data={data} />
+      <DetailTitle expanded={expanded} setExpanded={setExpanded} data={data} type={data.type} />
       <S.DetailContents $n={data?.data?.length}>
         {data?.data?.map((item) => (
           <DetailItem key={`${item.id}${item.name}`} data={item} />
