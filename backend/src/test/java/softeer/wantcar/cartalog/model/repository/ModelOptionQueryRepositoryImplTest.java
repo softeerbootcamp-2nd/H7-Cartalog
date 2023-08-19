@@ -111,4 +111,57 @@ class ModelOptionQueryRepositoryImplTest {
             assertThat(categories).isNull();
         }
     }
+
+    @SuppressWarnings({"SqlResolve", "SqlNoDataSourceInspection"})
+    @Nested
+    @DisplayName("findHashTagFromOptionsByOptionIds 테스트")
+    class findHashTagFromOptionsByOptionIdsTest {
+        List<Long> optionIds;
+        @BeforeEach
+        void setUp() {
+            optionIds = jdbcTemplate.queryForList("SELECT mo.id " +
+                                                  "FROM model_option_hash_tags AS moht " +
+                                                  "JOIN model_options AS mo ON mo.id=moht.model_option_id ",
+                    new HashMap<>(), Long.TYPE);
+        }
+
+        @Test
+        @DisplayName("옵션 식별자에 해당하는 해시 태그 목록을 반환한다")
+        void returnHashTagList() {
+            //given
+            //when
+            List<String> hashTags = modelOptionQueryRepository.findHashTagFromOptionsByOptionIds(optionIds);
+
+            //then
+            softAssertions.assertThat(hashTags.isEmpty()).isFalse();
+            softAssertions.assertThat(hashTags.size()).isNotEqualTo(hashTags.stream().distinct().count());
+            softAssertions.assertAll();
+        }
+    }
+
+    @SuppressWarnings({"SqlResolve", "SqlNoDataSourceInspection"})
+    @Nested
+    @DisplayName("findHashTagFromPackagesByPackageIds 테스트")
+    class findHashTagFromPackagesByPackageIdsTest {
+        List<Long> packageIds;
+        @BeforeEach
+        void setUp() {
+            packageIds = jdbcTemplate.queryForList("SELECT mp.id " +
+                                                   "FROM model_package_hash_tags AS mpht " +
+                                                   "JOIN model_packages AS mp ON mp.id=mpht.model_package_id ",
+                    new HashMap<>(), Long.TYPE);
+        }
+        @Test
+        @DisplayName("패키지 식별자에 해당하는 해시 태그 목록을 반환한다")
+        void returnHashTagList() {
+            //given
+            //when
+            List<String> hashTags = modelOptionQueryRepository.findHashTagFromPackagesByPackageIds(packageIds);
+
+            //then
+            softAssertions.assertThat(hashTags.isEmpty()).isFalse();
+            softAssertions.assertThat(hashTags.size()).isNotEqualTo(hashTags.stream().distinct().count());
+            softAssertions.assertAll();
+        }
+    }
 }
