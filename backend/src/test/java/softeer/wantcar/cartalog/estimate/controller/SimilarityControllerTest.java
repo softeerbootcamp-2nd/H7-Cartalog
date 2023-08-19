@@ -7,11 +7,14 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateCountResponseDto;
 import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateResponseDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateCountDto;
 import softeer.wantcar.cartalog.estimate.service.SimilarityService;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 @DisplayName("유사 견적 관련 Controller 테스트")
@@ -63,6 +66,42 @@ class SimilarityControllerTest {
             softAssertions.assertThat(actualResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
             softAssertions.assertThat(actualResponse.getBody()).isNull();
             softAssertions.assertAll();
+        }
+    }
+
+    @Nested
+    @DisplayName("findSimilarEstimateCounts 테스트")
+    class findSimilarEstimateCountsTest {
+        @Test
+        @DisplayName("존재하는 견적 식별자를 제공할 경우 200 상태와 함께 해당 견적 개수 및 유사 견적 개수들을 반환한다")
+        void returnStatus200AndEstimateCounts() {
+            //given
+            SimilarEstimateCountResponseDto expectResponse = new SimilarEstimateCountResponseDto(3L,
+                    List.of(new EstimateCountDto(2L, 3L),
+                            new EstimateCountDto(3L, 4L)));
+            when(similarityService.getSimilarEstimateCounts(anyLong()))
+                    .thenReturn(expectResponse);
+            //when
+            ResponseEntity<SimilarEstimateCountResponseDto> similarEstimateCounts =
+                    similarityController.findSimilarEstimateCounts(1L);
+
+            //then
+            softAssertions.assertThat(similarEstimateCounts.getStatusCode()).isEqualTo(HttpStatus.OK);
+            softAssertions.assertThat(similarEstimateCounts.getBody()).isEqualTo(expectResponse);
+            softAssertions.assertAll();
+        }
+
+        @Test
+        @DisplayName("존재하지 않는 견적 식별자를 제공할 경우 IllegalArgumentException을 발생시킨다")
+        void throwIllegalArgumentException() {
+            //given
+            when(similarityService.getSimilarEstimateCounts(anyLong()))
+                    .thenThrow(IllegalArgumentException.class);
+
+            //when
+            //then
+            assertThatThrownBy(() -> similarityController.findSimilarEstimateCounts(1L))
+                    .isInstanceOf(IllegalArgumentException.class);
         }
     }
 }

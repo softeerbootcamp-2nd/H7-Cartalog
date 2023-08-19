@@ -119,4 +119,12 @@ public class QueryString {
             "        WHERE trims.id = :trimId AND detail_trims.id = estimates.detail_trim_id " +
             "    ) " +
             ") AS combined_price ";
+
+    public static final String findEstimateCounts =
+            "SELECT " +
+            "   estimate_id, " +
+            "   count(estimate_id) AS count " +
+            "FROM similar_estimates " +
+            "WHERE estimate_id IN (:estimateIds) " +
+            "GROUP BY estimate_id ";
 }
