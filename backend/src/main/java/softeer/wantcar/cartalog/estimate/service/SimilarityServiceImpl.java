@@ -64,7 +64,7 @@ public class SimilarityServiceImpl implements SimilarityService {
     public SimilarEstimateCountResponseDto getSimilarEstimateCounts(Long estimateId) {
         EstimateOptionListDto estimateOptionListDto = estimateQueryRepository.findEstimateOptionIdsByEstimateId(estimateId);
         if (estimateOptionListDto == null) {
-            throw new IllegalArgumentException();
+            return null;
         }
         List<String> totalHashTags = getTotalHashTags(estimateOptionListDto);
         List<Long> estimateIds = getSimilarEstimateIds(estimateOptionListDto.getTrimId(), totalHashTags);
