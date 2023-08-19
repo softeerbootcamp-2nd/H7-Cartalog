@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import softeer.wantcar.cartalog.estimate.service.dto.EstimateDto;
+import softeer.wantcar.cartalog.global.ServerPath;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ class EstimateQueryRepositoryImplTest {
 
     @BeforeEach
     void setUp() {
-        estimateQueryRepository = new EstimateQueryRepositoryImpl(jdbcTemplate);
+        estimateQueryRepository = new EstimateQueryRepositoryImpl(jdbcTemplate, new ServerPath());
     }
 
     @Nested

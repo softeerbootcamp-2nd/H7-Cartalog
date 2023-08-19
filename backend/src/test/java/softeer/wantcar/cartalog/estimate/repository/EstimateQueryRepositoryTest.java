@@ -12,8 +12,9 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateCountDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateInfoDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionIdListDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionInfoDto;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionListDto;
+import softeer.wantcar.cartalog.global.ServerPath;
 
 import java.util.List;
 import java.util.Map;
@@ -31,10 +32,11 @@ class EstimateQueryRepositoryTest {
     NamedParameterJdbcTemplate jdbcTemplate;
     EstimateQueryRepository estimateQueryRepository;
     SoftAssertions softAssertions;
+    ServerPath serverPath = new ServerPath();
 
     @BeforeEach
     void setUp() {
-        estimateQueryRepository = new EstimateQueryRepositoryImpl(jdbcTemplate);
+        estimateQueryRepository = new EstimateQueryRepositoryImpl(jdbcTemplate, new ServerPath());
         softAssertions = new SoftAssertions();
     }
 
@@ -46,7 +48,7 @@ class EstimateQueryRepositoryTest {
         void returnEstimateInfo() {
             //given
             //when
-            EstimateOptionListDto estimateInfo = estimateQueryRepository.findEstimateOptionIdsByEstimateId(1L);
+            EstimateOptionIdListDto estimateInfo = estimateQueryRepository.findEstimateOptionIdsByEstimateId(1L);
 
             //then
             softAssertions.assertThat(estimateInfo).isNotNull();
@@ -66,7 +68,7 @@ class EstimateQueryRepositoryTest {
         void returnNull() {
             //given
             //when
-            EstimateOptionListDto estimateInfo = estimateQueryRepository.findEstimateOptionIdsByEstimateId(-1L);
+            EstimateOptionIdListDto estimateInfo = estimateQueryRepository.findEstimateOptionIdsByEstimateId(-1L);
 
             //then
             assertThat(estimateInfo).isNull();
@@ -152,6 +154,9 @@ class EstimateQueryRepositoryTest {
             //then
             Map<Long, List<EstimateOptionInfoDto>> mappedEstimateOptionInfos = estimateOptions.stream()
                     .collect(Collectors.groupingBy(EstimateOptionInfoDto::getEstimateId));
+            for (EstimateOptionInfoDto estimateOption : estimateOptions) {
+                softAssertions.assertThat(estimateOption.getImageUrl()).startsWith(serverPath.IMAGE_SERVER_PATH);
+            }
             softAssertions.assertThat(mappedEstimateOptionInfos.keySet().size()).isEqualTo(2);
             softAssertions.assertThat(mappedEstimateOptionInfos.keySet()).containsAll(List.of(3L, 4L));
             softAssertions.assertAll();
@@ -183,6 +188,9 @@ class EstimateQueryRepositoryTest {
                     estimateQueryRepository.findEstimatePackagesByEstimateIds(List.of(1L, 3L));
 
             //then
+            for (EstimateOptionInfoDto estimatePackage : estimatePackages) {
+                softAssertions.assertThat(estimatePackage.getImageUrl()).startsWith(serverPath.IMAGE_SERVER_PATH);
+            }
             Map<Long, List<EstimateOptionInfoDto>> mappedEstimatePackageInfos = estimatePackages.stream()
                     .collect(Collectors.groupingBy(EstimateOptionInfoDto::getEstimateId));
             softAssertions.assertThat(mappedEstimatePackageInfos.keySet().size()).isEqualTo(2);

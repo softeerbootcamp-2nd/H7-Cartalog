@@ -13,7 +13,7 @@ import softeer.wantcar.cartalog.estimate.repository.SimilarityQueryRepository;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateCountDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateInfoDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionInfoDto;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionListDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionIdListDto;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 
 import java.util.ArrayList;
@@ -102,7 +102,7 @@ class SimilarityServiceTest {
         void returnEstimateCounts() {
             //given
             when(estimateQueryRepository.findEstimateOptionIdsByEstimateId(anyLong()))
-                    .thenReturn(new EstimateOptionListDto(1L, List.of(1L, 2L), List.of(1L, 2L)));
+                    .thenReturn(new EstimateOptionIdListDto(1L, List.of(1L, 2L), List.of(1L, 2L)));
             when(estimateQueryRepository.findEstimateCounts(anyList()))
                     .thenReturn(List.of(new EstimateCountDto(1L, 1L),
                             new EstimateCountDto(2L, 2L),

@@ -6,7 +6,7 @@ import lombok.Getter;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateCountDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateInfoDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionInfoDto;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionListDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionIdListDto;
 import softeer.wantcar.cartalog.estimate.service.dto.EstimateDto;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public interface EstimateQueryRepository {
 
     List<EstimateOptionInfoDto> findEstimatePackagesByEstimateIds(List<Long> estimateIds);
 
-    EstimateOptionListDto findEstimateOptionIdsByEstimateId(Long estimateId);
+    EstimateOptionIdListDto findEstimateOptionIdsByEstimateId(Long estimateId);
 
     Long findAveragePrice(Long trimId);
 
