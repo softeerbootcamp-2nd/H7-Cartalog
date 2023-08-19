@@ -124,7 +124,7 @@ class SimilarityServiceTest {
         }
 
         @Test
-        @DisplayName("존재하지 않는 견적 식별자를 제공할 경우 IllegalArgumentException 예외를 발생시킨다")
+        @DisplayName("존재하지 않는 견적 식별자를 제공할 경우 null을 반환한다")
         void throwIllegalArgumentException() {
             //given
             when(estimateQueryRepository.findEstimateOptionIdsByEstimateId(anyLong()))
@@ -132,8 +132,7 @@ class SimilarityServiceTest {
 
             //when
             //then
-            assertThatThrownBy(() -> similarityService.getSimilarEstimateCounts(1L))
-                    .isInstanceOf(IllegalArgumentException.class);
+            assertThat(similarityService.getSimilarEstimateCounts(1L)).isNull();
         }
     }
 

@@ -98,7 +98,7 @@ class EstimateQueryRepositoryTest {
         void returnEmptyList() {
             //given
             //when
-            List<EstimateCountDto> estimateCounts = estimateQueryRepository.findEstimateCounts(List.of(1L, 2L, 3L));
+            List<EstimateCountDto> estimateCounts = estimateQueryRepository.findEstimateCounts(List.of(-1L));
 
             //then
             assertThat(estimateCounts.isEmpty()).isTrue();

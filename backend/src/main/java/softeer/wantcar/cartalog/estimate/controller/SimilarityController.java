@@ -48,6 +48,9 @@ public class SimilarityController {
     @GetMapping("")
     public ResponseEntity<SimilarEstimateCountResponseDto> findSimilarEstimateCounts(@RequestParam("estimateId") Long estimateId) {
         SimilarEstimateCountResponseDto similarEstimateCounts = similarityService.getSimilarEstimateCounts(estimateId);
+        if (similarEstimateCounts == null) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok().body(similarEstimateCounts);
     }
 }
