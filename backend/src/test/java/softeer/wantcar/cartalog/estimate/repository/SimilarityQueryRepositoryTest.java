@@ -12,9 +12,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
-import softeer.wantcar.cartalog.estimate.repository.dto.HashTagMap;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateInfoDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionInfoDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.HashTagMap;
 
 import java.util.HashMap;
 import java.util.List;
@@ -49,10 +49,10 @@ class SimilarityQueryRepositoryTest {
         void setUp() {
             SqlParameterSource parameters = new MapSqlParameterSource().addValue("trimId", leblancId);
             jdbcTemplate.update("INSERT INTO pending_hash_tag_similarities (hash_tag_key, pending_hash_tag_left_key, trim_id) " +
-                                "VALUES " +
-                                "    ('a:1|b:2', 'c:1|d:1', :trimId), " +
-                                "    ('a:1|b:2', 'c:1|d:2', :trimId), " +
-                                "    ('a:1|b:2', 'c:1|d:3', :trimId) ", parameters);
+                    "VALUES " +
+                    "    ('a:1|b:2', 'c:1|d:1', :trimId), " +
+                    "    ('a:1|b:2', 'c:1|d:2', :trimId), " +
+                    "    ('a:1|b:2', 'c:1|d:3', :trimId) ", parameters);
 
         }
 
@@ -97,10 +97,10 @@ class SimilarityQueryRepositoryTest {
         void setUp() {
             SqlParameterSource parameters = new MapSqlParameterSource().addValue("trimId", leblancId);
             jdbcTemplate.update("INSERT INTO hash_tag_similarities (hash_tag_key, hash_tag_left_key, trim_id, similarity) " +
-                                "VALUES " +
-                                "    ('a:1|b:2', 'c:1|d:1', :trimId, 0.5), " +
-                                "    ('a:1|b:2', 'c:1|d:2', :trimId, 0.4), " +
-                                "    ('a:1|b:2', 'c:1|d:3', :trimId, 0.7) ", parameters);
+                    "VALUES " +
+                    "    ('a:1|b:2', 'c:1|d:1', :trimId, 0.5), " +
+                    "    ('a:1|b:2', 'c:1|d:2', :trimId, 0.4), " +
+                    "    ('a:1|b:2', 'c:1|d:3', :trimId, 0.7) ", parameters);
         }
 
         @Test
@@ -137,12 +137,12 @@ class SimilarityQueryRepositoryTest {
         void setUp() {
             SqlParameterSource parameters = new MapSqlParameterSource().addValue("trimId", leblancId);
             jdbcTemplate.update("INSERT INTO similar_estimates (hash_tag_key, trim_id, estimate_id) " +
-                                "VALUES " +
-                                "    ('a:1|b:2', :trimId, 1), " +
-                                "    ('a:1|b:2', :trimId, 2), " +
-                                "    ('a:1|b:2', :trimId, 3), " +
-                                "    ('a:1|b:2', :trimId, 4), " +
-                                "    ('a:1|b:2', :trimId, 5) ", parameters);
+                    "VALUES " +
+                    "    ('a:1|b:2', :trimId, 1), " +
+                    "    ('a:1|b:2', :trimId, 2), " +
+                    "    ('a:1|b:2', :trimId, 3), " +
+                    "    ('a:1|b:2', :trimId, 4), " +
+                    "    ('a:1|b:2', :trimId, 5) ", parameters);
         }
 
         @Test

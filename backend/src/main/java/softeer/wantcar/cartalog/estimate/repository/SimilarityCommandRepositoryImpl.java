@@ -21,7 +21,7 @@ public class SimilarityCommandRepositoryImpl implements SimilarityCommandReposit
     @Override
     public void savePendingToOther(Long trimId, String hashTagKey, List<String> otherHashTagKeys) {
         StringBuilder insertSQL = new StringBuilder("INSERT INTO pending_hash_tag_similarities " +
-                                                    "(pending_hash_tag_left_key, hash_tag_key, trim_id) VALUES ");
+                "(pending_hash_tag_left_key, hash_tag_key, trim_id) VALUES ");
         List<String> batchInsertValues = otherHashTagKeys.stream()
                 .map(otherHashTagKey -> "('" + otherHashTagKey + "', '" + hashTagKey + "', " + trimId + ") ")
                 .collect(Collectors.toList());
@@ -36,16 +36,16 @@ public class SimilarityCommandRepositoryImpl implements SimilarityCommandReposit
                 .addValue("hashTagKey", hashTagKey);
 
         jdbcTemplate.update("DELETE FROM pending_hash_tag_similarities " +
-                            "WHERE trim_id= :trimId AND hash_tag_key= :hashTagKey ", parameters);
+                "WHERE trim_id= :trimId AND hash_tag_key= :hashTagKey ", parameters);
     }
 
     @Override
     public void saveCalculatedHashTagKeys(Long trimId, String hashTagKey, Map<String, Double> similarities) {
         StringBuilder insertSQL = new StringBuilder("INSERT INTO hash_tag_similarities " +
-                                                    "(hash_tag_left_key, hash_tag_key, trim_id, similarity) VALUES ");
+                "(hash_tag_left_key, hash_tag_key, trim_id, similarity) VALUES ");
         List<String> batchInsertValues = similarities.keySet().stream()
                 .map(otherHashTagKey -> "('" + otherHashTagKey + "', '" + hashTagKey + "', " +
-                                        trimId + ", " + similarities.get(otherHashTagKey) + ") ")
+                        trimId + ", " + similarities.get(otherHashTagKey) + ") ")
                 .collect(Collectors.toList());
         String batchInsertSQL = getBatchInsertSQL(insertSQL, batchInsertValues);
         jdbcTemplate.update(batchInsertSQL, new MapSqlParameterSource());

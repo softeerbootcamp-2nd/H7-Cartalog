@@ -27,7 +27,7 @@ public class SimilarityController {
     @GetMapping("/releases")
     public ResponseEntity<SimilarEstimateResponseDto> findSimilarEstimates(@RequestParam("estimateId") Long estimateId) {
         SimilarEstimateResponseDto similarEstimateDtoList = similarityService.getSimilarEstimateDtoList(estimateId);
-        if(similarEstimateDtoList == null) {
+        if (similarEstimateDtoList == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().body(similarEstimateDtoList);

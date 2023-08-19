@@ -33,6 +33,7 @@ class EstimateQueryRepositoryTest {
         estimateQueryRepository = new EstimateQueryRepositoryImpl(jdbcTemplate);
         softAssertions = new SoftAssertions();
     }
+
     @Nested
     @DisplayName("findEstimateOptionIdsByEstimateId 테스트")
     class findEstimateOptionIdsByEstimateIdTest {

@@ -62,7 +62,7 @@ public class ModelController {
     public ResponseEntity<EstimateImageDto> findSideExteriorAndInteriorImage(@RequestParam("exteriorColorCode") String exteriorColorCode,
                                                                              @RequestParam("interiorColorCode") String interiorColorCode) {
         EstimateImageDto estimateImageDto = modelQueryRepository.findCarSideExteriorAndInteriorImage(exteriorColorCode, interiorColorCode);
-        if(estimateImageDto == null) {
+        if (estimateImageDto == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(estimateImageDto, HttpStatus.OK);

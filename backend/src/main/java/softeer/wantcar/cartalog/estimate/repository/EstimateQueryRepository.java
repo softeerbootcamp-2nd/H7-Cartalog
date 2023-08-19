@@ -16,5 +16,6 @@ public interface EstimateQueryRepository {
     }
 
     EstimateOptionListDto findEstimateOptionIdsByEstimateId(Long estimateId);
+
     Long findAveragePrice(Long trimId);
 }

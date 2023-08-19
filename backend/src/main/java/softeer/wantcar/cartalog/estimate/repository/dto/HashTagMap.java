@@ -44,7 +44,7 @@ public class HashTagMap {
         long upperValue = getUpperValue(getHashTags(), otherHashTags, getAllKeys(getHashTags(), otherHashTags));
         double lowerValue = getHashTagVectorSize(getHashTags()) * getHashTagVectorSize(otherHashTags);
 
-        if(lowerValue == 0) {
+        if (lowerValue == 0) {
             return 0;
         }
         return 1 - (upperValue / lowerValue);

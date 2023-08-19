@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateDto;
-import softeer.wantcar.cartalog.estimate.repository.dto.HashTagMap;
 import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateResponseDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
 import softeer.wantcar.cartalog.estimate.repository.SimilarityCommandRepository;
@@ -14,13 +13,14 @@ import softeer.wantcar.cartalog.estimate.repository.SimilarityQueryRepository;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateInfoDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionInfoDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionListDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.HashTagMap;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

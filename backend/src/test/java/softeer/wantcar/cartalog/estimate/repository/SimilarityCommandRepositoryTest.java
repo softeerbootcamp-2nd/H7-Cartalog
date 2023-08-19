@@ -67,13 +67,13 @@ class SimilarityCommandRepositoryTest {
         void deletePendingList() {
             //given
             jdbcTemplate.update("INSERT INTO pending_hash_tag_similarities " +
-                                "(pending_hash_tag_left_key, hash_tag_key, trim_id) VALUES " +
-                                "('b:1|c:1', 'a:1|b:1', :trimId), " +
-                                "('b:2|c:2', 'a:1|b:1', :trimId), " +
-                                "('b:3|c:3', 'a:1|b:1', :trimId), " +
-                                "('b:4|c:4', 'a:1|b:1', :trimId), " +
-                                "('b:5|c:5', 'a:1|b:1', :trimId), " +
-                                "('b:6|c:6', 'a:2|b:2', :trimId) ",
+                            "(pending_hash_tag_left_key, hash_tag_key, trim_id) VALUES " +
+                            "('b:1|c:1', 'a:1|b:1', :trimId), " +
+                            "('b:2|c:2', 'a:1|b:1', :trimId), " +
+                            "('b:3|c:3', 'a:1|b:1', :trimId), " +
+                            "('b:4|c:4', 'a:1|b:1', :trimId), " +
+                            "('b:5|c:5', 'a:1|b:1', :trimId), " +
+                            "('b:6|c:6', 'a:2|b:2', :trimId) ",
                     new MapSqlParameterSource().addValue("trimId", leblancId));
 
             //when

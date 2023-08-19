@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateDto;
-import softeer.wantcar.cartalog.estimate.repository.dto.HashTagMap;
 import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateResponseDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
 import softeer.wantcar.cartalog.estimate.repository.SimilarityCommandRepository;
@@ -12,6 +11,7 @@ import softeer.wantcar.cartalog.estimate.repository.SimilarityQueryRepository;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateInfoDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionInfoDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionListDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.HashTagMap;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class SimilarityServiceImpl implements SimilarityService {
     @Override
     public SimilarEstimateResponseDto getSimilarEstimateDtoList(Long estimateId) {
         EstimateOptionListDto estimateOptionIds = estimateQueryRepository.findEstimateOptionIdsByEstimateId(estimateId);
-        if(estimateOptionIds == null) {
+        if (estimateOptionIds == null) {
             return null;
         }
         List<String> totalHashTags = getTotalHashTags(estimateOptionIds);
@@ -135,11 +135,11 @@ public class SimilarityServiceImpl implements SimilarityService {
     private static int getEstimatePrice(List<EstimateInfoDto> estimateInfos, List<EstimateOptionInfoDto> estimateOptionInfos, EstimateInfoDto curEstimateInfo) {
         int totalPrice = curEstimateInfo.getTrimPrice();
         totalPrice += estimateInfos.stream()
-                              .mapToInt(EstimateInfoDto::getModelTypePrice)
-                              .sum();
+                .mapToInt(EstimateInfoDto::getModelTypePrice)
+                .sum();
         totalPrice += estimateOptionInfos.stream()
-                              .mapToInt(EstimateOptionInfoDto::getPrice)
-                              .sum();
+                .mapToInt(EstimateOptionInfoDto::getPrice)
+                .sum();
         return totalPrice;
     }
 }
