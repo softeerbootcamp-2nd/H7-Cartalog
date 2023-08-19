@@ -294,7 +294,7 @@
             android:layout_marginBottom="8dp"
             android:elevation="8dp"
             android:fontFamily="@font/hyndaisans_head_medium"
-            android:text="43,560,000 원"
+            android:text="@{String.format(`%,d원`, viewModel.userTotalPrice)}"
             android:textColor="@color/primary_color_500"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/vw_summary_bgr"

@@ -46,20 +46,23 @@ class MainViewModel : ViewModel() {
     fun setTotalPriceProgress(total : Int){
         _totalPrice.value = total
         _totalPriceProgress.value = calculateProgressFromPrice(totalPrice.value!!)
-        _budgetRangeLimit.value = calculatePriceFromProgress(budgetRangeLimitProgress.value!!)
-        Log.d("PRICE","total price = ${_totalPrice.value}")
-        Log.d("PRICE","total price progress = ${_totalPriceProgress.value}")
-        Log.d("PRICE","init budget progress: ${budgetRangeLimitProgress.value}, price : ${_budgetRangeLimit.value}")
     }
 
     private fun calculateProgressFromPrice(price: Int): Int {
-
-        Log.d("PRICE","total price range = ${_priceRange.value}")
         val adjustedValue = price - minPrice.value!!
         return (adjustedValue.toFloat() / _priceRange.value!!.toFloat() * 100).toInt()
     }
 
     private fun calculatePriceFromProgress(progress: Int): Int {
         return minPrice.value!! + (_priceRange.value!! * progress / 100)
+    }
+
+    fun setInitPriceData(total: Int){
+        _totalPrice.value = total
+        _totalPriceProgress.value = calculateProgressFromPrice(totalPrice.value!!)
+        _budgetRangeLimit.value = calculatePriceFromProgress(50)
+        Log.d("PRICE","total price = ${_totalPrice.value}")
+        Log.d("PRICE","total price progress = ${_totalPriceProgress.value}")
+        Log.d("PRICE","init budget progress: ${budgetRangeLimitProgress.value}, price : ${_budgetRangeLimit.value}")
     }
 }

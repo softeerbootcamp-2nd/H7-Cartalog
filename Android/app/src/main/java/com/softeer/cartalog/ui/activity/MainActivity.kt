@@ -126,6 +126,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
     override fun onInitPriceDataReceived(priceList: List<Int>) {
         Log.d("PRICE","min : ${priceList[0]} , max: ${priceList[1]}, user: ${priceList[2]}")
         mainViewModel.setMinMaxPrice(priceList[0], priceList[1])
-        mainViewModel.setTotalPriceProgress(priceList[2])
+        mainViewModel.setInitPriceData(priceList[2])
+    }
+
+    override fun changeUserTotalPrice(price: Int) {
+        mainViewModel.setTotalPriceProgress(price)
+    }
+
+    fun getUserTotalPrice(): Int {
+        return  mainViewModel.totalPrice.value!!
     }
 }

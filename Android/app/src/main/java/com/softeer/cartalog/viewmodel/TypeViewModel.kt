@@ -9,6 +9,7 @@ import com.softeer.cartalog.data.enums.ModelTypeSubject
 import com.softeer.cartalog.data.enums.PriceDataType
 import com.softeer.cartalog.data.model.TrimDetail
 import com.softeer.cartalog.data.model.Type
+import com.softeer.cartalog.data.model.TypeOption
 import com.softeer.cartalog.data.model.db.PriceData
 import com.softeer.cartalog.data.repository.CarRepository
 import kotlinx.coroutines.launch
@@ -25,7 +26,7 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
     val wheeldrive1Selected: LiveData<Boolean> = _wheeldrive1Selected
 
     private val _navController = MutableLiveData<NavController>()
-    val navController: MutableLiveData<NavController> = _navController
+    val navController: LiveData<NavController> = _navController
 
     private val _typeList: MutableLiveData<List<Type>> = MutableLiveData(emptyList())
     val typeList: LiveData<List<Type>> = _typeList
@@ -40,12 +41,13 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
     private val _selectedBodyType: MutableLiveData<PriceData> = MutableLiveData()
     private val _selectedWheelDrive: MutableLiveData<PriceData> = MutableLiveData()
 
+    private val _userTotalPrice = MutableLiveData(0)
+    val userTotalPrice: LiveData<Int> = _userTotalPrice
+
     init {
         setTypeData()
         // TODO - 트림 화면에서 넘어온 트림 id로 요청해야함
         setHmgData(2)
-
-        // 선택된 데이터 불러오기
         setSelectedType()
     }
 
@@ -60,18 +62,25 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
     }
 
     fun selectType(type: ModelTypeSubject) {
+        _userTotalPrice.value = _userTotalPrice.value?.minus(getTypeData(type).price)
         when (type) {
-            ModelTypeSubject.POWERTRAIN -> _powertrain1Selected.value =
-                !_powertrain1Selected.value!!
+            ModelTypeSubject.POWERTRAIN -> {
+                _powertrain1Selected.value = !_powertrain1Selected.value!!
+            }
 
-            ModelTypeSubject.BODYTYPE -> _bodytype1Selected.value = !_bodytype1Selected.value!!
-            ModelTypeSubject.WHEELDRIVE -> _wheeldrive1Selected.value =
-                !_wheeldrive1Selected.value!!
+            ModelTypeSubject.BODYTYPE -> {
+                _bodytype1Selected.value = !_bodytype1Selected.value!!
+            }
+
+            ModelTypeSubject.WHEELDRIVE -> {
+                _wheeldrive1Selected.value = !_wheeldrive1Selected.value!!
+            }
         }
+        _userTotalPrice.value = _userTotalPrice.value?.plus(getTypeData(type).price)
         setHmgData(2)
     }
 
-    fun setHmgData(trimId: Int) {
+    private fun setHmgData(trimId: Int) {
         val selectPowerTrain = if (_powertrain1Selected.value!!) 1 else 2
         val selectBodyType = if (_bodytype1Selected.value!!) 5 else 6
         val selectWheelDrive = if (_wheeldrive1Selected.value!!) 3 else 4
@@ -84,49 +93,73 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
 
     suspend fun saveUserSelection() {
 
-        val powerTrain = if (powertrain1Selected.value == true) {
-            typeList.value?.get(0)?.options?.get(0)
-        } else {
-            typeList.value?.get(0)?.options?.get(1)
-        }
-        val bodyType = if (bodytype1Selected.value == true) {
-            typeList.value?.get(1)?.options?.get(0)
-        } else {
-            typeList.value?.get(1)?.options?.get(1)
-        }
-        val wheelDrive = if (wheeldrive1Selected.value == true) {
-            typeList.value?.get(2)?.options?.get(0)
-        } else {
-            typeList.value?.get(2)?.options?.get(1)
-        }
+        val powerTrain = getTypeData(ModelTypeSubject.POWERTRAIN)
+        val bodyType = getTypeData(ModelTypeSubject.BODYTYPE)
+        val wheelDrive = getTypeData(ModelTypeSubject.WHEELDRIVE)
 
-        val newPowerTrain = powerTrain?.let {
-            _selectedPowerTrain.value?.copy(
-                optionId = it.id, name = it.name, price = it.price, imgUrl = it.imageUrl
-            )
-        }
-        val newBodyType = bodyType?.let {
-            _selectedBodyType.value?.copy(
-                optionId = it.id, name = it.name, price = it.price, imgUrl = it.imageUrl
-            )
-        }
-        val newWheelDrive = wheelDrive?.let {
-            _selectedWheelDrive.value?.copy(
-                optionId = it.id, name = it.name, price = it.price, imgUrl = it.imageUrl
-            )
-        }
-        repository.saveUserTypeData(newPowerTrain!!,newBodyType!!,newWheelDrive!!)
+        val newPowerTrain = updateData(powerTrain, _selectedPowerTrain.value!!)
+        val newBodyType = updateData(bodyType, _selectedBodyType.value!!)
+        val newWheelDrive = updateData(wheelDrive, _selectedWheelDrive.value!!)
+
+        repository.saveUserTypeData(newPowerTrain, newBodyType, newWheelDrive)
     }
 
-    private fun setSelectedType(){
+    private fun setSelectedType() {
         viewModelScope.launch {
             _selectedPowerTrain.value = repository.getTypeData(PriceDataType.POWERTRAIN)
             _selectedBodyType.value = repository.getTypeData(PriceDataType.BODYTYPE)
             _selectedWheelDrive.value = repository.getTypeData(PriceDataType.WHEELDRIVE)
 
-            _powertrain1Selected.value = _selectedPowerTrain.value?.optionId == 1 || _selectedPowerTrain.value == null
-            _bodytype1Selected.value = _selectedBodyType.value?.optionId == 5 || _selectedBodyType.value == null
-            _wheeldrive1Selected.value = _selectedWheelDrive.value?.optionId == 3 || _selectedWheelDrive.value == null
+            _powertrain1Selected.value =
+                _selectedPowerTrain.value?.optionId == 1 || _selectedPowerTrain.value == null
+            _bodytype1Selected.value =
+                _selectedBodyType.value?.optionId == 5 || _selectedBodyType.value == null
+            _wheeldrive1Selected.value =
+                _selectedWheelDrive.value?.optionId == 3 || _selectedWheelDrive.value == null
         }
+    }
+
+    fun setUserTotalPrice(price: Int) {
+        _userTotalPrice.value = price
+    }
+
+    fun setNavController(navController: NavController) {
+        _navController.value = navController
+    }
+
+    private fun getTypeData(type: ModelTypeSubject): TypeOption {
+
+        when (type) {
+            ModelTypeSubject.POWERTRAIN -> {
+                return if (powertrain1Selected.value == true) {
+                    typeList.value!![0].options[0]
+                } else {
+                    typeList.value!![0].options[1]
+                }
+            }
+
+            ModelTypeSubject.BODYTYPE -> {
+                return if (bodytype1Selected.value == true) {
+                    typeList.value!![1].options[0]
+                } else {
+                    typeList.value!![1].options[1]
+                }
+            }
+
+            ModelTypeSubject.WHEELDRIVE -> {
+                return if (wheeldrive1Selected.value == true) {
+                    typeList.value!![2].options[0]
+                } else {
+                    typeList.value!![2].options[1]
+                }
+            }
+        }
+    }
+
+    private fun updateData(typeOption: TypeOption, priceData: PriceData): PriceData {
+        val newData = typeOption.run {
+            priceData.copy(optionId = id, name = name, price = price, imgUrl = imageUrl)
+        }
+        return newData
     }
 }
