@@ -78,10 +78,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintBottom_toTopOf="@id/iv_detail"
             app:tabBackground="@color/white"
             app:tabGravity="fill"
             app:tabIndicatorColor="@color/gray_900"
@@ -94,7 +94,7 @@
         <ImageView
             android:id="@+id/iv_detail"
             android:layout_width="0dp"
-            android:layout_height="140dp"
+            android:layout_height="180dp"
             android:background="@color/card_bg"
             android:scaleType="centerCrop"
             app:imgUrl="@{option.imageUrl}"
@@ -265,7 +265,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="@{option.hmgData.size() == 0 ? View.GONE : View.VISIBLE}"
-            app:constraint_referenced_ids="tl_option,tv_hmg_tag,tv_hmg_data_1_title,tv_hmg_data_1_divider,tv_hmg_data_1_times,tv_hmg_data_1_km,tv_hmg_data_2_title,tv_hmg_data_2_divider,tv_hmg_data_2_times,tv_hmg_data_2_km, v_gray_bgr" />
+            app:constraint_referenced_ids="tv_hmg_tag,tv_hmg_data_1_title,tv_hmg_data_1_divider,tv_hmg_data_1_times,tv_hmg_data_1_km,tv_hmg_data_2_title,tv_hmg_data_2_divider,tv_hmg_data_2_times,tv_hmg_data_2_km, v_gray_bgr" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

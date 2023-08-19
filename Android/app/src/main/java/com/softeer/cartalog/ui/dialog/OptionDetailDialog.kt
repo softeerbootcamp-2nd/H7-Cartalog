@@ -3,6 +3,7 @@ package com.softeer.cartalog.ui.dialog
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,16 +13,23 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.softeer.cartalog.R
+import com.softeer.cartalog.data.enums.OptionMode
 import com.softeer.cartalog.data.local.MyCarDatabase
 import com.softeer.cartalog.data.remote.api.RetrofitClient
 import com.softeer.cartalog.data.repository.CarRepositoryImpl
 import com.softeer.cartalog.data.repository.local.CarLocalDataSource
 import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
 import com.softeer.cartalog.databinding.DialogOptionDetailBinding
+import com.softeer.cartalog.ui.adapter.OptionDefaultAdapter
+import com.softeer.cartalog.ui.adapter.OptionSelectAdapter
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.internal.filterList
 
 
 class OptionDetailDialog : DialogFragment() {
@@ -61,13 +69,32 @@ class OptionDetailDialog : DialogFragment() {
         optionId?.let {
             lifecycleScope.launch {
                 val options = repository.getDetailOptions(optionId)
-                binding.option = options
+
+                if (options.options != null){
+                    val tabTitles = options.options.map { it.name }
+                    for (title in tabTitles) {
+                        val tab = binding.tlOption.newTab().apply { text = title }
+                        binding.tlOption.addTab(tab)
+                    }
+
+                    binding.option = options.options[0]
+                    binding.tlOption.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                        override fun onTabSelected(tab: TabLayout.Tab?) {
+                            binding.option = options.options[tab?.position!!]
+                        }
+
+                        override fun onTabUnselected(tab: TabLayout.Tab?) {}
+                        override fun onTabReselected(tab: TabLayout.Tab?) {}
+                    })
+                } else {
+                    binding.option = options
+                }
+
+
             }
         }
-        val tabTitles = listOf("후석 승객 알림", "메탈 리어범퍼스탭", "메탈 도어스커프")
-        for (title in tabTitles) {
-            val tab = binding.tlOption.newTab().apply { text = title }
-            binding.tlOption.addTab(tab)
-        }
+
+
+
     }
 }
