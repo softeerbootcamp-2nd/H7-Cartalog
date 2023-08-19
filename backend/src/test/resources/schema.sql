@@ -304,8 +304,10 @@ CREATE TABLE similar_estimates
 (
     hash_tag_key VARCHAR(255),
     estimate_id  BIGINT,
-    PRIMARY KEY (hash_tag_key, estimate_id),
-    FOREIGN KEY (estimate_id) REFERENCES estimates (id) ON UPDATE CASCADE
+    trim_id      BIGINT,
+    PRIMARY KEY (hash_tag_key, estimate_id, trim_id),
+    FOREIGN KEY (estimate_id) REFERENCES estimates (id) ON UPDATE CASCADE,
+    FOREIGN KEY (trim_id) REFERENCES trims (id) ON UPDATE CASCADE
 );
 
 CREATE TABLE hash_tag_similarities
@@ -468,7 +470,7 @@ INSERT INTO release_records (id, estimate_id, create_date)
 SELECT *
 FROM CSVREAD('classpath:csv/release_records.csv', null, 'fieldSeparator=|');
 
-INSERT INTO similar_estimates (hash_tag_key, estimate_id)
+INSERT INTO similar_estimates (hash_tag_key, estimate_id, trim_id)
 SELECT *
 FROM CSVREAD('classpath:csv/similar_estimates.csv', null, 'fieldSeparator=|');
 
