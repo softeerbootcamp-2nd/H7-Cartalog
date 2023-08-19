@@ -62,7 +62,6 @@ class SimilarityServiceTest {
                     similarityService.getSimilarEstimateDtoList(1L);
 
             //then
-            //TODO: 테스트 추가 필요
             softAssertions.assertThat(similarEstimateResponseDto).isNotNull();
             List<SimilarEstimateDto> similarEstimates =
                     similarEstimateResponseDto.getSimilarEstimates();
