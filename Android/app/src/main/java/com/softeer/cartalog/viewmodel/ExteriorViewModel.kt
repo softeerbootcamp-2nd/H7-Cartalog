@@ -19,13 +19,17 @@ class ExteriorViewModel(private val repository: CarRepository) : ViewModel() {
     private val _img360List = MutableLiveData<MutableList<Drawable>>()
     val img360List: LiveData<MutableList<Drawable>> = _img360List
 
-    private val _selectedColor = MutableLiveData(0)
-    val selectedColor: LiveData<Int> = _selectedColor
+    private val _selectedColorIdx = MutableLiveData(0)
+    val selectedColorIdx: LiveData<Int> = _selectedColorIdx
 
     private val _start360X = MutableLiveData(0f)
     val start360X: LiveData<Float> = _start360X
 
-    private val _selectedColorByUser = MutableLiveData<PriceData>()
+    private lateinit var selectedByUser: PriceData
+
+    private val _selectedColor = MutableLiveData<CarColor>()
+    private val _userTotalPrice = MutableLiveData(0)
+    val userTotalPrice: LiveData<Int> = _userTotalPrice
 
     init {
         setExteriorColorData()
@@ -34,15 +38,19 @@ class ExteriorViewModel(private val repository: CarRepository) : ViewModel() {
     private fun setExteriorColorData() {
         viewModelScope.launch {
             _colorList.value = repository.getCarColors(true, 2, "")
-            _selectedColorByUser.value = repository.getTypeData(PriceDataType.EXTERIOR_COLOR)
-            _selectedColor.value = colorList.value?.indices?.find {
-                colorList.value?.get(it)?.code == _selectedColorByUser.value!!.colorCode
+            selectedByUser = repository.getTypeData(PriceDataType.EXTERIOR_COLOR)
+            _selectedColorIdx.value = colorList.value?.indices?.find {
+                colorList.value?.get(it)?.code == selectedByUser.colorCode
             }
+            _selectedColor.value = colorList.value?.get(selectedColorIdx.value!!)
         }
     }
 
-    fun setSelectedColor(selectedColor: Int) {
-        _selectedColor.value = selectedColor
+    fun setSelectedColor(selected: Int) {
+        _userTotalPrice.value = _userTotalPrice.value?.minus(_selectedColor.value!!.price)
+        _selectedColorIdx.value = selected
+        _selectedColor.value = colorList.value?.get(selectedColorIdx.value!!)
+        _userTotalPrice.value = _userTotalPrice.value?.plus(_selectedColor.value!!.price)
     }
 
     fun setStart360X(startX: Float) {
@@ -50,12 +58,14 @@ class ExteriorViewModel(private val repository: CarRepository) : ViewModel() {
     }
 
     suspend fun saveUserSelection() {
-        val selectedColor = _colorList.value?.get(_selectedColor.value!!)
-        val newColor = selectedColor?.let {
-            _selectedColorByUser.value?.copy(
+        val newColor = _selectedColor.value?.let {
+            selectedByUser.copy(
                 name = it.name, price = it.price, colorCode = it.code, imgUrl = it.colorImageUrl
             )
         }
         repository.saveUserColorData(newColor!!)
+    }
+    fun setUserTotalPrice(price: Int) {
+        _userTotalPrice.value = price
     }
 }

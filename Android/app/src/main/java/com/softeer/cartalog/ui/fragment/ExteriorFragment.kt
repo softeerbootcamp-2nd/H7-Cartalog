@@ -1,5 +1,6 @@
 package com.softeer.cartalog.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.softeer.cartalog.data.repository.local.CarLocalDataSource
 import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
 import com.softeer.cartalog.databinding.FragmentExteriorBinding
 import com.softeer.cartalog.ui.activity.MainActivity
+import com.softeer.cartalog.util.PriceDataCallback
 import com.softeer.cartalog.viewmodel.CommonViewModelFactory
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -35,18 +37,30 @@ class ExteriorFragment : Fragment() {
     private val exteriorViewModel: ExteriorViewModel by viewModels {
         CommonViewModelFactory(carRepositoryImpl)
     }
+    private var dataCallback: PriceDataCallback? = null
+    private var totalPrice: Int = 0
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        totalPrice = (activity as MainActivity).getUserTotalPrice()
+        if (context is PriceDataCallback) {
+            dataCallback = context
+        } else {
+            throw RuntimeException("$context must implement DataCallback")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentExteriorBinding.inflate(inflater, container, false)
+        exteriorViewModel.setUserTotalPrice(totalPrice)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.viewModel = exteriorViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         binding.btnNext.setOnClickListener {
@@ -63,6 +77,9 @@ class ExteriorFragment : Fragment() {
                 exteriorViewModel.saveUserSelection()
                 findNavController().navigate(R.id.action_exteriorFragment_to_priceSummaryBottomSheetFragment)
             }
+        }
+        exteriorViewModel.userTotalPrice.observe(viewLifecycleOwner) { price ->
+            dataCallback?.changeUserTotalPrice(price)
         }
     }
 
