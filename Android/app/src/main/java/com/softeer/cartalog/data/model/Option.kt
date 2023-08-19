@@ -8,5 +8,6 @@ data class Option(
     val imageUrl: String,
     val price: Int,
     val chosen: Int,
-    val hashTags: List<String>
+    val hashTags: List<String>,
+    val hasHMGData: Boolean
 )

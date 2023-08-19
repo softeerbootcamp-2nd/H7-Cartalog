@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.softeer.cartalog.R
 import com.softeer.cartalog.data.model.Option
 import com.softeer.cartalog.databinding.ItemOptionSelectCardBinding
+import com.softeer.cartalog.ui.fragment.OptionFragmentDirections
 import com.softeer.cartalog.viewmodel.OptionViewModel
 
 class OptionSelectAdapter(private val viewModel: OptionViewModel) :
@@ -39,10 +40,19 @@ class OptionSelectAdapter(private val viewModel: OptionViewModel) :
             binding.viewModel = viewModel
             binding.position = position
             binding.optionAdapter = this@OptionSelectAdapter
-            binding.option = item
 
-            binding.btnHmgData.setOnClickListener {
-                it.findNavController().navigate(R.id.optionDetailDialog)
+            item?.let {option ->
+                binding.option = option
+                binding.btnHmgData.setOnClickListener {
+                    val args = option.id
+                    val action = OptionFragmentDirections.actionOptionFragmentToOptionDetailDialog(args)
+                    it.findNavController().navigate(action)
+                }
+                binding.btnDetailView.setOnClickListener {
+                    val args = option.id
+                    val action = OptionFragmentDirections.actionOptionFragmentToOptionDetailDialog(args)
+                    it.findNavController().navigate(action)
+                }
             }
         }
     }

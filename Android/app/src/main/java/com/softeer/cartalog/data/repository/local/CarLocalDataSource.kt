@@ -29,4 +29,5 @@ class CarLocalDataSource(
     suspend fun getPriceDataList(): List<PriceData>{
         return priceDataDao.getPriceDataList()
     }
+
 }

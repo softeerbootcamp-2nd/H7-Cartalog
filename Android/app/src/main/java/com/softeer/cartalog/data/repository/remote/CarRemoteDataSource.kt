@@ -1,5 +1,6 @@
 package com.softeer.cartalog.data.repository.remote
 
+import com.softeer.cartalog.data.model.DetailOptions
 import com.softeer.cartalog.data.model.SummaryCarImage
 import com.softeer.cartalog.data.model.ExteriorColors
 import com.softeer.cartalog.data.model.InteriorColors
@@ -49,4 +50,9 @@ class CarRemoteDataSource(
     ): Response<Options> {
         return carApi.getOptions(detailTrimId, interiorColorCode)
     }
+
+    suspend fun getDetailOptions(optionId: String): Response<DetailOptions> {
+        return carApi.getDetailOptions(optionId)
+    }
+
 }

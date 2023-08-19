@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View"/>
+
         <variable
             name="option"
             type="com.softeer.cartalog.data.model.Option" />
@@ -116,9 +118,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="8dp"
-                android:visibility="visible"
+                android:visibility="@{option.hasHMGData ? View.VISIBLE : View.GONE}"
                 app:drawableEndCompat="@drawable/icon_arrow_end_small"
                 app:drawableTint="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/btn_detail_view"
+                style="@style/DetailViewTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="6dp"
+                android:visibility="@{option.hasHMGData ? View.GONE : View.VISIBLE}"
+                app:drawableEndCompat="@drawable/icon_arrow_end_small"
+                app:drawableTint="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

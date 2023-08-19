@@ -6,9 +6,11 @@
 
         <import type="com.softeer.cartalog.data.enums.ModelTypeSubject" />
 
+        <import type="android.view.View" />
+
         <variable
-            name="optionId"
-            type="String" />
+            name="option"
+            type="com.softeer.cartalog.data.model.DetailOptions" />
 
     </data>
 
@@ -54,11 +56,11 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/hyndaisans_head_bold"
             android:gravity="center"
-            android:text="2열 통풍시트"
             android:paddingBottom="10dp"
+            android:text="@{option.name}"
             android:textColor="@color/gray_900"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintEnd_toStartOf="@id/btn_close"
             app:layout_constraintStart_toStartOf="@id/gl_start"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -86,7 +88,7 @@
             app:tabMode="scrollable"
             app:tabSelectedTextColor="@color/gray_900"
             app:tabTextAppearance="@style/TabOptionDetailTextStyle"
-            app:tabTextColor="@color/gray_200"/>
+            app:tabTextColor="@color/gray_200" />
 
 
         <ImageView
@@ -95,7 +97,7 @@
             android:layout_height="140dp"
             android:background="@color/card_bg"
             android:scaleType="centerCrop"
-            android:src="@drawable/tmp_img_option_item"
+            app:imgUrl="@{option.imageUrl}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tl_option" />
@@ -106,7 +108,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintStart_toStartOf="@id/gl_start"
-            app:layout_constraintTop_toTopOf="@id/iv_detail"/>
+            app:layout_constraintTop_toTopOf="@id/iv_detail" />
 
 
         <TextView
@@ -115,7 +117,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:lineSpacingExtra="1.8dp"
-            android:text="시동이 걸린 상태에서 해당 좌석의 통풍 스위치를 누르면 표시등이 켜지면서 해당 좌석에 바람이 나오는 편의장치입니다. 시동이 걸린 상태에서 해당 좌석의 통풍 스위치를 누르면 표시등이 켜지면서 해당 좌석에 바람이 나오는 편의장치입니다."
+            android:text="@{option.description}"
             android:textColor="@color/gray_800"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
@@ -148,7 +150,7 @@
             android:layout_marginEnd="12dp"
             android:gravity="start"
             android:lineSpacingExtra="6sp"
-            android:text="안전 하차 보조\n"
+            android:text="@{option.hmgData[0].name}"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@id/gl_hmg_center"
             app:layout_constraintStart_toStartOf="@+id/gl_start"
@@ -172,7 +174,7 @@
             android:layout_marginTop="6dp"
             android:fontFamily="@font/hyndaisans_head_medium"
             android:paddingBottom="4dp"
-            android:text="2,384개"
+            android:text="@{option.hmgData[0].value}"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="@id/tv_hmg_data_1_divider"
             app:layout_constraintStart_toStartOf="@+id/gl_start"
@@ -184,7 +186,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:gravity="start"
-            android:text="최근 90일 동안"
+            android:text="@{option.hmgData[0].measure}"
             android:textColor="@color/gray_600"
             android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="@id/gl_hmg_center"
@@ -198,7 +200,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             android:lineSpacingExtra="6sp"
-            android:text="주행 중 실제로\n이만큼 사용해요."
+            android:text="@{option.hmgData[1].name}"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintHorizontal_bias="0.0"
@@ -212,6 +214,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="6dp"
             android:background="@color/gray_400"
+            android:visibility="@{option.hmgData.size() == 2 ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintStart_toStartOf="@id/gl_hmg_center"
             app:layout_constraintTop_toBottomOf="@id/tv_hmg_data_2_title" />
@@ -224,7 +227,7 @@
             android:layout_marginTop="6dp"
             android:fontFamily="@font/hyndaisans_head_medium"
             android:paddingBottom="4dp"
-            android:text="73.2번"
+            android:text="@{option.hmgData[1].value}"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="@id/tv_hmg_data_2_divider"
             app:layout_constraintStart_toStartOf="@id/gl_hmg_center"
@@ -235,7 +238,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:text="1.5만km 당"
+            android:text="@{option.hmgData[1].measure}"
             android:textColor="@color/gray_600"
             android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="@id/tv_hmg_data_2_times"
@@ -243,7 +246,6 @@
             app:layout_constraintTop_toBottomOf="@id/tv_hmg_data_2_times" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:visibility="gone"
             android:id="@+id/btn_complete"
             android:layout_width="0dp"
             android:layout_height="60dp"
@@ -252,11 +254,18 @@
             android:fontFamily="@font/hyndaisans_head_medium"
             android:textColor="@color/white"
             android:textSize="16sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/v_gray_bgr"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/v_gray_bgr" />
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/hmg_data_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{option.hmgData.size() == 0 ? View.GONE : View.VISIBLE}"
+            app:constraint_referenced_ids="tl_option,tv_hmg_tag,tv_hmg_data_1_title,tv_hmg_data_1_divider,tv_hmg_data_1_times,tv_hmg_data_1_km,tv_hmg_data_2_title,tv_hmg_data_2_divider,tv_hmg_data_2_times,tv_hmg_data_2_km, v_gray_bgr" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

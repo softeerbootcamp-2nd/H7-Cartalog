@@ -4,6 +4,7 @@ import android.util.Log
 import com.softeer.cartalog.data.enums.PriceDataType
 import com.softeer.cartalog.data.model.SummaryCarImage
 import com.softeer.cartalog.data.model.CarColor
+import com.softeer.cartalog.data.model.DetailOptions
 import com.softeer.cartalog.data.model.Options
 import com.softeer.cartalog.data.model.Trim
 import com.softeer.cartalog.data.model.TrimDetail
@@ -109,7 +110,7 @@ class CarRepositoryImpl(
 
     override suspend fun getSummaryCarImage(exterior: String, interior: String): SummaryCarImage {
         val response = carRemoteDataSource.getSummaryCarImage(exterior, interior)
-        return if (response.isSuccessful) response.body()!! else SummaryCarImage("","")
+        return if (response.isSuccessful) response.body()!! else SummaryCarImage("", "")
     }
 
     override suspend fun getCarColors(
@@ -131,7 +132,19 @@ class CarRepositoryImpl(
         interiorColorCode: String
     ): Options {
         val response = carRemoteDataSource.getOptions(detailTrimId, interiorColorCode)
-        Log.d("OPTIOIN", response.body().toString())
-        return if (response.isSuccessful) response.body()!! else Options(emptyList(), emptyList(), emptyList())
+        return if (response.isSuccessful) response.body()!! else Options(
+            emptyList(),
+            emptyList(),
+            emptyList()
+        )
+    }
+
+    override suspend fun getDetailOptions(
+        optionId: String
+    ): DetailOptions {
+        val response = carRemoteDataSource.getDetailOptions(optionId)
+        return if (response.isSuccessful) response.body()!! else DetailOptions(
+            "", "", emptyList(), emptyList(), "", emptyList(), false
+        )
     }
 }

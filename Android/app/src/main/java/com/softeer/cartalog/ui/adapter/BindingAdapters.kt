@@ -106,22 +106,10 @@ fun setOptionRecyclerView(
     viewModel: OptionViewModel,
     optionList: Options?
 ) {
-//    when (viewModel.nowOptionMode.value) {
-//        OptionMode.SELECT_OPTION -> {
-//            recyclerView.setHasFixedSize(true)
-//            recyclerView.adapter = OptionSelectAdapter(viewModel)
-//            recyclerView.adapter?.notifyDataSetChanged()
-//
-//        }
-//
-//        OptionMode.DEFAULT_OPTION -> {
-//            recyclerView.setHasFixedSize(true)
-//            recyclerView.adapter = OptionDefaultAdapter(optionList?.defaultOptions!!)
-//            recyclerView.adapter?.notifyDataSetChanged()
-//        }
-//
-//        else -> {}
-//    }
+    // 처음 optionfragment 열렸을 때 추가옵션 세팅을 위한 함수
+    recyclerView.setHasFixedSize(true)
+    recyclerView.adapter = OptionSelectAdapter(viewModel)
+    recyclerView.adapter?.notifyDataSetChanged()
 }
 
 @BindingAdapter("bottomSeekBar")

@@ -66,7 +66,10 @@
         <item name="android:text">상세보기</item>
         <item name="android:background">@color/white</item>
         <item name="android:textColor">@color/gray_800</item>
-        <item name="android:padding">10dp</item>
+        <item name="android:paddingTop">7.5dp</item>
+        <item name="android:paddingBottom">7.5dp</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
     </style>
 
     <style name="Theme.AppCompat.Transparent.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">

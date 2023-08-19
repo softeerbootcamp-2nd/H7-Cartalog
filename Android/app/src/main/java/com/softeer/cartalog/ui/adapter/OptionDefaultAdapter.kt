@@ -2,18 +2,11 @@ package com.softeer.cartalog.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.softeer.cartalog.R
 import com.softeer.cartalog.data.model.Option
-import com.softeer.cartalog.data.model.Options
-import com.softeer.cartalog.data.model.Types
 import com.softeer.cartalog.databinding.ItemOptionDefaultCardBinding
 import com.softeer.cartalog.ui.fragment.OptionFragmentDirections
-import com.softeer.cartalog.ui.fragment.TypeFragmentDirections
-import com.softeer.cartalog.viewmodel.OptionViewModel
 
 class OptionDefaultAdapter(private val list: List<Option>) :
     RecyclerView.Adapter<OptionDefaultAdapter.OptionDefaultViewHolder>() {
@@ -46,6 +39,11 @@ class OptionDefaultAdapter(private val list: List<Option>) :
             binding.option = item
 
             binding.btnHmgData.setOnClickListener {
+                val args = item.id
+                val action = OptionFragmentDirections.actionOptionFragmentToOptionDetailDialog(args)
+                it.findNavController().navigate(action)
+            }
+            binding.btnDetailView.setOnClickListener {
                 val args = item.id
                 val action = OptionFragmentDirections.actionOptionFragmentToOptionDetailDialog(args)
                 it.findNavController().navigate(action)
