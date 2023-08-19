@@ -11,9 +11,13 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateCountDto;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionListDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateInfoDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionIdListDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionInfoDto;
+import softeer.wantcar.cartalog.global.ServerPath;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,10 +32,11 @@ class EstimateQueryRepositoryTest {
     NamedParameterJdbcTemplate jdbcTemplate;
     EstimateQueryRepository estimateQueryRepository;
     SoftAssertions softAssertions;
+    ServerPath serverPath = new ServerPath();
 
     @BeforeEach
     void setUp() {
-        estimateQueryRepository = new EstimateQueryRepositoryImpl(jdbcTemplate);
+        estimateQueryRepository = new EstimateQueryRepositoryImpl(jdbcTemplate, new ServerPath());
         softAssertions = new SoftAssertions();
     }
 
@@ -43,7 +48,7 @@ class EstimateQueryRepositoryTest {
         void returnEstimateInfo() {
             //given
             //when
-            EstimateOptionListDto estimateInfo = estimateQueryRepository.findEstimateOptionIdsByEstimateId(1L);
+            EstimateOptionIdListDto estimateInfo = estimateQueryRepository.findEstimateOptionIdsByEstimateId(1L);
 
             //then
             softAssertions.assertThat(estimateInfo).isNotNull();
@@ -63,7 +68,7 @@ class EstimateQueryRepositoryTest {
         void returnNull() {
             //given
             //when
-            EstimateOptionListDto estimateInfo = estimateQueryRepository.findEstimateOptionIdsByEstimateId(-1L);
+            EstimateOptionIdListDto estimateInfo = estimateQueryRepository.findEstimateOptionIdsByEstimateId(-1L);
 
             //then
             assertThat(estimateInfo).isNull();
@@ -95,10 +100,114 @@ class EstimateQueryRepositoryTest {
         void returnEmptyList() {
             //given
             //when
-            List<EstimateCountDto> estimateCounts = estimateQueryRepository.findEstimateCounts(List.of(1L, 2L, 3L));
+            List<EstimateCountDto> estimateCounts = estimateQueryRepository.findEstimateCounts(List.of(-1L));
 
             //then
             assertThat(estimateCounts.isEmpty()).isTrue();
+        }
+    }
+
+    @Nested
+    @DisplayName("findSimilarEstimateInfoBydEstimateIds 테스트")
+    class findSimilarEstimateInfoBydEstimateIdsTest {
+        @Test
+        @DisplayName("견적 식별자 목록에 존재하는 견적 정보를 반환한다")
+        void returnEstimateInfos() {
+            //given
+            //when
+            List<EstimateInfoDto> estimateInfos =
+                    estimateQueryRepository.findEstimateInfoBydEstimateIds(List.of(1L, 2L, 3L));
+
+            //then
+            Map<Long, List<EstimateInfoDto>> mappedEstimateInfos = estimateInfos.stream()
+                    .collect(Collectors.groupingBy(EstimateInfoDto::getEstimateId));
+            softAssertions.assertThat(mappedEstimateInfos.keySet().size()).isEqualTo(3);
+            softAssertions.assertThat(mappedEstimateInfos.keySet()).containsAll(List.of(1L, 2L, 3L));
+            softAssertions.assertAll();
+        }
+
+        @Test
+        @DisplayName("견적 식별자 목록의 모든 식별자가 존재하지 않는다면 빈 리스트를 반환한다")
+        void returnEmptyList() {
+            //given
+            //when
+            List<EstimateInfoDto> estimateInfos =
+                    estimateQueryRepository.findEstimateInfoBydEstimateIds(List.of(-1L));
+
+            //then
+            assertThat(estimateInfos.isEmpty()).isTrue();
+        }
+    }
+
+    @Nested
+    @DisplayName("findSimilarEstimateOptionsByEstimateIds 테스트")
+    class findSimilarEstimateOptionsByEstimateIdsTest {
+        @Test
+        @DisplayName("견적 식별자 목록에 존재하는 견적 선택 옵션 정보를 반환한다")
+        void returnSelectiveOptionInfos() {
+            //given
+            //when
+            //TODO: 3, 4이 아니거나, 데이터가 변경될 경우 실패 가능
+            List<EstimateOptionInfoDto> estimateOptions =
+                    estimateQueryRepository.findEstimateOptionsByEstimateIds(List.of(3L, 4L));
+
+            //then
+            Map<Long, List<EstimateOptionInfoDto>> mappedEstimateOptionInfos = estimateOptions.stream()
+                    .collect(Collectors.groupingBy(EstimateOptionInfoDto::getEstimateId));
+            for (EstimateOptionInfoDto estimateOption : estimateOptions) {
+                softAssertions.assertThat(estimateOption.getImageUrl()).startsWith(serverPath.IMAGE_SERVER_PATH);
+            }
+            softAssertions.assertThat(mappedEstimateOptionInfos.keySet().size()).isEqualTo(2);
+            softAssertions.assertThat(mappedEstimateOptionInfos.keySet()).containsAll(List.of(3L, 4L));
+            softAssertions.assertAll();
+        }
+
+        @Test
+        @DisplayName("견적 식별자 목록의 모든 식별자가 존재하지 않는다면 빈 리스트를 반환한다")
+        void returnEmptyList() {
+            //given
+            //when
+            List<EstimateOptionInfoDto> estimateOptions =
+                    estimateQueryRepository.findEstimateOptionsByEstimateIds(List.of(-1L));
+
+            //then
+            assertThat(estimateOptions.isEmpty()).isTrue();
+        }
+    }
+
+    @Nested
+    @DisplayName("findSimilarEstimatePackagesBtEstimateIds 테스트")
+    class findSimilarEstimatePackagesBtEstimateIdsTest {
+        @Test
+        @DisplayName("견적 식별자 목록에 존재하는 견적 패키지 정보를 반환한다")
+        void returnSelectivePackageInfos() {
+            //given
+            //when
+            //TODO: 1, 3이 아니거나, 데이터가 변경될 경우 실패 가능
+            List<EstimateOptionInfoDto> estimatePackages =
+                    estimateQueryRepository.findEstimatePackagesByEstimateIds(List.of(1L, 3L));
+
+            //then
+            for (EstimateOptionInfoDto estimatePackage : estimatePackages) {
+                softAssertions.assertThat(estimatePackage.getImageUrl()).startsWith(serverPath.IMAGE_SERVER_PATH);
+            }
+            Map<Long, List<EstimateOptionInfoDto>> mappedEstimatePackageInfos = estimatePackages.stream()
+                    .collect(Collectors.groupingBy(EstimateOptionInfoDto::getEstimateId));
+            softAssertions.assertThat(mappedEstimatePackageInfos.keySet().size()).isEqualTo(2);
+            softAssertions.assertThat(mappedEstimatePackageInfos.keySet()).containsAll(List.of(1L, 3L));
+            softAssertions.assertAll();
+        }
+
+        @Test
+        @DisplayName("견적 식별자 목록의 모든 식별자가 존재하지 않는다면 빈 리스트를 반환한다")
+        void returnEmptyList() {
+            //given
+            //when
+            List<EstimateOptionInfoDto> estimatePackages =
+                    estimateQueryRepository.findEstimatePackagesByEstimateIds(List.of(-1L));
+
+            //then
+            assertThat(estimatePackages.isEmpty()).isTrue();
         }
     }
 }
