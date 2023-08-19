@@ -92,40 +92,20 @@ fun setOnClickToggle(
     }
 }
 
-private fun toggleItemSelection(position: Int) {
-
-}
-
 @BindingAdapter("adapter", "viewModel", "position")
 fun setOptionItemClickListener(
     cardView: MaterialCardView,
-    adapter: OptionAdapter,
+    adapter: OptionSelectAdapter,
     viewModel: OptionViewModel,
     position: Int
 ) {
     cardView.setOnClickListener {
-        when (viewModel.nowOptionMode.value) {
-            OptionMode.SELECT_OPTION -> {
-                adapter as OptionSelectAdapter
-                if (adapter.selectedItems.contains(position)) {
-                    adapter.selectedItems.remove(position)
-                } else {
-                    adapter.selectedItems.add(position)
-                }
-                adapter.notifyItemChanged(position)
-            }
-
-            OptionMode.DEFAULT_OPTION -> {
-                adapter as OptionDefaultAdapter
-                if (adapter.selectedItem != position) {
-                    adapter.selectedItem = position
-                    viewModel.setSelectedDefaultOption(position)
-                }
-                adapter.notifyDataSetChanged()
-            }
-
-            else -> {}
+        if (adapter.selectedItems.contains(position)) {
+            adapter.selectedItems.remove(position)
+        } else {
+            adapter.selectedItems.add(position)
         }
+        adapter.notifyItemChanged(position)
     }
 }
 
@@ -141,14 +121,17 @@ fun setOptionTabSelected(
                 0 -> {
                     Log.d("TEST", viewModel.nowOptionMode.value.toString())
                     viewModel.setNowOptionMode(OptionMode.SELECT_OPTION)
+                    recyclerView.setHasFixedSize(true)
                     recyclerView.adapter =
-                        OptionSelectAdapter(viewModel).apply { notifyDataSetChanged() }
+                        OptionSelectAdapter(viewModel)
                 }
 
                 1 -> {
+                    Log.d("TEST", viewModel.nowOptionMode.value.toString())
+                    recyclerView.setHasFixedSize(true)
                     viewModel.setNowOptionMode(OptionMode.DEFAULT_OPTION)
                     recyclerView.adapter =
-                        OptionDefaultAdapter(viewModel).apply { notifyDataSetChanged() }
+                        OptionDefaultAdapter(viewModel.defaultOptions!!)
                 }
             }
         }
@@ -158,17 +141,18 @@ fun setOptionTabSelected(
     })
 }
 
-@BindingAdapter("imageView","imgUrl")
+@BindingAdapter("imageView", "imgUrl")
 fun setCarImageSelected(
     radioGroup: RadioGroup,
     imageView: ImageView,
     carImage: LiveData<SummaryCarImage>
-){
+) {
     radioGroup.setOnCheckedChangeListener { _, checkedId ->
-        when(checkedId){
+        when (checkedId) {
             R.id.rb_exterior -> {
                 imageView.load(carImage.value?.sideExteriorImageUrl)
             }
+
             R.id.rb_interior -> {
                 imageView.load(carImage.value?.interiorImageUrl)
             }

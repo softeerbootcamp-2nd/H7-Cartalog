@@ -1,5 +1,6 @@
 package com.softeer.cartalog.data.repository
 
+import android.util.Log
 import com.softeer.cartalog.data.enums.PriceDataType
 import com.softeer.cartalog.data.model.SummaryCarImage
 import com.softeer.cartalog.data.model.CarColor
@@ -130,6 +131,7 @@ class CarRepositoryImpl(
         interiorColorCode: String
     ): Options {
         val response = carRemoteDataSource.getOptions(detailTrimId, interiorColorCode)
+        Log.d("OPTIOIN", response.body().toString())
         return if (response.isSuccessful) response.body()!! else Options(emptyList(), emptyList(), emptyList())
     }
 }

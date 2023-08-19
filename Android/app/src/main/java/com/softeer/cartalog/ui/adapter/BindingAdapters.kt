@@ -9,6 +9,7 @@ import androidx.appcompat.widget.AppCompatSeekBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentContainerView
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.softeer.cartalog.R
@@ -25,6 +26,8 @@ import com.softeer.cartalog.viewmodel.PriceSummaryViewModel
 import com.softeer.cartalog.viewmodel.TrimViewModel
 import com.softeer.cartalog.viewmodel.TypeViewModel
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @BindingAdapter("viewModel", "indicator", "selectedType")
 fun setTypeDetailViewPager(
@@ -103,19 +106,22 @@ fun setOptionRecyclerView(
     viewModel: OptionViewModel,
     optionList: Options?
 ) {
-    when (viewModel.nowOptionMode.value) {
-        OptionMode.SELECT_OPTION -> {
-            recyclerView.adapter = OptionSelectAdapter(viewModel)
-            recyclerView.adapter?.notifyDataSetChanged()
-        }
-
-        OptionMode.DEFAULT_OPTION -> {
-            recyclerView.adapter = OptionDefaultAdapter(viewModel)
-            recyclerView.adapter?.notifyDataSetChanged()
-        }
-
-        else -> {}
-    }
+//    when (viewModel.nowOptionMode.value) {
+//        OptionMode.SELECT_OPTION -> {
+//            recyclerView.setHasFixedSize(true)
+//            recyclerView.adapter = OptionSelectAdapter(viewModel)
+//            recyclerView.adapter?.notifyDataSetChanged()
+//
+//        }
+//
+//        OptionMode.DEFAULT_OPTION -> {
+//            recyclerView.setHasFixedSize(true)
+//            recyclerView.adapter = OptionDefaultAdapter(optionList?.defaultOptions!!)
+//            recyclerView.adapter?.notifyDataSetChanged()
+//        }
+//
+//        else -> {}
+//    }
 }
 
 @BindingAdapter("bottomSeekBar")

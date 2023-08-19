@@ -8,13 +8,17 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.softeer.cartalog.R
 import com.softeer.cartalog.data.model.Option
+import com.softeer.cartalog.data.model.Options
+import com.softeer.cartalog.data.model.Types
 import com.softeer.cartalog.databinding.ItemOptionDefaultCardBinding
+import com.softeer.cartalog.ui.fragment.OptionFragmentDirections
+import com.softeer.cartalog.ui.fragment.TypeFragmentDirections
 import com.softeer.cartalog.viewmodel.OptionViewModel
 
-class OptionDefaultAdapter(private val viewModel: OptionViewModel) :
-    RecyclerView.Adapter<OptionDefaultAdapter.OptionDefaultViewHolder>(), OptionAdapter {
+class OptionDefaultAdapter(private val list: List<Option>) :
+    RecyclerView.Adapter<OptionDefaultAdapter.OptionDefaultViewHolder>() {
 
-    var selectedItem = 0
+    var selectedItem = -1
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -26,26 +30,25 @@ class OptionDefaultAdapter(private val viewModel: OptionViewModel) :
     }
 
     override fun onBindViewHolder(holder: OptionDefaultViewHolder, position: Int) {
-        val currentItem = viewModel.defaultOptions?.get(position)
+        val currentItem = list.get(position)
         holder.bind(currentItem, position)
     }
 
     override fun getItemCount(): Int {
-        return viewModel.defaultOptions?.size ?: 0
+        return list.size
     }
 
     inner class OptionDefaultViewHolder(val binding: ItemOptionDefaultCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        var isSelected = false
-        fun bind(item: Option?, position: Int) {
+        fun bind(item: Option, position: Int) {
             binding.lifecycleOwner = binding.lifecycleOwner
-            binding.viewModel = viewModel
             binding.position = position
-            binding.optionAdapter = this@OptionDefaultAdapter
             binding.option = item
 
             binding.btnHmgData.setOnClickListener {
-                it.findNavController().navigate(R.id.optionDetailDialog)
+                val args = item.id
+                val action = OptionFragmentDirections.actionOptionFragmentToOptionDetailDialog(args)
+                it.findNavController().navigate(action)
             }
         }
     }

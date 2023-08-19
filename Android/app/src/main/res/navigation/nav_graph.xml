@@ -115,6 +115,10 @@
         <action
             android:id="@+id/action_optionDetailDialog_to_optionFragment"
             app:destination="@id/optionFragment" />
+        <argument
+            android:name="optionId"
+            app:argType="string" />
+
     </dialog>
     <dialog
         android:id="@+id/priceSummaryBottomSheetFragment"

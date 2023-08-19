@@ -1,11 +1,14 @@
 package com.softeer.cartalog.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.google.android.material.tabs.TabLayout
+import com.softeer.cartalog.data.enums.OptionMode
 import com.softeer.cartalog.data.local.MyCarDatabase
 import com.softeer.cartalog.data.remote.api.RetrofitClient
 import com.softeer.cartalog.data.repository.CarRepositoryImpl
@@ -13,6 +16,8 @@ import com.softeer.cartalog.data.repository.local.CarLocalDataSource
 import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
 import com.softeer.cartalog.databinding.FragmentOptionBinding
 import com.softeer.cartalog.ui.activity.MainActivity
+import com.softeer.cartalog.ui.adapter.OptionDefaultAdapter
+import com.softeer.cartalog.ui.adapter.OptionSelectAdapter
 import com.softeer.cartalog.viewmodel.CommonViewModelFactory
 import com.softeer.cartalog.viewmodel.OptionViewModel
 import com.softeer.cartalog.viewmodel.TrimViewModel

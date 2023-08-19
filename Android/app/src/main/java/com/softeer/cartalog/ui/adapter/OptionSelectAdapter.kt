@@ -10,7 +10,7 @@ import com.softeer.cartalog.databinding.ItemOptionSelectCardBinding
 import com.softeer.cartalog.viewmodel.OptionViewModel
 
 class OptionSelectAdapter(private val viewModel: OptionViewModel) :
-    RecyclerView.Adapter<OptionSelectAdapter.OptionSelectViewHolder>(), OptionAdapter {
+    RecyclerView.Adapter<OptionSelectAdapter.OptionSelectViewHolder>() {
 
     var selectedItems = mutableListOf<Int>()
 

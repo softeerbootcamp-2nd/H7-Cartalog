@@ -44,6 +44,8 @@ class OptionDetailDialog : DialogFragment() {
 
         binding.btnClose.setOnClickListener { findNavController().popBackStack() }
 
+        val optionId = arguments?.getString("optionId")
+
         val tabTitles = listOf("후석 승객 알림", "메탈 리어범퍼스탭", "메탈 도어스커프")
         for (title in tabTitles) {
             val tab = binding.tlOption.newTab().apply { text = title }

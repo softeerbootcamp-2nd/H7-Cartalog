@@ -11,7 +11,9 @@ import coil.ImageLoader
 import coil.disk.DiskCache
 import coil.load
 import coil.memory.MemoryCache
+import coil.request.CachePolicy
 import coil.request.ImageRequest
+import coil.size.Precision
 import coil.transition.CrossfadeTransition
 import com.softeer.cartalog.util.UtilManager
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
