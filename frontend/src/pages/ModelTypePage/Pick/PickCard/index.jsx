@@ -5,13 +5,12 @@ import TypeCard from '../../../../components/TypeCard';
 function PickCard({ data }) {
   const { setTrimState, modelType, price } = useData();
 
-  const updateTrimState = (idKey, nameKey, optionKey, priceKey, option) => {
+  const updateTrimState = (idKey, optionKey, priceKey, option) => {
     if (modelType[idKey] === option.id) return;
     const updatedModelType = {
       ...modelType,
       pickId: option.id,
       [idKey]: option.id,
-      [nameKey]: option.name,
       [optionKey]: option,
     };
 
@@ -46,31 +45,13 @@ function PickCard({ data }) {
             onClick={() => {
               switch (data.type) {
                 case modelType.powerTrainType:
-                  updateTrimState(
-                    'powerTrainId',
-                    'powerTrainName',
-                    'powerTrainOption',
-                    'powerTrainPrice',
-                    option,
-                  );
+                  updateTrimState('powerTrainId', 'powerTrainOption', 'powerTrainPrice', option);
                   break;
                 case modelType.bodyTypeType:
-                  updateTrimState(
-                    'bodyTypeId',
-                    'bodyTypeName',
-                    'bodyTypeOption',
-                    'bodyTypePrice',
-                    option,
-                  );
+                  updateTrimState('bodyTypeId', 'bodyTypeOption', 'bodyTypePrice', option);
                   break;
                 case modelType.wheelDriveType:
-                  updateTrimState(
-                    'wheelDriveId',
-                    'wheelDriveName',
-                    'wheelDriveOption',
-                    'wheelDrivePrice',
-                    option,
-                  );
+                  updateTrimState('wheelDriveId', 'wheelDriveOption', 'wheelDrivePrice', option);
                   break;
                 default:
                   console.error('Unhandled data type:', data.type);
