@@ -23,17 +23,6 @@ public class SimilarityCommandRepositoryImpl implements SimilarityCommandReposit
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Override
-    public void savePendingToOther(Long trimId, String hashTagKey, List<String> otherHashTagKeys) {
-        StringBuilder insertSQL = new StringBuilder("INSERT INTO pending_hash_tag_similarities " +
-                "(pending_hash_tag_left_key, hash_tag_key, trim_id) VALUES ");
-        List<String> batchInsertValues = otherHashTagKeys.stream()
-                .map(otherHashTagKey -> "('" + otherHashTagKey + "', '" + hashTagKey + "', " + trimId + ") ")
-                .collect(Collectors.toList());
-        String batchInsertSQL = getBatchInsertSQL(insertSQL, batchInsertValues);
-        jdbcTemplate.update(batchInsertSQL, new MapSqlParameterSource());
-    }
-
-    @Override
     public void deletePending(Long trimId, String hashTagKey) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("trimId", trimId)
@@ -65,15 +54,15 @@ public class SimilarityCommandRepositoryImpl implements SimilarityCommandReposit
         return sql.toString();
     }
 
-    public void savePendingHashTagSimilarity(PendingHashTagSimilaritySaveDto pendingHashTagSimilaritySaveDto) {
-        SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("pending_hash_tag_left_key", pendingHashTagSimilaritySaveDto.getPendingHashTagLeftKey())
-                .addValue("hash_tag_key", pendingHashTagSimilaritySaveDto.getHashTagKey())
-                .addValue("trim_id", pendingHashTagSimilaritySaveDto.getTrimId());
+    public void savePendingHashTagSimilarities(PendingHashTagSimilaritySaveDto pendingHashTagSimilaritySaveDto) {
+        SqlParameterSource[] parameters = pendingHashTagSimilaritySaveDto.getPendingHashTagLeftKeys().stream()
+                .map(leftKey -> new MapSqlParameterSource()
+                        .addValue("pending_hash_tag_left_key", leftKey)
+                        .addValue("hash_tag_key", pendingHashTagSimilaritySaveDto.getHashTagKey())
+                        .addValue("trim_id", pendingHashTagSimilaritySaveDto.getTrimId()))
+                .toArray(SqlParameterSource[]::new);
 
-        String addPendingHashTagSimilaritiesQuery =
-                "INSERT INTO pending_hash_tag_similarities VALUES ( :pending_hash_tag_left_key, :hash_tag_key, :trim_id )";
-
-        jdbcTemplate.update(addPendingHashTagSimilaritiesQuery, parameters);
+        jdbcTemplate.batchUpdate("INSERT INTO pending_hash_tag_similarities VALUES ( :pending_hash_tag_left_key, :hash_tag_key, :trim_id )",
+                parameters);
     }
 }

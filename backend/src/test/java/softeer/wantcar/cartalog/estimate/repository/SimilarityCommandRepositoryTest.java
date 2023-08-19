@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
+import softeer.wantcar.cartalog.estimate.service.dto.PendingHashTagSimilaritySaveDto;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,14 +40,19 @@ class SimilarityCommandRepositoryTest {
     }
 
     @Nested
-    @DisplayName("savePendingToOther 테스트")
+    @DisplayName("savePendingHashTagSimilarities 테스트")
     class savePendingToOtherTest {
         @Test
         @DisplayName("다른 해시 태그 키들에 현재 키를 추가한다")
         void addCurrentKeyToOtherHashTagKeys() {
             //given
             //when
-            similarityCommandRepository.savePendingToOther(leblancId, "a:1|b:1", List.of("b:1|c:1", "b:2|c:2", "b:3|c:3"));
+            PendingHashTagSimilaritySaveDto pendingHashTagSimilaritySaveDto = PendingHashTagSimilaritySaveDto.builder()
+                    .trimId(leblancId)
+                    .hashTagKey("a:1|b:1")
+                    .pendingHashTagLeftKeys(List.of("b:1|c:1", "b:2|c:2", "b:3|c:3"))
+                    .build();
+            similarityCommandRepository.savePendingHashTagSimilarities(pendingHashTagSimilaritySaveDto);
 
             //then
             List<String> hashTagKeys = jdbcTemplate.queryForList(

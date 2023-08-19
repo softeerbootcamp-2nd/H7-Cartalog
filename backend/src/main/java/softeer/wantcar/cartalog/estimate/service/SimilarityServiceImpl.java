@@ -12,6 +12,7 @@ import softeer.wantcar.cartalog.estimate.repository.dto.EstimateInfoDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionInfoDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionListDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.HashTagMap;
+import softeer.wantcar.cartalog.estimate.service.dto.PendingHashTagSimilaritySaveDto;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 
 import java.util.ArrayList;
@@ -86,8 +87,13 @@ public class SimilarityServiceImpl implements SimilarityService {
             calculatedSimilarities.put(pendingHashTagMap.getKey(), hashTagMap.getSimilarity(pendingHashTagMap));
         }
 
+        PendingHashTagSimilaritySaveDto pendingHashTagSimilaritySaveDto = PendingHashTagSimilaritySaveDto.builder()
+                .trimId(trimId)
+                .hashTagKey(hashTagMap.getKey())
+                .pendingHashTagLeftKeys(new ArrayList<>(calculatedSimilarities.keySet()))
+                .build();
         similarityCommandRepository.deletePending(trimId, hashTagMap.getKey());
-        similarityCommandRepository.savePendingToOther(trimId, hashTagMap.getKey(), new ArrayList<>(calculatedSimilarities.keySet()));
+        similarityCommandRepository.savePendingHashTagSimilarities(pendingHashTagSimilaritySaveDto);
         similarityCommandRepository.saveCalculatedHashTagKeys(trimId, hashTagMap.getKey(), calculatedSimilarities);
     }
 
