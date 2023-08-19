@@ -11,8 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateCountDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateInfoDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionInfoDto;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionListDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionIdListDto;
 import softeer.wantcar.cartalog.estimate.service.dto.EstimateDto;
+import softeer.wantcar.cartalog.global.ServerPath;
 import softeer.wantcar.cartalog.global.utils.RowMapperUtils;
 
 import java.sql.ResultSet;
@@ -27,13 +28,14 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
+    private final ServerPath serverPath;
 
     @Override
     public List<EstimateInfoDto> findEstimateInfoBydEstimateIds(List<Long> similarEstimateIds) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("similarEstimateIds", similarEstimateIds);
         return jdbcTemplate.query(QueryString.findSimilarEstimateInfoByEstimateIds,
-                parameters, RowMapperUtils.mapping(EstimateInfoDto.class));
+                parameters, RowMapperUtils.mapping(EstimateInfoDto.class, serverPath.getImageServerPathRowMapperStrategy()));
     }
 
     @Override
@@ -53,7 +55,7 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
     }
 
     @Override
-    public EstimateOptionListDto findEstimateOptionIdsByEstimateId(Long estimateId) {
+    public EstimateOptionIdListDto findEstimateOptionIdsByEstimateId(Long estimateId) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("estimateId", estimateId);
         List<EstimateOptionIdsResult> queryResult = jdbcTemplate.query(QueryString.findEstimateOptionIdsByEstimateId,
@@ -73,7 +75,7 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
                 .distinct()
                 .collect(Collectors.toList());
 
-        return new EstimateOptionListDto(queryResult.get(0).getTrimId(), optionIds, packageIds);
+        return new EstimateOptionIdListDto(queryResult.get(0).getTrimId(), optionIds, packageIds);
     }
 
     @Override
@@ -120,7 +122,7 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
                 .optionId(optionPrefix + rs.getLong("option_id"))
                 .name(rs.getString("name"))
                 .price(rs.getInt("price"))
-                .imageUrl(rs.getString("image_url"))
+                .imageUrl(serverPath.attachImageServerPath(rs.getString("image_url")))
                 .build();
     }
 }

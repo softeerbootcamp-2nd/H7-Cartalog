@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @Getter
 @AllArgsConstructor
 @Builder
-public class EstimateOptionListDto {
+public class EstimateOptionIdListDto {
     private Long trimId;
     private List<Long> optionIds;
     private List<Long> packageIds;

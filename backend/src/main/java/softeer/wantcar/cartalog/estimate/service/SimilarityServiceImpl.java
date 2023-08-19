@@ -62,12 +62,12 @@ public class SimilarityServiceImpl implements SimilarityService {
 
     @Override
     public SimilarEstimateCountResponseDto getSimilarEstimateCounts(Long estimateId) {
-        EstimateOptionListDto estimateOptionListDto = estimateQueryRepository.findEstimateOptionIdsByEstimateId(estimateId);
-        if (estimateOptionListDto == null) {
+        EstimateOptionIdListDto estimateOptionIdListDto = estimateQueryRepository.findEstimateOptionIdsByEstimateId(estimateId);
+        if (estimateOptionIdListDto == null) {
             return null;
         }
-        List<String> totalHashTags = getTotalHashTags(estimateOptionListDto);
-        List<Long> estimateIds = getSimilarEstimateIds(estimateOptionListDto.getTrimId(), totalHashTags);
+        List<String> totalHashTags = getTotalHashTags(estimateOptionIdListDto);
+        List<Long> estimateIds = getSimilarEstimateIds(estimateOptionIdListDto.getTrimId(), totalHashTags);
         estimateIds.add(estimateId);
 
         List<EstimateCountDto> estimateCounts = estimateQueryRepository.findEstimateCounts(estimateIds);
@@ -92,10 +92,10 @@ public class SimilarityServiceImpl implements SimilarityService {
                 .collect(Collectors.toList());
     }
 
-    private List<String> getTotalHashTags(EstimateOptionListDto estimateOptionListDto) {
+    private List<String> getTotalHashTags(EstimateOptionIdListDto estimateOptionIdListDto) {
         List<String> totalHashTags = new ArrayList<>();
-        totalHashTags.addAll(modelOptionQueryRepository.findHashTagFromOptionsByOptionIds(estimateOptionListDto.getOptionIds()));
-        totalHashTags.addAll(modelOptionQueryRepository.findHashTagFromPackagesByPackageIds(estimateOptionListDto.getPackageIds()));
+        totalHashTags.addAll(modelOptionQueryRepository.findHashTagFromOptionsByOptionIds(estimateOptionIdListDto.getOptionIds()));
+        totalHashTags.addAll(modelOptionQueryRepository.findHashTagFromPackagesByPackageIds(estimateOptionIdListDto.getPackageIds()));
         return totalHashTags.stream()
                 .sorted()
                 .collect(Collectors.toList());
