@@ -97,6 +97,7 @@ export function StateProvider({ children }) {
           selectOptions: [],
           category: [],
           chosenOptions: [],
+          chosenOptionsData: [],
         };
         break;
       case 'estimation':

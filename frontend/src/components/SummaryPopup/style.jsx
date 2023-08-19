@@ -63,6 +63,10 @@ export const Contents = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 40px;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const LeftArea = styled.div`
@@ -77,6 +81,11 @@ export const LeftArea = styled.div`
     height: 212px;
     object-fit: cover;
   }
+`;
+
+export const RightArea = styled.div`
+  height: 325px;
+  overflow-y: scroll;
 `;
 
 export const TotalPrice = styled.div`

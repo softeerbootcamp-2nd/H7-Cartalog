@@ -8,7 +8,7 @@ import Toggle from '../Toggle';
 import InfoPanel from './InfoPanel';
 
 function SummaryPopup({ show, close }) {
-  const { setTrimState, exteriorColor, interiorColor, summary } = useData();
+  const { setTrimState, page, exteriorColor, interiorColor, summary, optionPicker } = useData();
   const data = useData();
   const [toggle, setToggle] = useState(false);
   const DATA = [
@@ -45,10 +45,24 @@ function SummaryPopup({ show, close }) {
         price: data.price.interiorColorPrice,
       },
     ],
-    [{ title: SUMMARY_DATA.OPTION, content: '-' }],
+    [
+      ...(optionPicker.chosenOptionsData.length !== 0
+        ? optionPicker.chosenOptionsData.map((optionData, index) => ({
+            title: index === 0 ? SUMMARY_DATA.OPTION : '',
+            content: optionData.name,
+            price: optionData.price,
+          }))
+        : [
+            {
+              title: SUMMARY_DATA.OPTION,
+              content: '-',
+            },
+          ]),
+    ],
   ];
 
   useEffect(() => {
+    if (!page || page === 1) return;
     async function fetchData() {
       const response = await fetch(
         `http://3.36.126.30/models/images?exteriorColorCode=${exteriorColor.code}&interiorColorCode=${interiorColor.code}`,
@@ -93,7 +107,9 @@ function SummaryPopup({ show, close }) {
               />
               <Toggle state={toggle} setState={setToggle} big />
             </S.LeftArea>
-            <InfoPanel data={DATA} />
+            <S.RightArea>
+              <InfoPanel data={DATA} />
+            </S.RightArea>
           </S.Contents>
           <S.TotalPrice>
             <S.TextTitle>{SUMMARY.PRICE_TITLE}</S.TextTitle>
