@@ -41,12 +41,16 @@ class PriceSummaryViewModel(private val repository: CarRepository) : ViewModel()
     private val _carImage = MutableLiveData<SummaryCarImage>()
     val carImage: LiveData<SummaryCarImage> = _carImage
 
+    private val _userTotalPrice = MutableLiveData(0)
+    val userTotalPrice: LiveData<Int> = _userTotalPrice
+
     init {
         viewModelScope.launch {
             _myCar.value = repository.getMyCarData()
             _priceData.value = repository.getPriceDataList()
             val colorCode = setOptionValues()
             _carImage.value = repository.getSummaryCarImage(colorCode.first, colorCode.second)
+            setUserTotalPrice()
         }
     }
 
@@ -87,6 +91,10 @@ class PriceSummaryViewModel(private val repository: CarRepository) : ViewModel()
             }
         }
         return Pair(exteriorCode, interiorCode)
+    }
+
+    private fun setUserTotalPrice() {
+        _userTotalPrice.value = myCar.value!!.minPrice + priceData.value!!.sumOf { it.price }
     }
 
 }
