@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useData, TotalPrice } from '../../../utils/Context';
 import { FOOTER } from '../constants';
 import * as S from './style';
@@ -5,7 +6,12 @@ import Button from '../../../components/Button';
 import ImageViewButton from '../../../components/ImageViewButton';
 
 function Footer() {
-  const { price } = useData();
+  const { page, price } = useData();
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(page && page === 6);
+  }, [page]);
 
   const shareButtonProps = {
     type: FOOTER.TYPE,
@@ -34,23 +40,27 @@ function Footer() {
   };
 
   return (
-    <S.Footer>
+    <S.Footer className={isVisible ? 'visible' : ''}>
       <S.ImageViewButtonWrapper>
         <ImageViewButton {...imageViewButtonProps} />
       </S.ImageViewButtonWrapper>
 
-      <S.TotalPrice>
-        <S.TotalPriceText>{FOOTER.FINAL_PRICE}</S.TotalPriceText>
-        <S.TotalPriceNumber>
-          {TotalPrice(price).toLocaleString('ko-KR')}
-          {FOOTER.WON}
-        </S.TotalPriceNumber>
-      </S.TotalPrice>
-      <S.ButtonWrapper>
-        <Button {...shareButtonProps} />
-        <Button {...pdfButtonProps} />
-        <Button {...counsultButtonProps} />
-      </S.ButtonWrapper>
+      <S.FooterBlur>
+        <S.FooterWrapper>
+          <S.TotalPrice>
+            <S.TotalPriceText>{FOOTER.FINAL_PRICE}</S.TotalPriceText>
+            <S.TotalPriceNumber>
+              {TotalPrice(price).toLocaleString('ko-KR')}
+              {FOOTER.WON}
+            </S.TotalPriceNumber>
+          </S.TotalPrice>
+          <S.ButtonWrapper>
+            <Button {...shareButtonProps} />
+            <Button {...pdfButtonProps} />
+            <Button {...counsultButtonProps} />
+          </S.ButtonWrapper>
+        </S.FooterWrapper>
+      </S.FooterBlur>
     </S.Footer>
   );
 }
