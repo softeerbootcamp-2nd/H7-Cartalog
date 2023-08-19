@@ -104,7 +104,7 @@ class SimilarityServiceTest {
                             getEstimateOptionIfo(1L, 1L, true),
                             getEstimateOptionIfo(1L, 2L, true),
                             getEstimateOptionIfo(2L, 3L, true)));
-            when(similarityQueryRepository.findSimilarEstimatePackagesBtEstimateIds(anyList()))
+            when(similarityQueryRepository.findSimilarEstimatePackagesByEstimateIds(anyList()))
                     .thenReturn(List.of(getEstimateOptionIfo(2L, 1L, false)));
         }
 

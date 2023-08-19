@@ -10,8 +10,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import softeer.wantcar.cartalog.estimate.dto.EstimateRequestDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
+import softeer.wantcar.cartalog.estimate.service.EstimateService;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -22,12 +27,14 @@ class EstimateControllerTest {
     @InjectSoftAssertions
     SoftAssertions softAssertions;
     EstimateQueryRepository estimateQueryRepository;
+    EstimateService estimateService;
     EstimateController estimateController;
 
     @BeforeEach
     void setUp() {
         estimateQueryRepository = mock(EstimateQueryRepository.class);
-        estimateController = new EstimateController(estimateQueryRepository);
+        estimateService = mock(EstimateService.class);
+        estimateController = new EstimateController(estimateQueryRepository, estimateService);
     }
 
     @Nested
@@ -49,4 +56,36 @@ class EstimateControllerTest {
         }
     }
 
+    @Nested
+    @DisplayName("견적서 등록 조회 테스트")
+    class registerOrGetEstimateTest {
+        @Test
+        @DisplayName("유효한 견적서 식별자를 요청했을때 정상적으로 반환해야 한다.")
+        void success() {
+            //given
+            Long estimateId = 1L;
+            EstimateRequestDto requestDto = mock(EstimateRequestDto.class);
+            when(estimateService.saveOrFindEstimateId(any())).thenReturn(estimateId);
+
+            //when
+            ResponseEntity<Long> response = estimateController.registerOrGetEstimate(requestDto);
+
+            //then
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getBody()).isEqualTo(estimateId);
+        }
+
+        @Test
+        @DisplayName("유효하지 않은 견적서를 전달했을 경우 요청을 거부해야 한다.")
+        void failure() {
+            //given
+            EstimateRequestDto requestDto = mock(EstimateRequestDto.class);
+            when(estimateService.saveOrFindEstimateId(any())).thenThrow(IllegalArgumentException.class);
+
+            //when
+            //then
+            assertThatThrownBy(() -> estimateController.registerOrGetEstimate(requestDto))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
+    }
 }

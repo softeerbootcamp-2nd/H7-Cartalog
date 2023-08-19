@@ -127,4 +127,26 @@ public class QueryString {
             "FROM similar_estimates " +
             "WHERE estimate_id IN (:estimateIds) " +
             "GROUP BY estimate_id ";
+
+    protected static final String findEstimateIdByEstimateDto =
+            "SELECT estimates.id " +
+            "FROM   estimates " +
+            "       LEFT JOIN estimate_packages " +
+            "              ON estimates.id = estimate_packages.estimate_id " +
+            "       LEFT JOIN estimate_options " +
+            "              ON estimates.id = estimate_options.estimate_id " +
+            "WHERE  detail_trim_id = :detailTrimId " +
+            "       AND estimates.trim_exterior_color_id = :trimExteriorColorId " +
+            "       AND estimates.trim_interior_color_id = :trimInteriorColorId " +
+            "GROUP  BY estimates.id " +
+            "HAVING Count(DISTINCT model_package_id) = :countOfPackages " +
+            "       AND Sum(CASE " +
+            "                 WHEN model_package_id IN ( :selectPackageIds ) THEN 1 " +
+            "                 ELSE 0 " +
+            "               end) = :countOfSumPackages " +
+            "       AND Count (DISTINCT model_option_id) = :countOfOptions " +
+            "       AND Sum(CASE " +
+            "                 WHEN model_option_id IN ( :selectOptionIds ) THEN 1 " +
+            "                 ELSE 0 " +
+            "               end) = :countOfSumOptions ";
 }

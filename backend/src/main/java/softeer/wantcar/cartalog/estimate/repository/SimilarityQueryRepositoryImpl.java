@@ -13,6 +13,7 @@ import softeer.wantcar.cartalog.global.utils.RowMapperUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,11 +69,17 @@ public class SimilarityQueryRepositoryImpl implements SimilarityQueryRepository 
     }
 
     @Override
-    public List<EstimateOptionInfoDto> findSimilarEstimatePackagesBtEstimateIds(List<Long> similarEstimateIds) {
+    public List<EstimateOptionInfoDto> findSimilarEstimatePackagesByEstimateIds(List<Long> similarEstimateIds) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("similarEstimateIds", similarEstimateIds);
         return jdbcTemplate.query(QueryString.findSimilarEstimatePackagesByEstimateIds,
                 parameters, (rs, rowNum) -> getEstimateOptionInfoDto(rs, false));
+    }
+
+    @Override
+    public List<String> findAllCalculatedHashTagKeys() {
+        return jdbcTemplate.queryForList("SELECT DISTINCT hash_tag_key FROM similar_estimates ",
+                new HashMap<>(), String.class);
     }
 
     private static List<HashTagMap> getHashTagMaps(List<String> pendingHashTags) {

@@ -10,9 +10,13 @@ import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
 import softeer.wantcar.cartalog.estimate.repository.SimilarityCommandRepository;
 import softeer.wantcar.cartalog.estimate.repository.SimilarityQueryRepository;
 import softeer.wantcar.cartalog.estimate.repository.dto.*;
+import softeer.wantcar.cartalog.estimate.service.dto.PendingHashTagSimilaritySaveDto;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -91,7 +95,7 @@ public class SimilarityServiceImpl implements SimilarityService {
     private Map<Long, List<EstimateOptionInfoDto>> getEstimateOptionInfos(List<Long> similarEstimateIds) {
         List<EstimateOptionInfoDto> totalEstimateOptions = new ArrayList<>();
         totalEstimateOptions.addAll(similarityQueryRepository.findSimilarEstimateOptionsByEstimateIds(similarEstimateIds));
-        totalEstimateOptions.addAll(similarityQueryRepository.findSimilarEstimatePackagesBtEstimateIds(similarEstimateIds));
+        totalEstimateOptions.addAll(similarityQueryRepository.findSimilarEstimatePackagesByEstimateIds(similarEstimateIds));
         return totalEstimateOptions.stream()
                 .collect(Collectors.groupingBy(EstimateOptionInfoDto::getEstimateId));
     }
@@ -108,14 +112,27 @@ public class SimilarityServiceImpl implements SimilarityService {
             return;
         }
 
-        Map<String, Double> calculatedSimilarities = new HashMap<>();
-        for (HashTagMap pendingHashTagMap : pendingHashTagMaps) {
-            calculatedSimilarities.put(pendingHashTagMap.getKey(), hashTagMap.getSimilarity(pendingHashTagMap));
-        }
+        PendingHashTagSimilaritySaveDto pendingHashTagSimilaritySaveDto = PendingHashTagSimilaritySaveDto.builder()
+                .trimId(trimId)
+                .hashTagKey(hashTagMap.getKey())
+                .pendingHashTagLeftKeys(getPendingHashTagKeys(pendingHashTagMaps))
+                .build();
 
         similarityCommandRepository.deletePending(trimId, hashTagMap.getKey());
-        similarityCommandRepository.savePendingToOther(trimId, hashTagMap.getKey(), new ArrayList<>(calculatedSimilarities.keySet()));
-        similarityCommandRepository.saveCalculatedHashTagKeys(trimId, hashTagMap.getKey(), calculatedSimilarities);
+        similarityCommandRepository.savePendingHashTagSimilarities(pendingHashTagSimilaritySaveDto);
+        similarityCommandRepository.saveCalculatedHashTagKeys(trimId, hashTagMap.getKey(), getSimilarityInfos(hashTagMap, pendingHashTagMaps));
+    }
+
+    private static List<String> getPendingHashTagKeys(List<HashTagMap> pendingHashTagMaps) {
+        return pendingHashTagMaps.stream()
+                .map(HashTagMap::getKey)
+                .collect(Collectors.toList());
+    }
+
+    private static List<SimilarityInfo> getSimilarityInfos(HashTagMap hashTagMap, List<HashTagMap> pendingHashTagMaps) {
+        return pendingHashTagMaps.stream()
+                .map(otherMap -> new SimilarityInfo(otherMap.getKey(), otherMap.getSimilarity(hashTagMap)))
+                .collect(Collectors.toList());
     }
 
     private static SimilarEstimateResponseDto getSimilarEstimateResponseDto(List<String> optionIds,

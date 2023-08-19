@@ -252,7 +252,7 @@ class SimilarityQueryRepositoryTest {
             //when
             //TODO: 1, 3이 아니거나, 데이터가 변경될 경우 실패 가능
             List<EstimateOptionInfoDto> estimatePackages =
-                    similarityQueryRepository.findSimilarEstimatePackagesBtEstimateIds(List.of(1L, 3L));
+                    similarityQueryRepository.findSimilarEstimatePackagesByEstimateIds(List.of(1L, 3L));
 
             //then
             Map<Long, List<EstimateOptionInfoDto>> mappedEstimatePackageInfos = estimatePackages.stream()
@@ -268,7 +268,7 @@ class SimilarityQueryRepositoryTest {
             //given
             //when
             List<EstimateOptionInfoDto> estimatePackages =
-                    similarityQueryRepository.findSimilarEstimatePackagesBtEstimateIds(List.of(-1L));
+                    similarityQueryRepository.findSimilarEstimatePackagesByEstimateIds(List.of(-1L));
 
             //then
             assertThat(estimatePackages.isEmpty()).isTrue();
