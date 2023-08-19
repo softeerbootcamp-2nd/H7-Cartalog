@@ -42,9 +42,9 @@ public class SimilarityController {
 
     @ApiOperation(
             value = "유사 견적 개수 조회",
-            notes = "견적 식별자와 유사한 견적의 개수를 제공한다.")
+            notes = "내 견적의 출고 개수와 유사 견적들의 출고 개수, 식별자를 제공한다.")
     @ApiImplicitParam(
-            name = "estimateId", value = "견적 식별자", required = true,
+            name = "estimateId", value = "내 견적 식별자", required = true,
             dataType = "java.lang.Long", paramType = "query", example = "1")
     @ApiResponses({
             @ApiResponse(code = 404, message = "존재하지 않는 견적 식별자입니다."),
