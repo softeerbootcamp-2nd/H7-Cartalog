@@ -12,7 +12,6 @@ import softeer.wantcar.cartalog.estimate.repository.dto.SimilarityInfo;
 import softeer.wantcar.cartalog.estimate.service.dto.PendingHashTagSimilaritySaveDto;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @SuppressWarnings({"SqlResolve", "SqlNoDataSourceInspection"})
