@@ -1,6 +1,5 @@
 package com.softeer.cartalog.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -33,7 +32,6 @@ class MainViewModel : ViewModel() {
     fun setRangeLimit(progress: Int) {
         _budgetRangeLimitProgress.value = progress
         _budgetRangeLimit.value = calculatePriceFromProgress(progress)
-        Log.d("PRICE","budget progress: $progress, price : ${_budgetRangeLimit.value}")
         _isExcess.value = budgetRangeLimit.value!! < totalPrice.value!!
     }
 
@@ -61,8 +59,5 @@ class MainViewModel : ViewModel() {
         _totalPrice.value = total
         _totalPriceProgress.value = calculateProgressFromPrice(totalPrice.value!!)
         _budgetRangeLimit.value = calculatePriceFromProgress(50)
-        Log.d("PRICE","total price = ${_totalPrice.value}")
-        Log.d("PRICE","total price progress = ${_totalPriceProgress.value}")
-        Log.d("PRICE","init budget progress: ${budgetRangeLimitProgress.value}, price : ${_budgetRangeLimit.value}")
     }
 }

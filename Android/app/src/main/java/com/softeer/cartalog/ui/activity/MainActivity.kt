@@ -2,7 +2,6 @@ package com.softeer.cartalog.ui.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
@@ -124,7 +123,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
     }
 
     override fun onInitPriceDataReceived(priceList: List<Int>) {
-        Log.d("PRICE","min : ${priceList[0]} , max: ${priceList[1]}, user: ${priceList[2]}")
         mainViewModel.setMinMaxPrice(priceList[0], priceList[1])
         mainViewModel.setInitPriceData(priceList[2])
     }
