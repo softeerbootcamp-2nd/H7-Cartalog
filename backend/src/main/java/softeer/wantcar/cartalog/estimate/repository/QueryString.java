@@ -124,7 +124,7 @@ public class QueryString {
             "SELECT " +
             "   estimate_id, " +
             "   count(estimate_id) AS count " +
-            "FROM similar_estimates " +
+            "FROM release_records " +
             "WHERE estimate_id IN (:estimateIds) " +
             "GROUP BY estimate_id ";
 
