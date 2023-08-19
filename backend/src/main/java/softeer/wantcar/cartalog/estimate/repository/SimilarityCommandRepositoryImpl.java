@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import softeer.wantcar.cartalog.estimate.repository.dto.SimilarityInfo;
 import softeer.wantcar.cartalog.estimate.service.dto.PendingHashTagSimilaritySaveDto;
 
 import java.util.List;
@@ -33,12 +34,12 @@ public class SimilarityCommandRepositoryImpl implements SimilarityCommandReposit
     }
 
     @Override
-    public void saveCalculatedHashTagKeys(Long trimId, String hashTagKey, Map<String, Double> similarities) {
+    public void saveCalculatedHashTagKeys(Long trimId, String hashTagKey, List<SimilarityInfo> similarities) {
         StringBuilder insertSQL = new StringBuilder("INSERT INTO hash_tag_similarities " +
                 "(hash_tag_left_key, hash_tag_key, trim_id, similarity) VALUES ");
-        List<String> batchInsertValues = similarities.keySet().stream()
-                .map(otherHashTagKey -> "('" + otherHashTagKey + "', '" + hashTagKey + "', " +
-                        trimId + ", " + similarities.get(otherHashTagKey) + ") ")
+        List<String> batchInsertValues = similarities.stream()
+                .map(similarityInfo -> "('" + similarityInfo.getHashTagKey() + "', '" + hashTagKey + "', " +
+                        trimId + ", " + similarityInfo.getSimilarity() + ") ")
                 .collect(Collectors.toList());
         String batchInsertSQL = getBatchInsertSQL(insertSQL, batchInsertValues);
         jdbcTemplate.update(batchInsertSQL, new MapSqlParameterSource());

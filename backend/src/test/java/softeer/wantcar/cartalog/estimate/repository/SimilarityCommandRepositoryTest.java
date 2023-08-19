@@ -11,11 +11,11 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
+import softeer.wantcar.cartalog.estimate.repository.dto.SimilarityInfo;
 import softeer.wantcar.cartalog.estimate.service.dto.PendingHashTagSimilaritySaveDto;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -101,11 +101,10 @@ class SimilarityCommandRepositoryTest {
         @DisplayName("계산된 해시 태그 키(similarities)들을 계산된 목록에 추가한다")
         void addSimilaritiesToCalculatedList() {
             //given
-            Map<String, Double> similarities = new HashMap<>();
-            similarities.put("b:1|c:1", 0.5);
-            similarities.put("b:2|c:2", 0.1);
-            similarities.put("b:3|c:3", 0.9);
-            similarities.put("b:4|c:4", 0.7);
+            List<SimilarityInfo> similarities = List.of(new SimilarityInfo("b:1|c:1", 0.5),
+                    new SimilarityInfo("b:2|c:2", 0.1),
+                    new SimilarityInfo("b:3|c:3", 0.9),
+                    new SimilarityInfo("b:4|c:4", 0.7));
 
             //when
             similarityCommandRepository.saveCalculatedHashTagKeys(leblancId, "a:1|b:1", similarities);
