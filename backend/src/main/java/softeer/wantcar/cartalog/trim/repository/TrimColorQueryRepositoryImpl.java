@@ -132,10 +132,10 @@ public class TrimColorQueryRepositoryImpl implements TrimColorQueryRepository {
                 .addValue("colorCode", colorCode);
 
         String SQL = "select trim_exterior_colors.id from trim_exterior_colors  " +
-                "inner join model_exterior_colors  " +
-                "on trim_exterior_colors.model_exterior_color_id = model_exterior_colors.id  " +
-                "where model_exterior_colors.color_code = :colorCode " +
-                "and trim_id = :trimId ";
+                     "inner join model_exterior_colors  " +
+                     "on trim_exterior_colors.model_exterior_color_id = model_exterior_colors.id  " +
+                     "where model_exterior_colors.color_code = :colorCode " +
+                     "and trim_id = :trimId ";
 
         try {
             return jdbcTemplate.queryForObject(SQL, parameters, Long.class);
@@ -152,8 +152,8 @@ public class TrimColorQueryRepositoryImpl implements TrimColorQueryRepository {
                 .addValue("interiorColorCode", interiorColorCode);
 
         String SQL = "select id from trim_interior_colors " +
-                "where model_interior_color_code = :interiorColorCode " +
-                "and trim_exterior_color_id = :trimExteriorColorId ";
+                     "where model_interior_color_code = :interiorColorCode " +
+                     "and trim_exterior_color_id = :trimExteriorColorId ";
 
         try {
             return jdbcTemplate.queryForObject(SQL, parameters, Long.class);

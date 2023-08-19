@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateCountResponseDto;
-import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateDto;
 import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateResponseDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
 import softeer.wantcar.cartalog.estimate.repository.SimilarityCommandRepository;
@@ -30,18 +29,35 @@ public class SimilarityServiceImpl implements SimilarityService {
     private final ModelOptionQueryRepository modelOptionQueryRepository;
 
     @Override
-    public SimilarEstimateResponseDto getSimilarEstimateDtoList(Long estimateId) {
-        EstimateOptionListDto estimateOptionIds = estimateQueryRepository.findEstimateOptionIdsByEstimateId(estimateId);
-        if (estimateOptionIds == null) {
+    public SimilarEstimateResponseDto getSimilarEstimateInfo(Long estimateId, Long similarEstimateId) {
+        List<EstimateInfoDto> similarEstimateInfos = estimateQueryRepository.findEstimateInfoBydEstimateIds(List.of(similarEstimateId));
+        if (similarEstimateInfos.isEmpty()) {
             return null;
         }
-        List<String> totalHashTags = getTotalHashTags(estimateOptionIds);
+        Map<Long, List<EstimateOptionInfoDto>> estimateOptionInfos = getEstimateOptionInfos(List.of(estimateId, similarEstimateId));
 
-        List<Long> similarEstimateIds = getSimilarEstimateIds(estimateOptionIds.getTrimId(), totalHashTags);
-        Map<Long, List<EstimateInfoDto>> estimateInfos = getEstimateInfos(similarEstimateIds);
-        Map<Long, List<EstimateOptionInfoDto>> estimateOptionInfos = getEstimateOptionInfos(similarEstimateIds);
+        return getSimilarEstimateResponseDto(estimateId, similarEstimateId, similarEstimateInfos, estimateOptionInfos);
+    }
 
-        return getSimilarEstimateResponseDto(estimateOptionIds.getAllOptionIds(), estimateInfos, estimateOptionInfos);
+    private static SimilarEstimateResponseDto getSimilarEstimateResponseDto(Long estimateId,
+                                                                            Long similarEstimateId,
+                                                                            List<EstimateInfoDto> similarEstimateInfos,
+                                                                            Map<Long, List<EstimateOptionInfoDto>> estimateOptionInfos) {
+        EstimateInfoDto similarEstimateInfo = similarEstimateInfos.get(0);
+
+        List<String> existOptionInfos = estimateOptionInfos.get(estimateId).stream()
+                .map(EstimateOptionInfoDto::getOptionId)
+                .collect(Collectors.toList());
+        List<EstimateOptionInfoDto> similarEstimateOptionInfos = estimateOptionInfos.get(similarEstimateId);
+
+        return SimilarEstimateResponseDto.builder()
+                .trimName(similarEstimateInfo.getTrimName())
+                .price(getEstimatePrice(similarEstimateInfos, similarEstimateOptionInfos))
+                .modelTypes(getModelTypes(similarEstimateInfos))
+                .exteriorColorCode(similarEstimateInfo.getExteriorColorCode())
+                .interiorColorCode(similarEstimateInfo.getInteriorColorCode())
+                .nonExistentOptions(getNonExistOptionInfoDtoList(existOptionInfos, similarEstimateOptionInfos))
+                .build();
     }
 
     @Override
@@ -94,15 +110,10 @@ public class SimilarityServiceImpl implements SimilarityService {
 
     private Map<Long, List<EstimateOptionInfoDto>> getEstimateOptionInfos(List<Long> similarEstimateIds) {
         List<EstimateOptionInfoDto> totalEstimateOptions = new ArrayList<>();
-        totalEstimateOptions.addAll(similarityQueryRepository.findSimilarEstimateOptionsByEstimateIds(similarEstimateIds));
-        totalEstimateOptions.addAll(similarityQueryRepository.findSimilarEstimatePackagesByEstimateIds(similarEstimateIds));
+        totalEstimateOptions.addAll(estimateQueryRepository.findEstimateOptionsByEstimateIds(similarEstimateIds));
+        totalEstimateOptions.addAll(estimateQueryRepository.findEstimatePackagesByEstimateIds(similarEstimateIds));
         return totalEstimateOptions.stream()
                 .collect(Collectors.groupingBy(EstimateOptionInfoDto::getEstimateId));
-    }
-
-    private Map<Long, List<EstimateInfoDto>> getEstimateInfos(List<Long> similarEstimateIds) {
-        return similarityQueryRepository.findSimilarEstimateInfoBydEstimateIds(similarEstimateIds).stream()
-                .collect(Collectors.groupingBy(EstimateInfoDto::getEstimateId));
     }
 
     private void lazyCalculateHashTagKeys(Long trimId, HashTagMap hashTagMap) {
@@ -135,34 +146,6 @@ public class SimilarityServiceImpl implements SimilarityService {
                 .collect(Collectors.toList());
     }
 
-    private static SimilarEstimateResponseDto getSimilarEstimateResponseDto(List<String> optionIds,
-                                                                            Map<Long, List<EstimateInfoDto>> estimateInfos,
-                                                                            Map<Long, List<EstimateOptionInfoDto>> estimateOptionInfos) {
-        List<SimilarEstimateDto> estimateDtoList = new ArrayList<>();
-        for (Long estimateId : estimateInfos.keySet()) {
-            SimilarEstimateDto estimateDto = getSimilarEstimateDto(optionIds, estimateInfos.get(estimateId), estimateOptionInfos.get(estimateId));
-            estimateDtoList.add(estimateDto);
-        }
-        return SimilarEstimateResponseDto.builder()
-                .similarEstimates(estimateDtoList)
-                .build();
-    }
-
-    private static SimilarEstimateDto getSimilarEstimateDto(List<String> optionIds,
-                                                            List<EstimateInfoDto> estimateInfos,
-                                                            List<EstimateOptionInfoDto> estimateOptionInfos) {
-        EstimateInfoDto curEstimateInfo = estimateInfos.get(0);
-        return SimilarEstimateDto.builder()
-                .detailTrimId(curEstimateInfo.getDetailTrimId())
-                .trimName(curEstimateInfo.getTrimName())
-                .price(getEstimatePrice(estimateInfos, estimateOptionInfos, curEstimateInfo))
-                .modelTypes(getModelTypes(estimateInfos))
-                .exteriorColorCode(curEstimateInfo.getExteriorColorCode())
-                .interiorColorCode(curEstimateInfo.getInteriorColorCode())
-                .nonExistentOptions(getNonExistOptionInfoDtoList(optionIds, estimateOptionInfos))
-                .build();
-    }
-
     private static List<String> getModelTypes(List<EstimateInfoDto> estimateInfos) {
         return estimateInfos.stream()
                 .map(EstimateInfoDto::getModelTypeName)
@@ -176,8 +159,9 @@ public class SimilarityServiceImpl implements SimilarityService {
                 .collect(Collectors.toList());
     }
 
-    private static int getEstimatePrice(List<EstimateInfoDto> estimateInfos, List<EstimateOptionInfoDto> estimateOptionInfos, EstimateInfoDto curEstimateInfo) {
-        int totalPrice = curEstimateInfo.getTrimPrice();
+    private static int getEstimatePrice(List<EstimateInfoDto> estimateInfos,
+                                        List<EstimateOptionInfoDto> estimateOptionInfos) {
+        int totalPrice = estimateInfos.get(0).getTrimPrice();
         totalPrice += estimateInfos.stream()
                 .mapToInt(EstimateInfoDto::getModelTypePrice)
                 .sum();

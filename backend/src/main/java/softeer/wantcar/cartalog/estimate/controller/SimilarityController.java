@@ -26,12 +26,14 @@ public class SimilarityController {
             @ApiResponse(code = 404, message = "존재하지 않는 견적 식별자입니다."),
             @ApiResponse(code = 500, message = "적절하지 않은 데이터가 있어 요청을 처리할 수 없습니다. 관리자에게 문의하세요.")})
     @GetMapping("/releases")
-    public ResponseEntity<SimilarEstimateResponseDto> findSimilarEstimates(@RequestParam("estimateId") Long estimateId) {
-        SimilarEstimateResponseDto similarEstimateDtoList = similarityService.getSimilarEstimateDtoList(estimateId);
-        if (similarEstimateDtoList == null) {
+    public ResponseEntity<SimilarEstimateResponseDto> findSimilarEstimates(@RequestParam("estimateId") Long estimateId,
+                                                                           @RequestParam("similarEstimateId") Long similarEstimateId) {
+        SimilarEstimateResponseDto similarEstimateResponseDto =
+                similarityService.getSimilarEstimateInfo(estimateId, similarEstimateId);
+        if (similarEstimateResponseDto == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().body(similarEstimateDtoList);
+        return ResponseEntity.ok().body(similarEstimateResponseDto);
     }
 
     @ApiOperation(

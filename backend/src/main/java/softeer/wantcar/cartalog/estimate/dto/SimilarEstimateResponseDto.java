@@ -1,14 +1,18 @@
 package softeer.wantcar.cartalog.estimate.dto;
 
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionInfoDto;
 
 import java.util.List;
 
 @Builder
 @Getter
-@EqualsAndHashCode
 public class SimilarEstimateResponseDto {
-    private List<SimilarEstimateDto> similarEstimates;
+    private String trimName;
+    private int price;
+    private List<String> modelTypes;
+    private String exteriorColorCode;
+    private String interiorColorCode;
+    private List<EstimateOptionInfoDto> nonExistentOptions;
 }
