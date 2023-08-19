@@ -43,11 +43,7 @@ class InteriorFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         totalPrice = (activity as MainActivity).getUserTotalPrice()
-        if (context is PriceDataCallback) {
-            dataCallback = context
-        } else {
-            throw RuntimeException("$context must implement DataCallback")
-        }
+        dataCallback = context as PriceDataCallback
     }
 
     override fun onCreateView(

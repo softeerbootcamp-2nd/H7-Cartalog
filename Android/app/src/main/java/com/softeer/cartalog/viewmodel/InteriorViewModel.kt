@@ -18,11 +18,11 @@ class InteriorViewModel(private val repository: CarRepository) : ViewModel() {
     private val _selectedColorIdx = MutableLiveData(0)
     val selectedColorIdx: LiveData<Int> = _selectedColorIdx
 
-    private lateinit var selectedByUser: PriceData
-
-    private val _selectedColor = MutableLiveData<CarColor>()
     private val _userTotalPrice = MutableLiveData(0)
     val userTotalPrice: LiveData<Int> = _userTotalPrice
+
+    private lateinit var selectedByUser: PriceData
+    private lateinit var selectedColor: CarColor
 
     init {
         setInteriorColorData()
@@ -36,25 +36,24 @@ class InteriorViewModel(private val repository: CarRepository) : ViewModel() {
             _selectedColorIdx.value = colorList.value?.indices?.find {
                 colorList.value?.get(it)?.code == selectedByUser.colorCode
             }
-            _selectedColor.value = colorList.value?.get(selectedColorIdx.value!!)
+            selectedColor = colorList.value?.get(selectedColorIdx.value!!)!!
         }
     }
 
     fun setSelectedColor(selected: Int) {
-        _userTotalPrice.value = _userTotalPrice.value?.minus(_selectedColor.value!!.price)
+        _userTotalPrice.value = _userTotalPrice.value?.minus(selectedColor.price)
         _selectedColorIdx.value = selected
-        _selectedColor.value = colorList.value?.get(selectedColorIdx.value!!)
-        _userTotalPrice.value = _userTotalPrice.value?.plus(_selectedColor.value!!.price)
+        selectedColor = colorList.value?.get(selectedColorIdx.value!!)!!
+        _userTotalPrice.value = _userTotalPrice.value?.plus(selectedColor.price)
     }
 
     suspend fun saveUserSelection() {
-        val selectedColor = _colorList.value?.get(_selectedColorIdx.value!!)
-        val newColor = selectedColor?.let {
+        val newColor = selectedColor.run {
             selectedByUser.copy(
-                name = it.name, price = it.price, colorCode = it.code, imgUrl = it.colorImageUrl
+                name = name, price = price, colorCode = code, imgUrl = colorImageUrl
             )
         }
-        repository.saveUserColorData(newColor!!)
+        repository.saveUserColorData(newColor)
     }
 
     fun setUserTotalPrice(price: Int) {
