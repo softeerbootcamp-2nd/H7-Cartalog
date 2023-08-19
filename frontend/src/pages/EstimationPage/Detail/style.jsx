@@ -5,7 +5,7 @@ export const Detail = styled.div`
   flex-direction: column;
   gap: 20px;
   width: 607px;
-  margin-top: 12px;
+  margin-top: 20px;
 `;
 
 export const Title = styled.h1`
@@ -16,7 +16,7 @@ export const Title = styled.h1`
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 8px;
   width: 100%;
   margin-bottom: 200px;
 `;

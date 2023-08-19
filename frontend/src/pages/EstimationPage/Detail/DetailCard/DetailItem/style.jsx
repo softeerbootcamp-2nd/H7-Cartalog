@@ -7,12 +7,13 @@ export const DetailItem = styled.div`
   height: 55px;
   padding: 8px 0;
   border-bottom: 1px solid ${({ theme }) => theme.color.gray['50']};
+`;
 
-  & > img {
-    width: 77px;
-    height: 55px;
-    object-fit: cover;
-  }
+export const DetailImage = styled.img`
+  min-width: 77px;
+  max-width: 77px;
+  height: 55px;
+  object-fit: cover;
 `;
 
 export const Description = styled.div`

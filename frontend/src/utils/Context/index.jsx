@@ -51,15 +51,14 @@ export function StateProvider({ children }) {
           powerTrainId: null,
           bodyTypeId: null,
           wheelDriveId: null,
-          powerTrainName: null,
-          bodyTypeName: null,
-          wheelDriveName: null,
           powerTrainOption: null,
           bodyTypeOption: null,
           wheelDriveOption: null,
           hmgData: {
             diesel: { output: null, talk: null },
             gasoline: { output: null, talk: null },
+            displacement: null,
+            fuelEfficiency: null,
           },
         };
         break;
@@ -93,6 +92,7 @@ export function StateProvider({ children }) {
         acc[key] = {
           fetchData: [],
           isFetch: false,
+          isExpend: false,
           defaultOptions: [],
           selectOptions: [],
           category: [],

@@ -1,10 +1,14 @@
-import { useState } from 'react';
-import DetailItem from './DetailItem';
+import { useEffect, useState } from 'react';
 import * as S from './style';
+import DetailItem from './DetailItem';
 import DetailTitle from './DetailTitle';
 
 function DetailCard({ data }) {
   const [expanded, setExpanded] = useState(data?.expand || false);
+
+  useEffect(() => {
+    setExpanded(data.expand);
+  }, [data.expand]);
 
   return (
     <S.DetailCard className={expanded ? 'expanded' : null}>

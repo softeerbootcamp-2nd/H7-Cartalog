@@ -52,6 +52,7 @@ const ImageAnimation = keyframes`
 
 export const Preview = styled.div`
   width: 100%;
+  height: 680px;
   background-color: ${({ theme }) => theme.color.white};
 
   & > div {
@@ -62,8 +63,8 @@ export const Preview = styled.div`
 export const CarInfo = styled.div`
   position: relative;
   width: 100%;
-  max-width: 1142px;
   margin: 0 auto;
+  margin-top: 60px;
   animation: ${CarInfoAnimation} 1s linear forwards;
   animation-play-state: paused;
 
@@ -73,6 +74,7 @@ export const CarInfo = styled.div`
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;
+    z-index: 1;
 
     font: ${({ theme }) => theme.font.headKR.Bold150};
     color: ${({ theme }) => theme.color.white};
@@ -86,11 +88,10 @@ export const CarInfo = styled.div`
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 203px;
-    right: 50%;
     transform: translateX(50%);
     animation: ${PreviewAnimation} 1s linear forwards;
     animation-play-state: paused;
+    gap: 10px;
 
     & > img {
       width: 760px;

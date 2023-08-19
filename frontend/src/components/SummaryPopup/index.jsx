@@ -19,18 +19,18 @@ function SummaryPopup({ show, close }) {
     [
       {
         title: SUMMARY_DATA.POWER_TRAIN,
-        content: data.modelType.powerTrainName,
-        price: data.price.powerTrainPrice,
+        content: data.modelType.powerTrainOption?.name,
+        price: data.modelType.powerTrainOption?.price,
       },
       {
         title: SUMMARY_DATA.BODY_TYPE,
-        content: data.modelType.bodyTypeName,
-        price: data.price.bodyTypePrice,
+        content: data.modelType.bodyTypeOption?.name,
+        price: data.modelType.bodyTypeOption?.price,
       },
       {
         title: SUMMARY_DATA.WHEEL_DRIVE,
-        content: data.modelType.wheelDriveName,
-        price: data.price.wheelDrivePrice,
+        content: data.modelType.wheelDriveOption?.name,
+        price: data.modelType.wheelDriveOption?.price,
       },
     ],
     [

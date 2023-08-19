@@ -41,6 +41,7 @@ function Pick({ selected, setSelected }) {
       ...optionPicker,
       chosenOptions: updatedChosenOptions,
       chosenOptionsData: updatedChosenOptionsData,
+      isExpend: updatedChosenOptions.length !== 0,
     };
 
     const updatedPrice = {
