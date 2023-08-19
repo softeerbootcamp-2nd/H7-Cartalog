@@ -1,28 +1,25 @@
-import { useEffect, useRef, useState } from 'react';
-import Toggle from '../../../components/Toggle';
+import { useState } from 'react';
+import { useData } from '../../../utils/Context';
 import * as S from './style';
-
-const INTERIOR_IMAGE_SRC =
-  'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade/interior/I49/img.png';
-const EXTERIOR_IMAGE_SRC =
-  'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade/exterior/A2B/001.png';
+import Toggle from '../../../components/Toggle';
 
 function Preview() {
+  const { trim, exteriorColor, interiorColor } = useData();
   const [toggle, setToggle] = useState(false);
 
   return (
     <S.Preview>
       <div>
         <S.CarInfo>
-          <div className="title">Le Blanc</div>
+          <div className="title">{trim.name}</div>
           <div className="preview">
             <img
-              src={INTERIOR_IMAGE_SRC}
+              src={interiorColor.carImageUrl}
               alt="interior"
               style={toggle ? null : { display: 'none' }}
             />
             <img
-              src={EXTERIOR_IMAGE_SRC}
+              src={`${exteriorColor.carImageDirectory}001.png`}
               alt="exterior"
               style={toggle ? { display: 'none' } : null}
             />
