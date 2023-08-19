@@ -57,6 +57,8 @@ export function StateProvider({ children }) {
           hmgData: {
             diesel: { output: null, talk: null },
             gasoline: { output: null, talk: null },
+            displacement: null,
+            fuelEfficiency: null,
           },
         };
         break;

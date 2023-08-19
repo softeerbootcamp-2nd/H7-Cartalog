@@ -52,7 +52,6 @@ function Estimation() {
   const SelectExterior = exteriorColor.fetchData.find((data) => exteriorColor.code === data.code);
   const SelectInterior = interiorColor.fetchData.find((data) => interiorColor.code === data.code);
 
-  console.log(optionPicker.isExpend);
   const DATA = [
     {
       title: ESTIMATION.DATA.MODEL_TYPE,

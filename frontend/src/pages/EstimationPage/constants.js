@@ -24,3 +24,12 @@ export const DETAIL_ITEM = {
   EDIT: '수정하기',
   WON: '원',
 };
+
+export const INFO = {
+  MENT: '합리적인 가격으로 완성된\n나만의 팰리세이드가 탄생했어요!',
+  MODEL: '모델',
+  DISPLACEMENT: '배기량',
+  FUELEFFICIENCY: '평균연비',
+  DISPLACEMENT_UNIT: 'cc',
+  FUELEFFICIENCY_UNIT: 'km/s',
+};
