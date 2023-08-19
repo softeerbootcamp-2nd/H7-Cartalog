@@ -322,10 +322,11 @@ CREATE TABLE hash_tag_similarities
 
 CREATE TABLE pending_hash_tag_similarities
 (
-    pending_hash_tag_left_key VARCHAR(255),
-    hash_tag_key              VARCHAR(255),
-    trim_id                   BIGINT,
-    PRIMARY KEY (pending_hash_tag_left_key, hash_tag_key, trim_id),
+    idx                   BIGINT AUTO_INCREMENT,
+    hash_tag_key          VARCHAR(255) NOT NULL,
+    trim_id               BIGINT       NOT NULL,
+    last_index_calculated BIGINT       NOT NULL,
+    PRIMARY KEY (idx),
     FOREIGN KEY (trim_id) REFERENCES trims (id) ON UPDATE CASCADE
 );
 
@@ -478,6 +479,6 @@ INSERT INTO hash_tag_similarities (hash_tag_left_key, hash_tag_key, trim_id, sim
 SELECT *
 FROM CSVREAD('classpath:csv/hash_tag_similarities.csv', null, 'fieldSeparator=|');
 
-INSERT INTO pending_hash_tag_similarities (pending_hash_tag_left_key, hash_tag_key, trim_id)
+INSERT INTO pending_hash_tag_similarities (idx, hash_tag_key, trim_id, last_index_calculated)
 SELECT *
 FROM CSVREAD('classpath:csv/pending_hash_tag_similarities.csv', null, 'fieldSeparator=|');
