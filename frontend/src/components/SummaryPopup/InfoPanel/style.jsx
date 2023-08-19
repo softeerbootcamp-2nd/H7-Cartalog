@@ -29,8 +29,10 @@ export const Title = styled.div`
 `;
 
 export const Content = styled.div`
+  width: 160px;
   font: ${({ theme }) => theme.font.textKR.Medium12};
   color: ${({ theme }) => theme.color.gray['900']};
+  word-break: keep-all;
 `;
 
 export const Price = styled.div`
