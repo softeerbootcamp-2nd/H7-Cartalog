@@ -119,4 +119,12 @@ public class QueryString {
             "        WHERE trims.id = :trimId AND detail_trims.id = estimates.detail_trim_id " +
             "    ) " +
             ") AS combined_price ";
+
+    protected static String findSimilarEstimateCounts =
+            "SELECT " +
+            "   hash_tag_key, " +
+            "   count(estimate_id) AS count " +
+            "FROM similar_estimates " +
+            "WHERE hash_tag_key IN (:hashTagKeys) " +
+            "GROUP BY hash_tag_key ";
 }
