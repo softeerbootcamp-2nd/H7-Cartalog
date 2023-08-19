@@ -56,20 +56,19 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
 
     @Override
     public Long findEstimateIdByEstimateDto(EstimateDto estimateDto) {
-        List<Long> selectPackageIds = estimateDto.getModelPackageIds();
-        List<Long> selectOptionIds = estimateDto.getModelOptionIds();
+        List<Long> selectPackages = estimateDto.getModelPackageIds();
+        List<Long> selectOptions = estimateDto.getModelOptionIds();
 
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("detailTrimId", estimateDto.getDetailTrimId())
-                .addValue("exteriorColorCode", estimateDto.getTrimExteriorColorId())
-                .addValue("interiorColorCode", estimateDto.getTrimInteriorColorId())
-                .addValue("selectPackageIds", selectPackageIds)
-                .addValue("selectOptionIds", selectOptionIds)
-                .addValue("countOfPackages", selectPackageIds.size())
-                .addValue("countOfOptions", selectOptionIds.size())
-                .addValue("countOfSumPackages", selectPackageIds.size() * Math.max(selectOptionIds.size(), 1))
-                .addValue("countOfSumOptions", Math.max(selectPackageIds.size(), 1) * selectOptionIds.size());
-
+                .addValue("trimExteriorColorId", estimateDto.getTrimExteriorColorId())
+                .addValue("trimInteriorColorId", estimateDto.getTrimInteriorColorId())
+                .addValue("selectPackageIds", selectPackages)
+                .addValue("selectOptionIds", selectOptions)
+                .addValue("countOfPackages", selectPackages.size())
+                .addValue("countOfOptions", selectOptions.size())
+                .addValue("countOfSumPackages", selectPackages.size() * Math.max(selectOptions.size(), 1))
+                .addValue("countOfSumOptions", Math.max(selectPackages.size(), 1) * selectOptions.size());
         try {
             return jdbcTemplate.queryForObject(QueryString.findEstimateIdByEstimateDto, parameters, Long.class);
         } catch (EmptyResultDataAccessException exception) {

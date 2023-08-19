@@ -123,20 +123,13 @@ public class QueryString {
     protected static final String findEstimateIdByEstimateDto =
             "SELECT estimates.id " +
             "FROM   estimates " +
-            "       INNER JOIN trim_exterior_colors " +
-            "               ON estimates.trim_exterior_color_id = trim_exterior_colors.id " +
-            "       INNER JOIN model_exterior_colors " +
-            "               ON trim_exterior_colors.model_exterior_color_id = " +
-            "                  model_exterior_colors.id " +
-            "       INNER JOIN trim_interior_colors " +
-            "               ON estimates.trim_interior_color_id = trim_interior_colors.id " +
             "       LEFT JOIN estimate_packages " +
             "              ON estimates.id = estimate_packages.estimate_id " +
             "       LEFT JOIN estimate_options " +
             "              ON estimates.id = estimate_options.estimate_id " +
             "WHERE  detail_trim_id = :detailTrimId " +
-            "       AND model_exterior_colors.color_code = :exteriorColorCode " +
-            "       AND trim_interior_colors.model_interior_color_code = :interiorColorCode " +
+            "       AND estimates.trim_exterior_color_id = :trimExteriorColorId " +
+            "       AND estimates.trim_interior_color_id = :trimInteriorColorId " +
             "GROUP  BY estimates.id " +
             "HAVING Count(DISTINCT model_package_id) = :countOfPackages " +
             "       AND Sum(CASE " +
