@@ -15,6 +15,7 @@ import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
 import softeer.wantcar.cartalog.estimate.service.EstimateService;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
@@ -82,11 +83,9 @@ class EstimateControllerTest {
             when(estimateService.saveOrFindEstimateId(any())).thenThrow(IllegalArgumentException.class);
 
             //when
-            ResponseEntity<Long> response = estimateController.registerOrGetEstimate(requestDto);
-
             //then
-            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-            assertThat(response.getBody()).isNull();
+            assertThatThrownBy(() -> estimateController.registerOrGetEstimate(requestDto))
+                    .isInstanceOf(IllegalArgumentException.class);
         }
     }
 }

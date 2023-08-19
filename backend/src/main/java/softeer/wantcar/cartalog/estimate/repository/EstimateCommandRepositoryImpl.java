@@ -51,7 +51,7 @@ public class EstimateCommandRepositoryImpl implements EstimateCommandRepository 
 
     private void saveEstimateOptions(List<Long> optionIds, Long nextId) {
         SqlParameterSource[] parameters = getBatchInsertParameters(optionIds, "optionId", nextId);
-        jdbcTemplate.batchUpdate("INSERT INTO estimate_options VALUES ( :nextId, :packageId ) ", parameters);
+        jdbcTemplate.batchUpdate("INSERT INTO estimate_options VALUES ( :nextId, :optionId ) ", parameters);
     }
 
 
