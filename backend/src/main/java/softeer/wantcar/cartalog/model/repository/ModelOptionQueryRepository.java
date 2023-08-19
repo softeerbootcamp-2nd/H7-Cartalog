@@ -9,4 +9,8 @@ public interface ModelOptionQueryRepository {
     ModelTypeListResponseDto findByModelTypeOptionsByTrimId(Long trimId);
 
     List<String> findModelTypeCategoriesByIds(List<Long> modelTypeIds);
+
+    List<String> findHashTagFromOptionsByOptionIds(List<Long> optionIds);
+
+    List<String> findHashTagFromPackagesByPackageIds(List<Long> packageIds);
 }

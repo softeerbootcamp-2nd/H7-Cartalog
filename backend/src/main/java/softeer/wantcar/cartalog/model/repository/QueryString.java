@@ -32,4 +32,18 @@ public class QueryString {
             "FROM model_exterior_colors AS mec " +
             "JOIN model_interior_colors AS mic ON mic.code= :interiorColorCode " +
             "WHERE mec.color_code= :exteriorColorCode ";
+
+    protected static final String findHashTagFromOptionsByOptionIds =
+            "SELECT " +
+            "   moht.hash_tag " +
+            "FROM model_options AS mo " +
+            "JOIN model_option_hash_tags AS moht ON moht.model_option_id=mo.id " +
+            "WHERE mo.id IN (:optionIds) ";
+
+    protected static final String findHashTagFromPackagesByPackageIds =
+            "SELECT " +
+            "   mpht.hash_tag " +
+            "FROM model_packages AS mp " +
+            "JOIN model_package_hash_tags AS mpht ON mpht.model_package_id=mp.id " +
+            "WHERE mp.id IN (:packageIds) ";
 }

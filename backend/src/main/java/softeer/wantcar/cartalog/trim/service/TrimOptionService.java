@@ -6,6 +6,8 @@ import softeer.wantcar.cartalog.trim.dto.TrimPackageDetailResponseDto;
 
 public interface TrimOptionService {
     TrimOptionListResponseDto getTrimOptionList(Long detailTrimId, String interiorColorCode);
+
     TrimOptionDetailResponseDto getTrimOptionDetail(Long detailTrimOptionId);
+
     TrimPackageDetailResponseDto getTrimPackageDetail(Long packageId);
 }
