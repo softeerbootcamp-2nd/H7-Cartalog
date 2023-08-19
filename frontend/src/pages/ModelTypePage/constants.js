@@ -27,4 +27,6 @@ export const HMG_TAG = {
 
 export const HMG_CHART = {
   DIVIDE: '/',
+  OUTPUT: '최대출력',
+  TALK: '최대토크',
 };

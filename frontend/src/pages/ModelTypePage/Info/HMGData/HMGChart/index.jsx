@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react';
 import { HMG_CHART } from '../../../constants';
+import { useData } from '../../../../../utils/Context';
 import * as S from './style';
 
 /**
@@ -10,8 +12,28 @@ import * as S from './style';
  * @returns
  */
 function HMGChart({ name, measure, rpm, value }) {
-  // !FIXME 최고출력, 최대토크 그래프 width 수정
-  const chartProps = { value };
+  const { modelType } = useData();
+  const [chartValue, setChartValue] = useState(0);
+  const chartProps = { chartValue };
+
+  useEffect(() => {
+    let ratio;
+
+    if (name === HMG_CHART.OUTPUT) {
+      ratio =
+        modelType.powerTrainId === 1
+          ? modelType.hmgData.diesel.output / modelType.hmgData.gasoline.output
+          : modelType.hmgData.gasoline.output / modelType.hmgData.diesel.output;
+    }
+    if (name === HMG_CHART.TALK) {
+      ratio =
+        modelType.powerTrainId === 1
+          ? modelType.hmgData.diesel.talk / modelType.hmgData.gasoline.talk
+          : modelType.hmgData.gasoline.talk / modelType.hmgData.diesel.talk;
+    }
+
+    setChartValue(Math.min(ratio * 200, 200));
+  }, [modelType.powerTrainId]);
 
   return (
     <S.HMGChart>

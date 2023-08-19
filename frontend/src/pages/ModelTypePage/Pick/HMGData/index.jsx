@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useData } from '../../../../utils/Context';
 import { HMG_DATA, HMG_TAG } from '../../constants';
 import * as S from './style';
@@ -7,45 +7,40 @@ import HMGUnit from './HMGUnit';
 
 function HMGData() {
   const { setTrimState, trim, modelType } = useData();
-  const [hmgData, setHmgData] = useState({
-    displacement: '',
-    fuelEfficiency: '',
-  });
 
   useEffect(() => {
     async function fetchData() {
-      if (trim.isDefault) {
-        const response = await fetch(
-          `http://3.36.126.30/models/trims/detail?modelTypeIds=${modelType.powerTrainId}&modelTypeIds=${modelType.bodyTypeId}&modelTypeIds=${modelType.wheelDriveId}&trimId=${trim.id}`,
-        );
-        const dataFetch = await response.json();
+      if (!trim.isDefault) return;
+      const response = await fetch(
+        `http://3.36.126.30/models/trims/detail?modelTypeIds=${modelType.powerTrainId}&modelTypeIds=${modelType.bodyTypeId}&modelTypeIds=${modelType.wheelDriveId}&trimId=${trim.id}`,
+      );
+      const dataFetch = await response.json();
 
-        setTrimState((prevState) => ({
-          ...prevState,
-          modelType: {
-            ...prevState.modelType,
-            detailTrimId: dataFetch.detailTrimId,
+      setTrimState((prevState) => ({
+        ...prevState,
+        modelType: {
+          ...prevState.modelType,
+          detailTrimId: dataFetch.detailTrimId,
+          hmgData: {
+            ...prevState.modelType.hmgData,
+            displacement: dataFetch.displacement,
+            fuelEfficiency: dataFetch.fuelEfficiency,
           },
-        }));
-
-        setHmgData({
-          displacement: dataFetch.displacement,
-          fuelEfficiency: dataFetch.fuelEfficiency,
-        });
-      }
+        },
+      }));
     }
 
     fetchData();
-  }, [trim.isDefault]);
+  }, [trim.isDefault, modelType.powerTrainId, modelType.wheelDriveId]);
 
   const tagProps = { type: HMG_TAG.TYPE };
   const displacementProps = {
     title: HMG_DATA.DISPLACEMENT,
-    unit: `${hmgData.displacement.toLocaleString('ko-KR')}${HMG_DATA.DISPLACEMENT_UNIT}`,
+    unit: `${modelType.hmgData.displacement?.toLocaleString('ko-KR')}${HMG_DATA.DISPLACEMENT_UNIT}`,
   };
   const fuelEfficiencyProps = {
     title: HMG_DATA.FUELEFFICIENCY,
-    unit: `${hmgData.fuelEfficiency}${HMG_DATA.FUELEFFICIENCY_UNIT}`,
+    unit: `${modelType.hmgData?.fuelEfficiency}${HMG_DATA.FUELEFFICIENCY_UNIT}`,
   };
 
   return trim.isDefault ? (

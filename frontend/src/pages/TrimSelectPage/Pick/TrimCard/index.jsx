@@ -19,6 +19,7 @@ function TrimCard({ name, description, minPrice, maxPrice, defaultInfo, active, 
         budget: (minPrice + maxPrice) / 2,
         trim: {
           ...prevState.trim,
+          name,
           minPrice,
           maxPrice,
         },
@@ -32,10 +33,12 @@ function TrimCard({ name, description, minPrice, maxPrice, defaultInfo, active, 
         exteriorColor: {
           ...prevState.exteriorColor,
           code: exteriorColor.code,
+          name: exteriorColor.name,
         },
         interiorColor: {
           ...prevState.interiorColor,
           code: interiorColor.code,
+          name: interiorColor.name,
         },
         price: {
           ...prevState.price,
@@ -43,6 +46,8 @@ function TrimCard({ name, description, minPrice, maxPrice, defaultInfo, active, 
           powerTrainPrice: powerTrainType.option.price,
           bodyTypePrice: bodyType.option.price,
           wheelDrivePrice: wheelDriveType.option.price,
+          exteriorColorPrice: exteriorColor.price,
+          interiorColorPrice: interiorColor.price,
         },
       }));
     }

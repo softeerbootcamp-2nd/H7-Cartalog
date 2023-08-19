@@ -1,29 +1,30 @@
-import Summary from './Summary';
+import { useData } from '../../../utils/Context';
+import { INFO } from '../constants';
 import * as S from './style';
-
-const TRIM_DATA = [
-  {
-    title: '모델',
-    name: 'Le Blanc (르블랑)',
-  },
-  {
-    title: '평균연비',
-    name: '10.5km/l',
-  },
-  {
-    title: '배기량',
-    name: '2,199cc',
-  },
-];
+import Summary from './Summary';
 
 function Info() {
+  const { trim, modelType } = useData();
+
+  const TRIM_DATA = [
+    {
+      title: INFO.MODEL,
+      name: trim.name,
+    },
+    {
+      title: INFO.DISPLACEMENT,
+      name: `${modelType.hmgData.displacement.toLocaleString('ko-KR')}${INFO.DISPLACEMENT_UNIT}`,
+    },
+    {
+      title: INFO.FUELEFFICIENCY,
+      name: `${modelType.hmgData.fuelEfficiency}${INFO.FUELEFFICIENCY_UNIT}`,
+    },
+  ];
+
   return (
     <S.InfoWrapper>
       <S.Info>
-        <div>
-          합리적인 가격으로 완성된
-          <br /> 나만의 팰리세이드가 탄생했어요!
-        </div>
+        <div>{INFO.MENT}</div>
         <Summary data={TRIM_DATA} />
       </S.Info>
     </S.InfoWrapper>

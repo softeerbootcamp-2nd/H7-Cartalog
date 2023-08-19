@@ -33,9 +33,15 @@ function Pick({ selected, setSelected }) {
     const updatedChosenOptions = chosen
       ? optionPicker.chosenOptions.filter((chosenOption) => chosenOption !== option.id)
       : [...optionPicker.chosenOptions, option.id];
+    const updatedChosenOptionsData = updatedChosenOptions.map((chosenOption) =>
+      optionPicker.selectOptions.find((selectOption) => selectOption.id === chosenOption),
+    );
+
     const updatedOptionPicker = {
       ...optionPicker,
       chosenOptions: updatedChosenOptions,
+      chosenOptionsData: updatedChosenOptionsData,
+      isExpend: updatedChosenOptions.length !== 0,
     };
 
     const updatedPrice = {

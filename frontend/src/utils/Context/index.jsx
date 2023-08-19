@@ -36,6 +36,7 @@ export function StateProvider({ children }) {
           minPrice: null,
           maxPrice: null,
           id: 2,
+          name: null,
         };
         break;
       case 'modelType':
@@ -53,6 +54,12 @@ export function StateProvider({ children }) {
           powerTrainOption: null,
           bodyTypeOption: null,
           wheelDriveOption: null,
+          hmgData: {
+            diesel: { output: null, talk: null },
+            gasoline: { output: null, talk: null },
+            displacement: null,
+            fuelEfficiency: null,
+          },
         };
         break;
       case 'exteriorColor':
@@ -85,10 +92,12 @@ export function StateProvider({ children }) {
         acc[key] = {
           fetchData: [],
           isFetch: false,
+          isExpend: false,
           defaultOptions: [],
           selectOptions: [],
           category: [],
           chosenOptions: [],
+          chosenOptionsData: [],
         };
         break;
       case 'estimation':
@@ -102,6 +111,13 @@ export function StateProvider({ children }) {
             'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade/le-blanc/options/10_driverseat_s.jpg',
         };
         break;
+      case 'summary':
+        acc[key] = {
+          sideImage: '',
+          interiorImage: '',
+        };
+        break;
+
       default:
         acc[key] = null; // 다른 키들은 null로 초기화
     }

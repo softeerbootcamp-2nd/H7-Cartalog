@@ -29,6 +29,7 @@ export const MainTitle = styled.h1`
 export const Info = styled.h2`
   margin-top: 8px;
   white-space: pre-line;
+  word-break: keep-all;
   ${({ type, theme }) => {
     if (type === 'light') return `color: ${theme.color.white}`;
     if (type === 'dark') return `color: ${theme.color.gray['800']}`;
