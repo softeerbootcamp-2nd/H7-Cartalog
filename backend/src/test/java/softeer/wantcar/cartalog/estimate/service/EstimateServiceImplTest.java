@@ -42,7 +42,7 @@ class EstimateServiceImplTest {
             //given
             Long estimateId = 1L;
             EstimateRequestDto requestDto = mock(EstimateRequestDto.class);
-            when(estimateQueryRepository.findEstimateIdByRequestDto(any())).thenReturn(estimateId);
+            when(estimateQueryRepository.findEstimateIdByEstimateDto(any())).thenReturn(estimateId);
 
             //when
             Long result = estimateService.saveOrFindEstimateId(requestDto);
@@ -57,14 +57,14 @@ class EstimateServiceImplTest {
             //given
             Long estimateId = 1L;
             EstimateRequestDto requestDto = mock(EstimateRequestDto.class);
-            when(estimateQueryRepository.findEstimateIdByRequestDto(any())).thenReturn(null).thenReturn(estimateId);
+            when(estimateQueryRepository.findEstimateIdByEstimateDto(any())).thenReturn(null).thenReturn(estimateId);
 
             //when
             Long result = estimateService.saveOrFindEstimateId(requestDto);
 
             //then
             verify(estimateCommandRepository, times(1)).save(any());
-            verify(estimateQueryRepository, times(2)).findEstimateIdByRequestDto(any());
+            verify(estimateQueryRepository, times(2)).findEstimateIdByEstimateDto(any());
             assertThat(result).isEqualTo(estimateId);
         }
 
@@ -74,14 +74,14 @@ class EstimateServiceImplTest {
             //given
             Long estimateId = 1L;
             EstimateRequestDto requestDto = mock(EstimateRequestDto.class);
-            when(estimateQueryRepository.findEstimateIdByRequestDto(any())).thenReturn(null).thenReturn(estimateId);
+            when(estimateQueryRepository.findEstimateIdByEstimateDto(any())).thenReturn(null).thenReturn(estimateId);
 
             //when
             Long result = estimateService.saveOrFindEstimateId(requestDto);
 
             //then
             verify(estimateCommandRepository, times(1)).save(any());
-            verify(estimateQueryRepository, times(2)).findEstimateIdByRequestDto(any());
+            verify(estimateQueryRepository, times(2)).findEstimateIdByEstimateDto(any());
             assertThat(result).isEqualTo(estimateId);
         }
     }

@@ -48,7 +48,7 @@ class EstimateCommandRepositoryImplTest {
             estimateCommandRepository.save(request);
 
             //then
-            Long estimateId = estimateQueryRepository.findEstimateIdByRequestDto(request);
+            Long estimateId = estimateQueryRepository.findEstimateIdByEstimateDto(request);
             assertThat(estimateId).isNotNull();
         }
     }

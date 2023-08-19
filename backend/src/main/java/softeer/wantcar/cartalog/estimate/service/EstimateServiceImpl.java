@@ -14,7 +14,6 @@ import softeer.wantcar.cartalog.trim.repository.TrimColorQueryRepository;
 import softeer.wantcar.cartalog.trim.repository.TrimQueryRepository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -35,7 +34,7 @@ public class EstimateServiceImpl implements EstimateService {
         Long trimId = trimQueryRepository.findTrimIdByDetailTrimId(estimateRequestDto.getDetailTrimId());
         EstimateDto estimateDto = buildEstimateDao(trimId, estimateRequestDto, selectPackages, selectOptions);
 
-        Long estimateId = estimateQueryRepository.findEstimateIdByRequestDto(estimateDto);
+        Long estimateId = estimateQueryRepository.findEstimateIdByEstimateDto(estimateDto);
         if (estimateId != null) {
             return estimateId;
         }
@@ -54,7 +53,7 @@ public class EstimateServiceImpl implements EstimateService {
             throw new IllegalArgumentException();
         }
 
-        return estimateQueryRepository.findEstimateIdByRequestDto(estimateDto);
+        return estimateQueryRepository.findEstimateIdByEstimateDto(estimateDto);
     }
 
     private EstimateDto buildEstimateDao(Long trimId, EstimateRequestDto estimateRequestDto, List<Long> selectPackages, List<Long> selectOptions) {

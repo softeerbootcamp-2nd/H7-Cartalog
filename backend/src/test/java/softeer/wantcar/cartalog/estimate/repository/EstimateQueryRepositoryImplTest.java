@@ -79,7 +79,7 @@ class EstimateQueryRepositoryImplTest {
                     .build();
 
             //when
-            Long estimateId = estimateQueryRepository.findEstimateIdByRequestDto(dto);
+            Long estimateId = estimateQueryRepository.findEstimateIdByEstimateDto(dto);
 
             //then
             assertThat(estimateId).isEqualTo(721L);
@@ -98,7 +98,7 @@ class EstimateQueryRepositoryImplTest {
                     .build();
 
             //when
-            Long estimateId = estimateQueryRepository.findEstimateIdByRequestDto(dto);
+            Long estimateId = estimateQueryRepository.findEstimateIdByEstimateDto(dto);
 
             //then
             assertThat(estimateId).isEqualTo(null);
@@ -117,7 +117,7 @@ class EstimateQueryRepositoryImplTest {
                     .build();
 
             //when
-            Long estimateId = estimateQueryRepository.findEstimateIdByRequestDto(dto);
+            Long estimateId = estimateQueryRepository.findEstimateIdByEstimateDto(dto);
 
             //then
             assertThat(estimateId).isEqualTo(450L);
@@ -136,7 +136,7 @@ class EstimateQueryRepositoryImplTest {
                     .build();
 
             //when
-            Long estimateId = estimateQueryRepository.findEstimateIdByRequestDto(dto);
+            Long estimateId = estimateQueryRepository.findEstimateIdByEstimateDto(dto);
 
             //then
             assertThat(estimateId).isEqualTo(253L);
@@ -155,7 +155,7 @@ class EstimateQueryRepositoryImplTest {
                     .build();
 
             //when
-            Long estimateId = estimateQueryRepository.findEstimateIdByRequestDto(dto);
+            Long estimateId = estimateQueryRepository.findEstimateIdByEstimateDto(dto);
 
             //then
             assertThat(estimateId).isEqualTo(256L);
