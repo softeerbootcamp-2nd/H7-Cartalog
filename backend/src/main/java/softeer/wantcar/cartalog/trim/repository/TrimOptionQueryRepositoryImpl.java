@@ -139,12 +139,12 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
                 .addValue("packageId", packageId);
 
         String getTrimOptionsSQL = "SELECT " +
-                "   model_option_id " +
-                "FROM detail_trim_options INNER JOIN trim_package_options " +
-                "   ON detail_trim_options.id = trim_package_options.detail_trim_option_id " +
-                "INNER JOIN model_options " +
-                "   ON detail_trim_options.model_option_id = model_options.id " +
-                "WHERE  trim_package_options.trim_package_id = :packageId";
+                                   "   model_option_id " +
+                                   "FROM detail_trim_options INNER JOIN trim_package_options " +
+                                   "   ON detail_trim_options.id = trim_package_options.detail_trim_option_id " +
+                                   "INNER JOIN model_options " +
+                                   "   ON detail_trim_options.model_option_id = model_options.id " +
+                                   "WHERE  trim_package_options.trim_package_id = :packageId";
 
         return jdbcTemplate.queryForList(getTrimOptionsSQL, parameters, Long.class);
 

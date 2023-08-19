@@ -3,6 +3,7 @@ package softeer.wantcar.cartalog.estimate.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateCountResponseDto;
 import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateDto;
 import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateResponseDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
@@ -15,6 +16,7 @@ import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,6 +42,38 @@ public class SimilarityServiceImpl implements SimilarityService {
         Map<Long, List<EstimateOptionInfoDto>> estimateOptionInfos = getEstimateOptionInfos(similarEstimateIds);
 
         return getSimilarEstimateResponseDto(estimateOptionIds.getAllOptionIds(), estimateInfos, estimateOptionInfos);
+    }
+
+    @Override
+    public SimilarEstimateCountResponseDto getSimilarEstimateCounts(Long estimateId) {
+        EstimateOptionListDto estimateOptionListDto = estimateQueryRepository.findEstimateOptionIdsByEstimateId(estimateId);
+        if (estimateOptionListDto == null) {
+            throw new IllegalArgumentException();
+        }
+        List<String> totalHashTags = getTotalHashTags(estimateOptionListDto);
+        List<Long> estimateIds = getSimilarEstimateIds(estimateOptionListDto.getTrimId(), totalHashTags);
+        estimateIds.add(estimateId);
+
+        List<EstimateCountDto> estimateCounts = estimateQueryRepository.findEstimateCounts(estimateIds);
+
+        Long myEstimateCount = getMyEstimateCount(estimateId, estimateCounts);
+        return SimilarEstimateCountResponseDto.builder()
+                .myEstimateCount(myEstimateCount)
+                .similarEstimateCounts(getSimilarEstimateCounts(estimateId, estimateCounts))
+                .build();
+    }
+
+    private static Long getMyEstimateCount(Long estimateId, List<EstimateCountDto> estimateCounts) {
+        return estimateCounts.stream()
+                .filter(estimateCountDto -> Objects.equals(estimateCountDto.getEstimateId(), estimateId))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new).getCount();
+    }
+
+    private static List<EstimateCountDto> getSimilarEstimateCounts(Long estimateId, List<EstimateCountDto> estimateCounts) {
+        return estimateCounts.stream()
+                .filter(estimateCountDto -> !Objects.equals(estimateCountDto.getEstimateId(), estimateId))
+                .collect(Collectors.toList());
     }
 
     private List<String> getTotalHashTags(EstimateOptionListDto estimateOptionListDto) {

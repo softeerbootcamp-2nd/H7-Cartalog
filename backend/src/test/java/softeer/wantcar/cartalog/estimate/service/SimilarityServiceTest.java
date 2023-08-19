@@ -5,15 +5,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateCountResponseDto;
 import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateDto;
 import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateResponseDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
 import softeer.wantcar.cartalog.estimate.repository.SimilarityCommandRepository;
 import softeer.wantcar.cartalog.estimate.repository.SimilarityQueryRepository;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateInfoDto;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionInfoDto;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionListDto;
-import softeer.wantcar.cartalog.estimate.repository.dto.HashTagMap;
+import softeer.wantcar.cartalog.estimate.repository.dto.*;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 
 import java.util.ArrayList;
@@ -21,6 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -116,6 +115,48 @@ class SimilarityServiceTest {
                     .thenReturn(List.of("a:1|b:1", "b:1|c:1", "c:1|d:1"));
             when(similarityQueryRepository.findSimilarEstimateIdsByTrimIdAndHashTagKey(anyLong(), anyList()))
                     .thenReturn(List.of(1L, 2L, 3L));
+        }
+    }
+    
+    @Nested
+    @DisplayName("getSimilarEstimateCounts 테스트")
+    class getSimilarEstimateCounts {
+        @Test
+        @DisplayName("존재하는 견적 식별자를 제공할 경우 해당 견적의 개수와 유사 견적의 개수들을 반환한다")
+        void returnEstimateCounts() {
+            //given
+            when(estimateQueryRepository.findEstimateOptionIdsByEstimateId(anyLong()))
+                    .thenReturn(new EstimateOptionListDto(1L, List.of(1L, 2L), List.of(1L, 2L)));
+            when(estimateQueryRepository.findEstimateCounts(anyList()))
+                    .thenReturn(List.of(new EstimateCountDto(1L, 1L),
+                            new EstimateCountDto(2L, 2L),
+                            new EstimateCountDto(3L, 2L)));
+            
+            //when
+            SimilarEstimateCountResponseDto estimateCounts =
+                    similarityService.getSimilarEstimateCounts(1L);
+
+            //then
+            softAssertions.assertThat(estimateCounts.getMyEstimateCount())
+                    .isEqualTo(1L);
+            List<EstimateCountDto> similarEstimateCounts = estimateCounts.getSimilarEstimateCounts();
+            for (EstimateCountDto similarEstimateCount : similarEstimateCounts) {
+                softAssertions.assertThat(similarEstimateCount.getCount()).isEqualTo(2L);
+            }
+            softAssertions.assertAll();
+        }
+
+        @Test
+        @DisplayName("존재하지 않는 견적 식별자를 제공할 경우 IllegalArgumentException 예외를 발생시킨다")
+        void throwIllegalArgumentException() {
+            //given
+            when(estimateQueryRepository.findEstimateOptionIdsByEstimateId(anyLong()))
+                    .thenReturn(null);
+
+            //when
+            //then
+            assertThatThrownBy(() -> similarityService.getSimilarEstimateCounts(1L))
+                    .isInstanceOf(IllegalArgumentException.class);
         }
     }
 

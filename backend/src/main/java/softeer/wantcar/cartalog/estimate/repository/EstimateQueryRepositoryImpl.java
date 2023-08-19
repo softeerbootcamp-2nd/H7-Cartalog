@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateCountDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionListDto;
 import softeer.wantcar.cartalog.estimate.service.dto.EstimateDto;
 import softeer.wantcar.cartalog.global.utils.RowMapperUtils;
@@ -52,6 +53,14 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("trimId", trimId);
         return jdbcTemplate.queryForObject(QueryString.findAveragePrice, parameters, Long.class);
+    }
+
+    @Override
+    public List<EstimateCountDto> findEstimateCounts(List<Long> estimateIds) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("estimateIds", estimateIds);
+        return jdbcTemplate.query(QueryString.findEstimateCounts,
+                parameters, RowMapperUtils.mapping(EstimateCountDto.class));
     }
 
     @Override

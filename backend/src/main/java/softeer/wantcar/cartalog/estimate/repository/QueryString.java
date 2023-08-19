@@ -120,6 +120,14 @@ public class QueryString {
             "    ) " +
             ") AS combined_price ";
 
+    public static final String findEstimateCounts =
+            "SELECT " +
+            "   estimate_id, " +
+            "   count(estimate_id) AS count " +
+            "FROM similar_estimates " +
+            "WHERE estimate_id IN (:estimateIds) " +
+            "GROUP BY estimate_id ";
+
     protected static final String findEstimateIdByEstimateDto =
             "SELECT estimates.id " +
             "FROM   estimates " +
