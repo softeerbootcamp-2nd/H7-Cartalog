@@ -20,8 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -107,7 +106,10 @@ class SimilarityServiceTest {
                     .thenReturn(List.of(new EstimateCountDto(1L, 1L),
                             new EstimateCountDto(2L, 2L),
                             new EstimateCountDto(3L, 2L)));
-
+            when(similarityQueryRepository.existHashTagKey(anyLong(), anyString()))
+                    .thenReturn(false);
+            when(similarityQueryRepository.findSimilarEstimateIds(anyLong(), anyList()))
+                    .thenReturn(List.of(1L, 2L, 3L));
             //when
             SimilarEstimateCountResponseDto estimateCounts =
                     similarityService.getSimilarEstimateCounts(1L);
