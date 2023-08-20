@@ -77,11 +77,8 @@ public class SimilarityServiceImpl implements SimilarityService {
 
     @Override
     public void updateHashTagSimilarities(Long trimId, String hashTagKey) {
-        boolean exist = similarityQueryRepository.existHashTagKey(trimId, hashTagKey);
 
-        List<PendingHashTagMap> pendingHashTagMaps = exist ?
-                similarityQueryRepository.findPendingHashTagKeys(trimId, hashTagKey) :
-                similarityQueryRepository.findAllHashTagKeys(trimId);
+        List<PendingHashTagMap> pendingHashTagMaps = similarityQueryRepository.findPendingHashTagKeys(trimId, hashTagKey);
 
         List<SimilarityInfo> pendingSimilarities = pendingHashTagMaps.stream()
                 .map(hashTagMap -> SimilarityInfo.builder()
@@ -95,24 +92,18 @@ public class SimilarityServiceImpl implements SimilarityService {
                 .max()
                 .orElse(0);
 
-        if (exist) {
-            similarityCommandRepository.updateLastCalculatedIndex(trimId, hashTagKey, lastIndex);
+        similarityCommandRepository.updateLastCalculatedIndex(trimId, hashTagKey, lastIndex);
 
-            List<SimilarityInfo> beforeSimilarities = similarityQueryRepository.findSimilarities(trimId, hashTagKey);
-            beforeSimilarities.addAll(pendingSimilarities);
-            List<SimilarityInfo> newSimilarities = beforeSimilarities.stream()
-                    .filter(similarityInfo -> similarityInfo.getSimilarity() < 0.9 && similarityInfo.getSimilarity() > 0.2)
-                    .sorted(Comparator.comparing(SimilarityInfo::getSimilarity, Comparator.reverseOrder()))
-                    .limit(4)
-                    .collect(Collectors.toList());
+        List<SimilarityInfo> beforeSimilarities = similarityQueryRepository.findSimilarities(trimId, hashTagKey);
+        beforeSimilarities.addAll(pendingSimilarities);
+        List<SimilarityInfo> newSimilarities = beforeSimilarities.stream()
+                .filter(similarityInfo -> similarityInfo.getSimilarity() < 0.9 && similarityInfo.getSimilarity() > 0.2)
+                .sorted(Comparator.comparing(SimilarityInfo::getSimilarity, Comparator.reverseOrder()))
+                .limit(4)
+                .collect(Collectors.toList());
 
-            similarityCommandRepository.deleteSimilarities(trimId, hashTagKey);
-            similarityCommandRepository.saveSimilarities(trimId, hashTagKey, newSimilarities);
-            return;
-        }
-
-        similarityCommandRepository.saveHashTagKey(trimId, hashTagKey, lastIndex);
-        similarityCommandRepository.saveSimilarities(trimId, hashTagKey, pendingSimilarities);
+        similarityCommandRepository.deleteSimilarities(trimId, hashTagKey);
+        similarityCommandRepository.saveSimilarities(trimId, hashTagKey, newSimilarities);
     }
 
     private static Long getMyEstimateCount(Long estimateId, List<EstimateCountDto> estimateCounts) {

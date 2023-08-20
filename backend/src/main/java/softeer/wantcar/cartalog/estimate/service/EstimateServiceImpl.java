@@ -9,6 +9,8 @@ import softeer.wantcar.cartalog.estimate.dto.EstimateRequestDto;
 import softeer.wantcar.cartalog.estimate.dto.EstimateResponseDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateCommandRepository;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
+import softeer.wantcar.cartalog.estimate.repository.SimilarityCommandRepository;
+import softeer.wantcar.cartalog.estimate.repository.SimilarityQueryRepository;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionIdListDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateShareInfoDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.PendingHashTagMap;
@@ -33,7 +35,8 @@ public class EstimateServiceImpl implements EstimateService {
     private final TrimColorQueryRepository trimColorQueryRepository;
     private final TrimQueryRepository trimQueryRepository;
     private final ModelOptionQueryRepository modelOptionQueryRepository;
-    private final SimilarityService similarityService;
+    private final SimilarityQueryRepository similarityQueryRepository;
+    private final SimilarityCommandRepository similarityCommandRepository;
     private final TrimOptionQueryRepository trimOptionQueryRepository;
 
     @Override
@@ -52,7 +55,9 @@ public class EstimateServiceImpl implements EstimateService {
         try {
             estimateCommandRepository.save(estimateDto);
             String hashTagKey = PendingHashTagMap.getHashTagKey(getTotalHashTags(estimateDto));
-            similarityService.updateHashTagSimilarities(trimId, hashTagKey);
+            if(!similarityQueryRepository.existHashTagKey(trimId, hashTagKey)) {
+                similarityCommandRepository.saveHashTagKey(trimId, hashTagKey, 0);
+            }
         } catch (DataAccessException exception) {
             throw new IllegalArgumentException();
         }
