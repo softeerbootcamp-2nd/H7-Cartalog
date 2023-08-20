@@ -75,7 +75,7 @@ public class EstimateServiceImpl implements EstimateService {
         }
 
         List<Long> estimateModelOptionIds = estimateQueryRepository.findEstimateModelOptionIdsByEstimateId(estimateId);
-        EstimateOptionIdListDto estimateOptionIdsByEstimateId = estimateQueryRepository.findEstimateOptionIdsByEstimateId(estimateId);
+        EstimateOptionIdListDto estimateOptionIds = estimateQueryRepository.findEstimateOptionIdsByEstimateId(estimateId);
 
         EstimateResponseDto.EstimateResponseDtoBuilder builder = EstimateResponseDto.builder()
                 .trimId(estimateShareInfo.getTrimId())
@@ -99,13 +99,13 @@ public class EstimateServiceImpl implements EstimateService {
                 .interiorCarImageUrl(estimateShareInfo.getInteriorColorImageUrl());
 
 
-        List<Long> allOptionIds = new ArrayList<>(estimateModelOptionIds);
-        allOptionIds.addAll(estimateOptionIdsByEstimateId.getOptionIds());
+        List<OptionPackageInfoDto> modelOptionInfos =
+                trimOptionQueryRepository.findOptionPackageInfoByOptionPackageIds(estimateModelOptionIds, null);
 
-        List<OptionPackageInfoDto> optionPackageInfos = trimOptionQueryRepository.findOptionPackageInfoByOptionPackageIds(allOptionIds, estimateOptionIdsByEstimateId.getPackageIds());
+        List<OptionPackageInfoDto> selectOptionPackageInfos =
+                trimOptionQueryRepository.findOptionPackageInfoByOptionPackageIds(estimateOptionIds.getOptionIds(), estimateOptionIds.getPackageIds());
 
-        optionPackageInfos.stream()
-                .filter(infoDto -> estimateModelOptionIds.contains(infoDto.getId()))
+        modelOptionInfos
                 .forEach(infoDto -> builder.modelOption(EstimateResponseDto.OptionPackageDto.builder()
                         .id("O" + infoDto.getId())
                         .childCategory(infoDto.getChildCategory())
@@ -114,8 +114,9 @@ public class EstimateServiceImpl implements EstimateService {
                         .build())
                 );
 
-        optionPackageInfos.stream()
-                .filter(infoDto -> estimateOptionIdsByEstimateId.getOptionIds().contains(infoDto.getId()))
+
+        selectOptionPackageInfos.stream()
+                .filter(infoDto -> estimateOptionIds.getOptionIds().contains(infoDto.getId()))
                 .forEach(infoDto -> builder.selectOptionOrPackage(EstimateResponseDto.OptionPackageDto.builder()
                         .id("O" + infoDto.getId())
                         .childCategory(infoDto.getChildCategory())
@@ -125,8 +126,8 @@ public class EstimateServiceImpl implements EstimateService {
                 );
 
 
-        optionPackageInfos.stream()
-                .filter(infoDto -> estimateOptionIdsByEstimateId.getPackageIds().contains(infoDto.getId()))
+        selectOptionPackageInfos.stream()
+                .filter(infoDto -> estimateOptionIds.getPackageIds().contains(infoDto.getId()))
                 .forEach(infoDto -> builder.selectOptionOrPackage(EstimateResponseDto.OptionPackageDto.builder()
                         .id("P" + infoDto.getId())
                         .childCategory(infoDto.getChildCategory())

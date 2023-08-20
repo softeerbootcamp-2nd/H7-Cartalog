@@ -185,7 +185,7 @@ public class QueryString {
             "WHERE  estimates.id = :estimateId ";
 
 
-    protected static String findEstimateModelOptionIdsByEstimateId =
+    protected static final String findEstimateModelOptionIdsByEstimateId =
             "SELECT model_options.id  " +
             "FROM   estimates  " +
             "       INNER JOIN detail_trims  " +
