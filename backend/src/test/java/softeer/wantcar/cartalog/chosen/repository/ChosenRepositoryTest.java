@@ -78,4 +78,46 @@ class ChosenRepositoryTest {
             assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);
         }
     }
+
+    @Nested
+    @DisplayName("모델 타입 옵션 선택률 조회 테스트")
+    class findOptionChosenByOptionIdTest {
+        @Test
+        @DisplayName("선택률을 가져와야 한다.")
+        void success() {
+            //given
+            List<Long> modelTypeIds = List.of(97L, 98L, 99L, 100L, 101L, 102L, 103L, 104L, 105L, 106L, 107L);
+            int daysAgo = 90;
+
+            List<Integer> modelTypeRecentRecords = List.of(57, 34, 42, 53, 41, 45, 39, 40, 48, 42, 40);
+            List<Integer> modelTypeTotalRecords = List.of(241, 241, 241, 126, 241, 241, 241, 241, 241, 241, 241);
+
+            List<Integer> modelTypeChosenExpected = IntStream.range(0, modelTypeIds.size())
+                    .mapToDouble(i -> (double) modelTypeRecentRecords.get(i) * 100 / modelTypeTotalRecords.get(i))
+                    .mapToLong(Math::round)
+                    .mapToInt(operand -> (int) operand)
+                    .boxed()
+                    .collect(Collectors.toUnmodifiableList());
+
+            //when
+            List<Integer> modelTypeChosen = chosenRepository.findOptionChosenByOptionId(modelTypeIds, daysAgo);
+
+            //then
+            softAssertions.assertThat(modelTypeChosen).isEqualTo(modelTypeChosenExpected);
+        }
+
+        @Test
+        @DisplayName("잘못된 식별자를 전달하면 오류를 발생해야 한다.")
+        void failure() {
+            //given
+            List<Long> modelTypeIds = List.of(10L);
+            int daysAgo = 90;
+
+            //when
+            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findOptionChosenByOptionId(modelTypeIds, daysAgo);
+
+            //then
+            assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);
+        }
+    }
 }

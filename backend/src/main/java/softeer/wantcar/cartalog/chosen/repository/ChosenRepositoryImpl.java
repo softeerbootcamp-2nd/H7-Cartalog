@@ -55,7 +55,7 @@ public class ChosenRepositoryImpl implements ChosenRepository {
         if (modelTypeIds.size() != query.size()) {
             throw new IllegalArgumentException();
         }
-        
+
         return query.stream()
                 .map(ChosenDto::getChosen)
                 .collect(Collectors.toUnmodifiableList());
@@ -63,7 +63,45 @@ public class ChosenRepositoryImpl implements ChosenRepository {
 
     @Override
     public List<Integer> findOptionChosenByOptionId(List<Long> optionIds, int daysAgo) {
-        return null;
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("optionIds", optionIds);
+
+        String SQL = "SELECT recent_records_count.id_code, recent_records, total_records  " +
+                "FROM (  " +
+                "    SELECT  " +
+                "        model_option_id AS id_code,  " +
+                "        COUNT(model_option_id) AS recent_records  " +
+                "    FROM release_records  " +
+                "    INNER JOIN estimates ON estimates.id = release_records.estimate_id  " +
+                "    INNER JOIN estimate_options ON estimate_options.estimate_id = estimates.id  " +
+                "    WHERE release_records.create_date >= CURRENT_DATE - INTERVAL '" + daysAgo + "' DAY  " +
+                "    GROUP BY model_option_id  " +
+                ") AS recent_records_count  " +
+                "LEFT JOIN (  " +
+                "    SELECT  " +
+                "        model_options.id AS id_code,  " +
+                "        COUNT(model_options.id) AS total_records  " +
+                "    FROM release_records  " +
+                "    INNER JOIN estimates ON estimates.id = release_records.estimate_id  " +
+                "    INNER JOIN detail_trims ON detail_trims.id = estimates.detail_trim_id  " +
+                "    INNER JOIN detail_trim_options ON detail_trim_options.detail_trim_id = detail_trims.id  " +
+                "    INNER JOIN model_options ON model_options.id = detail_trim_options.model_option_id  " +
+                "    WHERE model_options.basic = FALSE  " +
+                "        AND release_records.create_date >= CURRENT_DATE - INTERVAL '" + daysAgo + "' DAY  " +
+                "    GROUP BY model_options.id  " +
+                ") AS total_records_count  " +
+                "ON recent_records_count.id_code = total_records_count.id_code " +
+                "WHERE recent_records_count.id_code in ( :optionIds );";
+
+        var query = jdbcTemplate.query(SQL, parameters, RowMapperUtils.mapping(ChosenDto.class, getIdCodeRowMapperStrategy));
+
+        if (optionIds.size() != query.size()) {
+            throw new IllegalArgumentException();
+        }
+
+        return query.stream()
+                .map(ChosenDto::getChosen)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     @Override
