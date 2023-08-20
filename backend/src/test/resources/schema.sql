@@ -312,18 +312,18 @@ CREATE TABLE similar_estimates
 
 CREATE TABLE hash_tag_similarities
 (
-    origin_hash_tag_index   VARCHAR(255),
-    target_hash_tag_index   VARCHAR(255),
-    similarity              FLOAT NOT NULL,
+    origin_hash_tag_index VARCHAR(255),
+    target_hash_tag_index VARCHAR(255),
+    similarity            FLOAT NOT NULL,
     PRIMARY KEY (origin_hash_tag_index, target_hash_tag_index)
 );
 
 CREATE TABLE pending_hash_tag_similarities
 (
-    idx                       BIGINT AUTO_INCREMENT,
-    hash_tag_key              VARCHAR(255),
-    trim_id                   BIGINT,
-    last_calculated_index     BIGINT,
+    idx                   BIGINT AUTO_INCREMENT,
+    hash_tag_key          VARCHAR(255),
+    trim_id               BIGINT,
+    last_calculated_index BIGINT,
     PRIMARY KEY (idx),
     FOREIGN KEY (trim_id) REFERENCES trims (id) ON UPDATE CASCADE
 );
@@ -481,4 +481,5 @@ INSERT INTO pending_hash_tag_similarities (idx, hash_tag_key, trim_id, last_calc
 SELECT *
 FROM CSVREAD('classpath:csv/pending_hash_tag_similarities.csv', null, 'fieldSeparator=|');
 
-ALTER TABLE pending_hash_tag_similarities ALTER COLUMN idx RESTART WITH 400;
+ALTER TABLE pending_hash_tag_similarities
+    ALTER COLUMN idx RESTART WITH 400;

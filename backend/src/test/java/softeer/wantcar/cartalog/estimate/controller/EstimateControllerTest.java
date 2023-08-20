@@ -118,7 +118,7 @@ class EstimateControllerTest {
             ResponseEntity<EstimateResponseDto> response = estimateController.getEstimate(anyLong());
 
             //then
-            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);;
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         }
     }
 }
