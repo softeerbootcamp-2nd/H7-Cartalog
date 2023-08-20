@@ -8,8 +8,8 @@ import lombok.Getter;
 @Getter
 @EqualsAndHashCode
 @Builder
+@AllArgsConstructor
 public class SimilarityInfo {
-    private long index;
-    private String hashTagKey;
+    private long idx;
     private Double similarity;
 }
