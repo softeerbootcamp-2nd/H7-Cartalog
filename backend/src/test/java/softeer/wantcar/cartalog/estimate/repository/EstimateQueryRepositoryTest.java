@@ -12,6 +12,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateCountDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionListDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateShareInfoDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -99,6 +100,36 @@ class EstimateQueryRepositoryTest {
 
             //then
             assertThat(estimateCounts.isEmpty()).isTrue();
+        }
+    }
+
+    @Nested
+    @DisplayName("견적서 조회 테스트")
+    class findEstimateShareInfoByEstimateIdTest {
+        @Test
+        @DisplayName("적절한 견적서 식별자를 전달 했을 때 견적서 정보를 반환해야 한다.")
+        void success() {
+            //given
+            //when
+            EstimateShareInfoDto estimateShareInfo = estimateQueryRepository.findEstimateShareInfoByEstimateId(103L);
+
+            //then
+            softAssertions.assertThat(estimateShareInfo.getDetailTrimId()).isEqualTo(10L);
+            softAssertions.assertThat(estimateShareInfo.getTrimId()).isEqualTo(2L);
+            softAssertions.assertThat(estimateShareInfo.getExteriorColorCode()).isEqualTo("P7V");
+            softAssertions.assertThat(estimateShareInfo.getInteriorColorCode()).isEqualTo("YJY");
+            softAssertions.assertAll();
+        }
+
+        @Test
+        @DisplayName("존재하지 않는 견적서 식별자를 전달 했을 때 null을 반환해야 한다.")
+        void returnNull() {
+            //given
+            //when
+            EstimateShareInfoDto estimateShareInfo = estimateQueryRepository.findEstimateShareInfoByEstimateId(-1L);
+
+            //then
+            assertThat(estimateShareInfo).isNull();
         }
     }
 }
