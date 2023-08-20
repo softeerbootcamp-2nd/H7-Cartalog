@@ -102,7 +102,7 @@ public class SimilarityServiceImpl implements SimilarityService {
             beforeSimilarities.addAll(pendingSimilarities);
             List<SimilarityInfo> newSimilarities = beforeSimilarities.stream()
                     .filter(similarityInfo -> similarityInfo.getSimilarity() < 0.9 && similarityInfo.getSimilarity() > 0.2)
-                    .sorted(Comparator.comparingDouble(SimilarityInfo::getSimilarity))
+                    .sorted(Comparator.comparing(SimilarityInfo::getSimilarity, Comparator.reverseOrder()))
                     .limit(4)
                     .collect(Collectors.toList());
 
