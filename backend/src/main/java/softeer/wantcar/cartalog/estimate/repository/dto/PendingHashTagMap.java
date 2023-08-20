@@ -30,7 +30,7 @@ public class PendingHashTagMap {
     private static String getHashTagKey(SortedMap<String, Long> hashTagMap) {
         return hashTagMap.keySet().stream()
                 .map(key -> key + ":" + hashTagMap.get(key))
-                .collect(Collectors.joining("|"));
+                .collect(Collectors.joining("?"));
     }
 
     public double getSimilarity(String otherHashTagKey) {
@@ -67,7 +67,7 @@ public class PendingHashTagMap {
 
     private static SortedMap<String, Long> getHashTagMap(String hashTagKey) {
         SortedMap<String, Long> curHashTagMap = new TreeMap<>();
-        for (String hashTag : hashTagKey.split("\\|")) {
+        for (String hashTag : hashTagKey.split("\\?")) {
             String[] keyAndValue = hashTag.split(":");
             curHashTagMap.put(keyAndValue[0], Long.parseLong(keyAndValue[1]));
         }
