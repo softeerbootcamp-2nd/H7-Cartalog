@@ -129,7 +129,7 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
                 .addValue("estimateId", estimateId);
         try {
             return jdbcTemplate.queryForObject(QueryString.findEstimateShareInfoByEstimateId,
-                    parameters, RowMapperUtils.mapping(EstimateShareInfoDto.class));
+                    parameters, RowMapperUtils.mapping(EstimateShareInfoDto.class, serverPath.getImageServerPathRowMapperStrategy()));
         } catch (EmptyResultDataAccessException exception) {
             return null;
         }

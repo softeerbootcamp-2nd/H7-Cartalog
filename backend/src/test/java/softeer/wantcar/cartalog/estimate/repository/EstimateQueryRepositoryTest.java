@@ -221,8 +221,18 @@ class EstimateQueryRepositoryTest {
             //then
             softAssertions.assertThat(estimateShareInfo.getDetailTrimId()).isEqualTo(10L);
             softAssertions.assertThat(estimateShareInfo.getTrimId()).isEqualTo(2L);
+            softAssertions.assertThat(estimateShareInfo.getDisplacement()).isEqualTo(2199.0f);
+            softAssertions.assertThat(estimateShareInfo.getFuelEfficiency()).isEqualTo(12.16f);
             softAssertions.assertThat(estimateShareInfo.getExteriorColorCode()).isEqualTo("P7V");
             softAssertions.assertThat(estimateShareInfo.getInteriorColorCode()).isEqualTo("YJY");
+            softAssertions.assertThat(estimateShareInfo.getExteriorColorImageUrl())
+                    .isEqualTo(serverPath.IMAGE_SERVER_PATH + "/colors/exterior/P7V.png");
+            softAssertions.assertThat(estimateShareInfo.getExteriorCarImageDirectory()).isEqualTo("palisade/exterior/P7V/");
+            softAssertions.assertThat(estimateShareInfo.getExteriorColorPrice()).isEqualTo(0);
+            softAssertions.assertThat(estimateShareInfo.getExteriorColorName()).isEqualTo("그라파이트 그레이 메탈릭");
+            softAssertions.assertThat(estimateShareInfo.getInteriorCarImageUrl())
+                    .isEqualTo(serverPath.IMAGE_SERVER_PATH + "/palisade/interior/YJY.png");
+            softAssertions.assertThat(estimateShareInfo.getInteriorColorName()).isEqualTo("쿨그레이");
             softAssertions.assertAll();
         }
 
