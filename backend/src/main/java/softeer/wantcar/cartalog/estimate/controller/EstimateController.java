@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import softeer.wantcar.cartalog.estimate.dto.EstimateRequestDto;
+import softeer.wantcar.cartalog.estimate.dto.EstimateResponseDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
 import softeer.wantcar.cartalog.estimate.service.EstimateService;
 
@@ -38,7 +39,7 @@ public class EstimateController {
             @ApiResponse(code = 400, message = "불가능한 조합입니다."),
     })
     @PostMapping("")
-    public ResponseEntity<Long> registerOrGetEstimate(@RequestBody EstimateRequestDto estimateRequestDto) {
+    public ResponseEntity<Long> registerOrGetEstimateId(@RequestBody EstimateRequestDto estimateRequestDto) {
         Long estimateId = estimateService.saveOrFindEstimateId(estimateRequestDto);
         return ResponseEntity.ok().body(estimateId);
     }
