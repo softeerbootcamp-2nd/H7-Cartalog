@@ -5,7 +5,6 @@ export const SummaryPopup = styled.div`
   ${FadeInWithTransform}
   display: flex;
   flex-direction: column;
-  gap: 8px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -84,7 +83,7 @@ export const LeftArea = styled.div`
 `;
 
 export const RightArea = styled.div`
-  height: 325px;
+  height: 310px;
   overflow-y: scroll;
 `;
 
@@ -92,7 +91,8 @@ export const TotalPrice = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: 24px 40px;
+  padding: 0 40px;
+  margin-bottom: 24px;
   gap: 8px;
 `;
 
