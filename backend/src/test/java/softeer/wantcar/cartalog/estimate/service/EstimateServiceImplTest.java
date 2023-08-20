@@ -15,7 +15,7 @@ import softeer.wantcar.cartalog.estimate.repository.EstimateCommandRepository;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
 import softeer.wantcar.cartalog.estimate.repository.SimilarityCommandRepository;
 import softeer.wantcar.cartalog.estimate.repository.SimilarityQueryRepository;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionListDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionIdListDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateShareInfoDto;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 import softeer.wantcar.cartalog.trim.repository.TrimColorQueryRepository;
@@ -130,8 +130,8 @@ class EstimateServiceImplTest {
             EstimateShareInfoDto shareInfoDto = mock(EstimateShareInfoDto.class);
             when(estimateQueryRepository.findEstimateShareInfoByEstimateId(anyLong())).thenReturn(shareInfoDto);
             List<Long> modelOptionIds = List.of(1L, 4L, 9L);
-            when(estimateQueryRepository.findEstimateModelOptionIdsByEstimateId(anyLong())).thenReturn(modelOptionIds);
-            EstimateOptionListDto optionListDto = mock(EstimateOptionListDto.class);
+            when(estimateQueryRepository.findEstimateModelTypeIdsByEstimateId(anyLong())).thenReturn(modelOptionIds);
+            EstimateOptionIdListDto optionListDto = mock(EstimateOptionIdListDto.class);
             when(estimateQueryRepository.findEstimateOptionIdsByEstimateId(anyLong())).thenReturn(optionListDto);
 
             OptionPackageInfoDto option1 = mock(OptionPackageInfoDto.class);

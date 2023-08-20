@@ -18,7 +18,7 @@ public class EstimateResponseDto {
     private String exteriorCarDirectory;
     private String interiorCarImageUrl;
     @Singular
-    private List<OptionPackageDto> modelOptions;
+    private List<OptionPackageDto> modelTypes;
     @Singular
     private List<OptionPackageDto> selectOptionOrPackages;
 

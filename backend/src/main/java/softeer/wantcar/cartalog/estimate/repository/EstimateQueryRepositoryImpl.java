@@ -136,7 +136,7 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
     }
 
     @Override
-    public List<Long> findEstimateModelOptionIdsByEstimateId(Long estimateId) {
+    public List<Long> findEstimateModelTypeIdsByEstimateId(Long estimateId) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("estimateId", estimateId);
 
