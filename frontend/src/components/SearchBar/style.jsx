@@ -32,10 +32,6 @@ export const SearchButton = styled.button`
   height: 100%;
   border-left: 1px solid ${({ theme }) => theme.color.gray[200]};
   background-color: ${({ theme }) => theme.color.gray[100]};
-  /* background-image: url(${SearchIcon});
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 18px 18px; */
   cursor: pointer;
 
   &::before {
