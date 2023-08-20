@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.dto.EstimateRequestDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateCommandRepository;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
+import softeer.wantcar.cartalog.estimate.repository.dto.PendingHashTagMap;
 import softeer.wantcar.cartalog.estimate.service.dto.EstimateDto;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 import softeer.wantcar.cartalog.trim.repository.TrimColorQueryRepository;
@@ -44,8 +45,8 @@ public class EstimateServiceImpl implements EstimateService {
 
         try {
             estimateCommandRepository.save(estimateDto);
-            List<String> hashTags = getTotalHashTags(estimateDto);
-            similarityService.updateHashTagSimilarities(trimId, hashTags);
+            String hashTagKey = PendingHashTagMap.getHashTagKey(getTotalHashTags(estimateDto));
+            similarityService.updateHashTagSimilarities(trimId, hashTagKey);
         } catch (DataAccessException exception) {
             throw new IllegalArgumentException();
         }
