@@ -78,7 +78,7 @@ public class SimilarityServiceImpl implements SimilarityService {
 
     public void updateHashTagSimilarities(Long trimId, String hashTagKey) {
         List<PendingHashTagMap> pendingHashTagMaps = similarityQueryRepository.findPendingHashTagKeys(trimId, hashTagKey);
-        if(pendingHashTagMaps.isEmpty()) {
+        if (pendingHashTagMaps.isEmpty()) {
             return;
         }
 

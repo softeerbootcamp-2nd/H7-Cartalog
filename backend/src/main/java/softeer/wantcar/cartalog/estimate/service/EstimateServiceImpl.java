@@ -55,7 +55,7 @@ public class EstimateServiceImpl implements EstimateService {
         try {
             estimateId = estimateCommandRepository.save(estimateDto);
             String hashTagKey = PendingHashTagMap.getHashTagKey(getTotalHashTags(estimateDto));
-            if(!similarityQueryRepository.existHashTagKey(trimId, hashTagKey)) {
+            if (!similarityQueryRepository.existHashTagKey(trimId, hashTagKey)) {
                 similarityCommandRepository.saveHashTagKey(trimId, hashTagKey, 0);
                 similarityCommandRepository.saveSimilarEstimate(trimId, hashTagKey, estimateId);
             }
