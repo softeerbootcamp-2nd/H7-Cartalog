@@ -1,6 +1,7 @@
 package softeer.wantcar.cartalog.estimate.service;
 
 import org.assertj.core.api.SoftAssertions;
+import org.assertj.core.api.ThrowableAssert;
 import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,15 +10,22 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import softeer.wantcar.cartalog.estimate.dto.EstimateRequestDto;
+import softeer.wantcar.cartalog.estimate.dto.EstimateResponseDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateCommandRepository;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
-import softeer.wantcar.cartalog.estimate.repository.SimilarityCommandRepository;
-import softeer.wantcar.cartalog.estimate.repository.SimilarityQueryRepository;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionIdListDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateShareInfoDto;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 import softeer.wantcar.cartalog.trim.repository.TrimColorQueryRepository;
+import softeer.wantcar.cartalog.trim.repository.TrimOptionQueryRepository;
 import softeer.wantcar.cartalog.trim.repository.TrimQueryRepository;
+import softeer.wantcar.cartalog.trim.repository.dto.OptionPackageInfoDto;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -51,8 +59,6 @@ class EstimateServiceImplTest {
                 modelOptionQueryRepository,
                 similarityService,
                 trimOptionQueryRepository);
-
-        );
     }
 
     @Nested

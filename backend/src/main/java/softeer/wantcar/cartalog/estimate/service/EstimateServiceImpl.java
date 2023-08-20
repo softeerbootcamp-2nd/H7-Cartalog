@@ -6,10 +6,10 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.dto.EstimateRequestDto;
+import softeer.wantcar.cartalog.estimate.dto.EstimateResponseDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateCommandRepository;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
-import softeer.wantcar.cartalog.estimate.repository.dto.PendingHashTagMap;
-import softeer.wantcar.cartalog.estimate.repository.dto.SimilarityInfo;
+import softeer.wantcar.cartalog.estimate.repository.dto.*;
 import softeer.wantcar.cartalog.estimate.repository.dto.PendingHashTagMap;
 import softeer.wantcar.cartalog.estimate.service.dto.EstimateDto;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
@@ -132,23 +132,6 @@ public class EstimateServiceImpl implements EstimateService {
                 );
 
         return builder.build();
-    }
-
-    private void saveHashTagSimilarities(Long trimId, PendingHashTagMap curPendingHashTagMap, List<String> calculatedHashTagKeys) {
-        List<SimilarityInfo> similarities = calculatedHashTagKeys.stream()
-                .map(PendingHashTagMap::new)
-                .map(otherMap -> new SimilarityInfo(otherMap.getKey(), otherMap.getSimilarity(curPendingHashTagMap)))
-                .collect(Collectors.toList());
-        similarityCommandRepository.saveCalculatedHashTagKeys(trimId, curPendingHashTagMap.getKey(), similarities);
-    }
-
-    private void registerPendingHashTagSimilarities(Long trimId, PendingHashTagMap curPendingHashTagMap, List<String> calculatedHashTagKeys) {
-        PendingHashTagSimilaritySaveDto pendingHashTagSimilaritySaveDto = PendingHashTagSimilaritySaveDto.builder()
-                .trimId(trimId)
-                .hashTagKey(curPendingHashTagMap.getKey())
-                .pendingHashTagLeftKeys(calculatedHashTagKeys)
-                .build();
-        similarityCommandRepository.savePendingHashTagSimilarities(pendingHashTagSimilaritySaveDto);
     }
 
     private EstimateDto buildEstimateDao(Long trimId, EstimateRequestDto estimateRequestDto, List<Long> selectPackages, List<Long> selectOptions) {
