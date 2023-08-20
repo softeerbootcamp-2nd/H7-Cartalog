@@ -30,9 +30,19 @@ function Pick() {
         ...prevState.interiorColor,
         isFetch: false,
       },
+      optionPicker: {
+        ...prevState.optionPicker,
+        isFetch: false,
+      },
+      estimation: {
+        ...prevState.estimation,
+        isFetch: false,
+      },
       price: {
         ...prevState.price,
         exteriorColorPrice: exterior.price,
+        interiorColorPrice: 0,
+        optionPrice: 0,
       },
     }));
   };
