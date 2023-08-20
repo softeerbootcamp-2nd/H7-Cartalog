@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
@@ -121,6 +122,24 @@ class SimilarityCommandRepositoryTest {
                                                                  "WHERE trim_id = 1", new HashMap<>(), String.class);
             assertThat(hashTagKeys.size()).isEqualTo(1);
             assertThat(hashTagKeys.get(0)).isEqualTo("A");
+        }
+    }
+
+    @Nested
+    @DisplayName("saveSimilarEstimate 테스트")
+    class saveSimilarEstimateTest {
+        @Test
+        @DisplayName("유사 견적을 등록한다")
+        void registerSimilarEstimate() {
+            //given
+            //when
+            similarityCommandRepository.saveSimilarEstimate(1L, "A", 1L);
+
+            //then
+            Long savedEstimateId = jdbcTemplate.queryForObject("SELECT estimate_id FROM similar_estimates " +
+                                                               "WHERE trim_id=1 AND hash_tag_key='A' AND estimate_id=1",
+                    new MapSqlParameterSource(), Long.TYPE);
+            assertThat(savedEstimateId).isEqualTo(1);
         }
     }
 }
