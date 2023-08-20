@@ -2,6 +2,7 @@ package softeer.wantcar.cartalog.estimate.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Singular;
 
 import java.util.List;
 
@@ -11,17 +12,19 @@ public class EstimateResponseDto {
     private Long trimId;
     private Long detailTrimId;
     private float displacement;
-    private float fuel_efficiency;
-    private ExteriorColorDto exteriorColor;
-    private InteriorColorDto interiorColor;
+    private float fuelEfficiency;
+    private ColorDto exteriorColor;
+    private ColorDto interiorColor;
     private String exteriorCarImageUrl;
     private String interiorCarImageUrl;
+    @Singular
     private List<OptionPackageDto> modelOptions;
+    @Singular
     private List<OptionPackageDto> selectOptionOrPackages;
 
     @Getter
     @Builder
-    public static class ExteriorColorDto {
+    public static class ColorDto {
         private String colorCode;
         private String name;
         private int price;
@@ -30,13 +33,6 @@ public class EstimateResponseDto {
 
     @Getter
     @Builder
-    public static class InteriorColorDto {
-        private String colorCode;
-        private String name;
-        private int price;
-        private String imageUrl;
-    }
-
     public static class OptionPackageDto {
         private String id;
         private String name;

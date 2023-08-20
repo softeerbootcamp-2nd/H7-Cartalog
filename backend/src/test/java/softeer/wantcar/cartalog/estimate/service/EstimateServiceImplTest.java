@@ -22,6 +22,7 @@ import softeer.wantcar.cartalog.trim.repository.TrimColorQueryRepository;
 import softeer.wantcar.cartalog.trim.repository.TrimQueryRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -134,10 +135,16 @@ class EstimateServiceImplTest {
             //then
             softAssertions.assertThat(estimate.getTrimId()).isEqualTo(shareInfoDto.getTrimId());
             softAssertions.assertThat(estimate.getDetailTrimId()).isEqualTo(shareInfoDto.getDetailTrimId());
-            softAssertions.assertThat(estimate.getExteriorColorCode()).isEqualTo(shareInfoDto.getExteriorColorCode());
-            softAssertions.assertThat(estimate.getInteriorColorCode()).isEqualTo(shareInfoDto.getInteriorColorCode());
-            softAssertions.assertThat(estimate.getModelOptions().containsAll(expectModelOptionIds)).isTrue();
-            softAssertions.assertThat(estimate.getSelectOptionOrPackages().containsAll(optionListDto.getAllOptionIds())).isTrue();
+            softAssertions.assertThat(estimate.getExteriorColor().getColorCode()).isEqualTo(shareInfoDto.getExteriorColorCode());
+            softAssertions.assertThat(estimate.getInteriorColor().getColorCode()).isEqualTo(shareInfoDto.getInteriorColorCode());
+            List<String> actualModelOptionIds = estimate.getModelOptions().stream()
+                    .map(EstimateResponseDto.OptionPackageDto::getId)
+                    .collect(Collectors.toUnmodifiableList());
+            softAssertions.assertThat(actualModelOptionIds.containsAll(expectModelOptionIds)).isTrue();
+            List<String> actualModelPackageIds = estimate.getSelectOptionOrPackages().stream()
+                    .map(EstimateResponseDto.OptionPackageDto::getId)
+                    .collect(Collectors.toUnmodifiableList());
+            softAssertions.assertThat(actualModelPackageIds.containsAll(optionListDto.getAllOptionIds())).isTrue();
         }
 
         @Test
