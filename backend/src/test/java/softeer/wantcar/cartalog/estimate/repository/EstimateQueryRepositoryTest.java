@@ -10,10 +10,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateCountDto;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateInfoDto;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionIdListDto;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionInfoDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.*;
 import softeer.wantcar.cartalog.global.ServerPath;
 
 import java.util.List;
@@ -208,6 +205,64 @@ class EstimateQueryRepositoryTest {
 
             //then
             assertThat(estimatePackages.isEmpty()).isTrue();
+        }
+    }
+
+    @Nested
+    @DisplayName("견적서 조회 테스트")
+    class findEstimateShareInfoByEstimateIdTest {
+        @Test
+        @DisplayName("적절한 견적서 식별자를 전달 했을 때 견적서 정보를 반환해야 한다.")
+        void success() {
+            //given
+            //when
+            EstimateShareInfoDto estimateShareInfo = estimateQueryRepository.findEstimateShareInfoByEstimateId(103L);
+
+            //then
+            softAssertions.assertThat(estimateShareInfo.getDetailTrimId()).isEqualTo(10L);
+            softAssertions.assertThat(estimateShareInfo.getTrimId()).isEqualTo(2L);
+            softAssertions.assertThat(estimateShareInfo.getDisplacement()).isEqualTo(2199.0f);
+            softAssertions.assertThat(estimateShareInfo.getFuelEfficiency()).isEqualTo(12.16f);
+            softAssertions.assertThat(estimateShareInfo.getExteriorColorCode()).isEqualTo("P7V");
+            softAssertions.assertThat(estimateShareInfo.getInteriorColorCode()).isEqualTo("YJY");
+            softAssertions.assertThat(estimateShareInfo.getExteriorColorImageUrl())
+                    .isEqualTo(serverPath.IMAGE_SERVER_PATH + "/colors/exterior/P7V.png");
+            softAssertions.assertThat(estimateShareInfo.getExteriorCarImageDirectory()).isEqualTo("palisade/exterior/P7V/");
+            softAssertions.assertThat(estimateShareInfo.getExteriorColorPrice()).isEqualTo(0);
+            softAssertions.assertThat(estimateShareInfo.getExteriorColorName()).isEqualTo("그라파이트 그레이 메탈릭");
+            softAssertions.assertThat(estimateShareInfo.getInteriorCarImageUrl())
+                    .isEqualTo(serverPath.IMAGE_SERVER_PATH + "/palisade/interior/YJY.png");
+            softAssertions.assertThat(estimateShareInfo.getInteriorColorName()).isEqualTo("쿨그레이");
+            softAssertions.assertAll();
+        }
+
+        @Test
+        @DisplayName("존재하지 않는 견적서 식별자를 전달 했을 때 null을 반환해야 한다.")
+        void returnNull() {
+            //given
+            //when
+            EstimateShareInfoDto estimateShareInfo = estimateQueryRepository.findEstimateShareInfoByEstimateId(-1L);
+
+            //then
+            assertThat(estimateShareInfo).isNull();
+        }
+    }
+
+    @Nested
+    @DisplayName("견적서 모델 옵션 식별자 조회 세스트")
+    class findEstimateModelOptionIdsByEstimateIdTest {
+        @Test
+        @DisplayName("적절한 견적서 식별자를 전달 했을 때 견적서 모델 옵션을 반환해야 한다.")
+        void test() {
+            //given
+
+            //when
+            List<Long> estimateModelOptionIds = estimateQueryRepository.findEstimateModelOptionIdsByEstimateId(103L);
+
+            //then
+            softAssertions.assertThat(estimateModelOptionIds.size()).isEqualTo(3);
+            softAssertions.assertThat(estimateModelOptionIds.containsAll(List.of(1L, 3L, 6L))).isTrue();
+            softAssertions.assertAll();
         }
     }
 }

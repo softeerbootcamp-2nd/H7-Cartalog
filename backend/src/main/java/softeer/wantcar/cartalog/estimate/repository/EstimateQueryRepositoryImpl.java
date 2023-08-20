@@ -8,10 +8,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateCountDto;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateInfoDto;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionInfoDto;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionIdListDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.*;
 import softeer.wantcar.cartalog.estimate.service.dto.EstimateDto;
 import softeer.wantcar.cartalog.global.ServerPath;
 import softeer.wantcar.cartalog.global.utils.RowMapperUtils;
@@ -124,5 +121,30 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
                 .price(rs.getInt("price"))
                 .imageUrl(serverPath.attachImageServerPath(rs.getString("image_url")))
                 .build();
+    }
+
+    @Override
+    public EstimateShareInfoDto findEstimateShareInfoByEstimateId(Long estimateId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("estimateId", estimateId);
+        try {
+            return jdbcTemplate.queryForObject(QueryString.findEstimateShareInfoByEstimateId,
+                    parameters, RowMapperUtils.mapping(EstimateShareInfoDto.class, serverPath.getImageServerPathRowMapperStrategy()));
+        } catch (EmptyResultDataAccessException exception) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<Long> findEstimateModelOptionIdsByEstimateId(Long estimateId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("estimateId", estimateId);
+
+        try {
+            return jdbcTemplate.queryForList(QueryString.findEstimateModelOptionIdsByEstimateId,
+                    parameters, Long.class);
+        } catch (EmptyResultDataAccessException exception) {
+            return null;
+        }
     }
 }

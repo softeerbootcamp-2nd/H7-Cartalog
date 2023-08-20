@@ -8,6 +8,16 @@ import lombok.Getter;
 public class EstimateShareInfoDto {
     private Long trimId;
     private Long detailTrimId;
+    private float displacement;
+    private float fuelEfficiency;
     private String exteriorColorCode;
+    private String exteriorColorName;
+    private int exteriorColorPrice;
+    private String exteriorColorImageUrl;
     private String interiorColorCode;
+    private String interiorColorName;
+    private int interiorColorPrice;
+    private String interiorColorImageUrl;
+    private String exteriorCarImageDirectory;
+    private String interiorCarImageUrl;
 }

@@ -151,21 +151,37 @@ public class QueryString {
             "               end) = :countOfSumOptions ";
 
     protected static final String findEstimateShareInfoByEstimateId =
-            "SELECT estimates.id                                   AS estimate_id,  " +
-            "       detail_trims.trim_id                           AS trim_id,  " +
-            "       detail_trims.id                                AS detail_trim_id,  " +
-            "       model_exterior_colors.color_code               AS exterior_color_code,  " +
-            "       trim_interior_colors.model_interior_color_code AS interior_color_code  " +
-            "FROM   estimates  " +
-            "       INNER JOIN detail_trims  " +
-            "               ON detail_trims.id = estimates.detail_trim_id  " +
-            "       INNER JOIN trim_exterior_colors  " +
-            "               ON trim_exterior_colors.id = estimates.trim_exterior_color_id  " +
-            "       INNER JOIN model_exterior_colors  " +
-            "               ON model_exterior_colors.id =  " +
-            "                  trim_exterior_colors.model_exterior_color_id  " +
-            "       INNER JOIN trim_interior_colors  " +
-            "               ON trim_interior_colors.id = estimates.trim_interior_color_id  " +
+            "SELECT detail_trims.trim_id                           AS trim_id, " +
+            "       detail_trims.id                                AS detail_trim_id, " +
+            "       detail_models.displacement                     AS displacement, " +
+            "       detail_models.fuel_efficiency                  AS fuelEfficiency, " +
+            "       model_exterior_colors.color_code               AS exterior_color_code, " +
+            "       colors.name                                    AS exterior_color_name, " +
+            "       model_exterior_colors.price                    AS exterior_color_price, " +
+            "       colors.image_url                               AS exterior_color_image_url, " +
+            "       trim_interior_colors.model_interior_color_code AS interior_color_code, " +
+            "       model_interior_colors.name                     AS interior_color_name, " +
+            "       model_interior_colors.price                    AS interior_color_price, " +
+            "       model_interior_colors.image_url                AS interior_color_image_url, " +
+            "       model_exterior_colors.exterior_image_directory AS exterior_car_image_directory, " +
+            "       model_interior_colors.interior_image_url       AS interior_car_image_url " +
+            "FROM   estimates " +
+            "       INNER JOIN detail_trims " +
+            "               ON detail_trims.id = estimates.detail_trim_id " +
+            "       INNER JOIN detail_models " +
+            "               ON detail_models.id = detail_trims.detail_model_id " +
+            "       INNER JOIN trim_exterior_colors " +
+            "               ON trim_exterior_colors.id = estimates.trim_exterior_color_id " +
+            "       INNER JOIN model_exterior_colors " +
+            "               ON model_exterior_colors.id = " +
+            "                  trim_exterior_colors.model_exterior_color_id " +
+            "       INNER JOIN colors " +
+            "               ON colors.code = model_exterior_colors.color_code " +
+            "       INNER JOIN trim_interior_colors " +
+            "               ON trim_interior_colors.id = estimates.trim_interior_color_id " +
+            "       INNER JOIN model_interior_colors " +
+            "               ON model_interior_colors.code = " +
+            "                  trim_interior_colors.model_interior_color_code " +
             "WHERE  estimates.id = :estimateId ";
 
 
