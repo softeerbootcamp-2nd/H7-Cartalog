@@ -15,7 +15,7 @@ public class EstimateResponseDto {
     private float fuelEfficiency;
     private ColorDto exteriorColor;
     private ColorDto interiorColor;
-    private String exteriorCarImageUrl;
+    private String exteriorCarDirectory;
     private String interiorCarImageUrl;
     @Singular
     private List<OptionPackageDto> modelOptions;

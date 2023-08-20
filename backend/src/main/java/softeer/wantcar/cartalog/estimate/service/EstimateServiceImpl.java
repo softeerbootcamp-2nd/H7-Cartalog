@@ -95,7 +95,7 @@ public class EstimateServiceImpl implements EstimateService {
                         .price(estimateShareInfo.getInteriorColorPrice())
                         .build()
                 )
-                .exteriorCarImageUrl(estimateShareInfo.getInteriorCarImageUrl())
+                .exteriorCarDirectory(estimateShareInfo.getExteriorCarImageDirectory())
                 .interiorCarImageUrl(estimateShareInfo.getInteriorColorImageUrl());
 
 
