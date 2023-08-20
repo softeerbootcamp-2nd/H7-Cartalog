@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 import softeer.wantcar.cartalog.estimate.dto.EstimateRequestDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateCommandRepository;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
-import softeer.wantcar.cartalog.estimate.repository.SimilarityCommandRepository;
-import softeer.wantcar.cartalog.estimate.repository.SimilarityQueryRepository;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 import softeer.wantcar.cartalog.trim.repository.TrimColorQueryRepository;
 import softeer.wantcar.cartalog.trim.repository.TrimQueryRepository;
@@ -22,8 +20,7 @@ class EstimateServiceImplTest {
     EstimateCommandRepository estimateCommandRepository;
     TrimColorQueryRepository trimColorQueryRepository;
     TrimQueryRepository trimQueryRepository;
-    SimilarityCommandRepository similarityCommandRepository;
-    SimilarityQueryRepository similarityQueryRepository;
+    SimilarityService similarityService;
     ModelOptionQueryRepository modelOptionQueryRepository;
     EstimateService estimateService;
 
@@ -34,16 +31,13 @@ class EstimateServiceImplTest {
         trimColorQueryRepository = mock(TrimColorQueryRepository.class);
         trimQueryRepository = mock(TrimQueryRepository.class);
         modelOptionQueryRepository = mock(ModelOptionQueryRepository.class);
-        similarityQueryRepository = mock(SimilarityQueryRepository.class);
-        similarityCommandRepository = mock(SimilarityCommandRepository.class);
-
+        similarityService = mock(SimilarityService.class);
         estimateService = new EstimateServiceImpl(estimateQueryRepository,
                 estimateCommandRepository,
                 trimColorQueryRepository,
                 trimQueryRepository,
                 modelOptionQueryRepository,
-                similarityCommandRepository,
-                similarityQueryRepository);
+                similarityService);
     }
 
     @Nested
