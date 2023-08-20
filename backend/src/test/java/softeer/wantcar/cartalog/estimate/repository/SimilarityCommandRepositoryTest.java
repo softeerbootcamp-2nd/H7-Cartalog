@@ -69,14 +69,14 @@ class SimilarityCommandRepositoryTest {
                                 "(0, 'A', 1, 1) ", new HashMap<>());
             jdbcTemplate.update("INSERT INTO hash_tag_similarities " +
                                 "(target_hash_tag_index, origin_hash_tag_index, similarity) VALUES " +
-                                "(1, 400, 0.3) ", new HashMap<>());
+                                "(1, 0, 0.3) ", new HashMap<>());
 
             //when
             similarityCommandRepository.deleteSimilarities(1L, "A");
 
             //then
             List<Long> targetIndexes = jdbcTemplate.queryForList("SELECT target_hash_tag_index FROM hash_tag_similarities " +
-                                                                 "WHERE target_hash_tag_index = 0", new HashMap<>(), Long.class);
+                                                                 "WHERE target_hash_tag_index = 1", new HashMap<>(), Long.class);
             System.out.println(targetIndexes);
             assertThat(targetIndexes.isEmpty()).isTrue();
         }
@@ -91,7 +91,7 @@ class SimilarityCommandRepositoryTest {
             //given
             jdbcTemplate.update("INSERT INTO pending_hash_tag_similarities " +
                                 "(idx, hash_tag_key, trim_id, last_calculated_index) VALUES " +
-                                "(400, 'A', 1, 1) ", new HashMap<>());
+                                "(0, 'A', 1, 1) ", new HashMap<>());
             SimilarityInfo similarityInfo = SimilarityInfo.builder()
                     .idx(1)
                     .similarity(0.2)
@@ -100,9 +100,9 @@ class SimilarityCommandRepositoryTest {
             similarityCommandRepository.saveSimilarities(1L, "A", List.of(similarityInfo));
 
             //then
-            Long targetHashTagIndex = jdbcTemplate.queryForObject("SELECT target_hash_tag_index FROM hash_tag_similarities " +
+            Long origin_hash_tag_index = jdbcTemplate.queryForObject("SELECT origin_hash_tag_index FROM hash_tag_similarities " +
                                                                   "WHERE target_hash_tag_index = 1", new HashMap<>(), Long.TYPE);
-            assertThat(targetHashTagIndex).isEqualTo(1);
+            assertThat(origin_hash_tag_index).isEqualTo(0);
         }
     }
 
