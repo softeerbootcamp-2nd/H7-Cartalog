@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateCountDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionListDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateShareInfoDto;
 import softeer.wantcar.cartalog.estimate.service.dto.EstimateDto;
 import softeer.wantcar.cartalog.global.utils.RowMapperUtils;
 
@@ -80,6 +81,18 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
                 .addValue("countOfSumOptions", Math.max(selectPackages.size(), 1) * selectOptions.size());
         try {
             return jdbcTemplate.queryForObject(QueryString.findEstimateIdByEstimateDto, parameters, Long.class);
+        } catch (EmptyResultDataAccessException exception) {
+            return null;
+        }
+    }
+
+    @Override
+    public EstimateShareInfoDto findEstimateShareInfoByEstimateId(Long estimateId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("estimateId", estimateId);
+        try {
+            return jdbcTemplate.queryForObject(QueryString.findEstimateShareInfoByEstimateId,
+                    parameters, RowMapperUtils.mapping(EstimateShareInfoDto.class));
         } catch (EmptyResultDataAccessException exception) {
             return null;
         }

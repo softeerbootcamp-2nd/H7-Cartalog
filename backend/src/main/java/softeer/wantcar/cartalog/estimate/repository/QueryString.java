@@ -149,4 +149,22 @@ public class QueryString {
             "                 WHEN model_option_id IN ( :selectOptionIds ) THEN 1 " +
             "                 ELSE 0 " +
             "               end) = :countOfSumOptions ";
+
+    protected static final String findEstimateShareInfoByEstimateId =
+            "SELECT estimates.id                                   AS estimate_id,  " +
+            "       detail_trims.trim_id                           AS trim_id,  " +
+            "       detail_trims.id                                AS detail_trim_id,  " +
+            "       model_exterior_colors.color_code               AS exterior_color_code,  " +
+            "       trim_interior_colors.model_interior_color_code AS interior_color_code  " +
+            "FROM   estimates  " +
+            "       INNER JOIN detail_trims  " +
+            "               ON detail_trims.id = estimates.detail_trim_id  " +
+            "       INNER JOIN trim_exterior_colors  " +
+            "               ON trim_exterior_colors.id = estimates.trim_exterior_color_id  " +
+            "       INNER JOIN model_exterior_colors  " +
+            "               ON model_exterior_colors.id =  " +
+            "                  trim_exterior_colors.model_exterior_color_id  " +
+            "       INNER JOIN trim_interior_colors  " +
+            "               ON trim_interior_colors.id = estimates.trim_interior_color_id  " +
+            "WHERE  estimates.id = :estimateId ";
 }
