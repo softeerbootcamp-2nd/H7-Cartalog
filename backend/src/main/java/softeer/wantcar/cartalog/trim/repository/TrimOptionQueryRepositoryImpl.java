@@ -158,15 +158,15 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
                 .addValue("packageIds", packageIds);
 
         String getOptionInfoSQL = "SELECT id, name, child_category, price, image_url " +
-                "FROM ( " +
-                "    SELECT id, name, child_category, image_url, price  " +
-                "    FROM model_options " +
-                "    WHERE id IN ( :optionIds ) " +
-                "    UNION " +
-                "    SELECT id, name, NULL AS child_category, image_url, price  " +
-                "    FROM model_packages " +
-                "    WHERE id IN ( :packageIds ) " +
-                ") AS combined_result ";
+                                  "FROM ( " +
+                                  "    SELECT id, name, child_category, image_url, price  " +
+                                  "    FROM model_options " +
+                                  "    WHERE id IN ( :optionIds ) " +
+                                  "    UNION " +
+                                  "    SELECT id, name, NULL AS child_category, image_url, price  " +
+                                  "    FROM model_packages " +
+                                  "    WHERE id IN ( :packageIds ) " +
+                                  ") AS combined_result ";
 
         return jdbcTemplate.query(getOptionInfoSQL, parameters,
                 RowMapperUtils.mapping(OptionPackageInfoDto.class, serverPath.getImageServerPathRowMapperStrategy()));
