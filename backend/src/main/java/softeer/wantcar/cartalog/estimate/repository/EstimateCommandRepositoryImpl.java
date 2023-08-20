@@ -21,12 +21,13 @@ public class EstimateCommandRepositoryImpl implements EstimateCommandRepository 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Override
-    public void save(EstimateDto estimateDto) throws DataAccessException {
+    public Long save(EstimateDto estimateDto) throws DataAccessException {
         Long nextId = jdbcTemplate.queryForObject("SELECT Max(id) FROM estimates", new HashMap<>(), Long.class) + 1;
 
         saveEstimate(estimateDto, nextId);
         saveEstimateOptions(estimateDto.getModelOptionIds(), nextId);
         saveEstimatePackages(estimateDto.getModelPackageIds(), nextId);
+        return nextId;
     }
 
     private void saveEstimate(EstimateDto estimateDto, Long nextId) {

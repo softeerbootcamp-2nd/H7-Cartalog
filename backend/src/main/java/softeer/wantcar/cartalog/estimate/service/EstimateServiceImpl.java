@@ -53,10 +53,11 @@ public class EstimateServiceImpl implements EstimateService {
         }
 
         try {
-            estimateCommandRepository.save(estimateDto);
+            estimateId = estimateCommandRepository.save(estimateDto);
             String hashTagKey = PendingHashTagMap.getHashTagKey(getTotalHashTags(estimateDto));
             if(!similarityQueryRepository.existHashTagKey(trimId, hashTagKey)) {
                 similarityCommandRepository.saveHashTagKey(trimId, hashTagKey, 0);
+                similarityCommandRepository.saveSimilarEstimate(trimId, hashTagKey, estimateId);
             }
         } catch (DataAccessException exception) {
             throw new IllegalArgumentException();
