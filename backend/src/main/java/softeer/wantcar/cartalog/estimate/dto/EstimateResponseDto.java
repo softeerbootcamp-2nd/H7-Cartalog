@@ -18,6 +18,10 @@ public class EstimateResponseDto {
     private List<String> modelOptions;
     private List<String> selectOptionOrPackages;
 
+    public static EstimateResponseDtoBuilder builder() {
+        return new EstimateResponseDtoBuilder();
+    }
+
     public static class EstimateResponseDtoBuilder {
         @Setter(AccessLevel.PRIVATE)
         private Long trimId;
@@ -29,10 +33,6 @@ public class EstimateResponseDto {
         private String interiorColorCode;
         private final List<String> modelOptions = new ArrayList<>();
         private final List<String> selectOptionOrPackages = new ArrayList<>();
-
-        public static EstimateResponseDtoBuilder builder() {
-            return new EstimateResponseDtoBuilder();
-        }
 
         public EstimateResponseDtoBuilder trimId(Long trimId) {
             setTrimId(trimId);

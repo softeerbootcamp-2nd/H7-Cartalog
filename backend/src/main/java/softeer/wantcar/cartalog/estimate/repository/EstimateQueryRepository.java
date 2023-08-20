@@ -11,6 +11,7 @@ import softeer.wantcar.cartalog.estimate.service.dto.EstimateDto;
 import java.util.List;
 
 public interface EstimateQueryRepository {
+
     @Getter
     @AllArgsConstructor
     @Builder
@@ -29,4 +30,6 @@ public interface EstimateQueryRepository {
     List<EstimateCountDto> findEstimateCounts(List<Long> estimateIds);
 
     EstimateShareInfoDto findEstimateShareInfoByEstimateId(Long estimateId);
+
+    List<Long> findEstimateModelOptionIdsByEstimateId(Long estimateId);
 }
