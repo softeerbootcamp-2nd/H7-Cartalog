@@ -57,7 +57,7 @@ public class EstimateServiceImpl implements EstimateService {
         try {
             estimateCommandRepository.save(estimateDto);
             PendingHashTagMap curPendingHashTagMap = new PendingHashTagMap(getTotalHashTags(estimateDto));
-            List<String> calculatedHashTagKeys = similarityQueryRepository.findAllCalculatedHashTagKeys();
+            List<String> calculatedHashTagKeys = similarityQueryRepository.findAllHashTagKeys();
             registerPendingHashTagSimilarities(trimId, curPendingHashTagMap, calculatedHashTagKeys);
             saveHashTagSimilarities(trimId, curPendingHashTagMap, calculatedHashTagKeys);
         } catch (DataAccessException exception) {
