@@ -43,4 +43,13 @@ public class EstimateController {
         Long estimateId = estimateService.saveOrFindEstimateId(estimateRequestDto);
         return ResponseEntity.ok().body(estimateId);
     }
+
+    @GetMapping("")
+    public ResponseEntity<EstimateResponseDto> getEstimate(@RequestParam Long id) {
+        try {
+            return ResponseEntity.ok(estimateService.findEstimateByEstimateId(id));
+        } catch (IllegalArgumentException exception) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
