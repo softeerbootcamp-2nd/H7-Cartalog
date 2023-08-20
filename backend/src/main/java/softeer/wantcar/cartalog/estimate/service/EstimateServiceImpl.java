@@ -8,12 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.dto.EstimateRequestDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateCommandRepository;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
-import softeer.wantcar.cartalog.estimate.repository.SimilarityCommandRepository;
-import softeer.wantcar.cartalog.estimate.repository.SimilarityQueryRepository;
-import softeer.wantcar.cartalog.estimate.repository.dto.PendingHashTagMap;
-import softeer.wantcar.cartalog.estimate.repository.dto.SimilarityInfo;
 import softeer.wantcar.cartalog.estimate.service.dto.EstimateDto;
-import softeer.wantcar.cartalog.estimate.service.dto.PendingHashTagSimilaritySaveDto;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 import softeer.wantcar.cartalog.trim.repository.TrimColorQueryRepository;
 import softeer.wantcar.cartalog.trim.repository.TrimQueryRepository;
@@ -32,8 +27,7 @@ public class EstimateServiceImpl implements EstimateService {
     private final TrimColorQueryRepository trimColorQueryRepository;
     private final TrimQueryRepository trimQueryRepository;
     private final ModelOptionQueryRepository modelOptionQueryRepository;
-    private final SimilarityCommandRepository similarityCommandRepository;
-    private final SimilarityQueryRepository similarityQueryRepository;
+    private final SimilarityService similarityService;
 
     @Override
     public Long saveOrFindEstimateId(EstimateRequestDto estimateRequestDto) {
@@ -50,32 +44,13 @@ public class EstimateServiceImpl implements EstimateService {
 
         try {
             estimateCommandRepository.save(estimateDto);
-            PendingHashTagMap curPendingHashTagMap = new PendingHashTagMap(getTotalHashTags(estimateDto));
-            List<String> calculatedHashTagKeys = similarityQueryRepository.findAllHashTagKeys();
-            registerPendingHashTagSimilarities(trimId, curPendingHashTagMap, calculatedHashTagKeys);
-            saveHashTagSimilarities(trimId, curPendingHashTagMap, calculatedHashTagKeys);
+            List<String> hashTags = getTotalHashTags(estimateDto);
+            similarityService.updateHashTagSimilarities(trimId, hashTags);
         } catch (DataAccessException exception) {
             throw new IllegalArgumentException();
         }
 
         return estimateQueryRepository.findEstimateIdByEstimateDto(estimateDto);
-    }
-
-    private void saveHashTagSimilarities(Long trimId, PendingHashTagMap curPendingHashTagMap, List<String> calculatedHashTagKeys) {
-        List<SimilarityInfo> similarities = calculatedHashTagKeys.stream()
-                .map(PendingHashTagMap::new)
-                .map(otherMap -> new SimilarityInfo(otherMap.getKey(), otherMap.getSimilarity(curPendingHashTagMap)))
-                .collect(Collectors.toList());
-        similarityCommandRepository.saveCalculatedHashTagKeys(trimId, curPendingHashTagMap.getKey(), similarities);
-    }
-
-    private void registerPendingHashTagSimilarities(Long trimId, PendingHashTagMap curPendingHashTagMap, List<String> calculatedHashTagKeys) {
-        PendingHashTagSimilaritySaveDto pendingHashTagSimilaritySaveDto = PendingHashTagSimilaritySaveDto.builder()
-                .trimId(trimId)
-                .hashTagKey(curPendingHashTagMap.getKey())
-                .pendingHashTagLeftKeys(calculatedHashTagKeys)
-                .build();
-        similarityCommandRepository.savePendingHashTagSimilarities(pendingHashTagSimilaritySaveDto);
     }
 
     private EstimateDto buildEstimateDao(Long trimId, EstimateRequestDto estimateRequestDto, List<Long> selectPackages, List<Long> selectOptions) {
