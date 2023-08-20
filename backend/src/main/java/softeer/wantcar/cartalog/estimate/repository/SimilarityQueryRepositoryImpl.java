@@ -19,43 +19,4 @@ import java.util.stream.Collectors;
 public class SimilarityQueryRepositoryImpl implements SimilarityQueryRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
-    @Override
-    public List<PendingHashTagMap> findPendingHashTagMapByTrimIdAndHashTagKey(Long trimId, String hashTagKey) {
-        SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("trimId", trimId)
-                .addValue("hashTagKey", hashTagKey);
-        List<String> pendingHashTags = jdbcTemplate.queryForList(QueryString.findPendingHashTagKey, parameters, String.class);
-        return getHashTagMaps(pendingHashTags);
-    }
-
-    @Override
-    public List<String> findSimilarHashTagKeysByTrimIdAndHashTagKey(Long trimId, String hashTagKey) {
-        SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("trimId", trimId)
-                .addValue("hashTagKey", hashTagKey);
-
-        return jdbcTemplate.queryForList(QueryString.findCalculatedSimilarHashTagKeys,
-                parameters, String.class);
-    }
-
-    @Override
-    public List<Long> findSimilarEstimateIdsByTrimIdAndHashTagKey(Long trimId, List<String> hashTagKey) {
-        SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("trimId", trimId)
-                .addValue("hashTagKey", hashTagKey);
-
-        return jdbcTemplate.queryForList(QueryString.findSimilarEstimateIds, parameters, Long.TYPE);
-    }
-
-    @Override
-    public List<String> findAllCalculatedHashTagKeys() {
-        return jdbcTemplate.queryForList("SELECT DISTINCT hash_tag_key FROM similar_estimates ",
-                new HashMap<>(), String.class);
-    }
-
-    private static List<PendingHashTagMap> getHashTagMaps(List<String> pendingHashTags) {
-        return pendingHashTags.stream()
-                .map(PendingHashTagMap::new)
-                .collect(Collectors.toList());
-    }
 }
