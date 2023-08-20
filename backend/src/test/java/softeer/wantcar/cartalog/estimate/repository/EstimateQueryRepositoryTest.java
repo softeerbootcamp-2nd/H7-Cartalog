@@ -249,19 +249,19 @@ class EstimateQueryRepositoryTest {
     }
 
     @Nested
-    @DisplayName("견적서 모델 옵션 식별자 조회 세스트")
-    class findEstimateModelOptionIdsByEstimateIdTest {
+    @DisplayName("견적서 모델 타입 옵션 식별자 조회 세스트")
+    class findEstimateModelTypeIdsByEstimateIdTest {
         @Test
-        @DisplayName("적절한 견적서 식별자를 전달 했을 때 견적서 모델 옵션을 반환해야 한다.")
+        @DisplayName("적절한 견적서 식별자를 전달 했을 때 견적서 모델 타입 옵션을 반환해야 한다.")
         void test() {
             //given
 
             //when
-            List<Long> estimateModelOptionIds = estimateQueryRepository.findEstimateModelOptionIdsByEstimateId(103L);
+            List<Long> estimateModelTypeIds = estimateQueryRepository.findEstimateModelTypeIdsByEstimateId(103L);
 
             //then
-            softAssertions.assertThat(estimateModelOptionIds.size()).isEqualTo(3);
-            softAssertions.assertThat(estimateModelOptionIds.containsAll(List.of(1L, 3L, 6L))).isTrue();
+            softAssertions.assertThat(estimateModelTypeIds.size()).isEqualTo(3);
+            softAssertions.assertThat(estimateModelTypeIds.containsAll(List.of(1L, 3L, 6L))).isTrue();
             softAssertions.assertAll();
         }
     }

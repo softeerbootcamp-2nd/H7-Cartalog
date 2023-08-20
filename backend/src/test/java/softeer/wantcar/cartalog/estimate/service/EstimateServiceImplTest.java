@@ -130,7 +130,7 @@ class EstimateServiceImplTest {
             EstimateShareInfoDto shareInfoDto = mock(EstimateShareInfoDto.class);
             when(estimateQueryRepository.findEstimateShareInfoByEstimateId(anyLong())).thenReturn(shareInfoDto);
             List<Long> modelOptionIds = List.of(1L, 4L, 9L);
-            when(estimateQueryRepository.findEstimateModelOptionIdsByEstimateId(anyLong())).thenReturn(modelOptionIds);
+            when(estimateQueryRepository.findEstimateModelTypeIdsByEstimateId(anyLong())).thenReturn(modelOptionIds);
             EstimateOptionIdListDto optionListDto = mock(EstimateOptionIdListDto.class);
             when(estimateQueryRepository.findEstimateOptionIdsByEstimateId(anyLong())).thenReturn(optionListDto);
 

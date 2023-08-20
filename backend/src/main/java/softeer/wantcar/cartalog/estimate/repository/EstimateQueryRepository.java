@@ -34,5 +34,5 @@ public interface EstimateQueryRepository {
 
     EstimateShareInfoDto findEstimateShareInfoByEstimateId(Long estimateId);
 
-    List<Long> findEstimateModelOptionIdsByEstimateId(Long estimateId);
+    List<Long> findEstimateModelTypeIdsByEstimateId(Long estimateId);
 }

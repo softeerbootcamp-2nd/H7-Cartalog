@@ -74,7 +74,7 @@ public class EstimateServiceImpl implements EstimateService {
             throw new IllegalArgumentException();
         }
 
-        List<Long> estimateModelOptionIds = estimateQueryRepository.findEstimateModelOptionIdsByEstimateId(estimateId);
+        List<Long> estimateModelTypeIds = estimateQueryRepository.findEstimateModelTypeIdsByEstimateId(estimateId);
         EstimateOptionIdListDto estimateOptionIds = estimateQueryRepository.findEstimateOptionIdsByEstimateId(estimateId);
 
         EstimateResponseDto.EstimateResponseDtoBuilder builder = EstimateResponseDto.builder()
@@ -99,14 +99,14 @@ public class EstimateServiceImpl implements EstimateService {
                 .interiorCarImageUrl(estimateShareInfo.getInteriorColorImageUrl());
 
 
-        List<OptionPackageInfoDto> modelOptionInfos =
-                trimOptionQueryRepository.findOptionPackageInfoByOptionPackageIds(estimateModelOptionIds, null);
+        List<OptionPackageInfoDto> modelTypesInfos =
+                trimOptionQueryRepository.findOptionPackageInfoByOptionPackageIds(estimateModelTypeIds, null);
 
         List<OptionPackageInfoDto> selectOptionPackageInfos =
                 trimOptionQueryRepository.findOptionPackageInfoByOptionPackageIds(estimateOptionIds.getOptionIds(), estimateOptionIds.getPackageIds());
 
-        modelOptionInfos
-                .forEach(infoDto -> builder.modelOption(EstimateResponseDto.OptionPackageDto.builder()
+        modelTypesInfos
+                .forEach(infoDto -> builder.modelType(EstimateResponseDto.OptionPackageDto.builder()
                         .id("O" + infoDto.getId())
                         .childCategory(infoDto.getChildCategory())
                         .imageUrl(infoDto.getImageUrl())
