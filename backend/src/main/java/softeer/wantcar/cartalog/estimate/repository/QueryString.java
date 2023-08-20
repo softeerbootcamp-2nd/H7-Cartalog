@@ -243,7 +243,7 @@ public class QueryString {
             "       WHERE trim_id= :trimId AND hash_tag_key= :hashTagKey" +
             "   )";
 
-    protected static final  String saveSimilarities =
+    protected static final String saveSimilarities =
             "INSERT INTO hash_tag_similarities (target_hash_tag_index, similarity, origin_hash_tag_index) " +
             "VALUES (:targetHashTagIndex, :similarity, " +
             "   (SELECT idx FROM pending_hash_tag_similarities WHERE trim_id= :trimId AND hash_tag_key= :hashTagKey)) ";

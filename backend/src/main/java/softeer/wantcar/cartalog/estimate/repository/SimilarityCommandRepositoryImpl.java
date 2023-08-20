@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.repository.dto.SimilarityInfo;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @SuppressWarnings({"SqlResolve", "SqlNoDataSourceInspection"})
 @Repository

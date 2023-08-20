@@ -95,7 +95,7 @@ public class SimilarityServiceImpl implements SimilarityService {
                 .max()
                 .orElse(0);
 
-        if(exist) {
+        if (exist) {
             similarityCommandRepository.updateLastCalculatedIndex(trimId, hashTagKey, lastIndex);
 
             List<SimilarityInfo> beforeSimilarities = similarityQueryRepository.findSimilarities(trimId, hashTagKey);
