@@ -4,27 +4,33 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Getter
 @EqualsAndHashCode
 public class PendingHashTagMap {
-    private final long index;
+    private final long idx;
     private final SortedMap<String, Long> hashTags;
 
-    public PendingHashTagMap(long index, String hashTagKey) {
-        this.index = index;
+    public PendingHashTagMap(long idx, String hashTagKey) {
+        this.idx = idx;
         hashTags = getHashTagMap(hashTagKey);
     }
 
     public String getKey() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String key : hashTags.keySet()) {
-            stringBuilder.append(key);
-            stringBuilder.append(":");
-            stringBuilder.append(hashTags.get(key));
-            stringBuilder.append("|");
-        }
-        return stringBuilder.toString();
+        return getHashTagKey(hashTags);
+    }
+
+    public static String getHashTagKey(List<String> hashTags) {
+        return getHashTagKey(new TreeMap<>(hashTags.stream()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))));
+    }
+
+    private static String getHashTagKey(SortedMap<String, Long> hashTagMap) {
+        return hashTagMap.keySet().stream()
+                .map(key -> key + ":" + hashTagMap.get(key))
+                .collect(Collectors.joining("|"));
     }
 
     public double getSimilarity(String otherHashTagKey) {
