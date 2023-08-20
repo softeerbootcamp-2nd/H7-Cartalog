@@ -4,7 +4,6 @@ import * as S from './style';
 import PickTitle from '../../../components/PickTitle';
 import ColorCard from '../../../components/ColorCard';
 import ColorChip from '../../../components/ColorChip';
-import NextButton from '../../../components/NextButton';
 
 function Pick() {
   const { setTrimState, interiorColor } = useData();
@@ -19,9 +18,18 @@ function Pick() {
         name: interior.name,
         carImageUrl: interior.carImageUrl,
       },
+      optionPicker: {
+        ...prevState.optionPicker,
+        isFetch: false,
+      },
+      estimation: {
+        ...prevState.estimation,
+        isFetch: false,
+      },
       price: {
         ...prevState.price,
         interiorColorPrice: interior.price,
+        optionPrice: 0,
       },
     }));
   };
