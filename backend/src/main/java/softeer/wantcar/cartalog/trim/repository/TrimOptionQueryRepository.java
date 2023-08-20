@@ -3,6 +3,7 @@ package softeer.wantcar.cartalog.trim.repository;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import softeer.wantcar.cartalog.trim.repository.dto.OptionPackageInfoDto;
 
 import java.util.List;
 
@@ -65,4 +66,6 @@ public interface TrimOptionQueryRepository {
     List<String> findPackageHashTagByPackageId(Long packageId);
 
     List<Long> findModelOptionIdsByPackageId(Long packageId);
+
+    List<OptionPackageInfoDto> findOptionPackageInfoByOptionPackageIds(List<Long> optionIds, List<Long> packageIds);
 }
