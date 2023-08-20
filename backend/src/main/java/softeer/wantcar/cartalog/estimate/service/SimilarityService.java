@@ -7,6 +7,4 @@ public interface SimilarityService {
     SimilarEstimateResponseDto getSimilarEstimateInfo(Long estimateId, Long similarEstimateId);
 
     SimilarEstimateCountResponseDto getSimilarEstimateCounts(Long estimateId);
-
-    void updateHashTagSimilarities(Long trimId, String hashTagKey);
 }

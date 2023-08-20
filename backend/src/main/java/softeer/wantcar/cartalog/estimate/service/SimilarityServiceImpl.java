@@ -15,8 +15,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class SimilarityServiceImpl implements SimilarityService {
     private static final int DISPLAY_OPTION_MAX_SIZE = 2;
     private final SimilarityQueryRepository similarityQueryRepository;
@@ -57,6 +57,7 @@ public class SimilarityServiceImpl implements SimilarityService {
     }
 
     @Override
+    @Transactional
     public SimilarEstimateCountResponseDto getSimilarEstimateCounts(Long estimateId) {
         EstimateOptionIdListDto estimateOptionIdListDto = estimateQueryRepository.findEstimateOptionIdsByEstimateId(estimateId);
         if (estimateOptionIdListDto == null) {
@@ -75,10 +76,11 @@ public class SimilarityServiceImpl implements SimilarityService {
                 .build();
     }
 
-    @Override
     public void updateHashTagSimilarities(Long trimId, String hashTagKey) {
-
         List<PendingHashTagMap> pendingHashTagMaps = similarityQueryRepository.findPendingHashTagKeys(trimId, hashTagKey);
+        if(pendingHashTagMaps.isEmpty()) {
+            return;
+        }
 
         List<SimilarityInfo> pendingSimilarities = pendingHashTagMaps.stream()
                 .map(hashTagMap -> SimilarityInfo.builder()
