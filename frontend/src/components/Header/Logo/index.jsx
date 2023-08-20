@@ -12,7 +12,7 @@ function Logo() {
 
   const popupProps = {
     show,
-    close: { handleClose },
+    close: handleClose,
     actions: [
       {
         secondary: true,
@@ -29,18 +29,20 @@ function Logo() {
   };
 
   return (
-    <S.Logo>
-      <S.LogoWrapper onClick={handleShow}>
-        <HyundaiLogo />
-      </S.LogoWrapper>
+    <>
+      <S.Logo>
+        <S.LogoWrapper onClick={handleShow}>
+          <HyundaiLogo />
+        </S.LogoWrapper>
 
-      <S.Line />
-      <S.CarType>
-        <S.Type>{LOGO.TYPE}</S.Type>
-        <ArrowDown />
-      </S.CarType>
+        <S.Line />
+        <S.CarType>
+          <S.Type>{LOGO.TYPE}</S.Type>
+          <ArrowDown />
+        </S.CarType>
+      </S.Logo>
       <Popup {...popupProps} />
-    </S.Logo>
+    </>
   );
 }
 

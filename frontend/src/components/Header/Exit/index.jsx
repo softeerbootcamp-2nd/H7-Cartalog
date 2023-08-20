@@ -12,7 +12,7 @@ function Exit() {
 
   const popupProps = {
     show,
-    close: { handleClose },
+    close: handleClose,
     actions: [
       {
         secondary: true,
@@ -29,11 +29,13 @@ function Exit() {
   };
 
   return (
-    <S.Exit onClick={handleShow}>
-      <S.Text>{EXIT.TEXT}</S.Text>
-      <Cancel />
+    <>
+      <S.Exit onClick={handleShow}>
+        <S.Text>{EXIT.TEXT}</S.Text>
+        <Cancel />
+      </S.Exit>
       <Popup {...popupProps} />
-    </S.Exit>
+    </>
   );
 }
 
