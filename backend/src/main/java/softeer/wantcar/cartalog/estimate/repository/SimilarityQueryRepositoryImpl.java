@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import softeer.wantcar.cartalog.estimate.repository.dto.HashTagMap;
+import softeer.wantcar.cartalog.estimate.repository.dto.PendingHashTagMap;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +20,7 @@ public class SimilarityQueryRepositoryImpl implements SimilarityQueryRepository 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Override
-    public List<HashTagMap> findPendingHashTagMapByTrimIdAndHashTagKey(Long trimId, String hashTagKey) {
+    public List<PendingHashTagMap> findPendingHashTagMapByTrimIdAndHashTagKey(Long trimId, String hashTagKey) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("trimId", trimId)
                 .addValue("hashTagKey", hashTagKey);
@@ -53,9 +53,9 @@ public class SimilarityQueryRepositoryImpl implements SimilarityQueryRepository 
                 new HashMap<>(), String.class);
     }
 
-    private static List<HashTagMap> getHashTagMaps(List<String> pendingHashTags) {
+    private static List<PendingHashTagMap> getHashTagMaps(List<String> pendingHashTags) {
         return pendingHashTags.stream()
-                .map(HashTagMap::new)
+                .map(PendingHashTagMap::new)
                 .collect(Collectors.toList());
     }
 }

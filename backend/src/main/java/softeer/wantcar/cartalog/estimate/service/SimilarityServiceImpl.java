@@ -102,9 +102,9 @@ public class SimilarityServiceImpl implements SimilarityService {
     }
 
     private List<Long> getSimilarEstimateIds(Long trimId, List<String> hashTags) {
-        HashTagMap hashTagMap = new HashTagMap(hashTags);
-        lazyCalculateHashTagKeys(trimId, hashTagMap);
-        List<String> similarHashTagKeys = similarityQueryRepository.findSimilarHashTagKeysByTrimIdAndHashTagKey(trimId, hashTagMap.getKey());
+        PendingHashTagMap pendingHashTagMap = new PendingHashTagMap(hashTags);
+        lazyCalculateHashTagKeys(trimId, pendingHashTagMap);
+        List<String> similarHashTagKeys = similarityQueryRepository.findSimilarHashTagKeysByTrimIdAndHashTagKey(trimId, pendingHashTagMap.getKey());
         return similarityQueryRepository.findSimilarEstimateIdsByTrimIdAndHashTagKey(trimId, similarHashTagKeys);
     }
 
@@ -116,33 +116,33 @@ public class SimilarityServiceImpl implements SimilarityService {
                 .collect(Collectors.groupingBy(EstimateOptionInfoDto::getEstimateId));
     }
 
-    private void lazyCalculateHashTagKeys(Long trimId, HashTagMap hashTagMap) {
-        List<HashTagMap> pendingHashTagMaps =
-                similarityQueryRepository.findPendingHashTagMapByTrimIdAndHashTagKey(trimId, hashTagMap.getKey());
-        if (pendingHashTagMaps.isEmpty()) {
+    private void lazyCalculateHashTagKeys(Long trimId, PendingHashTagMap pendingHashTagMap) {
+        List<PendingHashTagMap> pendingPendingHashTagMaps =
+                similarityQueryRepository.findPendingHashTagMapByTrimIdAndHashTagKey(trimId, pendingHashTagMap.getKey());
+        if (pendingPendingHashTagMaps.isEmpty()) {
             return;
         }
 
         PendingHashTagSimilaritySaveDto pendingHashTagSimilaritySaveDto = PendingHashTagSimilaritySaveDto.builder()
                 .trimId(trimId)
-                .hashTagKey(hashTagMap.getKey())
-                .pendingHashTagLeftKeys(getPendingHashTagKeys(pendingHashTagMaps))
+                .hashTagKey(pendingHashTagMap.getKey())
+                .pendingHashTagLeftKeys(getPendingHashTagKeys(pendingPendingHashTagMaps))
                 .build();
 
-        similarityCommandRepository.deletePending(trimId, hashTagMap.getKey());
+        similarityCommandRepository.deletePending(trimId, pendingHashTagMap.getKey());
         similarityCommandRepository.savePendingHashTagSimilarities(pendingHashTagSimilaritySaveDto);
-        similarityCommandRepository.saveCalculatedHashTagKeys(trimId, hashTagMap.getKey(), getSimilarityInfos(hashTagMap, pendingHashTagMaps));
+        similarityCommandRepository.saveCalculatedHashTagKeys(trimId, pendingHashTagMap.getKey(), getSimilarityInfos(pendingHashTagMap, pendingPendingHashTagMaps));
     }
 
-    private static List<String> getPendingHashTagKeys(List<HashTagMap> pendingHashTagMaps) {
-        return pendingHashTagMaps.stream()
-                .map(HashTagMap::getKey)
+    private static List<String> getPendingHashTagKeys(List<PendingHashTagMap> pendingPendingHashTagMaps) {
+        return pendingPendingHashTagMaps.stream()
+                .map(PendingHashTagMap::getKey)
                 .collect(Collectors.toList());
     }
 
-    private static List<SimilarityInfo> getSimilarityInfos(HashTagMap hashTagMap, List<HashTagMap> pendingHashTagMaps) {
-        return pendingHashTagMaps.stream()
-                .map(otherMap -> new SimilarityInfo(otherMap.getKey(), otherMap.getSimilarity(hashTagMap)))
+    private static List<SimilarityInfo> getSimilarityInfos(PendingHashTagMap pendingHashTagMap, List<PendingHashTagMap> pendingPendingHashTagMaps) {
+        return pendingPendingHashTagMaps.stream()
+                .map(otherMap -> new SimilarityInfo(otherMap.getKey(), otherMap.getSimilarity(pendingHashTagMap)))
                 .collect(Collectors.toList());
     }
 

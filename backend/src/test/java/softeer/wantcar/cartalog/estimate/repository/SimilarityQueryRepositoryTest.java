@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
-import softeer.wantcar.cartalog.estimate.repository.dto.HashTagMap;
+import softeer.wantcar.cartalog.estimate.repository.dto.PendingHashTagMap;
 
 import java.util.HashMap;
 import java.util.List;
@@ -57,15 +57,15 @@ class SimilarityQueryRepositoryTest {
         void returnHashTagKeysToQueue() {
             //given
             //when
-            List<HashTagMap> pendingHashTagKeys =
+            List<PendingHashTagMap> pendingHashTagKeys =
                     similarityQueryRepository.findPendingHashTagMapByTrimIdAndHashTagKey(leblancId, "a:1|b:2");
 
             //then
             softAssertions.assertThat(pendingHashTagKeys.size()).isEqualTo(3);
             softAssertions.assertThat(pendingHashTagKeys).containsAll(List.of(
-                    new HashTagMap("c:1|d:1"),
-                    new HashTagMap("c:1|d:2"),
-                    new HashTagMap("c:1|d:3")));
+                    new PendingHashTagMap("c:1|d:1"),
+                    new PendingHashTagMap("c:1|d:2"),
+                    new PendingHashTagMap("c:1|d:3")));
             softAssertions.assertAll();
         }
 
@@ -74,9 +74,9 @@ class SimilarityQueryRepositoryTest {
         void returnEmptyQueue() {
             //given
             //when
-            List<HashTagMap> nonExistTrimIdResult =
+            List<PendingHashTagMap> nonExistTrimIdResult =
                     similarityQueryRepository.findPendingHashTagMapByTrimIdAndHashTagKey(-1L, "a:1|b:2");
-            List<HashTagMap> nonExistHashTagKeyResult =
+            List<PendingHashTagMap> nonExistHashTagKeyResult =
                     similarityQueryRepository.findPendingHashTagMapByTrimIdAndHashTagKey(leblancId, "NOT-EXIST");
 
             //then
