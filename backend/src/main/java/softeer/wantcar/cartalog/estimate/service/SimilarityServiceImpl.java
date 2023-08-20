@@ -63,7 +63,7 @@ public class SimilarityServiceImpl implements SimilarityService {
             return null;
         }
         List<String> totalHashTags = getTotalHashTags(estimateOptionIdListDto);
-        List<Long> estimateIds = getSimilarEstimateIds(estimateOptionIdListDto.getTrimId(), totalHashTags);
+        List<Long> estimateIds = new ArrayList<>(getSimilarEstimateIds(estimateOptionIdListDto.getTrimId(), totalHashTags));
         estimateIds.add(estimateId);
 
         List<EstimateCountDto> estimateCounts = estimateQueryRepository.findEstimateCounts(estimateIds);
@@ -76,31 +76,29 @@ public class SimilarityServiceImpl implements SimilarityService {
     }
 
     @Override
-    public void updateHashTagSimilarities(Long trimId, List<String> hashTags) {
-        String hashTagKey = PendingHashTagMap.getKey(hashTags);
+    public void updateHashTagSimilarities(Long trimId, String hashTagKey) {
         boolean exist = similarityQueryRepository.existHashTagKey(trimId, hashTagKey);
 
         List<PendingHashTagMap> pendingHashTagMaps = exist ?
                 similarityQueryRepository.findPendingHashTagKeys(trimId, hashTagKey) :
-                similarityQueryRepository.findAllHashTagKeys(trimId, hashTagKey);
+                similarityQueryRepository.findAllHashTagKeys(trimId);
 
         List<SimilarityInfo> pendingSimilarities = pendingHashTagMaps.stream()
                 .map(hashTagMap -> SimilarityInfo.builder()
-                        .index(hashTagMap.getIndex())
-                        .hashTagKey(hashTagMap.getKey())
+                        .idx(hashTagMap.getIdx())
                         .similarity(hashTagMap.getSimilarity(hashTagKey))
                         .build())
                 .collect(Collectors.toList());
 
         long lastIndex = pendingSimilarities.stream()
-                .mapToLong(SimilarityInfo::getIndex)
+                .mapToLong(SimilarityInfo::getIdx)
                 .max()
-                .orElseThrow(RuntimeException::new);
+                .orElse(0);
 
         if(exist) {
             similarityCommandRepository.updateLastCalculatedIndex(trimId, hashTagKey, lastIndex);
 
-            List<SimilarityInfo> beforeSimilarities = similarityQueryRepository.findSimilarHashTagKeys(trimId, hashTagKey);
+            List<SimilarityInfo> beforeSimilarities = similarityQueryRepository.findSimilarities(trimId, hashTagKey);
             beforeSimilarities.addAll(pendingSimilarities);
             List<SimilarityInfo> newSimilarities = beforeSimilarities.stream()
                     .filter(similarityInfo -> similarityInfo.getSimilarity() < 0.9 && similarityInfo.getSimilarity() > 0.2)
@@ -109,12 +107,12 @@ public class SimilarityServiceImpl implements SimilarityService {
                     .collect(Collectors.toList());
 
             similarityCommandRepository.deleteSimilarities(trimId, hashTagKey);
-            similarityCommandRepository.saveSimilarities(trimId, hashTagKey);
+            similarityCommandRepository.saveSimilarities(trimId, hashTagKey, newSimilarities);
             return;
         }
 
         similarityCommandRepository.saveHashTagKey(trimId, hashTagKey, lastIndex);
-        similarityCommandRepository.saveSimilarities(trimId, hashTagKey);
+        similarityCommandRepository.saveSimilarities(trimId, hashTagKey, pendingSimilarities);
     }
 
     private static Long getMyEstimateCount(Long estimateId, List<EstimateCountDto> estimateCounts) {
@@ -140,9 +138,13 @@ public class SimilarityServiceImpl implements SimilarityService {
     }
 
     private List<Long> getSimilarEstimateIds(Long trimId, List<String> hashTags) {
+        String hashTagKey = PendingHashTagMap.getHashTagKey(hashTags);
         updateHashTagSimilarities(trimId, hashTagKey);
-        List<String> similarHashTagKeys = similarityQueryRepository.findSimilarHashTagKeysByTrimIdAndHashTagKey(trimId, pendingHashTagMap.getKey());
-        return similarityQueryRepository.findSimilarEstimateIdsByTrimIdAndHashTagKey(trimId, similarHashTagKeys);
+        List<Long> similarHashTagIndex = similarityQueryRepository.findSimilarities(trimId, hashTagKey)
+                .stream()
+                .map(SimilarityInfo::getIdx)
+                .collect(Collectors.toList());
+        return similarityQueryRepository.findSimilarEstimateIds(trimId, similarHashTagIndex);
     }
 
     private Map<Long, List<EstimateOptionInfoDto>> getEstimateOptionInfos(List<Long> similarEstimateIds) {
