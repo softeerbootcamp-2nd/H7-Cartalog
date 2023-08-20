@@ -68,7 +68,7 @@ class EstimateControllerTest {
             when(estimateService.saveOrFindEstimateId(any())).thenReturn(estimateId);
 
             //when
-            ResponseEntity<Long> response = estimateController.registerOrGetEstimate(requestDto);
+            ResponseEntity<Long> response = estimateController.registerOrGetEstimateId(requestDto);
 
             //then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -84,7 +84,7 @@ class EstimateControllerTest {
 
             //when
             //then
-            assertThatThrownBy(() -> estimateController.registerOrGetEstimate(requestDto))
+            assertThatThrownBy(() -> estimateController.registerOrGetEstimateId(requestDto))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }
