@@ -10,6 +10,8 @@ import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentContainerView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.softeer.cartalog.R
 import com.softeer.cartalog.data.model.CarColor
 import com.softeer.cartalog.data.model.Options
@@ -204,3 +206,21 @@ fun setSummaryOptionsRecyclerView(
     }
     recyclerView.adapter = adapter
 }
+
+@BindingAdapter("hashTags")
+fun setHashTagChipGroup(
+    chipGroup: ChipGroup,
+    hashTags: List<String>?
+) {
+    hashTags?.let {
+        chipGroup.removeAllViews()
+        for (hashTag in it) {
+            chipGroup.addView(Chip(chipGroup.context).apply {
+                text = hashTag
+            })
+        }
+    }
+
+}
+
+

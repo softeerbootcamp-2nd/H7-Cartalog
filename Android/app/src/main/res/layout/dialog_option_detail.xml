@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.65" />
+            app:layout_constraintGuide_percent="0.7" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_hmg_center"
@@ -79,10 +79,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/iv_detail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title"
-            app:layout_constraintBottom_toTopOf="@id/iv_detail"
             app:tabBackground="@color/white"
             app:tabGravity="fill"
             app:tabIndicatorColor="@color/gray_900"
@@ -96,9 +96,9 @@
             android:id="@+id/iv_detail"
             android:layout_width="0dp"
             android:layout_height="180dp"
+            android:adjustViewBounds="true"
             android:background="@color/card_bg"
             android:scaleType="centerCrop"
-            android:adjustViewBounds="true"
             app:imgUrl="@{option.imageUrl}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -108,6 +108,7 @@
             android:id="@+id/cg_hashtag"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:hashTags="@{option.hashTags}"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintStart_toStartOf="@id/gl_start"
             app:layout_constraintTop_toTopOf="@id/iv_detail" />
@@ -116,13 +117,15 @@
         <TextView
             android:id="@+id/tv_detail"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="12dp"
+            android:layout_marginBottom="30dp"
+            android:gravity="top|start"
             android:lineSpacingExtra="1.8dp"
             android:text="@{option.description}"
-            android:layout_marginBottom="30dp"
             android:textColor="@color/gray_800"
             android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/v_gray_bgr"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintStart_toStartOf="@id/gl_start"
             app:layout_constraintTop_toBottomOf="@id/iv_detail" />

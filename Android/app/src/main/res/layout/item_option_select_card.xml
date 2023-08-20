@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
         <variable
             name="option"
@@ -94,22 +94,10 @@
                 android:id="@+id/cg_hashtag"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                app:hashTags="@{option.hashTags}"
                 app:layout_constraintBottom_toBottomOf="@id/iv_option"
                 app:layout_constraintEnd_toEndOf="@id/gl_end"
-                app:layout_constraintStart_toStartOf="@id/gl_start">
-
-                <com.google.android.material.chip.Chip
-                    style="@style/ChipHashTagStyle"
-                    android:text="전체" />
-
-                <com.google.android.material.chip.Chip
-                    style="@style/ChipHashTagStyle"
-                    android:text="상세품목" />
-
-                <com.google.android.material.chip.Chip
-                    style="@style/ChipHashTagStyle"
-                    android:text="악세서리" />
-            </com.google.android.material.chip.ChipGroup>
+                app:layout_constraintStart_toStartOf="@id/gl_start" />
 
 
             <TextView
