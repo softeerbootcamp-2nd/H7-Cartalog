@@ -19,7 +19,9 @@ import softeer.wantcar.cartalog.estimate.service.dto.EstimateDto;
 import softeer.wantcar.cartalog.estimate.service.dto.PendingHashTagSimilaritySaveDto;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 import softeer.wantcar.cartalog.trim.repository.TrimColorQueryRepository;
+import softeer.wantcar.cartalog.trim.repository.TrimOptionQueryRepository;
 import softeer.wantcar.cartalog.trim.repository.TrimQueryRepository;
+import softeer.wantcar.cartalog.trim.repository.dto.OptionPackageInfoDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,7 @@ public class EstimateServiceImpl implements EstimateService {
     private final ModelOptionQueryRepository modelOptionQueryRepository;
     private final SimilarityCommandRepository similarityCommandRepository;
     private final SimilarityQueryRepository similarityQueryRepository;
+    private final TrimOptionQueryRepository trimOptionQueryRepository;
 
     @Override
     public Long saveOrFindEstimateId(EstimateRequestDto estimateRequestDto) {
@@ -95,21 +98,40 @@ public class EstimateServiceImpl implements EstimateService {
                 .exteriorCarImageUrl(estimateShareInfo.getInteriorCarImageUrl())
                 .interiorCarImageUrl(estimateShareInfo.getInteriorColorImageUrl());
 
-        estimateModelOptionIds
-                .forEach(id -> builder.modelOption(EstimateResponseDto.OptionPackageDto.builder()
-                        .id("O" + id)
+
+        List<Long> allOptionIds = new ArrayList<>(estimateModelOptionIds);
+        allOptionIds.addAll(estimateOptionIdsByEstimateId.getOptionIds());
+
+        List<OptionPackageInfoDto> optionPackageInfos = trimOptionQueryRepository.findOptionPackageInfoByOptionPackageIds(allOptionIds, estimateOptionIdsByEstimateId.getPackageIds());
+
+        optionPackageInfos.stream()
+                .filter(infoDto -> estimateModelOptionIds.contains(infoDto.getId()))
+                .forEach(infoDto -> builder.modelOption(EstimateResponseDto.OptionPackageDto.builder()
+                        .id("O" + infoDto.getId())
+                        .childCategory(infoDto.getChildCategory())
+                        .imageUrl(infoDto.getImageUrl())
+                        .name(infoDto.getName())
                         .build())
                 );
 
-        estimateOptionIdsByEstimateId.getOptionIds()
-                .forEach(id -> builder.modelOption(EstimateResponseDto.OptionPackageDto.builder()
-                        .id("O" + id)
+        optionPackageInfos.stream()
+                .filter(infoDto -> estimateOptionIdsByEstimateId.getOptionIds().contains(infoDto.getId()))
+                .forEach(infoDto -> builder.selectOptionOrPackage(EstimateResponseDto.OptionPackageDto.builder()
+                        .id("O" + infoDto.getId())
+                        .childCategory(infoDto.getChildCategory())
+                        .imageUrl(infoDto.getImageUrl())
+                        .name(infoDto.getName())
                         .build())
                 );
 
-        estimateOptionIdsByEstimateId.getPackageIds()
-                .forEach(id -> builder.modelOption(EstimateResponseDto.OptionPackageDto.builder()
-                        .id("O" + id)
+
+        optionPackageInfos.stream()
+                .filter(infoDto -> estimateOptionIdsByEstimateId.getPackageIds().contains(infoDto.getId()))
+                .forEach(infoDto -> builder.selectOptionOrPackage(EstimateResponseDto.OptionPackageDto.builder()
+                        .id("P" + infoDto.getId())
+                        .childCategory(infoDto.getChildCategory())
+                        .imageUrl(infoDto.getImageUrl())
+                        .name(infoDto.getName())
                         .build())
                 );
 

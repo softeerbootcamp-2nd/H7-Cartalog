@@ -19,7 +19,9 @@ import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionListDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateShareInfoDto;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 import softeer.wantcar.cartalog.trim.repository.TrimColorQueryRepository;
+import softeer.wantcar.cartalog.trim.repository.TrimOptionQueryRepository;
 import softeer.wantcar.cartalog.trim.repository.TrimQueryRepository;
+import softeer.wantcar.cartalog.trim.repository.dto.OptionPackageInfoDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,6 +42,7 @@ class EstimateServiceImplTest {
     SimilarityCommandRepository similarityCommandRepository;
     SimilarityQueryRepository similarityQueryRepository;
     ModelOptionQueryRepository modelOptionQueryRepository;
+    TrimOptionQueryRepository trimOptionQueryRepository;
     EstimateService estimateService;
 
     @BeforeEach
@@ -51,6 +54,7 @@ class EstimateServiceImplTest {
         modelOptionQueryRepository = mock(ModelOptionQueryRepository.class);
         similarityQueryRepository = mock(SimilarityQueryRepository.class);
         similarityCommandRepository = mock(SimilarityCommandRepository.class);
+        trimOptionQueryRepository = mock(TrimOptionQueryRepository.class);
 
         estimateService = new EstimateServiceImpl(estimateQueryRepository,
                 estimateCommandRepository,
@@ -58,7 +62,9 @@ class EstimateServiceImplTest {
                 trimQueryRepository,
                 modelOptionQueryRepository,
                 similarityCommandRepository,
-                similarityQueryRepository);
+                similarityQueryRepository,
+                trimOptionQueryRepository
+        );
     }
 
     @Nested
@@ -124,10 +130,15 @@ class EstimateServiceImplTest {
             EstimateShareInfoDto shareInfoDto = mock(EstimateShareInfoDto.class);
             when(estimateQueryRepository.findEstimateShareInfoByEstimateId(anyLong())).thenReturn(shareInfoDto);
             List<Long> modelOptionIds = List.of(1L, 4L, 9L);
-            List<String> expectModelOptionIds = List.of("O1", "O4", "O9");
             when(estimateQueryRepository.findEstimateModelOptionIdsByEstimateId(anyLong())).thenReturn(modelOptionIds);
             EstimateOptionListDto optionListDto = mock(EstimateOptionListDto.class);
             when(estimateQueryRepository.findEstimateOptionIdsByEstimateId(anyLong())).thenReturn(optionListDto);
+
+            OptionPackageInfoDto option1 = mock(OptionPackageInfoDto.class);
+            OptionPackageInfoDto option4 = mock(OptionPackageInfoDto.class);
+            OptionPackageInfoDto option9 = mock(OptionPackageInfoDto.class);
+            List<OptionPackageInfoDto> optionPackageInfoDtoList = List.of(option1, option4, option9);
+            when(trimOptionQueryRepository.findOptionPackageInfoByOptionPackageIds(modelOptionIds, null)).thenReturn(optionPackageInfoDtoList);
 
             //when
             EstimateResponseDto estimate = estimateService.findEstimateByEstimateId(anyLong());
@@ -137,14 +148,10 @@ class EstimateServiceImplTest {
             softAssertions.assertThat(estimate.getDetailTrimId()).isEqualTo(shareInfoDto.getDetailTrimId());
             softAssertions.assertThat(estimate.getExteriorColor().getColorCode()).isEqualTo(shareInfoDto.getExteriorColorCode());
             softAssertions.assertThat(estimate.getInteriorColor().getColorCode()).isEqualTo(shareInfoDto.getInteriorColorCode());
-            List<String> actualModelOptionIds = estimate.getModelOptions().stream()
+            List<String> actualSelectOptionPackageIds = estimate.getSelectOptionOrPackages().stream()
                     .map(EstimateResponseDto.OptionPackageDto::getId)
                     .collect(Collectors.toUnmodifiableList());
-            softAssertions.assertThat(actualModelOptionIds.containsAll(expectModelOptionIds)).isTrue();
-            List<String> actualModelPackageIds = estimate.getSelectOptionOrPackages().stream()
-                    .map(EstimateResponseDto.OptionPackageDto::getId)
-                    .collect(Collectors.toUnmodifiableList());
-            softAssertions.assertThat(actualModelPackageIds.containsAll(optionListDto.getAllOptionIds())).isTrue();
+            softAssertions.assertThat(actualSelectOptionPackageIds.containsAll(optionListDto.getAllOptionIds())).isTrue();
         }
 
         @Test
