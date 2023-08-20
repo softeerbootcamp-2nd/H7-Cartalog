@@ -375,6 +375,7 @@ class TrimOptionQueryRepositoryTest {
 
             //then
             assertThat(optionPackageInfos.size()).isEqualTo(6);
+            assertThat(optionPackageInfos.get(0).getImageUrl().startsWith(serverPath.IMAGE_SERVER_PATH)).isTrue();
         }
     }
 }
