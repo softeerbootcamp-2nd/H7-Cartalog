@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +16,6 @@ import softeer.wantcar.cartalog.estimate.repository.dto.SimilarityInfo;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -34,16 +34,6 @@ class SimilarityQueryRepositoryTest {
     void setUp() {
         similarityQueryRepository = new SimilarityQueryRepositoryImpl(jdbcTemplate);
         softAssertions = new SoftAssertions();
-        jdbcTemplate.update("INSERT INTO pending_hash_tag_similarities " +
-                            "(idx, hash_tag_key, trim_id, last_calculated_index) VALUES " +
-                            "(1, 'a:1|b:1', 1, 2), " +
-                            "(2, 'a:1|b:2', 1, 0), " +
-                            "(3, 'a:1|b:3', 1, 0), " +
-                            "(4, 'a:1|b:4', 1, 0)", new HashMap<>());
-
-        jdbcTemplate.update("INSERT INTO hash_tag_similarities " +
-                            "(origin_hash_tag_index, target_hash_tag_index, similarity) VALUES " +
-                            "(1, 2, 0.3) ", new HashMap<>());
     }
 
     @Nested
@@ -54,7 +44,7 @@ class SimilarityQueryRepositoryTest {
         void returnTrue() {
             //given
             //when
-            boolean response = similarityQueryRepository.existHashTagKey(1L, "a:1|b:1");
+            boolean response = similarityQueryRepository.existHashTagKey(2L, "다인가족:2?레저:2?반려동물:1?스타일:2?안전:2?자녀:2?자녀 통학:1?쾌적:1");
 
             //then
             assertThat(response).isTrue();
@@ -65,7 +55,7 @@ class SimilarityQueryRepositoryTest {
         void returnFalse() {
             //given
             //when
-            boolean response = similarityQueryRepository.existHashTagKey(1L, "Z");
+            boolean response = similarityQueryRepository.existHashTagKey(1L, "NOT-EXIST");
 
             //then
             assertThat(response).isFalse();
@@ -80,15 +70,10 @@ class SimilarityQueryRepositoryTest {
         void returnPendingHashTagKeys() {
             //given
             //when
-            List<PendingHashTagMap> pendingHashTagMaps = similarityQueryRepository.findPendingHashTagKeys(1L, "a:1|b:1");
+            List<PendingHashTagMap> pendingHashTagMaps = similarityQueryRepository.findPendingHashTagKeys(2L, "다인가족:2?레저:2?반려동물:1?스타일:2?안전:2?자녀:2?자녀 통학:1?쾌적:1");
 
             //then
-            softAssertions.assertThat(pendingHashTagMaps.size()).isEqualTo(2);
-            List<String> pendingHashTagKeys = pendingHashTagMaps.stream()
-                    .map(PendingHashTagMap::getKey)
-                    .collect(Collectors.toList());
-            softAssertions.assertThat(pendingHashTagKeys).containsAll(List.of("a:1|b:3", "a:1|b:4"));
-            softAssertions.assertAll();
+            assertThat(pendingHashTagMaps.size()).isEqualTo(396);
         }
 
         @Test
@@ -96,7 +81,7 @@ class SimilarityQueryRepositoryTest {
         void returnEmptyList() {
             //given
             //when
-            List<PendingHashTagMap> pendingHashTagMaps = similarityQueryRepository.findPendingHashTagKeys(0L, "Z");
+            List<PendingHashTagMap> pendingHashTagMaps = similarityQueryRepository.findPendingHashTagKeys(0L, "NOT-EXIST");
 
             //then
             assertThat(pendingHashTagMaps.isEmpty()).isTrue();
@@ -111,17 +96,10 @@ class SimilarityQueryRepositoryTest {
         void returnAllHashTagKeys() {
             //given
             //when
-            List<PendingHashTagMap> pendingHashTagMaps = similarityQueryRepository.findAllHashTagKeys(1L);
+            List<PendingHashTagMap> pendingHashTagMaps = similarityQueryRepository.findAllHashTagKeys(2L);
 
             //then
-            softAssertions.assertThat(pendingHashTagMaps.size()).isEqualTo(4);
-
-            List<String> hsahTagKeys = pendingHashTagMaps.stream()
-                    .map(PendingHashTagMap::getKey)
-                    .collect(Collectors.toList());
-
-            softAssertions.assertThat(hsahTagKeys).containsAll(List.of("a:1|b:1", "a:1|b:2", "a:1|b:3", "a:1|b:4"));
-            softAssertions.assertAll();
+            assertThat(pendingHashTagMaps.size()).isEqualTo(396);
         }
 
         @Test
@@ -143,8 +121,12 @@ class SimilarityQueryRepositoryTest {
         @DisplayName("트림 아이디와 해시 태그 키 조합이 존재한다면 해당 조합의 유사 정보를 반환한다")
         void returnSimilarityInfos() {
             //given
+            jdbcTemplate.update("INSERT INTO hash_tag_similarities " +
+                                "(target_hash_tag_index, origin_hash_tag_index, similarity) VALUES " +
+                                "(2, 1, 0.3)", new MapSqlParameterSource());
             //when
-            List<SimilarityInfo> similarityInfos = similarityQueryRepository.findSimilarities(1L, "a:1|b:1");
+            List<SimilarityInfo> similarityInfos = similarityQueryRepository.findSimilarities(2L,
+                    "다인가족:2?레저:2?반려동물:1?스타일:2?안전:2?자녀:2?자녀 통학:1?쾌적:1");
 
             //then
             softAssertions.assertThat(similarityInfos.size()).isEqualTo(1);
@@ -159,7 +141,7 @@ class SimilarityQueryRepositoryTest {
         void returnEmptyList() {
             //given
             //when
-            List<SimilarityInfo> similarityInfos = similarityQueryRepository.findSimilarities(1L, "Z");
+            List<SimilarityInfo> similarityInfos = similarityQueryRepository.findSimilarities(1L, "NOT-EXISTå");
 
             //then
             assertThat(similarityInfos.isEmpty()).isTrue();
@@ -172,11 +154,11 @@ class SimilarityQueryRepositoryTest {
         @BeforeEach
         void setUp() {
             jdbcTemplate.update("INSERT INTO similar_estimates (hash_tag_key, trim_id, estimate_id) VALUES " +
-                                "    ('a:1|b:1', 1, 1), " +
-                                "    ('a:1|b:1', 1, 2), " +
-                                "    ('a:1|b:1', 1, 3), " +
-                                "    ('a:1|b:1', 1, 4), " +
-                                "    ('a:1|b:1', 1, 5) ", new HashMap<>());
+                                "    ('다인가족:2?레저:2?반려동물:1?스타일:2?안전:2?자녀:2?자녀 통학:1?쾌적:1', 2, 1), " +
+                                "    ('다인가족:2?레저:2?반려동물:1?스타일:2?안전:2?자녀:2?자녀 통학:1?쾌적:1', 2, 2), " +
+                                "    ('다인가족:2?레저:2?반려동물:1?스타일:2?안전:2?자녀:2?자녀 통학:1?쾌적:1', 2, 3), " +
+                                "    ('다인가족:2?레저:2?반려동물:1?스타일:2?안전:2?자녀:2?자녀 통학:1?쾌적:1', 2, 4), " +
+                                "    ('다인가족:2?레저:2?반려동물:1?스타일:2?안전:2?자녀:2?자녀 통학:1?쾌적:1', 2, 5) ", new HashMap<>());
         }
 
         @Test
@@ -185,7 +167,7 @@ class SimilarityQueryRepositoryTest {
             //given
             //when
             List<Long> estimateIds =
-                    similarityQueryRepository.findSimilarEstimateIds(1L, List.of(1L));
+                    similarityQueryRepository.findSimilarEstimateIds(2L, List.of(1L));
 
             //then
             softAssertions.assertThat(estimateIds).isNotNull();

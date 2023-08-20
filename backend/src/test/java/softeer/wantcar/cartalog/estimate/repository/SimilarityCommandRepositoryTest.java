@@ -44,7 +44,7 @@ class SimilarityCommandRepositoryTest {
             //given
             jdbcTemplate.update("INSERT INTO pending_hash_tag_similarities " +
                                 "(idx, hash_tag_key, trim_id, last_calculated_index) VALUES " +
-                                "(1, 'A', 1, 1) ", new HashMap<>());
+                                "(0, 'A', 1, 1) ", new HashMap<>());
 
             //when
             similarityCommandRepository.updateLastCalculatedIndex(1L, "A", 2);
@@ -52,7 +52,7 @@ class SimilarityCommandRepositoryTest {
             //then
             Long lastCalculatedIndex = jdbcTemplate.queryForObject("SELECT last_calculated_index " +
                                                                    "FROM pending_hash_tag_similarities " +
-                                                                   "WHERE idx = 1 ", new HashMap<>(), Long.class);
+                                                                   "WHERE idx = 0 ", new HashMap<>(), Long.class);
             assertThat(lastCalculatedIndex).isEqualTo(2);
         }
     }
@@ -66,17 +66,18 @@ class SimilarityCommandRepositoryTest {
             //given
             jdbcTemplate.update("INSERT INTO pending_hash_tag_similarities " +
                                 "(idx, hash_tag_key, trim_id, last_calculated_index) VALUES " +
-                                "(1, 'A', 1, 1) ", new HashMap<>());
+                                "(0, 'A', 1, 1) ", new HashMap<>());
             jdbcTemplate.update("INSERT INTO hash_tag_similarities " +
                                 "(target_hash_tag_index, origin_hash_tag_index, similarity) VALUES " +
-                                "(2, 1, 0.3) ", new HashMap<>());
+                                "(1, 400, 0.3) ", new HashMap<>());
 
             //when
             similarityCommandRepository.deleteSimilarities(1L, "A");
 
             //then
             List<Long> targetIndexes = jdbcTemplate.queryForList("SELECT target_hash_tag_index FROM hash_tag_similarities " +
-                                                                 "WHERE target_hash_tag_index = 2", new HashMap<>(), Long.class);
+                                                                 "WHERE target_hash_tag_index = 0", new HashMap<>(), Long.class);
+            System.out.println(targetIndexes);
             assertThat(targetIndexes.isEmpty()).isTrue();
         }
     }
@@ -90,7 +91,7 @@ class SimilarityCommandRepositoryTest {
             //given
             jdbcTemplate.update("INSERT INTO pending_hash_tag_similarities " +
                                 "(idx, hash_tag_key, trim_id, last_calculated_index) VALUES " +
-                                "(1, 'A', 1, 1) ", new HashMap<>());
+                                "(400, 'A', 1, 1) ", new HashMap<>());
             SimilarityInfo similarityInfo = SimilarityInfo.builder()
                     .idx(1)
                     .similarity(0.2)
