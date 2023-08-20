@@ -167,4 +167,20 @@ public class QueryString {
             "       INNER JOIN trim_interior_colors  " +
             "               ON trim_interior_colors.id = estimates.trim_interior_color_id  " +
             "WHERE  estimates.id = :estimateId ";
+
+
+    protected static String findEstimateModelOptionIdsByEstimateId =
+            "SELECT model_options.id  " +
+            "FROM   estimates  " +
+            "       INNER JOIN detail_trims  " +
+            "               ON detail_trims.id = estimates.detail_trim_id  " +
+            "       INNER JOIN detail_models  " +
+            "               ON detail_models.id = detail_trims.detail_model_id  " +
+            "       INNER JOIN detail_model_decision_options  " +
+            "               ON detail_model_decision_options.detail_model_id =  " +
+            "                  detail_models.id  " +
+            "       INNER JOIN model_options  " +
+            "               ON model_options.id =  " +
+            "                  detail_model_decision_options.model_option_id  " +
+            "WHERE  estimates.id = :estimateId ";
 }

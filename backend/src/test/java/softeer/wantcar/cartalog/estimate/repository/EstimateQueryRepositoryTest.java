@@ -132,4 +132,22 @@ class EstimateQueryRepositoryTest {
             assertThat(estimateShareInfo).isNull();
         }
     }
+
+    @Nested
+    @DisplayName("견적서 모델 옵션 식별자 조회 세스트")
+    class findEstimateModelOptionIdsByEstimateIdTest {
+        @Test
+        @DisplayName("적절한 견적서 식별자를 전달 했을 때 견적서 모델 옵션을 반환해야 한다.")
+        void test() {
+            //given
+
+            //when
+            List<Long> estimateModelOptionIds = estimateQueryRepository.findEstimateModelOptionIdsByEstimateId(103L);
+
+            //then
+            softAssertions.assertThat(estimateModelOptionIds.size()).isEqualTo(3);
+            softAssertions.assertThat(estimateModelOptionIds.containsAll(List.of(1L, 3L, 6L))).isTrue();
+            softAssertions.assertAll();
+        }
+    }
 }

@@ -97,4 +97,17 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
             return null;
         }
     }
+
+    @Override
+    public List<Long> findEstimateModelOptionIdsByEstimateId(Long estimateId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("estimateId", estimateId);
+
+        try {
+            return jdbcTemplate.queryForList(QueryString.findEstimateModelOptionIdsByEstimateId,
+                    parameters, Long.class);
+        } catch (EmptyResultDataAccessException exception) {
+            return null;
+        }
+    }
 }
