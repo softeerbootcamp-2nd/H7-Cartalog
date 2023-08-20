@@ -34,8 +34,10 @@ export const PopupContent = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  text-align: center;
   flex: 1;
   padding: 20px;
+  white-space: pre-line;
   font: ${({ theme }) => theme.font.textKR.Medium14};
   color: ${({ theme }) => theme.color.gray['900']};
 `;
