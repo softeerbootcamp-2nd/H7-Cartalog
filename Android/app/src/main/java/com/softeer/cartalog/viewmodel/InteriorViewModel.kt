@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.softeer.cartalog.data.enums.PriceDataType
 import com.softeer.cartalog.data.model.CarColor
+import com.softeer.cartalog.data.model.db.PriceData
 import com.softeer.cartalog.data.repository.CarRepository
 import kotlinx.coroutines.launch
 
@@ -13,8 +15,14 @@ class InteriorViewModel(private val repository: CarRepository) : ViewModel() {
     private val _colorList = MutableLiveData<List<CarColor>>()
     val colorList: LiveData<List<CarColor>> = _colorList
 
-    private val _selectedColor = MutableLiveData(0)
-    val selectedColor: LiveData<Int> = _selectedColor
+    private val _selectedColorIdx = MutableLiveData(0)
+    val selectedColorIdx: LiveData<Int> = _selectedColorIdx
+
+    private val _userTotalPrice = MutableLiveData(0)
+    val userTotalPrice: LiveData<Int> = _userTotalPrice
+
+    private lateinit var selectedByUser: PriceData
+    private lateinit var selectedColor: CarColor
 
     init {
         setInteriorColorData()
@@ -22,12 +30,33 @@ class InteriorViewModel(private val repository: CarRepository) : ViewModel() {
 
     private fun setInteriorColorData() {
         viewModelScope.launch {
-            // TODO : exteriorColorCode 부분 추후 RoomDB에서 불러온값으로 초기화 해야함
-            _colorList.value = repository.getCarColors(false, 2, "A2B")
+            selectedByUser = repository.getTypeData(PriceDataType.INTERIOR_COLOR)
+            val exteriorColor = repository.getTypeData(PriceDataType.EXTERIOR_COLOR)
+            _colorList.value = repository.getCarColors(false, 2, exteriorColor.colorCode!!)
+            _selectedColorIdx.value = colorList.value?.indices?.find {
+                colorList.value?.get(it)?.code == selectedByUser.colorCode
+            }
+            selectedColor = colorList.value?.get(selectedColorIdx.value!!)!!
         }
     }
 
-    fun setSelectedColor(selectedColor: Int){
-        _selectedColor.value = selectedColor
+    fun setSelectedColor(selected: Int) {
+        _userTotalPrice.value = _userTotalPrice.value?.minus(selectedColor.price)
+        _selectedColorIdx.value = selected
+        selectedColor = colorList.value?.get(selectedColorIdx.value!!)!!
+        _userTotalPrice.value = _userTotalPrice.value?.plus(selectedColor.price)
+    }
+
+    suspend fun saveUserSelection() {
+        val newColor = selectedColor.run {
+            selectedByUser.copy(
+                name = name, price = price, colorCode = code, imgUrl = colorImageUrl
+            )
+        }
+        repository.saveUserColorData(newColor)
+    }
+
+    fun setUserTotalPrice(price: Int) {
+        _userTotalPrice.value = price
     }
 }

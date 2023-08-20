@@ -58,22 +58,23 @@
         <ImageView
             android:id="@+id/im_car_result"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="8dp"
+            android:scaleType="centerCrop"
             app:imgUrl="@{viewModel.carImage.sideExteriorImageUrl}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_close_top" />
 
         <RadioGroup
-            imageView="@{imCarResult}"
-            imgUrl="@{viewModel.carImage}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:background="@drawable/shape_radio_background"
             android:orientation="horizontal"
             android:padding="5dp"
+            app:imageView="@{imCarResult}"
+            app:imgUrl="@{viewModel.carImage}"
             app:layout_constraintBottom_toBottomOf="@id/vw_divider_1"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintStart_toStartOf="@id/gl_title">
@@ -88,8 +89,8 @@
                 android:fontFamily="@font/hyndaisans_text"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
-                android:paddingHorizontal="23dp"
-                android:paddingVertical="6dp"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="8dp"
                 android:text="@string/tab_exterior"
                 android:textAlignment="center"
                 android:textColor="@drawable/selector_radio_text_exterior_interior" />
@@ -103,8 +104,8 @@
                 android:fontFamily="@font/hyndaisans_text"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
-                android:paddingHorizontal="23dp"
-                android:paddingVertical="6dp"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="8dp"
                 android:text="@string/tab_interior"
                 android:textAlignment="center"
                 android:textColor="@drawable/selector_radio_text_exterior_interior" />
@@ -114,7 +115,6 @@
             android:id="@+id/vw_divider_1"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_marginTop="8dp"
             android:background="@color/gray_300"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintStart_toStartOf="@id/gl_title"
@@ -135,6 +135,7 @@
             android:id="@+id/tv_contents_1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/hyndaisans_text"
             android:text="@{viewModel.myCar.carName}"
             android:textColor="@color/gray_900"
             app:layout_constraintEnd_toStartOf="@id/gl_price"
@@ -369,7 +370,6 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_option_list"
-            viewModel="@{viewModel}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -378,6 +378,7 @@
             app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintStart_toStartOf="@id/gl_title"
             app:layout_constraintTop_toBottomOf="@id/vw_item_divider_3"
+            app:viewModel="@{viewModel}"
             tools:listitem="@layout/item_price_summary_option" />
 
         <View
@@ -411,7 +412,7 @@
             android:layout_marginBottom="8dp"
             android:elevation="10dp"
             android:fontFamily="@font/hyndaisans_head_medium"
-            android:text="43,560,000 원"
+            android:text="@{String.format(`%,d원`,viewModel.userTotalPrice)}"
             android:textColor="@color/primary_color_500"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/vw_summary_bgr"

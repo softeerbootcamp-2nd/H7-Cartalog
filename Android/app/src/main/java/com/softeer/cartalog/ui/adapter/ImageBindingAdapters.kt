@@ -1,7 +1,6 @@
 package com.softeer.cartalog.ui.adapter
 
 import android.annotation.SuppressLint
-import android.graphics.drawable.Drawable
 import android.view.MotionEvent
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
@@ -21,7 +20,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @BindingAdapter("imgUrl")
 fun setImageWithUrl(
@@ -83,7 +81,7 @@ fun setImage360WithUrl(
                     (((viewModel.start360X.value!! - event.x) / imageView.width * 60).toInt() + 60) % 60
 
                 val imgUrl = UtilManager.get360Image(
-                    viewModel.colorList.value!![viewModel.selectedColor.value!!].code,
+                    viewModel.colorList.value!![viewModel.selectedColorIdx.value!!].code,
                     dragIdx
                 )
                 val request = ImageRequest.Builder(imageView.context)
