@@ -111,6 +111,7 @@ public class EstimateServiceImpl implements EstimateService {
                         .childCategory(infoDto.getChildCategory())
                         .imageUrl(infoDto.getImageUrl())
                         .name(infoDto.getName())
+                        .price(infoDto.getPrice())
                         .build())
                 );
 
@@ -122,6 +123,7 @@ public class EstimateServiceImpl implements EstimateService {
                         .childCategory(infoDto.getChildCategory())
                         .imageUrl(infoDto.getImageUrl())
                         .name(infoDto.getName())
+                        .price(infoDto.getPrice())
                         .build())
                 );
 
@@ -133,6 +135,7 @@ public class EstimateServiceImpl implements EstimateService {
                         .childCategory(infoDto.getChildCategory())
                         .imageUrl(infoDto.getImageUrl())
                         .name(infoDto.getName())
+                        .price(infoDto.getPrice())
                         .build())
                 );
 
