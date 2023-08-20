@@ -312,20 +312,19 @@ CREATE TABLE similar_estimates
 
 CREATE TABLE hash_tag_similarities
 (
-    hash_tag_left_key VARCHAR(255),
-    hash_tag_key      VARCHAR(255),
-    trim_id           BIGINT,
-    similarity        FLOAT NOT NULL,
-    PRIMARY KEY (hash_tag_left_key, hash_tag_key, trim_id),
-    FOREIGN KEY (trim_id) REFERENCES trims (id) ON UPDATE CASCADE
+    origin_hash_tag_index   VARCHAR(255),
+    target_hash_tag_index   VARCHAR(255),
+    similarity              FLOAT NOT NULL,
+    PRIMARY KEY (origin_hash_tag_index, target_hash_tag_index)
 );
 
 CREATE TABLE pending_hash_tag_similarities
 (
-    pending_hash_tag_left_key VARCHAR(255),
+    idx                       BIGINT AUTO_INCREMENT,
     hash_tag_key              VARCHAR(255),
     trim_id                   BIGINT,
-    PRIMARY KEY (pending_hash_tag_left_key, hash_tag_key, trim_id),
+    last_calculated_index     BIGINT,
+    PRIMARY KEY (idx),
     FOREIGN KEY (trim_id) REFERENCES trims (id) ON UPDATE CASCADE
 );
 
@@ -474,10 +473,10 @@ INSERT INTO similar_estimates (hash_tag_key, estimate_id, trim_id)
 SELECT *
 FROM CSVREAD('classpath:csv/similar_estimates.csv', null, 'fieldSeparator=|');
 
-INSERT INTO hash_tag_similarities (hash_tag_left_key, hash_tag_key, trim_id, similarity)
-SELECT *
-FROM CSVREAD('classpath:csv/hash_tag_similarities.csv', null, 'fieldSeparator=|');
-
-INSERT INTO pending_hash_tag_similarities (pending_hash_tag_left_key, hash_tag_key, trim_id)
-SELECT *
-FROM CSVREAD('classpath:csv/pending_hash_tag_similarities.csv', null, 'fieldSeparator=|');
+-- INSERT INTO hash_tag_similarities (origin_hash_tag_index, target_hash_tag_index, similarity)
+-- SELECT *
+-- FROM CSVREAD('classpath:csv/hash_tag_similarities.csv', null, 'fieldSeparator=|');
+--
+-- INSERT INTO pending_hash_tag_similarities (index, hash_tag_key, trim_id, last_calculated_index)
+-- SELECT *
+-- FROM CSVREAD('classpath:csv/pending_hash_tag_similarities.csv', null, 'fieldSeparator=|');
