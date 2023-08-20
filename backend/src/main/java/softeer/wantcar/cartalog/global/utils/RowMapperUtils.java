@@ -1,5 +1,6 @@
 package softeer.wantcar.cartalog.global.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.lang.reflect.Constructor;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 public abstract class RowMapperUtils {
     public interface RowMapperStrategy {
         boolean isMappingTarget(Class<?> type, String name);
@@ -57,7 +59,7 @@ public abstract class RowMapperUtils {
     private static final class FloatStrategy implements RowMapperStrategy {
         @Override
         public boolean isMappingTarget(Class<?> type, String name) {
-            return type == Float.class;
+            return type == Float.class || type == float.class;
         }
 
         @Override
@@ -69,7 +71,7 @@ public abstract class RowMapperUtils {
     private static final class DoubleStrategy implements RowMapperStrategy {
         @Override
         public boolean isMappingTarget(Class<?> type, String name) {
-            return type == Double.class;
+            return type == Double.class || type == double.class;
         }
 
         @Override
