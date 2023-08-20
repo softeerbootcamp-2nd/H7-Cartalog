@@ -7,12 +7,10 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.repository.dto.SimilarityInfo;
-import softeer.wantcar.cartalog.estimate.service.dto.PendingHashTagSimilaritySaveDto;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,12 +28,98 @@ class SimilarityCommandRepositoryTest {
     NamedParameterJdbcTemplate jdbcTemplate;
     SimilarityCommandRepository similarityCommandRepository;
     SoftAssertions softAssertions;
-    Long leblancId;
 
     @BeforeEach
     void setUp() {
         similarityCommandRepository = new SimilarityCommandRepositoryImpl(jdbcTemplate);
         softAssertions = new SoftAssertions();
-        leblancId = jdbcTemplate.queryForObject("SELECT id FROM trims WHERE name='Le Blanc'", new HashMap<>(), Long.class);
+    }
+
+    @Nested
+    @DisplayName("updateLastCalculatedIndex 테스트")
+    class updateLastCalculatedIndexTest {
+        @Test
+        @DisplayName("기존에 존재하던 해시 태그 키의 마지막 계산 인덱스를 변경한다")
+        void changeLastCalculatedIndex() {
+            //given
+            jdbcTemplate.update("INSERT INTO pending_hash_tag_similarities " +
+                                "(idx, hash_tag_key, trim_id, last_calculated_index) VALUES " +
+                                "(1, 'A', 1, 1) ", new HashMap<>());
+
+            //when
+            similarityCommandRepository.updateLastCalculatedIndex(1L, "A", 2);
+
+            //then
+            Long lastCalculatedIndex = jdbcTemplate.queryForObject("SELECT last_calculated_index " +
+                                                                   "FROM pending_hash_tag_similarities " +
+                                                                   "WHERE idx = 1 ", new HashMap<>(), Long.class);
+            assertThat(lastCalculatedIndex).isEqualTo(2);
+        }
+    }
+
+    @Nested
+    @DisplayName("deleteSimilarities 테스트")
+    class deleteSimilaritiesTest {
+        @Test
+        @DisplayName("기존제 존재하던 해시 태그 키의 유사 목록을 삭제한다")
+        void deleteSimilarities() {
+            //given
+            jdbcTemplate.update("INSERT INTO pending_hash_tag_similarities " +
+                                "(idx, hash_tag_key, trim_id, last_calculated_index) VALUES " +
+                                "(1, 'A', 1, 1) ", new HashMap<>());
+            jdbcTemplate.update("INSERT INTO hash_tag_similarities " +
+                                "(target_hash_tag_index, origin_hash_tag_index, similarity) VALUES " +
+                                "(2, 1, 0.3) ", new HashMap<>());
+
+            //when
+            similarityCommandRepository.deleteSimilarities(1L, "A");
+
+            //then
+            List<Long> targetIndexes = jdbcTemplate.queryForList("SELECT target_hash_tag_index FROM hash_tag_similarities " +
+                                                                 "WHERE target_hash_tag_index = 2", new HashMap<>(), Long.class);
+            assertThat(targetIndexes.isEmpty()).isTrue();
+        }
+    }
+
+    @Nested
+    @DisplayName("saveSimilarities 테스트")
+    class saveSimilaritiesTest {
+        @Test
+        @DisplayName("해시 태그 키의 새로운 유사 목록을 등록한다")
+        void saveNewSimilarities() {
+            //given
+            jdbcTemplate.update("INSERT INTO pending_hash_tag_similarities " +
+                                "(idx, hash_tag_key, trim_id, last_calculated_index) VALUES " +
+                                "(1, 'A', 1, 1) ", new HashMap<>());
+            SimilarityInfo similarityInfo = SimilarityInfo.builder()
+                    .idx(1)
+                    .similarity(0.2)
+                    .build();
+            //when
+            similarityCommandRepository.saveSimilarities(1L, "A", List.of(similarityInfo));
+
+            //then
+            Long targetHashTagIndex = jdbcTemplate.queryForObject("SELECT target_hash_tag_index FROM hash_tag_similarities " +
+                                                                  "WHERE target_hash_tag_index = 1", new HashMap<>(), Long.TYPE);
+            assertThat(targetHashTagIndex).isEqualTo(1);
+        }
+    }
+
+    @Nested
+    @DisplayName("saveHashTagKey 테스트")
+    class saveHashTagKeyTest {
+        @Test
+        @DisplayName("새로운 해시 태그 키를 등록한다")
+        void registerNewHashTagKey() {
+            //given
+            //when
+            similarityCommandRepository.saveHashTagKey(1L, "A", 1);
+
+            //then
+            List<String> hashTagKeys = jdbcTemplate.queryForList("SELECT hash_tag_key FROM pending_hash_tag_similarities " +
+                                                                 "WHERE trim_id = 1", new HashMap<>(), String.class);
+            assertThat(hashTagKeys.size()).isEqualTo(1);
+            assertThat(hashTagKeys.get(0)).isEqualTo("A");
+        }
     }
 }
