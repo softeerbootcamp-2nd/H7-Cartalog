@@ -2,30 +2,18 @@ package softeer.wantcar.cartalog.estimate.repository.dto;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 @Getter
 @EqualsAndHashCode
-public class HashTagMap {
+public class PendingHashTagMap {
+    private final long index;
     private final SortedMap<String, Long> hashTags;
 
-    public HashTagMap(List<String> hashTags) {
-        this(new TreeMap<>(hashTags.stream()
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))));
-    }
-
-    public HashTagMap(String hashTagKey) {
-        SortedMap<String, Long> curHashTagMap = new TreeMap<>();
-        for (String hashTag : hashTagKey.split("\\|")) {
-            String[] keyAndValue = hashTag.split(":");
-            curHashTagMap.put(keyAndValue[0], Long.parseLong(keyAndValue[1]));
-        }
-        hashTags = curHashTagMap;
+    public PendingHashTagMap(long index, String hashTagKey) {
+        this.index = index;
+        hashTags = getHashTagMap(hashTagKey);
     }
 
     public String getKey() {
@@ -39,8 +27,8 @@ public class HashTagMap {
         return stringBuilder.toString();
     }
 
-    public double getSimilarity(HashTagMap other) {
-        SortedMap<String, Long> otherHashTags = other.getHashTags();
+    public double getSimilarity(String otherHashTagKey) {
+        SortedMap<String, Long> otherHashTags = getHashTagMap(otherHashTagKey);
         long upperValue = getUpperValue(getHashTags(), otherHashTags, getAllKeys(getHashTags(), otherHashTags));
         double lowerValue = getHashTagVectorSize(getHashTags()) * getHashTagVectorSize(otherHashTags);
 
@@ -69,5 +57,14 @@ public class HashTagMap {
         totalHashTagKeys.addAll(hashTagMap.keySet());
         totalHashTagKeys.addAll(pendingHashTagMap.keySet());
         return totalHashTagKeys;
+    }
+
+    private static SortedMap<String, Long> getHashTagMap(String hashTagKey) {
+        SortedMap<String, Long> curHashTagMap = new TreeMap<>();
+        for (String hashTag : hashTagKey.split("\\|")) {
+            String[] keyAndValue = hashTag.split(":");
+            curHashTagMap.put(keyAndValue[0], Long.parseLong(keyAndValue[1]));
+        }
+        return curHashTagMap;
     }
 }
