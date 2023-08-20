@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React, { useEffect, useRef } from 'react';
 import { useData } from '../../utils/Context';
 import { EASE_OUT_CUBIC } from '../../constants';
@@ -13,8 +14,24 @@ import OptionPicker from '../../pages/OptionPickerPage';
 import Estimation from '../../pages/EstimationPage';
 
 function Interaction() {
-  const { page } = useData();
+  const { setTrimState, page } = useData();
   const pageRef = useRef();
+
+  const prevPage = () =>
+    setTrimState((prevState) => ({ ...prevState, page: history.state.nowPage }));
+
+  useEffect(() => {
+    window.addEventListener('popstate', prevPage);
+    return () => {
+      window.removeEventListener('popstate', prevPage);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (history.state.nowPage !== page) {
+      history.pushState({ nowPage: page }, '');
+    }
+  }, [page]);
 
   useEffect(() => {
     pageRef.current.style.transition = `all 0.5s ${EASE_OUT_CUBIC}`;
