@@ -1,76 +1,47 @@
 package softeer.wantcar.cartalog.estimate.dto;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
 public class EstimateResponseDto {
     private Long trimId;
     private Long detailTrimId;
-    private String exteriorColorCode;
-    private String interiorColorCode;
-    private List<String> modelOptions;
-    private List<String> selectOptionOrPackages;
+    private float displacement;
+    private float fuel_efficiency;
+    private ExteriorColorDto exteriorColor;
+    private InteriorColorDto interiorColor;
+    private String exteriorCarImageUrl;
+    private String interiorCarImageUrl;
+    private List<OptionPackageDto> modelOptions;
+    private List<OptionPackageDto> selectOptionOrPackages;
 
-    public static EstimateResponseDtoBuilder builder() {
-        return new EstimateResponseDtoBuilder();
+    @Getter
+    @Builder
+    public static class ExteriorColorDto {
+        private String colorCode;
+        private String name;
+        private int price;
+        private String imageUrl;
     }
 
-    public static class EstimateResponseDtoBuilder {
-        @Setter(AccessLevel.PRIVATE)
-        private Long trimId;
-        @Setter(AccessLevel.PRIVATE)
-        private Long detailTrimId;
-        @Setter(AccessLevel.PRIVATE)
-        private String exteriorColorCode;
-        @Setter(AccessLevel.PRIVATE)
-        private String interiorColorCode;
-        private final List<String> modelOptions = new ArrayList<>();
-        private final List<String> selectOptionOrPackages = new ArrayList<>();
+    @Getter
+    @Builder
+    public static class InteriorColorDto {
+        private String colorCode;
+        private String name;
+        private int price;
+        private String imageUrl;
+    }
 
-        public EstimateResponseDtoBuilder trimId(Long trimId) {
-            setTrimId(trimId);
-            return this;
-        }
-
-        public EstimateResponseDtoBuilder detailTrimId(Long detailTrimId) {
-            setDetailTrimId(detailTrimId);
-            return this;
-        }
-
-        public EstimateResponseDtoBuilder exteriorColorCode(String exteriorColorCode) {
-            setExteriorColorCode(exteriorColorCode);
-            return this;
-        }
-
-        public EstimateResponseDtoBuilder interiorColorCode(String interiorColorCode) {
-            setInteriorColorCode(interiorColorCode);
-            return this;
-        }
-
-        public EstimateResponseDtoBuilder modelOptionId(Long modelOptionId) {
-            modelOptions.add("O" + modelOptionId);
-            return this;
-        }
-
-        public EstimateResponseDtoBuilder selectOptionId(Long selectOptionId) {
-            selectOptionOrPackages.add("O" + selectOptionId);
-            return this;
-        }
-
-        public EstimateResponseDtoBuilder selectPackageId(Long selectPackageId) {
-            selectOptionOrPackages.add("P" + selectPackageId);
-            return this;
-        }
-
-        public EstimateResponseDto build() {
-            return new EstimateResponseDto(trimId, detailTrimId, exteriorColorCode, interiorColorCode, modelOptions, selectOptionOrPackages);
-        }
+    public static class OptionPackageDto {
+        private String id;
+        private String name;
+        private String childCategory;
+        private int price;
+        private String imageUrl;
     }
 }
