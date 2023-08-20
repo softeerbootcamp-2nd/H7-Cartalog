@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.test.context.jdbc.Sql;
 import softeer.wantcar.cartalog.global.ServerPath;
 import softeer.wantcar.cartalog.global.utils.CompareUtils;
+import softeer.wantcar.cartalog.trim.repository.dto.OptionPackageInfoDto;
 
 import java.util.HashMap;
 import java.util.List;
@@ -356,6 +357,25 @@ class TrimOptionQueryRepositoryTest {
 
             //then
             assertThat(modelOptionIds.isEmpty()).isTrue();
+        }
+    }
+
+    @Nested
+    @DisplayName("옵션, 패키지 상세 정보 조회 테스트")
+    class findOptionPackageInfoByOptionPackageIdsTest {
+        @Test
+        @DisplayName("존재하는 옵션, 패키지 식별자들을 전달하면 상세정보들을 반환한다.")
+        void success() {
+            //given
+            List<Long> optionIds = List.of(1L, 2L, 3L);
+            List<Long> packageIds = List.of(1L, 2L, 3L);
+
+            //when
+            List<OptionPackageInfoDto> optionPackageInfos = trimOptionQueryRepository.findOptionPackageInfoByOptionPackageIds(optionIds, packageIds);
+
+            //then
+            assertThat(optionPackageInfos.size()).isEqualTo(6);
+            assertThat(optionPackageInfos.get(0).getImageUrl().startsWith(serverPath.IMAGE_SERVER_PATH)).isTrue();
         }
     }
 }

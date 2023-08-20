@@ -11,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import softeer.wantcar.cartalog.estimate.dto.EstimateRequestDto;
+import softeer.wantcar.cartalog.estimate.dto.EstimateResponseDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
 import softeer.wantcar.cartalog.estimate.service.EstimateService;
 
@@ -68,7 +69,7 @@ class EstimateControllerTest {
             when(estimateService.saveOrFindEstimateId(any())).thenReturn(estimateId);
 
             //when
-            ResponseEntity<Long> response = estimateController.registerOrGetEstimate(requestDto);
+            ResponseEntity<Long> response = estimateController.registerOrGetEstimateId(requestDto);
 
             //then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -84,8 +85,40 @@ class EstimateControllerTest {
 
             //when
             //then
-            assertThatThrownBy(() -> estimateController.registerOrGetEstimate(requestDto))
+            assertThatThrownBy(() -> estimateController.registerOrGetEstimateId(requestDto))
                     .isInstanceOf(IllegalArgumentException.class);
+        }
+    }
+
+    @Nested
+    @DisplayName("견적서 조회 테스트")
+    class getEstimateTest {
+        @Test
+        @DisplayName("유효한 견적서 식별자를 전달헀을 때 견적서 정보를 정상적으로 반환해야 한다.")
+        void success() {
+            //given
+            EstimateResponseDto requestDto = mock(EstimateResponseDto.class);
+            when(estimateService.findEstimateByEstimateId(anyLong())).thenReturn(requestDto);
+
+            //when
+            ResponseEntity<EstimateResponseDto> response = estimateController.getEstimate(anyLong());
+
+            //then
+            softAssertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            softAssertions.assertThat(response.getBody()).isEqualTo(requestDto);
+        }
+
+        @Test
+        @DisplayName("존재하지 않은 견적서 식별자를 전달헀을 때 견적서 정보를 정상적으로 반환해야 한다.")
+        void returnNotFound() {
+            //given
+            when(estimateService.findEstimateByEstimateId(anyLong())).thenThrow(IllegalArgumentException.class);
+
+            //when
+            ResponseEntity<EstimateResponseDto> response = estimateController.getEstimate(anyLong());
+
+            //then
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);;
         }
     }
 }

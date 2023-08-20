@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import softeer.wantcar.cartalog.estimate.dto.EstimateRequestDto;
+import softeer.wantcar.cartalog.estimate.dto.EstimateResponseDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
 import softeer.wantcar.cartalog.estimate.service.EstimateService;
 
@@ -38,8 +39,26 @@ public class EstimateController {
             @ApiResponse(code = 400, message = "불가능한 조합입니다."),
     })
     @PostMapping("")
-    public ResponseEntity<Long> registerOrGetEstimate(@RequestBody EstimateRequestDto estimateRequestDto) {
+    public ResponseEntity<Long> registerOrGetEstimateId(@RequestBody EstimateRequestDto estimateRequestDto) {
         Long estimateId = estimateService.saveOrFindEstimateId(estimateRequestDto);
         return ResponseEntity.ok().body(estimateId);
+    }
+
+    @ApiOperation(
+            value = "견적서 세부 사항 조회",
+            notes = "견적서에 등록된 트림 종류, 모델 옵션 식별자, 선택 옵션, 패키지 식별자를 조회한다 =.")
+    @ApiImplicitParam(
+            name = "estimateId", value = "견적서 식별자", required = true,
+            dataTypeClass = Long.class, paramType = "query", example = "1")
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "존재하지 않는 식별자입니다."),
+    })
+    @GetMapping("")
+    public ResponseEntity<EstimateResponseDto> getEstimate(@RequestParam Long estimateId) {
+        try {
+            return ResponseEntity.ok(estimateService.findEstimateByEstimateId(estimateId));
+        } catch (IllegalArgumentException exception) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

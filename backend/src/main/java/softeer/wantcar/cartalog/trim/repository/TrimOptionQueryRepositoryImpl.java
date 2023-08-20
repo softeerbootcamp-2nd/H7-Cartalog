@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.global.ServerPath;
 import softeer.wantcar.cartalog.global.utils.RowMapperUtils;
+import softeer.wantcar.cartalog.trim.repository.dto.OptionPackageInfoDto;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -148,6 +149,27 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
 
         return jdbcTemplate.queryForList(getTrimOptionsSQL, parameters, Long.class);
 
+    }
+
+    @Override
+    public List<OptionPackageInfoDto> findOptionPackageInfoByOptionPackageIds(List<Long> optionIds, List<Long> packageIds) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("optionIds", optionIds)
+                .addValue("packageIds", packageIds);
+
+        String getOptionInfoSQL = "SELECT id, name, child_category, price, image_url " +
+                "FROM ( " +
+                "    SELECT id, name, child_category, image_url, price  " +
+                "    FROM model_options " +
+                "    WHERE id IN ( :optionIds ) " +
+                "    UNION " +
+                "    SELECT id, name, NULL AS child_category, image_url, price  " +
+                "    FROM model_packages " +
+                "    WHERE id IN ( :packageIds ) " +
+                ") AS combined_result ";
+
+        return jdbcTemplate.query(getOptionInfoSQL, parameters,
+                RowMapperUtils.mapping(OptionPackageInfoDto.class, serverPath.getImageServerPathRowMapperStrategy()));
     }
 
     private List<TrimOptionInfo> getTrimOptionInfos(List<TrimOptionQueryResult> queryResults) {

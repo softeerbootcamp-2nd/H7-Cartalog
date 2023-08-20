@@ -6,17 +6,22 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.dto.EstimateRequestDto;
+import softeer.wantcar.cartalog.estimate.dto.EstimateResponseDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateCommandRepository;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
 import softeer.wantcar.cartalog.estimate.repository.SimilarityCommandRepository;
 import softeer.wantcar.cartalog.estimate.repository.SimilarityQueryRepository;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionIdListDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateShareInfoDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.HashTagMap;
 import softeer.wantcar.cartalog.estimate.repository.dto.SimilarityInfo;
 import softeer.wantcar.cartalog.estimate.service.dto.EstimateDto;
 import softeer.wantcar.cartalog.estimate.service.dto.PendingHashTagSimilaritySaveDto;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 import softeer.wantcar.cartalog.trim.repository.TrimColorQueryRepository;
+import softeer.wantcar.cartalog.trim.repository.TrimOptionQueryRepository;
 import softeer.wantcar.cartalog.trim.repository.TrimQueryRepository;
+import softeer.wantcar.cartalog.trim.repository.dto.OptionPackageInfoDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +39,7 @@ public class EstimateServiceImpl implements EstimateService {
     private final ModelOptionQueryRepository modelOptionQueryRepository;
     private final SimilarityCommandRepository similarityCommandRepository;
     private final SimilarityQueryRepository similarityQueryRepository;
+    private final TrimOptionQueryRepository trimOptionQueryRepository;
 
     @Override
     public Long saveOrFindEstimateId(EstimateRequestDto estimateRequestDto) {
@@ -59,6 +65,81 @@ public class EstimateServiceImpl implements EstimateService {
         }
 
         return estimateQueryRepository.findEstimateIdByEstimateDto(estimateDto);
+    }
+
+    @Override
+    public EstimateResponseDto findEstimateByEstimateId(Long estimateId) {
+        EstimateShareInfoDto estimateShareInfo = estimateQueryRepository.findEstimateShareInfoByEstimateId(estimateId);
+        if (estimateShareInfo == null) {
+            throw new IllegalArgumentException();
+        }
+
+        List<Long> estimateModelTypeIds = estimateQueryRepository.findEstimateModelTypeIdsByEstimateId(estimateId);
+        EstimateOptionIdListDto estimateOptionIds = estimateQueryRepository.findEstimateOptionIdsByEstimateId(estimateId);
+
+        EstimateResponseDto.EstimateResponseDtoBuilder builder = EstimateResponseDto.builder()
+                .trimId(estimateShareInfo.getTrimId())
+                .detailTrimId(estimateShareInfo.getDetailTrimId())
+                .displacement(estimateShareInfo.getDisplacement())
+                .fuelEfficiency(estimateShareInfo.getFuelEfficiency())
+                .exteriorColor(EstimateResponseDto.ColorDto.builder()
+                        .colorCode(estimateShareInfo.getExteriorColorCode())
+                        .imageUrl(estimateShareInfo.getExteriorColorImageUrl())
+                        .name(estimateShareInfo.getExteriorColorName())
+                        .price(estimateShareInfo.getExteriorColorPrice())
+                        .build())
+                .interiorColor(EstimateResponseDto.ColorDto.builder()
+                        .colorCode(estimateShareInfo.getInteriorColorCode())
+                        .imageUrl(estimateShareInfo.getInteriorCarImageUrl())
+                        .name(estimateShareInfo.getInteriorColorName())
+                        .price(estimateShareInfo.getInteriorColorPrice())
+                        .build()
+                )
+                .exteriorCarDirectory(estimateShareInfo.getExteriorCarImageDirectory())
+                .interiorCarImageUrl(estimateShareInfo.getInteriorColorImageUrl());
+
+
+        List<OptionPackageInfoDto> modelTypesInfos =
+                trimOptionQueryRepository.findOptionPackageInfoByOptionPackageIds(estimateModelTypeIds, null);
+
+        List<OptionPackageInfoDto> selectOptionPackageInfos =
+                trimOptionQueryRepository.findOptionPackageInfoByOptionPackageIds(estimateOptionIds.getOptionIds(), estimateOptionIds.getPackageIds());
+
+        modelTypesInfos
+                .forEach(infoDto -> builder.modelType(EstimateResponseDto.OptionPackageDto.builder()
+                        .id("O" + infoDto.getId())
+                        .childCategory(infoDto.getChildCategory())
+                        .imageUrl(infoDto.getImageUrl())
+                        .name(infoDto.getName())
+                        .price(infoDto.getPrice())
+                        .build())
+                );
+
+
+        selectOptionPackageInfos.stream()
+                .filter(infoDto -> estimateOptionIds.getOptionIds().contains(infoDto.getId()))
+                .forEach(infoDto -> builder.selectOptionOrPackage(EstimateResponseDto.OptionPackageDto.builder()
+                        .id("O" + infoDto.getId())
+                        .childCategory(infoDto.getChildCategory())
+                        .imageUrl(infoDto.getImageUrl())
+                        .name(infoDto.getName())
+                        .price(infoDto.getPrice())
+                        .build())
+                );
+
+
+        selectOptionPackageInfos.stream()
+                .filter(infoDto -> estimateOptionIds.getPackageIds().contains(infoDto.getId()))
+                .forEach(infoDto -> builder.selectOptionOrPackage(EstimateResponseDto.OptionPackageDto.builder()
+                        .id("P" + infoDto.getId())
+                        .childCategory(infoDto.getChildCategory())
+                        .imageUrl(infoDto.getImageUrl())
+                        .name(infoDto.getName())
+                        .price(infoDto.getPrice())
+                        .build())
+                );
+
+        return builder.build();
     }
 
     private void saveHashTagSimilarities(Long trimId, HashTagMap curHashTagMap, List<String> calculatedHashTagKeys) {
