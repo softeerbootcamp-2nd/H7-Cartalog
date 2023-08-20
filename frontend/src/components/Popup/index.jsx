@@ -1,5 +1,6 @@
 import React from 'react';
 import * as S from './style';
+import { createPortal } from 'react-dom';
 
 function Popup({ show, close, actions, children }) {
   const actionButtons = actions.map((child) => {
@@ -24,14 +25,16 @@ function Popup({ show, close, actions, children }) {
     );
   });
   return (
-    show && (
+    show &&
+    createPortal(
       <>
         <S.Overlay onClick={close} />
         <S.Popup>
           <S.PopupContent>{children}</S.PopupContent>
           <S.PopupActions>{actionButtons}</S.PopupActions>
         </S.Popup>
-      </>
+      </>,
+      document.querySelector('#modal'),
     )
   );
 }
