@@ -6,10 +6,13 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.dto.EstimateRequestDto;
+import softeer.wantcar.cartalog.estimate.dto.EstimateResponseDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateCommandRepository;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
 import softeer.wantcar.cartalog.estimate.repository.SimilarityCommandRepository;
 import softeer.wantcar.cartalog.estimate.repository.SimilarityQueryRepository;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionListDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateShareInfoDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.HashTagMap;
 import softeer.wantcar.cartalog.estimate.repository.dto.SimilarityInfo;
 import softeer.wantcar.cartalog.estimate.service.dto.EstimateDto;
@@ -59,6 +62,33 @@ public class EstimateServiceImpl implements EstimateService {
         }
 
         return estimateQueryRepository.findEstimateIdByEstimateDto(estimateDto);
+    }
+
+    @Override
+    public EstimateResponseDto findEstimateByEstimateId(Long estimateId) {
+        EstimateShareInfoDto estimateShareInfo = estimateQueryRepository.findEstimateShareInfoByEstimateId(estimateId);
+        if (estimateShareInfo == null) {
+            throw new IllegalArgumentException();
+        }
+
+        List<Long> estimateModelOptionIds = estimateQueryRepository.findEstimateModelOptionIdsByEstimateId(estimateId);
+        EstimateOptionListDto estimateOptionIdsByEstimateId = estimateQueryRepository.findEstimateOptionIdsByEstimateId(estimateId);
+
+        EstimateResponseDto.EstimateResponseDtoBuilder builder = EstimateResponseDto.builder()
+                .trimId(estimateShareInfo.getTrimId())
+                .detailTrimId(estimateShareInfo.getDetailTrimId())
+                .interiorColorCode(estimateShareInfo.getInteriorColorCode())
+                .exteriorColorCode(estimateShareInfo.getExteriorColorCode());
+
+        estimateModelOptionIds.forEach(builder::modelOptionId);
+
+        estimateOptionIdsByEstimateId.getOptionIds()
+                .forEach(builder::selectOptionId);
+
+        estimateOptionIdsByEstimateId.getPackageIds()
+                .forEach(builder::selectPackageId);
+
+        return builder.build();
     }
 
     private void saveHashTagSimilarities(Long trimId, HashTagMap curHashTagMap, List<String> calculatedHashTagKeys) {
