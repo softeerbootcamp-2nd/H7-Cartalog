@@ -1,6 +1,7 @@
 package softeer.wantcar.cartalog.estimate.repository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -11,6 +12,7 @@ import softeer.wantcar.cartalog.estimate.repository.dto.SimilarityInfo;
 import java.util.List;
 
 @SuppressWarnings({"SqlResolve", "SqlNoDataSourceInspection"})
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 @Transactional
@@ -53,5 +55,14 @@ public class SimilarityCommandRepositoryImpl implements SimilarityCommandReposit
                 .addValue("hashTagKey", hashTagKey)
                 .addValue("lastCalculatedIndex", lastCalculatedIndex);
         jdbcTemplate.update(QueryString.saveHashTagKey, parameters);
+    }
+
+    @Override
+    public void saveSimilarEstimate(Long trimId, String hashTagKey, Long estimateId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("trimId", trimId)
+                .addValue("hashTagKey", hashTagKey)
+                .addValue("estimateId", estimateId);
+        jdbcTemplate.update(QueryString.saveSimilarEstimate, parameters);
     }
 }

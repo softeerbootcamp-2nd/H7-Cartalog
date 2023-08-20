@@ -12,4 +12,6 @@ public interface SimilarityCommandRepository {
     void saveSimilarities(Long trimId, String hashTagKey, List<SimilarityInfo> similarityInfos);
 
     void saveHashTagKey(Long trimId, String hashTagKey, long lastIndex);
+
+    void saveSimilarEstimate(Long trimId, String hashTagKey, Long estimateId);
 }

@@ -252,4 +252,10 @@ public class QueryString {
             "INSERT INTO pending_hash_tag_similarities (hash_tag_key, trim_id, last_calculated_index) " +
             "VALUES (:hashTagKey, :trimId, :lastCalculatedIndex) ";
 
+    protected static final String saveSimilarEstimate =
+            "INSERT INTO similar_estimates " +
+            "(hash_tag_key, estimate_id, trim_id) VALUES " +
+            "(:hashTagKey, :estimateId, :trimId) ";
+
+
 }
