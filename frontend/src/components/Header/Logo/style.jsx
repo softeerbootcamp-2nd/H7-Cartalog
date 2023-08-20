@@ -5,6 +5,7 @@ export const Logo = styled.div`
   align-items: center;
   margin-bottom: 10px;
   gap: 20px;
+  cursor: pointer;
 `;
 
 export const Line = styled.div`

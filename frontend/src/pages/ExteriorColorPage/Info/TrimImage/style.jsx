@@ -7,6 +7,7 @@ export const TrimImage = styled.div`
   height: 325px;
   margin-top: 36px;
   margin-left: 220px;
+  cursor: pointer;
 `;
 
 export const RotateImage = styled.img`
