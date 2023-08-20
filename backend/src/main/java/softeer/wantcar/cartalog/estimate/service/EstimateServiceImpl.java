@@ -77,16 +77,41 @@ public class EstimateServiceImpl implements EstimateService {
         EstimateResponseDto.EstimateResponseDtoBuilder builder = EstimateResponseDto.builder()
                 .trimId(estimateShareInfo.getTrimId())
                 .detailTrimId(estimateShareInfo.getDetailTrimId())
-                .interiorColorCode(estimateShareInfo.getInteriorColorCode())
-                .exteriorColorCode(estimateShareInfo.getExteriorColorCode());
+                .displacement(estimateShareInfo.getDisplacement())
+                .fuelEfficiency(estimateShareInfo.getFuelEfficiency())
+                .exteriorColor(EstimateResponseDto.ColorDto.builder()
+                        .colorCode(estimateShareInfo.getExteriorColorCode())
+                        .imageUrl(estimateShareInfo.getExteriorColorImageUrl())
+                        .name(estimateShareInfo.getExteriorColorName())
+                        .price(estimateShareInfo.getExteriorColorPrice())
+                        .build())
+                .interiorColor(EstimateResponseDto.ColorDto.builder()
+                        .colorCode(estimateShareInfo.getInteriorColorCode())
+                        .imageUrl(estimateShareInfo.getInteriorCarImageUrl())
+                        .name(estimateShareInfo.getInteriorColorName())
+                        .price(estimateShareInfo.getInteriorColorPrice())
+                        .build()
+                )
+                .exteriorCarImageUrl(estimateShareInfo.getInteriorCarImageUrl())
+                .interiorCarImageUrl(estimateShareInfo.getInteriorColorImageUrl());
 
-        estimateModelOptionIds.forEach(builder::modelOptionId);
+        estimateModelOptionIds
+                .forEach(id -> builder.modelOption(EstimateResponseDto.OptionPackageDto.builder()
+                        .id("O" + id)
+                        .build())
+                );
 
         estimateOptionIdsByEstimateId.getOptionIds()
-                .forEach(builder::selectOptionId);
+                .forEach(id -> builder.modelOption(EstimateResponseDto.OptionPackageDto.builder()
+                        .id("O" + id)
+                        .build())
+                );
 
         estimateOptionIdsByEstimateId.getPackageIds()
-                .forEach(builder::selectPackageId);
+                .forEach(id -> builder.modelOption(EstimateResponseDto.OptionPackageDto.builder()
+                        .id("O" + id)
+                        .build())
+                );
 
         return builder.build();
     }
