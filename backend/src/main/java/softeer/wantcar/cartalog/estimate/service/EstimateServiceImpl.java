@@ -11,7 +11,7 @@ import softeer.wantcar.cartalog.estimate.repository.EstimateCommandRepository;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
 import softeer.wantcar.cartalog.estimate.repository.SimilarityCommandRepository;
 import softeer.wantcar.cartalog.estimate.repository.SimilarityQueryRepository;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionListDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionIdListDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateShareInfoDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.HashTagMap;
 import softeer.wantcar.cartalog.estimate.repository.dto.SimilarityInfo;
@@ -72,7 +72,7 @@ public class EstimateServiceImpl implements EstimateService {
         }
 
         List<Long> estimateModelOptionIds = estimateQueryRepository.findEstimateModelOptionIdsByEstimateId(estimateId);
-        EstimateOptionListDto estimateOptionIdsByEstimateId = estimateQueryRepository.findEstimateOptionIdsByEstimateId(estimateId);
+        EstimateOptionIdListDto estimateOptionIdsByEstimateId = estimateQueryRepository.findEstimateOptionIdsByEstimateId(estimateId);
 
         EstimateResponseDto.EstimateResponseDtoBuilder builder = EstimateResponseDto.builder()
                 .trimId(estimateShareInfo.getTrimId())

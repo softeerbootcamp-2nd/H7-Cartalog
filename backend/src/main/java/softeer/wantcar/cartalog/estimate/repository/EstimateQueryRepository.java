@@ -3,15 +3,12 @@ package softeer.wantcar.cartalog.estimate.repository;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateCountDto;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionListDto;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateShareInfoDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.*;
 import softeer.wantcar.cartalog.estimate.service.dto.EstimateDto;
 
 import java.util.List;
 
 public interface EstimateQueryRepository {
-
     @Getter
     @AllArgsConstructor
     @Builder
@@ -21,7 +18,13 @@ public interface EstimateQueryRepository {
         private Long packageId;
     }
 
-    EstimateOptionListDto findEstimateOptionIdsByEstimateId(Long estimateId);
+    List<EstimateInfoDto> findEstimateInfoBydEstimateIds(List<Long> similarEstimateIds);
+
+    List<EstimateOptionInfoDto> findEstimateOptionsByEstimateIds(List<Long> estimateIds);
+
+    List<EstimateOptionInfoDto> findEstimatePackagesByEstimateIds(List<Long> estimateIds);
+
+    EstimateOptionIdListDto findEstimateOptionIdsByEstimateId(Long estimateId);
 
     Long findAveragePrice(Long trimId);
 
