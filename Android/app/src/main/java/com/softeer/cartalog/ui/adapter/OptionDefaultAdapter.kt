@@ -8,7 +8,7 @@ import com.softeer.cartalog.data.model.Option
 import com.softeer.cartalog.databinding.ItemOptionDefaultCardBinding
 import com.softeer.cartalog.ui.fragment.OptionFragmentDirections
 
-class OptionDefaultAdapter(private val list: List<Option>) :
+class OptionDefaultAdapter(val list: List<Option>) :
     RecyclerView.Adapter<OptionDefaultAdapter.OptionDefaultViewHolder>() {
 
     var selectedItem = -1
@@ -23,7 +23,7 @@ class OptionDefaultAdapter(private val list: List<Option>) :
     }
 
     override fun onBindViewHolder(holder: OptionDefaultViewHolder, position: Int) {
-        val currentItem = list.get(position)
+        val currentItem = list[position]
         holder.bind(currentItem, position)
     }
 

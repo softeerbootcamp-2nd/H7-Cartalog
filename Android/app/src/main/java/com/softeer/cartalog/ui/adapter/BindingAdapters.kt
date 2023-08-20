@@ -1,6 +1,5 @@
 package com.softeer.cartalog.ui.adapter
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.SeekBar
@@ -9,11 +8,9 @@ import androidx.appcompat.widget.AppCompatSeekBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentContainerView
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.softeer.cartalog.R
-import com.softeer.cartalog.data.enums.OptionMode
 import com.softeer.cartalog.data.model.CarColor
 import com.softeer.cartalog.data.model.Options
 import com.softeer.cartalog.data.model.SummaryOptionPrice
@@ -26,8 +23,6 @@ import com.softeer.cartalog.viewmodel.PriceSummaryViewModel
 import com.softeer.cartalog.viewmodel.TrimViewModel
 import com.softeer.cartalog.viewmodel.TypeViewModel
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 @BindingAdapter("viewModel", "indicator", "selectedType")
 fun setTypeDetailViewPager(
@@ -108,7 +103,7 @@ fun setOptionRecyclerView(
 ) {
     // 처음 optionfragment 열렸을 때 추가옵션 세팅을 위한 함수
     recyclerView.setHasFixedSize(true)
-    recyclerView.adapter = OptionSelectAdapter(viewModel)
+    recyclerView.adapter = OptionSelectAdapter(viewModel, "전체")
     recyclerView.adapter?.notifyDataSetChanged()
 }
 

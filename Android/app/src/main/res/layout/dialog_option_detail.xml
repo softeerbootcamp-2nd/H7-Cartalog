@@ -18,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
+        android:minHeight="400dp"
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.Guideline
@@ -97,6 +98,7 @@
             android:layout_height="180dp"
             android:background="@color/card_bg"
             android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
             app:imgUrl="@{option.imageUrl}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -118,6 +120,7 @@
             android:layout_marginTop="12dp"
             android:lineSpacingExtra="1.8dp"
             android:text="@{option.description}"
+            android:layout_marginBottom="30dp"
             android:textColor="@color/gray_800"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@id/gl_end"

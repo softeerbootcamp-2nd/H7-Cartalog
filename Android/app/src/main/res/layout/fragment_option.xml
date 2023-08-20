@@ -6,6 +6,7 @@
     <data>
 
         <import type="com.softeer.cartalog.data.enums.OptionMode" />
+
         <import type="android.view.View" />
 
         <variable
@@ -94,7 +95,10 @@
                         android:id="@+id/rg_category_select"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        app:optionMode="@{viewModel.nowOptionMode}"
+                        app:recyclerView="@{rvOption}"
+                        app:viewModel="@{viewModel}">
 
                         <RadioButton
                             android:id="@+id/rb_select_all"
@@ -146,7 +150,10 @@
                         android:id="@+id/rg_category_default"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        app:optionMode="@{viewModel.nowOptionMode}"
+                        app:recyclerView="@{rvOption}"
+                        app:viewModel="@{viewModel}">
 
                         <RadioButton
                             android:id="@+id/rb_default_all"
@@ -235,8 +242,8 @@
                     app:layout_constraintEnd_toEndOf="@id/gl_end"
                     app:layout_constraintStart_toStartOf="@id/gl_start"
                     app:layout_constraintTop_toBottomOf="@id/sv_category_select"
-                    app:viewModel="@{viewModel}"
                     app:optionList="@{viewModel.options}"
+                    app:viewModel="@{viewModel}"
                     tools:listitem="@layout/item_option_select_card" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

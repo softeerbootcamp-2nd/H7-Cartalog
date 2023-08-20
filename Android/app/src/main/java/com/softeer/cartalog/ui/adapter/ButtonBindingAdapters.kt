@@ -1,9 +1,9 @@
 package com.softeer.cartalog.ui.adapter
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
@@ -119,15 +119,13 @@ fun setOptionTabSelected(
         override fun onTabSelected(tab: TabLayout.Tab?) {
             when (tab?.position) {
                 0 -> {
-                    Log.d("TEST", viewModel.nowOptionMode.value.toString())
                     viewModel.setNowOptionMode(OptionMode.SELECT_OPTION)
                     recyclerView.setHasFixedSize(true)
                     recyclerView.adapter =
-                        OptionSelectAdapter(viewModel)
+                        OptionSelectAdapter(viewModel, "전체")
                 }
 
                 1 -> {
-                    Log.d("TEST", viewModel.nowOptionMode.value.toString())
                     recyclerView.setHasFixedSize(true)
                     viewModel.setNowOptionMode(OptionMode.DEFAULT_OPTION)
                     recyclerView.adapter =
@@ -139,6 +137,38 @@ fun setOptionTabSelected(
         override fun onTabUnselected(tab: TabLayout.Tab?) {}
         override fun onTabReselected(tab: TabLayout.Tab?) {}
     })
+}
+
+@BindingAdapter("viewModel", "recyclerView", "optionMode")
+fun setOptionCategorySelected(
+    radioGroup: RadioGroup,
+    viewModel: OptionViewModel,
+    recyclerView: RecyclerView,
+    optionMode: OptionMode
+) {
+    radioGroup.setOnCheckedChangeListener { _, _ ->
+        val selected =
+            radioGroup.findViewById<RadioButton>(radioGroup.checkedRadioButtonId).text.toString()
+
+        when (optionMode) {
+            OptionMode.DEFAULT_OPTION -> {
+                if (selected == "전체") {
+                    recyclerView.adapter =
+                        OptionDefaultAdapter(viewModel.defaultOptions!!)
+                } else {
+                    recyclerView.adapter =
+                        OptionDefaultAdapter(viewModel.defaultOptions!!.filter {
+                            it.childCategory?.contains(selected) ?: false
+                        })
+                }
+            }
+
+            OptionMode.SELECT_OPTION -> {
+                recyclerView.adapter = OptionSelectAdapter(viewModel, selected)
+                recyclerView.adapter?.notifyDataSetChanged()
+            }
+        }
+    }
 }
 
 @BindingAdapter("imageView", "imgUrl")
@@ -159,3 +189,4 @@ fun setCarImageSelected(
         }
     }
 }
+

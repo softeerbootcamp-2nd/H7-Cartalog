@@ -4,13 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.softeer.cartalog.R
 import com.softeer.cartalog.data.model.Option
 import com.softeer.cartalog.databinding.ItemOptionSelectCardBinding
 import com.softeer.cartalog.ui.fragment.OptionFragmentDirections
 import com.softeer.cartalog.viewmodel.OptionViewModel
 
-class OptionSelectAdapter(private val viewModel: OptionViewModel) :
+class OptionSelectAdapter(private val viewModel: OptionViewModel, private val filterParam: String) :
     RecyclerView.Adapter<OptionSelectAdapter.OptionSelectViewHolder>() {
 
     var selectedItems = mutableListOf<Int>()
@@ -25,7 +24,14 @@ class OptionSelectAdapter(private val viewModel: OptionViewModel) :
     }
 
     override fun onBindViewHolder(holder: OptionSelectViewHolder, position: Int) {
-        val currentItem = viewModel.selectOptions?.get(position)
+        var currentItem = viewModel.selectOptions?.get(position)
+        if (filterParam != "전체") {
+            currentItem =
+                viewModel.selectOptions?.filter {
+                    it.parentCategory?.contains(filterParam) ?: false
+                }
+                    ?.getOrNull(position)
+        }
         holder.bind(currentItem, position)
     }
 
@@ -41,16 +47,18 @@ class OptionSelectAdapter(private val viewModel: OptionViewModel) :
             binding.position = position
             binding.optionAdapter = this@OptionSelectAdapter
 
-            item?.let {option ->
+            item?.let { option ->
                 binding.option = option
                 binding.btnHmgData.setOnClickListener {
                     val args = option.id
-                    val action = OptionFragmentDirections.actionOptionFragmentToOptionDetailDialog(args)
+                    val action =
+                        OptionFragmentDirections.actionOptionFragmentToOptionDetailDialog(args)
                     it.findNavController().navigate(action)
                 }
                 binding.btnDetailView.setOnClickListener {
                     val args = option.id
-                    val action = OptionFragmentDirections.actionOptionFragmentToOptionDetailDialog(args)
+                    val action =
+                        OptionFragmentDirections.actionOptionFragmentToOptionDetailDialog(args)
                     it.findNavController().navigate(action)
                 }
             }
