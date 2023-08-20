@@ -9,6 +9,7 @@ export const TrimCard = styled.div`
   border: 1px solid ${({ theme }) => theme.color.gray['200']};
   border-radius: 2px;
   background-color: ${({ theme }) => theme.color.white};
+  cursor: pointer;
 
   &:hover,
   &.active {

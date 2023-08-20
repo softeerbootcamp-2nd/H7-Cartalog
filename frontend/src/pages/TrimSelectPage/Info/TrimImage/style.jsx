@@ -3,6 +3,7 @@ import { styled } from 'styled-components';
 export const TrimImage = styled.div`
   display: flex;
   gap: 16px;
+  cursor: pointer;
 `;
 
 export const TrimImageItem = styled.div`

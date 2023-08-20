@@ -5,6 +5,7 @@ export const Exit = styled.div`
   align-items: center;
   margin-bottom: 10px;
   gap: 8px;
+  cursor: pointer;
 
   & > svg {
     fill: ${({ theme }) => theme.color.gray['800']};
