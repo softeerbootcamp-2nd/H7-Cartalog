@@ -10,9 +10,6 @@ import softeer.wantcar.cartalog.global.ServerPath;
 import softeer.wantcar.cartalog.global.utils.RowMapperUtils;
 import softeer.wantcar.cartalog.model.dto.EstimateImageDto;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 @SuppressWarnings({"SqlResolve", "SqlNoDataSourceInspection"})
 @Repository
 @RequiredArgsConstructor
