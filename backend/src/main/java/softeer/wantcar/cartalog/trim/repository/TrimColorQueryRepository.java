@@ -1,12 +1,14 @@
 package softeer.wantcar.cartalog.trim.repository;
 
-import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
-import softeer.wantcar.cartalog.trim.dto.TrimInteriorColorListResponseDto;
+import softeer.wantcar.cartalog.trim.repository.dto.TrimExteriorColorQueryResult;
+import softeer.wantcar.cartalog.trim.repository.dto.TrimInteriorColorQueryResult;
+
+import java.util.List;
 
 public interface TrimColorQueryRepository {
-    TrimExteriorColorListResponseDto findTrimExteriorColorByTrimId(Long trimId);
+    List<TrimExteriorColorQueryResult> findTrimExteriorColorsByTrimId(Long trimId);
 
-    TrimInteriorColorListResponseDto findTrimInteriorColorByTrimIdAndExteriorColorCode(Long trimId, String colorCode);
+    List<TrimInteriorColorQueryResult> findTrimInteriorColorsByTrimIdAndExteriorColorCode(Long trimId, String exteriorColorCode);
 
     Long findTrimExteriorColorIdByTrimIdAndColorCode(Long trimId, String colorCode);
 

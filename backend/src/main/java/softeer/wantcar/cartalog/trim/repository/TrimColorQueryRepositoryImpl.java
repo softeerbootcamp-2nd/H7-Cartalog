@@ -10,8 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.global.ServerPath;
 import softeer.wantcar.cartalog.global.utils.RowMapperUtils;
-import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
-import softeer.wantcar.cartalog.trim.dto.TrimInteriorColorListResponseDto;
 import softeer.wantcar.cartalog.trim.repository.dto.TrimExteriorColorQueryResult;
 import softeer.wantcar.cartalog.trim.repository.dto.TrimInteriorColorQueryResult;
 
@@ -27,47 +25,25 @@ public class TrimColorQueryRepositoryImpl implements TrimColorQueryRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Override
-    public TrimExteriorColorListResponseDto findTrimExteriorColorByTrimId(Long trimId) {
+    public List<TrimExteriorColorQueryResult> findTrimExteriorColorsByTrimId(Long trimId) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("trimId", trimId);
 
-        List<TrimExteriorColorQueryResult> results = jdbcTemplate.query(
+        return jdbcTemplate.query(
                 QueryString.findTrimExteriorColorByTrimId, parameters,
                 RowMapperUtils.mapping(TrimExteriorColorQueryResult.class, serverPath.getImageServerPathRowMapperStrategy()));
-
-        if (results.isEmpty()) {
-            return null;
-        }
-
-        TrimExteriorColorListResponseDto.TrimExteriorColorListResponseDtoBuilder builder = TrimExteriorColorListResponseDto.builder();
-        results.stream()
-                .map(TrimExteriorColorQueryResult::toTrimExteriorColorDto)
-                .forEach(builder::trimExteriorColorDto);
-
-        return builder.build();
     }
 
     @Override
-    public TrimInteriorColorListResponseDto findTrimInteriorColorByTrimIdAndExteriorColorCode(Long trimId, String colorCode) {
+    public List<TrimInteriorColorQueryResult> findTrimInteriorColorsByTrimIdAndExteriorColorCode(Long trimId, String exteriorColorCode) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("trimId", trimId)
-                .addValue("colorCode", colorCode);
+                .addValue("colorCode", exteriorColorCode);
 
-        List<TrimInteriorColorQueryResult> results = jdbcTemplate.query(
+        return jdbcTemplate.query(
                 QueryString.findTrimInteriorColorByTrimIdAndExteriorColorCode, parameters,
                 RowMapperUtils.mapping(TrimInteriorColorQueryResult.class, serverPath.getImageServerPathRowMapperStrategy())
         );
-
-        if (results.isEmpty()) {
-            return null;
-        }
-
-        TrimInteriorColorListResponseDto.TrimInteriorColorListResponseDtoBuilder builder = TrimInteriorColorListResponseDto.builder();
-        results.stream()
-                .map(TrimInteriorColorQueryResult::toTrimInteriorColorDto)
-                .forEach(builder::trimInteriorColorDto);
-
-        return builder.build();
     }
 
     @Override
