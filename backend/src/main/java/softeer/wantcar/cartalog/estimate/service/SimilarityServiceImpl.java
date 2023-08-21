@@ -123,8 +123,15 @@ public class SimilarityServiceImpl implements SimilarityService {
 
     private List<String> getTotalHashTags(EstimateOptionIdListDto estimateOptionIdListDto) {
         List<String> totalHashTags = new ArrayList<>();
-        totalHashTags.addAll(modelOptionQueryRepository.findHashTagFromOptionsByOptionIds(estimateOptionIdListDto.getOptionIds()));
-        totalHashTags.addAll(modelOptionQueryRepository.findHashTagFromPackagesByPackageIds(estimateOptionIdListDto.getPackageIds()));
+
+        List<Long> optionIds = estimateOptionIdListDto.getOptionIds();
+        if(!optionIds.isEmpty()) {
+            totalHashTags.addAll(modelOptionQueryRepository.findHashTagFromOptionsByOptionIds(optionIds));
+        }
+        List<Long> packageIds = estimateOptionIdListDto.getPackageIds();
+        if (!packageIds.isEmpty()) {
+            totalHashTags.addAll(modelOptionQueryRepository.findHashTagFromPackagesByPackageIds(packageIds));
+        }
         return totalHashTags.stream()
                 .sorted()
                 .collect(Collectors.toList());
