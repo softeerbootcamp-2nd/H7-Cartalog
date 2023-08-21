@@ -18,10 +18,6 @@ public class PendingHashTagMap {
         hashTags = getHashTagMap(hashTagKey);
     }
 
-    public String getKey() {
-        return getHashTagKey(hashTags);
-    }
-
     public static String getHashTagKey(List<String> hashTags) {
         return getHashTagKey(new TreeMap<>(hashTags.stream()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))));

@@ -122,13 +122,12 @@ public class SimilarityServiceImpl implements SimilarityService {
     }
 
     private static List<SimilarityInfo> getPendingSimilarities(String hashTagKey, List<PendingHashTagMap> pendingHashTagMaps) {
-        List<SimilarityInfo> pendingSimilarities = pendingHashTagMaps.stream()
+        return pendingHashTagMaps.stream()
                 .map(hashTagMap -> SimilarityInfo.builder()
                         .idx(hashTagMap.getIdx())
                         .similarity(hashTagMap.getSimilarity(hashTagKey))
                         .build())
                 .collect(Collectors.toList());
-        return pendingSimilarities;
     }
 
     private static Long getMyEstimateCount(Long estimateId, List<EstimateCountDto> estimateCounts) {
