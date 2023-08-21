@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayout
@@ -24,18 +25,25 @@ import com.softeer.cartalog.viewmodel.CommonViewModelFactory
 import com.softeer.cartalog.viewmodel.OptionViewModel
 import com.softeer.cartalog.viewmodel.TrimViewModel
 
-class OptionFragment: Fragment() {
+class OptionFragment : Fragment() {
     private var _binding: FragmentOptionBinding? = null
     private val binding get() = _binding!!
 
     private val carRepositoryImpl by lazy {
         CarRepositoryImpl(
             CarLocalDataSource(MyCarDatabase.getInstance(requireContext())!!), CarRemoteDataSource(
-                RetrofitClient.carApi)
+                RetrofitClient.carApi
+            )
         )
     }
     private val optionViewModel: OptionViewModel by viewModels {
         CommonViewModelFactory(carRepositoryImpl)
+    }
+
+    private val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            (activity as MainActivity).changeTab(3)
+        }
     }
 
     override fun onCreateView(
@@ -60,6 +68,7 @@ class OptionFragment: Fragment() {
         binding.btnPriceSummary.setOnClickListener {
             findNavController().navigate(R.id.action_optionFragment_to_priceSummaryBottomSheetFragment)
         }
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), callback)
     }
 
     override fun onDestroyView() {

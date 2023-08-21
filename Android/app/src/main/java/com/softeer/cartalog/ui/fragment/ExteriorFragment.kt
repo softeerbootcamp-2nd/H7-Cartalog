@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -41,6 +42,12 @@ class ExteriorFragment : Fragment() {
     private var dataCallback: PriceDataCallback? = null
     private var totalPrice: Int = 0
 
+    private val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            (activity as MainActivity).changeTab(1)
+        }
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         totalPrice = (activity as MainActivity).getUserTotalPrice()
@@ -53,6 +60,7 @@ class ExteriorFragment : Fragment() {
     ): View {
         _binding = FragmentExteriorBinding.inflate(inflater, container, false)
         exteriorViewModel.setUserTotalPrice(totalPrice)
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), callback)
         return binding.root
     }
 
@@ -64,7 +72,7 @@ class ExteriorFragment : Fragment() {
             CoroutineScope(Dispatchers.IO).launch {
                 exteriorViewModel.saveUserSelection()
                 exteriorViewModel.updateCarData()
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
                     (activity as MainActivity).changeTab(3)
                 }
             }
@@ -75,7 +83,7 @@ class ExteriorFragment : Fragment() {
         binding.btnPriceSummary.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 exteriorViewModel.saveUserSelection()
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
                     findNavController().navigate(R.id.action_exteriorFragment_to_priceSummaryBottomSheetFragment)
                 }
             }
