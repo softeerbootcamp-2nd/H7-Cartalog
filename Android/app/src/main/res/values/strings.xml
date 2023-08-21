@@ -9,6 +9,8 @@
     <string name="btn_open_similar_estimate">유사 출고 견적 확인하기</string>
     <string name="btn_share">공유하기</string>
     <string name="btn_consult">상담신청</string>
+    <string name="btn_restart">처음부터 시작하기</string>
+    <string name="btn_exit_2">저장하고 종료하기</string>
 
     <string name="tab_trim">트림</string>
     <string name="tab_type">타입</string>
@@ -62,4 +64,7 @@
     <string name="confirm_car_model">Le Blanc</string>
     <string name="confirm_title_summary">요약 견적</string>
     <string name="confirm_title_detail">상세 견적</string>
+
+    <string name="exit_content">내 차 만들기를 종료하시겠습니까?</string>
+
 </resources>
