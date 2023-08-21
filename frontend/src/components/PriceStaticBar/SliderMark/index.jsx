@@ -1,7 +1,7 @@
 import * as S from './style';
 
 function SliderMark({ minPrice, maxPrice, budget }) {
-  const budgetText = budget / 10000;
+  const budgetText = Math.round(budget / 10000);
   const minText = minPrice / 10000;
   const maxText = maxPrice / 10000;
 
