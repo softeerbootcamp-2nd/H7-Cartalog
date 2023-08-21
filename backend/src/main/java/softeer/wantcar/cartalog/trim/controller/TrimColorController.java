@@ -47,7 +47,7 @@ public class TrimColorController {
                     name = "trimId", value = "트림 식별자", required = true,
                     dataType = "java.lang.Long", paramType = "query", example = "2"),
             @ApiImplicitParam(
-                    name = "exteriorColorCode", value = "트림 식별자", required = true,
+                    name = "exteriorColorCode", value = "외장 색상 코드", required = true,
                     dataType = "java.lang.String", paramType = "query", example = "A2B")
     })
     @ApiResponses({
