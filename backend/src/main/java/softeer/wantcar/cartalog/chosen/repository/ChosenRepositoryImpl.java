@@ -120,6 +120,7 @@ public class ChosenRepositoryImpl implements ChosenRepository {
 
         var query = jdbcTemplate.query(SQL, parameters, RowMapperUtils.mapping(ChosenDto.class, getIdCodeRowMapperStrategy));
 
+        log.info(String.valueOf(query.size()));
         if (optionIds.size() != query.size()) {
             throw new IllegalArgumentException();
         }
@@ -131,7 +132,48 @@ public class ChosenRepositoryImpl implements ChosenRepository {
 
     @Override
     public List<Integer> findPackageChosenByOptionId(List<Long> packageIds, int daysAgo) {
-        return null;
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("packageIds", packageIds);
+
+        String SQL = "SELECT recent_records_count.id_code,  " +
+                "       recent_records,  " +
+                "       total_records  " +
+                "FROM   (SELECT model_package_id        AS id_code,  " +
+                "               Count(model_package_id) AS recent_records  " +
+                "        FROM   release_records  " +
+                "               INNER JOIN estimates  " +
+                "                       ON estimates.id = release_records.estimate_id  " +
+                "               INNER JOIN estimate_packages  " +
+                "                       ON estimate_packages.estimate_id = estimates.id  " +
+                "        WHERE release_records.create_date >= CURRENT_DATE - INTERVAL '" + daysAgo + "' DAY  " +
+                "        GROUP  BY model_package_id) AS recent_records_count  " +
+                "       LEFT JOIN (SELECT model_packages.id        AS id_code,  " +
+                "                         Count(model_packages.id) AS total_records  " +
+                "                  FROM   release_records  " +
+                "                         INNER JOIN estimates  " +
+                "                                 ON estimates.id = release_records.estimate_id  " +
+                "                         INNER JOIN detail_trims  " +
+                "                                 ON detail_trims.id = estimates.detail_trim_id  " +
+                "                         INNER JOIN detail_trim_packages  " +
+                "                                 ON detail_trim_packages.detail_trim_id =  " +
+                "                                    detail_trims.id  " +
+                "                         INNER JOIN model_packages  " +
+                "                                 ON model_packages.id =  " +
+                "                                    detail_trim_packages.model_package_id  " +
+                "                  WHERE release_records.create_date >= CURRENT_DATE - INTERVAL '" + daysAgo + "' DAY  " +
+                "                  GROUP  BY model_packages.id) AS total_records_count  " +
+                "              ON recent_records_count.id_code = total_records_count.id_code  " +
+                "WHERE  recent_records_count.id_code IN ( :packageIds ) ";
+
+        var query = jdbcTemplate.query(SQL, parameters, RowMapperUtils.mapping(ChosenDto.class, getIdCodeRowMapperStrategy));
+
+        if (packageIds.size() != query.size()) {
+            throw new IllegalArgumentException();
+        }
+
+        return query.stream()
+                .map(ChosenDto::getChosen)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     @Override

@@ -57,8 +57,8 @@ class ChosenRepositoryTest {
 
             int daysAgo = 90 + intDayDifference;
 
-            List<Integer> modelTypeRecentRecords = List.of(125, 114, 124, 115, 125, 114);
-            List<Integer> modelTypeTotalRecords = List.of(239, 239, 239, 239, 239, 239);
+            List<Integer> modelTypeRecentRecords = List.of(126, 115, 126, 115, 126, 115);
+            List<Integer> modelTypeTotalRecords = List.of(241, 241, 241, 241, 241, 241);
 
             List<Integer> collect = IntStream.range(0, 6)
                     .mapToDouble(i -> (double) modelTypeRecentRecords.get(i) * 100 / modelTypeTotalRecords.get(i))
@@ -90,41 +90,84 @@ class ChosenRepositoryTest {
     }
 
     @Nested
-    @DisplayName("모델 타입 옵션 선택률 조회 테스트")
+    @DisplayName("모델 옵션 선택률 조회 테스트")
     class findOptionChosenByOptionIdTest {
         @Test
         @DisplayName("선택률을 가져와야 한다.")
         void success() {
             //given
-            List<Long> modelTypeIds = List.of(97L, 98L, 99L, 100L, 101L, 102L, 103L, 104L, 105L, 106L, 107L);
-            int daysAgo = 90;
+            List<Long> modelSelectOptionIds = List.of(97L, 98L, 99L, 100L, 101L, 102L, 103L, 104L, 105L, 106L, 107L);
+            int daysAgo = 90 + intDayDifference;
 
-            List<Integer> modelTypeRecentRecords = List.of(57, 34, 42, 53, 41, 45, 39, 40, 48, 42, 40);
-            List<Integer> modelTypeTotalRecords = List.of(241, 241, 241, 126, 241, 241, 241, 241, 241, 241, 241);
+            List<Integer> modelSelectOptionRecords = List.of(57, 34, 42, 53, 41, 45, 39, 40, 48, 42, 40);
+            List<Integer> modelSelectOptionTotalRecords = List.of(241, 241, 241, 126, 241, 241, 241, 241, 241, 241, 241);
 
-            List<Integer> modelTypeChosenExpected = IntStream.range(0, modelTypeIds.size())
-                    .mapToDouble(i -> (double) modelTypeRecentRecords.get(i) * 100 / modelTypeTotalRecords.get(i))
+            List<Integer> modelSelectOptionChosenExpected = IntStream.range(0, modelSelectOptionIds.size())
+                    .mapToDouble(i -> (double) modelSelectOptionRecords.get(i) * 100 / modelSelectOptionTotalRecords.get(i))
                     .mapToLong(Math::round)
                     .mapToInt(operand -> (int) operand)
                     .boxed()
                     .collect(Collectors.toUnmodifiableList());
 
             //when
-            List<Integer> modelTypeChosen = chosenRepository.findOptionChosenByOptionId(modelTypeIds, daysAgo);
+            List<Integer> modelSelectOptionChosen = chosenRepository.findOptionChosenByOptionId(modelSelectOptionIds, daysAgo);
 
             //then
-            softAssertions.assertThat(modelTypeChosen).isEqualTo(modelTypeChosenExpected);
+            softAssertions.assertThat(modelSelectOptionChosen).isEqualTo(modelSelectOptionChosenExpected);
         }
 
         @Test
         @DisplayName("잘못된 식별자를 전달하면 오류를 발생해야 한다.")
         void failure() {
             //given
-            List<Long> modelTypeIds = List.of(10L);
-            int daysAgo = 90;
+            List<Long> modelOptionIds = List.of(10L);
+            int daysAgo = 90 + intDayDifference;
 
             //when
-            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findOptionChosenByOptionId(modelTypeIds, daysAgo);
+            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findOptionChosenByOptionId(modelOptionIds, daysAgo);
+
+            //then
+            assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);
+        }
+    }
+
+
+    @Nested
+    @DisplayName("모델 패키지 선택률 조회 테스트")
+    class findPackageChosenByOptionId {
+        @Test
+        @DisplayName("선택률을 가져와야 한다.")
+        void success() {
+            //given
+            List<Long> modelPackageIds = List.of(1L, 2L, 3L, 4L);
+            int daysAgo = 90 + intDayDifference;
+
+            List<Integer> modelPackageRecentRecords = List.of(50, 52, 56, 57);
+            List<Integer> modelPackageTotalRecords = List.of(241, 241, 241, 241);
+
+            List<Integer> modelPackageChosenExpected = IntStream.range(0, modelPackageIds.size())
+                    .mapToDouble(i -> (double) modelPackageRecentRecords.get(i) * 100 / modelPackageTotalRecords.get(i))
+                    .mapToLong(Math::round)
+                    .mapToInt(operand -> (int) operand)
+                    .boxed()
+                    .collect(Collectors.toUnmodifiableList());
+
+            //when
+            List<Integer> modelPackageChosen = chosenRepository.findPackageChosenByOptionId(modelPackageIds, daysAgo);
+
+            //then
+            softAssertions.assertThat(modelPackageChosen).isEqualTo(modelPackageChosenExpected);
+        }
+
+        @Test
+        @DisplayName("잘못된 식별자를 전달하면 오류를 발생해야 한다.")
+        void failure() {
+            //given
+            List<Long> modelPackageIds = List.of(10L);
+            int daysAgo = 90  + intDayDifference;
+
+            //when
+            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findOptionChosenByOptionId(modelPackageIds, daysAgo);
 
             //then
             assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);

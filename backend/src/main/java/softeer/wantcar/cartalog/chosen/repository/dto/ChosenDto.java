@@ -1,7 +1,9 @@
 package softeer.wantcar.cartalog.chosen.repository.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 @AllArgsConstructor
