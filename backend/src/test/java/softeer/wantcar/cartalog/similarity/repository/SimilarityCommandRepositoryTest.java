@@ -1,4 +1,4 @@
-package softeer.wantcar.cartalog.estimate.repository;
+package softeer.wantcar.cartalog.similarity.repository;
 
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
-import softeer.wantcar.cartalog.estimate.repository.dto.SimilarityInfo;
+import softeer.wantcar.cartalog.similarity.repository.dto.SimilarityInfo;
 
 import java.util.HashMap;
 import java.util.List;
@@ -102,7 +102,7 @@ class SimilarityCommandRepositoryTest {
 
             //then
             Long origin_hash_tag_index = jdbcTemplate.queryForObject("SELECT origin_hash_tag_index FROM hash_tag_similarities " +
-                                                                  "WHERE target_hash_tag_index = 1", new HashMap<>(), Long.TYPE);
+                                                                     "WHERE target_hash_tag_index = 1", new HashMap<>(), Long.TYPE);
             assertThat(origin_hash_tag_index).isEqualTo(0);
         }
     }

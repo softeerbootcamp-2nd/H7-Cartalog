@@ -15,6 +15,7 @@ import softeer.wantcar.cartalog.global.utils.RowMapperUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,26 +29,35 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
     private final ServerPath serverPath;
 
     @Override
-    public List<EstimateInfoDto> findEstimateInfoBydEstimateIds(List<Long> similarEstimateIds) {
+    public List<EstimateInfoDto> findEstimateInfoBydEstimateIds(List<Long> estimateIds) {
+        if (estimateIds.isEmpty()) {
+            return new ArrayList<>();
+        }
         SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("similarEstimateIds", similarEstimateIds);
-        return jdbcTemplate.query(QueryString.findSimilarEstimateInfoByEstimateIds,
+                .addValue("estimateIds", estimateIds);
+        return jdbcTemplate.query(QueryString.findEstimateInfoBydEstimateIds,
                 parameters, RowMapperUtils.mapping(EstimateInfoDto.class, serverPath.getImageServerPathRowMapperStrategy()));
     }
 
     @Override
     public List<EstimateOptionInfoDto> findEstimateOptionsByEstimateIds(List<Long> estimateIds) {
+        if (estimateIds.isEmpty()) {
+            return new ArrayList<>();
+        }
         SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("similarEstimateIds", estimateIds);
-        return jdbcTemplate.query(QueryString.findSimilarEstimateOptionsByEstimateIds,
+                .addValue("estimateIds", estimateIds);
+        return jdbcTemplate.query(QueryString.findEstimateOptionsByEstimateIds,
                 parameters, (rs, rowNum) -> getEstimateOptionInfoDto(rs, true));
     }
 
     @Override
     public List<EstimateOptionInfoDto> findEstimatePackagesByEstimateIds(List<Long> estimateIds) {
+        if (estimateIds.isEmpty()) {
+            return new ArrayList<>();
+        }
         SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("similarEstimateIds", estimateIds);
-        return jdbcTemplate.query(QueryString.findSimilarEstimatePackagesByEstimateIds,
+                .addValue("estimateIds", estimateIds);
+        return jdbcTemplate.query(QueryString.findEstimatePackagesByEstimateIds,
                 parameters, (rs, rowNum) -> getEstimateOptionInfoDto(rs, false));
     }
 
@@ -84,6 +94,9 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
 
     @Override
     public List<EstimateCountDto> findEstimateCounts(List<Long> estimateIds) {
+        if (estimateIds.isEmpty()) {
+            return new ArrayList<>();
+        }
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("estimateIds", estimateIds);
         return jdbcTemplate.query(QueryString.findEstimateCounts,
@@ -139,7 +152,6 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
     public List<Long> findEstimateModelTypeIdsByEstimateId(Long estimateId) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("estimateId", estimateId);
-
         try {
             return jdbcTemplate.queryForList(QueryString.findEstimateModelOptionIdsByEstimateId,
                     parameters, Long.class);

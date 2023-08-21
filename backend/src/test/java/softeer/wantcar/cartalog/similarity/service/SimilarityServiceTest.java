@@ -1,26 +1,27 @@
-package softeer.wantcar.cartalog.estimate.service;
+package softeer.wantcar.cartalog.similarity.service;
 
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateCountResponseDto;
-import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateResponseDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
-import softeer.wantcar.cartalog.estimate.repository.SimilarityCommandRepository;
-import softeer.wantcar.cartalog.estimate.repository.SimilarityQueryRepository;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateCountDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateInfoDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionIdListDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionInfoDto;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
+import softeer.wantcar.cartalog.similarity.dto.SimilarEstimateCountResponseDto;
+import softeer.wantcar.cartalog.similarity.dto.SimilarEstimateResponseDto;
+import softeer.wantcar.cartalog.similarity.repository.SimilarityCommandRepository;
+import softeer.wantcar.cartalog.similarity.repository.SimilarityQueryRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

@@ -1,4 +1,4 @@
-package softeer.wantcar.cartalog.estimate.repository.dto;
+package softeer.wantcar.cartalog.similarity.repository.dto;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -16,10 +16,6 @@ public class PendingHashTagMap {
     public PendingHashTagMap(long idx, String hashTagKey) {
         this.idx = idx;
         hashTags = getHashTagMap(hashTagKey);
-    }
-
-    public String getKey() {
-        return getHashTagKey(hashTags);
     }
 
     public static String getHashTagKey(List<String> hashTags) {

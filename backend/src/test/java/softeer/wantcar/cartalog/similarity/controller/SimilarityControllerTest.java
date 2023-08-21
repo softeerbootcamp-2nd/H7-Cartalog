@@ -1,4 +1,4 @@
-package softeer.wantcar.cartalog.estimate.controller;
+package softeer.wantcar.cartalog.similarity.controller;
 
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateCountResponseDto;
-import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateResponseDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateCountDto;
-import softeer.wantcar.cartalog.estimate.service.SimilarityService;
+import softeer.wantcar.cartalog.similarity.dto.SimilarEstimateCountResponseDto;
+import softeer.wantcar.cartalog.similarity.dto.SimilarEstimateResponseDto;
+import softeer.wantcar.cartalog.similarity.service.SimilarityService;
 
 import java.util.List;
 

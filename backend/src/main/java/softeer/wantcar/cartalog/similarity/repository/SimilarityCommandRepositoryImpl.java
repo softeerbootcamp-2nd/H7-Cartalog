@@ -1,4 +1,4 @@
-package softeer.wantcar.cartalog.estimate.repository;
+package softeer.wantcar.cartalog.similarity.repository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import softeer.wantcar.cartalog.estimate.repository.dto.SimilarityInfo;
+import softeer.wantcar.cartalog.similarity.repository.dto.SimilarityInfo;
 
 import java.util.List;
 
@@ -38,6 +38,9 @@ public class SimilarityCommandRepositoryImpl implements SimilarityCommandReposit
 
     @Override
     public void saveSimilarities(Long trimId, String hashTagKey, List<SimilarityInfo> similarityInfos) {
+        if (similarityInfos.isEmpty()) {
+            return;
+        }
         SqlParameterSource[] parameters = similarityInfos.stream()
                 .map(similarityInfo -> new MapSqlParameterSource()
                         .addValue("trimId", trimId)

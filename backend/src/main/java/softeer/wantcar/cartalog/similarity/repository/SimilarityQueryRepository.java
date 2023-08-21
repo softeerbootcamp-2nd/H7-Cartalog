@@ -1,7 +1,7 @@
-package softeer.wantcar.cartalog.estimate.repository;
+package softeer.wantcar.cartalog.similarity.repository;
 
-import softeer.wantcar.cartalog.estimate.repository.dto.PendingHashTagMap;
-import softeer.wantcar.cartalog.estimate.repository.dto.SimilarityInfo;
+import softeer.wantcar.cartalog.similarity.repository.dto.PendingHashTagMap;
+import softeer.wantcar.cartalog.similarity.repository.dto.SimilarityInfo;
 
 import java.util.List;
 
