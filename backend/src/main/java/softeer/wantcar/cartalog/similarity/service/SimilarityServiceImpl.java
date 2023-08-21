@@ -37,6 +37,26 @@ public class SimilarityServiceImpl implements SimilarityService {
         return getSimilarEstimateResponseDto(estimateId, similarEstimateId, similarEstimateInfos, estimateOptionInfos);
     }
 
+    @Override
+    @Transactional
+    public SimilarEstimateCountResponseDto getSimilarEstimateCounts(Long estimateId) {
+        EstimateOptionIdListDto estimateOptionIdListDto = estimateQueryRepository.findEstimateOptionIdsByEstimateId(estimateId);
+        if (estimateOptionIdListDto == null) {
+            return null;
+        }
+        List<String> totalHashTags = getTotalHashTags(estimateOptionIdListDto);
+        List<Long> estimateIds = new ArrayList<>(getSimilarEstimateIds(estimateOptionIdListDto.getTrimId(), totalHashTags));
+        estimateIds.add(estimateId);
+
+        List<EstimateCountDto> estimateCounts = estimateQueryRepository.findEstimateCounts(estimateIds);
+
+        Long myEstimateCount = getMyEstimateCount(estimateId, estimateCounts);
+        return SimilarEstimateCountResponseDto.builder()
+                .myEstimateCount(myEstimateCount)
+                .similarEstimateCounts(getSimilarEstimateCounts(estimateId, estimateCounts))
+                .build();
+    }
+
     private static SimilarEstimateResponseDto getSimilarEstimateResponseDto(Long estimateId,
                                                                             Long similarEstimateId,
                                                                             List<EstimateInfoDto> similarEstimateInfos,
@@ -58,56 +78,54 @@ public class SimilarityServiceImpl implements SimilarityService {
                 .build();
     }
 
-    @Override
-    @Transactional
-    public SimilarEstimateCountResponseDto getSimilarEstimateCounts(Long estimateId) {
-        EstimateOptionIdListDto estimateOptionIdListDto = estimateQueryRepository.findEstimateOptionIdsByEstimateId(estimateId);
-        if (estimateOptionIdListDto == null) {
-            return null;
-        }
-        List<String> totalHashTags = getTotalHashTags(estimateOptionIdListDto);
-        List<Long> estimateIds = new ArrayList<>(getSimilarEstimateIds(estimateOptionIdListDto.getTrimId(), totalHashTags));
-        estimateIds.add(estimateId);
-
-        List<EstimateCountDto> estimateCounts = estimateQueryRepository.findEstimateCounts(estimateIds);
-
-        Long myEstimateCount = getMyEstimateCount(estimateId, estimateCounts);
-        return SimilarEstimateCountResponseDto.builder()
-                .myEstimateCount(myEstimateCount)
-                .similarEstimateCounts(getSimilarEstimateCounts(estimateId, estimateCounts))
-                .build();
-    }
-
     public void updateHashTagSimilarities(Long trimId, String hashTagKey) {
         List<PendingHashTagMap> pendingHashTagMaps = similarityQueryRepository.findPendingHashTagKeys(trimId, hashTagKey);
         if (pendingHashTagMaps.isEmpty()) {
             return;
         }
 
+        List<SimilarityInfo> pendingSimilarities = getPendingSimilarities(hashTagKey, pendingHashTagMaps);
+
+        long lastCalculatedIndex = getLastCalculatedIndex(pendingSimilarities);
+        similarityCommandRepository.updateLastCalculatedIndex(trimId, hashTagKey, lastCalculatedIndex);
+
+        List<SimilarityInfo> mostSimilarities = getMostSimilarities(trimId, hashTagKey, pendingSimilarities);
+        if(mostSimilarities.equals(pendingSimilarities)) {
+            return;
+        }
+        saveMostSimilarities(trimId, hashTagKey, mostSimilarities);
+    }
+
+    private void saveMostSimilarities(Long trimId, String hashTagKey, List<SimilarityInfo> mostSimilarities) {
+        similarityCommandRepository.deleteSimilarities(trimId, hashTagKey);
+        similarityCommandRepository.saveSimilarities(trimId, hashTagKey, mostSimilarities);
+    }
+
+    private List<SimilarityInfo> getMostSimilarities(Long trimId, String hashTagKey, List<SimilarityInfo> pendingSimilarities) {
+        List<SimilarityInfo> beforeSimilarities = similarityQueryRepository.findSimilarities(trimId, hashTagKey);
+        beforeSimilarities.addAll(pendingSimilarities);
+        return beforeSimilarities.stream()
+                .filter(similarityInfo -> similarityInfo.getSimilarity() < 0.9 && similarityInfo.getSimilarity() > 0.2)
+                .sorted(Comparator.comparing(SimilarityInfo::getSimilarity, Comparator.reverseOrder()))
+                .limit(4)
+                .collect(Collectors.toList());
+    }
+
+    private static long getLastCalculatedIndex(List<SimilarityInfo> pendingSimilarities) {
+        return pendingSimilarities.stream()
+                .mapToLong(SimilarityInfo::getIdx)
+                .max()
+                .orElse(0);
+    }
+
+    private static List<SimilarityInfo> getPendingSimilarities(String hashTagKey, List<PendingHashTagMap> pendingHashTagMaps) {
         List<SimilarityInfo> pendingSimilarities = pendingHashTagMaps.stream()
                 .map(hashTagMap -> SimilarityInfo.builder()
                         .idx(hashTagMap.getIdx())
                         .similarity(hashTagMap.getSimilarity(hashTagKey))
                         .build())
                 .collect(Collectors.toList());
-
-        long lastIndex = pendingSimilarities.stream()
-                .mapToLong(SimilarityInfo::getIdx)
-                .max()
-                .orElse(0);
-
-        similarityCommandRepository.updateLastCalculatedIndex(trimId, hashTagKey, lastIndex);
-
-        List<SimilarityInfo> beforeSimilarities = similarityQueryRepository.findSimilarities(trimId, hashTagKey);
-        beforeSimilarities.addAll(pendingSimilarities);
-        List<SimilarityInfo> newSimilarities = beforeSimilarities.stream()
-                .filter(similarityInfo -> similarityInfo.getSimilarity() < 0.9 && similarityInfo.getSimilarity() > 0.2)
-                .sorted(Comparator.comparing(SimilarityInfo::getSimilarity, Comparator.reverseOrder()))
-                .limit(4)
-                .collect(Collectors.toList());
-
-        similarityCommandRepository.deleteSimilarities(trimId, hashTagKey);
-        similarityCommandRepository.saveSimilarities(trimId, hashTagKey, newSimilarities);
+        return pendingSimilarities;
     }
 
     private static Long getMyEstimateCount(Long estimateId, List<EstimateCountDto> estimateCounts) {
