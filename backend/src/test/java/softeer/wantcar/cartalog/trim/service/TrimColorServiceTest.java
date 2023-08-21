@@ -42,7 +42,7 @@ class TrimColorServiceTest {
     }
 
     @Nested
-    @DisplayName("외장 색상 테스트")
+    @DisplayName("외장 색상 조회 테스트")
     class findTrimExteriorColorTest {
         @Test
         @DisplayName("적절한 트림 식별자를 전달했을 때 외장 색상 리스트를 반환해야 한다.")
@@ -73,7 +73,7 @@ class TrimColorServiceTest {
         }
 
         @Test
-        @DisplayName("존재하지 않는 트림 식별자를 전달했을 경우 에러를 던져야 한다.")
+        @DisplayName("존재하지 않는 트림 식별자를 전달했을 경우 IllegalArgumentException 에러를 던져야 한다.")
         void failure() {
             //given
             when(trimColorQueryRepository.findTrimExteriorColorsByTrimId(anyLong())).thenReturn(List.of());
@@ -87,7 +87,7 @@ class TrimColorServiceTest {
     }
 
     @Nested
-    @DisplayName("내장 색상 테스트")
+    @DisplayName("내장 색상 조회 테스트")
     class findTrimInteriorColorTest {
         @Test
         @DisplayName("적절한 트림 식별자와 외장 색상 코드를 전달했을 때 내장 색상 리스트를 반환해야 한다.")
@@ -119,7 +119,7 @@ class TrimColorServiceTest {
         }
 
         @Test
-        @DisplayName("존재하지 않는 트림 식별자 혹은 외장 색상 코드를 전달했을 경우 에러를 던져야 한다.")
+        @DisplayName("존재하지 않는 트림 식별자 혹은 외장 색상 코드를 전달했을 경우 IllegalArgumentException 에러를 던져야 한다.")
         void failure() {
             //given
             when(trimColorQueryRepository.findTrimInteriorColorsByTrimIdAndExteriorColorCode(anyLong(), anyString())).thenReturn(List.of());
