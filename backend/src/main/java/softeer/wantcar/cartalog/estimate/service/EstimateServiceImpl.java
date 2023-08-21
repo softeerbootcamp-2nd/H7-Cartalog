@@ -103,7 +103,7 @@ public class EstimateServiceImpl implements EstimateService {
         List<OptionPackageInfoDto> selectOptionPackageInfos =
                 trimOptionQueryRepository.findOptionPackageInfoByOptionPackageIds(estimateOptionIds.getOptionIds(), estimateOptionIds.getPackageIds());
 
-        addOptionPackageInfoDto(builder, modelTypesInfos, true);
+        addOptionPackageInfoDto(builder, modelTypesInfos);
         addEstimateResponseOptionDto(builder, selectOptionPackageInfos, estimateOptionIds.getOptionIds(), true);
         addEstimateResponseOptionDto(builder, selectOptionPackageInfos, estimateOptionIds.getPackageIds(), false);
 
@@ -111,12 +111,10 @@ public class EstimateServiceImpl implements EstimateService {
     }
 
     private static void addOptionPackageInfoDto(EstimateResponseDto.EstimateResponseDtoBuilder builder,
-                                                List<OptionPackageInfoDto> optionPackageInfoDtoList,
-                                                boolean isOption) {
-        String prefix = isOption ? "O" : "P";
+                                                List<OptionPackageInfoDto> optionPackageInfoDtoList) {
         optionPackageInfoDtoList
                 .forEach(infoDto -> builder.modelType(EstimateResponseDto.OptionPackageDto.builder()
-                        .id(prefix + infoDto.getId())
+                        .id("O" + infoDto.getId())
                         .childCategory(infoDto.getChildCategory())
                         .imageUrl(infoDto.getImageUrl())
                         .name(infoDto.getName())
@@ -129,10 +127,17 @@ public class EstimateServiceImpl implements EstimateService {
                                                      List<OptionPackageInfoDto> selectOptionPackageInfos,
                                                      List<Long> estimateOptionIds,
                                                      boolean isOption) {
-        List<OptionPackageInfoDto> filteredOptionPackageInfoDto = selectOptionPackageInfos.stream()
+        String prefix = isOption ? "O" : "P";
+        selectOptionPackageInfos.stream()
                 .filter(infoDto -> estimateOptionIds.contains(infoDto.getId()))
-                .collect(Collectors.toList());
-        addOptionPackageInfoDto(builder, filteredOptionPackageInfoDto, isOption);
+                .forEach(infoDto -> builder.selectOptionOrPackage(EstimateResponseDto.OptionPackageDto.builder()
+                        .id(prefix + infoDto.getId())
+                        .childCategory(infoDto.getChildCategory())
+                        .imageUrl(infoDto.getImageUrl())
+                        .name(infoDto.getName())
+                        .price(infoDto.getPrice())
+                        .build())
+                );
     }
 
     private void saveEstimate(Long trimId, EstimateDto estimateDto) {
