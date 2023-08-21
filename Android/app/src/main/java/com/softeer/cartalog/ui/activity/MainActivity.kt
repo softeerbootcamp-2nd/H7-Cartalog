@@ -1,12 +1,17 @@
 package com.softeer.cartalog.ui.activity
 
 import android.annotation.SuppressLint
+import android.graphics.Typeface
 import android.os.Bundle
+import android.os.Process
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -31,19 +36,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
     private val bottomSheetFragment by lazy {
         PriceSummaryBottomSheetFragment()
     }
+    private var tabFont: Typeface? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = mainViewModel
         binding.lifecycleOwner = this
+        tabFont = ResourcesCompat.getFont(this, R.font.hyndaisans_head_bold)
+
         setTabSelected()
 
         MyCarDatabase.getInstance(applicationContext)
+        binding.btnExit.setOnClickListener(this)
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setTabSelected() {
-        val font = ResourcesCompat.getFont(this, R.font.hyndaisans_head_bold)
         val tabLayout = binding.tlStep
         val tabStrip = tabLayout.getChildAt(0) as? LinearLayout
 
@@ -58,7 +67,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
                 tab?.let {
                     val selectedPosition = it.position
 
-                    if (selectedPosition > mainViewModel.stepIndex.value!!) {
+                    // 처음부터 시작하기 눌렀을 때 동작
+                    // TODO :: RoomDB 초기화 해야함!
+                    if (mainViewModel.isReset.value == true) {
+                        navController.navigate(R.id.trimFragment)
+                        resetTabTextColor(tabLayout)
+                        mainViewModel.changeResetState()
+                    }
+
+                    // 다음 탭 이동 동작
+                    else if (selectedPosition > mainViewModel.stepIndex.value!!) {
 
                         when (selectedPosition) {
                             0 -> navController.navigate(R.id.trimFragment)
@@ -69,20 +87,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
                             5 -> navController.navigate(R.id.action_optionFragment_to_confirmFragment)
                         }
 
-                        val tv = TextView(tabLayout.context).apply {
-                            setTextColor(
-                                ContextCompat.getColor(
-                                    tabLayout.context,
-                                    R.color.primary_color_200
-                                )
-                            )
-                            typeface = font
-                            gravity = Gravity.CENTER
-                            text = tabLayout.getTabAt(selectedPosition - 1)?.text
-                        }
-                        tabLayout.getTabAt(selectedPosition - 1)?.customView = tv
+                        setPrevTabTextColor(tabLayout, selectedPosition)
+                    }
 
-                    } else {
+                    // 이전 탭 이동 동작
+                    else {
                         when (selectedPosition) {
                             0 -> navController.navigate(R.id.action_typeFragment_to_trimFragment)
                             1 -> navController.navigate(R.id.action_exteriorFragment_to_typeFragment)
@@ -93,6 +102,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
                         }
                         tabLayout.getTabAt(selectedPosition)?.customView = null
                     }
+
                     mainViewModel.setStepIndex(selectedPosition)
                 }
             }
@@ -102,22 +112,50 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
         })
     }
 
-    fun changeTab(idx: Int){
+    fun changeTab(idx: Int) {
         binding.tlStep.selectTab(binding.tlStep.getTabAt(idx))
+    }
+
+    fun setPrevTabTextColor(tabLayout: TabLayout, selectedPosition: Int) {
+        val tv = TextView(tabLayout.context).apply {
+            setTextColor(
+                ContextCompat.getColor(tabLayout.context, R.color.primary_color_200)
+            )
+            typeface = tabFont
+            gravity = Gravity.CENTER
+            text = tabLayout.getTabAt(selectedPosition - 1)?.text
+        }
+        tabLayout.getTabAt(selectedPosition - 1)?.customView = null
+        tabLayout.getTabAt(selectedPosition - 1)?.customView = tv
+    }
+
+    fun resetTabTextColor(tabLayout: TabLayout) {
+        (0..5).forEach { tabLayout.getTabAt(it)?.customView = null }
     }
 
     override fun onClick(view: View?) {
         when (view?.id) {
-            R.id.btn_next -> {
-                changeTab(mainViewModel.stepIndex.value!! + 1)
-            }
-
-            R.id.btn_prev -> {
-                changeTab(mainViewModel.stepIndex.value!! - 1)
-            }
-
             R.id.btn_price_summary -> {
                 bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+            }
+
+            R.id.btn_exit -> {
+                val dialogView =
+                    LayoutInflater.from(this@MainActivity).inflate(R.layout.dialog_exit, null)
+                val dialog = AlertDialog.Builder(this@MainActivity)
+                    .setView(dialogView)
+                    .create()
+
+                dialogView.findViewById<Button>(R.id.btn_exit)?.setOnClickListener {
+                    Process.killProcess(Process.myPid())
+                    finish()
+                }
+                dialogView.findViewById<Button>(R.id.btn_restart)?.setOnClickListener {
+                    mainViewModel.changeResetState()
+                    changeTab(0)
+                    dialog.dismiss()
+                }
+                dialog.show()
             }
         }
     }
@@ -132,6 +170,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
     }
 
     fun getUserTotalPrice(): Int {
-        return  mainViewModel.totalPrice.value!!
+        return mainViewModel.totalPrice.value!!
     }
+
+
 }
