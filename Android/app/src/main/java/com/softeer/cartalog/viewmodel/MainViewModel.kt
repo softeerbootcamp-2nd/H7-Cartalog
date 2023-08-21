@@ -25,6 +25,9 @@ class MainViewModel : ViewModel() {
     val maxPrice: LiveData<Int> = _maxPrice
     private var priceRange = 0
 
+    private val _isReset = MutableLiveData<Boolean>(false)
+    val isReset: LiveData<Boolean> = _isReset
+
     fun setStepIndex(index: Int) {
         _stepIndex.value = index
     }
@@ -59,5 +62,9 @@ class MainViewModel : ViewModel() {
         _totalPrice.value = total
         _totalPriceProgress.value = calculateProgressFromPrice(totalPrice.value!!)
         _budgetRangeLimit.value = calculatePriceFromProgress(50)
+    }
+
+    fun changeResetState(){
+        _isReset.value = !_isReset.value!!
     }
 }

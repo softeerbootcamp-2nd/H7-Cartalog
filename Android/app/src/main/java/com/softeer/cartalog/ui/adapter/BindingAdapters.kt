@@ -10,7 +10,10 @@ import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentContainerView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.softeer.cartalog.R
+import com.softeer.cartalog.data.model.Options
 import com.softeer.cartalog.data.enums.OptionMode
 import com.softeer.cartalog.data.model.CarColor
 import com.softeer.cartalog.data.model.ConfirmDetail
@@ -99,24 +102,16 @@ fun setInteriorColorRecyclerView(
     recyclerView.adapter = adapter
 }
 
-@BindingAdapter("viewModel")
+@BindingAdapter("viewModel", "optionList")
 fun setOptionRecyclerView(
     recyclerView: RecyclerView,
-    viewModel: OptionViewModel
+    viewModel: OptionViewModel,
+    optionList: Options?
 ) {
-    when (viewModel.nowOptionMode.value) {
-        OptionMode.SELECT_OPTION -> {
-            recyclerView.adapter = OptionSelectAdapter(viewModel)
-            recyclerView.adapter?.notifyDataSetChanged()
-        }
-
-        OptionMode.DEFAULT_OPTION -> {
-            recyclerView.adapter = OptionDefaultAdapter(viewModel)
-            recyclerView.adapter?.notifyDataSetChanged()
-        }
-
-        else -> {}
-    }
+    // 처음 optionfragment 열렸을 때 추가옵션 세팅을 위한 함수
+    recyclerView.setHasFixedSize(true)
+    recyclerView.adapter = OptionSelectAdapter(viewModel, "전체")
+    recyclerView.adapter?.notifyDataSetChanged()
 }
 
 @BindingAdapter("bottomSeekBar")
@@ -239,4 +234,20 @@ fun setConfirmDetailContentsRecyclerView(
     } else {
         recyclerView.visibility = View.GONE
     }
+}
+
+@BindingAdapter("hashTags")
+fun setHashTagChipGroup(
+    chipGroup: ChipGroup,
+    hashTags: List<String>?
+) {
+    hashTags?.let {
+        chipGroup.removeAllViews()
+        for (hashTag in it) {
+            chipGroup.addView(Chip(chipGroup.context).apply {
+                text = hashTag
+            })
+        }
+    }
+
 }
