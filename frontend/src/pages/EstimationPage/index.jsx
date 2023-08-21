@@ -38,20 +38,14 @@ const MOCK_HMGDATA = {
 };
 
 function Estimation() {
-  const {
-    setTrimState,
-    page,
-    trim,
-    modelType,
-    exteriorColor,
-    interiorColor,
-    price,
-    estimation,
-    optionPicker,
-  } = useData();
-  const SelectModel = trim.fetchData.find((model) => model.id === trim.id);
-  const SelectExterior = exteriorColor.fetchData.find((data) => exteriorColor.code === data.code);
-  const SelectInterior = interiorColor.fetchData.find((data) => interiorColor.code === data.code);
+  const data = useData();
+  const SelectModel = data.trim.fetchData.find((model) => model.id === data.trim.id);
+  const SelectExterior = data.exteriorColor.fetchData.find(
+    (pick) => data.exteriorColor.code === pick.code,
+  );
+  const SelectInterior = data.interiorColor.fetchData.find(
+    (pick) => data.interiorColor.code === pick.code,
+  );
 
   const DATA = [
     {
@@ -61,21 +55,21 @@ function Estimation() {
       data: [
         {
           title: ESTIMATION.DATA.POWER_TRAIN,
-          name: modelType.powerTrainOption?.name,
-          image: modelType.powerTrainOption?.imageUrl,
-          price: modelType.powerTrainOption?.price,
+          name: data.modelType.powerTrainOption?.name,
+          image: data.modelType.powerTrainOption?.imageUrl,
+          price: data.modelType.powerTrainOption?.price,
         },
         {
           title: ESTIMATION.DATA.BODY_TYPE,
-          name: modelType.bodyTypeOption?.name,
-          image: modelType.bodyTypeOption?.imageUrl,
-          price: modelType.bodyTypeOption?.price,
+          name: data.modelType.bodyTypeOption?.name,
+          image: data.modelType.bodyTypeOption?.imageUrl,
+          price: data.modelType.bodyTypeOption?.price,
         },
         {
           title: ESTIMATION.DATA.WHEEL_DRIVE,
-          name: modelType.wheelDriveOption?.name,
-          image: modelType.wheelDriveOption?.imageUrl,
-          price: modelType.wheelDriveOption?.price,
+          name: data.modelType.wheelDriveOption?.name,
+          image: data.modelType.wheelDriveOption?.imageUrl,
+          price: data.modelType.wheelDriveOption?.price,
         },
       ],
     },
@@ -101,9 +95,9 @@ function Estimation() {
     {
       title: ESTIMATION.DATA.OPTION,
       type: TYPE.PLUS,
-      expand: optionPicker.isExpend,
+      expand: data.optionPicker.isExpend,
       data: [
-        ...optionPicker.chosenOptionsData.map((optionData, index) => ({
+        ...data.optionPicker.chosenOptionsData.map((optionData, index) => ({
           id: index,
           name: optionData.name,
           image: optionData?.imageUrl,
@@ -120,8 +114,8 @@ function Estimation() {
 
   useEffect(() => {
     async function fetchData() {
-      if (!estimation.isFetch && page === 6) {
-        setTrimState((prevState) => ({
+      if (!data.estimation.isFetch && data.page === 6) {
+        data.setTrimState((prevState) => ({
           ...prevState,
           estimation: {
             ...prevState.estimation,
@@ -132,9 +126,9 @@ function Estimation() {
     }
 
     fetchData();
-  }, [page]);
+  }, [data]);
 
-  return estimation.isFetch ? (
+  return data.estimation.isFetch ? (
     <S.Estimation>
       <Preview />
       <S.Estimation>
@@ -149,7 +143,7 @@ function Estimation() {
       <PriceStaticBar
         min={SelectModel?.minPrice}
         max={SelectModel?.maxPrice}
-        price={TotalPrice(price)}
+        price={TotalPrice(data.price)}
       />
     </S.Estimation>
   ) : (
