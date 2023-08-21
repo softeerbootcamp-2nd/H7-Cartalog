@@ -15,7 +15,7 @@ public class ServerPath {
     private final RowMapperUtils.RowMapperStrategy rowMapperStrategy = new RowMapperUtils.RowMapperStrategy() {
         @Override
         public boolean isMappingTarget(Class<?> type, String name) {
-            return type == String.class && name.endsWith("image_url");
+            return type == String.class && (name.endsWith("image_url") || name.endsWith("image_directory"));
         }
 
         @Override
