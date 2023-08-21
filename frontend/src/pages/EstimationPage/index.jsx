@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { useReactToPrint } from 'react-to-print';
 import { useData, TotalPrice } from '../../utils/Context';
 import * as S from './style';
 import PriceStaticBar from '../../components/PriceStaticBar';
@@ -11,6 +12,11 @@ import Footer from './Footer';
 function Estimation() {
   const data = useData();
   const SelectModel = data.trim.fetchData.find((model) => model.id === data.trim.id);
+  const pdfRef = useRef();
+  const pdfEvent = useReactToPrint({
+    content: () => pdfRef.current,
+    documentTitle: '테스트',
+  });
 
   useEffect(() => {
     async function fetchData() {
@@ -30,21 +36,23 @@ function Estimation() {
 
   return data.estimation.isFetch ? (
     <S.Estimation>
-      <Preview />
-      <S.Estimation>
-        <Info />
-        <S.PageContents>
-          <Detail />
-          <HMGArea />
-        </S.PageContents>
-        <Footer />
-      </S.Estimation>
+      <div ref={pdfRef}>
+        <Preview />
+        <S.Estimation>
+          <Info />
+          <S.PageContents>
+            <Detail />
+            <HMGArea />
+          </S.PageContents>
+        </S.Estimation>
+      </div>
 
       <PriceStaticBar
         min={SelectModel?.minPrice}
         max={SelectModel?.maxPrice}
         price={TotalPrice(data.price)}
       />
+      <Footer pdfEvent={pdfEvent} />
     </S.Estimation>
   ) : (
     <>Loading...</>
