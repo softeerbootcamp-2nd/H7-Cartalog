@@ -35,6 +35,9 @@ public class ChosenRepositoryImpl implements ChosenRepository {
 
     @Override
     public List<Integer> findModelTypeChosenByOptionId(List<Long> modelTypeIds, int daysAgo) {
+        if (modelTypeIds.size() == 0) {
+            return List.of();
+        }
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("optionIds", modelTypeIds);
 
@@ -88,6 +91,9 @@ public class ChosenRepositoryImpl implements ChosenRepository {
 
     @Override
     public List<Integer> findOptionChosenByOptionId(List<Long> optionIds, int daysAgo) {
+        if (optionIds.size() == 0) {
+            return List.of();
+        }
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("optionIds", optionIds);
 
@@ -132,6 +138,9 @@ public class ChosenRepositoryImpl implements ChosenRepository {
 
     @Override
     public List<Integer> findPackageChosenByOptionId(List<Long> packageIds, int daysAgo) {
+        if (packageIds.size() == 0) {
+            return List.of();
+        }
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("packageIds", packageIds);
 
@@ -178,6 +187,9 @@ public class ChosenRepositoryImpl implements ChosenRepository {
 
     @Override
     public List<Integer> findExteriorColorChosenByExteriorColorCode(List<String> exteriorColorCodes, int daysAgo) {
+        if (exteriorColorCodes.size() == 0) {
+            return List.of();
+        }
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("exteriorColorCodes", exteriorColorCodes);
 
@@ -219,6 +231,9 @@ public class ChosenRepositoryImpl implements ChosenRepository {
 
     @Override
     public List<Integer> findInteriorColorChosenByInteriorColorCode(String exteriorColorCode, List<String> interiorColorCodes, int daysAgo) {
+        if (interiorColorCodes.size() == 0) {
+            return List.of();
+        }
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("exteriorColorCode", exteriorColorCode)
                 .addValue("interiorColorCodes", interiorColorCodes);

@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
@@ -87,6 +88,19 @@ class ChosenRepositoryTest {
             //then
             assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);
         }
+
+        @Test
+        @DisplayName("식별자를 전달하지 않으면 빈 리스트를 반환하여야 한다.")
+        void returnEmptyList() {
+            //given
+            int daysAgo = 90 + intDayDifference;
+
+            //when
+            List<Integer> modelTypeChosen = chosenRepository.findModelTypeChosenByOptionId(List.of(), daysAgo);
+
+            //then
+            assertThat(modelTypeChosen.size()).isEqualTo(0);
+        }
     }
 
     @Nested
@@ -128,6 +142,19 @@ class ChosenRepositoryTest {
 
             //then
             assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        @DisplayName("식별자를 전달하지 않으면 빈 리스트를 반환하여야 한다.")
+        void returnEmptyList() {
+            //given
+            int daysAgo = 90 + intDayDifference;
+
+            //when
+            List<Integer> modelOptionChosen = chosenRepository.findOptionChosenByOptionId(List.of(), daysAgo);
+
+            //then
+            assertThat(modelOptionChosen.size()).isEqualTo(0);
         }
     }
 
@@ -171,6 +198,19 @@ class ChosenRepositoryTest {
             //then
             assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);
         }
+
+        @Test
+        @DisplayName("식별자를 전달하지 않으면 빈 리스트를 반환하여야 한다.")
+        void returnEmptyList() {
+            //given
+            int daysAgo = 90 + intDayDifference;
+
+            //when
+            List<Integer> modelPackageChosen = chosenRepository.findPackageChosenByOptionId(List.of(), daysAgo);
+
+            //then
+            assertThat(modelPackageChosen.size()).isEqualTo(0);
+        }
     }
 
     @Nested
@@ -213,6 +253,19 @@ class ChosenRepositoryTest {
             //then
             assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);
         }
+
+        @Test
+        @DisplayName("식별자를 전달하지 않으면 빈 리스트를 반환하여야 한다.")
+        void returnEmptyList() {
+            //given
+            int daysAgo = 90 + intDayDifference;
+
+            //when
+            List<Integer> exteriorColorChosen = chosenRepository.findExteriorColorChosenByExteriorColorCode(List.of(), daysAgo);
+
+            //then
+            assertThat(exteriorColorChosen.size()).isEqualTo(0);
+        }
     }
 
     @Nested
@@ -254,6 +307,19 @@ class ChosenRepositoryTest {
 
             //then
             assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        @DisplayName("식별자를 전달하지 않으면 빈 리스트를 반환하여야 한다.")
+        void returnEmptyList() {
+            //given
+            int daysAgo = 90 + intDayDifference;
+
+            //when
+            List<Integer> interiorColorChosen = chosenRepository.findInteriorColorChosenByInteriorColorCode("A2B", List.of(), daysAgo);
+
+            //then
+            assertThat(interiorColorChosen.size()).isEqualTo(0);
         }
     }
 }
