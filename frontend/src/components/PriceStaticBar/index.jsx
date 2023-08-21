@@ -15,7 +15,7 @@ function PriceStaticBar() {
   const over = TotalPrice(price) > budget;
 
   useEffect(() => {
-    setIsVisible(page !== 1);
+    setIsVisible(!!page && page !== 1);
   }, [page]);
 
   return (
