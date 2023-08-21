@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useData } from '../../utils/Context';
 import { MODEL_TYPE } from './constants';
+import Skeleton from '../../components/Skeleton';
 import Section from '../../components/Section';
 import Info from './Info';
 import Pick from './Pick';
@@ -59,7 +60,12 @@ function ModelType() {
     Info: <Info />,
     Pick: <Pick />,
   };
-  return modelType.isFetch ? <Section {...SectionProps} /> : <>Loding</>;
+
+  const SkeletonProps = {
+    type: MODEL_TYPE.TYPE,
+  };
+
+  return modelType.isFetch ? <Section {...SectionProps} /> : <Skeleton {...SkeletonProps} />;
 }
 
 export default ModelType;

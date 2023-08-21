@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useData } from '../../utils/Context';
 import { TRIM_SELECT } from './constants';
+import Skeleton from '../../components/Skeleton';
 import Section from '../../components/Section';
 import Info from './Info';
 import Pick from './Pick';
@@ -34,7 +35,11 @@ function TrimSelect() {
     Pick: <Pick />,
   };
 
-  return trim.isFetch ? <Section {...SectionProps} /> : <div>loading...</div>;
+  const SkeletonProps = {
+    type: TRIM_SELECT.TYPE,
+  };
+
+  return trim.isFetch ? <Section {...SectionProps} /> : <Skeleton {...SkeletonProps} />;
 }
 
 export default TrimSelect;

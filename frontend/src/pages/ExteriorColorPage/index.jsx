@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useData } from '../../utils/Context';
 import { EXTERIOR_COLOR } from './constants';
+import Skeleton from '../../components/Skeleton';
 import Section from '../../components/Section';
 import Info from './Info';
 import Pick from './Pick';
@@ -45,7 +46,10 @@ function ExteriorColor() {
     Pick: <Pick />,
   };
 
-  return exteriorColor.isFetch ? <Section {...SectionProps} /> : <>Loding</>;
-}
+  const SkeletonProps = {
+    type: EXTERIOR_COLOR.TYPE,
+  };
 
+  return exteriorColor.isFetch ? <Section {...SectionProps} /> : <Skeleton {...SkeletonProps} />;
+}
 export default ExteriorColor;

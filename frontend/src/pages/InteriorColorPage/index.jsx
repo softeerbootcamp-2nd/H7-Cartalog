@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useData } from '../../utils/Context';
 import { INTERIOR_COLOR } from './constants';
+import Skeleton from '../../components/Skeleton';
 import Section from '../../components/Section';
 import Info from './Info';
 import Pick from './Pick';
@@ -42,7 +43,11 @@ function InteriorColor() {
     Pick: <Pick />,
   };
 
-  return interiorColor.isFetch ? <Section {...SectionProps} /> : <>Loding</>;
+  const SkeletonProps = {
+    type: INTERIOR_COLOR.TYPE,
+  };
+
+  return interiorColor.isFetch ? <Section {...SectionProps} /> : <Skeleton {...SkeletonProps} />;
 }
 
 export default InteriorColor;
