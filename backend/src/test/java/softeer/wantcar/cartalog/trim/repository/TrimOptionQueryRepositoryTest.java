@@ -12,7 +12,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.test.context.jdbc.Sql;
 import softeer.wantcar.cartalog.global.ServerPath;
-import softeer.wantcar.cartalog.global.utils.CompareUtils;
 import softeer.wantcar.cartalog.trim.repository.dto.OptionPackageInfoDto;
 
 import java.util.HashMap;
@@ -206,7 +205,9 @@ class TrimOptionQueryRepositoryTest {
             List<String> hashTags = trimOptionQueryRepository.findHashTagsByOptionId(modelOptionId);
 
             //then
-            assertThat(CompareUtils.equalAndAllContain(expected, hashTags)).isTrue();
+            softAssertions.assertThat(hashTags.size()).isEqualTo(expected.size());
+            softAssertions.assertThat(hashTags).containsAll(expected);
+            softAssertions.assertAll();
         }
 
         @Test
@@ -240,7 +241,9 @@ class TrimOptionQueryRepositoryTest {
                     .map(TrimOptionQueryRepository.HMGDataInfo::getName)
                     .collect(Collectors.toUnmodifiableList());
 
-            assertThat(CompareUtils.equalAndAllContain(expected, hmgDataNames)).isTrue();
+            softAssertions.assertThat(hmgDataNames.size()).isEqualTo(expected.size());
+            softAssertions.assertThat(hmgDataNames).containsAll(expected);
+            softAssertions.assertAll();
         }
 
         @Test
@@ -308,7 +311,9 @@ class TrimOptionQueryRepositoryTest {
             List<String> packageHashTags = trimOptionQueryRepository.findPackageHashTagByPackageId(compose2PackageId);
 
             //then
-            assertThat(CompareUtils.equalAndAllContain(expect, packageHashTags)).isTrue();
+            softAssertions.assertThat(packageHashTags.size()).isEqualTo(expect.size());
+            softAssertions.assertThat(packageHashTags).containsAll(expect);
+            softAssertions.assertAll();
         }
 
         @Test
@@ -345,7 +350,9 @@ class TrimOptionQueryRepositoryTest {
                     .map(TrimOptionQueryRepository.ModelOptionInfo::getName)
                     .collect(Collectors.toUnmodifiableList());
 
-            assertThat(CompareUtils.equalAndAllContain(expect, modelOptionNames)).isTrue();
+            softAssertions.assertThat(modelOptionNames.size()).isEqualTo(expect.size());
+            softAssertions.assertThat(modelOptionNames).containsAll(expect);
+            softAssertions.assertAll();
         }
 
         @Test

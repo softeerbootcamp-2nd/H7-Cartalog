@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Singular;
-import softeer.wantcar.cartalog.global.annotation.TestMethod;
 import softeer.wantcar.cartalog.global.dto.HMGDataDtoInterface;
 
 import java.util.List;
@@ -21,9 +20,4 @@ public class OptionDto {
     private String description;
     @Singular("hmgDatum")
     private List<HMGDataDtoInterface> hmgData;
-
-    @TestMethod
-    public boolean startWithUrl(String url) {
-        return imageUrl.startsWith(url);
-    }
 }
