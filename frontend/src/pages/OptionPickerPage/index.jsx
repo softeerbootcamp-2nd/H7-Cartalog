@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useData } from '../../utils/Context';
 import { OPTION_PICKER } from './constants';
+import Skeleton from '../../components/Skeleton';
 import Section from '../../components/Section';
 import Info from './Info';
 import Pick from './Pick';
@@ -38,7 +39,11 @@ function OptionPicker() {
     Pick: <Pick selected={selectedId} setSelected={setSelectedId} />,
   };
 
-  return optionPicker.isFetch ? <Section {...SectionProps} /> : <div>loading...</div>;
+  const SkeletonProps = {
+    type: OPTION_PICKER.TYPE,
+  };
+
+  return optionPicker.isFetch ? <Section {...SectionProps} /> : <Skeleton {...SkeletonProps} />;
 }
 
 export default OptionPicker;
