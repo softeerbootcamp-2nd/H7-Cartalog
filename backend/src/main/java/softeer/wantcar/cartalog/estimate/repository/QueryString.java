@@ -132,7 +132,7 @@ public class QueryString {
             "SELECT detail_trims.trim_id                           AS trim_id, " +
             "       detail_trims.id                                AS detail_trim_id, " +
             "       detail_models.displacement                     AS displacement, " +
-            "       detail_models.fuel_efficiency                  AS fuelEfficiency, " +
+            "       detail_models.fuel_efficiency                  AS fuel_efficiency, " +
             "       model_exterior_colors.color_code               AS exterior_color_code, " +
             "       colors.name                                    AS exterior_color_name, " +
             "       model_exterior_colors.price                    AS exterior_color_price, " +
