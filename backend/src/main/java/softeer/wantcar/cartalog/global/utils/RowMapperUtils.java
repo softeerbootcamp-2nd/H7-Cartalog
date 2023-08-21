@@ -10,7 +10,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -110,7 +109,7 @@ public abstract class RowMapperUtils {
 
     public static <T> RowMapper<T> mapping(final Class<T> clazz, final List<RowMapperStrategy> rowMapperStrategies) {
         Constructor<?>[] constructors = clazz.getConstructors();
-        if(constructors.length > 1) {
+        if (constructors.length > 1) {
             throw new RuntimeException("생성자가 2개 이상입니다");
         }
         var array = constructors[0].getParameterTypes();
