@@ -35,7 +35,7 @@ function PriceStaticBar() {
           budget={budget}
           $over={over}
         />
-        <SliderMark minPrice={trim.minPrice} maxPrice={trim.maxPrice} />
+        <SliderMark minPrice={trim.minPrice} maxPrice={trim.maxPrice} budget={budget} />
       </S.ExpandedArea>
     </S.PriceStaticBar>
   );
