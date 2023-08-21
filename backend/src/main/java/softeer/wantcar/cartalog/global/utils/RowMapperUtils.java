@@ -109,9 +109,11 @@ public abstract class RowMapperUtils {
     }
 
     public static <T> RowMapper<T> mapping(final Class<T> clazz, final List<RowMapperStrategy> rowMapperStrategies) {
-        var array = Arrays.stream(clazz.getDeclaredFields())
-                .map(Field::getType)
-                .toArray(Class[]::new);
+        Constructor<?>[] constructors = clazz.getConstructors();
+        if(constructors.length > 1) {
+            throw new RuntimeException("생성자가 2개 이상입니다");
+        }
+        var array = constructors[0].getParameterTypes();
 
         return (rs, rowNum) -> {
             List<Object> args = new ArrayList<>();
