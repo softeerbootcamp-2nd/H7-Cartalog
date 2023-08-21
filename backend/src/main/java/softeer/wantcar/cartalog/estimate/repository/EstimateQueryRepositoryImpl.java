@@ -132,11 +132,11 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
                 "               end) = :countOfSumOptions ";
         String query = QueryString.findEstimateIdByEstimateDto;
 
-        if (selectPackages.size() != 0) {
+        if (!selectPackages.isEmpty()) {
             query += appendPackageIdSQL;
         }
 
-        if (selectOptions.size() != 0) {
+        if (!selectOptions.isEmpty()) {
             query += appendOptionIdSQL;
         }
 
