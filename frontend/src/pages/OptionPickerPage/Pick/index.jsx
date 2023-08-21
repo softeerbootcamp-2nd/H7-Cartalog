@@ -4,17 +4,29 @@ import TypeSelector from './TypeSelector';
 import CategorySelector from './CategorySelector';
 import OptionCard from '../OptionCard';
 import { useData } from '../../../utils/Context';
+import SearchBar from '../../../components/SearchBar';
+
+const PLACEHOLDER = '옵션명, 해시태그, 카테고리로 검색해보세요.';
 
 function Pick({ selected, setSelected }) {
   const { setTrimState, price, optionPicker } = useData();
   const [showDefault, setShowDefault] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [searchText, setSearchText] = useState('');
   const options = showDefault ? optionPicker.defaultOptions : optionPicker.selectOptions;
   const defaultCategories = [
     ...new Set(optionPicker.defaultOptions.map((option) => option.childCategory)),
   ];
   const categories = showDefault ? defaultCategories : optionPicker.category;
+  const searched = (option) =>
+    searchText === '' ||
+    option.name.includes(searchText) ||
+    option.childCategory?.includes(searchText) ||
+    option.parentCategory?.includes(searchText) ||
+    option.hashTags.some((hashTag) => hashTag.includes(searchText));
+
   const optionsToShow = options.filter((option) => {
+    if (!searched(option)) return false;
     if (selectedCategory === null) return true;
     return option.childCategory === selectedCategory || option.parentCategory === selectedCategory;
   });
@@ -58,7 +70,15 @@ function Pick({ selected, setSelected }) {
 
   return (
     <S.Pick>
-      <TypeSelector showDefault={showDefault} setShowDefault={handleShowDefault} />
+      <S.Header>
+        <TypeSelector showDefault={showDefault} setShowDefault={handleShowDefault} />
+        <SearchBar
+          placeholder={PLACEHOLDER}
+          search={(text) => {
+            setSearchText(text);
+          }}
+        />
+      </S.Header>
       <CategorySelector
         data={categories}
         selectedCategory={selectedCategory}

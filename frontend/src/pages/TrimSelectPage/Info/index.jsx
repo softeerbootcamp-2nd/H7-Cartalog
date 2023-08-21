@@ -3,8 +3,8 @@ import { INFO } from '../constants';
 import * as S from './style';
 import Title from '../../../components/Title';
 import HMGTag from '../../../components/HMGTag';
-import HMGData from './HMGData';
 import TrimImage from './TrimImage';
+import HMGData from '../../../components/HMGData';
 
 function Info() {
   const { trim } = useData();

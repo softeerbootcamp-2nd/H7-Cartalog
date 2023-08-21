@@ -11,7 +11,7 @@ export const TrimText = styled.div`
 `;
 
 export const HMG = styled.div`
-  margin-top: 32px;
+  margin-bottom: 32px;
 `;
 
 export const HMGInfo = styled.div`

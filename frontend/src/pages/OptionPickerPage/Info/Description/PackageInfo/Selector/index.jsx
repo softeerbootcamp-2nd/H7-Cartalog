@@ -1,21 +1,18 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import * as S from './style';
-import { ReactComponent as LeftArrow } from '../../../../../../assets/icons/arrow_left.svg';
-import { ReactComponent as RightArrow } from '../../../../../../assets/icons/arrow_right.svg';
+import { ReactComponent as LeftArrow } from '../../../../../../../assets/icons/arrow_left.svg';
+import { ReactComponent as RightArrow } from '../../../../../../../assets/icons/arrow_right.svg';
 
-function Selector({ options, selected, setSelected }) {
+function Selector({ name, options, selected, setSelected }) {
   const barRef = useRef();
   const [rightClassName, setRightClassName] = useState('');
   const [leftClassName, setLeftClassName] = useState('');
-  const moveBar = (target) => {
+  const moveBar = () => {
+    const target = barRef.current.offsetParent.querySelector('.selected');
+
     barRef.current.style.transform = `translateX(${target.offsetLeft}px) scaleX(${
       target.offsetWidth / target.offsetParent.offsetWidth
     })`;
-  };
-  const handleSelect = ({ target }, name) => {
-    if (selected === name) return;
-    setSelected(name);
-    moveBar(target);
   };
   const setMoveAvailability = (targetScrollLeft) => {
     const { scrollLeft, scrollWidth, offsetWidth } = barRef.current.offsetParent;
@@ -37,11 +34,9 @@ function Selector({ options, selected, setSelected }) {
   };
 
   useLayoutEffect(() => {
-    const target = barRef.current.offsetParent.querySelector('.selected');
-
-    moveBar(target);
+    moveBar();
     setMoveAvailability();
-  }, []);
+  }, [selected]);
 
   return (
     <S.Selector>
@@ -52,9 +47,9 @@ function Selector({ options, selected, setSelected }) {
         <S.Bar ref={barRef} />
         {options.map((option) => (
           <S.SelectorItem
-            key={option.name}
+            key={`${name} ${option.name}`}
             className={selected === option.name ? 'selected' : ''}
-            onClick={(event) => handleSelect(event, option.name)}
+            onClick={() => setSelected(option.name)}
           >
             {option.name}
           </S.SelectorItem>
