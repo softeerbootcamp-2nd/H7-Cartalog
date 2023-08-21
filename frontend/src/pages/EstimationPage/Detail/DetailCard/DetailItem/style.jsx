@@ -2,10 +2,11 @@ import { styled } from 'styled-components';
 
 export const DetailItem = styled.div`
   display: flex;
+  align-items: center;
   gap: 16px;
   width: 100%;
   height: 55px;
-  padding: 8px 0;
+  padding: 10px 0;
   border-bottom: 1px solid ${({ theme }) => theme.color.gray['50']};
 `;
 
@@ -25,18 +26,13 @@ export const Description = styled.div`
 export const Area = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   height: 100%;
+  gap: 8px;
   font: ${({ theme }) => theme.font.textKR.Regular14};
   color: ${({ theme }) => theme.color.gray['900']};
 
   & .title {
     color: ${({ theme }) => theme.color.gray['500']};
-  }
-
-  & button {
-    font: ${({ theme }) => theme.font.headKR.Medium14};
-    color: ${({ theme }) => theme.color.primary.default};
   }
 
   &:last-child {

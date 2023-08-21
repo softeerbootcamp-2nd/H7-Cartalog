@@ -11,7 +11,6 @@ function DetailItem({ data }) {
           <div>{data.name}</div>
         </S.Area>
         <S.Area>
-          <button type="button">{DETAIL_ITEM.EDIT}</button>
           <div>
             +{data.price.toLocaleString()} {DETAIL_ITEM.WON}
           </div>
