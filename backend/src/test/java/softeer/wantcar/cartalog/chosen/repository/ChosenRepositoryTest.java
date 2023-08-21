@@ -14,6 +14,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -32,8 +34,15 @@ class ChosenRepositoryTest {
     NamedParameterJdbcTemplate jdbcTemplate;
     ChosenRepository chosenRepository;
 
+    int intDayDifference = 0;
+
     @BeforeEach
     void setUp() {
+        LocalDate currentTime = LocalDate.now();
+        LocalDate baseTime = LocalDate.of(2023, 8, 20);
+
+        long dayDifference = ChronoUnit.DAYS.between(baseTime, currentTime);
+        intDayDifference = Math.toIntExact(dayDifference);
         chosenRepository = new ChosenRepositoryImpl(jdbcTemplate);
     }
 
@@ -45,10 +54,11 @@ class ChosenRepositoryTest {
         void success() {
             //given
             List<Long> modelTypeIds = List.of(1L, 2L, 3L, 4L, 5L, 6L);
-            int daysAgo = 90;
 
-            List<Integer> modelTypeRecentRecords = List.of(126, 115, 126, 115, 126, 115);
-            List<Integer> modelTypeTotalRecords = List.of(499, 501, 528, 472, 506, 494);
+            int daysAgo = 90 + intDayDifference;
+
+            List<Integer> modelTypeRecentRecords = List.of(125, 114, 124, 115, 125, 114);
+            List<Integer> modelTypeTotalRecords = List.of(239, 239, 239, 239, 239, 239);
 
             List<Integer> collect = IntStream.range(0, 6)
                     .mapToDouble(i -> (double) modelTypeRecentRecords.get(i) * 100 / modelTypeTotalRecords.get(i))
@@ -69,7 +79,7 @@ class ChosenRepositoryTest {
         void failure() {
             //given
             List<Long> modelTypeIds = List.of(10L);
-            int daysAgo = 90;
+            int daysAgo = 90 + intDayDifference;
 
             //when
             ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findModelTypeChosenByOptionId(modelTypeIds, daysAgo);

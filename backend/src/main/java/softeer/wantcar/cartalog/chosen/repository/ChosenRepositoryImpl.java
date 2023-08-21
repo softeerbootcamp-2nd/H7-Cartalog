@@ -38,17 +38,42 @@ public class ChosenRepositoryImpl implements ChosenRepository {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("optionIds", modelTypeIds);
 
-        String SQL = "SELECT  " +
-                "    detail_model_decision_options.model_option_id AS id_code,  " +
-                "    COUNT(*) AS total_records,  " +
-                "    COUNT(CASE WHEN release_records.create_date >= CURRENT_DATE - INTERVAL '" + daysAgo + "' DAY THEN 1 END) AS recent_records  " +
-                "FROM  release_records  " +
-                "INNER JOIN estimates ON release_records.estimate_id = estimates.id  " +
-                "INNER JOIN detail_trims ON detail_trims.id = estimates.detail_trim_id  " +
-                "INNER JOIN detail_models ON detail_models.id = detail_trims.detail_model_id  " +
-                "INNER JOIN detail_model_decision_options ON detail_model_decision_options.detail_model_id = detail_models.id  " +
-                "WHERE model_option_id in ( :optionIds )  " +
-                "GROUP BY detail_model_decision_options.model_option_id ";
+        String SQL = "SELECT " +
+                "    recent.model_option_id AS id_code, " +
+                "    recent.recent_records, " +
+                "    total.total_records " +
+                "FROM " +
+                "    (SELECT " +
+                "        dmdo.model_option_id, " +
+                "        COUNT(dmdo.model_option_id) AS recent_records, " +
+                "        mo.child_category " +
+                "    FROM " +
+                "        release_records " +
+                "        INNER JOIN estimates ON estimates.id = release_records.estimate_id " +
+                "        INNER JOIN detail_trims ON detail_trims.id = estimates.detail_trim_id " +
+                "        INNER JOIN detail_models ON detail_models.id = detail_trims.detail_model_id " +
+                "        INNER JOIN detail_model_decision_options AS dmdo ON dmdo.detail_model_id = detail_models.id " +
+                "        INNER JOIN model_options AS mo ON mo.id = dmdo.model_option_id " +
+                "    WHERE release_records.create_date >= CURRENT_DATE - INTERVAL '" + daysAgo + "' DAY  " +
+                "    and mo.id in ( :optionIds) " +
+                "    GROUP BY " +
+                "        dmdo.model_option_id, mo.child_category) AS recent " +
+                "INNER JOIN " +
+                "    (SELECT " +
+                "        mo.child_category, " +
+                "        COUNT(mo.child_category) AS total_records " +
+                "    FROM " +
+                "        release_records " +
+                "        INNER JOIN estimates ON estimates.id = release_records.estimate_id " +
+                "        INNER JOIN detail_trims ON detail_trims.id = estimates.detail_trim_id " +
+                "        INNER JOIN detail_models ON detail_models.id = detail_trims.detail_model_id " +
+                "        INNER JOIN detail_model_decision_options AS dmdo ON dmdo.detail_model_id = detail_models.id " +
+                "        INNER JOIN model_options AS mo ON mo.id = dmdo.model_option_id " +
+                "    WHERE release_records.create_date >= CURRENT_DATE - INTERVAL '" + daysAgo + "' DAY  " +
+                "    and mo.id in ( :optionIds) " +
+                "    GROUP BY " +
+                "        mo.child_category) AS total " +
+                "ON recent.child_category = total.child_category ";
 
         var query = jdbcTemplate.query(SQL, parameters, RowMapperUtils.mapping(ChosenDto.class, getIdCodeRowMapperStrategy));
 
@@ -91,7 +116,7 @@ public class ChosenRepositoryImpl implements ChosenRepository {
                 "    GROUP BY model_options.id  " +
                 ") AS total_records_count  " +
                 "ON recent_records_count.id_code = total_records_count.id_code " +
-                "WHERE recent_records_count.id_code in ( :optionIds );";
+                "WHERE recent_records_count.id_code in ( :optionIds ) ";
 
         var query = jdbcTemplate.query(SQL, parameters, RowMapperUtils.mapping(ChosenDto.class, getIdCodeRowMapperStrategy));
 
