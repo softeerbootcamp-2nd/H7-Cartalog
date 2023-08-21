@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="com.softeer.cartalog.data.enums.PriceDataType"/>
         <variable
             name="item"
             type="com.softeer.cartalog.data.model.db.PriceData" />
@@ -45,7 +46,7 @@
             android:id="@+id/iv_item"
             android:layout_width="77dp"
             android:layout_height="55dp"
-            android:scaleType="centerCrop"
+            app:optionType="@{item.optionType}"
             app:layout_constraintBottom_toBottomOf="@id/gl_bottom"
             app:layout_constraintStart_toStartOf="@+id/gl_start"
             app:layout_constraintTop_toTopOf="@+id/gl_top"

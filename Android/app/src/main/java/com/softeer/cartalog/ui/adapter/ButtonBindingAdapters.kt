@@ -151,17 +151,18 @@ fun setOptionTabSelected(
     })
 }
 
-@BindingAdapter("imageView","imgUrl")
+@BindingAdapter("imageView", "imgUrl")
 fun setCarImageSelected(
     radioGroup: RadioGroup,
     imageView: ImageView,
     carImage: SummaryCarImage?
-){
+) {
     radioGroup.setOnCheckedChangeListener { _, checkedId ->
-        when(checkedId){
+        when (checkedId) {
             R.id.rb_exterior -> {
                 imageView.load(carImage?.sideExteriorImageUrl)
             }
+
             R.id.rb_interior -> {
                 imageView.load(carImage?.interiorImageUrl)
             }
@@ -173,12 +174,13 @@ fun setCarImageSelected(
 fun setConfirmCarImageSelected(
     radioGroup: RadioGroup,
     horizontalScrollView: HorizontalScrollView
-){
+) {
     radioGroup.setOnCheckedChangeListener { _, checkedId ->
-        when(checkedId){
+        when (checkedId) {
             R.id.rb_exterior -> {
                 horizontalScrollView.visibility = View.GONE
             }
+
             R.id.rb_interior -> {
                 horizontalScrollView.visibility = View.VISIBLE
             }
@@ -186,25 +188,27 @@ fun setConfirmCarImageSelected(
     }
 }
 
-@BindingAdapter("recyclerView")
+@BindingAdapter("recyclerView", "isEmpty")
 fun setOnClickToggle(
     button: ImageButton,
-    recyclerView: RecyclerView
+    recyclerView: RecyclerView,
+    isEmpty: Boolean
 ) {
-
-    if (recyclerView.visibility == View.VISIBLE) {
-        button.rotation = 180f
-    } else {
-        button.rotation = 0f
-    }
-
-    button.setOnClickListener {
+    if (!isEmpty) {
         if (recyclerView.visibility == View.VISIBLE) {
-            recyclerView.visibility = View.GONE
-            button.animate().rotation(0f).start()
+            button.rotation = 180f
         } else {
-            recyclerView.visibility = View.VISIBLE
-            button.animate().rotation(180f).start()
+            button.rotation = 0f
+        }
+
+        button.setOnClickListener {
+            if (recyclerView.visibility == View.VISIBLE) {
+                recyclerView.visibility = View.GONE
+                button.animate().rotation(0f).start()
+            } else {
+                recyclerView.visibility = View.VISIBLE
+                button.animate().rotation(180f).start()
+            }
         }
     }
 }
