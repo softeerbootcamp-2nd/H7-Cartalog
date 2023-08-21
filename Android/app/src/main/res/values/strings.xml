@@ -62,4 +62,5 @@
     <string name="confirm_car_model">Le Blanc</string>
     <string name="confirm_title_summary">요약 견적</string>
     <string name="confirm_title_detail">상세 견적</string>
+    <string name="confirm_btn_check_img">이미지 확인</string>
 </resources>

@@ -5,7 +5,9 @@ import android.widget.HorizontalScrollView
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RadioGroup
+import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.widget.NestedScrollView
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentContainerView
 import androidx.recyclerview.widget.RecyclerView
@@ -210,5 +212,24 @@ fun setOnClickToggle(
                 button.animate().rotation(180f).start()
             }
         }
+    }
+}
+
+@BindingAdapter("nestedScrollView")
+fun setImageCheckBtn(
+    button: AppCompatButton,
+    nestedScrollView: NestedScrollView
+) {
+
+    nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+        if (scrollY > oldScrollY) {
+            button.visibility = View.VISIBLE
+        } else {
+            button.visibility = View.GONE
+        }
+    }
+
+    button.setOnClickListener {
+        nestedScrollView.smoothScrollTo(0, 0)
     }
 }
