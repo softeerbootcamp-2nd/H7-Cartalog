@@ -226,12 +226,12 @@ class EstimateQueryRepositoryTest {
             softAssertions.assertThat(estimateShareInfo.getExteriorColorCode()).isEqualTo("P7V");
             softAssertions.assertThat(estimateShareInfo.getInteriorColorCode()).isEqualTo("YJY");
             softAssertions.assertThat(estimateShareInfo.getExteriorColorImageUrl())
-                    .isEqualTo(serverPath.IMAGE_SERVER_PATH + "/colors/exterior/P7V.png");
-            softAssertions.assertThat(estimateShareInfo.getExteriorCarImageDirectory()).isEqualTo(serverPath.IMAGE_SERVER_PATH + "/palisade/exterior/P7V/");
+                    .isEqualTo(serverPath.attachImageServerPath("colors/exterior/P7V.png"));
+            softAssertions.assertThat(estimateShareInfo.getExteriorCarImageDirectory()).isEqualTo(serverPath.attachImageServerPath("palisade/exterior/P7V/"));
             softAssertions.assertThat(estimateShareInfo.getExteriorColorPrice()).isEqualTo(0);
             softAssertions.assertThat(estimateShareInfo.getExteriorColorName()).isEqualTo("그라파이트 그레이 메탈릭");
             softAssertions.assertThat(estimateShareInfo.getInteriorCarImageUrl())
-                    .isEqualTo(serverPath.IMAGE_SERVER_PATH + "/palisade/interior/YJY.png");
+                    .isEqualTo(serverPath.attachImageServerPath("palisade/interior/YJY.png"));
             softAssertions.assertThat(estimateShareInfo.getInteriorColorName()).isEqualTo("쿨그레이");
             softAssertions.assertAll();
         }
