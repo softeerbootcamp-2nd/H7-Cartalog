@@ -22,6 +22,7 @@ import com.softeer.cartalog.viewmodel.InteriorViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class InteriorFragment : Fragment() {
     private var _binding: FragmentInteriorBinding? = null
@@ -61,9 +62,11 @@ class InteriorFragment : Fragment() {
         binding.viewModel = interiorViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         binding.btnNext.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch {
+            CoroutineScope(Dispatchers.IO).launch {
                 interiorViewModel.saveUserSelection()
-                (activity as MainActivity).changeTab(4)
+                withContext(Dispatchers.Main){
+                    (activity as MainActivity).changeTab(4)
+                }
             }
         }
         binding.btnPrev.setOnClickListener {
@@ -72,7 +75,9 @@ class InteriorFragment : Fragment() {
         binding.btnPriceSummary.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
                 interiorViewModel.saveUserSelection()
-                findNavController().navigate(R.id.action_interiorFragment_to_priceSummaryBottomSheetFragment)
+                withContext(Dispatchers.Main) {
+                    findNavController().navigate(R.id.action_interiorFragment_to_priceSummaryBottomSheetFragment)
+                }
             }
         }
         interiorViewModel.userTotalPrice.observe(viewLifecycleOwner) { price ->

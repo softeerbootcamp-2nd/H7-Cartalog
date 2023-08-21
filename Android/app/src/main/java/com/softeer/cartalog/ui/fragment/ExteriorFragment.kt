@@ -22,6 +22,7 @@ import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ExteriorFragment : Fragment() {
     private var _binding: FragmentExteriorBinding? = null
@@ -60,18 +61,22 @@ class ExteriorFragment : Fragment() {
         binding.viewModel = exteriorViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         binding.btnNext.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch {
+            CoroutineScope(Dispatchers.IO).launch {
                 exteriorViewModel.saveUserSelection()
-                (activity as MainActivity).changeTab(3)
+                withContext(Dispatchers.Main){
+                    (activity as MainActivity).changeTab(3)
+                }
             }
         }
         binding.btnPrev.setOnClickListener {
             (activity as MainActivity).changeTab(1)
         }
         binding.btnPriceSummary.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch {
+            CoroutineScope(Dispatchers.IO).launch {
                 exteriorViewModel.saveUserSelection()
-                findNavController().navigate(R.id.action_exteriorFragment_to_priceSummaryBottomSheetFragment)
+                withContext(Dispatchers.Main){
+                    findNavController().navigate(R.id.action_exteriorFragment_to_priceSummaryBottomSheetFragment)
+                }
             }
         }
         exteriorViewModel.userTotalPrice.observe(viewLifecycleOwner) { price ->
