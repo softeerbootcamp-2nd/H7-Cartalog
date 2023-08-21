@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import softeer.wantcar.cartalog.global.ServerPath;
+import softeer.wantcar.cartalog.global.utils.RowMapperUtils;
 import softeer.wantcar.cartalog.model.dto.EstimateImageDto;
 
 import java.sql.ResultSet;
@@ -24,17 +25,10 @@ public class ModelQueryRepository {
                 .addValue("exteriorColorCode", exteriorColorCode)
                 .addValue("interiorColorCode", interiorColorCode);
         try {
-            return jdbcTemplate.queryForObject(QueryString.findCarSideExteriorAndInteriorImage, parameters,
-                    (rs, rowNum) -> getEstimateImageDto(rs));
+            return jdbcTemplate.queryForObject(QueryString.findCarSideExteriorAndInteriorImage,
+                    parameters, RowMapperUtils.mapping(EstimateImageDto.class, serverPath.getImageServerPathRowMapperStrategy()));
         } catch (DataAccessException exception) {
             return null;
         }
-    }
-
-    private EstimateImageDto getEstimateImageDto(ResultSet rs) throws SQLException {
-        return EstimateImageDto.builder()
-                .sideExteriorImageUrl(serverPath.attachImageServerPath(rs.getString("sideExteriorImageUrl")))
-                .interiorImageUrl(serverPath.attachImageServerPath(rs.getString("interiorImageUrl")))
-                .build();
     }
 }
