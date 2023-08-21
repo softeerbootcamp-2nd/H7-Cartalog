@@ -93,15 +93,16 @@
 
             <ImageView
                 android:id="@+id/iv_car"
-                android:layout_width="0dp"
+                android:layout_width="460dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="40dp"
-                android:scaleType="fitEnd"
+                android:layout_marginBottom="20dp"
+                android:scaleType="centerCrop"
                 app:imgUrl="@{trimItem.exteriorImageUrl}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/gl_bottom"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_price" />
 
             <androidx.constraintlayout.widget.Group
@@ -224,9 +225,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:maxLines="2"
                 android:ellipsize="end"
                 android:lineSpacingExtra="6sp"
+                android:maxLines="2"
                 android:text="@{trimItem.hmgData[1].name}"
                 android:textSize="10sp"
                 app:layout_constraintEnd_toEndOf="@id/tv_hmg_data_2_divider"
