@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.softeer.cartalog.data.local.MyCarDatabase
@@ -18,7 +19,7 @@ import com.softeer.cartalog.util.PriceDataCallback
 import com.softeer.cartalog.viewmodel.CommonViewModelFactory
 import com.softeer.cartalog.viewmodel.ConfirmViewModel
 
-class ConfirmFragment: Fragment() {
+class ConfirmFragment : Fragment() {
     private var _binding: FragmentConfirmBinding? = null
     private val binding get() = _binding!!
     private val carRepositoryImpl by lazy {
@@ -34,6 +35,12 @@ class ConfirmFragment: Fragment() {
     private var dataCallback: PriceDataCallback? = null
     private var totalPrice: Int = 0
 
+    private val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            (activity as MainActivity).changeTab(4)
+        }
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         totalPrice = (activity as MainActivity).getUserTotalPrice()
@@ -46,6 +53,7 @@ class ConfirmFragment: Fragment() {
     ): View {
         _binding = FragmentConfirmBinding.inflate(inflater, container, false)
         confirmViewModel.setUserTotalPrice(totalPrice)
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), callback)
         return binding.root
     }
 

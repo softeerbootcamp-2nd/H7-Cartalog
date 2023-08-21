@@ -119,6 +119,7 @@ fun setOptionTabSelected(
 ) {
     tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
         override fun onTabSelected(tab: TabLayout.Tab?) {
+
             when (tab?.position) {
                 0 -> {
                     viewModel.setNowOptionMode(OptionMode.SELECT_OPTION)

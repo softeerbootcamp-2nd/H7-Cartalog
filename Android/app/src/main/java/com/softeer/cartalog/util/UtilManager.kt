@@ -11,7 +11,7 @@ class UtilManager {
     companion object {
         fun get360Image(colorCode: String, imgIndex: Int): String {
             return "https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade/exterior/${colorCode}/${
-                String.format("%03d", imgIndex)}.png"
+                String.format("%03d", imgIndex)}.webp"
         }
 
 

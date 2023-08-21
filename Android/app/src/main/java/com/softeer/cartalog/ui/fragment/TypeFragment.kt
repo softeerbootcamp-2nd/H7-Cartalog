@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -40,6 +41,12 @@ class TypeFragment : Fragment() {
     private var dataCallback: PriceDataCallback? = null
     private var totalPrice: Int = 0
 
+    private val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            (activity as MainActivity).changeTab(0)
+        }
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         totalPrice = (activity as MainActivity).getUserTotalPrice()
@@ -53,6 +60,7 @@ class TypeFragment : Fragment() {
         _binding = FragmentTypeBinding.inflate(inflater, container, false)
         typeViewModel.setNavController(findNavController())
         typeViewModel.setUserTotalPrice(totalPrice)
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), callback)
         return binding.root
     }
 
