@@ -12,6 +12,7 @@ import coil.load
 import coil.memory.MemoryCache
 import coil.request.CachePolicy
 import coil.request.ImageRequest
+import com.softeer.cartalog.data.enums.PriceDataType
 import coil.size.Precision
 import coil.transition.CrossfadeTransition
 import com.softeer.cartalog.util.UtilManager
@@ -106,5 +107,17 @@ fun setImage360WithUrl(
 
             else -> false
         }
+    }
+}
+
+@BindingAdapter("optionType")
+fun setImageViewScaleType(
+    imageView: ImageView,
+    optionType: PriceDataType
+){
+    if(optionType == PriceDataType.EXTERIOR_COLOR || optionType == PriceDataType.INTERIOR_COLOR){
+        imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+    } else {
+        imageView.scaleType = ImageView.ScaleType.FIT_CENTER
     }
 }

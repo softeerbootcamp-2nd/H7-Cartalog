@@ -16,7 +16,11 @@ import com.softeer.cartalog.R
 import com.softeer.cartalog.data.model.Options
 import com.softeer.cartalog.data.enums.OptionMode
 import com.softeer.cartalog.data.model.CarColor
+import com.softeer.cartalog.data.model.ConfirmDetail
 import com.softeer.cartalog.data.model.SummaryOptionPrice
+import com.softeer.cartalog.data.model.db.PriceData
+import com.softeer.cartalog.util.ItemDividerDecoration
+import com.softeer.cartalog.util.ItemVerticalSpacingDecoration
 import com.softeer.cartalog.util.UtilManager
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import com.softeer.cartalog.viewmodel.InteriorViewModel
@@ -205,6 +209,33 @@ fun setSummaryOptionsRecyclerView(
     recyclerView.adapter = adapter
 }
 
+@BindingAdapter("listData")
+fun setConfirmDetailTitleRecyclerView(
+    recyclerView: RecyclerView,
+    data: List<ConfirmDetail>?
+) {
+    if (data != null) {
+        val adapter = ConfirmDetailTitleAdapter(data)
+        recyclerView.adapter = adapter
+        recyclerView.addItemDecoration(ItemVerticalSpacingDecoration(16))
+    }
+}
+
+@BindingAdapter("listData")
+fun setConfirmDetailContentsRecyclerView(
+    recyclerView: RecyclerView,
+    data: List<PriceData>?
+) {
+    if (data != null) {
+        val adapter = ConfirmDetailContentsAdapter(data)
+        recyclerView.adapter = adapter
+        recyclerView.addItemDecoration(ItemDividerDecoration())
+        recyclerView.visibility = View.VISIBLE
+    } else {
+        recyclerView.visibility = View.GONE
+    }
+}
+
 @BindingAdapter("hashTags")
 fun setHashTagChipGroup(
     chipGroup: ChipGroup,
@@ -220,5 +251,3 @@ fun setHashTagChipGroup(
     }
 
 }
-
-

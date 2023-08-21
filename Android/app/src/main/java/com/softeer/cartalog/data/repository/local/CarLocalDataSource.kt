@@ -38,4 +38,8 @@ class CarLocalDataSource(
     suspend fun updatePriceData(input: PriceData){
         priceDataDao.insertPriceData(input)
     }
+
+    suspend fun updateMyCarData(input: MyCar){
+        myCarDao.upDateMyCar(input)
+    }
 }

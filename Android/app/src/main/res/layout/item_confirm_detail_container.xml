@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="detailData"
+            type="com.softeer.cartalog.data.model.ConfirmDetail" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/vw_detail_bgr_1"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:background="@color/blue_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_detail_title_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/hyndaisans_head_medium"
+            android:text="@{detailData.title}"
+            android:textColor="@color/gray_900"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/vw_detail_bgr_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/vw_detail_bgr_1" />
+
+        <ImageButton
+            android:id="@+id/tv_detail_more_btn_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/icon_arrow_down_big"
+            app:isEmpty="@{detailData.contents == null ? true : false}"
+            app:recyclerView="@{rcDetailList}"
+            app:layout_constraintBottom_toBottomOf="@id/vw_detail_bgr_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/vw_detail_bgr_1"
+            app:tint="@color/gray_900" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rc_detail_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:listData="@{detailData.contents}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vw_detail_bgr_1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -23,7 +23,7 @@ class MainViewModel : ViewModel() {
     val minPrice: LiveData<Int> = _minPrice
     private val _maxPrice = MutableLiveData(0)
     val maxPrice: LiveData<Int> = _maxPrice
-    private val _priceRange = MutableLiveData(0)
+    private var priceRange = 0
 
     private val _isReset = MutableLiveData<Boolean>(false)
     val isReset: LiveData<Boolean> = _isReset
@@ -41,7 +41,7 @@ class MainViewModel : ViewModel() {
     fun setMinMaxPrice(minPrice: Int, maxPrice: Int){
         _minPrice.value = minPrice
         _maxPrice.value = maxPrice
-        _priceRange.value = maxPrice - minPrice
+        priceRange = maxPrice - minPrice
     }
 
     fun setTotalPriceProgress(total : Int){
@@ -51,11 +51,11 @@ class MainViewModel : ViewModel() {
 
     private fun calculateProgressFromPrice(price: Int): Int {
         val adjustedValue = price - minPrice.value!!
-        return (adjustedValue.toFloat() / _priceRange.value!!.toFloat() * 100).toInt()
+        return (adjustedValue.toFloat() / priceRange.toFloat() * 100).toInt()
     }
 
     private fun calculatePriceFromProgress(progress: Int): Int {
-        return minPrice.value!! + (_priceRange.value!! * progress / 100)
+        return minPrice.value!! + (priceRange * progress / 100)
     }
 
     fun setInitPriceData(total: Int){

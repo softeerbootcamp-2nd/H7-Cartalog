@@ -166,5 +166,9 @@ class CarRepositoryImpl(
         carLocalDataSource.updatePriceData(color)
     }
 
+    override suspend fun saveUserCarData(myCar: MyCar) {
+        carLocalDataSource.updateMyCarData(myCar)
+    }
+
 
 }

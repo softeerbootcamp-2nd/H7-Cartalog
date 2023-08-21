@@ -1,11 +1,14 @@
 package com.softeer.cartalog.ui.adapter
 
 import android.view.View
+import android.widget.HorizontalScrollView
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.widget.NestedScrollView
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentContainerView
 import androidx.recyclerview.widget.RecyclerView
@@ -175,7 +178,7 @@ fun setCarImageSelected(
     radioGroup: RadioGroup,
     imageView: ImageView,
     carImage: SummaryCarImage?
-){
+) {
     radioGroup.setOnCheckedChangeListener { _, checkedId ->
         when (checkedId) {
             R.id.rb_exterior -> {
@@ -189,3 +192,64 @@ fun setCarImageSelected(
     }
 }
 
+@BindingAdapter("horizontalScrollView")
+fun setConfirmCarImageSelected(
+    radioGroup: RadioGroup,
+    horizontalScrollView: HorizontalScrollView
+) {
+    radioGroup.setOnCheckedChangeListener { _, checkedId ->
+        when (checkedId) {
+            R.id.rb_exterior -> {
+                horizontalScrollView.visibility = View.GONE
+            }
+
+            R.id.rb_interior -> {
+                horizontalScrollView.visibility = View.VISIBLE
+            }
+        }
+    }
+}
+
+@BindingAdapter("recyclerView", "isEmpty")
+fun setOnClickToggle(
+    button: ImageButton,
+    recyclerView: RecyclerView,
+    isEmpty: Boolean
+) {
+    if (!isEmpty) {
+        if (recyclerView.visibility == View.VISIBLE) {
+            button.rotation = 180f
+        } else {
+            button.rotation = 0f
+        }
+
+        button.setOnClickListener {
+            if (recyclerView.visibility == View.VISIBLE) {
+                recyclerView.visibility = View.GONE
+                button.animate().rotation(0f).start()
+            } else {
+                recyclerView.visibility = View.VISIBLE
+                button.animate().rotation(180f).start()
+            }
+        }
+    }
+}
+
+@BindingAdapter("nestedScrollView")
+fun setImageCheckBtn(
+    button: AppCompatButton,
+    nestedScrollView: NestedScrollView
+) {
+
+    nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+        if (scrollY > oldScrollY) {
+            button.visibility = View.VISIBLE
+        } else {
+            button.visibility = View.GONE
+        }
+    }
+
+    button.setOnClickListener {
+        nestedScrollView.smoothScrollTo(0, 0)
+    }
+}

@@ -69,4 +69,14 @@ class ExteriorViewModel(private val repository: CarRepository) : ViewModel() {
     fun setUserTotalPrice(price: Int) {
         _userTotalPrice.value = price
     }
+
+    fun updateCarData(){
+        viewModelScope.launch {
+            val old = repository.getMyCarData()
+            val update = old.copy(
+                exteriorImg = (selectedColor.carImageDirectory + "001.png")
+            )
+            repository.saveUserCarData(update)
+        }
+    }
 }
