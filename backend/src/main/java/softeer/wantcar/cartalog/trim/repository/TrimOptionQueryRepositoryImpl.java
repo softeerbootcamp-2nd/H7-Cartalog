@@ -160,6 +160,10 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
 
     @Override
     public List<OptionPackageInfoDto> findOptionPackageInfoByOptionPackageIds(List<Long> optionIds, List<Long> packageIds) {
+        if(optionIds.isEmpty() || packageIds.isEmpty()) {
+            return new ArrayList<>();
+        }
+
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("optionIds", optionIds)
                 .addValue("packageIds", packageIds);
