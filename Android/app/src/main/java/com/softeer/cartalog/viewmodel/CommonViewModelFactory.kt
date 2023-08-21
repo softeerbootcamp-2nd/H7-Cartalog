@@ -12,6 +12,7 @@ class CommonViewModelFactory(private val repository: CarRepository) : ViewModelP
             modelClass.isAssignableFrom(PriceSummaryViewModel::class.java) -> PriceSummaryViewModel(repository) as T
             modelClass.isAssignableFrom(ExteriorViewModel::class.java) -> ExteriorViewModel(repository) as T
             modelClass.isAssignableFrom(InteriorViewModel::class.java) -> InteriorViewModel(repository) as T
+            modelClass.isAssignableFrom(ConfirmViewModel::class.java) -> ConfirmViewModel(repository) as T
 
             // ... 여러 뷰모델 추가
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

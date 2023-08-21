@@ -1,7 +1,7 @@
 package com.softeer.cartalog.ui.adapter
 
-import android.util.Log
 import android.view.View
+import android.widget.HorizontalScrollView
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RadioGroup
@@ -133,7 +133,6 @@ fun setOptionTabSelected(
         override fun onTabSelected(tab: TabLayout.Tab?) {
             when (tab?.position) {
                 0 -> {
-                    Log.d("TEST", viewModel.nowOptionMode.value.toString())
                     viewModel.setNowOptionMode(OptionMode.SELECT_OPTION)
                     recyclerView.adapter =
                         OptionSelectAdapter(viewModel).apply { notifyDataSetChanged() }
@@ -166,6 +165,46 @@ fun setCarImageSelected(
             R.id.rb_interior -> {
                 imageView.load(carImage?.interiorImageUrl)
             }
+        }
+    }
+}
+
+@BindingAdapter("horizontalScrollView")
+fun setConfirmCarImageSelected(
+    radioGroup: RadioGroup,
+    horizontalScrollView: HorizontalScrollView
+){
+    radioGroup.setOnCheckedChangeListener { _, checkedId ->
+        when(checkedId){
+            R.id.rb_exterior -> {
+                horizontalScrollView.visibility = View.GONE
+            }
+            R.id.rb_interior -> {
+                horizontalScrollView.visibility = View.VISIBLE
+            }
+        }
+    }
+}
+
+@BindingAdapter("recyclerView")
+fun setOnClickToggle(
+    button: ImageButton,
+    recyclerView: RecyclerView
+) {
+
+    if (recyclerView.visibility == View.VISIBLE) {
+        button.rotation = 180f
+    } else {
+        button.rotation = 0f
+    }
+
+    button.setOnClickListener {
+        if (recyclerView.visibility == View.VISIBLE) {
+            recyclerView.visibility = View.GONE
+            button.animate().rotation(0f).start()
+        } else {
+            recyclerView.visibility = View.VISIBLE
+            button.animate().rotation(180f).start()
         }
     }
 }
