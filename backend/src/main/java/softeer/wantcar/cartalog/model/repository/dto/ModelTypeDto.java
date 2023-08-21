@@ -10,7 +10,7 @@ import softeer.wantcar.cartalog.global.dto.PowerTrainHMGDataDto;
 @Builder
 @AllArgsConstructor
 @Getter
-public class SimpleModelOptionMapper {
+public class ModelTypeDto {
     private Long modelOptionId;
     private String name;
     private String childCategory;

@@ -1,18 +1,19 @@
 package softeer.wantcar.cartalog.model.repository;
 
 import org.assertj.core.api.SoftAssertions;
+import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
+import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import softeer.wantcar.cartalog.global.ServerPath;
-import softeer.wantcar.cartalog.model.dto.ModelTypeDto;
-import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
-import softeer.wantcar.cartalog.model.dto.OptionDto;
+import softeer.wantcar.cartalog.model.repository.dto.ModelTypeDto;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +25,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @JdbcTest
 @Sql({"classpath:schema.sql"})
 @DisplayName("모델 옵션 쿼리 Repository 테스트")
+@ExtendWith(SoftAssertionsExtension.class)
 class ModelOptionQueryRepositoryImplTest {
+    @InjectSoftAssertions
     SoftAssertions softAssertions;
     @Autowired
     NamedParameterJdbcTemplate jdbcTemplate;
@@ -33,7 +36,6 @@ class ModelOptionQueryRepositoryImplTest {
 
     @BeforeEach
     void setUp() {
-        softAssertions = new SoftAssertions();
         modelOptionQueryRepository = new ModelOptionQueryRepositoryImpl(serverPath, jdbcTemplate);
     }
 
@@ -42,56 +44,40 @@ class ModelOptionQueryRepositoryImplTest {
     class findByModelId {
         @Test
         @DisplayName("존재하는 식별자로 조회시 모델 타입 옵션을 포함한 dto를 반환해야 한다.")
-        void findByModelTypeOptionsByBasicModelIdWithCollectId() {
+        void success() {
             //given
             Long trimId = 2L;
-            List<String> checkTypes = List.of("파워트레인/성능", "바디타입", "구동방식");
             Map<String, List<String>> checkOptions = new HashMap<>();
             checkOptions.put("파워트레인/성능", List.of("디젤 2.2", "가솔린 3.8"));
             checkOptions.put("바디타입", List.of("7인승", "8인승"));
             checkOptions.put("구동방식", List.of("2WD", "4WD"));
 
             //when
-            ModelTypeListResponseDto response = modelOptionQueryRepository.findByModelTypeOptionsByTrimId(trimId);
+            List<ModelTypeDto> modelTypes = modelOptionQueryRepository.findModelTypeByTrimId(trimId);
 
             //then
-            assertThat(response).isNotNull();
+            assertThat(modelTypes).isNotNull();
 
-            softAssertions.assertThat(response.getModelTypes().size()).isEqualTo(checkTypes.size());
-
-            List<String> modelTypeNames = response.getModelTypes().stream()
-                    .map(ModelTypeDto::getType)
-                    .collect(Collectors.toList());
-            softAssertions.assertThat(modelTypeNames).containsAll(checkTypes);
-
-            for (ModelTypeDto modelType : response.getModelTypes()) {
-                List<String> modelTypeOptions = modelType.getOptions().stream()
-                        .map(OptionDto::getName)
+            checkOptions.forEach((category, expectedOptions) -> {
+                List<String> actualOptions = modelTypes.stream()
+                        .filter(modelTypeDto -> modelTypeDto.getChildCategory().equals(category))
+                        .map(ModelTypeDto::getName)
                         .collect(Collectors.toList());
-                softAssertions.assertThat(modelTypeOptions.size()).isEqualTo(checkOptions.get(modelType.getType()).size());
-                softAssertions.assertThat(modelTypeOptions).containsAll(checkOptions.get(modelType.getType()));
-
-                List<String> imageUrls = modelType.getOptions().stream()
-                        .map(OptionDto::getImageUrl)
-                        .collect(Collectors.toList());
-                for (String imageUrl : imageUrls) {
-                    softAssertions.assertThat(imageUrl).startsWith(serverPath.IMAGE_SERVER_PATH);
-                }
-            }
-            softAssertions.assertAll();
+                softAssertions.assertThat(actualOptions.containsAll(expectedOptions)).isTrue();
+            });
         }
 
         @Test
-        @DisplayName("없는 식별자로 조회시 null을 반환해야 한다.")
-        void findByModelTypeOptionsByBasicModelIdWithIllegalId() {
+        @DisplayName("없는 식별자로 조회시 빈 리스트를 반환해야 한다.")
+        void returnEmptyList() {
             //given
             Long basicModelId = -1L;
 
             //when
-            ModelTypeListResponseDto response = modelOptionQueryRepository.findByModelTypeOptionsByTrimId(basicModelId);
+            List<ModelTypeDto> modelTypes = modelOptionQueryRepository.findModelTypeByTrimId(basicModelId);
 
             //then
-            assertThat(response).isNull();
+            assertThat(modelTypes.isEmpty()).isTrue();
         }
     }
 
@@ -140,8 +126,8 @@ class ModelOptionQueryRepositoryImplTest {
         @BeforeEach
         void setUp() {
             optionIds = jdbcTemplate.queryForList("SELECT mo.id " +
-                                                  "FROM model_option_hash_tags AS moht " +
-                                                  "JOIN model_options AS mo ON mo.id=moht.model_option_id ",
+                            "FROM model_option_hash_tags AS moht " +
+                            "JOIN model_options AS mo ON mo.id=moht.model_option_id ",
                     new HashMap<>(), Long.TYPE);
         }
 
@@ -155,7 +141,6 @@ class ModelOptionQueryRepositoryImplTest {
             //then
             softAssertions.assertThat(hashTags.isEmpty()).isFalse();
             softAssertions.assertThat(hashTags.size()).isNotEqualTo(hashTags.stream().distinct().count());
-            softAssertions.assertAll();
         }
     }
 
@@ -168,8 +153,8 @@ class ModelOptionQueryRepositoryImplTest {
         @BeforeEach
         void setUp() {
             packageIds = jdbcTemplate.queryForList("SELECT mp.id " +
-                                                   "FROM model_package_hash_tags AS mpht " +
-                                                   "JOIN model_packages AS mp ON mp.id=mpht.model_package_id ",
+                            "FROM model_package_hash_tags AS mpht " +
+                            "JOIN model_packages AS mp ON mp.id=mpht.model_package_id ",
                     new HashMap<>(), Long.TYPE);
         }
 
@@ -183,7 +168,6 @@ class ModelOptionQueryRepositoryImplTest {
             //then
             softAssertions.assertThat(hashTags.isEmpty()).isFalse();
             softAssertions.assertThat(hashTags.size()).isNotEqualTo(hashTags.stream().distinct().count());
-            softAssertions.assertAll();
         }
     }
 }

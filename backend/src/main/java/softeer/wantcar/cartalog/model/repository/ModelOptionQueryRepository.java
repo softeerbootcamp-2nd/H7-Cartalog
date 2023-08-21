@@ -1,12 +1,12 @@
 package softeer.wantcar.cartalog.model.repository;
 
-import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
+import softeer.wantcar.cartalog.model.repository.dto.ModelTypeDto;
 
 import java.util.List;
 
 public interface ModelOptionQueryRepository {
 
-    ModelTypeListResponseDto findByModelTypeOptionsByTrimId(Long trimId);
+    List<ModelTypeDto> findModelTypeByTrimId(Long trimId);
 
     List<String> findModelTypeCategoriesByIds(List<Long> modelTypeIds);
 

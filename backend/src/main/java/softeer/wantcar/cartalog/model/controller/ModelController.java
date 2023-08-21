@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import softeer.wantcar.cartalog.model.dto.EstimateImageDto;
 import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
-import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 import softeer.wantcar.cartalog.model.repository.ModelQueryRepository;
+import softeer.wantcar.cartalog.model.service.ModelOptionService;
 
 import javax.websocket.server.PathParam;
 
@@ -23,7 +23,7 @@ import javax.websocket.server.PathParam;
 @Slf4j
 public class ModelController {
     private final ModelQueryRepository modelQueryRepository;
-    private final ModelOptionQueryRepository modelOptionQueryRepository;
+    private final ModelOptionService modelOptionService;
 
     @ApiOperation(
             value = "모델 타입 조회",
@@ -36,13 +36,11 @@ public class ModelController {
             @ApiResponse(code = 500, message = "적절하지 않은 데이터가 있어 요청을 처리할 수 없습니다. 관리자에게 문의하세요.")})
     @GetMapping("/types")
     public ResponseEntity<ModelTypeListResponseDto> searchModelType(@PathParam("trimId") Long trimId) {
-        ModelTypeListResponseDto dto = modelOptionQueryRepository.findByModelTypeOptionsByTrimId(trimId);
-
-        if (dto == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            return ResponseEntity.ok(modelOptionService.findModelTypeListByTrimId(trimId));
+        } catch (IllegalArgumentException exception) {
+            return ResponseEntity.notFound().build();
         }
-
-        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @ApiOperation(

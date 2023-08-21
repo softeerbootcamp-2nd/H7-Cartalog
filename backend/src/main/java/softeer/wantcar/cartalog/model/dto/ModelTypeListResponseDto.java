@@ -10,5 +10,5 @@ import java.util.List;
 @Builder
 public class ModelTypeListResponseDto {
     @Singular
-    private List<ModelTypeDto> modelTypes;
+    private List<ModelTypeOptionDto> modelTypes;
 }

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import softeer.wantcar.cartalog.trim.repository.TrimOptionQueryRepository;
+import softeer.wantcar.cartalog.trim.repository.dto.TrimOptionChosenInfo;
 
 import java.util.List;
 
@@ -32,16 +32,16 @@ public class TrimOptionListResponseDto {
         private List<String> hashTags;
         private boolean hasHMGData;
 
-        public TrimOptionDto(TrimOptionQueryRepository.TrimOptionInfo trimOptionInfo, int chosen) {
-            this.id = trimOptionInfo.getId();
-            this.name = trimOptionInfo.getName();
-            this.parentCategory = trimOptionInfo.getParentCategory();
-            this.childCategory = trimOptionInfo.getChildCategory();
-            this.imageUrl = trimOptionInfo.getImageUrl();
-            this.price = trimOptionInfo.getPrice();
-            this.chosen = chosen;
-            this.hashTags = trimOptionInfo.getHashTags();
-            this.hasHMGData = trimOptionInfo.isHasHMGData();
+        public TrimOptionDto(TrimOptionChosenInfo trimOptionChosenInfo) {
+            this.id = trimOptionChosenInfo.getId();
+            this.name = trimOptionChosenInfo.getName();
+            this.parentCategory = trimOptionChosenInfo.getParentCategory();
+            this.childCategory = trimOptionChosenInfo.getChildCategory();
+            this.imageUrl = trimOptionChosenInfo.getImageUrl();
+            this.price = trimOptionChosenInfo.getPrice();
+            this.chosen = trimOptionChosenInfo.getChosen();
+            this.hashTags = trimOptionChosenInfo.getHashTags();
+            this.hasHMGData = trimOptionChosenInfo.isHasHMGData();
         }
     }
 }

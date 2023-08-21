@@ -1,8 +1,5 @@
 package softeer.wantcar.cartalog.trim.repository;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -13,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.global.ServerPath;
 import softeer.wantcar.cartalog.global.utils.RowMapperUtils;
 import softeer.wantcar.cartalog.trim.repository.dto.OptionPackageInfoDto;
+import softeer.wantcar.cartalog.trim.repository.dto.TrimOptionInfo;
+import softeer.wantcar.cartalog.trim.repository.dto.TrimOptionQueryResult;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,23 +24,6 @@ import java.util.stream.Collectors;
 public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository {
     private final ServerPath serverPath;
     private final NamedParameterJdbcTemplate jdbcTemplate;
-
-    @AllArgsConstructor
-    @Builder
-    @Getter
-    private static class TrimOptionQueryResult {
-        private String id;
-        private String name;
-        private String parentCategory;
-        private String childCategory;
-        private String imageUrl;
-        private int price;
-        private boolean basic;
-        private boolean colorCondition;
-        private String trimInteriorColorCode;
-        private String hashTag;
-        private Long hmgModelOptionId;
-    }
 
     @Override
     public List<TrimOptionInfo> findPackagesByDetailTrimId(Long detailTrimId) {
@@ -183,7 +165,7 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
         return TrimOptionInfo.builder()
                 .id(optionId)
                 .name(optionQueryResult.getName())
-                .parentCategory(optionQueryResult.parentCategory)
+                .parentCategory(optionQueryResult.getParentCategory())
                 .childCategory(optionQueryResult.getChildCategory())
                 .imageUrl(optionQueryResult.getImageUrl())
                 .price(optionQueryResult.getPrice())
