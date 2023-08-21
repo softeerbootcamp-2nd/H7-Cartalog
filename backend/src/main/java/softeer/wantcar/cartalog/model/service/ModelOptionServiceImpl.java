@@ -40,6 +40,11 @@ public class ModelOptionServiceImpl implements ModelOptionService {
         Map<Long, Integer> chosenMap = new HashMap<>();
         IntStream.range(0, modelTypeIds.size())
                 .forEach(index -> chosenMap.put(modelTypeIds.get(index), modelTypeChosen.get(index)));
+        ModelTypeListResponseDto.ModelTypeListResponseDtoBuilder builder = buildModelTypeListResponseDto(modelTypeDtoList, chosenMap);
+        return builder.build();
+    }
+
+    private static ModelTypeListResponseDto.ModelTypeListResponseDtoBuilder buildModelTypeListResponseDto(List<ModelTypeDto> modelTypeDtoList, Map<Long, Integer> chosenMap) {
         Map<String, Map<Long, OptionDto.OptionDtoBuilder>> dtoBuilderMap = new HashMap<>();
 
         modelTypeDtoList.forEach(mapper -> {
@@ -66,6 +71,6 @@ public class ModelOptionServiceImpl implements ModelOptionService {
             optionDtoBuilderMap.forEach((modelOptionId, optionDtoBuilder) -> modelTypeDtoBuilder.option(optionDtoBuilder.build()));
             builder.modelType(modelTypeDtoBuilder.build());
         });
-        return builder.build();
+        return builder;
     }
 }
