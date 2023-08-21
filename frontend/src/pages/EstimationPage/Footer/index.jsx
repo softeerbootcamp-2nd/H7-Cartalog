@@ -5,7 +5,7 @@ import * as S from './style';
 import Button from '../../../components/Button';
 import ImageViewButton from '../../../components/ImageViewButton';
 
-function Footer() {
+function Footer({ pdfEvent }) {
   const { page, price } = useData();
   const [isVisible, setIsVisible] = useState(false);
 
@@ -24,7 +24,7 @@ function Footer() {
     type: FOOTER.TYPE,
     state: FOOTER.INACTIVE,
     mainTitle: FOOTER.PDF_TITLE,
-    event: () => {},
+    event: pdfEvent,
   };
 
   const counsultButtonProps = {

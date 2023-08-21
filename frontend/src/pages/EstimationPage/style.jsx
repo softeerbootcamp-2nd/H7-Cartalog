@@ -12,9 +12,19 @@ export const Estimation = styled.div`
   }
 `;
 
+export const PDF = styled.div`
+  @media print {
+    margin-top: -60px;
+  }
+`;
+
 export const PageContents = styled.div`
   display: flex;
   width: 1024px;
   margin: 0 auto;
   gap: 70px;
+
+  @media print {
+    padding: 0 69px;
+  }
 `;
