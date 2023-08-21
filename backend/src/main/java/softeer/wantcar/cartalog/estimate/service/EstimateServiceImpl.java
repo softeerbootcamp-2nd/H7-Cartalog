@@ -98,7 +98,7 @@ public class EstimateServiceImpl implements EstimateService {
 
 
         List<OptionPackageInfoDto> modelTypesInfos =
-                trimOptionQueryRepository.findOptionPackageInfoByOptionPackageIds(estimateModelTypeIds, null);
+                trimOptionQueryRepository.findOptionPackageInfoByOptionPackageIds(estimateModelTypeIds, new ArrayList<>());
 
         List<OptionPackageInfoDto> selectOptionPackageInfos =
                 trimOptionQueryRepository.findOptionPackageInfoByOptionPackageIds(estimateOptionIds.getOptionIds(), estimateOptionIds.getPackageIds());

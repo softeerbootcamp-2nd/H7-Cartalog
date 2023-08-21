@@ -23,6 +23,7 @@ import softeer.wantcar.cartalog.trim.repository.TrimOptionQueryRepository;
 import softeer.wantcar.cartalog.trim.repository.TrimQueryRepository;
 import softeer.wantcar.cartalog.trim.repository.dto.OptionPackageInfoDto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -137,7 +138,7 @@ class EstimateServiceImplTest {
             OptionPackageInfoDto option4 = mock(OptionPackageInfoDto.class);
             OptionPackageInfoDto option9 = mock(OptionPackageInfoDto.class);
             List<OptionPackageInfoDto> optionPackageInfoDtoList = List.of(option1, option4, option9);
-            when(trimOptionQueryRepository.findOptionPackageInfoByOptionPackageIds(modelOptionIds, null)).thenReturn(optionPackageInfoDtoList);
+            when(trimOptionQueryRepository.findOptionPackageInfoByOptionPackageIds(modelOptionIds, new ArrayList<>())).thenReturn(optionPackageInfoDtoList);
 
             //when
             EstimateResponseDto estimate = estimateService.findEstimateByEstimateId(anyLong());
