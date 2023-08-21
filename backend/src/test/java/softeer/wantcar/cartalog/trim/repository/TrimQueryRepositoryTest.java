@@ -127,7 +127,6 @@ class TrimQueryRepositoryTest {
             softAssertions.assertAll();
         }
 
-        @SuppressWarnings("DataFlowIssue")
         @Test
         @DisplayName("존재하지 않는 식별자일 경우 null을 반환해야 한다")
         void returnNullWhenIdIsNotExist() {
