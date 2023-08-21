@@ -15,7 +15,7 @@ public class QueryString {
             "LEFT OUTER JOIN estimate_packages AS ep ON ep.estimate_id = e.id " +
             "WHERE e.id= :estimateId";
 
-    protected static final String findSimilarEstimateInfoByEstimateIds =
+    protected static final String findEstimateInfoBydEstimateIds =
             "SELECT " +
             "   e.id AS estimate_id, " +
             "   e.detail_trim_id AS detail_trim_id, " +
@@ -33,9 +33,9 @@ public class QueryString {
             "JOIN trim_exterior_colors AS tec ON tec.id=e.trim_exterior_color_id " +
             "JOIN model_exterior_colors AS mec ON mec.id=tec.model_exterior_color_id " +
             "JOIN trim_interior_colors AS tic ON tic.id=e.trim_interior_color_id " +
-            "WHERE e.id IN (:similarEstimateIds);";
+            "WHERE e.id IN (:estimateIds);";
 
-    protected static final String findSimilarEstimateOptionsByEstimateIds =
+    protected static final String findEstimateOptionsByEstimateIds =
             "SELECT " +
             "   e.id AS estimate_id, " +
             "   mo.id AS option_id, " +
@@ -45,9 +45,9 @@ public class QueryString {
             "FROM estimates AS e " +
             "JOIN estimate_options AS eo ON eo.estimate_id=e.id " +
             "JOIN model_options AS mo ON mo.id=eo.model_option_id " +
-            "WHERE e.id IN (:similarEstimateIds)";
+            "WHERE e.id IN (:estimateIds)";
 
-    protected static final String findSimilarEstimatePackagesByEstimateIds =
+    protected static final String findEstimatePackagesByEstimateIds =
             "SELECT " +
             "   e.id AS estimate_id, " +
             "   mp.id AS option_id, " +
@@ -57,7 +57,7 @@ public class QueryString {
             "FROM estimates AS e " +
             "JOIN estimate_packages AS ep ON ep.estimate_id=e.id " +
             "JOIN model_packages AS mp ON mp.id=ep.model_package_id " +
-            "WHERE e.id IN (:similarEstimateIds)";
+            "WHERE e.id IN (:estimateIds)";
 
     protected static final String findAveragePrice =
             "SELECT ROUND(COALESCE(AVG(price), 0)) AS average_price " +

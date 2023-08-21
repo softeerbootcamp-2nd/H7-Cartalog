@@ -46,11 +46,17 @@ public class EstimateCommandRepositoryImpl implements EstimateCommandRepository 
     }
 
     private void saveEstimatePackages(List<Long> packageIds, Long nextId) {
+        if(packageIds.isEmpty()) {
+            return;
+        }
         SqlParameterSource[] parameters = getBatchInsertParameters(packageIds, "packageId", nextId);
         jdbcTemplate.batchUpdate("INSERT INTO estimate_packages VALUES ( :nextId, :packageId ) ", parameters);
     }
 
     private void saveEstimateOptions(List<Long> optionIds, Long nextId) {
+        if(optionIds.isEmpty()) {
+            return;
+        }
         SqlParameterSource[] parameters = getBatchInsertParameters(optionIds, "optionId", nextId);
         jdbcTemplate.batchUpdate("INSERT INTO estimate_options VALUES ( :nextId, :optionId ) ", parameters);
     }

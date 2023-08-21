@@ -53,12 +53,7 @@ public class EstimateServiceImpl implements EstimateService {
         }
 
         try {
-            estimateId = estimateCommandRepository.save(estimateDto);
-            String hashTagKey = PendingHashTagMap.getHashTagKey(getTotalHashTags(estimateDto));
-            if (!similarityQueryRepository.existHashTagKey(trimId, hashTagKey)) {
-                similarityCommandRepository.saveHashTagKey(trimId, hashTagKey, 0);
-                similarityCommandRepository.saveSimilarEstimate(trimId, hashTagKey, estimateId);
-            }
+            saveEstimate(trimId, estimateDto);
         } catch (DataAccessException exception) {
             throw new IllegalArgumentException();
         }
@@ -76,6 +71,10 @@ public class EstimateServiceImpl implements EstimateService {
         List<Long> estimateModelTypeIds = estimateQueryRepository.findEstimateModelTypeIdsByEstimateId(estimateId);
         EstimateOptionIdListDto estimateOptionIds = estimateQueryRepository.findEstimateOptionIdsByEstimateId(estimateId);
 
+        return getEstimateResponseDto(estimateShareInfo, estimateModelTypeIds, estimateOptionIds);
+    }
+
+    private EstimateResponseDto getEstimateResponseDto(EstimateShareInfoDto estimateShareInfo, List<Long> estimateModelTypeIds, EstimateOptionIdListDto estimateOptionIds) {
         EstimateResponseDto.EstimateResponseDtoBuilder builder = EstimateResponseDto.builder()
                 .trimId(estimateShareInfo.getTrimId())
                 .detailTrimId(estimateShareInfo.getDetailTrimId())
@@ -104,41 +103,46 @@ public class EstimateServiceImpl implements EstimateService {
         List<OptionPackageInfoDto> selectOptionPackageInfos =
                 trimOptionQueryRepository.findOptionPackageInfoByOptionPackageIds(estimateOptionIds.getOptionIds(), estimateOptionIds.getPackageIds());
 
-        modelTypesInfos
-                .forEach(infoDto -> builder.modelType(EstimateResponseDto.OptionPackageDto.builder()
-                        .id("O" + infoDto.getId())
-                        .childCategory(infoDto.getChildCategory())
-                        .imageUrl(infoDto.getImageUrl())
-                        .name(infoDto.getName())
-                        .price(infoDto.getPrice())
-                        .build())
-                );
-
-
-        selectOptionPackageInfos.stream()
-                .filter(infoDto -> estimateOptionIds.getOptionIds().contains(infoDto.getId()))
-                .forEach(infoDto -> builder.selectOptionOrPackage(EstimateResponseDto.OptionPackageDto.builder()
-                        .id("O" + infoDto.getId())
-                        .childCategory(infoDto.getChildCategory())
-                        .imageUrl(infoDto.getImageUrl())
-                        .name(infoDto.getName())
-                        .price(infoDto.getPrice())
-                        .build())
-                );
-
-
-        selectOptionPackageInfos.stream()
-                .filter(infoDto -> estimateOptionIds.getPackageIds().contains(infoDto.getId()))
-                .forEach(infoDto -> builder.selectOptionOrPackage(EstimateResponseDto.OptionPackageDto.builder()
-                        .id("P" + infoDto.getId())
-                        .childCategory(infoDto.getChildCategory())
-                        .imageUrl(infoDto.getImageUrl())
-                        .name(infoDto.getName())
-                        .price(infoDto.getPrice())
-                        .build())
-                );
+        addOptionPackageInfoDto(builder, modelTypesInfos, true);
+        addEstimateResponseOptionDto(builder, selectOptionPackageInfos, estimateOptionIds.getOptionIds(), true);
+        addEstimateResponseOptionDto(builder, selectOptionPackageInfos, estimateOptionIds.getPackageIds(), false);
 
         return builder.build();
+    }
+
+    private static void addOptionPackageInfoDto(EstimateResponseDto.EstimateResponseDtoBuilder builder,
+                                                List<OptionPackageInfoDto> optionPackageInfoDtoList,
+                                                boolean isOption) {
+        String prefix = isOption ? "O" : "P";
+        optionPackageInfoDtoList
+                .forEach(infoDto -> builder.modelType(EstimateResponseDto.OptionPackageDto.builder()
+                        .id(prefix + infoDto.getId())
+                        .childCategory(infoDto.getChildCategory())
+                        .imageUrl(infoDto.getImageUrl())
+                        .name(infoDto.getName())
+                        .price(infoDto.getPrice())
+                        .build())
+                );
+    }
+
+    private static void addEstimateResponseOptionDto(EstimateResponseDto.EstimateResponseDtoBuilder builder,
+                                                     List<OptionPackageInfoDto> selectOptionPackageInfos,
+                                                     List<Long> estimateOptionIds,
+                                                     boolean isOption) {
+        List<OptionPackageInfoDto> filteredOptionPackageInfoDto = selectOptionPackageInfos.stream()
+                .filter(infoDto -> estimateOptionIds.contains(infoDto.getId()))
+                .collect(Collectors.toList());
+        addOptionPackageInfoDto(builder, filteredOptionPackageInfoDto, isOption);
+    }
+
+    private void saveEstimate(Long trimId, EstimateDto estimateDto) {
+        Long estimateId;
+        estimateId = estimateCommandRepository.save(estimateDto);
+        String hashTagKey = PendingHashTagMap.getHashTagKey(getTotalHashTags(estimateDto));
+        if (!similarityQueryRepository.existHashTagKey(trimId, hashTagKey)) {
+            similarityCommandRepository.saveHashTagKey(trimId, hashTagKey, 0);
+            similarityCommandRepository.saveSimilarEstimate(trimId, hashTagKey, estimateId);
+        }
     }
 
     private EstimateDto buildEstimateDao(Long trimId, EstimateRequestDto estimateRequestDto, List<Long> selectPackages, List<Long> selectOptions) {
@@ -162,11 +166,11 @@ public class EstimateServiceImpl implements EstimateService {
     private List<String> getTotalHashTags(EstimateDto estimateDto) {
         List<String> totalHashTags = new ArrayList<>();
         List<Long> modelOptionIds = estimateDto.getModelOptionIds();
-        if(!modelOptionIds.isEmpty()) {
+        if (!modelOptionIds.isEmpty()) {
             totalHashTags.addAll(modelOptionQueryRepository.findHashTagFromOptionsByOptionIds(modelOptionIds));
         }
         List<Long> modelPackageIds = estimateDto.getModelPackageIds();
-        if(!modelPackageIds.isEmpty()) {
+        if (!modelPackageIds.isEmpty()) {
             totalHashTags.addAll(modelOptionQueryRepository.findHashTagFromPackagesByPackageIds(modelPackageIds));
         }
         return totalHashTags.stream()
