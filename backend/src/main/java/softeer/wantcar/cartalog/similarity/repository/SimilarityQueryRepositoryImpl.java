@@ -7,9 +7,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import softeer.wantcar.cartalog.global.utils.RowMapperUtils;
 import softeer.wantcar.cartalog.similarity.repository.dto.PendingHashTagMap;
 import softeer.wantcar.cartalog.similarity.repository.dto.SimilarityInfo;
-import softeer.wantcar.cartalog.global.utils.RowMapperUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -64,7 +64,7 @@ public class SimilarityQueryRepositoryImpl implements SimilarityQueryRepository 
 
     @Override
     public List<Long> findSimilarEstimateIds(List<Long> hashTagIndexes) {
-        if(hashTagIndexes.isEmpty()) {
+        if (hashTagIndexes.isEmpty()) {
             return new ArrayList<>();
         }
         SqlParameterSource parameters = new MapSqlParameterSource()

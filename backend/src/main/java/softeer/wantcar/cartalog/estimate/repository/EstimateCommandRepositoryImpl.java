@@ -46,7 +46,7 @@ public class EstimateCommandRepositoryImpl implements EstimateCommandRepository 
     }
 
     private void saveEstimatePackages(List<Long> packageIds, Long nextId) {
-        if(packageIds.isEmpty()) {
+        if (packageIds.isEmpty()) {
             return;
         }
         SqlParameterSource[] parameters = getBatchInsertParameters(packageIds, "packageId", nextId);
@@ -54,7 +54,7 @@ public class EstimateCommandRepositoryImpl implements EstimateCommandRepository 
     }
 
     private void saveEstimateOptions(List<Long> optionIds, Long nextId) {
-        if(optionIds.isEmpty()) {
+        if (optionIds.isEmpty()) {
             return;
         }
         SqlParameterSource[] parameters = getBatchInsertParameters(optionIds, "optionId", nextId);

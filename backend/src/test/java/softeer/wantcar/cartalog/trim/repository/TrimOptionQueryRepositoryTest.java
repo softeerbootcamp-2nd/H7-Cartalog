@@ -32,18 +32,18 @@ class TrimOptionQueryRepositoryTest {
     ServerPath serverPath = new ServerPath();
     SoftAssertions softAssertions;
     String palisadeLeBlancOptionSQL = "SELECT model_options.id " +
-            "FROM basic_models " +
-            "       INNER JOIN model_options" +
-            "               ON basic_models.id = model_options.model_id " +
-            "WHERE  model_options.name = :optionName" +
-            "       AND  basic_models.name = '팰리세이드'";
+                                      "FROM basic_models " +
+                                      "       INNER JOIN model_options" +
+                                      "               ON basic_models.id = model_options.model_id " +
+                                      "WHERE  model_options.name = :optionName" +
+                                      "       AND  basic_models.name = '팰리세이드'";
 
     String palisadeLeBlancPackageSQL = "SELECT model_packages.id " +
-            "FROM model_packages " +
-            "       INNER JOIN basic_models " +
-            "               ON model_packages.model_id = basic_models.id " +
-            "WHERE  model_packages.name = :packageName" +
-            "       AND basic_models.name = '팰리세이드' ";
+                                       "FROM model_packages " +
+                                       "       INNER JOIN basic_models " +
+                                       "               ON model_packages.model_id = basic_models.id " +
+                                       "WHERE  model_packages.name = :packageName" +
+                                       "       AND basic_models.name = '팰리세이드' ";
 
     @BeforeEach
     void setUp() {
@@ -60,11 +60,11 @@ class TrimOptionQueryRepositoryTest {
         void returnTrimOptionListWhenDetailTrimIdExist() {
             //given
             String SQL = "SELECT " +
-                    "   dt.id " +
-                    "FROM detail_trims AS dt " +
-                    "JOIN trims AS t ON t.id=dt.trim_id " +
-                    "WHERE t.name= 'Le Blanc' " +
-                    "LIMIT 1";
+                         "   dt.id " +
+                         "FROM detail_trims AS dt " +
+                         "JOIN trims AS t ON t.id=dt.trim_id " +
+                         "WHERE t.name= 'Le Blanc' " +
+                         "LIMIT 1";
             Long leblancDetailTrimId = jdbcTemplate.queryForObject(SQL, new HashMap<>(), Long.TYPE);
 
             //when
@@ -104,11 +104,11 @@ class TrimOptionQueryRepositoryTest {
         void returnTrimPackageListWhenDetailTrimIdExist() {
             //given
             String SQL = "SELECT " +
-                    "   dt.id " +
-                    "FROM detail_trims AS dt " +
-                    "JOIN trims AS t ON t.id=dt.trim_id " +
-                    "WHERE t.name= 'Le Blanc' " +
-                    "LIMIT 1";
+                         "   dt.id " +
+                         "FROM detail_trims AS dt " +
+                         "JOIN trims AS t ON t.id=dt.trim_id " +
+                         "WHERE t.name= 'Le Blanc' " +
+                         "LIMIT 1";
             Long leblancDetailTrimId = jdbcTemplate.queryForObject(SQL, new HashMap<>(), Long.TYPE);
 
             //when

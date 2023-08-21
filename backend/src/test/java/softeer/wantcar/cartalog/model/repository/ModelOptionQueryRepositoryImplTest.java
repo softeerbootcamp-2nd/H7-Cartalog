@@ -121,8 +121,8 @@ class ModelOptionQueryRepositoryImplTest {
         @BeforeEach
         void setUp() {
             optionIds = jdbcTemplate.queryForList("SELECT mo.id " +
-                            "FROM model_option_hash_tags AS moht " +
-                            "JOIN model_options AS mo ON mo.id=moht.model_option_id ",
+                                                  "FROM model_option_hash_tags AS moht " +
+                                                  "JOIN model_options AS mo ON mo.id=moht.model_option_id ",
                     new HashMap<>(), Long.TYPE);
         }
 
@@ -149,8 +149,8 @@ class ModelOptionQueryRepositoryImplTest {
         @BeforeEach
         void setUp() {
             packageIds = jdbcTemplate.queryForList("SELECT mp.id " +
-                            "FROM model_package_hash_tags AS mpht " +
-                            "JOIN model_packages AS mp ON mp.id=mpht.model_package_id ",
+                                                   "FROM model_package_hash_tags AS mpht " +
+                                                   "JOIN model_packages AS mp ON mp.id=mpht.model_package_id ",
                     new HashMap<>(), Long.TYPE);
         }
 

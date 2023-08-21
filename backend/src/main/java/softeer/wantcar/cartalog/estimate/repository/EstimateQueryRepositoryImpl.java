@@ -30,7 +30,7 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
 
     @Override
     public List<EstimateInfoDto> findEstimateInfoBydEstimateIds(List<Long> estimateIds) {
-        if(estimateIds.isEmpty()) {
+        if (estimateIds.isEmpty()) {
             return new ArrayList<>();
         }
         SqlParameterSource parameters = new MapSqlParameterSource()
@@ -41,7 +41,7 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
 
     @Override
     public List<EstimateOptionInfoDto> findEstimateOptionsByEstimateIds(List<Long> estimateIds) {
-        if(estimateIds.isEmpty()) {
+        if (estimateIds.isEmpty()) {
             return new ArrayList<>();
         }
         SqlParameterSource parameters = new MapSqlParameterSource()
@@ -52,7 +52,7 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
 
     @Override
     public List<EstimateOptionInfoDto> findEstimatePackagesByEstimateIds(List<Long> estimateIds) {
-        if(estimateIds.isEmpty()) {
+        if (estimateIds.isEmpty()) {
             return new ArrayList<>();
         }
         SqlParameterSource parameters = new MapSqlParameterSource()

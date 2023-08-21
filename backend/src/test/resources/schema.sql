@@ -312,8 +312,8 @@ CREATE TABLE release_records
 
 CREATE TABLE similar_estimates
 (
-    hash_tag_index  BIGINT,
-    estimate_id     BIGINT,
+    hash_tag_index BIGINT,
+    estimate_id    BIGINT,
     PRIMARY KEY (hash_tag_index, estimate_id),
     FOREIGN KEY (hash_tag_index) REFERENCES pending_hash_tag_similarities (idx) ON UPDATE CASCADE,
     FOREIGN KEY (estimate_id) REFERENCES estimates (id) ON UPDATE CASCADE

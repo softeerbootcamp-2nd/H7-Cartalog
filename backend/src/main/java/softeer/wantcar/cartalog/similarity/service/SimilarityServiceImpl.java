@@ -3,13 +3,16 @@ package softeer.wantcar.cartalog.similarity.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateCountDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateInfoDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionIdListDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionInfoDto;
+import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 import softeer.wantcar.cartalog.similarity.dto.SimilarEstimateCountResponseDto;
 import softeer.wantcar.cartalog.similarity.dto.SimilarEstimateResponseDto;
-import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
 import softeer.wantcar.cartalog.similarity.repository.SimilarityCommandRepository;
 import softeer.wantcar.cartalog.similarity.repository.SimilarityQueryRepository;
-import softeer.wantcar.cartalog.estimate.repository.dto.*;
-import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 import softeer.wantcar.cartalog.similarity.repository.dto.PendingHashTagMap;
 import softeer.wantcar.cartalog.similarity.repository.dto.SimilarityInfo;
 
@@ -90,7 +93,7 @@ public class SimilarityServiceImpl implements SimilarityService {
         similarityCommandRepository.updateLastCalculatedIndex(trimId, hashTagKey, lastCalculatedIndex);
 
         List<SimilarityInfo> mostSimilarities = getMostSimilarities(trimId, hashTagKey, pendingSimilarities);
-        if(mostSimilarities.equals(pendingSimilarities)) {
+        if (mostSimilarities.equals(pendingSimilarities)) {
             return;
         }
         saveMostSimilarities(trimId, hashTagKey, mostSimilarities);
@@ -145,7 +148,7 @@ public class SimilarityServiceImpl implements SimilarityService {
         List<String> totalHashTags = new ArrayList<>();
 
         List<Long> optionIds = estimateOptionIdListDto.getOptionIds();
-        if(!optionIds.isEmpty()) {
+        if (!optionIds.isEmpty()) {
             totalHashTags.addAll(modelOptionQueryRepository.findHashTagFromOptionsByOptionIds(optionIds));
         }
         List<Long> packageIds = estimateOptionIdListDto.getPackageIds();

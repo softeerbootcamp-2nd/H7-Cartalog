@@ -38,7 +38,7 @@ public class SimilarityCommandRepositoryImpl implements SimilarityCommandReposit
 
     @Override
     public void saveSimilarities(Long trimId, String hashTagKey, List<SimilarityInfo> similarityInfos) {
-        if(similarityInfos.isEmpty()) {
+        if (similarityInfos.isEmpty()) {
             return;
         }
         SqlParameterSource[] parameters = similarityInfos.stream()
