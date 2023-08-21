@@ -19,7 +19,7 @@ function Preview() {
               style={toggle ? null : { display: 'none' }}
             />
             <img
-              src={`${exteriorColor.carImageDirectory}001.png`}
+              src={`${exteriorColor.carImageDirectory}001.webp`}
               alt="exterior"
               style={toggle ? { display: 'none' } : null}
             />
