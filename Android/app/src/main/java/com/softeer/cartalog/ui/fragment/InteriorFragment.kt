@@ -64,6 +64,7 @@ class InteriorFragment : Fragment() {
         binding.btnNext.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 interiorViewModel.saveUserSelection()
+                interiorViewModel.updateCarData()
                 withContext(Dispatchers.Main){
                     (activity as MainActivity).changeTab(4)
                 }

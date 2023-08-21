@@ -23,4 +23,5 @@ interface CarRepository {
     suspend fun saveUserTypeData(powerTrain: PriceData, bodyType: PriceData, wheelDrive: PriceData)
     suspend fun getTypeData(type: PriceDataType): PriceData
     suspend fun saveUserColorData(color: PriceData)
+    suspend fun saveUserCarData(myCar: MyCar)
 }

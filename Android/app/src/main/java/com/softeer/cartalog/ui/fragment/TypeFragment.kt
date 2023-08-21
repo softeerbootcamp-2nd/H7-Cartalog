@@ -63,6 +63,7 @@ class TypeFragment : Fragment() {
         binding.btnNext.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 typeViewModel.saveUserSelection()
+                typeViewModel.updateCarData()
                 withContext(Dispatchers.Main){
                     (activity as MainActivity).changeTab(2)
                 }

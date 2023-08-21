@@ -97,9 +97,9 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
         val bodyType = getTypeData(ModelTypeSubject.BODYTYPE)
         val wheelDrive = getTypeData(ModelTypeSubject.WHEELDRIVE)
 
-        val newPowerTrain = updateData(powerTrain, selectedPowerTrain)
-        val newBodyType = updateData(bodyType, selectedBodyType)
-        val newWheelDrive = updateData(wheelDrive, selectedWheelDrive)
+        val newPowerTrain = updateTypeData(powerTrain, selectedPowerTrain)
+        val newBodyType = updateTypeData(bodyType, selectedBodyType)
+        val newWheelDrive = updateTypeData(wheelDrive, selectedWheelDrive)
 
         repository.saveUserTypeData(newPowerTrain, newBodyType, newWheelDrive)
     }
@@ -156,10 +156,21 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
         }
     }
 
-    private fun updateData(typeOption: TypeOption, priceData: PriceData): PriceData {
+    private fun updateTypeData(typeOption: TypeOption, priceData: PriceData): PriceData {
         val newData = typeOption.run {
             priceData.copy(optionId = id, name = name, price = price, imgUrl = imageUrl)
         }
         return newData
+    }
+
+    fun updateCarData(){
+        viewModelScope.launch {
+            val old = repository.getMyCarData()
+            val update = old.copy(
+                fuelEfficiency = hmgData.value?.fuelEfficiency,
+                displacement = hmgData.value?.displacement
+            )
+            repository.saveUserCarData(update)
+        }
     }
 }

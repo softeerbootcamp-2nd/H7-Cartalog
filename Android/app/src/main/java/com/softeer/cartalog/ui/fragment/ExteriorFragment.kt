@@ -63,6 +63,7 @@ class ExteriorFragment : Fragment() {
         binding.btnNext.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 exteriorViewModel.saveUserSelection()
+                exteriorViewModel.updateCarData()
                 withContext(Dispatchers.Main){
                     (activity as MainActivity).changeTab(3)
                 }
