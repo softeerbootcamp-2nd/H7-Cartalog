@@ -1,4 +1,4 @@
-package softeer.wantcar.cartalog.estimate.repository;
+package softeer.wantcar.cartalog.similarity.repository;
 
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +11,9 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
-import softeer.wantcar.cartalog.estimate.repository.dto.SimilarityInfo;
+import softeer.wantcar.cartalog.similarity.repository.dto.SimilarityInfo;
+import softeer.wantcar.cartalog.similarity.repository.SimilarityCommandRepository;
+import softeer.wantcar.cartalog.similarity.repository.SimilarityCommandRepositoryImpl;
 
 import java.util.HashMap;
 import java.util.List;

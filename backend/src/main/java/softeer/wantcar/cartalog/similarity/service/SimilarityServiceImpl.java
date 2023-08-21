@@ -1,15 +1,17 @@
-package softeer.wantcar.cartalog.estimate.service;
+package softeer.wantcar.cartalog.similarity.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateCountResponseDto;
-import softeer.wantcar.cartalog.estimate.dto.SimilarEstimateResponseDto;
+import softeer.wantcar.cartalog.similarity.dto.SimilarEstimateCountResponseDto;
+import softeer.wantcar.cartalog.similarity.dto.SimilarEstimateResponseDto;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
-import softeer.wantcar.cartalog.estimate.repository.SimilarityCommandRepository;
-import softeer.wantcar.cartalog.estimate.repository.SimilarityQueryRepository;
+import softeer.wantcar.cartalog.similarity.repository.SimilarityCommandRepository;
+import softeer.wantcar.cartalog.similarity.repository.SimilarityQueryRepository;
 import softeer.wantcar.cartalog.estimate.repository.dto.*;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
+import softeer.wantcar.cartalog.similarity.repository.dto.PendingHashTagMap;
+import softeer.wantcar.cartalog.similarity.repository.dto.SimilarityInfo;
 
 import java.util.*;
 import java.util.stream.Collectors;

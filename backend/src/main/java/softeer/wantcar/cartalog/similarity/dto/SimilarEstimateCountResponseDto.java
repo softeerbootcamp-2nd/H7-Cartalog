@@ -1,4 +1,4 @@
-package softeer.wantcar.cartalog.estimate.dto;
+package softeer.wantcar.cartalog.similarity.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
