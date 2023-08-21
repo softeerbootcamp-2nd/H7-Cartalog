@@ -15,7 +15,7 @@ function Estimation() {
   const pdfRef = useRef();
   const pdfEvent = useReactToPrint({
     content: () => pdfRef.current,
-    documentTitle: '테스트',
+    documentTitle: '내 차 만들기_견적서',
   });
 
   useEffect(() => {
@@ -36,16 +36,14 @@ function Estimation() {
 
   return data.estimation.isFetch ? (
     <S.Estimation>
-      <div ref={pdfRef}>
+      <S.PDF ref={pdfRef}>
         <Preview />
-        <S.Estimation>
-          <Info />
-          <S.PageContents>
-            <Detail />
-            <HMGArea />
-          </S.PageContents>
-        </S.Estimation>
-      </div>
+        <Info />
+        <S.PageContents>
+          <Detail />
+          <HMGArea />
+        </S.PageContents>
+      </S.PDF>
 
       <PriceStaticBar
         min={SelectModel?.minPrice}
