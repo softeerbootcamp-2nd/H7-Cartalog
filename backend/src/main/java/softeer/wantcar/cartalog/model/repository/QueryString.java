@@ -27,8 +27,8 @@ public class QueryString {
 
     protected static final String findCarSideExteriorAndInteriorImage =
             "SELECT " +
-            "mec.side_exterior_image_url AS sideExteriorImageUrl, " +
-            "mic.interior_image_url AS interiorImageUrl " +
+            "   mec.side_exterior_image_url AS sideExteriorImageUrl, " +
+            "   mic.interior_image_url AS interiorImageUrl " +
             "FROM model_exterior_colors AS mec " +
             "JOIN model_interior_colors AS mic ON mic.code= :interiorColorCode " +
             "WHERE mec.color_code= :exteriorColorCode ";

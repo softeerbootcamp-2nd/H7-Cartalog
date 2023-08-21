@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
-import softeer.wantcar.cartalog.entity.model.BasicModel;
+import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.global.ServerPath;
 import softeer.wantcar.cartalog.global.dto.HMGDataDto;
 import softeer.wantcar.cartalog.model.repository.ModelQueryRepository;
@@ -22,9 +22,11 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
+@SuppressWarnings({"SqlNoDataSourceInspection", "SqlResolve"})
 @JdbcTest
-@Sql({"classpath:schema.sql"})
 @DisplayName("트림 Repository 테스트")
+@Sql({"classpath:schema.sql"})
+@Transactional
 class TrimQueryRepositoryTest {
     ServerPath serverPath = new ServerPath();
     @Autowired
@@ -40,7 +42,6 @@ class TrimQueryRepositoryTest {
         softAssertions = new SoftAssertions();
     }
 
-
     @Nested
     @DisplayName("트림 목록 조회 테스트")
     class getTrimListTest {
@@ -48,10 +49,11 @@ class TrimQueryRepositoryTest {
         @DisplayName("modelId가 존재하면 modelId 맞는 트림 목록을 반환한다")
         void returnTrimListMatchedModelIdWhenModelIdExist() {
             //given
-            BasicModel basicModel = modelQueryRepository.findBasicModelByName("팰리세이드");
+            Long basicModelId = jdbcTemplate.queryForObject("SELECT id FROM basic_models WHERE name = '팰리세이드'",
+                    new HashMap<>(), Long.class);
 
             //when
-            TrimListResponseDto trimListResponseDto = trimQueryRepository.findTrimsByBasicModelId(basicModel.getId());
+            TrimListResponseDto trimListResponseDto = trimQueryRepository.findTrimsByBasicModelId(basicModelId);
 
             //then
             softAssertions.assertThat(trimListResponseDto).isNotNull();
@@ -95,18 +97,26 @@ class TrimQueryRepositoryTest {
     @Nested
     @DisplayName("세부 트림 조회 테스트")
     class getDetailTrimTest {
+        Long trimId;
+        Long powerTrainId;
+        Long wdId;
+        Long bodyTypeId;
+
+        @BeforeEach
+        void setUp() {
+            trimId = jdbcTemplate.queryForObject("SELECT id FROM trims WHERE name = 'Le Blanc' ;", new HashMap<>(), Long.TYPE);
+            powerTrainId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name = '디젤 2.2' ;", new HashMap<>(), Long.TYPE);
+            wdId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name = '2WD' ;", new HashMap<>(), Long.TYPE);
+            bodyTypeId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name = '7인승' ;", new HashMap<>(), Long.TYPE);
+            if (trimId == null || powerTrainId == null || wdId == null || bodyTypeId == null) {
+                throw new RuntimeException();
+            }
+        }
+
         @Test
         @DisplayName("적절한 트림 식별자와 모델 타입 식별자들을 전달할 경우 이에 맞는 세부 트림 정보를 반환한다.")
         void returnDetailTrimInfos() {
             //given
-            Long trimId = jdbcTemplate.queryForObject("SELECT id FROM trims WHERE name = 'Le Blanc' ;", new HashMap<>(), Long.TYPE);
-            Long powerTrainId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name = '디젤 2.2' ;", new HashMap<>(), Long.TYPE);
-            Long wdId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name = '2WD' ;", new HashMap<>(), Long.TYPE);
-            Long bodyTypeId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name = '7인승' ;", new HashMap<>(), Long.TYPE);
-            if (trimId == null || powerTrainId == null || wdId == null || bodyTypeId == null) {
-                throw new RuntimeException();
-            }
-
             //when
             DetailTrimInfoDto detailTrimInfoDto = trimQueryRepository.findDetailTrimInfoByTrimIdAndModelTypeIds(
                     trimId, List.of(powerTrainId, wdId, bodyTypeId));
@@ -117,15 +127,11 @@ class TrimQueryRepositoryTest {
             softAssertions.assertAll();
         }
 
-        @SuppressWarnings("DataFlowIssue")
         @Test
         @DisplayName("존재하지 않는 식별자일 경우 null을 반환해야 한다")
         void returnNullWhenIdIsNotExist() {
             //given
-            Long trimId = jdbcTemplate.queryForObject("SELECT id FROM trims WHERE name = 'Le Blanc' ;", new HashMap<>(), Long.TYPE);
-            Long powerTrainId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name = '디젤 2.2' ;", new HashMap<>(), Long.TYPE);
-            Long wdId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name = '2WD' ;", new HashMap<>(), Long.TYPE);
-            Long bodyTypeId = -1L;
+            bodyTypeId = -1L;
 
             //when
             DetailTrimInfoDto detailTrimInfoDto = trimQueryRepository.findDetailTrimInfoByTrimIdAndModelTypeIds(
@@ -139,13 +145,6 @@ class TrimQueryRepositoryTest {
         @DisplayName("동일한 유형의 모델 타입 식별자를 전달할 경우 null을 반환한다")
         void returnNullWhenModelTypeIdOverlapped() {
             //given
-            Long trimId = jdbcTemplate.queryForObject("SELECT id FROM trims WHERE name = 'Le Blanc' ;", new HashMap<>(), Long.TYPE);
-            Long powerTrainId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name = '디젤 2.2' ;", new HashMap<>(), Long.TYPE);
-            Long bodyTypeId = jdbcTemplate.queryForObject("SELECT id FROM model_options WHERE name = '7인승' ;", new HashMap<>(), Long.TYPE);
-            assert trimId != null;
-            assert powerTrainId != null;
-            assert bodyTypeId != null;
-
             //when
             DetailTrimInfoDto detailTrimInfoDto = trimQueryRepository.findDetailTrimInfoByTrimIdAndModelTypeIds(
                     trimId, List.of(powerTrainId, powerTrainId, bodyTypeId));

@@ -1,5 +1,6 @@
 package softeer.wantcar.cartalog.global.utils;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -9,7 +10,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -18,6 +18,21 @@ public abstract class RowMapperUtils {
         boolean isMappingTarget(Class<?> type, String name);
 
         Object mapping(String name, ResultSet rs) throws SQLException;
+    }
+
+    @RequiredArgsConstructor
+    public static final class RowMapperOptionStrategy implements RowMapperStrategy {
+        private final boolean isOption;
+
+        @Override
+        public boolean isMappingTarget(Class<?> type, String name) {
+            return type == String.class && name.contains("optionId");
+        }
+
+        @Override
+        public Object mapping(String name, ResultSet rs) throws SQLException {
+            return (isOption ? "O" : "P") + rs.getString(name);
+        }
     }
 
     private static final class IntegerStrategy implements RowMapperStrategy {
@@ -93,9 +108,11 @@ public abstract class RowMapperUtils {
     }
 
     public static <T> RowMapper<T> mapping(final Class<T> clazz, final List<RowMapperStrategy> rowMapperStrategies) {
-        var array = Arrays.stream(clazz.getDeclaredFields())
-                .map(Field::getType)
-                .toArray(Class[]::new);
+        Constructor<?>[] constructors = clazz.getConstructors();
+        if (constructors.length > 1) {
+            throw new RuntimeException("생성자가 2개 이상입니다");
+        }
+        var array = constructors[0].getParameterTypes();
 
         return (rs, rowNum) -> {
             List<Object> args = new ArrayList<>();
