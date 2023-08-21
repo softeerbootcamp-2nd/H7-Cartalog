@@ -17,6 +17,7 @@ export const SearchInput = styled.input`
   box-sizing: border-box;
   font: ${({ theme }) => theme.font.textKR.Regular12};
   color: ${({ theme }) => theme.color.gray[900]};
+  font-display: swap;
 
   &::placeholder {
     color: ${({ theme }) => theme.color.gray[600]};

@@ -12,6 +12,7 @@ export const DetailTitle = styled.div`
 export const Title = styled.div`
   font: ${({ theme }) => theme.font.headKR.Medium16};
   color: ${({ theme }) => theme.color.gray['900']};
+  font-display: swap;
 `;
 
 export const Area = styled.div`
@@ -36,4 +37,5 @@ export const Area = styled.div`
 export const Price = styled.div`
   font: ${({ theme }) => theme.font.headKR.Medium14};
   color: ${({ theme }) => theme.color.primary.default};
+  font-display: swap;
 `;

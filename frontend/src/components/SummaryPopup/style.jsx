@@ -38,6 +38,7 @@ export const Title = styled.div`
   padding-top: 20px;
   font: ${({ theme }) => theme.font.headKR.Medium18};
   color: ${({ theme }) => theme.color.gray['800']};
+  font-display: swap;
   text-align: center;
 `;
 
@@ -99,9 +100,11 @@ export const TotalPrice = styled.div`
 export const TextTitle = styled.div`
   font: ${({ theme }) => theme.font.headKR.Regular12};
   color: ${({ theme }) => theme.color.gray['700']};
+  font-display: swap;
 `;
 
 export const PriceTitle = styled.div`
   font: ${({ theme }) => theme.font.headKR.Medium24};
   color: ${({ theme }) => theme.color.primary.default};
+  font-display: swap;
 `;

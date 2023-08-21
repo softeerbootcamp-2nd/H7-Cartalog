@@ -30,4 +30,5 @@ export const CarType = styled.div`
 export const Type = styled.div`
   color: ${({ theme }) => theme.color.gray['800']};
   font: ${({ theme }) => theme.font.textKR.Medium14};
+  font-display: swap;
 `;

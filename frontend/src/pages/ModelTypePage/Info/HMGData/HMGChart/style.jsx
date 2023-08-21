@@ -9,12 +9,14 @@ export const HMGChart = styled.div`
 export const Title = styled.h4`
   color: ${({ theme }) => theme.color.gray['600']};
   font: ${({ theme }) => theme.font.textKR.Medium10};
+  font-display: swap;
 `;
 
 export const Output = styled.h4`
   margin-top: 8px;
   color: ${({ theme }) => theme.color.gray['900']};
   font: ${({ theme }) => theme.font.headKR.Regular28};
+  font-display: swap;
 `;
 
 export const Chart = styled.div`

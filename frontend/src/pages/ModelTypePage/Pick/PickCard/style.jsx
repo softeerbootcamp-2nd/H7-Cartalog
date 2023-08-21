@@ -18,4 +18,5 @@ export const TypeCardName = styled.div`
   margin-top: 4px;
   font: ${({ theme }) => theme.font.headKR.Medium14};
   color: ${({ theme }) => theme.color.gray['600']};
+  font-display: swap;
 `;

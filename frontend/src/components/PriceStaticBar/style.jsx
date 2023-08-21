@@ -64,6 +64,7 @@ export const CollapsedArea = styled.div`
 export const Title = styled.div`
   font: ${({ theme }) => theme.font.headKR.Medium14};
   color: ${({ theme }) => theme.color.gray['50']};
+  font-display: swap;
 `;
 
 export const ExpandedArea = styled.div`

@@ -25,6 +25,7 @@ export const Text = styled.li`
   height: 22px;
   color: ${({ theme }) => theme.color.gray['200']};
   font: ${({ theme }) => theme.font.headKR.Medium14};
+  font-display: swap;
 `;
 
 export const Bar = styled.div`
@@ -34,6 +35,7 @@ export const Bar = styled.div`
 export const Button = styled.button`
   color: ${({ theme }) => theme.color.gray['200']};
   font: ${({ theme }) => theme.font.headKR.Medium14};
+  font-display: swap;
 
   &.selected {
     color: ${({ theme }) => theme.color.primary.default};

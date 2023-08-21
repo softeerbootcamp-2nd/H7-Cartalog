@@ -30,6 +30,7 @@ export const Area = styled.div`
   gap: 8px;
   font: ${({ theme }) => theme.font.textKR.Regular14};
   color: ${({ theme }) => theme.color.gray['900']};
+  font-display: swap;
 
   & .title {
     color: ${({ theme }) => theme.color.gray['500']};

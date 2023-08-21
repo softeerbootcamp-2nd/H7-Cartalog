@@ -7,6 +7,7 @@ export const SliderMark = styled.div`
   width: 100%;
   font: ${({ theme }) => theme.font.textKR.Medium10};
   color: ${({ theme }) => theme.color.primary['200']};
+  font-display: swap;
 `;
 
 export const SliderMarkText = styled.span`

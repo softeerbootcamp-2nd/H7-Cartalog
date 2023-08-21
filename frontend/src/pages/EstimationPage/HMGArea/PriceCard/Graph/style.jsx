@@ -27,8 +27,10 @@ export const PriceInfo = styled.div`
 export const Price = styled.div`
   font: ${({ theme }) => theme.font.textKR.Medium16};
   color: ${({ theme }) => theme.color.gray['600']};
+  font-display: swap;
 
   & > span {
     font: ${({ theme }) => theme.font.textKR.Regular16};
+    font-display: swap;
   }
 `;

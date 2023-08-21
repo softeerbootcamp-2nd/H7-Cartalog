@@ -20,11 +20,13 @@ export const InfoText = styled.h1`
   margin-top: 4px;
   color: ${({ theme }) => theme.color.gray['900']};
   font: ${({ theme }) => theme.font.textKR.Regular14};
+  font-display: swap;
 `;
 
 export const InfoHighlight = styled.p`
   color: ${({ theme }) => theme.color.activeBlue};
   font: ${({ theme }) => theme.font.textKR.Medium16};
+  font-display: swap;
 `;
 
 export const Detail = styled.div`

@@ -11,6 +11,7 @@ export const Header = styled.header`
   background-color: ${({ theme }) => theme.color.white};
   border-bottom: 2px solid ${({ theme }) => theme.color.gray['200']};
   font: ${({ theme }) => theme.font.textKR.Medium14};
+  font-display: swap;
 `;
 
 export const Contents = styled.div`

@@ -17,6 +17,7 @@ export const Title = styled.div`
   width: 100%;
   font: ${({ theme }) => theme.font.headKR.Medium16};
   color: ${({ theme }) => theme.color.gray['900']};
+  font-display: swap;
 
   & > span {
     color: ${({ theme }) => theme.color.activeBlue};
@@ -29,6 +30,7 @@ export const Description = styled.div`
   font: ${({ theme }) => theme.font.textKR.Regular14};
   color: ${({ theme }) => theme.color.gray['600']};
   word-break: keep-all;
+  font-display: swap;
 `;
 
 export const Divider = styled.div`

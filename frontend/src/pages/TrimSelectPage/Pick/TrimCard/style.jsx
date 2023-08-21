@@ -31,18 +31,21 @@ export const Description = styled.div`
   height: 18px;
   font: ${({ theme }) => theme.font.textKR.Regular12};
   color: ${({ theme }) => theme.color.gray['900']};
+  font-display: swap;
 `;
 
 export const Name = styled.div`
   height: 28px;
   font: ${({ theme }) => theme.font.headKR.Medium20};
   color: ${({ theme }) => theme.color.gray['900']};
+  font-display: swap;
 `;
 
 export const Price = styled.div`
   margin: 4px 16px;
   font: ${({ theme }) => theme.font.headKR.Medium18};
   color: ${({ theme }) => theme.color.gray['900']};
+  font-display: swap;
 `;
 
 export const SelectButton = styled.div`

@@ -15,6 +15,7 @@ export const SubTitle = styled.h2`
     if (type === 'dark') return `color: ${theme.color.gray['900']}`;
   }};
   font: ${({ theme }) => theme.font.textKR.Regular14};
+  font-display: swap;
   ${SlideFromRight};
 `;
 
@@ -31,6 +32,7 @@ export const MainTitle = styled.h1`
     }
   }};
   font: ${({ theme }) => theme.font.headKR.Bold32};
+  font-display: swap;
   ${SlideFromRight};
 `;
 
@@ -50,5 +52,6 @@ export const Info = styled.div`
     }
   }};
   font: ${({ theme }) => theme.font.textKR.Regular12};
+  font-display: swap;
   ${SlideFromRight};
 `;

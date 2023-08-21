@@ -17,5 +17,6 @@ export const Info = styled.div`
   & > div {
     font: ${({ theme }) => theme.font.textKR.Medium14};
     white-space: pre-line;
+    font-display: swap;
   }
 `;

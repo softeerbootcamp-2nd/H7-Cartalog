@@ -26,18 +26,21 @@ export const Title = styled.div`
   width: 56px;
   font: ${({ theme }) => theme.font.textKR.Regular12};
   color: ${({ theme }) => theme.color.gray['500']};
+  font-display: swap;
 `;
 
 export const Content = styled.div`
   width: 160px;
   font: ${({ theme }) => theme.font.textKR.Medium12};
   color: ${({ theme }) => theme.color.gray['900']};
+  font-display: swap;
   word-break: keep-all;
 `;
 
 export const Price = styled.div`
   font: ${({ theme }) => theme.font.textKR.Regular14};
   color: ${({ theme }) => theme.color.gray['900']};
+  font-display: swap;
 `;
 
 export const Divider = styled.div`
