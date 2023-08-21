@@ -464,6 +464,10 @@ INSERT INTO estimate_packages (estimate_id, model_package_id)
 SELECT *
 FROM CSVREAD('classpath:csv/estimate_packages.csv', null, 'fieldSeparator=|');
 
+INSERT INTO pending_hash_tag_similarities (idx, hash_tag_key, trim_id, last_calculated_index)
+SELECT *
+FROM CSVREAD('classpath:csv/pending_hash_tag_similarities.csv', null, 'fieldSeparator=|');
+
 INSERT INTO release_records (id, estimate_id, create_date)
 SELECT *
 FROM CSVREAD('classpath:csv/release_records.csv', null, 'fieldSeparator=|');
@@ -475,10 +479,6 @@ FROM CSVREAD('classpath:csv/similar_estimates.csv', null, 'fieldSeparator=|');
 INSERT INTO hash_tag_similarities (origin_hash_tag_index, target_hash_tag_index, similarity)
 SELECT *
 FROM CSVREAD('classpath:csv/hash_tag_similarities.csv', null, 'fieldSeparator=|');
-
-INSERT INTO pending_hash_tag_similarities (idx, hash_tag_key, trim_id, last_calculated_index)
-SELECT *
-FROM CSVREAD('classpath:csv/pending_hash_tag_similarities.csv', null, 'fieldSeparator=|');
 
 ALTER TABLE pending_hash_tag_similarities
     ALTER COLUMN idx RESTART WITH 400;
