@@ -1,10 +1,11 @@
-import { styled } from 'styled-components';
+import { keyframes, styled } from 'styled-components';
 import { CardCss } from '../../../styles/GlobalStyle';
 
 export const OptionCard = styled.button`
   ${CardCss}
   display: flex;
   flex-direction: column;
+  position: relative;
   width: 244px;
   height: 278px;
   padding: 0;
@@ -12,13 +13,16 @@ export const OptionCard = styled.button`
 `;
 
 export const OptionImg = styled.div`
+  flex-shrink: 1;
   position: relative;
   width: 100%;
   height: 160px;
+  overflow: hidden;
+  transition: all 0.2s ease;
 
   & > img {
     width: 100%;
-    height: 100%;
+    height: 160px;
     object-fit: cover;
   }
 `;
@@ -50,20 +54,47 @@ export const HashTags = styled.div`
 `;
 
 export const OptionInfo = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
   width: 100%;
-  height: 118px;
   padding: 16px;
   box-sizing: border-box;
+  transition: all 0.2s ease;
+`;
+
+const scrollAnimation = keyframes`
+  /* 0% {
+    transform: translateX(0);
+  } */
+  100% {
+    transform: translateX(-100%);
+  }
 `;
 
 export const UpperInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 100%;
+  overflow: hidden;
+
+  & .title {
+    width: 100%;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &:hover .title {
+    /* overflow-x: scroll; */
+    text-overflow: unset;
+    overflow: visible;
+    animation: ${scrollAnimation} 5s linear infinite;
+  }
 `;
 
 export const LowerInfo = styled.div`

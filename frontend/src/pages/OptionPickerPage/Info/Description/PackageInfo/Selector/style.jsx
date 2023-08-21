@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 
 export const Selector = styled.div`
   display: flex;
+  margin-left: -14px;
 `;
 
 export const Bar = styled.div`
@@ -28,7 +29,7 @@ export const SelectorList = styled.ul`
 
 export const SelectorItem = styled.li`
   flex-shrink: 0;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   font: ${({ theme }) => theme.font.textKR.Regular14};
   color: ${({ theme }) => theme.color.gray['400']};
   font-display: swap;

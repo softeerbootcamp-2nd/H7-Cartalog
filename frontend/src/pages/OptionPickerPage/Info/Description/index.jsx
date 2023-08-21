@@ -2,11 +2,15 @@ import * as S from './style';
 import PackageInfo from './PackageInfo';
 import HMGArea from '../HMGArea';
 
-function Description({ optionInfo }) {
+function Description({ optionInfo, setImageUrl }) {
   return (
     <S.Description>
       {optionInfo?.package ? (
-        <PackageInfo name={optionInfo?.name} options={optionInfo?.options} />
+        <PackageInfo
+          name={optionInfo?.name}
+          options={optionInfo?.options}
+          setImageUrl={setImageUrl}
+        />
       ) : (
         <>
           <div>{optionInfo?.description}</div>
