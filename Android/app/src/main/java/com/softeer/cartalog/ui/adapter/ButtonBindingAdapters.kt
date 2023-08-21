@@ -145,9 +145,9 @@ fun setOptionCategorySelected(
     recyclerView: RecyclerView,
     optionMode: OptionMode
 ) {
-    radioGroup.setOnCheckedChangeListener { _, _ ->
+    radioGroup.setOnCheckedChangeListener { _, id ->
         val selected =
-            radioGroup.findViewById<RadioButton>(radioGroup.checkedRadioButtonId).text.toString()
+            radioGroup.findViewById<RadioButton>(id).text.toString()
 
         when (optionMode) {
             OptionMode.DEFAULT_OPTION -> {
