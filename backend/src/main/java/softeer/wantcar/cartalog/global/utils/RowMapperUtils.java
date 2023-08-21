@@ -1,5 +1,6 @@
 package softeer.wantcar.cartalog.global.utils;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -18,6 +19,21 @@ public abstract class RowMapperUtils {
         boolean isMappingTarget(Class<?> type, String name);
 
         Object mapping(String name, ResultSet rs) throws SQLException;
+    }
+
+    @RequiredArgsConstructor
+    public static final class RowMapperOptionStrategy implements RowMapperStrategy {
+        private final boolean isOption;
+
+        @Override
+        public boolean isMappingTarget(Class<?> type, String name) {
+            return type == String.class && name.contains("optionId");
+        }
+
+        @Override
+        public Object mapping(String name, ResultSet rs) throws SQLException {
+            return (isOption ? "O" : "P") + rs.getString(name);
+        }
     }
 
     private static final class IntegerStrategy implements RowMapperStrategy {
