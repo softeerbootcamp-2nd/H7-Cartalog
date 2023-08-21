@@ -16,10 +16,7 @@ import softeer.wantcar.cartalog.trim.repository.dto.OptionPackageInfoDto;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @SuppressWarnings({"SqlResolve", "SqlNoDataSourceInspection"})
@@ -57,8 +54,8 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
 
     @Override
     public List<String> findMultipleSelectableCategories() {
-        return jdbcTemplate.query(QueryString.findMultipleSelectableCategories,
-                (rs, rowNum) -> rs.getString("category"));
+        return jdbcTemplate.queryForList(QueryString.findMultipleSelectableCategories,
+                new HashMap<>(), String.class);
     }
 
     @Override
@@ -112,7 +109,6 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
     public DetailTrimPackageInfo findDetailTrimPackageInfoByPackageId(Long packageId) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("packageId", packageId);
-
         try {
             return jdbcTemplate.queryForObject(
                     "SELECT name, image_url FROM model_packages WHERE id = :packageId",
@@ -127,7 +123,6 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
     public List<String> findPackageHashTagByPackageId(Long packageId) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("packageId", packageId);
-
         return jdbcTemplate.queryForList(
                 "SELECT hash_tag FROM model_package_hash_tags where model_package_id = :packageId",
                 parameters, String.class);
@@ -138,29 +133,13 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
     public List<Long> findModelOptionIdsByPackageId(Long packageId) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("packageId", packageId);
-
-        String getTrimOptionsSQL = "SELECT model_option_id " +
-                                   "FROM   detail_trim_options " +
-                                   "       INNER JOIN trim_package_options " +
-                                   "               ON detail_trim_options.id = " +
-                                   "                  trim_package_options.detail_trim_option_id " +
-                                   "       INNER JOIN model_options " +
-                                   "               ON detail_trim_options.model_option_id = model_options.id " +
-                                   "WHERE  trim_package_options.trim_package_id = (SELECT detail_trim_packages.id " +
-                                   "                                               FROM   model_packages " +
-                                   "       INNER JOIN detail_trim_packages " +
-                                   "               ON " +
-                                   "       detail_trim_packages.model_package_id = model_packages.id " +
-                                   "                                               WHERE  model_packages.id = :packageId " +
-                                   "                                               LIMIT  1) ";
-
-        return jdbcTemplate.queryForList(getTrimOptionsSQL, parameters, Long.class);
+        return jdbcTemplate.queryForList(QueryString.findModelOptionIdsByPackageId, parameters, Long.class);
 
     }
 
     @Override
     public List<OptionPackageInfoDto> findOptionPackageInfoByOptionPackageIds(List<Long> optionIds, List<Long> packageIds) {
-        if(optionIds.isEmpty() || packageIds.isEmpty()) {
+        if (optionIds.isEmpty() || packageIds.isEmpty()) {
             return new ArrayList<>();
         }
 
@@ -168,18 +147,7 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
                 .addValue("optionIds", optionIds)
                 .addValue("packageIds", packageIds);
 
-        String getOptionInfoSQL = "SELECT id, name, child_category, price, image_url " +
-                                  "FROM ( " +
-                                  "    SELECT id, name, child_category, image_url, price  " +
-                                  "    FROM model_options " +
-                                  "    WHERE id IN ( :optionIds ) " +
-                                  "    UNION " +
-                                  "    SELECT id, name, NULL AS child_category, image_url, price  " +
-                                  "    FROM model_packages " +
-                                  "    WHERE id IN ( :packageIds ) " +
-                                  ") AS combined_result ";
-
-        return jdbcTemplate.query(getOptionInfoSQL, parameters,
+        return jdbcTemplate.query(QueryString.findOptionPackageInfoByOptionPackageIds, parameters,
                 RowMapperUtils.mapping(OptionPackageInfoDto.class, serverPath.getImageServerPathRowMapperStrategy()));
     }
 
@@ -205,7 +173,7 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
                 .name(optionQueryResult.getName())
                 .parentCategory(optionQueryResult.parentCategory)
                 .childCategory(optionQueryResult.getChildCategory())
-                .imageUrl(serverPath.attachImageServerPath(optionQueryResult.getImageUrl()))
+                .imageUrl(optionQueryResult.getImageUrl())
                 .price(optionQueryResult.getPrice())
                 .basic(optionQueryResult.isBasic())
                 .colorCondition(optionQueryResult.isColorCondition())
@@ -236,23 +204,23 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
                 .anyMatch(id -> Objects.nonNull(id) && id != 0);
     }
 
-    private static TrimOptionQueryResult getTrimOptionQueryResult(ResultSet rs, boolean isOption) throws SQLException {
+    private TrimOptionQueryResult getTrimOptionQueryResult(ResultSet rs, boolean isOption) throws SQLException {
         TrimOptionQueryResult.TrimOptionQueryResultBuilder builder = TrimOptionQueryResult.builder()
                 .id((isOption ? "O" : "P") + rs.getLong("id"))
                 .name(rs.getString("name"))
-                .parentCategory(rs.getString("parentCategory"))
+                .parentCategory(rs.getString("parent_category"))
                 .childCategory(null)
-                .imageUrl(rs.getString("imageUrl"))
+                .imageUrl(serverPath.attachImageServerPath(rs.getString("image_url")))
                 .price(rs.getInt("price"))
                 .basic(false)
-                .colorCondition(rs.getBoolean("colorCondition"))
-                .trimInteriorColorCode(rs.getString("trimInteriorColorCode"))
-                .hashTag(rs.getString("hashTag"))
-                .hmgModelOptionId(rs.getLong("hmgModelOptionId"));
+                .colorCondition(rs.getBoolean("color_condition"))
+                .trimInteriorColorCode(rs.getString("trim_interior_color_code"))
+                .hashTag(rs.getString("hash_tag"))
+                .hmgModelOptionId(rs.getLong("hmg_model_option_id"));
 
         if (isOption) {
             builder.basic(rs.getBoolean("basic"));
-            builder.childCategory(rs.getString("childCategory"));
+            builder.childCategory(rs.getString("child_category"));
         }
 
         return builder.build();
