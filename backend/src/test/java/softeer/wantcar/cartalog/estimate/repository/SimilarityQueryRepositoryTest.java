@@ -153,12 +153,12 @@ class SimilarityQueryRepositoryTest {
     class findSimilarEstimateIdsTest {
         @BeforeEach
         void setUp() {
-            jdbcTemplate.update("INSERT INTO similar_estimates (hash_tag_key, trim_id, estimate_id) VALUES " +
-                                "    ('다인가족:2?레저:2?반려동물:1?스타일:2?안전:2?자녀:2?자녀 통학:1?쾌적:1', 2, 1), " +
-                                "    ('다인가족:2?레저:2?반려동물:1?스타일:2?안전:2?자녀:2?자녀 통학:1?쾌적:1', 2, 2), " +
-                                "    ('다인가족:2?레저:2?반려동물:1?스타일:2?안전:2?자녀:2?자녀 통학:1?쾌적:1', 2, 3), " +
-                                "    ('다인가족:2?레저:2?반려동물:1?스타일:2?안전:2?자녀:2?자녀 통학:1?쾌적:1', 2, 4), " +
-                                "    ('다인가족:2?레저:2?반려동물:1?스타일:2?안전:2?자녀:2?자녀 통학:1?쾌적:1', 2, 5) ", new HashMap<>());
+            jdbcTemplate.update("INSERT INTO similar_estimates (hash_tag_index, estimate_id) VALUES " +
+                                "    (1, 1), " +
+                                "    (1, 2), " +
+                                "    (1, 3), " +
+                                "    (1, 4), " +
+                                "    (1, 5) ", new HashMap<>());
         }
 
         @Test
@@ -167,7 +167,7 @@ class SimilarityQueryRepositoryTest {
             //given
             //when
             List<Long> estimateIds =
-                    similarityQueryRepository.findSimilarEstimateIds(2L, List.of(1L));
+                    similarityQueryRepository.findSimilarEstimateIds(List.of(1L));
 
             //then
             softAssertions.assertThat(estimateIds).isNotNull();
@@ -181,14 +181,11 @@ class SimilarityQueryRepositoryTest {
         void returnEmptyList() {
             //given
             //when
-            List<Long> notExistTrimId =
-                    similarityQueryRepository.findSimilarEstimateIds(-1L, List.of(1L, 2L, 3L, 4L));
-            List<Long> notExistHashTagKey =
-                    similarityQueryRepository.findSimilarEstimateIds(1L, List.of(-1L));
+            List<Long> notExistHashTagIndex =
+                    similarityQueryRepository.findSimilarEstimateIds(List.of(-1L));
 
             //then
-            softAssertions.assertThat(notExistTrimId.isEmpty()).isTrue();
-            softAssertions.assertThat(notExistHashTagKey.isEmpty()).isTrue();
+            softAssertions.assertThat(notExistHashTagIndex.isEmpty()).isTrue();
             softAssertions.assertAll();
         }
     }

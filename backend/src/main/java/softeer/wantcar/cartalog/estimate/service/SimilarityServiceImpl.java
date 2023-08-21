@@ -137,7 +137,7 @@ public class SimilarityServiceImpl implements SimilarityService {
                 .stream()
                 .map(SimilarityInfo::getIdx)
                 .collect(Collectors.toList());
-        return similarityQueryRepository.findSimilarEstimateIds(trimId, similarHashTagIndex);
+        return similarityQueryRepository.findSimilarEstimateIds(similarHashTagIndex);
     }
 
     private Map<Long, List<EstimateOptionInfoDto>> getEstimateOptionInfos(List<Long> similarEstimateIds) {

@@ -62,9 +62,8 @@ public class SimilarityQueryRepositoryImpl implements SimilarityQueryRepository 
     }
 
     @Override
-    public List<Long> findSimilarEstimateIds(Long trimId, List<Long> hashTagIndexes) {
+    public List<Long> findSimilarEstimateIds(List<Long> hashTagIndexes) {
         SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("trimId", trimId)
                 .addValue("hashTagIndexes", hashTagIndexes);
         return jdbcTemplate.queryForList(QueryString.findSimilarEstimateIds, parameters, Long.TYPE);
     }

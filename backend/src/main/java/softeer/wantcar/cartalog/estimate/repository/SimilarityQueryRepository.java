@@ -14,5 +14,5 @@ public interface SimilarityQueryRepository {
 
     List<SimilarityInfo> findSimilarities(Long trimId, String hashTagKey);
 
-    List<Long> findSimilarEstimateIds(Long trimId, List<Long> hashTagIndexes);
+    List<Long> findSimilarEstimateIds(List<Long> hashTagIndexes);
 }

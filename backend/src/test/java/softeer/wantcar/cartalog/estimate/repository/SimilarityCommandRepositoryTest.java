@@ -132,12 +132,16 @@ class SimilarityCommandRepositoryTest {
         @DisplayName("유사 견적을 등록한다")
         void registerSimilarEstimate() {
             //given
+            jdbcTemplate.update("INSERT INTO pending_hash_tag_similarities " +
+                                "(idx, hash_tag_key, trim_id, last_calculated_index) VALUES " +
+                                "(0, 'A', 1, 1) ", new HashMap<>());
+
             //when
             similarityCommandRepository.saveSimilarEstimate(1L, "A", 1L);
 
             //then
             Long savedEstimateId = jdbcTemplate.queryForObject("SELECT estimate_id FROM similar_estimates " +
-                                                               "WHERE trim_id=1 AND hash_tag_key='A' AND estimate_id=1",
+                                                               "WHERE hash_tag_index=0 AND estimate_id=1",
                     new MapSqlParameterSource(), Long.TYPE);
             assertThat(savedEstimateId).isEqualTo(1);
         }

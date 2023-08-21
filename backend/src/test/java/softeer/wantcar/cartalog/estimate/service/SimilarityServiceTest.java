@@ -106,7 +106,7 @@ class SimilarityServiceTest {
                     .thenReturn(List.of(new EstimateCountDto(1L, 1L),
                             new EstimateCountDto(2L, 2L),
                             new EstimateCountDto(3L, 2L)));
-            when(similarityQueryRepository.findSimilarEstimateIds(anyLong(), anyList()))
+            when(similarityQueryRepository.findSimilarEstimateIds(anyList()))
                     .thenReturn(List.of(1L, 2L, 3L));
             //when
             SimilarEstimateCountResponseDto estimateCounts =

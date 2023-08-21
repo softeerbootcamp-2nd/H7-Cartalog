@@ -57,13 +57,9 @@ public class QueryString {
 
     protected static final String findSimilarEstimateIds =
             "SELECT estimate_id " +
-            "FROM similar_estimates AS se " +
-            "JOIN pending_hash_tag_similarities AS phts " +
-            "   ON phts.trim_id=se.trim_id AND " +
-            "       phts.hash_tag_key=se.hash_tag_key " +
-            "WHERE phts.idx IN (:hashTagIndexes) AND " +
-            "   se.trim_id= :trimId " +
-            "LIMIT 4";
+            "FROM similar_estimates " +
+            "WHERE hash_tag_index IN (:hashTagIndexes) " +
+            "LIMIT 4 ";
 
     protected static final String findSimilarEstimateInfoByEstimateIds =
             "SELECT " +
@@ -254,8 +250,10 @@ public class QueryString {
 
     protected static final String saveSimilarEstimate =
             "INSERT INTO similar_estimates " +
-            "(hash_tag_key, estimate_id, trim_id) VALUES " +
-            "(:hashTagKey, :estimateId, :trimId) ";
-
-
+            "(estimate_id, hash_tag_index) VALUES " +
+            "(:estimateId, " +
+            "   (SELECT " +
+            "       idx " +
+            "   FROM pending_hash_tag_similarities " +
+            "   WHERE trim_id= :trimId AND hash_tag_key= :hashTagKey)) ";
 }
