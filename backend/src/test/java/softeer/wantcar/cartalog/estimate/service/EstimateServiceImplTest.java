@@ -137,7 +137,7 @@ class EstimateServiceImplTest {
             OptionPackageInfoDto option4 = mock(OptionPackageInfoDto.class);
             OptionPackageInfoDto option9 = mock(OptionPackageInfoDto.class);
             List<OptionPackageInfoDto> optionPackageInfoDtoList = List.of(option1, option4, option9);
-            when(trimOptionQueryRepository.findOptionPackageInfoByOptionPackageIds(modelOptionIds, null)).thenReturn(optionPackageInfoDtoList);
+            when(trimOptionQueryRepository.findOptionPackageInfoByOptionPackageIds(modelOptionIds, anyList())).thenReturn(optionPackageInfoDtoList);
 
             //when
             EstimateResponseDto estimate = estimateService.findEstimateByEstimateId(anyLong());
