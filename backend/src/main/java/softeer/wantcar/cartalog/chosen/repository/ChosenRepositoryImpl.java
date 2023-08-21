@@ -178,7 +178,43 @@ public class ChosenRepositoryImpl implements ChosenRepository {
 
     @Override
     public List<Integer> findExteriorColorChosenByExteriorColorCode(List<String> exteriorColorCodes, int daysAgo) {
-        return null;
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("exteriorColorCodes", exteriorColorCodes);
+
+        String SQL = "SELECT recent_records_count.id_code,   " +
+                "       recent_records,   " +
+                "       total_records   " +
+                "FROM   (SELECT model_exterior_colors.color_code        AS id_code,   " +
+                "               Count(model_exterior_colors.color_code) AS recent_records   " +
+                "        FROM   release_records   " +
+                "               INNER JOIN estimates   " +
+                "                       ON estimates.id = release_records.estimate_id   " +
+                "               INNER JOIN trim_exterior_colors   " +
+                "                       ON trim_exterior_colors.id = estimates.trim_exterior_color_id   " +
+                "               INNER JOIN model_exterior_colors   " +
+                "                       ON model_exterior_colors.id = trim_exterior_colors.model_exterior_color_id   " +
+                "       WHERE release_records.create_date >= CURRENT_DATE - INTERVAL '" + daysAgo + "' DAY  " +
+                "           AND model_exterior_colors.color_code IN ( :exteriorColorCodes ) " +
+                "       GROUP  BY model_exterior_colors.color_code) AS recent_records_count   " +
+                "       CROSS JOIN (SELECT Count(trim_exterior_colors.id) AS total_records   " +
+                "                   FROM   release_records   " +
+                "                          INNER JOIN estimates   " +
+                "                                  ON estimates.id = release_records.estimate_id   " +
+                "                          INNER JOIN trim_exterior_colors   " +
+                "                                  ON trim_exterior_colors.id = estimates.trim_exterior_color_id   " +
+                "                          INNER JOIN model_exterior_colors   " +
+                "                                  ON model_exterior_colors.id = trim_exterior_colors.model_exterior_color_id   " +
+                "WHERE release_records.create_date >= CURRENT_DATE - INTERVAL '" + daysAgo + "' DAY) AS total_records_count ";
+
+        var query = jdbcTemplate.query(SQL, parameters, RowMapperUtils.mapping(ChosenDto.class, getIdCodeRowMapperStrategy));
+
+        if (exteriorColorCodes.size() != query.size()) {
+            throw new IllegalArgumentException();
+        }
+
+        return query.stream()
+                .map(ChosenDto::getChosen)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     @Override

@@ -131,7 +131,6 @@ class ChosenRepositoryTest {
         }
     }
 
-
     @Nested
     @DisplayName("모델 패키지 선택률 조회 테스트")
     class findPackageChosenByOptionId {
@@ -167,7 +166,50 @@ class ChosenRepositoryTest {
             int daysAgo = 90  + intDayDifference;
 
             //when
-            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findOptionChosenByOptionId(modelPackageIds, daysAgo);
+            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findPackageChosenByOptionId(modelPackageIds, daysAgo);
+
+            //then
+            assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);
+        }
+    }
+
+
+    @Nested
+    @DisplayName("모델 패키지 선택률 조회 테스트")
+    class findExteriorColorChosenByExteriorColorCode {
+        @Test
+        @DisplayName("선택률을 가져와야 한다.")
+        void success() {
+            //given
+            List<String> exteriorColorIds = List.of("A2B", "D2S", "P7V", "R2T", "UB7", "WC9");
+            int daysAgo = 90 + intDayDifference;
+
+            List<Integer> exteriorColorRecentRecords = List.of(38, 46, 36, 35, 42, 44);
+            List<Integer> exteriorColorTotalRecords = List.of(241, 241, 241, 241, 241, 241);
+
+            List<Integer> exteriorColorChosenExpected = IntStream.range(0, exteriorColorIds.size())
+                    .mapToDouble(i -> (double) exteriorColorRecentRecords.get(i) * 100 / exteriorColorTotalRecords.get(i))
+                    .mapToLong(Math::round)
+                    .mapToInt(operand -> (int) operand)
+                    .boxed()
+                    .collect(Collectors.toUnmodifiableList());
+
+            //when
+            List<Integer> exteriorColorChosen = chosenRepository.findExteriorColorChosenByExteriorColorCode(exteriorColorIds, daysAgo);
+
+            //then
+            softAssertions.assertThat(exteriorColorChosen).isEqualTo(exteriorColorChosenExpected);
+        }
+
+        @Test
+        @DisplayName("잘못된 식별자를 전달하면 오류를 발생해야 한다.")
+        void failure() {
+            //given
+            List<String> exteriorColorIds = List.of("AAA");
+            int daysAgo = 90  + intDayDifference;
+
+            //when
+            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findExteriorColorChosenByExteriorColorCode(exteriorColorIds, daysAgo);
 
             //then
             assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);
