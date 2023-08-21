@@ -218,7 +218,60 @@ public class ChosenRepositoryImpl implements ChosenRepository {
     }
 
     @Override
-    public List<Integer> findInteriorColorChosenByInteriorColorCOde(List<String> interiorColorCodes, int daysAgo) {
-        return null;
+    public List<Integer> findInteriorColorChosenByInteriorColorCode(String exteriorColorCode, List<String> interiorColorCodes, int daysAgo) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("exteriorColorCode", exteriorColorCode)
+                .addValue("interiorColorCodes", interiorColorCodes);
+
+        String SQL = "SELECT recent_records_count.id_code, " +
+                "       recent_records, " +
+                "       total_records " +
+                "FROM   (SELECT trim_interior_colors.model_interior_color_code        AS id_code, " +
+                "               Count(trim_interior_colors.model_interior_color_code) AS " +
+                "               recent_records " +
+                "        FROM   release_records " +
+                "               INNER JOIN estimates " +
+                "                       ON estimates.id = release_records.estimate_id " +
+                "               INNER JOIN trim_interior_colors " +
+                "                       ON trim_interior_colors.id = " +
+                "                          estimates.trim_interior_color_id " +
+                "               INNER JOIN trim_exterior_colors " +
+                "                       ON trim_exterior_colors.id = " +
+                "                          trim_interior_colors.trim_exterior_color_id " +
+                "               INNER JOIN model_exterior_colors " +
+                "                       ON model_exterior_colors.id = " +
+                "                          trim_exterior_colors.model_exterior_color_id " +
+                "        WHERE release_records.create_date >= CURRENT_DATE - INTERVAL '" + daysAgo + "' DAY  " +
+                "               AND model_exterior_colors.color_code = :exteriorColorCode " +
+                "               AND trim_interior_colors.model_interior_color_code in ( :interiorColorCodes ) " +
+                "        GROUP  BY trim_interior_colors.model_interior_color_code) AS " +
+                "       recent_records_count " +
+                "       CROSS JOIN (SELECT Count(trim_interior_colors.model_interior_color_code) " +
+                "                          AS " +
+                "                          total_records " +
+                "                   FROM   release_records " +
+                "                          INNER JOIN estimates " +
+                "                                  ON estimates.id = release_records.estimate_id " +
+                "                          INNER JOIN trim_interior_colors " +
+                "                                  ON trim_interior_colors.id = " +
+                "                                     estimates.trim_interior_color_id " +
+                "                          INNER JOIN trim_exterior_colors " +
+                "                                  ON trim_exterior_colors.id = " +
+                "                                     trim_interior_colors.trim_exterior_color_id " +
+                "                          INNER JOIN model_exterior_colors " +
+                "                                  ON model_exterior_colors.id = " +
+                "trim_exterior_colors.model_exterior_color_id " +
+                "WHERE release_records.create_date >= CURRENT_DATE - INTERVAL '" + daysAgo + "' DAY  " +
+                "AND model_exterior_colors.color_code = :exteriorColorCode) AS total_records_count ";
+
+        var query = jdbcTemplate.query(SQL, parameters, RowMapperUtils.mapping(ChosenDto.class, getIdCodeRowMapperStrategy));
+
+        if (interiorColorCodes.size() != query.size()) {
+            throw new IllegalArgumentException();
+        }
+
+        return query.stream()
+                .map(ChosenDto::getChosen)
+                .collect(Collectors.toUnmodifiableList());
     }
 }

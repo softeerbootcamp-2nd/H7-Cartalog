@@ -163,7 +163,7 @@ class ChosenRepositoryTest {
         void failure() {
             //given
             List<Long> modelPackageIds = List.of(10L);
-            int daysAgo = 90  + intDayDifference;
+            int daysAgo = 90 + intDayDifference;
 
             //when
             ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findPackageChosenByOptionId(modelPackageIds, daysAgo);
@@ -172,7 +172,6 @@ class ChosenRepositoryTest {
             assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);
         }
     }
-
 
     @Nested
     @DisplayName("모델 패키지 선택률 조회 테스트")
@@ -206,10 +205,52 @@ class ChosenRepositoryTest {
         void failure() {
             //given
             List<String> exteriorColorIds = List.of("AAA");
-            int daysAgo = 90  + intDayDifference;
+            int daysAgo = 90 + intDayDifference;
 
             //when
             ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findExteriorColorChosenByExteriorColorCode(exteriorColorIds, daysAgo);
+
+            //then
+            assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);
+        }
+    }
+
+    @Nested
+    @DisplayName("모델 패키지 선택률 조회 테스트")
+    class findInteriorColorChosenByInteriorColorCode {
+        @Test
+        @DisplayName("선택률을 가져와야 한다.")
+        void success() {
+            //given
+            List<String> interiorColorIds = List.of("I49", "YJY");
+            int daysAgo = 90 + intDayDifference;
+
+            List<Integer> interiorColorRecentRecords = List.of(19, 19);
+            List<Integer> interiorColorTotalRecords = List.of(38, 38);
+
+            List<Integer> interiorColorChosenExpected = IntStream.range(0, interiorColorIds.size())
+                    .mapToDouble(i -> (double) interiorColorRecentRecords.get(i) * 100 / interiorColorTotalRecords.get(i))
+                    .mapToLong(Math::round)
+                    .mapToInt(operand -> (int) operand)
+                    .boxed()
+                    .collect(Collectors.toUnmodifiableList());
+
+            //when
+            List<Integer> exteriorColorChosen = chosenRepository.findInteriorColorChosenByInteriorColorCode("A2B", interiorColorIds, daysAgo);
+
+            //then
+            softAssertions.assertThat(exteriorColorChosen).isEqualTo(interiorColorChosenExpected);
+        }
+
+        @Test
+        @DisplayName("잘못된 식별자를 전달하면 오류를 발생해야 한다.")
+        void failure() {
+            //given
+            List<String> interiorColorIds = List.of("AAA");
+            int daysAgo = 90 + intDayDifference;
+
+            //when
+            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findInteriorColorChosenByInteriorColorCode("A2B", interiorColorIds, daysAgo);
 
             //then
             assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);

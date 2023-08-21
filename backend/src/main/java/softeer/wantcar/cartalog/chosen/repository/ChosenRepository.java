@@ -11,5 +11,5 @@ public interface ChosenRepository {
 
     List<Integer> findExteriorColorChosenByExteriorColorCode(List<String> exteriorColorCodes, int daysAgo);
 
-    List<Integer> findInteriorColorChosenByInteriorColorCOde(List<String> interiorColorCodes, int daysAgo);
+    List<Integer> findInteriorColorChosenByInteriorColorCode(String exteriorColorCode, List<String> interiorColorCodes, int daysAgo);
 }
