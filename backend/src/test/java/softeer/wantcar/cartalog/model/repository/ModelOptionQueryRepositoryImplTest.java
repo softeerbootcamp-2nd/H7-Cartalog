@@ -34,7 +34,7 @@ class ModelOptionQueryRepositoryImplTest {
     @BeforeEach
     void setUp() {
         softAssertions = new SoftAssertions();
-        modelOptionQueryRepository = new ModelOptionQueryRepositoryImpl(jdbcTemplate);
+        modelOptionQueryRepository = new ModelOptionQueryRepositoryImpl(serverPath, jdbcTemplate);
     }
 
     @Nested
