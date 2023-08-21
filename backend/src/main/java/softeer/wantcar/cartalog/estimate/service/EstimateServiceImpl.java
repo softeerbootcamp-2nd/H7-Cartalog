@@ -161,8 +161,14 @@ public class EstimateServiceImpl implements EstimateService {
 
     private List<String> getTotalHashTags(EstimateDto estimateDto) {
         List<String> totalHashTags = new ArrayList<>();
-        totalHashTags.addAll(modelOptionQueryRepository.findHashTagFromOptionsByOptionIds(estimateDto.getModelOptionIds()));
-        totalHashTags.addAll(modelOptionQueryRepository.findHashTagFromPackagesByPackageIds(estimateDto.getModelPackageIds()));
+        List<Long> modelOptionIds = estimateDto.getModelOptionIds();
+        if(!modelOptionIds.isEmpty()) {
+            totalHashTags.addAll(modelOptionQueryRepository.findHashTagFromOptionsByOptionIds(modelOptionIds));
+        }
+        List<Long> modelPackageIds = estimateDto.getModelPackageIds();
+        if(!modelPackageIds.isEmpty()) {
+            totalHashTags.addAll(modelOptionQueryRepository.findHashTagFromPackagesByPackageIds(modelPackageIds));
+        }
         return totalHashTags.stream()
                 .sorted()
                 .collect(Collectors.toList());
