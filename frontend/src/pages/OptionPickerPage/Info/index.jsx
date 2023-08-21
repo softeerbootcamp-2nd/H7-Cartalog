@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import * as S from './style';
 import Title from '../../../components/Title';
-import PackageInfo from './PackageInfo';
+import Description from './Description';
 
 const TYPE = 'dark';
 const CATEGORY = '파워트레인/성능';
@@ -12,11 +12,7 @@ function Info({ optionId }) {
     type: TYPE,
     subTitle: optionInfo?.category ?? CATEGORY,
     mainTitle: optionInfo?.name,
-    info: optionInfo?.package ? (
-      <PackageInfo options={optionInfo?.options} />
-    ) : (
-      optionInfo?.description
-    ),
+    info: <Description optionInfo={optionInfo} />,
   };
 
   useEffect(() => {

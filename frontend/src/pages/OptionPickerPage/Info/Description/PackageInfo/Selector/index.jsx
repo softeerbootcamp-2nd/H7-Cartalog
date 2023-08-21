@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import * as S from './style';
-import { ReactComponent as LeftArrow } from '../../../../../../assets/icons/arrow_left.svg';
-import { ReactComponent as RightArrow } from '../../../../../../assets/icons/arrow_right.svg';
+import { ReactComponent as LeftArrow } from '../../../../../../../assets/icons/arrow_left.svg';
+import { ReactComponent as RightArrow } from '../../../../../../../assets/icons/arrow_right.svg';
 
 function Selector({ options, selected, setSelected }) {
   const barRef = useRef();
