@@ -7,16 +7,11 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.global.ServerPath;
-import softeer.wantcar.cartalog.global.dto.HMGDataDtoInterface;
 import softeer.wantcar.cartalog.global.utils.RowMapperUtils;
-import softeer.wantcar.cartalog.model.dto.ModelTypeDto;
-import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
-import softeer.wantcar.cartalog.model.dto.OptionDto;
-import softeer.wantcar.cartalog.model.repository.dto.SimpleModelOptionMapper;
+import softeer.wantcar.cartalog.model.repository.dto.ModelTypeDto;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @SuppressWarnings({"SqlNoDataSourceInspection", "SqlResolve"})
 @Repository
@@ -27,17 +22,17 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
 
     @Override
     @Transactional(readOnly = true)
-    public ModelTypeListResponseDto findByModelTypeOptionsByTrimId(Long trimId) {
+    public List<ModelTypeDto> findModelTypeByTrimId(Long trimId) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("trimId", trimId);
 
-        List<SimpleModelOptionMapper> simpleModelOptionMapperList = jdbcTemplate.query(QueryString.findByModelTypeOptions, parameters,
-                RowMapperUtils.mapping(SimpleModelOptionMapper.class, serverPath.getImageServerPathRowMapperStrategy()));
+        List<ModelTypeDto> modelTypeDtoList = jdbcTemplate.query(QueryString.findByModelTypeOptions, parameters,
+                RowMapperUtils.mapping(ModelTypeDto.class, serverPath.getImageServerPathRowMapperStrategy()));
 
-        if (simpleModelOptionMapperList.isEmpty()) {
-            return null;
+        if (modelTypeDtoList.isEmpty()) {
+            return new ArrayList<>();
         }
-        return buildModelTypeListResponseDto(simpleModelOptionMapperList);
+        return modelTypeDtoList;
     }
 
     @Override
@@ -49,34 +44,6 @@ public class ModelOptionQueryRepositoryImpl implements ModelOptionQueryRepositor
                 parameters, (rs, rowNum) -> rs.getString("childCategory"));
 
         return categories.isEmpty() ? null : categories;
-    }
-
-    private ModelTypeListResponseDto buildModelTypeListResponseDto(List<SimpleModelOptionMapper> simpleModelOptionMapperList) {
-        Map<String, Map<Long, OptionDto.OptionDtoBuilder>> dtoBuilderMap = new HashMap<>();
-        simpleModelOptionMapperList.forEach(mapper -> {
-            Map<Long, OptionDto.OptionDtoBuilder> optionDtoBuilderMap = dtoBuilderMap.getOrDefault(mapper.getChildCategory(), new HashMap<>());
-            OptionDto.OptionDtoBuilder optionDtoBuilder = optionDtoBuilderMap.getOrDefault(mapper.getModelOptionId(),
-                    OptionDto.builder()
-                            .id(mapper.getModelOptionId())
-                            .name(mapper.getName())
-                            .price(mapper.getPrice())
-                            .imageUrl(mapper.getImageUrl())
-                            .description(mapper.getDescription()));
-            HMGDataDtoInterface hmgDataDto = mapper.toHMGDataDto();
-            if (hmgDataDto != null) {
-                optionDtoBuilder.hmgDatum(mapper.toHMGDataDto());
-            }
-            optionDtoBuilderMap.put(mapper.getModelOptionId(), optionDtoBuilder);
-            dtoBuilderMap.put(mapper.getChildCategory(), optionDtoBuilderMap);
-        });
-
-        ModelTypeListResponseDto.ModelTypeListResponseDtoBuilder builder = ModelTypeListResponseDto.builder();
-        dtoBuilderMap.forEach((type, optionDtoBuilderMap) -> {
-            ModelTypeDto.ModelTypeDtoBuilder modelTypeDtoBuilder = ModelTypeDto.builder().type(type);
-            optionDtoBuilderMap.forEach((modelOptionId, optionDtoBuilder) -> modelTypeDtoBuilder.option(optionDtoBuilder.build()));
-            builder.modelType(modelTypeDtoBuilder.build());
-        });
-        return builder.build();
     }
 
     @Override

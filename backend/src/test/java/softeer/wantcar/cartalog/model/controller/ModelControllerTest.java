@@ -14,6 +14,7 @@ import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepositoryImpl;
 import softeer.wantcar.cartalog.model.repository.ModelQueryRepository;
+import softeer.wantcar.cartalog.model.service.ModelOptionService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -26,13 +27,15 @@ class ModelControllerTest {
     ModelController modelController;
     ModelOptionQueryRepository modelOptionQueryRepository;
     ModelQueryRepository modelQueryRepository;
+    ModelOptionService modelOptionService;
 
     @BeforeEach
     void setUp() {
         softAssertions = new SoftAssertions();
         modelOptionQueryRepository = mock(ModelOptionQueryRepositoryImpl.class);
         modelQueryRepository = mock(ModelQueryRepository.class);
-        modelController = new ModelController(modelQueryRepository, modelOptionQueryRepository);
+        modelOptionService = mock(ModelOptionService.class);
+        modelController = new ModelController(modelQueryRepository, modelOptionService);
     }
 
     @Nested
@@ -44,7 +47,7 @@ class ModelControllerTest {
             //given
             Long trimId = 2L;
             ModelTypeListResponseDto returnDto = mock(ModelTypeListResponseDto.class);
-            when(modelOptionQueryRepository.findByModelTypeOptionsByTrimId(trimId)).thenReturn(returnDto);
+            when(modelOptionService.findModelTypeListByTrimId(trimId)).thenReturn(returnDto);
 
             //when
             ResponseEntity<ModelTypeListResponseDto> response = modelController.searchModelType(trimId);
@@ -60,7 +63,7 @@ class ModelControllerTest {
         void returnStatusCode404WhenGetModelTypeByExistModelId() {
             //given
             Long basicModelId = -1L;
-            when(modelOptionQueryRepository.findByModelTypeOptionsByTrimId(basicModelId)).thenReturn(null);
+            when(modelOptionService.findModelTypeListByTrimId(basicModelId)).thenThrow(IllegalArgumentException.class);
 
             //when
             ResponseEntity<ModelTypeListResponseDto> response = modelController.searchModelType(basicModelId);
