@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @Builder
-public class ModelTypeDto {
+public class ModelTypeOptionDto {
     private String type;
     @Singular
     private List<OptionDto> options;

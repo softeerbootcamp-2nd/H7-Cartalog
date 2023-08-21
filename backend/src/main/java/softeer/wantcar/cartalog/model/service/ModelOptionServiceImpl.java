@@ -7,6 +7,7 @@ import softeer.wantcar.cartalog.chosen.ChosenConfig;
 import softeer.wantcar.cartalog.chosen.repository.ChosenRepository;
 import softeer.wantcar.cartalog.global.dto.HMGDataDtoInterface;
 import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
+import softeer.wantcar.cartalog.model.dto.ModelTypeOptionDto;
 import softeer.wantcar.cartalog.model.dto.OptionDto;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 import softeer.wantcar.cartalog.model.repository.dto.ModelTypeDto;
@@ -67,7 +68,7 @@ public class ModelOptionServiceImpl implements ModelOptionService {
 
         ModelTypeListResponseDto.ModelTypeListResponseDtoBuilder builder = ModelTypeListResponseDto.builder();
         dtoBuilderMap.forEach((type, optionDtoBuilderMap) -> {
-            softeer.wantcar.cartalog.model.dto.ModelTypeDto.ModelTypeDtoBuilder modelTypeDtoBuilder = softeer.wantcar.cartalog.model.dto.ModelTypeDto.builder().type(type);
+            ModelTypeOptionDto.ModelTypeOptionDtoBuilder modelTypeDtoBuilder = ModelTypeOptionDto.builder().type(type);
             optionDtoBuilderMap.forEach((modelOptionId, optionDtoBuilder) -> modelTypeDtoBuilder.option(optionDtoBuilder.build()));
             builder.modelType(modelTypeDtoBuilder.build());
         });
