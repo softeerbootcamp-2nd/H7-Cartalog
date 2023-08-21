@@ -31,7 +31,9 @@ function Footer({ pdfEvent }) {
     type: FOOTER.TYPE,
     state: FOOTER.ACTIVE,
     mainTitle: FOOTER.COUNSULT_TITLE,
-    event: () => {},
+    event: () => {
+      window.open(FOOTER.COUNSULT_URL, '_blank');
+    },
   };
 
   const imageViewButtonProps = {
