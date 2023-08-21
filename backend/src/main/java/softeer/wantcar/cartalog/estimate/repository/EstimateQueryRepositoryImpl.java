@@ -121,13 +121,13 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
 
         String appendPackageIdSQL = "" +
                 "       AND Sum(CASE " +
-                "                 WHEN model_package_id IN :selectPackageIds THEN 1 " +
+                "                 WHEN model_package_id IN ( :selectPackageIds ) THEN 1 " +
                 "                 ELSE 0 " +
                 "               end) = :countOfSumPackages ";
 
         String appendOptionIdSQL = "" +
                 "       AND Sum(CASE " +
-                "                 WHEN model_option_id IN :selectOptionIds THEN 1 " +
+                "                 WHEN model_option_id IN ( :selectOptionIds ) THEN 1 " +
                 "                 ELSE 0 " +
                 "               end) = :countOfSumOptions ";
         String query = QueryString.findEstimateIdByEstimateDto;
