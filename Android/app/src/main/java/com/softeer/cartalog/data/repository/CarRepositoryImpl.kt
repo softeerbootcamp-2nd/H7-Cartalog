@@ -1,8 +1,11 @@
 package com.softeer.cartalog.data.repository
 
+import android.util.Log
 import com.softeer.cartalog.data.enums.PriceDataType
 import com.softeer.cartalog.data.model.SummaryCarImage
 import com.softeer.cartalog.data.model.CarColor
+import com.softeer.cartalog.data.model.DetailOptions
+import com.softeer.cartalog.data.model.Options
 import com.softeer.cartalog.data.model.Trim
 import com.softeer.cartalog.data.model.TrimDetail
 import com.softeer.cartalog.data.model.Trims
@@ -11,6 +14,7 @@ import com.softeer.cartalog.data.model.db.MyCar
 import com.softeer.cartalog.data.model.db.PriceData
 import com.softeer.cartalog.data.repository.local.CarLocalDataSource
 import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
+import retrofit2.Response
 
 class CarRepositoryImpl(
     private val carLocalDataSource: CarLocalDataSource,
@@ -19,7 +23,7 @@ class CarRepositoryImpl(
 
     override suspend fun getTrims(): Trims {
         val response = carRemoteDataSource.getTrims()
-        return if (response.isSuccessful) response.body()!! else Trims("", arrayListOf())
+        return if (response.isSuccessful) response.body()!! else Trims("", emptyList())
     }
 
     override suspend fun setInitialMyCarData(carName: String, trim: Trim) {
@@ -88,7 +92,7 @@ class CarRepositoryImpl(
 
     override suspend fun getTypes(): List<Type> {
         val response = carRemoteDataSource.getTypes()
-        return if (response.isSuccessful) response.body()!!.modelTypes else arrayListOf()
+        return if (response.isSuccessful) response.body()!!.modelTypes else emptyList()
     }
 
     override suspend fun getTrimDetail(modelTypeIds: String, trimId: Int): TrimDetail {
@@ -106,7 +110,7 @@ class CarRepositoryImpl(
 
     override suspend fun getSummaryCarImage(exterior: String, interior: String): SummaryCarImage {
         val response = carRemoteDataSource.getSummaryCarImage(exterior, interior)
-        return if (response.isSuccessful) response.body()!! else SummaryCarImage("","")
+        return if (response.isSuccessful) response.body()!! else SummaryCarImage("", "")
     }
 
     override suspend fun getCarColors(
@@ -116,12 +120,34 @@ class CarRepositoryImpl(
     ): List<CarColor> {
         return if (isExterior) {
             val response = carRemoteDataSource.getExteriorColors(trimId)
-            if (response.isSuccessful) response.body()!!.exteriorColors else listOf()
+            if (response.isSuccessful) response.body()!!.exteriorColors else emptyList()
         } else {
             val response = carRemoteDataSource.getInteriorColors(exteriorColorCode, trimId)
-            if (response.isSuccessful) response.body()!!.interiorColors else listOf()
+            if (response.isSuccessful) response.body()!!.interiorColors else emptyList()
         }
     }
+
+    override suspend fun getOptions(
+        detailTrimId: Int,
+        interiorColorCode: String
+    ): Options {
+        val response = carRemoteDataSource.getOptions(detailTrimId, interiorColorCode)
+        return if (response.isSuccessful) response.body()!! else Options(
+            emptyList(),
+            emptyList(),
+            emptyList()
+        )
+    }
+
+    override suspend fun getDetailOptions(
+        optionId: String
+    ): DetailOptions {
+        val response = carRemoteDataSource.getDetailOptions(optionId)
+        return if (response.isSuccessful) response.body()!! else DetailOptions(
+            "", "", emptyList(), emptyList(), "", emptyList(), false
+        )
+    }
+
     override suspend fun saveUserTypeData(
         powerTrain: PriceData,
         bodyType: PriceData,

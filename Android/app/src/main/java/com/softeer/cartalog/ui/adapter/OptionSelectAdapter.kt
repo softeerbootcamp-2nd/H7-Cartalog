@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.softeer.cartalog.R
 import com.softeer.cartalog.data.model.Option
 import com.softeer.cartalog.databinding.ItemOptionSelectCardBinding
+import com.softeer.cartalog.ui.fragment.OptionFragmentDirections
 import com.softeer.cartalog.viewmodel.OptionViewModel
 
-class OptionSelectAdapter(private val viewModel: OptionViewModel) :
-    RecyclerView.Adapter<OptionSelectAdapter.OptionSelectViewHolder>(), OptionAdapter {
+class OptionSelectAdapter(private val viewModel: OptionViewModel, private val filterParam: String) :
+    RecyclerView.Adapter<OptionSelectAdapter.OptionSelectViewHolder>() {
 
-    var selectedItem = 0
+    var selectedItems = mutableListOf<Int>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -24,27 +24,46 @@ class OptionSelectAdapter(private val viewModel: OptionViewModel) :
     }
 
     override fun onBindViewHolder(holder: OptionSelectViewHolder, position: Int) {
-        val currentItem = viewModel.selectOptions?.get(position)
+        var currentItem = viewModel.selectOptions?.get(position)
+        if (filterParam != "전체") {
+            currentItem =
+                viewModel.selectOptions?.filter {
+                    it.parentCategory?.contains(filterParam) ?: false
+                }
+                    ?.getOrNull(position)
+        }
         holder.bind(currentItem, position)
     }
 
     override fun getItemCount(): Int {
-        return viewModel.selectOptions!!.size
+        return viewModel.selectOptions?.size ?: 0
     }
 
     inner class OptionSelectViewHolder(val binding: ItemOptionSelectCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        var isSelected = false
         fun bind(item: Option?, position: Int) {
             binding.lifecycleOwner = binding.lifecycleOwner
             binding.viewModel = viewModel
             binding.position = position
             binding.optionAdapter = this@OptionSelectAdapter
-            binding.option = item
 
-            binding.btnHmgData.setOnClickListener {
-                it.findNavController().navigate(R.id.optionDetailDialog)
+            item?.let { option ->
+                binding.option = option
+                binding.btnHmgData.setOnClickListener {
+                    val args = option.id
+                    val action =
+                        OptionFragmentDirections.actionOptionFragmentToOptionDetailDialog(args)
+                    it.findNavController().navigate(action)
+                }
+                binding.btnDetailView.setOnClickListener {
+                    val args = option.id
+                    val action =
+                        OptionFragmentDirections.actionOptionFragmentToOptionDetailDialog(args)
+                    it.findNavController().navigate(action)
+                }
             }
         }
     }
+
+
 }

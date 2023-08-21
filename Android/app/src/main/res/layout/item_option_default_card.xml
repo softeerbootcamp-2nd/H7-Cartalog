@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
 
         <variable
             name="option"
@@ -13,13 +14,6 @@
             name="position"
             type="Integer" />
 
-        <variable
-            name="optionAdapter"
-            type="com.softeer.cartalog.ui.adapter.OptionDefaultAdapter" />
-
-        <variable
-            name="viewModel"
-            type="com.softeer.cartalog.viewmodel.OptionViewModel" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -28,14 +22,11 @@
         android:layout_height="210dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        app:adapter="@{optionAdapter}"
         app:cardCornerRadius="5dp"
         app:cardElevation="0dp"
-        app:position="@{position}"
-        app:cardBackgroundColor="@{position == optionAdapter.selectedItem ? @color/active_blue_card_bg : @color/gray_50}"
-        app:strokeColor="@{position == optionAdapter.selectedItem ?  @color/active_blue :  @color/gray_200}"
-        app:strokeWidth="@{position == optionAdapter.selectedItem ? 7 : 4}"
-        app:viewModel="@{viewModel}">
+        app:cardBackgroundColor="@color/gray_50"
+        app:strokeColor="@color/gray_200"
+        app:strokeWidth="2dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -82,29 +73,11 @@
                 android:layout_height="0dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/tmp_img_option_item"
+                app:imgUrl="@{option.imageUrl}"
                 app:layout_constraintBottom_toBottomOf="@id/gl_center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/cg_category"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@id/iv_option"
-                app:layout_constraintStart_toStartOf="@id/gl_start"
-                app:layout_constraintEnd_toEndOf="@id/gl_end">
-                <com.google.android.material.chip.Chip
-                    style="@style/ChipHashTagStyle"
-                    android:text="전체"/>
-                <com.google.android.material.chip.Chip
-                    style="@style/ChipHashTagStyle"
-                    android:text="상세품목"/>
-                <com.google.android.material.chip.Chip
-                    style="@style/ChipHashTagStyle"
-                    android:text="악세서리"/>
-            </com.google.android.material.chip.ChipGroup>
-
 
             <TextView
                 android:id="@+id/btn_hmg_data"
@@ -112,9 +85,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="8dp"
-                android:visibility="visible"
+                android:visibility="@{option.hasHMGData ? View.VISIBLE : View.GONE}"
                 app:drawableEndCompat="@drawable/icon_arrow_end_small"
                 app:drawableTint="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/btn_detail_view"
+                style="@style/DetailViewTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="6dp"
+                android:visibility="@{option.hasHMGData ? View.GONE : View.VISIBLE}"
+                app:drawableEndCompat="@drawable/icon_arrow_end_small"
+                app:drawableTint="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -124,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text='@{option.chosen + "%"}'
-                android:textColor="@{position == optionAdapter.selectedItem ? @color/active_blue : @color/gray_600}"
+                android:textColor="@color/gray_600"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@id/gl_start"
                 app:layout_constraintTop_toBottomOf="@id/iv_option" />
@@ -134,7 +119,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/option_item_select_guide"
-                android:textColor="@{position == optionAdapter.selectedItem ? @color/gray_700 : @color/gray_600}"
+                android:textColor="@color/gray_600"
                 android:textSize="12sp"
                 app:layout_constraintStart_toEndOf="@id/tv_selected_percent"
                 app:layout_constraintTop_toTopOf="@id/tv_selected_percent" />
@@ -145,7 +130,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{option.name}"
-                android:textColor="@{position == optionAdapter.selectedItem ? @color/gray_900 : @color/gray_600}"
+                android:textColor="@color/gray_600"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/gl_start"
                 app:layout_constraintTop_toBottomOf="@id/tv_selected_percent_guide" />

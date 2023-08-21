@@ -1,9 +1,9 @@
 package com.softeer.cartalog.ui.adapter
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
@@ -94,32 +94,17 @@ fun setOnClickToggle(
 @BindingAdapter("adapter", "viewModel", "position")
 fun setOptionItemClickListener(
     cardView: MaterialCardView,
-    adapter: OptionAdapter,
+    adapter: OptionSelectAdapter,
     viewModel: OptionViewModel,
     position: Int
 ) {
     cardView.setOnClickListener {
-        when (viewModel.nowOptionMode.value) {
-            OptionMode.SELECT_OPTION -> {
-                adapter as OptionSelectAdapter
-                if (adapter.selectedItem != position) {
-                    adapter.selectedItem = position
-                    viewModel.setSelectedSelectOption(position)
-                }
-                adapter.notifyDataSetChanged()
-            }
-
-            OptionMode.DEFAULT_OPTION -> {
-                adapter as OptionDefaultAdapter
-                if (adapter.selectedItem != position) {
-                    adapter.selectedItem = position
-                    viewModel.setSelectedDefaultOption(position)
-                }
-                adapter.notifyDataSetChanged()
-            }
-
-            else -> {}
+        if (adapter.selectedItems.contains(position)) {
+            adapter.selectedItems.remove(position)
+        } else {
+            adapter.selectedItems.add(position)
         }
+        adapter.notifyItemChanged(position)
     }
 }
 
@@ -133,16 +118,17 @@ fun setOptionTabSelected(
         override fun onTabSelected(tab: TabLayout.Tab?) {
             when (tab?.position) {
                 0 -> {
-                    Log.d("TEST", viewModel.nowOptionMode.value.toString())
                     viewModel.setNowOptionMode(OptionMode.SELECT_OPTION)
+                    recyclerView.setHasFixedSize(true)
                     recyclerView.adapter =
-                        OptionSelectAdapter(viewModel).apply { notifyDataSetChanged() }
+                        OptionSelectAdapter(viewModel, "전체")
                 }
 
                 1 -> {
+                    recyclerView.setHasFixedSize(true)
                     viewModel.setNowOptionMode(OptionMode.DEFAULT_OPTION)
                     recyclerView.adapter =
-                        OptionDefaultAdapter(viewModel).apply { notifyDataSetChanged() }
+                        OptionDefaultAdapter(viewModel.defaultOptions!!)
                 }
             }
         }
@@ -152,20 +138,54 @@ fun setOptionTabSelected(
     })
 }
 
-@BindingAdapter("imageView","imgUrl")
+@BindingAdapter("viewModel", "recyclerView", "optionMode")
+fun setOptionCategorySelected(
+    radioGroup: RadioGroup,
+    viewModel: OptionViewModel,
+    recyclerView: RecyclerView,
+    optionMode: OptionMode
+) {
+    radioGroup.setOnCheckedChangeListener { _, _ ->
+        val selected =
+            radioGroup.findViewById<RadioButton>(radioGroup.checkedRadioButtonId).text.toString()
+
+        when (optionMode) {
+            OptionMode.DEFAULT_OPTION -> {
+                if (selected == "전체") {
+                    recyclerView.adapter =
+                        OptionDefaultAdapter(viewModel.defaultOptions!!)
+                } else {
+                    recyclerView.adapter =
+                        OptionDefaultAdapter(viewModel.defaultOptions!!.filter {
+                            it.childCategory?.contains(selected) ?: false
+                        })
+                }
+            }
+
+            OptionMode.SELECT_OPTION -> {
+                recyclerView.adapter = OptionSelectAdapter(viewModel, selected)
+                recyclerView.adapter?.notifyDataSetChanged()
+            }
+        }
+    }
+}
+
+@BindingAdapter("imageView", "imgUrl")
 fun setCarImageSelected(
     radioGroup: RadioGroup,
     imageView: ImageView,
     carImage: SummaryCarImage?
 ){
     radioGroup.setOnCheckedChangeListener { _, checkedId ->
-        when(checkedId){
+        when (checkedId) {
             R.id.rb_exterior -> {
                 imageView.load(carImage?.sideExteriorImageUrl)
             }
+
             R.id.rb_interior -> {
                 imageView.load(carImage?.interiorImageUrl)
             }
         }
     }
 }
+
