@@ -43,6 +43,7 @@ export const HashTags = styled.div`
     border-radius: 2px;
     font: ${({ theme }) => theme.font.textKR.Regular12};
     color: ${({ theme }) => theme.color.gray['50']};
+    font-display: swap;
     background-color: rgba(117, 117, 117, 0.5);
     backdrop-filter: blur(2px);
   }

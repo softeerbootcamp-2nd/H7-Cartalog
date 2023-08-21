@@ -10,6 +10,7 @@ export const RoundButton = styled.button`
 export const Title = styled.div`
   font: ${({ theme }) => theme.font.textKR.Medium14};
   transition: all 0.2s ease-in;
+  font-display: swap;
 
   ${({ $state, type, theme }) => {
     if (type === 'price') {

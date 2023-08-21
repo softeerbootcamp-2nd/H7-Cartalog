@@ -13,6 +13,7 @@ export const DetailTitle = styled.p`
   display: flex;
   color: ${({ theme }) => theme.color.gray['900']};
   font: ${({ theme }) => theme.font.textKR.Regular14};
+  font-display: swap;
 `;
 
 export const DetailUnit = styled.div`
@@ -20,4 +21,5 @@ export const DetailUnit = styled.div`
   margin-top: 8px;
   color: ${({ theme }) => theme.color.gray['900']};
   font: ${({ theme }) => theme.font.headKR.Regular28};
+  font-display: swap;
 `;

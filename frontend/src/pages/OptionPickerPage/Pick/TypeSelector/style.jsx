@@ -23,6 +23,7 @@ export const Bar = styled.div`
 export const SelectorItem = styled.button`
   font: ${({ theme }) => theme.font.headKR.Medium16};
   color: ${({ theme }) => theme.color.gray['200']};
+  font-display: swap;
 
   &.selected {
     color: ${({ theme }) => theme.color.gray['900']};

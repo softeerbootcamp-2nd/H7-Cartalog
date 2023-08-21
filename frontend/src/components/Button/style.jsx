@@ -47,10 +47,12 @@ export const Button = styled.button`
 export const SubTitle = styled.h2`
   color: ${({ theme }) => theme.color.gray['100']};
   font: ${({ theme }) => theme.font.textKR.Regular12};
+  font-display: swap;
 `;
 
 export const MainTitle = styled.h1`
   color: ${({ theme }) => theme.color.white};
   font: ${({ type, theme }) =>
     type === 'buttonC' ? theme.font.textKR.Medium12 : theme.font.textKR.Medium16};
+  font-display: swap;
 `;

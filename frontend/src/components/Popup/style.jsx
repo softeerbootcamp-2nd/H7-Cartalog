@@ -40,6 +40,7 @@ export const PopupContent = styled.div`
   white-space: pre-line;
   font: ${({ theme }) => theme.font.textKR.Medium14};
   color: ${({ theme }) => theme.color.gray['900']};
+  font-display: swap;
 `;
 
 export const PopupActions = styled.div`
@@ -57,6 +58,7 @@ const PopupButtonStyles = css`
   height: 100%;
   font: ${({ theme }) => theme.font.headKR.Medium16};
   user-select: none;
+  font-display: swap;
 `;
 
 export const SecondaryPopupButton = styled.button`

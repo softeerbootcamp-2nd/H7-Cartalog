@@ -35,11 +35,13 @@ export const Item = styled.div`
 
 const optionTitleCss = css`
   font: ${({ theme }) => theme.font.textKR.Medium12};
+  font-display: swap;
 `;
 
 const defaultTitleCss = css`
   height: 35px;
   font: ${({ theme }) => theme.font.textKR.Regular10};
+  font-display: swap;
 
   &:hover {
     position: absolute;
@@ -76,9 +78,11 @@ export const Divide = styled.div`
 export const Count = styled.div`
   color: ${({ theme }) => theme.color.gray['900']};
   font: ${({ theme }) => theme.font.headKR.Regular24};
+  font-display: swap;
 `;
 
 export const Per = styled.div`
   color: ${({ theme }) => theme.color.gray['600']};
   font: ${({ theme }) => theme.font.textKR.Regular10};
+  font-display: swap;
 `;

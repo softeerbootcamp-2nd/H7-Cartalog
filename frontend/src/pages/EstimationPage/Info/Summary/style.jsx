@@ -13,9 +13,11 @@ export const TrimData = styled.div`
 export const Title = styled.div`
   font: ${({ theme }) => theme.font.textKR.Regular12};
   color: ${({ theme }) => theme.color.gray['600']};
+  font-display: swap;
 `;
 
 export const Name = styled.div`
   font: ${({ theme }) => theme.font.headKR.Bold26};
   color: ${({ theme }) => theme.color.gray['900']};
+  font-display: swap;
 `;

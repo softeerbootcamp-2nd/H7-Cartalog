@@ -21,6 +21,7 @@ export const Title = styled.h4`
   overflow: hidden;
   color: ${({ theme }) => theme.color.gray['900']};
   font: ${({ theme }) => theme.font.textKR.Regular10};
+  font-display: swap;
 `;
 
 export const Divide = styled.div`
@@ -32,9 +33,11 @@ export const Count = styled.div`
   margin-top: 6px;
   color: ${({ theme }) => theme.color.gray['900']};
   font: ${({ theme }) => theme.font.headKR.Regular24};
+  font-display: swap;
 `;
 
 export const Per = styled.div`
   color: ${({ theme }) => theme.color.gray['600']};
   font: ${({ theme }) => theme.font.textKR.Regular10};
+  font-display: swap;
 `;

@@ -11,6 +11,7 @@ export const Detail = styled.div`
 export const Title = styled.h1`
   font: ${({ theme }) => theme.font.headKR.Medium18};
   color: ${({ theme }) => theme.color.gray['900']};
+  font-display: swap;
 `;
 
 export const Content = styled.div`

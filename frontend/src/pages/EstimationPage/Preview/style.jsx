@@ -77,6 +77,7 @@ export const CarInfo = styled.div`
 
     font: ${({ theme }) => theme.font.headKR.Bold150};
     color: ${({ theme }) => theme.color.white};
+    font-display: swap;
     animation: ${TitleAnimation} 1s linear forwards;
     animation-play-state: paused;
   }

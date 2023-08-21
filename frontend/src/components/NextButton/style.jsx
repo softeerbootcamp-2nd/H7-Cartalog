@@ -24,9 +24,11 @@ export const TotalPrice = styled.div`
 export const TotalPriceText = styled.h2`
   font: ${({ theme }) => theme.font.headKR.Regular12};
   color: ${({ theme }) => theme.color.gray['700']};
+  font-display: swap;
 `;
 
 export const TotalPriceNumber = styled.h2`
   font: ${({ theme }) => theme.font.headKR.Medium24};
   color: ${({ theme }) => theme.color.primary['500']};
+  font-display: swap;
 `;

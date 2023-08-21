@@ -31,12 +31,14 @@ export const SelectorItem = styled.li`
   margin-bottom: 6px;
   font: ${({ theme }) => theme.font.textKR.Regular14};
   color: ${({ theme }) => theme.color.gray['400']};
+  font-display: swap;
   cursor: pointer;
   transition: color 0.2s ease;
 
   &.selected {
     font: ${({ theme }) => theme.font.textKR.Medium14};
     color: ${({ theme }) => theme.color.gray['800']};
+    font-display: swap;
   }
 `;
 

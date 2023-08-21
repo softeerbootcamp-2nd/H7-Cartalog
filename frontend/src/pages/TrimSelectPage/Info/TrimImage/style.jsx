@@ -36,6 +36,7 @@ export const TrimImageItem = styled.div`
     background-color: transparent;
     color: rgba(255, 255, 255, 0.7);
     font: ${({ theme }) => theme.font.headKR.Regular12};
+    font-display: swap;
     transition: background-color 0.2s ease;
   }
 

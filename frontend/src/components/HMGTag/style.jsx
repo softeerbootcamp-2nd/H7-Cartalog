@@ -17,4 +17,5 @@ export const HMGTag = styled.div`
 export const Text = styled.h2`
   color: ${({ theme }) => theme.color.white};
   font: ${({ theme }) => theme.font.head.BoldH5};
+  font-display: swap;
 `;

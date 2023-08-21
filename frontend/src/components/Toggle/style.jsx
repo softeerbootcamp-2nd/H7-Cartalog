@@ -46,6 +46,7 @@ export const ToggleButton = styled.div`
   border-radius: 18px;
   font: ${({ theme }) => theme.font.textKR.Regular14};
   color: ${({ theme }) => theme.color.gray['400']};
+  font-display: swap;
   cursor: pointer;
   transition: color 0.2s ease;
 

@@ -7,4 +7,5 @@ export const PickTitle = styled.div`
 export const MainTitle = styled.h1`
   color: ${({ theme }) => theme.color.gray['900']};
   font: ${({ theme }) => theme.font.headKR.Medium16};
+  font-display: swap;
 `;

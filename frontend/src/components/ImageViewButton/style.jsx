@@ -10,6 +10,7 @@ export const ImageViewButton = styled.button`
   border-radius: 14px;
   font: ${({ theme }) => theme.font.textKR.Medium12};
   color: ${({ theme }) => theme.color.white};
+  font-display: swap;
   background-color: rgba(117, 117, 117, 0.5);
   backdrop-filter: blur(2px);
 `;

@@ -10,6 +10,7 @@ export const Chart = styled.div`
   & div {
     font: ${({ theme }) => theme.font.textKR.Medium14};
     color: ${({ theme }) => theme.color.gray['300']};
+    font-display: swap;
   }
 
   &.active div {
