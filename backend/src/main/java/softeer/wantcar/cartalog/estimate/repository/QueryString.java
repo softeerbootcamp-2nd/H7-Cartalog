@@ -118,15 +118,7 @@ public class QueryString {
             "       AND estimates.trim_interior_color_id = :trimInteriorColorId " +
             "GROUP  BY estimates.id " +
             "HAVING Count(DISTINCT model_package_id) = :countOfPackages " +
-            "       AND Sum(CASE " +
-            "                 WHEN model_package_id IN ( :selectPackageIds ) THEN 1 " +
-            "                 ELSE 0 " +
-            "               end) = :countOfSumPackages " +
-            "       AND Count (DISTINCT model_option_id) = :countOfOptions " +
-            "       AND Sum(CASE " +
-            "                 WHEN model_option_id IN ( :selectOptionIds ) THEN 1 " +
-            "                 ELSE 0 " +
-            "               end) = :countOfSumOptions ";
+            "       AND Count (DISTINCT model_option_id) = :countOfOptions ";
 
     protected static final String findEstimateShareInfoByEstimateId =
             "SELECT detail_trims.trim_id                           AS trim_id, " +

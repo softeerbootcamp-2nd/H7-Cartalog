@@ -118,8 +118,32 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
                 .addValue("countOfOptions", selectOptions.size())
                 .addValue("countOfSumPackages", selectPackages.size() * Math.max(selectOptions.size(), 1))
                 .addValue("countOfSumOptions", Math.max(selectPackages.size(), 1) * selectOptions.size());
+
+        String appendPackageIdSQL = "" +
+                "       AND Sum(CASE " +
+                "                 WHEN model_package_id IN ( :selectPackageIds ) THEN 1 " +
+                "                 ELSE 0 " +
+                "               end) = :countOfSumPackages ";
+
+        String appendOptionIdSQL = "" +
+                "       AND Sum(CASE " +
+                "                 WHEN model_option_id IN ( :selectOptionIds ) THEN 1 " +
+                "                 ELSE 0 " +
+                "               end) = :countOfSumOptions ";
+        String query = QueryString.findEstimateIdByEstimateDto;
+
+        if (!selectPackages.isEmpty()) {
+            query += appendPackageIdSQL;
+        }
+
+        if (!selectOptions.isEmpty()) {
+            query += appendOptionIdSQL;
+        }
+
         try {
-            return jdbcTemplate.queryForObject(QueryString.findEstimateIdByEstimateDto, parameters, Long.class);
+            return jdbcTemplate.queryForObject(query, parameters, Long.class);
+
+
         } catch (EmptyResultDataAccessException exception) {
             return null;
         }

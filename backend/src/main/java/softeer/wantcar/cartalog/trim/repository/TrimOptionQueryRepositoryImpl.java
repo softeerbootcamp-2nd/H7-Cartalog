@@ -139,7 +139,7 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
 
     @Override
     public List<OptionPackageInfoDto> findOptionPackageInfoByOptionPackageIds(List<Long> optionIds, List<Long> packageIds) {
-        if (optionIds.isEmpty() || packageIds.isEmpty()) {
+        if (optionIds.isEmpty() && packageIds.isEmpty()) {
             return new ArrayList<>();
         }
 
@@ -147,7 +147,19 @@ public class TrimOptionQueryRepositoryImpl implements TrimOptionQueryRepository 
                 .addValue("optionIds", optionIds)
                 .addValue("packageIds", packageIds);
 
-        return jdbcTemplate.query(QueryString.findOptionPackageInfoByOptionPackageIds, parameters,
+        String query = "SELECT id, name, child_category, price, image_url " +
+                "FROM ( " +
+                "    SELECT id, name, child_category, image_url, price  " +
+                "    FROM model_options ";
+        query += optionIds.isEmpty() ? "WHERE 1 = 0" : "WHERE id IN ( :optionIds ) ";
+        query += "    UNION " +
+                "    SELECT id, name, NULL AS child_category, image_url, price  " +
+                "    FROM model_packages ";
+
+        query += packageIds.isEmpty() ? "WHERE 1 = 0" : "WHERE id IN ( :packageIds ) ";
+        query += ") AS combined_result ";
+
+        return jdbcTemplate.query(query, parameters,
                 RowMapperUtils.mapping(OptionPackageInfoDto.class, serverPath.getImageServerPathRowMapperStrategy()));
     }
 
