@@ -17,12 +17,31 @@ function PickCard({ data }) {
     const updatedPrice = {
       ...price,
       [priceKey]: option.price,
+      exteriorColorPrice: 0,
+      interiorColorPrice: 0,
+      optionPrice: 0,
     };
 
     setTrimState((prevState) => ({
       ...prevState,
       modelType: updatedModelType,
       price: updatedPrice,
+      exteriorColor: {
+        ...prevState.exteriorColor,
+        isFetch: false,
+      },
+      interiorColor: {
+        ...prevState.interiorColor,
+        isFetch: false,
+      },
+      optionPicker: {
+        ...prevState.optionPicker,
+        isFetch: false,
+      },
+      estimation: {
+        ...prevState.estimation,
+        isFetch: false,
+      },
     }));
   };
 
