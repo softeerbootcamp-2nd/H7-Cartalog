@@ -55,4 +55,5 @@ export const FOOTER = {
   FINAL_PRICE: '최종 견적 가격',
   CHECK_IMAGE: '이미지 확인',
   WON: '원',
+  COUNSULT_URL: 'https://www.hyundai.com/kr/ko/e/vehicles/purchase-consult',
 };
