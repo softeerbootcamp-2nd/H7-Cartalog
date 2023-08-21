@@ -1,9 +1,17 @@
+import { useState } from 'react';
 import * as S from './style';
 
-function SearchBar({ placeholder = '', value, onChange, onSubmit }) {
+function SearchBar({ placeholder = '', search }) {
+  const [value, setValue] = useState('');
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+  const handleSubmit = () => {
+    search(value);
+  };
   const handleKeyDown = (event) => {
     if (event.key !== 'Enter') return;
-    onSubmit();
+    handleSubmit();
   };
 
   return (
@@ -11,11 +19,11 @@ function SearchBar({ placeholder = '', value, onChange, onSubmit }) {
       <S.SearchInput
         placeholder={placeholder}
         value={value}
-        onChange={onChange}
+        onChange={handleChange}
         onKeyDown={handleKeyDown}
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit}
       />
-      <S.SearchButton type="button" onClick={onSubmit} />
+      <S.SearchButton type="button" onClick={handleSubmit} />
     </S.SearchBar>
   );
 }

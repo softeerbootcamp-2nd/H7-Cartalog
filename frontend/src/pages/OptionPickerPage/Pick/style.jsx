@@ -8,6 +8,11 @@ export const Pick = styled.div`
   margin-bottom: 120px;
 `;
 
+export const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const OptionGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);

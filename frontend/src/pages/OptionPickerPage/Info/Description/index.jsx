@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import * as S from './style';
 import PackageInfo from './PackageInfo';
 import HMGArea from '../HMGArea';
@@ -7,7 +6,7 @@ function Description({ optionInfo }) {
   return (
     <S.Description>
       {optionInfo?.package ? (
-        <PackageInfo options={optionInfo?.options} />
+        <PackageInfo name={optionInfo?.name} options={optionInfo?.options} />
       ) : (
         <>
           <div>{optionInfo?.description}</div>
