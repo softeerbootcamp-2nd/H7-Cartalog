@@ -154,7 +154,6 @@ class SimilarityQueryRepositoryTest {
         @BeforeEach
         void setUp() {
             jdbcTemplate.update("INSERT INTO similar_estimates (hash_tag_index, estimate_id) VALUES " +
-                                "    (1, 1), " +
                                 "    (1, 2), " +
                                 "    (1, 3), " +
                                 "    (1, 4), " +
@@ -164,12 +163,14 @@ class SimilarityQueryRepositoryTest {
         @Test
         @DisplayName("올바른 식별자들을 전달했을 때 유사 견적들을 최대 4개까지 List형태로 반환한다")
         void returnHashTagKeysToList() {
+            System.out.println("hleoo");
             //given
             //when
             List<Long> estimateIds =
                     similarityQueryRepository.findSimilarEstimateIds(List.of(1L));
 
             //then
+            System.out.println(estimateIds);
             softAssertions.assertThat(estimateIds).isNotNull();
             softAssertions.assertThat(estimateIds.size()).isLessThanOrEqualTo(4);
             softAssertions.assertThat(estimateIds).containsAll(List.of(1L, 2L, 3L, 4L));
