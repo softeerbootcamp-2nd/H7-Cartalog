@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.test.context.jdbc.Sql;
 import softeer.wantcar.cartalog.global.ServerPath;
 import softeer.wantcar.cartalog.trim.repository.dto.OptionPackageInfoDto;
+import softeer.wantcar.cartalog.trim.repository.dto.TrimOptionInfo;
 
 import java.util.HashMap;
 import java.util.List;
@@ -67,11 +68,11 @@ class TrimOptionQueryRepositoryTest {
             Long leblancDetailTrimId = jdbcTemplate.queryForObject(SQL, new HashMap<>(), Long.TYPE);
 
             //when
-            List<TrimOptionQueryRepository.TrimOptionInfo> trimOptions
+            List<TrimOptionInfo> trimOptions
                     = trimOptionQueryRepository.findOptionsByDetailTrimId(leblancDetailTrimId);
 
             softAssertions.assertThat(trimOptions.isEmpty()).isFalse();
-            for (TrimOptionQueryRepository.TrimOptionInfo trimOption : trimOptions) {
+            for (TrimOptionInfo trimOption : trimOptions) {
                 softAssertions.assertThat(trimOption.getId()).startsWith("O");
                 softAssertions.assertThat(trimOption.getName()).isNotBlank();
                 softAssertions.assertThat(trimOption.getHashTags()).doesNotContain((String) null);
@@ -87,7 +88,7 @@ class TrimOptionQueryRepositoryTest {
             Long notExistDetailTrimId = -1L;
 
             //when
-            List<TrimOptionQueryRepository.TrimOptionInfo> trimOptions
+            List<TrimOptionInfo> trimOptions
                     = trimOptionQueryRepository.findOptionsByDetailTrimId(notExistDetailTrimId);
 
             assertThat(trimOptions).isNull();
@@ -111,11 +112,11 @@ class TrimOptionQueryRepositoryTest {
             Long leblancDetailTrimId = jdbcTemplate.queryForObject(SQL, new HashMap<>(), Long.TYPE);
 
             //when
-            List<TrimOptionQueryRepository.TrimOptionInfo> trimPackages
+            List<TrimOptionInfo> trimPackages
                     = trimOptionQueryRepository.findPackagesByDetailTrimId(leblancDetailTrimId);
 
             softAssertions.assertThat(trimPackages.isEmpty()).isFalse();
-            for (TrimOptionQueryRepository.TrimOptionInfo trimPackage : trimPackages) {
+            for (TrimOptionInfo trimPackage : trimPackages) {
                 softAssertions.assertThat(trimPackage.getId()).startsWith("P");
                 softAssertions.assertThat(trimPackage.getName()).isNotBlank();
                 softAssertions.assertThat(trimPackage.getHashTags()).doesNotContain((String) null);
@@ -131,7 +132,7 @@ class TrimOptionQueryRepositoryTest {
             Long notExistDetailTrimId = -1L;
 
             //when
-            List<TrimOptionQueryRepository.TrimOptionInfo> trimPackages
+            List<TrimOptionInfo> trimPackages
                     = trimOptionQueryRepository.findPackagesByDetailTrimId(notExistDetailTrimId);
 
             assertThat(trimPackages).isNull();
