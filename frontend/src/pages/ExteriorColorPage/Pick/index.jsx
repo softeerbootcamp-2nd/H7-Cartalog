@@ -23,7 +23,7 @@ function Pick() {
         carImageDirectory: exterior.carImageDirectory,
         carImageList: Array.from({ length: 60 }, (_, index) => {
           const imageNumber = (index + 1).toString().padStart(3, '0');
-          return `${exterior.carImageDirectory}${imageNumber}.png`;
+          return `${exterior.carImageDirectory}${imageNumber}.webp`;
         }),
       },
       interiorColor: {
