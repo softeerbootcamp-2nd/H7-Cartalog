@@ -1,7 +1,7 @@
 -- noinspection SqlInsertValuesForFile
+DROP TABLE IF EXISTS similar_estimates;
 DROP TABLE IF EXISTS pending_hash_tag_similarities;
 DROP TABLE IF EXISTS hash_tag_similarities;
-DROP TABLE IF EXISTS similar_estimates;
 DROP TABLE IF EXISTS release_records;
 DROP TABLE IF EXISTS estimate_packages;
 DROP TABLE IF EXISTS estimate_options;
@@ -292,6 +292,16 @@ CREATE TABLE estimate_packages
     FOREIGN KEY (model_package_id) REFERENCES model_packages (id) ON UPDATE CASCADE
 );
 
+CREATE TABLE pending_hash_tag_similarities
+(
+    idx                   BIGINT AUTO_INCREMENT,
+    hash_tag_key          VARCHAR(255),
+    trim_id               BIGINT,
+    last_calculated_index BIGINT,
+    PRIMARY KEY (idx),
+    FOREIGN KEY (trim_id) REFERENCES trims (id) ON UPDATE CASCADE
+);
+
 CREATE TABLE release_records
 (
     id          BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -302,12 +312,11 @@ CREATE TABLE release_records
 
 CREATE TABLE similar_estimates
 (
-    hash_tag_key VARCHAR(255),
-    estimate_id  BIGINT,
-    trim_id      BIGINT,
-    PRIMARY KEY (hash_tag_key, estimate_id, trim_id),
-    FOREIGN KEY (estimate_id) REFERENCES estimates (id) ON UPDATE CASCADE,
-    FOREIGN KEY (trim_id) REFERENCES trims (id) ON UPDATE CASCADE
+    hash_tag_index  BIGINT,
+    estimate_id     BIGINT,
+    PRIMARY KEY (hash_tag_index, estimate_id),
+    FOREIGN KEY (hash_tag_index) REFERENCES pending_hash_tag_similarities (idx) ON UPDATE CASCADE,
+    FOREIGN KEY (estimate_id) REFERENCES estimates (id) ON UPDATE CASCADE
 );
 
 CREATE TABLE hash_tag_similarities
@@ -316,16 +325,6 @@ CREATE TABLE hash_tag_similarities
     target_hash_tag_index VARCHAR(255),
     similarity            FLOAT NOT NULL,
     PRIMARY KEY (origin_hash_tag_index, target_hash_tag_index)
-);
-
-CREATE TABLE pending_hash_tag_similarities
-(
-    idx                   BIGINT AUTO_INCREMENT,
-    hash_tag_key          VARCHAR(255),
-    trim_id               BIGINT,
-    last_calculated_index BIGINT,
-    PRIMARY KEY (idx),
-    FOREIGN KEY (trim_id) REFERENCES trims (id) ON UPDATE CASCADE
 );
 
 INSERT INTO basic_model_categories (category)
@@ -469,7 +468,7 @@ INSERT INTO release_records (id, estimate_id, create_date)
 SELECT *
 FROM CSVREAD('classpath:csv/release_records.csv', null, 'fieldSeparator=|');
 
-INSERT INTO similar_estimates (hash_tag_key, estimate_id, trim_id)
+INSERT INTO similar_estimates (hash_tag_index, estimate_id)
 SELECT *
 FROM CSVREAD('classpath:csv/similar_estimates.csv', null, 'fieldSeparator=|');
 
