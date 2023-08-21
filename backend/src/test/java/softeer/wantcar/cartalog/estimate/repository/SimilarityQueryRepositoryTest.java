@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
-import softeer.wantcar.cartalog.estimate.repository.dto.HashTagMap;
+import softeer.wantcar.cartalog.estimate.repository.dto.PendingHashTagMap;
+import softeer.wantcar.cartalog.estimate.repository.dto.SimilarityInfo;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,127 +29,148 @@ class SimilarityQueryRepositoryTest {
     NamedParameterJdbcTemplate jdbcTemplate;
     SimilarityQueryRepository similarityQueryRepository;
     SoftAssertions softAssertions;
-    Long leblancId;
 
     @BeforeEach
     void setUp() {
         similarityQueryRepository = new SimilarityQueryRepositoryImpl(jdbcTemplate);
         softAssertions = new SoftAssertions();
-        leblancId = jdbcTemplate.queryForObject("SELECT id FROM trims WHERE name='Le Blanc'", new HashMap<>(), Long.class);
     }
 
     @Nested
-    @DisplayName("findPendingHashTagKeyByTrimIdAndHashTagKey 테스트")
-    class findPendingHashTagKeyByTrimIdAndHashTagKeyTest {
-        @BeforeEach
-        void setUp() {
-            SqlParameterSource parameters = new MapSqlParameterSource().addValue("trimId", leblancId);
-            jdbcTemplate.update("INSERT INTO pending_hash_tag_similarities (hash_tag_key, pending_hash_tag_left_key, trim_id) " +
-                    "VALUES " +
-                    "    ('a:1|b:2', 'c:1|d:1', :trimId), " +
-                    "    ('a:1|b:2', 'c:1|d:2', :trimId), " +
-                    "    ('a:1|b:2', 'c:1|d:3', :trimId) ", parameters);
+    @DisplayName("existHashTagKey 테스트")
+    class existHashTagKeyTest {
+        @Test
+        @DisplayName("트림 아이디와 해시 태그 키 조합이 존재한다면 true를 반환한다")
+        void returnTrue() {
+            //given
+            //when
+            boolean response = similarityQueryRepository.existHashTagKey(2L, "다인가족:2?레저:2?반려동물:1?스타일:2?안전:2?자녀:2?자녀 통학:1?쾌적:1");
 
+            //then
+            assertThat(response).isTrue();
         }
 
         @Test
-        @DisplayName("올바른 식별자들을 전달했을 때 계산되어야 하는 해시 태그 키들을 반환한다")
-        void returnHashTagKeysToQueue() {
+        @DisplayName("트림 아이디와 해시 태그 키 조합이 존재하지 않는다면 false를 반환한다")
+        void returnFalse() {
             //given
             //when
-            List<HashTagMap> pendingHashTagKeys =
-                    similarityQueryRepository.findPendingHashTagMapByTrimIdAndHashTagKey(leblancId, "a:1|b:2");
+            boolean response = similarityQueryRepository.existHashTagKey(1L, "NOT-EXIST");
 
             //then
-            softAssertions.assertThat(pendingHashTagKeys.size()).isEqualTo(3);
-            softAssertions.assertThat(pendingHashTagKeys).containsAll(List.of(
-                    new HashTagMap("c:1|d:1"),
-                    new HashTagMap("c:1|d:2"),
-                    new HashTagMap("c:1|d:3")));
-            softAssertions.assertAll();
-        }
-
-        @Test
-        @DisplayName("존재하지 않는 식별자를 전달했을 때 빈 Queue를 반환한다")
-        void returnEmptyQueue() {
-            //given
-            //when
-            List<HashTagMap> nonExistTrimIdResult =
-                    similarityQueryRepository.findPendingHashTagMapByTrimIdAndHashTagKey(-1L, "a:1|b:2");
-            List<HashTagMap> nonExistHashTagKeyResult =
-                    similarityQueryRepository.findPendingHashTagMapByTrimIdAndHashTagKey(leblancId, "NOT-EXIST");
-
-            //then
-            softAssertions.assertThat(nonExistTrimIdResult.isEmpty()).isTrue();
-            softAssertions.assertThat(nonExistHashTagKeyResult.isEmpty()).isTrue();
-            softAssertions.assertAll();
+            assertThat(response).isFalse();
         }
     }
 
     @Nested
-    @DisplayName("findSimilarHashTagKeysByTrimIdAndHashTagKey 테스트")
-    class findSimilarHashTagKeysByTrimIdAndHashTagKeyTest {
-        @BeforeEach
-        void setUp() {
-            SqlParameterSource parameters = new MapSqlParameterSource().addValue("trimId", leblancId);
-            jdbcTemplate.update("INSERT INTO hash_tag_similarities (hash_tag_key, hash_tag_left_key, trim_id, similarity) " +
-                    "VALUES " +
-                    "    ('a:1|b:2', 'c:1|d:1', :trimId, 0.5), " +
-                    "    ('a:1|b:2', 'c:1|d:2', :trimId, 0.4), " +
-                    "    ('a:1|b:2', 'c:1|d:3', :trimId, 0.7) ", parameters);
-        }
-
+    @DisplayName("findPendingHashTagKeys 테스트")
+    class findPendingHashTagKeysTest {
         @Test
-        @DisplayName("올바른 식별자들을 전달했을 때 계산된 해시 태그 정보들을 List형태로 반환한다")
-        void returnHashTagKeysToList() {
+        @DisplayName("트림 아이디와 해시 태그 키 조합이 존재한다면 보류된 해시 태그 키 목록을 반환한다")
+        void returnPendingHashTagKeys() {
             //given
             //when
-            List<String> similarHashTagKeys =
-                    similarityQueryRepository.findSimilarHashTagKeysByTrimIdAndHashTagKey(leblancId, "a:1|b:2");
+            List<PendingHashTagMap> pendingHashTagMaps = similarityQueryRepository.findPendingHashTagKeys(2L, "다인가족:2?레저:2?반려동물:1?스타일:2?안전:2?자녀:2?자녀 통학:1?쾌적:1");
 
             //then
-            softAssertions.assertThat(similarHashTagKeys.size()).isEqualTo(3);
-            softAssertions.assertThat(similarHashTagKeys).containsAll(List.of("c:1|d:3", "c:1|d:1", "c:1|d:2"));
-            softAssertions.assertAll();
+            assertThat(pendingHashTagMaps.size()).isEqualTo(396);
         }
 
         @Test
-        @DisplayName("존재하지 않는 식별자를 전달했을 때 빈 List를 반환한다")
+        @DisplayName("트림 아이디와 해시 태그 키 조합이 존재하지 않는다면 빈 리스트를 반환한다")
         void returnEmptyList() {
             //given
             //when
-            List<String> similarHashTagKeys =
-                    similarityQueryRepository.findSimilarHashTagKeysByTrimIdAndHashTagKey(leblancId, "a:1,b:2");
+            List<PendingHashTagMap> pendingHashTagMaps = similarityQueryRepository.findPendingHashTagKeys(0L, "NOT-EXIST");
 
             //then
-            assertThat(similarHashTagKeys.isEmpty()).isTrue();
+            assertThat(pendingHashTagMaps.isEmpty()).isTrue();
         }
     }
 
     @Nested
-    @DisplayName("findSimilarEstimateIdsByTrimIdAndHashTagKey 테스트")
-    class findSimilarEstimateIdsByTrimIdAndHashTagKeyTest {
+    @DisplayName("findAllHashTagKeys 테스트")
+    class findAllHashTagKeysTest {
+        @Test
+        @DisplayName("트림 식별자가 존재한다면 해당 트림 식별자를 갖는 모든 해시 태그 키 목록을 반환한다")
+        void returnAllHashTagKeys() {
+            //given
+            //when
+            List<PendingHashTagMap> pendingHashTagMaps = similarityQueryRepository.findAllHashTagKeys(2L);
+
+            //then
+            assertThat(pendingHashTagMaps.size()).isEqualTo(396);
+        }
+
+        @Test
+        @DisplayName("트림 식별자가 존재하지 않는다면 빈 리스트를 반환한다")
+        void returnEmptyList() {
+            //given
+            //when
+            List<PendingHashTagMap> pendingHashTagMaps = similarityQueryRepository.findAllHashTagKeys(-1L);
+
+            //then
+            assertThat(pendingHashTagMaps.isEmpty()).isTrue();
+        }
+    }
+
+    @Nested
+    @DisplayName("findSimilarities 테스트")
+    class findSimilaritiesTest {
+        @Test
+        @DisplayName("트림 아이디와 해시 태그 키 조합이 존재한다면 해당 조합의 유사 정보를 반환한다")
+        void returnSimilarityInfos() {
+            //given
+            jdbcTemplate.update("INSERT INTO hash_tag_similarities " +
+                                "(target_hash_tag_index, origin_hash_tag_index, similarity) VALUES " +
+                                "(2, 1, 0.3)", new MapSqlParameterSource());
+            //when
+            List<SimilarityInfo> similarityInfos = similarityQueryRepository.findSimilarities(2L,
+                    "다인가족:2?레저:2?반려동물:1?스타일:2?안전:2?자녀:2?자녀 통학:1?쾌적:1");
+
+            //then
+            softAssertions.assertThat(similarityInfos.size()).isEqualTo(1);
+            SimilarityInfo similarityInfo = similarityInfos.get(0);
+            softAssertions.assertThat(similarityInfo.getIdx()).isEqualTo(2);
+            softAssertions.assertThat(similarityInfo.getSimilarity()).isEqualTo(0.3);
+            softAssertions.assertAll();
+        }
+
+        @Test
+        @DisplayName("트림 아이디와 해시 태그 키 조합이 존재하지 않는다면 빈 리스트를 반환한다")
+        void returnEmptyList() {
+            //given
+            //when
+            List<SimilarityInfo> similarityInfos = similarityQueryRepository.findSimilarities(1L, "NOT-EXISTå");
+
+            //then
+            assertThat(similarityInfos.isEmpty()).isTrue();
+        }
+    }
+
+    @Nested
+    @DisplayName("findSimilarEstimateIds 테스트")
+    class findSimilarEstimateIdsTest {
         @BeforeEach
         void setUp() {
-            SqlParameterSource parameters = new MapSqlParameterSource().addValue("trimId", leblancId);
-            jdbcTemplate.update("INSERT INTO similar_estimates (hash_tag_key, trim_id, estimate_id) " +
-                    "VALUES " +
-                    "    ('a:1|b:2', :trimId, 1), " +
-                    "    ('a:1|b:2', :trimId, 2), " +
-                    "    ('a:1|b:2', :trimId, 3), " +
-                    "    ('a:1|b:2', :trimId, 4), " +
-                    "    ('a:1|b:2', :trimId, 5) ", parameters);
+            jdbcTemplate.update("INSERT INTO similar_estimates (hash_tag_index, estimate_id) VALUES " +
+                                "    (1, 2), " +
+                                "    (1, 3), " +
+                                "    (1, 4), " +
+                                "    (1, 5) ", new HashMap<>());
         }
 
         @Test
         @DisplayName("올바른 식별자들을 전달했을 때 유사 견적들을 최대 4개까지 List형태로 반환한다")
         void returnHashTagKeysToList() {
+            System.out.println("hleoo");
             //given
             //when
             List<Long> estimateIds =
-                    similarityQueryRepository.findSimilarEstimateIdsByTrimIdAndHashTagKey(leblancId, List.of("a:1|b:2"));
+                    similarityQueryRepository.findSimilarEstimateIds(List.of(1L));
 
             //then
+            System.out.println(estimateIds);
             softAssertions.assertThat(estimateIds).isNotNull();
             softAssertions.assertThat(estimateIds.size()).isLessThanOrEqualTo(4);
             softAssertions.assertThat(estimateIds).containsAll(List.of(1L, 2L, 3L, 4L));
@@ -161,14 +182,11 @@ class SimilarityQueryRepositoryTest {
         void returnEmptyList() {
             //given
             //when
-            List<Long> notExistTrimId =
-                    similarityQueryRepository.findSimilarEstimateIdsByTrimIdAndHashTagKey(-1L, List.of("a:1|b:2"));
-            List<Long> notExistHashTagKey =
-                    similarityQueryRepository.findSimilarEstimateIdsByTrimIdAndHashTagKey(leblancId, List.of("NOT-EXIST"));
+            List<Long> notExistHashTagIndex =
+                    similarityQueryRepository.findSimilarEstimateIds(List.of(-1L));
 
             //then
-            softAssertions.assertThat(notExistTrimId.isEmpty()).isTrue();
-            softAssertions.assertThat(notExistHashTagKey.isEmpty()).isTrue();
+            softAssertions.assertThat(notExistHashTagIndex.isEmpty()).isTrue();
             softAssertions.assertAll();
         }
     }

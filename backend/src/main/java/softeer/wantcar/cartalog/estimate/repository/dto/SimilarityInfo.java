@@ -1,13 +1,15 @@
 package softeer.wantcar.cartalog.estimate.repository.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
 @EqualsAndHashCode
+@Builder
+@AllArgsConstructor
 public class SimilarityInfo {
-    private String hashTagKey;
+    private long idx;
     private Double similarity;
 }

@@ -1,14 +1,17 @@
 package softeer.wantcar.cartalog.estimate.repository;
 
 import softeer.wantcar.cartalog.estimate.repository.dto.SimilarityInfo;
-import softeer.wantcar.cartalog.estimate.service.dto.PendingHashTagSimilaritySaveDto;
 
 import java.util.List;
 
 public interface SimilarityCommandRepository {
-    void deletePending(Long trimId, String hashTagKey);
+    void updateLastCalculatedIndex(Long trimId, String hashTagKey, long lastIndex);
 
-    void saveCalculatedHashTagKeys(Long trimId, String hashTagKey, List<SimilarityInfo> similarities);
+    void deleteSimilarities(Long trimId, String hashTagKey);
 
-    void savePendingHashTagSimilarities(PendingHashTagSimilaritySaveDto pendingHashTagSimilaritySaveDto);
+    void saveSimilarities(Long trimId, String hashTagKey, List<SimilarityInfo> similarityInfos);
+
+    void saveHashTagKey(Long trimId, String hashTagKey, long lastIndex);
+
+    void saveSimilarEstimate(Long trimId, String hashTagKey, Long estimateId);
 }

@@ -52,19 +52,18 @@ class EstimateServiceImplTest {
         trimColorQueryRepository = mock(TrimColorQueryRepository.class);
         trimQueryRepository = mock(TrimQueryRepository.class);
         modelOptionQueryRepository = mock(ModelOptionQueryRepository.class);
+        trimOptionQueryRepository = mock(TrimOptionQueryRepository.class);
         similarityQueryRepository = mock(SimilarityQueryRepository.class);
         similarityCommandRepository = mock(SimilarityCommandRepository.class);
-        trimOptionQueryRepository = mock(TrimOptionQueryRepository.class);
 
         estimateService = new EstimateServiceImpl(estimateQueryRepository,
                 estimateCommandRepository,
                 trimColorQueryRepository,
                 trimQueryRepository,
                 modelOptionQueryRepository,
-                similarityCommandRepository,
                 similarityQueryRepository,
-                trimOptionQueryRepository
-        );
+                similarityCommandRepository,
+                trimOptionQueryRepository);
     }
 
     @Nested
