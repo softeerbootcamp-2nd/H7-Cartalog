@@ -36,7 +36,14 @@ class OptionSelectAdapter(private val viewModel: OptionViewModel, private val fi
     }
 
     override fun getItemCount(): Int {
-        return viewModel.selectOptions?.size ?: 0
+        return if (filterParam != "전체") {
+            viewModel.selectOptions?.filter {
+                it.parentCategory?.contains(filterParam) ?: false
+            }?.size ?: 0
+        } else {
+            viewModel.selectOptions?.size ?: 0
+        }
+
     }
 
     inner class OptionSelectViewHolder(val binding: ItemOptionSelectCardBinding) :
