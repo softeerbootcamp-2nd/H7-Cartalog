@@ -13,26 +13,32 @@ import softeer.wantcar.cartalog.global.ServerPath;
 import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimInteriorColorListResponseDto;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SuppressWarnings({"SqlResolve", "SqlNoDataSourceInspection"})
 @JdbcTest
 @Sql({"classpath:schema.sql"})
 @DisplayName("트림 색상 Repository 테스트")
 class TrimColorQueryRepositoryImplTest {
     @Autowired
     NamedParameterJdbcTemplate jdbcTemplate;
-    TrimTestRepository trimQueryRepository;
+    TrimQueryRepository trimQueryRepository;
     TrimColorQueryRepository trimColorQueryRepository;
     ServerPath serverPath = new ServerPath();
     SoftAssertions softAssertions;
 
+    Long leblancId;
+
     @BeforeEach
     void setUp() {
         trimColorQueryRepository = new TrimColorQueryRepositoryImpl(serverPath, jdbcTemplate);
-        trimQueryRepository = new TrimTestRepository(jdbcTemplate);
+        trimQueryRepository = new TrimQueryRepositoryImpl(serverPath, jdbcTemplate);
         softAssertions = new SoftAssertions();
+        leblancId = jdbcTemplate.queryForObject("SELECT id FROM trims WHERE name= 'Le Blanc'", new HashMap<>(), Long.TYPE);
     }
 
     @Nested
@@ -42,16 +48,33 @@ class TrimColorQueryRepositoryImplTest {
         @DisplayName("적절한 트림 식별자를 전달할 경우 해당 트림이 선택 가능한 외장 색상을 반환해야 한다.")
         void success() {
             //given
-            Long LeBlancTrimId = trimQueryRepository.findTrimIdByModelNameAndTrimName("팰리세이드", "Le Blanc");
             List<String> selectableLeBlancExteriorColors = List.of("A2B", "R2T", "UB7", "D2S", "P7V", "WC9");
 
             //when
-            TrimExteriorColorListResponseDto result = trimColorQueryRepository.findTrimExteriorColorByTrimId(LeBlancTrimId);
+            TrimExteriorColorListResponseDto result = trimColorQueryRepository.findTrimExteriorColorByTrimId(leblancId);
 
             //then
-            softAssertions.assertThat(result.getExteriorColors().size()).isEqualTo(6);
-            softAssertions.assertThat(result.hasColor(selectableLeBlancExteriorColors)).isTrue();
-            softAssertions.assertThat(result.startWithUrl(serverPath.IMAGE_SERVER_PATH)).isTrue();
+            List<TrimExteriorColorListResponseDto.TrimExteriorColorDto> exteriorColors = result.getExteriorColors();
+            softAssertions.assertThat(exteriorColors.size()).isEqualTo(6);
+
+            List<String> resultColorCodes = exteriorColors.stream()
+                    .map(TrimExteriorColorListResponseDto.TrimExteriorColorDto::getCode)
+                    .collect(Collectors.toList());
+            softAssertions.assertThat(resultColorCodes).containsAll(selectableLeBlancExteriorColors);
+
+            List<String> colorImageUrls = exteriorColors.stream()
+                    .map(TrimExteriorColorListResponseDto.TrimExteriorColorDto::getColorImageUrl)
+                    .collect(Collectors.toList());
+            for (String colorImageUrl : colorImageUrls) {
+                softAssertions.assertThat(colorImageUrl).startsWith(serverPath.IMAGE_SERVER_PATH);
+            }
+
+            List<String> carImageUrls = exteriorColors.stream()
+                    .map(TrimExteriorColorListResponseDto.TrimExteriorColorDto::getCarImageDirectory)
+                    .collect(Collectors.toList());
+            for (String carImageUrl : carImageUrls) {
+                softAssertions.assertThat(carImageUrl).startsWith(serverPath.IMAGE_SERVER_PATH);
+            }
             softAssertions.assertAll();
         }
 
@@ -75,18 +98,38 @@ class TrimColorQueryRepositoryImplTest {
         @DisplayName("적절한 트림 아이디와 외장 색상 코드를 전달했을 때 해당 조합으로 선택 가능한 내장 색상 리스트를 반환해야 한다.")
         void success() {
             //given
-            Long LeBlancTrimId = trimQueryRepository.findTrimIdByModelNameAndTrimName("팰리세이드", "Le Blanc");
             String exteriorColorCode = "A2B";
             List<String> selectableInteriorColors = List.of("I49", "YJY");
 
 
             //when
-            TrimInteriorColorListResponseDto result = trimColorQueryRepository.findTrimInteriorColorByTrimIdAndExteriorColorCode(LeBlancTrimId, exteriorColorCode);
+            TrimInteriorColorListResponseDto result =
+                    trimColorQueryRepository.findTrimInteriorColorByTrimIdAndExteriorColorCode(leblancId, exteriorColorCode);
 
             //then
+            List<TrimInteriorColorListResponseDto.TrimInteriorColorDto> interiorColors = result.getInteriorColors();
             softAssertions.assertThat(result.getInteriorColors().size()).isEqualTo(2);
-            softAssertions.assertThat(result.hasColor(selectableInteriorColors)).isTrue();
-            softAssertions.assertThat(result.startWithUrl(serverPath.IMAGE_SERVER_PATH)).isTrue();
+
+            softAssertions.assertThat(interiorColors.size()).isEqualTo(2);
+
+            List<String> resultColorCode = interiorColors.stream()
+                    .map(TrimInteriorColorListResponseDto.TrimInteriorColorDto::getCode)
+                    .collect(Collectors.toList());
+            softAssertions.assertThat(resultColorCode).containsAll(selectableInteriorColors);
+
+            List<String> colorImageUrls = interiorColors.stream()
+                    .map(TrimInteriorColorListResponseDto.TrimInteriorColorDto::getColorImageUrl)
+                    .collect(Collectors.toList());
+            for (String colorImageUrl : colorImageUrls) {
+                softAssertions.assertThat(colorImageUrl).startsWith(serverPath.IMAGE_SERVER_PATH);
+            }
+
+            List<String> carImageUrls = interiorColors.stream()
+                    .map(TrimInteriorColorListResponseDto.TrimInteriorColorDto::getCarImageUrl)
+                    .collect(Collectors.toList());
+            for (String carImageUrl : carImageUrls) {
+                softAssertions.assertThat(carImageUrl).startsWith(serverPath.IMAGE_SERVER_PATH);
+            }
             softAssertions.assertAll();
         }
 
@@ -95,7 +138,8 @@ class TrimColorQueryRepositoryImplTest {
         void failByNonexistentTrimId() {
             //given
             //when
-            TrimInteriorColorListResponseDto result = trimColorQueryRepository.findTrimInteriorColorByTrimIdAndExteriorColorCode(-1L, "A2B");
+            TrimInteriorColorListResponseDto result =
+                    trimColorQueryRepository.findTrimInteriorColorByTrimIdAndExteriorColorCode(-1L, "A2B");
 
             //then
             assertThat(result).isNull();
@@ -105,10 +149,9 @@ class TrimColorQueryRepositoryImplTest {
         @DisplayName("존재하지 않은 외장 색상 코드로 전달한 경우 null을 반환해야 한다.")
         void failByNonexistentColorCode() {
             //given
-            Long LeBlancTrimId = trimQueryRepository.findTrimIdByModelNameAndTrimName("팰리세이드", "Le Blanc");
-
             //when
-            TrimInteriorColorListResponseDto result = trimColorQueryRepository.findTrimInteriorColorByTrimIdAndExteriorColorCode(LeBlancTrimId, "AAA");
+            TrimInteriorColorListResponseDto result =
+                    trimColorQueryRepository.findTrimInteriorColorByTrimIdAndExteriorColorCode(leblancId, "AAA");
 
             //then
             assertThat(result).isNull();

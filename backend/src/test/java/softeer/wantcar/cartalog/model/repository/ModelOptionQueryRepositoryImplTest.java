@@ -6,15 +6,18 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
+import softeer.wantcar.cartalog.global.ServerPath;
+import softeer.wantcar.cartalog.model.dto.ModelTypeDto;
 import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
+import softeer.wantcar.cartalog.model.dto.OptionDto;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,8 +29,7 @@ class ModelOptionQueryRepositoryImplTest {
     @Autowired
     NamedParameterJdbcTemplate jdbcTemplate;
     ModelOptionQueryRepository modelOptionQueryRepository;
-    @Value("${env.imageServerPath}")
-    private String imageServerPath = "example-url";
+    ServerPath serverPath = new ServerPath();
 
     @BeforeEach
     void setUp() {
@@ -54,11 +56,28 @@ class ModelOptionQueryRepositoryImplTest {
 
             //then
             assertThat(response).isNotNull();
-            softAssertions.assertThat(response.modelTypeSize()).isEqualTo(3);
-            softAssertions.assertThat(response.equalAndAllContainTypes(checkTypes)).isTrue();
-            softAssertions.assertThat(response.hasOptions(checkOptions)).isTrue();
-            softAssertions.assertThat(response.startWithUrl(imageServerPath)).isTrue();
 
+            softAssertions.assertThat(response.getModelTypes().size()).isEqualTo(checkTypes.size());
+
+            List<String> modelTypeNames = response.getModelTypes().stream()
+                    .map(ModelTypeDto::getType)
+                    .collect(Collectors.toList());
+            softAssertions.assertThat(modelTypeNames).containsAll(checkTypes);
+
+            for (ModelTypeDto modelType : response.getModelTypes()) {
+                List<String> modelTypeOptions = modelType.getOptions().stream()
+                        .map(OptionDto::getName)
+                        .collect(Collectors.toList());
+                softAssertions.assertThat(modelTypeOptions.size()).isEqualTo(checkOptions.get(modelType.getType()).size());
+                softAssertions.assertThat(modelTypeOptions).containsAll(checkOptions.get(modelType.getType()));
+
+                List<String> imageUrls = modelType.getOptions().stream()
+                        .map(OptionDto::getImageUrl)
+                        .collect(Collectors.toList());
+                for (String imageUrl : imageUrls) {
+                    softAssertions.assertThat(imageUrl).startsWith(serverPath.IMAGE_SERVER_PATH);
+                }
+            }
             softAssertions.assertAll();
         }
 
