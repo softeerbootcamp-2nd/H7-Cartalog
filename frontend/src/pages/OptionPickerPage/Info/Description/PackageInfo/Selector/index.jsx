@@ -3,7 +3,7 @@ import * as S from './style';
 import { ReactComponent as LeftArrow } from '../../../../../../../assets/icons/arrow_left.svg';
 import { ReactComponent as RightArrow } from '../../../../../../../assets/icons/arrow_right.svg';
 
-function Selector({ name, options, selected, setSelected }) {
+function Selector({ name, options, selected, handleSelect }) {
   const barRef = useRef();
   const [rightClassName, setRightClassName] = useState('');
   const [leftClassName, setLeftClassName] = useState('');
@@ -24,6 +24,8 @@ function Selector({ name, options, selected, setSelected }) {
   const handlePageMove = (moveNext) => {
     const target = barRef.current.offsetParent;
     const { scrollLeft, offsetWidth } = target;
+    if (moveNext && scrollLeft + offsetWidth >= target.scrollWidth) return;
+    if (!moveNext && scrollLeft === 0) return;
     const targetScrollLeft = moveNext ? scrollLeft + offsetWidth : scrollLeft - offsetWidth;
 
     target.scrollTo({
@@ -49,7 +51,7 @@ function Selector({ name, options, selected, setSelected }) {
           <S.SelectorItem
             key={`${name} ${option.name}`}
             className={selected === option.name ? 'selected' : ''}
-            onClick={() => setSelected(option.name)}
+            onClick={() => handleSelect(option)}
           >
             {option.name}
           </S.SelectorItem>

@@ -8,18 +8,25 @@ const CATEGORY = '파워트레인/성능';
 
 function Info({ optionId }) {
   const [optionInfo, setOptionInfo] = useState();
+  const [imageUrl, setImageUrl] = useState();
   const TitleProps = {
     type: TYPE,
     subTitle: optionInfo?.category ?? CATEGORY,
     mainTitle: optionInfo?.name,
-    info: <Description optionInfo={optionInfo} />,
+    info: <Description optionInfo={optionInfo} setImageUrl={setImageUrl} />,
   };
 
   useEffect(() => {
     if (!optionId) return;
-    fetch(`http://3.36.126.30/models/trims/options/detail?optionId=${optionId}`)
-      .then((res) => res.json())
-      .then((data) => setOptionInfo(data));
+    async function fetchData() {
+      const response = await fetch(
+        `http://3.36.126.30/models/trims/options/detail?optionId=${optionId}`,
+      );
+      const data = await response.json();
+      setOptionInfo(data);
+      setImageUrl(data.imageUrl);
+    }
+    fetchData();
   }, [optionId]);
 
   if (!optionInfo) return <div>loading...</div>;
@@ -29,7 +36,7 @@ function Info({ optionId }) {
       <S.ModelText>
         <Title {...TitleProps} />
       </S.ModelText>
-      <S.ModelImage src={optionInfo?.imageUrl} />
+      <S.ModelImage src={imageUrl} />
     </S.Info>
   );
 }
