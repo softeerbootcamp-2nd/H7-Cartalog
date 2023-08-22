@@ -39,7 +39,7 @@ const BarAnimation = keyframes`
 export const Bar = styled.div`
   position: absolute;
   left: 0;
-  width: ${({ chartValue }) => `${chartValue}px`};
+  width: 0;
   height: 4px;
   background-color: ${({ theme }) => theme.color.activeBlue2};
   transform-origin: left;
