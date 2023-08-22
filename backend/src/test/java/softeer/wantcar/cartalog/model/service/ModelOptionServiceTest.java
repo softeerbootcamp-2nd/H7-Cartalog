@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import softeer.wantcar.cartalog.chosen.repository.ChosenRepository;
 import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
+import softeer.wantcar.cartalog.model.dto.ModelTypeOptionDto;
 import softeer.wantcar.cartalog.model.dto.OptionDto;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 import softeer.wantcar.cartalog.model.repository.dto.ModelTypeDto;
@@ -66,7 +67,7 @@ class ModelOptionServiceTest {
 
             //then
             List<String> collect = modelTypeList.getModelTypes().stream()
-                    .map(modelTypeDto -> modelTypeDto.getType())
+                    .map(ModelTypeOptionDto::getType)
                     .collect(Collectors.toUnmodifiableList());
             softAssertions.assertThat(collect.containsAll(List.of("category1", "category2", "category3"))).isTrue();
             List<OptionDto> options = modelTypeList.getModelTypes().stream()

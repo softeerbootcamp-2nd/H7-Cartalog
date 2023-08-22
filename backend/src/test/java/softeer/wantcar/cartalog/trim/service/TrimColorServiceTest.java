@@ -9,7 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import softeer.wantcar.cartalog.chosen.ChosenConfig;
 import softeer.wantcar.cartalog.chosen.repository.ChosenRepository;
 import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimInteriorColorListResponseDto;

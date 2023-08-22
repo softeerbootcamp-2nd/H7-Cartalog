@@ -3,7 +3,6 @@ package softeer.wantcar.cartalog.trim.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import softeer.wantcar.cartalog.chosen.ChosenConfig;
 import softeer.wantcar.cartalog.chosen.repository.ChosenRepository;
 import softeer.wantcar.cartalog.global.dto.HMGDataDto;
 import softeer.wantcar.cartalog.trim.dto.TrimOptionDetailResponseDto;
