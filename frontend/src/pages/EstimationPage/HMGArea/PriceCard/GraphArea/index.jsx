@@ -1,21 +1,20 @@
-import { ReactComponent as GraphSvg } from './graph.svg';
-import { ReactComponent as PointSvg } from './point.svg';
-import { useData } from '../../../../../utils/Context';
+import { useData, TotalPrice } from '../../../../../utils/Context';
 import * as S from './style';
-// import GraphSvg from '../GraphSvg';
+import PriceGraph from '../../../../../components/PriceGraph';
 
 function GrapArea() {
-  // const values = [38960000, 39978000, 40056000, 48990000, 50123000, 54012300, 56770000];
-
   const data = useData();
 
   return (
     <S.Graph>
-      <GraphSvg />
-      <S.Point>
-        <PointSvg />
-        <S.PointText>내 견적</S.PointText>
-      </S.Point>
+      <PriceGraph
+        min={data.trim.minPrice}
+        max={data.trim.maxPrice}
+        avg={data.estimation.averagePrice}
+        value={TotalPrice(data.price)}
+        width={314}
+        height={117}
+      />
 
       <S.PriceInfo>
         <S.Price className="min">
