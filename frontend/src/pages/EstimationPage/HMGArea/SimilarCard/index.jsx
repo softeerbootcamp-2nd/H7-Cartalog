@@ -30,6 +30,7 @@ function SimilarCard({ data }) {
           <Chart key={item.id} value={item.value} max={max} />
         ))}
       </S.ChartWrapper>
+      <S.Button>유사 출고 견적 확인하기</S.Button>
     </HMGCard>
   );
 }

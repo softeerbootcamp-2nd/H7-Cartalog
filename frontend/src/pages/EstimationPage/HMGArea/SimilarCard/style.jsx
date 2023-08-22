@@ -1,6 +1,5 @@
 import { styled } from 'styled-components';
 
-// eslint-disable-next-line import/prefer-default-export
 export const ChartWrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -19,4 +18,14 @@ export const ChartWrapper = styled.div`
       }`,
       )
       .join('')}
+`;
+
+export const Button = styled.button`
+  width: 311px;
+  height: 47px;
+  border-radius: 2px;
+  margin-top: 12px;
+  background-color: ${({ theme }) => theme.color.skyBlue}4c;
+  color: ${({ theme }) => theme.color.primary.default};
+  font: ${({ theme }) => theme.font.textKR.Medium14};
 `;
