@@ -65,6 +65,11 @@ function Pick({ selected, setSelected }) {
       ...prevState,
       optionPicker: updatedOptionPicker,
       price: updatedPrice,
+      estimation: {
+        ...prevState.estimation,
+        isPost: false,
+        isFetch: false,
+      },
     }));
   }
 
