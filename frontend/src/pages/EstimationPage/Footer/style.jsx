@@ -3,7 +3,7 @@ import { EASE_OUT_CUBIC } from '../../../constants';
 
 const slideCss = css`
   transform: translateY(120%);
-  transition: transform 0.5s ${EASE_OUT_CUBIC};
+  transition: transform 0.5s ${EASE_OUT_CUBIC} 3.5s;
 
   &.visible {
     transform: translateY(0);
