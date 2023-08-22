@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import softeer.wantcar.cartalog.chosen.repository.ChosenRepository;
+import softeer.wantcar.cartalog.chosen.repository.dto.ChosenDto;
 import softeer.wantcar.cartalog.global.dto.HMGDataDtoInterface;
 import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
 import softeer.wantcar.cartalog.model.dto.ModelTypeOptionDto;
@@ -15,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Slf4j
 @Service
@@ -31,11 +31,10 @@ public class ModelOptionServiceImpl implements ModelOptionService {
             throw new IllegalArgumentException();
         }
         List<String> modelTypeIds = getModelTypeIds(modelTypeDtoList);
-        List<Integer> modelTypeChosen = chosenRepository.findModelTypeChosenByOptionId(modelTypeIds);
+        List<ChosenDto> modelTypeChosen = chosenRepository.findModelTypeChosenByOptionId(modelTypeIds);
 
         Map<String, Integer> chosenMap = new HashMap<>();
-        IntStream.range(0, modelTypeIds.size())
-                .forEach(index -> chosenMap.put(modelTypeIds.get(index), modelTypeChosen.get(index)));
+        modelTypeChosen.forEach(chosen -> chosenMap.put(chosen.getIdCode(), chosen.getChosen()));
         ModelTypeListResponseDto.ModelTypeListResponseDtoBuilder builder = buildModelTypeListResponseDto(modelTypeDtoList, chosenMap);
         return builder.build();
     }
@@ -48,7 +47,8 @@ public class ModelOptionServiceImpl implements ModelOptionService {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private static ModelTypeListResponseDto.ModelTypeListResponseDtoBuilder buildModelTypeListResponseDto(List<ModelTypeDto> modelTypeDtoList, Map<String, Integer> chosenMap) {
+    private static ModelTypeListResponseDto.ModelTypeListResponseDtoBuilder buildModelTypeListResponseDto(List<ModelTypeDto> modelTypeDtoList,
+                                                                                                          Map<String, Integer> chosenMap) {
         Map<String, Map<Long, OptionDto.OptionDtoBuilder>> dtoBuilderMap = new HashMap<>();
 
         modelTypeDtoList.forEach(mapper -> {

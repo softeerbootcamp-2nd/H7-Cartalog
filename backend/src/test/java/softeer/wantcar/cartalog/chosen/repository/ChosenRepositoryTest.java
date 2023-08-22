@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
+import softeer.wantcar.cartalog.chosen.repository.dto.ChosenDto;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -46,10 +48,12 @@ class ChosenRepositoryTest {
             List<Integer> expectResults = List.of(50, 50, 50, 50, 50, 50);
 
             //when
-            List<Integer> modelTypeChosen = chosenRepository.findModelTypeChosenByOptionId(modelTypeIds);
+            List<Integer> chosenValues = chosenRepository.findModelTypeChosenByOptionId(modelTypeIds).stream()
+                    .map(ChosenDto::getChosen)
+                    .collect(Collectors.toList());
 
             //then
-            softAssertions.assertThat(modelTypeChosen).isEqualTo(expectResults);
+            softAssertions.assertThat(chosenValues).containsAll(expectResults);
         }
 
         @Test
@@ -69,7 +73,7 @@ class ChosenRepositoryTest {
         void returnEmptyList() {
             //given
             //when
-            List<Integer> modelTypeChosen = chosenRepository.findModelTypeChosenByOptionId(List.of());
+            List<ChosenDto> modelTypeChosen = chosenRepository.findModelTypeChosenByOptionId(List.of());
 
             //then
             assertThat(modelTypeChosen.size()).isEqualTo(0);
@@ -87,10 +91,12 @@ class ChosenRepositoryTest {
             List<Integer> expectResults = List.of(42, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21);
 
             //when
-            List<Integer> modelSelectOptionChosen = chosenRepository.findOptionChosenByOptionId(modelSelectOptionIds);
+            List<Integer> chosenValues = chosenRepository.findOptionChosenByOptionId(modelSelectOptionIds).stream()
+                    .map(ChosenDto::getChosen)
+                    .collect(Collectors.toList());
 
             //then
-            softAssertions.assertThat(modelSelectOptionChosen).isEqualTo(expectResults);
+            softAssertions.assertThat(chosenValues).isEqualTo(expectResults);
         }
 
         @Test
@@ -110,7 +116,7 @@ class ChosenRepositoryTest {
         void returnEmptyList() {
             //given
             //when
-            List<Integer> modelOptionChosen = chosenRepository.findOptionChosenByOptionId(List.of());
+            List<ChosenDto> modelOptionChosen = chosenRepository.findOptionChosenByOptionId(List.of());
 
             //then
             assertThat(modelOptionChosen.size()).isEqualTo(0);
@@ -128,10 +134,12 @@ class ChosenRepositoryTest {
             List<Integer> expectResults = List.of(21, 21, 21, 21);
 
             //when
-            List<Integer> modelPackageChosen = chosenRepository.findPackageChosenByOptionId(modelPackageIds);
+            List<Integer> chosenValues = chosenRepository.findPackageChosenByOptionId(modelPackageIds).stream()
+                    .map(ChosenDto::getChosen)
+                    .collect(Collectors.toList());
 
             //then
-            softAssertions.assertThat(modelPackageChosen).isEqualTo(expectResults);
+            softAssertions.assertThat(chosenValues).isEqualTo(expectResults);
         }
 
         @Test
@@ -151,7 +159,7 @@ class ChosenRepositoryTest {
         void returnEmptyList() {
             //given
             //when
-            List<Integer> modelPackageChosen = chosenRepository.findPackageChosenByOptionId(List.of());
+            List<ChosenDto> modelPackageChosen = chosenRepository.findPackageChosenByOptionId(List.of());
 
             //then
             assertThat(modelPackageChosen.size()).isEqualTo(0);
@@ -169,10 +177,12 @@ class ChosenRepositoryTest {
             List<Integer> expectResults = List.of(17, 17, 17, 17, 17, 17);
 
             //when
-            List<Integer> exteriorColorChosen = chosenRepository.findExteriorColorChosenByExteriorColorCode(exteriorColorIds);
+            List<Integer> chosenValues = chosenRepository.findExteriorColorChosenByExteriorColorCode(exteriorColorIds).stream()
+                    .map(ChosenDto::getChosen)
+                    .collect(Collectors.toList());
 
             //then
-            softAssertions.assertThat(exteriorColorChosen).isEqualTo(expectResults);
+            softAssertions.assertThat(chosenValues).isEqualTo(expectResults);
         }
 
         @Test
@@ -192,7 +202,7 @@ class ChosenRepositoryTest {
         void returnEmptyList() {
             //given
             //when
-            List<Integer> exteriorColorChosen = chosenRepository.findExteriorColorChosenByExteriorColorCode(List.of());
+            List<ChosenDto> exteriorColorChosen = chosenRepository.findExteriorColorChosenByExteriorColorCode(List.of());
 
             //then
             assertThat(exteriorColorChosen.size()).isEqualTo(0);
@@ -210,10 +220,12 @@ class ChosenRepositoryTest {
             List<Integer> expectResults = List.of(50, 50);
 
             //when
-            List<Integer> exteriorColorChosen = chosenRepository.findInteriorColorChosenByInteriorColorCode(interiorColorIds);
+            List<Integer> chosenValues = chosenRepository.findInteriorColorChosenByInteriorColorCode(interiorColorIds).stream()
+                    .map(ChosenDto::getChosen)
+                    .collect(Collectors.toList());
 
             //then
-            softAssertions.assertThat(exteriorColorChosen).isEqualTo(expectResults);
+            softAssertions.assertThat(chosenValues).isEqualTo(expectResults);
         }
 
         @Test
@@ -233,7 +245,7 @@ class ChosenRepositoryTest {
         void returnEmptyList() {
             //given
             //when
-            List<Integer> interiorColorChosen = chosenRepository.findInteriorColorChosenByInteriorColorCode(List.of());
+            List<ChosenDto> interiorColorChosen = chosenRepository.findInteriorColorChosenByInteriorColorCode(List.of());
 
             //then
             assertThat(interiorColorChosen.size()).isEqualTo(0);

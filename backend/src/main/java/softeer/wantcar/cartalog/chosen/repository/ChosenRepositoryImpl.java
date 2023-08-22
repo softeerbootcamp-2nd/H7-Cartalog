@@ -13,7 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @SuppressWarnings({"SqlResolve", "SqlNoDataSourceInspection"})
 @Slf4j
@@ -35,103 +34,93 @@ public class ChosenRepositoryImpl implements ChosenRepository {
     };
 
     @Override
-    public List<Integer> findModelTypeChosenByOptionId(List<String> modelTypeIds) {
+    public List<ChosenDto> findModelTypeChosenByOptionId(List<String> modelTypeIds) {
         if (modelTypeIds.size() == 0) {
             return List.of();
         }
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("optionIds", modelTypeIds);
 
-        var query = jdbcTemplate.query("SELECT id_code, chosen FROM chosens " +
+        List<ChosenDto> chosenDtoList = jdbcTemplate.query("SELECT id_code, chosen FROM chosens " +
                                        "WHERE domain = 'model_type' AND id_code IN (:optionIds) ",
                 parameters, RowMapperUtils.mapping(ChosenDto.class, getIdCodeRowMapperStrategy));
-        if (modelTypeIds.size() != query.size()) {
+        if (modelTypeIds.size() != chosenDtoList.size()) {
             throw new IllegalArgumentException();
         }
-        return query.stream()
-                .map(ChosenDto::getChosen)
-                .collect(Collectors.toUnmodifiableList());
+        return chosenDtoList;
     }
 
     @Override
-    public List<Integer> findOptionChosenByOptionId(List<String> optionIds) {
+    public List<ChosenDto> findOptionChosenByOptionId(List<String> optionIds) {
         if (optionIds.size() == 0) {
             return List.of();
         }
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("optionIds", optionIds);
 
-        var query = jdbcTemplate.query("SELECT id_code, chosen FROM chosens " +
+        List<ChosenDto> chosenDtoList = jdbcTemplate.query("SELECT id_code, chosen FROM chosens " +
                                        "WHERE domain = 'model_option' AND id_code IN (:optionIds) ",
                 parameters, RowMapperUtils.mapping(ChosenDto.class, getIdCodeRowMapperStrategy));
-        if (optionIds.size() != query.size()) {
+        if (optionIds.size() != chosenDtoList.size()) {
             throw new IllegalArgumentException();
         }
 
-        return query.stream()
-                .map(ChosenDto::getChosen)
-                .collect(Collectors.toUnmodifiableList());
+        return chosenDtoList;
     }
 
     @Override
-    public List<Integer> findPackageChosenByOptionId(List<String> packageIds) {
+    public List<ChosenDto> findPackageChosenByOptionId(List<String> packageIds) {
         if (packageIds.size() == 0) {
             return List.of();
         }
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("packageIds", packageIds);
 
-        var query = jdbcTemplate.query("SELECT id_code, chosen FROM chosens " +
+        List<ChosenDto> chosenDtoList = jdbcTemplate.query("SELECT id_code, chosen FROM chosens " +
                                        "WHERE domain = 'model_package' AND id_code IN (:packageIds) ",
                 parameters, RowMapperUtils.mapping(ChosenDto.class, getIdCodeRowMapperStrategy));
-        if (packageIds.size() != query.size()) {
+        if (packageIds.size() != chosenDtoList.size()) {
             throw new IllegalArgumentException();
         }
 
-        return query.stream()
-                .map(ChosenDto::getChosen)
-                .collect(Collectors.toUnmodifiableList());
+        return chosenDtoList;
     }
 
     @Override
-    public List<Integer> findExteriorColorChosenByExteriorColorCode(List<String> exteriorColorCodes) {
+    public List<ChosenDto> findExteriorColorChosenByExteriorColorCode(List<String> exteriorColorCodes) {
         if (exteriorColorCodes.size() == 0) {
             return List.of();
         }
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("exteriorColorCodes", exteriorColorCodes);
 
-        var query = jdbcTemplate.query("SELECT id_code, chosen FROM chosens " +
+        List<ChosenDto> chosenDtoList = jdbcTemplate.query("SELECT id_code, chosen FROM chosens " +
                                        "WHERE domain = 'exterior_color' AND id_code IN (:exteriorColorCodes) ",
                 parameters, RowMapperUtils.mapping(ChosenDto.class, getIdCodeRowMapperStrategy));
 
-        if (exteriorColorCodes.size() != query.size()) {
+        if (exteriorColorCodes.size() != chosenDtoList.size()) {
             throw new IllegalArgumentException();
         }
 
-        return query.stream()
-                .map(ChosenDto::getChosen)
-                .collect(Collectors.toUnmodifiableList());
+        return chosenDtoList;
     }
 
     @Override
-    public List<Integer> findInteriorColorChosenByInteriorColorCode(List<String> interiorColorCodes) {
+    public List<ChosenDto> findInteriorColorChosenByInteriorColorCode(List<String> interiorColorCodes) {
         if (interiorColorCodes.size() == 0) {
             return List.of();
         }
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("interiorColorCodes", interiorColorCodes);
 
-        var query = jdbcTemplate.query("SELECT id_code, chosen FROM chosens " +
+        List<ChosenDto> chosenDtoList = jdbcTemplate.query("SELECT id_code, chosen FROM chosens " +
                                        "WHERE domain = 'interior_color' AND id_code IN (:interiorColorCodes) ",
                 parameters, RowMapperUtils.mapping(ChosenDto.class, getIdCodeRowMapperStrategy));
 
-        if (interiorColorCodes.size() != query.size()) {
+        if (interiorColorCodes.size() != chosenDtoList.size()) {
             throw new IllegalArgumentException();
         }
 
-        return query.stream()
-                .map(ChosenDto::getChosen)
-                .collect(Collectors.toUnmodifiableList());
+        return chosenDtoList;
     }
 }

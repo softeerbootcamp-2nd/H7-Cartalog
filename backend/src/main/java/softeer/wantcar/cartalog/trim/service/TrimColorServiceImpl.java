@@ -3,6 +3,7 @@ package softeer.wantcar.cartalog.trim.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import softeer.wantcar.cartalog.chosen.repository.ChosenRepository;
+import softeer.wantcar.cartalog.chosen.repository.dto.ChosenDto;
 import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimInteriorColorListResponseDto;
 import softeer.wantcar.cartalog.trim.repository.TrimColorQueryRepository;
@@ -11,7 +12,6 @@ import softeer.wantcar.cartalog.trim.repository.dto.TrimInteriorColorQueryResult
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -31,12 +31,12 @@ public class TrimColorServiceImpl implements TrimColorService {
                 .map(TrimExteriorColorQueryResult::getCode)
                 .collect(Collectors.toUnmodifiableList());
 
-        List<Integer> exteriorColorChosen = chosenRepository.findExteriorColorChosenByExteriorColorCode(exteriorColorCodes);
+        List<ChosenDto> chosenDtoList = chosenRepository.findExteriorColorChosenByExteriorColorCode(exteriorColorCodes);
 
         TrimExteriorColorListResponseDto.TrimExteriorColorListResponseDtoBuilder builder = TrimExteriorColorListResponseDto.builder();
-
-        IntStream.range(0, trimExteriorColors.size())
-                .mapToObj(index -> trimExteriorColors.get(index).toTrimExteriorColorDto(exteriorColorChosen.get(index)))
+        trimExteriorColors.stream()
+                .map(exteriorColor -> exteriorColor.toTrimExteriorColorDto(
+                        ChosenDto.findChosenDtoById(chosenDtoList, exteriorColor.getCode()).getChosen()))
                 .forEach(builder::trimExteriorColorDto);
 
         return builder.build();
@@ -54,12 +54,11 @@ public class TrimColorServiceImpl implements TrimColorService {
                 .map(TrimInteriorColorQueryResult::getCode)
                 .collect(Collectors.toUnmodifiableList());
 
-        List<Integer> interiorColorCods = chosenRepository.findInteriorColorChosenByInteriorColorCode(interiorColorCodes);
-
+        List<ChosenDto> chosenDtoList = chosenRepository.findInteriorColorChosenByInteriorColorCode(interiorColorCodes);
         TrimInteriorColorListResponseDto.TrimInteriorColorListResponseDtoBuilder builder = TrimInteriorColorListResponseDto.builder();
-
-        IntStream.range(0, trimInteriorColors.size())
-                .mapToObj(index -> trimInteriorColors.get(index).toTrimInteriorColorDto(interiorColorCods.get(index)))
+        trimInteriorColors.stream()
+                .map(interiorColor -> interiorColor.toTrimInteriorColorDto(
+                        ChosenDto.findChosenDtoById(chosenDtoList, interiorColor.getCode()).getChosen()))
                 .forEach(builder::trimInteriorColorDto);
 
         return builder.build();

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import softeer.wantcar.cartalog.chosen.repository.ChosenRepository;
+import softeer.wantcar.cartalog.chosen.repository.dto.ChosenDto;
 import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
 import softeer.wantcar.cartalog.model.dto.ModelTypeOptionDto;
 import softeer.wantcar.cartalog.model.dto.OptionDto;
@@ -59,7 +60,11 @@ class ModelOptionServiceTest {
                     "O" + modelType3.getModelOptionId(),
                     "O" + modelType4.getModelOptionId());
 
-            List<Integer> chosen = List.of(10, 20, 30, 40);
+            List<ChosenDto> chosen = List.of(
+                    new ChosenDto("O" + modelType1.getModelOptionId(), 10),
+                    new ChosenDto("O" + modelType2.getModelOptionId(), 20),
+                    new ChosenDto("O" + modelType3.getModelOptionId(), 30),
+                    new ChosenDto("O" + modelType4.getModelOptionId(), 40));
             when(chosenRepository.findModelTypeChosenByOptionId(modelOptionIds)).thenReturn(chosen);
 
             //when
