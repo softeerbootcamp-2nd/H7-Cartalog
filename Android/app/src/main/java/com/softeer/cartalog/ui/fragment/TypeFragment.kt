@@ -78,7 +78,13 @@ class TypeFragment : Fragment() {
             }
         }
         binding.btnPrev.setOnClickListener {
-            (activity as MainActivity).changeTab(0)
+            CoroutineScope(Dispatchers.IO).launch {
+                typeViewModel.saveUserSelection()
+                typeViewModel.updateCarData()
+                withContext(Dispatchers.Main){
+                    (activity as MainActivity).changeTab(0)
+                }
+            }
         }
         binding.btnPriceSummary.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {

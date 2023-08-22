@@ -78,7 +78,13 @@ class ExteriorFragment : Fragment() {
             }
         }
         binding.btnPrev.setOnClickListener {
-            (activity as MainActivity).changeTab(1)
+            CoroutineScope(Dispatchers.IO).launch {
+                exteriorViewModel.saveUserSelection()
+                exteriorViewModel.updateCarData()
+                withContext(Dispatchers.Main) {
+                    (activity as MainActivity).changeTab(1)
+                }
+            }
         }
         binding.btnPriceSummary.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {

@@ -79,7 +79,13 @@ class InteriorFragment : Fragment() {
             }
         }
         binding.btnPrev.setOnClickListener {
-            (activity as MainActivity).changeTab(2)
+            CoroutineScope(Dispatchers.IO).launch {
+                interiorViewModel.saveUserSelection()
+                interiorViewModel.updateCarData()
+                withContext(Dispatchers.Main) {
+                    (activity as MainActivity).changeTab(2)
+                }
+            }
         }
         binding.btnPriceSummary.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
