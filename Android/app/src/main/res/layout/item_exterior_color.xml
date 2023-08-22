@@ -26,10 +26,8 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_root"
         android:layout_width="150dp"
-        android:layout_height="190dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_height="175dp"
+        android:layout_marginVertical="10dp"
         app:adapter="@{adapter}"
         app:cardBackgroundColor="@{position == adapter.selectedItem ? @color/active_blue_card_bg : @color/white}"
         app:cardCornerRadius="2dp"

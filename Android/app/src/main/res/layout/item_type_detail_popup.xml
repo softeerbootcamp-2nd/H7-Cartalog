@@ -94,7 +94,7 @@
 
             <ImageView
                 android:id="@+id/iv_detail"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="140dp"
                 android:layout_marginTop="12dp"
                 android:background="@color/card_bg"
@@ -108,7 +108,7 @@
                 android:id="@+id/tv_option_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="18dp"
                 android:fontFamily="@font/hyndaisans_head_bold"
                 android:text="@{viewModel.typeList[selectedType].options[position].name}"
                 android:textColor="@color/gray_900"
@@ -142,7 +142,7 @@
                 android:id="@+id/tv_detail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="13dp"
                 android:text="@{viewModel.typeList[selectedType].options[position].description}"
                 android:textColor="@color/gray_800"
                 android:textSize="12sp"

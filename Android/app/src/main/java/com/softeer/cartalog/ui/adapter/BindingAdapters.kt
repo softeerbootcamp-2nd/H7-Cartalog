@@ -19,6 +19,7 @@ import com.softeer.cartalog.data.model.Options
 import com.softeer.cartalog.data.model.SummaryOptionPrice
 import com.softeer.cartalog.data.model.db.PriceData
 import com.softeer.cartalog.util.ItemDividerDecoration
+import com.softeer.cartalog.util.ItemHorizontalSpacingDecoration
 import com.softeer.cartalog.util.ItemVerticalSpacingDecoration
 import com.softeer.cartalog.util.UtilManager
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
@@ -88,6 +89,7 @@ fun setExteriorColorRecyclerView(
 ) {
     val adapter = ExteriorColorAdapter(viewModel)
     recyclerView.adapter = adapter
+    recyclerView.addItemDecoration(ItemHorizontalSpacingDecoration(16))
 }
 
 @BindingAdapter("viewModel", "colorList")
@@ -98,6 +100,7 @@ fun setInteriorColorRecyclerView(
 ) {
     val adapter = InteriorColorAdapter(viewModel)
     recyclerView.adapter = adapter
+    recyclerView.addItemDecoration(ItemHorizontalSpacingDecoration(16))
 }
 
 @BindingAdapter("viewModel", "optionList")
