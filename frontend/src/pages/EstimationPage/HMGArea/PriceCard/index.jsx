@@ -1,6 +1,6 @@
 import { useData } from '../../../../utils/Context';
 import HMGCard from '../../../../components/HMGCard';
-import GrapArea from './GraphArea';
+import GraphArea from './GraphArea';
 
 function PriceCard() {
   const data = useData();
@@ -15,7 +15,7 @@ function PriceCard() {
         </>
       }
     >
-      <GrapArea />
+      <GraphArea />
     </HMGCard>
   );
 }
