@@ -77,7 +77,6 @@
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/tmp_img_interior"
                 app:imgUrl="@{carColor.colorImageUrl}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

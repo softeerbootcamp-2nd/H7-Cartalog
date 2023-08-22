@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -45,6 +46,12 @@ class OptionFragment : Fragment() {
         super.onAttach(context)
         totalPrice = (activity as MainActivity).getUserTotalPrice()
         dataCallback = context as PriceDataCallback
+    }
+
+    private val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            (activity as MainActivity).changeTab(3)
+        }
     }
 
     override fun onCreateView(
@@ -89,6 +96,7 @@ class OptionFragment : Fragment() {
         optionViewModel.userTotalPrice.observe(viewLifecycleOwner) { price ->
             dataCallback?.changeUserTotalPrice(price)
         }
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), callback)
     }
 
     override fun onDestroyView() {

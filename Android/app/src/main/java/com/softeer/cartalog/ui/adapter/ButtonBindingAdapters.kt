@@ -8,6 +8,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentContainerView
@@ -83,9 +84,7 @@ fun setOnClickToggle(
                 .setDuration(300)
                 .withEndAction {
                     layout.visibility = View.VISIBLE
-                    if (idx == 5) {
-                        fragmentContainer.setPadding(0, 250, 0, 0)
-                    } else {
+                    if (idx != 5) {
                         fragmentContainer.setPadding(0, 150, 0, 0)
                     }
                 }
@@ -121,6 +120,7 @@ fun setOptionTabSelected(
 ) {
     tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
         override fun onTabSelected(tab: TabLayout.Tab?) {
+
             when (tab?.position) {
                 0 -> {
                     viewModel.setNowOptionMode(OptionMode.SELECT_OPTION)

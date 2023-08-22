@@ -38,7 +38,7 @@
     <string name="option_safetech">지능형 안전기술</string>
     <string name="option_safe">안전</string>
     <string name="option_exterior">외관</string>
-    <string name="option_interior">내관</string>
+    <string name="option_interior">내장</string>
     <string name="option_seat">시트</string>
     <string name="option_convenience">편의</string>
     <string name="option_multimedia">멀티미디어</string>
@@ -67,4 +67,5 @@
     <string name="confirm_btn_check_img">이미지 확인</string>
 
     <string name="exit_content">내 차 만들기를 종료하시겠습니까?</string>
+    <string name="estimate_header">유사견적</string>
 </resources>

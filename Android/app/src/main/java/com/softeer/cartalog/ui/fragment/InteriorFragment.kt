@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -41,6 +42,12 @@ class InteriorFragment : Fragment() {
     private var dataCallback: PriceDataCallback? = null
     private var totalPrice: Int = 0
 
+    private val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            (activity as MainActivity).changeTab(2)
+        }
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         totalPrice = (activity as MainActivity).getUserTotalPrice()
@@ -53,6 +60,7 @@ class InteriorFragment : Fragment() {
     ): View {
         _binding = FragmentInteriorBinding.inflate(inflater, container, false)
         interiorViewModel.setUserTotalPrice(totalPrice)
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), callback)
         return binding.root
     }
 
@@ -65,7 +73,7 @@ class InteriorFragment : Fragment() {
             CoroutineScope(Dispatchers.IO).launch {
                 interiorViewModel.saveUserSelection()
                 interiorViewModel.updateCarData()
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
                     (activity as MainActivity).changeTab(4)
                 }
             }

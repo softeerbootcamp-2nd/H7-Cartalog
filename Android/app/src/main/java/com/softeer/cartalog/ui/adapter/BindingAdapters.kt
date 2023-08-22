@@ -167,7 +167,7 @@ fun setRangeBarVisibility(
             .setDuration(300)
             .withEndAction {
                 layout.visibility = View.VISIBLE
-                fragmentContainer.setPadding(0, 250, 0, 0)
+                fragmentContainer.setPadding(0, 0, 0, 0)
             }
         button.animate().rotation(180f).start()
     }
