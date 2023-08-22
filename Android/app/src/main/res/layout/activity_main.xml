@@ -125,7 +125,6 @@
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@{viewModel.stepIndex == 5 ? @color/center_color : @color/white}"
             app:defaultNavHost="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -148,13 +147,14 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:paddingVertical="2dp">
 
                 <TextView
                     android:id="@+id/tv_budget_range_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="12dp"
                     android:layout_marginTop="9dp"
                     android:layout_marginBottom="9dp"
                     android:fontFamily="@font/hyndaisans_head_bold"
@@ -173,7 +173,7 @@
                     android:text="@{viewModel.isExcess ? `설정한 예산보다 ` : `설정한 예산까지 `}"
                     android:textAlignment="textEnd"
                     android:textColor="@color/gray_50"
-                    android:textSize="12sp"
+                    android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="@id/tv_budget_range_title"
                     app:layout_constraintEnd_toStartOf="@id/tv_budget_range_text_price"
                     app:layout_constraintStart_toEndOf="@id/tv_budget_range_title"
@@ -199,7 +199,7 @@
                     android:fontFamily="@font/hyndaisans_head_light"
                     android:text="@{viewModel.isExcess ? ` 더 들었어요.` : ` 남았어요.`}"
                     android:textColor="@color/gray_50"
-                    android:textSize="12sp"
+                    android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="@id/tv_budget_range_text_1"
                     app:layout_constraintEnd_toStartOf="@id/btn_budget_range_toggle"
                     app:layout_constraintTop_toTopOf="@id/tv_budget_range_text_1" />
@@ -208,7 +208,7 @@
                     android:id="@+id/btn_budget_range_toggle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="10dp"
                     android:adjustViewBounds="true"
                     android:background="@android:color/transparent"
                     android:scaleType="fitCenter"
@@ -237,7 +237,7 @@
                         android:id="@+id/sb_budget_range_limit"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="7dp"
                         android:progress="50"
                         android:progressDrawable="@{viewModel.isExcess ? @drawable/shape_seekbar_bar_excess : @drawable/shape_seekbar_bar}"
                         android:splitTrack="false"
@@ -270,7 +270,7 @@
                         android:layout_marginBottom="14dp"
                         android:text="@{String.format(`%d만원`,viewModel.minPrice/10000)}"
                         android:textColor="@{viewModel.isExcess ? @color/gray_200 : @color/primary_color_200}"
-                        android:textSize="10sp"
+                        android:textSize="11sp"
                         app:layout_constraintBottom_toTopOf="@id/btn_similar_estimate"
                         app:layout_constraintStart_toStartOf="@id/sb_budget_range_limit"
                         app:layout_constraintTop_toBottomOf="@id/sb_budget_range_limit" />
@@ -284,7 +284,7 @@
                         android:layout_marginBottom="14dp"
                         android:text="@{String.format(`%d만원`,viewModel.maxPrice/10000)}"
                         android:textColor="@{viewModel.isExcess ? @color/gray_200 : @color/primary_color_200}"
-                        android:textSize="10sp"
+                        android:textSize="11sp"
                         app:layout_constraintBottom_toTopOf="@id/btn_similar_estimate"
                         app:layout_constraintEnd_toEndOf="@id/sb_budget_range_limit"
                         app:layout_constraintTop_toBottomOf="@id/sb_budget_range_limit" />
