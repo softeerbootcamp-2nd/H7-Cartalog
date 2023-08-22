@@ -52,10 +52,14 @@ class ModelOptionServiceTest {
             ModelTypeDto modelType3 = ModelTypeDto.builder().modelOptionId(3L).childCategory("category3").build();
             List<ModelTypeDto> modelTypes = List.of(modelType1, modelType2, modelType3, modelType4);
             when(modelOptionQueryRepository.findModelTypeByTrimId(anyLong())).thenReturn(modelTypes);
-            List<Long> modelOptionIds = List.of(modelType1.getModelOptionId(), modelType2.getModelOptionId(), modelType3.getModelOptionId(), modelType4.getModelOptionId());
+            List<String> modelOptionIds = List.of(
+                    "O" + modelType1.getModelOptionId(),
+                    "O" + modelType2.getModelOptionId(),
+                    "O" + modelType3.getModelOptionId(),
+                    "O" + modelType4.getModelOptionId());
 
             List<Integer> chosen = List.of(10, 20, 30, 40);
-            when(chosenRepository.findModelTypeChosenByOptionId(modelOptionIds, 90)).thenReturn(chosen);
+            when(chosenRepository.findModelTypeChosenByOptionId(modelOptionIds)).thenReturn(chosen);
 
             //when
             ModelTypeListResponseDto modelTypeList = modelOptionService.findModelTypeListByTrimId(anyLong());

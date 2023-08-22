@@ -54,9 +54,7 @@ class ChosenRepositoryTest {
         @DisplayName("선택률을 가져와야 한다.")
         void success() {
             //given
-            List<Long> modelTypeIds = List.of(1L, 2L, 3L, 4L, 5L, 6L);
-
-            int daysAgo = 90 + intDayDifference;
+            List<String> modelTypeIds = List.of("O1", "O2", "O3", "O4", "O5", "O6");
 
             List<Integer> modelTypeRecentRecords = List.of(126, 115, 126, 115, 126, 115);
             List<Integer> modelTypeTotalRecords = List.of(241, 241, 241, 241, 241, 241);
@@ -69,7 +67,7 @@ class ChosenRepositoryTest {
                     .collect(Collectors.toUnmodifiableList());
 
             //when
-            List<Integer> modelTypeChosen = chosenRepository.findModelTypeChosenByOptionId(modelTypeIds, daysAgo);
+            List<Integer> modelTypeChosen = chosenRepository.findModelTypeChosenByOptionId(modelTypeIds);
 
             //then
             softAssertions.assertThat(modelTypeChosen).isEqualTo(collect);
@@ -79,11 +77,10 @@ class ChosenRepositoryTest {
         @DisplayName("잘못된 식별자를 전달하면 오류를 발생해야 한다.")
         void failure() {
             //given
-            List<Long> modelTypeIds = List.of(10L);
-            int daysAgo = 90 + intDayDifference;
+            List<String> modelTypeIds = List.of("NOT-EXIST");
 
             //when
-            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findModelTypeChosenByOptionId(modelTypeIds, daysAgo);
+            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findModelTypeChosenByOptionId(modelTypeIds);
 
             //then
             assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);
@@ -93,10 +90,8 @@ class ChosenRepositoryTest {
         @DisplayName("식별자를 전달하지 않으면 빈 리스트를 반환하여야 한다.")
         void returnEmptyList() {
             //given
-            int daysAgo = 90 + intDayDifference;
-
             //when
-            List<Integer> modelTypeChosen = chosenRepository.findModelTypeChosenByOptionId(List.of(), daysAgo);
+            List<Integer> modelTypeChosen = chosenRepository.findModelTypeChosenByOptionId(List.of());
 
             //then
             assertThat(modelTypeChosen.size()).isEqualTo(0);
@@ -110,8 +105,7 @@ class ChosenRepositoryTest {
         @DisplayName("선택률을 가져와야 한다.")
         void success() {
             //given
-            List<Long> modelSelectOptionIds = List.of(97L, 98L, 99L, 100L, 101L, 102L, 103L, 104L, 105L, 106L, 107L);
-            int daysAgo = 90 + intDayDifference;
+            List<String> modelSelectOptionIds = List.of("O97", "O98", "O99", "O100", "O101", "O102", "O103", "O104", "O105", "O106", "O107");
 
             List<Integer> modelSelectOptionRecords = List.of(57, 34, 42, 53, 41, 45, 39, 40, 48, 42, 40);
             List<Integer> modelSelectOptionTotalRecords = List.of(241, 241, 241, 126, 241, 241, 241, 241, 241, 241, 241);
@@ -124,7 +118,7 @@ class ChosenRepositoryTest {
                     .collect(Collectors.toUnmodifiableList());
 
             //when
-            List<Integer> modelSelectOptionChosen = chosenRepository.findOptionChosenByOptionId(modelSelectOptionIds, daysAgo);
+            List<Integer> modelSelectOptionChosen = chosenRepository.findOptionChosenByOptionId(modelSelectOptionIds);
 
             //then
             softAssertions.assertThat(modelSelectOptionChosen).isEqualTo(modelSelectOptionChosenExpected);
@@ -134,11 +128,10 @@ class ChosenRepositoryTest {
         @DisplayName("잘못된 식별자를 전달하면 오류를 발생해야 한다.")
         void failure() {
             //given
-            List<Long> modelOptionIds = List.of(10L);
-            int daysAgo = 90 + intDayDifference;
+            List<String> modelOptionIds = List.of("NOT-EXIST");
 
             //when
-            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findOptionChosenByOptionId(modelOptionIds, daysAgo);
+            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findOptionChosenByOptionId(modelOptionIds);
 
             //then
             assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);
@@ -148,10 +141,8 @@ class ChosenRepositoryTest {
         @DisplayName("식별자를 전달하지 않으면 빈 리스트를 반환하여야 한다.")
         void returnEmptyList() {
             //given
-            int daysAgo = 90 + intDayDifference;
-
             //when
-            List<Integer> modelOptionChosen = chosenRepository.findOptionChosenByOptionId(List.of(), daysAgo);
+            List<Integer> modelOptionChosen = chosenRepository.findOptionChosenByOptionId(List.of());
 
             //then
             assertThat(modelOptionChosen.size()).isEqualTo(0);
@@ -165,9 +156,7 @@ class ChosenRepositoryTest {
         @DisplayName("선택률을 가져와야 한다.")
         void success() {
             //given
-            List<Long> modelPackageIds = List.of(1L, 2L, 3L, 4L);
-            int daysAgo = 90 + intDayDifference;
-
+            List<String> modelPackageIds = List.of("P1", "P2", "P3", "P4");
             List<Integer> modelPackageRecentRecords = List.of(50, 52, 56, 57);
             List<Integer> modelPackageTotalRecords = List.of(241, 241, 241, 241);
 
@@ -179,7 +168,7 @@ class ChosenRepositoryTest {
                     .collect(Collectors.toUnmodifiableList());
 
             //when
-            List<Integer> modelPackageChosen = chosenRepository.findPackageChosenByOptionId(modelPackageIds, daysAgo);
+            List<Integer> modelPackageChosen = chosenRepository.findPackageChosenByOptionId(modelPackageIds);
 
             //then
             softAssertions.assertThat(modelPackageChosen).isEqualTo(modelPackageChosenExpected);
@@ -189,11 +178,10 @@ class ChosenRepositoryTest {
         @DisplayName("잘못된 식별자를 전달하면 오류를 발생해야 한다.")
         void failure() {
             //given
-            List<Long> modelPackageIds = List.of(10L);
-            int daysAgo = 90 + intDayDifference;
+            List<String> modelPackageIds = List.of("NOT-EXIST");
 
             //when
-            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findPackageChosenByOptionId(modelPackageIds, daysAgo);
+            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findPackageChosenByOptionId(modelPackageIds);
 
             //then
             assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);
@@ -203,10 +191,8 @@ class ChosenRepositoryTest {
         @DisplayName("식별자를 전달하지 않으면 빈 리스트를 반환하여야 한다.")
         void returnEmptyList() {
             //given
-            int daysAgo = 90 + intDayDifference;
-
             //when
-            List<Integer> modelPackageChosen = chosenRepository.findPackageChosenByOptionId(List.of(), daysAgo);
+            List<Integer> modelPackageChosen = chosenRepository.findPackageChosenByOptionId(List.of());
 
             //then
             assertThat(modelPackageChosen.size()).isEqualTo(0);
@@ -221,8 +207,6 @@ class ChosenRepositoryTest {
         void success() {
             //given
             List<String> exteriorColorIds = List.of("A2B", "D2S", "P7V", "R2T", "UB7", "WC9");
-            int daysAgo = 90 + intDayDifference;
-
             List<Integer> exteriorColorRecentRecords = List.of(38, 46, 36, 35, 42, 44);
             List<Integer> exteriorColorTotalRecords = List.of(241, 241, 241, 241, 241, 241);
 
@@ -234,7 +218,7 @@ class ChosenRepositoryTest {
                     .collect(Collectors.toUnmodifiableList());
 
             //when
-            List<Integer> exteriorColorChosen = chosenRepository.findExteriorColorChosenByExteriorColorCode(exteriorColorIds, daysAgo);
+            List<Integer> exteriorColorChosen = chosenRepository.findExteriorColorChosenByExteriorColorCode(exteriorColorIds);
 
             //then
             softAssertions.assertThat(exteriorColorChosen).isEqualTo(exteriorColorChosenExpected);
@@ -245,10 +229,9 @@ class ChosenRepositoryTest {
         void failure() {
             //given
             List<String> exteriorColorIds = List.of("AAA");
-            int daysAgo = 90 + intDayDifference;
 
             //when
-            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findExteriorColorChosenByExteriorColorCode(exteriorColorIds, daysAgo);
+            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findExteriorColorChosenByExteriorColorCode(exteriorColorIds);
 
             //then
             assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);
@@ -258,10 +241,8 @@ class ChosenRepositoryTest {
         @DisplayName("식별자를 전달하지 않으면 빈 리스트를 반환하여야 한다.")
         void returnEmptyList() {
             //given
-            int daysAgo = 90 + intDayDifference;
-
             //when
-            List<Integer> exteriorColorChosen = chosenRepository.findExteriorColorChosenByExteriorColorCode(List.of(), daysAgo);
+            List<Integer> exteriorColorChosen = chosenRepository.findExteriorColorChosenByExteriorColorCode(List.of());
 
             //then
             assertThat(exteriorColorChosen.size()).isEqualTo(0);
@@ -276,7 +257,6 @@ class ChosenRepositoryTest {
         void success() {
             //given
             List<String> interiorColorIds = List.of("I49", "YJY");
-            int daysAgo = 90 + intDayDifference;
 
             List<Integer> interiorColorRecentRecords = List.of(19, 19);
             List<Integer> interiorColorTotalRecords = List.of(38, 38);
@@ -289,7 +269,7 @@ class ChosenRepositoryTest {
                     .collect(Collectors.toUnmodifiableList());
 
             //when
-            List<Integer> exteriorColorChosen = chosenRepository.findInteriorColorChosenByInteriorColorCode("A2B", interiorColorIds, daysAgo);
+            List<Integer> exteriorColorChosen = chosenRepository.findInteriorColorChosenByInteriorColorCode("A2B", interiorColorIds);
 
             //then
             softAssertions.assertThat(exteriorColorChosen).isEqualTo(interiorColorChosenExpected);
@@ -300,10 +280,9 @@ class ChosenRepositoryTest {
         void failure() {
             //given
             List<String> interiorColorIds = List.of("AAA");
-            int daysAgo = 90 + intDayDifference;
 
             //when
-            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findInteriorColorChosenByInteriorColorCode("A2B", interiorColorIds, daysAgo);
+            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findInteriorColorChosenByInteriorColorCode("A2B", interiorColorIds);
 
             //then
             assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);
@@ -313,10 +292,8 @@ class ChosenRepositoryTest {
         @DisplayName("식별자를 전달하지 않으면 빈 리스트를 반환하여야 한다.")
         void returnEmptyList() {
             //given
-            int daysAgo = 90 + intDayDifference;
-
             //when
-            List<Integer> interiorColorChosen = chosenRepository.findInteriorColorChosenByInteriorColorCode("A2B", List.of(), daysAgo);
+            List<Integer> interiorColorChosen = chosenRepository.findInteriorColorChosenByInteriorColorCode("A2B", List.of());
 
             //then
             assertThat(interiorColorChosen.size()).isEqualTo(0);

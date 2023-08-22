@@ -2,7 +2,6 @@ package softeer.wantcar.cartalog.trim.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import softeer.wantcar.cartalog.chosen.ChosenConfig;
 import softeer.wantcar.cartalog.chosen.repository.ChosenRepository;
 import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimInteriorColorListResponseDto;
@@ -32,7 +31,7 @@ public class TrimColorServiceImpl implements TrimColorService {
                 .map(TrimExteriorColorQueryResult::getCode)
                 .collect(Collectors.toUnmodifiableList());
 
-        List<Integer> exteriorColorChosen = chosenRepository.findExteriorColorChosenByExteriorColorCode(exteriorColorCodes, ChosenConfig.CHOSEN_DAYS);
+        List<Integer> exteriorColorChosen = chosenRepository.findExteriorColorChosenByExteriorColorCode(exteriorColorCodes);
 
         TrimExteriorColorListResponseDto.TrimExteriorColorListResponseDtoBuilder builder = TrimExteriorColorListResponseDto.builder();
 
@@ -55,7 +54,7 @@ public class TrimColorServiceImpl implements TrimColorService {
                 .map(TrimInteriorColorQueryResult::getCode)
                 .collect(Collectors.toUnmodifiableList());
 
-        List<Integer> interiorColorCods = chosenRepository.findInteriorColorChosenByInteriorColorCode(exteriorColorCode, interiorColorCodes, ChosenConfig.CHOSEN_DAYS);
+        List<Integer> interiorColorCods = chosenRepository.findInteriorColorChosenByInteriorColorCode(exteriorColorCode, interiorColorCodes);
 
         TrimInteriorColorListResponseDto.TrimInteriorColorListResponseDtoBuilder builder = TrimInteriorColorListResponseDto.builder();
 

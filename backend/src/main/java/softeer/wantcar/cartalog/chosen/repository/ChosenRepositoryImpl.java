@@ -6,13 +6,11 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
-import softeer.wantcar.cartalog.chosen.ChosenConfig;
 import softeer.wantcar.cartalog.chosen.repository.dto.ChosenDto;
 import softeer.wantcar.cartalog.global.utils.RowMapperUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -36,35 +34,8 @@ public class ChosenRepositoryImpl implements ChosenRepository {
         }
     };
 
-    private List<Object> switchActivateChosen(List<Object> requestIdCodes) {
-        if (!ChosenConfig.isActivate) {
-            int size = requestIdCodes.size();
-
-            ArrayList<Object> objects = new ArrayList<>();
-
-            for (int i = 0; i < size; i++) {
-                objects.add(0);
-            }
-
-            return objects;
-        }
-        return requestIdCodes;
-    }
-
     @Override
-    public List<Integer> findModelTypeChosenByOptionId(List<Long> modelTypeIds, int daysAgo) {
-        if (!ChosenConfig.isActivate) {
-            int size = modelTypeIds.size();
-
-            List<Integer> objects = new ArrayList<>();
-
-            for (int i = 0; i < size; i++) {
-                objects.add(0);
-            }
-
-            return objects;
-        }
-
+    public List<Integer> findModelTypeChosenByOptionId(List<String> modelTypeIds) {
         if (modelTypeIds.size() == 0) {
             return List.of();
         }
@@ -82,19 +53,7 @@ public class ChosenRepositoryImpl implements ChosenRepository {
     }
 
     @Override
-    public List<Integer> findOptionChosenByOptionId(List<Long> optionIds, int daysAgo) {
-        if (!ChosenConfig.isActivate) {
-            int size = optionIds.size();
-
-            List<Integer> objects = new ArrayList<>();
-
-            for (int i = 0; i < size; i++) {
-                objects.add(0);
-            }
-
-            return objects;
-        }
-
+    public List<Integer> findOptionChosenByOptionId(List<String> optionIds) {
         if (optionIds.size() == 0) {
             return List.of();
         }
@@ -113,19 +72,7 @@ public class ChosenRepositoryImpl implements ChosenRepository {
     }
 
     @Override
-    public List<Integer> findPackageChosenByOptionId(List<Long> packageIds, int daysAgo) {
-        if (!ChosenConfig.isActivate) {
-            int size = packageIds.size();
-
-            List<Integer> objects = new ArrayList<>();
-
-            for (int i = 0; i < size; i++) {
-                objects.add(0);
-            }
-
-            return objects;
-        }
-
+    public List<Integer> findPackageChosenByOptionId(List<String> packageIds) {
         if (packageIds.size() == 0) {
             return List.of();
         }
@@ -144,19 +91,7 @@ public class ChosenRepositoryImpl implements ChosenRepository {
     }
 
     @Override
-    public List<Integer> findExteriorColorChosenByExteriorColorCode(List<String> exteriorColorCodes, int daysAgo) {
-        if (!ChosenConfig.isActivate) {
-            int size = exteriorColorCodes.size();
-
-            List<Integer> objects = new ArrayList<>();
-
-            for (int i = 0; i < size; i++) {
-                objects.add(0);
-            }
-
-            return objects;
-        }
-
+    public List<Integer> findExteriorColorChosenByExteriorColorCode(List<String> exteriorColorCodes) {
         if (exteriorColorCodes.size() == 0) {
             return List.of();
         }
@@ -176,19 +111,7 @@ public class ChosenRepositoryImpl implements ChosenRepository {
     }
 
     @Override
-    public List<Integer> findInteriorColorChosenByInteriorColorCode(String exteriorColorCode, List<String> interiorColorCodes, int daysAgo) {
-        if (!ChosenConfig.isActivate) {
-            int size = interiorColorCodes.size();
-
-            List<Integer> objects = new ArrayList<>();
-
-            for (int i = 0; i < size; i++) {
-                objects.add(0);
-            }
-
-            return objects;
-        }
-
+    public List<Integer> findInteriorColorChosenByInteriorColorCode(String exteriorColorCode, List<String> interiorColorCodes) {
         if (interiorColorCodes.size() == 0) {
             return List.of();
         }

@@ -103,15 +103,12 @@ public class TrimOptionServiceImpl implements TrimOptionService {
     }
 
     private List<TrimOptionChosenInfo> getChosenThenTransformTrimOptionChosenInfo(List<TrimOptionInfo> optionPackageInfo, boolean isOption) {
-        List<Long> ids = optionPackageInfo.stream()
+        List<String> ids = optionPackageInfo.stream()
                 .map(TrimOptionInfo::getId)
-                .map(id -> id.substring(1))
-                .mapToLong(Long::parseLong)
-                .boxed()
                 .collect(Collectors.toUnmodifiableList());
-        List<Integer> chosen = isOption
-                ? chosenRepository.findOptionChosenByOptionId(ids, ChosenConfig.CHOSEN_DAYS)
-                : chosenRepository.findPackageChosenByOptionId(ids, ChosenConfig.CHOSEN_DAYS);
+        List<Integer> chosen = isOption ?
+                chosenRepository.findOptionChosenByOptionId(ids) :
+                chosenRepository.findPackageChosenByOptionId(ids);
         return IntStream.range(0, optionPackageInfo.size())
                 .mapToObj(index -> TrimOptionChosenInfo.from(optionPackageInfo.get(index), chosen.get(index)))
                 .collect(Collectors.toUnmodifiableList());

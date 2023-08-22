@@ -55,7 +55,7 @@ class TrimColorServiceTest {
 
             List<String> exteriorColorCodes = List.of("A1", "B2");
             List<Integer> exteriorColorChosen = List.of(10, 20);
-            when(chosenRepository.findExteriorColorChosenByExteriorColorCode(exteriorColorCodes, ChosenConfig.CHOSEN_DAYS))
+            when(chosenRepository.findExteriorColorChosenByExteriorColorCode(exteriorColorCodes))
                     .thenReturn(exteriorColorChosen);
 
             //when
@@ -101,7 +101,7 @@ class TrimColorServiceTest {
 
             List<String> interiorColorCodes = List.of("A1", "B2");
             List<Integer> interiorColorChosen = List.of(10, 20);
-            when(chosenRepository.findInteriorColorChosenByInteriorColorCode(exteriorColorCode, interiorColorCodes, ChosenConfig.CHOSEN_DAYS))
+            when(chosenRepository.findInteriorColorChosenByInteriorColorCode(exteriorColorCode, interiorColorCodes))
                     .thenReturn(interiorColorChosen);
 
             //when
