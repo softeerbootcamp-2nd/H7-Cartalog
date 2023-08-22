@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-import React, { useEffect, useRef } from 'react';
+import React, { Suspense, useEffect, useRef } from 'react';
 import { useData } from '../../utils/Context';
 import { EASE_OUT_CUBIC } from '../../constants';
 import * as S from './style';
@@ -12,6 +12,8 @@ import ModelType from '../../pages/ModelTypePage';
 import ExteriorColor from '../../pages/ExteriorColorPage';
 import OptionPicker from '../../pages/OptionPickerPage';
 import Estimation from '../../pages/EstimationPage';
+import Skeleton from '../Skeleton';
+import { TRIM_SELECT } from '../../pages/TrimSelectPage/constants';
 
 function Interaction() {
   const data = useData();
@@ -62,7 +64,9 @@ function Interaction() {
     <S.Interaction>
       <Header />
       <S.Page ref={pageRef}>
-        <TrimSelect />
+        <Suspense fallback={<Skeleton type={TRIM_SELECT.TYPE} />}>
+          <TrimSelect />
+        </Suspense>
         <ModelType />
         <ExteriorColor />
         <InteriorColor />
