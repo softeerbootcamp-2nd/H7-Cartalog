@@ -102,10 +102,12 @@ fun setOptionItemClickListener(
     position: Int
 ) {
     cardView.setOnClickListener {
-        if (adapter.selectedItems.contains(position)) {
+        if (viewModel.selectedSelectOption.value!!.contains(viewModel.selectOptions?.get(position)!!)) {
             adapter.selectedItems.remove(position)
+            viewModel.removeSelectedSelectOption(viewModel.selectOptions?.get(position)!!)
         } else {
             adapter.selectedItems.add(position)
+            viewModel.addSelectedSelectOption(viewModel.selectOptions?.get(position)!!)
         }
         adapter.notifyItemChanged(position)
     }
@@ -135,7 +137,6 @@ fun setOptionTabSelected(
                 }
             }
         }
-
         override fun onTabUnselected(tab: TabLayout.Tab?) {}
         override fun onTabReselected(tab: TabLayout.Tab?) {}
     })
