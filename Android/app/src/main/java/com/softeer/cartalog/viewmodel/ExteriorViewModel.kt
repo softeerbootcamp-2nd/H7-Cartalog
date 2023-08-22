@@ -40,7 +40,7 @@ class ExteriorViewModel(private val repository: CarRepository) : ViewModel() {
             _colorList.value = repository.getCarColors(true, 2, "")
             selectedByUser = repository.getTypeData(PriceDataType.EXTERIOR_COLOR)
             _selectedColorIdx.value = colorList.value?.indices?.find {
-                colorList.value?.get(it)?.code == selectedByUser?.colorCode
+                colorList.value?.get(it)?.code == selectedByUser?.code
             }
             selectedColor = colorList.value?.get(selectedColorIdx.value!!)!!
         }
@@ -60,7 +60,7 @@ class ExteriorViewModel(private val repository: CarRepository) : ViewModel() {
     suspend fun saveUserSelection() {
         val newColor = selectedColor?.run {
             selectedByUser?.copy(
-                name = name, price = price, colorCode = code, imgUrl = colorImageUrl
+                name = name, price = price, code = code, imgUrl = colorImageUrl
             )
         }
         newColor?.let { repository.saveUserColorData(it) }
@@ -74,7 +74,7 @@ class ExteriorViewModel(private val repository: CarRepository) : ViewModel() {
         viewModelScope.launch {
             val old = repository.getMyCarData()
             val update = old!!.copy(
-                exteriorImg = (selectedColor.carImageDirectory + "001.png")
+                exteriorImg = (selectedColor?.carImageDirectory + "001.png")
             )
             repository.saveUserCarData(update)
         }
