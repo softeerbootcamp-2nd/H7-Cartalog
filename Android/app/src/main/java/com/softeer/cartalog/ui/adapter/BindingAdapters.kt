@@ -29,6 +29,10 @@ import com.softeer.cartalog.viewmodel.OptionViewModel
 import com.softeer.cartalog.viewmodel.TrimViewModel
 import com.softeer.cartalog.viewmodel.TypeViewModel
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @BindingAdapter("viewModel", "indicator", "selectedType")
 fun setTypeDetailViewPager(
@@ -75,6 +79,11 @@ fun setTrimCardViewPager(
                 super.onPageSelected(position)
                 viewModel.changeSelectedTrim(position)
                 trimItemAdapter.notifyItemRangeChanged(position - 1, 3)
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    delay(300)
+                    viewPager.setCurrentItem(1, true)
+                }
             }
         })
     }

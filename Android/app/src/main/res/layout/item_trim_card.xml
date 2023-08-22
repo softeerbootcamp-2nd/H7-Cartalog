@@ -215,7 +215,8 @@
                 android:textSize="10sp"
                 app:layout_constraintEnd_toEndOf="@id/tv_hmg_data_1_times"
                 app:layout_constraintStart_toStartOf="@id/tv_hmg_data_1_times"
-                app:layout_constraintTop_toBottomOf="@id/tv_hmg_data_1_times" />
+                app:layout_constraintTop_toBottomOf="@id/tv_hmg_data_1_times"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
 
             <!--  data 2  -->
