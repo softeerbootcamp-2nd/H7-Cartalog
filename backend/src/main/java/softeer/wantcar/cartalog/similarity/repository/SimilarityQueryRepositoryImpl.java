@@ -25,6 +25,9 @@ public class SimilarityQueryRepositoryImpl implements SimilarityQueryRepository 
 
     @Override
     public boolean existHashTagKey(Long trimId, String hashTagKey) {
+        if(hashTagKey.isBlank()) {
+            return true;
+        }
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("trimId", trimId)
                 .addValue("hashTagKey", hashTagKey);
