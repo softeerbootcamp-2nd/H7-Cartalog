@@ -31,7 +31,14 @@ function HMGData() {
     }
 
     fetchData();
-  }, [trim.isDefault, modelType.powerTrainId, modelType.wheelDriveId]);
+  }, [
+    trim.isDefault,
+    modelType.powerTrainId,
+    modelType.wheelDriveId,
+    trim.id,
+    modelType.bodyTypeId,
+    setTrimState,
+  ]);
 
   const tagProps = { type: HMG_TAG.TYPE };
   const displacementProps = {
