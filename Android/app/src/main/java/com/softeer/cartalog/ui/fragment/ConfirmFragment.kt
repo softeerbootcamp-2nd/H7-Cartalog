@@ -63,6 +63,7 @@ class ConfirmFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = confirmViewModel
 
+
     }
 
     override fun onDestroyView() {

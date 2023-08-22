@@ -67,4 +67,5 @@
     <string name="confirm_btn_check_img">이미지 확인</string>
 
     <string name="exit_content">내 차 만들기를 종료하시겠습니까?</string>
+    <string name="estimate_header">유사견적</string>
 </resources>
