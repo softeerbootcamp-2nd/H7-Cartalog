@@ -23,7 +23,7 @@ class CarLocalDataSource(
         return priceDataDao.getPriceDataCountByCarId(carId) == 0
     }
 
-    suspend fun getMyCar(): MyCar {
+    suspend fun getMyCar(): MyCar? {
         return myCarDao.getMyCar()
     }
 

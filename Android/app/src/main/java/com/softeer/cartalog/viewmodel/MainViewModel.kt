@@ -38,13 +38,13 @@ class MainViewModel : ViewModel() {
         _isExcess.value = budgetRangeLimit.value!! < totalPrice.value!!
     }
 
-    fun setMinMaxPrice(minPrice: Int, maxPrice: Int){
+    fun setMinMaxPrice(minPrice: Int, maxPrice: Int) {
         _minPrice.value = minPrice
         _maxPrice.value = maxPrice
         priceRange = maxPrice - minPrice
     }
 
-    fun setTotalPriceProgress(total : Int){
+    fun setTotalPriceProgress(total: Int) {
         _totalPrice.value = total
         _totalPriceProgress.value = calculateProgressFromPrice(totalPrice.value!!)
     }
@@ -58,13 +58,13 @@ class MainViewModel : ViewModel() {
         return minPrice.value!! + (priceRange * progress / 100)
     }
 
-    fun setInitPriceData(total: Int){
+    fun setInitPriceData(total: Int) {
         _totalPrice.value = total
         _totalPriceProgress.value = calculateProgressFromPrice(totalPrice.value!!)
         _budgetRangeLimit.value = calculatePriceFromProgress(50)
     }
 
-    fun changeResetState(){
+    fun changeResetState() {
         _isReset.value = !_isReset.value!!
     }
 }

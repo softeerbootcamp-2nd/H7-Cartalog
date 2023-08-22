@@ -39,12 +39,12 @@ class OptionViewModel(private val repository: CarRepository) : ViewModel() {
     private fun setOptionsData() {
         viewModelScope.launch {
             val interior = repository.getTypeData(PriceDataType.INTERIOR_COLOR)
-            _options.value = repository.getOptions(9, interior.colorCode!!)
+            _options.value = repository.getOptions(9, interior.code!!)
             defaultOptions = _options.value?.defaultOptions
             selectOptions = _options.value?.selectOptions
             getUserDataFromDB()
             _selectedSelectOption.value = selectOptions!!.filter { allData ->
-                selectedDataFromDB.any { fromDB -> fromDB.colorCode == allData.id }
+                selectedDataFromDB.any { fromDB -> fromDB.code == allData.id }
             }.toMutableList()
         }
     }
@@ -68,7 +68,7 @@ class OptionViewModel(private val repository: CarRepository) : ViewModel() {
                 name = selectedOption.name,
                 price = selectedOption.price,
                 imgUrl = selectedOption.imageUrl,
-                colorCode = selectedOption.id
+                code = selectedOption.id
             )
         )
     }
@@ -83,7 +83,7 @@ class OptionViewModel(private val repository: CarRepository) : ViewModel() {
             name = selectedOption.name,
             price = selectedOption.price,
             imgUrl = selectedOption.imageUrl,
-            colorCode = selectedOption.id
+            code = selectedOption.id
         )
         if (selectedDataFromDB.contains(selected)) {
             val deleted = selectedDataFromDB.find { it == selected }

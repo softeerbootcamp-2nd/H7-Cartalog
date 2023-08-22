@@ -35,12 +35,22 @@ class TrimViewModel(private val repository: CarRepository) : ViewModel() {
     }
 
     suspend fun setInitialMyCarData() {
-        repository.setInitialMyCarData(modelName, _trimList.value!![_selectedTrim.value!!])
+        if(repository.getMyCarData() == null){
+            repository.setInitialMyCarData(modelName, _trimList.value!![_selectedTrim.value!!])
+        }
     }
 
-    fun getPriceData(): List<Int>{
+    suspend fun getPriceData(): List<Int> {
         val selected = trimList.value!![selectedTrim.value!!]
-        val initTotalPrice = selected.minPrice + selected.defaultInfo!!.modelTypes.sumOf { it.option.price }
+        val myCarFromDB = repository.getMyCarData()
+        val priceFromDB = myCarFromDB!!.totalPrice
+        var initTotalPrice: Int
+        if (priceFromDB == 0) {
+            initTotalPrice = selected.minPrice + selected.defaultInfo!!.modelTypes.sumOf { it.option.price }
+            repository.saveUserCarData(myCarFromDB.copy(totalPrice = initTotalPrice))
+        } else {
+            initTotalPrice = priceFromDB
+        }
         return listOf(selected.minPrice, selected.maxPrice, initTotalPrice)
     }
 }
