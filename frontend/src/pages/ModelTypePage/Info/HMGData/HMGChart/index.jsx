@@ -14,7 +14,6 @@ import * as S from './style';
 function HMGChart({ name, measure, rpm, value }) {
   const { modelType } = useData();
   const [chartValue, setChartValue] = useState(0);
-  const chartProps = { chartValue };
 
   useEffect(() => {
     let ratio;
@@ -46,7 +45,7 @@ function HMGChart({ name, measure, rpm, value }) {
         {rpm}
       </S.Output>
       <S.Chart>
-        <S.Bar {...chartProps} />
+        <S.Bar style={{ width: chartValue }} />
       </S.Chart>
     </S.HMGChart>
   );

@@ -29,7 +29,7 @@ function Info({ optionId }) {
     fetchData();
   }, [optionId]);
 
-  if (!optionInfo) return <div>loading...</div>;
+  if (!optionInfo) return <div />;
 
   return (
     <S.Info>
