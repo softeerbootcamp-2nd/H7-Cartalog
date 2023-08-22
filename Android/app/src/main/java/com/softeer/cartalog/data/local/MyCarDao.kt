@@ -20,7 +20,7 @@ interface MyCarDao {
     suspend fun getAll(): MyCarWithPriceData
 
     @Query("SELECT * FROM MyCar")
-    suspend fun getMyCar(): MyCar
+    suspend fun getMyCar(): MyCar?
 
     @Update
     suspend fun upDateMyCar(myCar: MyCar)

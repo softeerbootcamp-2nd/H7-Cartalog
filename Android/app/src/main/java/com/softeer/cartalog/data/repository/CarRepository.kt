@@ -18,7 +18,7 @@ interface CarRepository {
     suspend fun setInitialMyCarData(carName: String, trim: Trim)
     suspend fun getTypes(): List<Type>
     suspend fun getTrimDetail(modelTypeIds: String, trimId: Int): TrimDetail
-    suspend fun getMyCarData(): MyCar
+    suspend fun getMyCarData(): MyCar?
     suspend fun getPriceDataList(): List<PriceData>
     suspend fun getSummaryCarImage(exterior: String, interior: String): SummaryCarImage
     suspend fun getCarColors(isExterior: Boolean, trimId: Int, exteriorColorCode: String): List<CarColor>

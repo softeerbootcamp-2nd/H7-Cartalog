@@ -98,7 +98,7 @@ class CarRepositoryImpl(
         return if (response.isSuccessful) response.body()!! else TrimDetail(0, 0, 0f)
     }
 
-    override suspend fun getMyCarData(): MyCar {
+    override suspend fun getMyCarData(): MyCar? {
         return carLocalDataSource.getMyCar()
     }
 
@@ -179,6 +179,4 @@ class CarRepositoryImpl(
     override suspend fun deleteOptionItem(option: PriceData) {
         carLocalDataSource.deleteOptionItem(option)
     }
-
-
 }
