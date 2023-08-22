@@ -71,6 +71,7 @@ class OptionFragment : Fragment() {
         binding.btnNext.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 optionViewModel.saveUserSelection()
+                optionViewModel.updateCarData()
                 withContext(Dispatchers.Main) {
                     (activity as MainActivity).changeTab(5)
                 }
@@ -79,6 +80,7 @@ class OptionFragment : Fragment() {
         binding.btnPrev.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 optionViewModel.saveUserSelection()
+                optionViewModel.updateCarData()
                 withContext(Dispatchers.Main) {
                     (activity as MainActivity).changeTab(3)
                 }

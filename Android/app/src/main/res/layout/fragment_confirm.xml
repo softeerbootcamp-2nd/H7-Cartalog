@@ -43,6 +43,13 @@
                         app:layout_constraintGuide_begin="20dp" />
 
                     <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/gl_center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.5" />
+
+                    <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/gl_end"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -89,9 +96,9 @@
                         android:id="@+id/hsv_interior_img"
                         android:layout_width="0dp"
                         android:layout_height="536dp"
+                        android:background="@color/white"
                         android:fillViewport="true"
                         android:overScrollMode="never"
-                        android:background="@color/white"
                         android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -205,12 +212,11 @@
                         android:id="@+id/tv_car_summary_title_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="142dp"
                         android:layout_marginTop="26dp"
                         android:text="@string/summary_title_2"
                         android:textColor="@color/gray_600"
                         android:textSize="12sp"
-                        app:layout_constraintStart_toEndOf="@id/tv_car_summary_title_1"
+                        app:layout_constraintStart_toEndOf="@id/gl_center"
                         app:layout_constraintTop_toTopOf="@id/vw_car_summary_bgr" />
 
                     <TextView
@@ -238,12 +244,13 @@
 
                     <TextView
                         android:id="@+id/tv_car_summary_contents_3"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/hyndaisans_head_medium"
                         android:text="@{String.format(`%,dcc`,viewModel.carInfo.displacement)}"
                         android:textColor="@color/gray_900"
                         android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="@id/gl_end"
                         app:layout_constraintStart_toStartOf="@id/tv_car_summary_title_3"
                         app:layout_constraintTop_toBottomOf="@id/tv_car_summary_title_3" />
 
@@ -289,8 +296,7 @@
                 android:textSize="12sp"
                 android:visibility="gone"
                 app:nestedScrollView="@{svConfirmContents}" />
-
-
+            
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <View

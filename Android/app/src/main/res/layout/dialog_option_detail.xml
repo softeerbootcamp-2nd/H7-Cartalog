@@ -84,7 +84,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title"
             app:tabBackground="@color/white"
-            app:tabGravity="fill"
+            android:background="@color/white"
+            app:tabGravity="center"
             app:tabIndicatorColor="@color/gray_900"
             app:tabMode="scrollable"
             app:tabSelectedTextColor="@color/gray_900"
@@ -112,7 +113,6 @@
             app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintStart_toStartOf="@id/gl_start"
             app:layout_constraintTop_toTopOf="@id/iv_detail" />
-
 
         <TextView
             android:id="@+id/tv_detail"

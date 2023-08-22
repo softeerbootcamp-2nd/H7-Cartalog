@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -14,6 +13,10 @@
         <variable
             name="position"
             type="Integer" />
+
+        <variable
+            name="optionId"
+            type="String" />
 
         <variable
             name="optionAdapter"
@@ -34,7 +37,7 @@
         app:cardBackgroundColor="@{viewModel.selectedSelectOption.contains(option) ? @color/active_blue_card_bg : @color/gray_50}"
         app:cardCornerRadius="5dp"
         app:cardElevation="0dp"
-        app:position="@{position}"
+        app:option="@{option}"
         app:strokeColor="@{viewModel.selectedSelectOption.contains(option) ?  @color/active_blue :  @color/gray_200}"
         app:strokeWidth="@{viewModel.selectedSelectOption.contains(option) ? 7 : 4}"
         app:viewModel="@{viewModel}">

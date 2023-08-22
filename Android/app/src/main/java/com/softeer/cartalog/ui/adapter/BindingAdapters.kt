@@ -19,6 +19,7 @@ import com.softeer.cartalog.data.model.Options
 import com.softeer.cartalog.data.model.SummaryOptionPrice
 import com.softeer.cartalog.data.model.db.PriceData
 import com.softeer.cartalog.util.ItemDividerDecoration
+import com.softeer.cartalog.util.ItemHorizontalSpacingDecoration
 import com.softeer.cartalog.util.ItemVerticalSpacingDecoration
 import com.softeer.cartalog.util.UtilManager
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
@@ -28,6 +29,10 @@ import com.softeer.cartalog.viewmodel.OptionViewModel
 import com.softeer.cartalog.viewmodel.TrimViewModel
 import com.softeer.cartalog.viewmodel.TypeViewModel
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @BindingAdapter("viewModel", "indicator", "selectedType")
 fun setTypeDetailViewPager(
@@ -74,6 +79,11 @@ fun setTrimCardViewPager(
                 super.onPageSelected(position)
                 viewModel.changeSelectedTrim(position)
                 trimItemAdapter.notifyItemRangeChanged(position - 1, 3)
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    delay(300)
+                    viewPager.setCurrentItem(1, true)
+                }
             }
         })
     }
@@ -88,6 +98,7 @@ fun setExteriorColorRecyclerView(
 ) {
     val adapter = ExteriorColorAdapter(viewModel)
     recyclerView.adapter = adapter
+    recyclerView.addItemDecoration(ItemHorizontalSpacingDecoration(16))
 }
 
 @BindingAdapter("viewModel", "colorList")
@@ -98,6 +109,7 @@ fun setInteriorColorRecyclerView(
 ) {
     val adapter = InteriorColorAdapter(viewModel)
     recyclerView.adapter = adapter
+    recyclerView.addItemDecoration(ItemHorizontalSpacingDecoration(16))
 }
 
 @BindingAdapter("viewModel", "optionList")
@@ -108,7 +120,11 @@ fun setOptionRecyclerView(
 ) {
     // 처음 optionfragment 열렸을 때 추가옵션 세팅을 위한 함수
     recyclerView.setHasFixedSize(true)
-    recyclerView.adapter = OptionSelectAdapter(viewModel, "전체")
+    recyclerView.adapter = OptionSelectAdapter(viewModel, "전체").apply {
+        viewModel.selectOptions?.let {
+            setItems(it)
+        }
+    }
     recyclerView.adapter?.notifyDataSetChanged()
 }
 

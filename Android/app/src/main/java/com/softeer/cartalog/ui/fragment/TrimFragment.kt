@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.softeer.cartalog.data.local.MyCarDatabase
@@ -36,6 +37,11 @@ class TrimFragment : Fragment() {
         CommonViewModelFactory(carRepositoryImpl)
     }
     private var dataCallback: PriceDataCallback? = null
+    private val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            (activity as MainActivity).finish()
+        }
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -47,6 +53,7 @@ class TrimFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTrimBinding.inflate(inflater, container, false)
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), callback)
         return binding.root
     }
 

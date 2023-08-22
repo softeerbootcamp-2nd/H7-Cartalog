@@ -1,5 +1,6 @@
 package com.softeer.cartalog.ui.adapter
 
+import android.util.Log
 import android.view.View
 import android.widget.HorizontalScrollView
 import android.widget.ImageButton
@@ -8,7 +9,6 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentContainerView
@@ -18,6 +18,7 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.tabs.TabLayout
 import com.softeer.cartalog.R
 import com.softeer.cartalog.data.enums.OptionMode
+import com.softeer.cartalog.data.model.Option
 import com.softeer.cartalog.data.model.SummaryCarImage
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import com.softeer.cartalog.viewmodel.InteriorViewModel
@@ -93,22 +94,24 @@ fun setOnClickToggle(
     }
 }
 
-@BindingAdapter("adapter", "viewModel", "position")
+@BindingAdapter("adapter", "viewModel", "option")
 fun setOptionItemClickListener(
     cardView: MaterialCardView,
     adapter: OptionSelectAdapter,
     viewModel: OptionViewModel,
-    position: Int
+    option: Option
 ) {
     cardView.setOnClickListener {
-        if (viewModel.selectedSelectOption.value!!.contains(viewModel.selectOptions?.get(position)!!)) {
-            adapter.selectedItems.remove(position)
-            viewModel.removeSelectedSelectOption(viewModel.selectOptions?.get(position)!!)
+        if (viewModel.selectedSelectOption.value!!.contains(option)) {
+            adapter.selectedItems.remove(option)
+            viewModel.removeSelectedSelectOption(option)
+            Log.d("TEST", "removed ${viewModel.selectedSelectOption.value}")
         } else {
-            adapter.selectedItems.add(position)
-            viewModel.addSelectedSelectOption(viewModel.selectOptions?.get(position)!!)
+            adapter.selectedItems.add(option)
+            viewModel.addSelectedSelectOption(option)
+            Log.d("TEST", "added ${viewModel.selectedSelectOption.value}")
         }
-        adapter.notifyItemChanged(position)
+        adapter.notifyItemChanged(adapter.items.indexOf(option))
     }
 }
 
@@ -126,7 +129,7 @@ fun setOptionTabSelected(
                     viewModel.setNowOptionMode(OptionMode.SELECT_OPTION)
                     recyclerView.setHasFixedSize(true)
                     recyclerView.adapter =
-                        OptionSelectAdapter(viewModel, "전체")
+                        OptionSelectAdapter(viewModel, "전체").apply { setItems(viewModel.selectOptions!!) }
                 }
 
                 1 -> {
@@ -137,6 +140,7 @@ fun setOptionTabSelected(
                 }
             }
         }
+
         override fun onTabUnselected(tab: TabLayout.Tab?) {}
         override fun onTabReselected(tab: TabLayout.Tab?) {}
     })
@@ -167,7 +171,7 @@ fun setOptionCategorySelected(
             }
 
             OptionMode.SELECT_OPTION -> {
-                recyclerView.adapter = OptionSelectAdapter(viewModel, selected)
+                recyclerView.adapter = OptionSelectAdapter(viewModel, selected).apply { setItems(viewModel.selectOptions!!) }
                 recyclerView.adapter?.notifyDataSetChanged()
             }
         }
@@ -211,11 +215,12 @@ fun setConfirmCarImageSelected(
     }
 }
 
-@BindingAdapter("recyclerView", "isEmpty")
+@BindingAdapter("recyclerView", "button", "isEmpty")
 fun setOnClickToggle(
-    button: ImageButton,
+    view: View,
     recyclerView: RecyclerView,
-    isEmpty: Boolean
+    button: ImageButton,
+    isEmpty: Boolean,
 ) {
     if (!isEmpty) {
         if (recyclerView.visibility == View.VISIBLE) {
@@ -224,7 +229,7 @@ fun setOnClickToggle(
             button.rotation = 0f
         }
 
-        button.setOnClickListener {
+        val onClickListener = View.OnClickListener {
             if (recyclerView.visibility == View.VISIBLE) {
                 recyclerView.visibility = View.GONE
                 button.animate().rotation(0f).start()
@@ -233,6 +238,8 @@ fun setOnClickToggle(
                 button.animate().rotation(180f).start()
             }
         }
+        view.setOnClickListener(onClickListener)
+        button.setOnClickListener(onClickListener)
     }
 }
 

@@ -12,7 +12,8 @@ import com.softeer.cartalog.viewmodel.OptionViewModel
 class OptionSelectAdapter(private val viewModel: OptionViewModel, private val filterParam: String) :
     RecyclerView.Adapter<OptionSelectAdapter.OptionSelectViewHolder>() {
 
-    var selectedItems = mutableListOf<Int>()
+    var selectedItems = mutableListOf<Option>()
+    val items = mutableListOf<Option>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -23,27 +24,24 @@ class OptionSelectAdapter(private val viewModel: OptionViewModel, private val fi
         return OptionSelectViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: OptionSelectViewHolder, position: Int) {
-        var currentItem = viewModel.selectOptions?.get(position)
-        if (filterParam != "전체") {
-            currentItem =
-                viewModel.selectOptions?.filter {
-                    it.parentCategory?.contains(filterParam) ?: false
-                }
-                    ?.getOrNull(position)
+    fun setItems(options: List<Option>){
+        items.clear()
+        if(filterParam == "전체"){
+            items.addAll(options)
+        }else{
+            items.addAll(options.filter {
+                it.parentCategory?.contains(filterParam) ?: false
+            })
         }
+    }
+
+    override fun onBindViewHolder(holder: OptionSelectViewHolder, position: Int) {
+        val currentItem = items[position]
         holder.bind(currentItem, position)
     }
 
     override fun getItemCount(): Int {
-        return if (filterParam != "전체") {
-            viewModel.selectOptions?.filter {
-                it.parentCategory?.contains(filterParam) ?: false
-            }?.size ?: 0
-        } else {
-            viewModel.selectOptions?.size ?: 0
-        }
-
+        return items.size
     }
 
     inner class OptionSelectViewHolder(val binding: ItemOptionSelectCardBinding) :

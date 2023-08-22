@@ -163,15 +163,13 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
         return newData
     }
 
-    fun updateCarData(){
-        viewModelScope.launch {
-            val old = repository.getMyCarData()
-            val update = old!!.copy(
-                fuelEfficiency = hmgData.value?.fuelEfficiency,
-                displacement = hmgData.value?.displacement,
-                totalPrice = userTotalPrice.value!!
-            )
-            repository.saveUserCarData(update)
-        }
+    suspend fun updateCarData(){
+        val old = repository.getMyCarData()
+        val update = old!!.copy(
+            fuelEfficiency = hmgData.value?.fuelEfficiency,
+            displacement = hmgData.value?.displacement,
+            totalPrice = userTotalPrice.value!!
+        )
+        repository.saveUserCarData(update)
     }
 }

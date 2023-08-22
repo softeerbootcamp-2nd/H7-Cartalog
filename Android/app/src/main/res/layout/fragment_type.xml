@@ -164,7 +164,7 @@
                     android:id="@+id/tv_hmgdata_drivemode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.bodytype1Selected ? viewModel.typeList[2].options[0].name : viewModel.typeList[2].options[1].name}"
+                    android:text="@{viewModel.wheeldrive1Selected ? viewModel.typeList[2].options[0].name : viewModel.typeList[2].options[1].name}"
                     android:textColor="@color/active_blue"
                     android:textSize="16sp"
                     app:layout_constraintStart_toEndOf="@id/tv_hmgdata_1"
