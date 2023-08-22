@@ -60,6 +60,17 @@ class SimilarityQueryRepositoryTest {
             //then
             assertThat(response).isFalse();
         }
+
+        @Test
+        @DisplayName("빈 문자열일 경우 true를 반환한다")
+        void returnTrueWhenEmptyString() {
+            //given
+            //when
+            boolean response = similarityQueryRepository.existHashTagKey(1L, "");
+
+            //then
+            assertThat(response).isTrue();
+        }
     }
 
     @Nested
