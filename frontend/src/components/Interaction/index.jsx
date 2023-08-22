@@ -1,5 +1,4 @@
-/* eslint-disable no-restricted-globals */
-import React, { useEffect, useRef } from 'react';
+import React, { Suspense, useEffect, useRef } from 'react';
 import { useData } from '../../utils/Context';
 import { EASE_OUT_CUBIC } from '../../constants';
 import * as S from './style';
@@ -12,6 +11,8 @@ import ModelType from '../../pages/ModelTypePage';
 import ExteriorColor from '../../pages/ExteriorColorPage';
 import OptionPicker from '../../pages/OptionPickerPage';
 import Estimation from '../../pages/EstimationPage';
+import Skeleton from '../Skeleton';
+import { TRIM_SELECT } from '../../pages/TrimSelectPage/constants';
 
 function Interaction() {
   const data = useData();
@@ -28,16 +29,16 @@ function Interaction() {
         6: data.estimation.isFetch,
       };
 
-      const canGoBack = isFetchMap[history.state.nowPage] || false;
+      const canGoBack = isFetchMap[window.history.state.nowPage] || false;
 
       if (!canGoBack) {
-        const { nowPage } = history.state;
+        const { nowPage } = window.history.state;
         if (nowPage !== data.page) {
-          history.replaceState({ nowPage: data.page }, '');
+          window.history.replaceState({ nowPage: data.page }, '');
           return;
         }
       }
-      data.setTrimState((prevState) => ({ ...prevState, page: history.state.nowPage }));
+      data.setTrimState((prevState) => ({ ...prevState, page: window.history.state.nowPage }));
     };
 
     window.addEventListener('popstate', handlePopstate);
@@ -53,8 +54,8 @@ function Interaction() {
       (data.page - 1) * 1280
     }px))`;
 
-    if (history.state.nowPage !== data.page) {
-      history.pushState({ nowPage: data.page }, '');
+    if (window.history.state.nowPage !== data.page) {
+      window.history.pushState({ nowPage: data.page }, '');
     }
   }, [data.page]);
 
@@ -62,7 +63,9 @@ function Interaction() {
     <S.Interaction>
       <Header />
       <S.Page ref={pageRef}>
-        <TrimSelect />
+        <Suspense fallback={<Skeleton type={TRIM_SELECT.TYPE} />}>
+          <TrimSelect />
+        </Suspense>
         <ModelType />
         <ExteriorColor />
         <InteriorColor />

@@ -1,11 +1,9 @@
-import { useData } from '../../../utils/Context';
 import { PICK } from '../constants';
 import * as S from './style';
 import PickTitle from '../../../components/PickTitle';
 import TrimCard from './TrimCard';
 
-function Pick() {
-  const { setTrimState, trim } = useData();
+function Pick({ setTrimState, trim }) {
   const pickTitleProps = { mainTitle: PICK.TITLE };
   const handleTrimCardClick = (trimData) => {
     if (trimData.id === trim.id) return;
