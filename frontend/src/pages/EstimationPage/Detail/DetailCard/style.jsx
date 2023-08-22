@@ -16,7 +16,7 @@ export const DetailContents = styled.div`
           
         .expanded & {
           opacity: 1;
-          transition: opacity 0.25s ease ${0.05 * i + 0.15}s;
+          transition: opacity 0.25s ease ${0.05 * i}s;
         }
     }`,
       )
@@ -25,13 +25,13 @@ export const DetailContents = styled.div`
   height: 0;
   overflow: hidden;
   transition:
-    height 0.5s ease 0.15s,
-    margin-top 0.5s ease 0.15s;
+    height 0.5s ease 0.1s,
+    margin-top 0.5s ease;
 
   .expanded & {
     transition:
       height 0.5s ease,
       margin-top 0.5s ease;
-    height: ${({ $n }) => 76 * $n}px;
+    height: ${({ $n }) => 76 * $n - 2}px;
   }
 `;

@@ -8,6 +8,10 @@ export const DetailItem = styled.div`
   height: 55px;
   padding: 10px 0;
   border-bottom: 1px solid ${({ theme }) => theme.color.gray['50']};
+
+  &:nth-last-of-type(1) {
+    border-bottom: none;
+  }
 `;
 
 export const DetailImage = styled.img`
