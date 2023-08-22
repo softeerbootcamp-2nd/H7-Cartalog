@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { SlideFromBottom } from '../../styles/GlobalStyle';
 
 export const Estimation = styled.div`
   min-width: max(1280px, 100%);
@@ -15,7 +16,17 @@ export const Estimation = styled.div`
 export const PDF = styled.div`
   @media print {
     margin-top: -60px;
+
+    & * {
+      opacity: 1 !important;
+      transform: none !important;
+    }
   }
+`;
+
+export const Info = styled.div`
+  ${SlideFromBottom}
+  animation-delay: 2.5s;
 `;
 
 export const PageContents = styled.div`
@@ -23,6 +34,7 @@ export const PageContents = styled.div`
   width: 1024px;
   margin: 0 auto;
   gap: 70px;
+  margin-bottom: 200px;
 
   @media print {
     padding: 0 69px;

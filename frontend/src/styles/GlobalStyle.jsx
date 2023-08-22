@@ -8,6 +8,7 @@ import HyundaiSansTextMedium from '../../assets/fonts/HyundaiSansText-Medium.wof
 import HyundaiSansTextKRBold from '../../assets/fonts/HyundaiSansTextKROTFBold.woff2';
 import HyundaiSansTextKRMedium from '../../assets/fonts/HyundaiSansTextKROTFMedium.woff2';
 import HyundaiSansTextKRRegular from '../../assets/fonts/HyundaiSansTextKROTFRegular.woff2';
+import { EASE_OUT_CUBIC } from '../constants';
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -128,7 +129,23 @@ const slideFromRightAnimation = keyframes`
 `;
 
 export const SlideFromRight = css`
-  animation: ${slideFromRightAnimation} 0.5s ease-out forwards;
+  animation: ${slideFromRightAnimation} 0.5s ${EASE_OUT_CUBIC} forwards;
+`;
+
+const slideFromBottomAnimation = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+export const SlideFromBottom = css`
+  opacity: 0;
+  animation: ${slideFromBottomAnimation} 0.5s ${EASE_OUT_CUBIC} forwards;
 `;
 
 export const CardCss = css`

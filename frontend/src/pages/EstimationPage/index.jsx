@@ -79,11 +79,13 @@ function Estimation() {
     <S.Estimation>
       <S.PDF ref={pdfRef}>
         <Preview />
-        <Info />
-        <S.PageContents>
-          <Detail />
-          <HMGArea />
-        </S.PageContents>
+        <S.Info>
+          <Info />
+          <S.PageContents>
+            <Detail />
+            <HMGArea />
+          </S.PageContents>
+        </S.Info>
       </S.PDF>
 
       <PriceStaticBar

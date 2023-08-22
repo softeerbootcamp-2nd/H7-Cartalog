@@ -1,54 +1,5 @@
-import { keyframes, styled } from 'styled-components';
-
-const CarInfoAnimation = keyframes`
-  0% {
-    height: 640px;
-  }
-
-  100% {
-    height: 232px;
-  }
-`;
-
-const TitleAnimation = keyframes`
-  0% {
-    top: 72px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  100% {
-    top: 0;
-    left: 70px;
-    transform: translateX(-20%) scale(0.6);
-  }
-`;
-
-const PreviewAnimation = keyframes`
-  0% {
-    top: 203px;
-    right: 50%;
-    transform: translateX(50%);
-  }
-
-  100% {
-    top: 0;
-    right: 0;
-    transform: none;
-  }
-`;
-
-const ImageAnimation = keyframes`
-  0% {
-    width: 760px;
-    height: 360px;
-  }
-
-  100% {
-    width: 280px;
-    height: 180px;
-  }
-`;
+import { styled } from 'styled-components';
+import { SlideFromBottom } from '../../../styles/GlobalStyle';
 
 export const Preview = styled.div`
   width: 100%;
@@ -60,45 +11,43 @@ export const Preview = styled.div`
 `;
 
 export const CarInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
   width: 100%;
+  height: 640px;
   margin: 0 auto;
   margin-top: 60px;
-  animation: ${CarInfoAnimation} 1s linear forwards;
-  animation-play-state: paused;
+  padding-top: 72px;
 
   & > .title {
-    position: absolute;
-    top: 72px;
-    left: 50%;
-    transform: translateX(-50%);
+    ${SlideFromBottom}
     white-space: nowrap;
     z-index: 1;
-
     font: ${({ theme }) => theme.font.headKR.Bold150};
     color: ${({ theme }) => theme.color.white};
     font-display: swap;
-    animation: ${TitleAnimation} 1s linear forwards;
-    animation-play-state: paused;
+    opacity: 0;
+    animation-delay: 0.5s;
   }
 
   & > .preview {
+    ${SlideFromBottom}
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     position: absolute;
-    transform: translateX(50%);
-    animation: ${PreviewAnimation} 1s linear forwards;
-    animation-play-state: paused;
+    top: 203px;
+    opacity: 0;
+    animation-delay: 1.5s;
     gap: 10px;
 
     & > img {
       width: 760px;
       height: 360px;
       object-fit: contain;
-      animation: ${ImageAnimation} 1s linear forwards;
-      animation-play-state: paused;
     }
   }
 `;
