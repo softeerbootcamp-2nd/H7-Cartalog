@@ -21,8 +21,8 @@ class InteriorViewModel(private val repository: CarRepository) : ViewModel() {
     private val _userTotalPrice = MutableLiveData(0)
     val userTotalPrice: LiveData<Int> = _userTotalPrice
 
-    private lateinit var selectedByUser: PriceData
-    private lateinit var selectedColor: CarColor
+    private var selectedByUser: PriceData? = null
+    private var selectedColor: CarColor? = null
 
     init {
         setInteriorColorData()
@@ -34,26 +34,26 @@ class InteriorViewModel(private val repository: CarRepository) : ViewModel() {
             val exteriorColor = repository.getTypeData(PriceDataType.EXTERIOR_COLOR)
             _colorList.value = repository.getCarColors(false, 2, exteriorColor.colorCode!!)
             _selectedColorIdx.value = colorList.value?.indices?.find {
-                colorList.value?.get(it)?.code == selectedByUser.colorCode
+                colorList.value?.get(it)?.code == selectedByUser?.colorCode
             }
             selectedColor = colorList.value?.get(selectedColorIdx.value!!)!!
         }
     }
 
     fun setSelectedColor(selected: Int) {
-        _userTotalPrice.value = _userTotalPrice.value?.minus(selectedColor.price)
+        _userTotalPrice.value = _userTotalPrice.value?.minus(selectedColor?.price!!)
         _selectedColorIdx.value = selected
         selectedColor = colorList.value?.get(selectedColorIdx.value!!)!!
-        _userTotalPrice.value = _userTotalPrice.value?.plus(selectedColor.price)
+        _userTotalPrice.value = _userTotalPrice.value?.plus(selectedColor?.price!!)
     }
 
     suspend fun saveUserSelection() {
-        val newColor = selectedColor.run {
-            selectedByUser.copy(
+        val newColor = selectedColor?.run {
+            selectedByUser?.copy(
                 name = name, price = price, colorCode = code, imgUrl = colorImageUrl
             )
         }
-        repository.saveUserColorData(newColor)
+        newColor?.let {repository.saveUserColorData(it) }
     }
 
     fun setUserTotalPrice(price: Int) {
@@ -64,7 +64,7 @@ class InteriorViewModel(private val repository: CarRepository) : ViewModel() {
         viewModelScope.launch {
             val old = repository.getMyCarData()
             val update = old.copy(
-                interiorImg = selectedColor.carImageUrl ?: ""
+                interiorImg = selectedColor?.carImageUrl ?: ""
             )
             repository.saveUserCarData(update)
         }

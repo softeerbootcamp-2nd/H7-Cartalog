@@ -84,9 +84,7 @@ fun setOnClickToggle(
                 .setDuration(300)
                 .withEndAction {
                     layout.visibility = View.VISIBLE
-                    if (idx == 5) {
-                        fragmentContainer.setPadding(0, 250, 0, 0)
-                    } else {
+                    if (idx != 5) {
                         fragmentContainer.setPadding(0, 150, 0, 0)
                     }
                 }

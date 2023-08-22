@@ -40,9 +40,9 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
     private val _userTotalPrice = MutableLiveData(0)
     val userTotalPrice: LiveData<Int> = _userTotalPrice
 
-    private lateinit var selectedPowerTrain: PriceData
-    private lateinit var selectedBodyType: PriceData
-    private lateinit var selectedWheelDrive: PriceData
+    private var selectedPowerTrain: PriceData? = null
+    private var selectedBodyType: PriceData? = null
+    private var selectedWheelDrive: PriceData? = null
 
     init {
         setTypeData()
@@ -97,11 +97,13 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
         val bodyType = getTypeData(ModelTypeSubject.BODYTYPE)
         val wheelDrive = getTypeData(ModelTypeSubject.WHEELDRIVE)
 
-        val newPowerTrain = updateTypeData(powerTrain, selectedPowerTrain)
-        val newBodyType = updateTypeData(bodyType, selectedBodyType)
-        val newWheelDrive = updateTypeData(wheelDrive, selectedWheelDrive)
+        val newPowerTrain = selectedPowerTrain?.let { updateTypeData(powerTrain, it) }
+        val newBodyType = selectedBodyType?.let { updateTypeData(bodyType, it) }
+        val newWheelDrive = selectedWheelDrive?.let { updateTypeData(wheelDrive, it) }
 
-        repository.saveUserTypeData(newPowerTrain, newBodyType, newWheelDrive)
+        if(newPowerTrain != null && newBodyType != null && newWheelDrive != null){
+            repository.saveUserTypeData(newPowerTrain, newBodyType, newWheelDrive)
+        }
     }
 
     private fun setSelectedType() {
@@ -111,11 +113,11 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
             selectedWheelDrive = repository.getTypeData(PriceDataType.WHEELDRIVE)
 
             _powertrain1Selected.value =
-                selectedPowerTrain.optionId == 1
+                selectedPowerTrain?.optionId == 1
             _bodytype1Selected.value =
-                selectedBodyType.optionId == 5
+                selectedBodyType?.optionId == 5
             _wheeldrive1Selected.value =
-                selectedWheelDrive.optionId == 3
+                selectedWheelDrive?.optionId == 3
         }
     }
 
