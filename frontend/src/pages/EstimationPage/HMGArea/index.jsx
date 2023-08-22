@@ -33,7 +33,7 @@ function HMGArea() {
 
   return (
     <S.HMGArea>
-      <PriceCard data={MOCK_HMGDATA} />
+      <PriceCard />
       <SimilarCard data={MOCK_HMGDATA} />
     </S.HMGArea>
   );

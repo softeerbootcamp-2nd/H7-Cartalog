@@ -10,6 +10,16 @@ export const Graph = styled.div`
   }
 `;
 
+export const Point = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+export const PointText = styled.div`
+  font: ${({ theme }) => theme.font.textKR.Medium14};
+  color: ${({ theme }) => theme.color.activeBlue2};
+`;
+
 export const PriceInfo = styled.div`
   display: flex;
   justify-content: space-between;
