@@ -19,7 +19,7 @@ function Slider({ min = 0, max = 100, step = 1, disabled, price, budget }) {
       <S.Pin style={{ left: priceRatioText }} className={overClass} />
       <S.Slider
         type="range"
-        value={budget}
+        value={budget ?? 0}
         min={min}
         max={max}
         step={step}

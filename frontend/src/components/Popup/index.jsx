@@ -1,6 +1,6 @@
 import React from 'react';
-import * as S from './style';
 import { createPortal } from 'react-dom';
+import * as S from './style';
 
 function Popup({ show, close, actions, children }) {
   const actionButtons = actions.map((child) => {
