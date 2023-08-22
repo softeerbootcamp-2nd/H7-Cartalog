@@ -20,6 +20,7 @@ import com.softeer.cartalog.viewmodel.TrimViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class TrimFragment : Fragment() {
 
@@ -55,10 +56,12 @@ class TrimFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.btnChoose.setOnClickListener {
-            dataCallback?.onInitPriceDataReceived(trimViewModel.getPriceData())
-            CoroutineScope(Dispatchers.Main).launch {
+            CoroutineScope(Dispatchers.IO).launch {
                 trimViewModel.setInitialMyCarData()
-                (activity as MainActivity).changeTab(1)
+                withContext(Dispatchers.Main){
+                    dataCallback?.onInitPriceDataReceived(trimViewModel.getPriceData())
+                    (activity as MainActivity).changeTab(1)
+                }
             }
         }
     }

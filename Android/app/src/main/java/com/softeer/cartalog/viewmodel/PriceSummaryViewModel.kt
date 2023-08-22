@@ -75,18 +75,19 @@ class PriceSummaryViewModel(private val repository: CarRepository) : ViewModel()
 
                 PriceDataType.EXTERIOR_COLOR -> {
                     _exterior.value = SummaryOptionPrice(it.name, it.price)
-                    exteriorCode = it.colorCode.toString()
+                    exteriorCode = it.code.toString()
                 }
 
                 PriceDataType.INTERIOR_COLOR -> {
                     _interior.value = SummaryOptionPrice(it.name, it.price)
-                    interiorCode = it.colorCode.toString()
+                    interiorCode = it.code.toString()
                 }
 
                 PriceDataType.OPTION -> {
                     _options.value?.add(
                         SummaryOptionPrice(it.name, it.price)
                     )
+                    _options.postValue(_options.value)
                 }
             }
         }

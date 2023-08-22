@@ -11,7 +11,8 @@ data class MyCar(
     val exteriorImg: String,
     val interiorImg: String,
     val fuelEfficiency: Float?,
-    val displacement: Int?
+    val displacement: Int?,
+    val totalPrice: Int = 0
 ) {
     @PrimaryKey var id: Int = 1
 }

@@ -23,7 +23,7 @@ class CarLocalDataSource(
         return priceDataDao.getPriceDataCountByCarId(carId) == 0
     }
 
-    suspend fun getMyCar(): MyCar {
+    suspend fun getMyCar(): MyCar? {
         return myCarDao.getMyCar()
     }
 
@@ -35,11 +35,23 @@ class CarLocalDataSource(
         return priceDataDao.getTypeData(type)
     }
 
-    suspend fun updatePriceData(input: PriceData){
+    suspend fun updatePriceData(input: PriceData) {
         priceDataDao.insertPriceData(input)
     }
 
-    suspend fun updateMyCarData(input: MyCar){
+    suspend fun updateMyCarData(input: MyCar) {
         myCarDao.upDateMyCar(input)
+    }
+
+    suspend fun getOptionTypeDataList(): List<PriceData> {
+        return priceDataDao.getTypeDataList(PriceDataType.OPTION)
+    }
+
+    suspend fun insertOptionDataList(optionList: List<PriceData>): List<Long> {
+        return priceDataDao.insertOptionDataList(optionList)
+    }
+
+    suspend fun deleteOptionItem(option: PriceData){
+        priceDataDao.deleteOptionItem(option)
     }
 }

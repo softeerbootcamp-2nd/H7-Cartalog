@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.softeer.cartalog.data.model.db.MyCar
 import com.softeer.cartalog.data.model.db.PriceData
 
-@Database(entities = [MyCar::class, PriceData::class], version = 1)
+@Database(entities = [MyCar::class, PriceData::class], version = 1, exportSchema = false)
 abstract class MyCarDatabase : RoomDatabase() {
     abstract fun myCarDao(): MyCarDao
     abstract fun priceDataDao(): PriceDataDao

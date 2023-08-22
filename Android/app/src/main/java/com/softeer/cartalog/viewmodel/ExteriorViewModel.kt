@@ -73,8 +73,8 @@ class ExteriorViewModel(private val repository: CarRepository) : ViewModel() {
     fun updateCarData(){
         viewModelScope.launch {
             val old = repository.getMyCarData()
-            val update = old.copy(
-                exteriorImg = (selectedColor?.carImageDirectory + "001.png")
+            val update = old!!.copy(
+                exteriorImg = (selectedColor.carImageDirectory + "001.png")
             )
             repository.saveUserCarData(update)
         }

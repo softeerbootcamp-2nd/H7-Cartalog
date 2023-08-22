@@ -12,8 +12,33 @@ data class PriceData(
     val name: String,
     val price: Int,
     val imgUrl: String?,
-    val colorCode: String?,
-    @PrimaryKey (autoGenerate = true) var id: Int = 0
+    val code: String?,
+    val isCheckedFromEstimate: Boolean = false,
+    @PrimaryKey(autoGenerate = true) var id: Int = 0
 ) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is PriceData) return false
 
+        return carId == other.carId &&
+                optionType == other.optionType &&
+                optionId == other.optionId &&
+                name == other.name &&
+                price == other.price &&
+                imgUrl == other.imgUrl &&
+                code == other.code &&
+                isCheckedFromEstimate == other.isCheckedFromEstimate
+    }
+
+    override fun hashCode(): Int {
+        var result = carId
+        result = 31 * result + optionType.hashCode()
+        result = 31 * result + (optionId ?: 0)
+        result = 31 * result + name.hashCode()
+        result = 31 * result + price
+        result = 31 * result + (imgUrl?.hashCode() ?: 0)
+        result = 31 * result + (code?.hashCode() ?: 0)
+        result = 31 * result + isCheckedFromEstimate.hashCode()
+        return result
+    }
 }

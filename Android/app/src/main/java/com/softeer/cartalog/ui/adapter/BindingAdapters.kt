@@ -13,10 +13,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.softeer.cartalog.R
-import com.softeer.cartalog.data.model.Options
-import com.softeer.cartalog.data.enums.OptionMode
 import com.softeer.cartalog.data.model.CarColor
 import com.softeer.cartalog.data.model.ConfirmDetail
+import com.softeer.cartalog.data.model.Options
 import com.softeer.cartalog.data.model.SummaryOptionPrice
 import com.softeer.cartalog.data.model.db.PriceData
 import com.softeer.cartalog.util.ItemDividerDecoration
@@ -26,7 +25,6 @@ import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import com.softeer.cartalog.viewmodel.InteriorViewModel
 import com.softeer.cartalog.viewmodel.MainViewModel
 import com.softeer.cartalog.viewmodel.OptionViewModel
-import com.softeer.cartalog.viewmodel.PriceSummaryViewModel
 import com.softeer.cartalog.viewmodel.TrimViewModel
 import com.softeer.cartalog.viewmodel.TypeViewModel
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
@@ -195,12 +193,12 @@ fun setRangeBarVisibility(
     }
 }
 
-@BindingAdapter("viewModel")
+@BindingAdapter("optionList")
 fun setSummaryOptionsRecyclerView(
     recyclerView: RecyclerView,
-    viewModel: PriceSummaryViewModel
+    optionList: MutableList<SummaryOptionPrice>
 ) {
-    val optionList = viewModel.options.value!!
+
     val adapter = if (optionList.isEmpty()) {
         SummaryOptionsAdapter(listOf(SummaryOptionPrice("-", -1)))
     } else {

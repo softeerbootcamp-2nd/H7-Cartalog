@@ -92,7 +92,6 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
     }
 
     suspend fun saveUserSelection() {
-
         val powerTrain = getTypeData(ModelTypeSubject.POWERTRAIN)
         val bodyType = getTypeData(ModelTypeSubject.BODYTYPE)
         val wheelDrive = getTypeData(ModelTypeSubject.WHEELDRIVE)
@@ -130,7 +129,6 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
     }
 
     private fun getTypeData(type: ModelTypeSubject): TypeOption {
-
         when (type) {
             ModelTypeSubject.POWERTRAIN -> {
                 return if (powertrain1Selected.value == true) {
@@ -168,9 +166,10 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
     fun updateCarData(){
         viewModelScope.launch {
             val old = repository.getMyCarData()
-            val update = old.copy(
+            val update = old!!.copy(
                 fuelEfficiency = hmgData.value?.fuelEfficiency,
-                displacement = hmgData.value?.displacement
+                displacement = hmgData.value?.displacement,
+                totalPrice = userTotalPrice.value!!
             )
             repository.saveUserCarData(update)
         }
