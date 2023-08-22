@@ -1,6 +1,7 @@
 package com.softeer.cartalog.ui.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Process
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
 
         MyCarDatabase.getInstance(applicationContext)
         binding.btnExit.setOnClickListener(this)
+        binding.btnSimilarEstimate.setOnClickListener(this)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -156,6 +158,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
                     dialog.dismiss()
                 }
                 dialog.show()
+            }
+
+            R.id.btn_similar_estimate -> {
+                startActivity(Intent(this@MainActivity, EstimateActivity::class.java))
             }
         }
     }
