@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <import type="com.softeer.cartalog.data.enums.PriceDataType"/>
@@ -57,28 +58,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/gray_500"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:text="@{item.optionType.typeName}"
             app:layout_constraintTop_toTopOf="@id/gl_top"
             app:layout_constraintStart_toEndOf="@id/iv_item" />
 
         <TextView
             android:id="@+id/tv_item_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/gray_900"
             android:text="@{item.name}"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@id/tv_item_price"
             app:layout_constraintBottom_toBottomOf="@id/iv_item"
-            app:layout_constraintStart_toStartOf="@id/tv_item_type" />
+            app:layout_constraintStart_toStartOf="@id/tv_item_type"
+            tools:text="알콘 단조 브레이크 20인치 20인치 휠 패키지"/>
 
         <TextView
             android:id="@+id/tv_item_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray_900"
+            android:textColor="@color/gray_800"
             android:text="@{String.format(`+ %,d원`,item.price)}"
+            app:layout_constraintStart_toEndOf="@id/tv_item_name"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
-            app:layout_constraintBottom_toBottomOf="@id/tv_item_name" />
+            app:layout_constraintBottom_toBottomOf="@id/tv_item_name"
+            tools:text="+3,660,000원"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -8,7 +8,6 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentContainerView
@@ -137,6 +136,7 @@ fun setOptionTabSelected(
                 }
             }
         }
+
         override fun onTabUnselected(tab: TabLayout.Tab?) {}
         override fun onTabReselected(tab: TabLayout.Tab?) {}
     })
@@ -211,11 +211,12 @@ fun setConfirmCarImageSelected(
     }
 }
 
-@BindingAdapter("recyclerView", "isEmpty")
+@BindingAdapter("recyclerView", "button", "isEmpty")
 fun setOnClickToggle(
-    button: ImageButton,
+    view: View,
     recyclerView: RecyclerView,
-    isEmpty: Boolean
+    button: ImageButton,
+    isEmpty: Boolean,
 ) {
     if (!isEmpty) {
         if (recyclerView.visibility == View.VISIBLE) {
@@ -224,7 +225,7 @@ fun setOnClickToggle(
             button.rotation = 0f
         }
 
-        button.setOnClickListener {
+        val onClickListener = View.OnClickListener {
             if (recyclerView.visibility == View.VISIBLE) {
                 recyclerView.visibility = View.GONE
                 button.animate().rotation(0f).start()
@@ -233,6 +234,8 @@ fun setOnClickToggle(
                 button.animate().rotation(180f).start()
             }
         }
+        view.setOnClickListener(onClickListener)
+        button.setOnClickListener(onClickListener)
     }
 }
 

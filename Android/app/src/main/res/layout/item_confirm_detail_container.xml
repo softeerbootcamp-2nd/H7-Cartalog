@@ -13,16 +13,19 @@
         android:layout_height="wrap_content">
 
         <View
-            android:id="@+id/vw_detail_bgr_1"
+            android:id="@+id/vw_detail_bgr"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:background="@color/blue_bg"
+            app:isEmpty="@{detailData.contents == null ? true : false}"
+            app:recyclerView="@{rcDetailList}"
+            app:button="@{tvDetailMoreBtn}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_detail_title_1"
+            android:id="@+id/tv_detail_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -30,22 +33,20 @@
             android:text="@{detailData.title}"
             android:textColor="@color/gray_900"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@id/vw_detail_bgr_1"
+            app:layout_constraintBottom_toBottomOf="@id/vw_detail_bgr"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/vw_detail_bgr_1" />
+            app:layout_constraintTop_toTopOf="@id/vw_detail_bgr" />
 
         <ImageButton
-            android:id="@+id/tv_detail_more_btn_1"
+            android:id="@+id/tv_detail_more_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:background="@android:color/transparent"
             android:src="@drawable/icon_arrow_down_big"
-            app:isEmpty="@{detailData.contents == null ? true : false}"
-            app:recyclerView="@{rcDetailList}"
-            app:layout_constraintBottom_toBottomOf="@id/vw_detail_bgr_1"
+            app:layout_constraintBottom_toBottomOf="@id/vw_detail_bgr"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/vw_detail_bgr_1"
+            app:layout_constraintTop_toTopOf="@id/vw_detail_bgr"
             app:tint="@color/gray_900" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -59,7 +60,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/vw_detail_bgr_1" />
+            app:layout_constraintTop_toBottomOf="@id/vw_detail_bgr" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
