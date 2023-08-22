@@ -68,4 +68,11 @@
 
     <string name="exit_content">내 차 만들기를 종료하시겠습니까?</string>
     <string name="estimate_header">유사견적</string>
+    <string name="estimate_btn_none">옵션을 선택해 추가해보세요.</string>
+    <string name="estimate_btn_choice">선택된 옵션 4개</string>
+    <string name="estimate_btn_add">내 견적서에 추가하기.</string>
+    <string name="estimate_range_bar_title">유사견적 가격</string>
+    <string name="estimate_range_bar_mine">내 견적</string>
+    <string name="estimate_range_bar_text_1">내 견적 보다 </string>
+    <string name="estimate_range_bar_text_2">원 비싸요. </string>
 </resources>
