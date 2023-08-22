@@ -265,4 +265,10 @@ class EstimateQueryRepositoryTest {
             softAssertions.assertAll();
         }
     }
+
+    @Nested
+    @DisplayName("getEstimatePrice 테스트")
+    class getEstimatePriceTest {
+        //TODO
+    }
 }

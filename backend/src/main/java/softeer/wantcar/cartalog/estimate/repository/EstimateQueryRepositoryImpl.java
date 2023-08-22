@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
-@SuppressWarnings({"SqlNoDataSourceInspection", "SqlResolve"})
+@SuppressWarnings({"SqlNoDataSourceInspection", "SqlResolve", "DataFlowIssue"})
 @Repository
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -181,6 +181,22 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
                     parameters, Long.class);
         } catch (EmptyResultDataAccessException exception) {
             return null;
+        }
+    }
+
+    @Override
+    public int getEstimatePrice(EstimateDto estimateDto) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("detailTrimId", estimateDto.getDetailTrimId())
+                .addValue("exteriorColorId", estimateDto.getTrimExteriorColorId())
+                .addValue("interiorColorId", estimateDto.getTrimInteriorColorId())
+                .addValue("optionIds", estimateDto.getModelOptionIds())
+                .addValue("packageIds", estimateDto.getModelPackageIds());
+        try {
+            return jdbcTemplate.queryForObject(QueryString.getEstimatePrice,
+                    parameters, Integer.class);
+        } catch (EmptyResultDataAccessException exception) {
+            return 0;
         }
     }
 }

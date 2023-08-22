@@ -21,26 +21,25 @@ public class EstimateCommandRepositoryImpl implements EstimateCommandRepository 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Override
-    public Long save(EstimateDto estimateDto) throws DataAccessException {
+    public Long save(EstimateDto estimateDto, int price) throws DataAccessException {
         Long nextId = jdbcTemplate.queryForObject("SELECT Max(id) FROM estimates", new HashMap<>(), Long.class) + 1;
 
-        saveEstimate(estimateDto, nextId);
+        saveEstimate(estimateDto, price, nextId);
         saveEstimateOptions(estimateDto.getModelOptionIds(), nextId);
         saveEstimatePackages(estimateDto.getModelPackageIds(), nextId);
         return nextId;
     }
 
-    private void saveEstimate(EstimateDto estimateDto, Long nextId) {
+    private void saveEstimate(EstimateDto estimateDto, int price, Long nextId) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("detailTrimId", estimateDto.getDetailTrimId())
                 .addValue("exteriorColorId", estimateDto.getTrimExteriorColorId())
                 .addValue("exteriorColorId", estimateDto.getTrimInteriorColorId())
-                .addValue("modelOptionIds", estimateDto.getModelOptionIds())
-                .addValue("modelPackageIds", estimateDto.getModelPackageIds())
+                .addValue("price", price)
                 .addValue("nextId", nextId);
 
-        String addEstimateQuery = "INSERT INTO estimates ( id, detail_trim_id, trim_exterior_color_id, trim_interior_color_id ) " +
-                                  "VALUES ( :nextId, :detailTrimId, :exteriorColorId, :exteriorColorId )";
+        String addEstimateQuery = "INSERT INTO estimates ( id, detail_trim_id, trim_exterior_color_id, trim_interior_color_id, price ) " +
+                                  "VALUES ( :nextId, :detailTrimId, :exteriorColorId, :exteriorColorId, :price )";
 
         jdbcTemplate.update(addEstimateQuery, parameters);
     }

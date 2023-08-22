@@ -97,7 +97,7 @@ class EstimateServiceImplTest {
             Long result = estimateService.saveOrFindEstimateId(requestDto);
 
             //then
-            verify(estimateCommandRepository, times(1)).save(any());
+            verify(estimateCommandRepository, times(1)).save(any(), any());
             verify(estimateQueryRepository, times(2)).findEstimateIdByEstimateDto(any());
             assertThat(result).isEqualTo(estimateId);
         }
@@ -114,7 +114,7 @@ class EstimateServiceImplTest {
             Long result = estimateService.saveOrFindEstimateId(requestDto);
 
             //then
-            verify(estimateCommandRepository, times(1)).save(any());
+            verify(estimateCommandRepository, times(1)).save(any(), any());
             verify(estimateQueryRepository, times(2)).findEstimateIdByEstimateDto(any());
             assertThat(result).isEqualTo(estimateId);
         }
