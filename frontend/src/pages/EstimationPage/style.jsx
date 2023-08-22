@@ -16,6 +16,11 @@ export const Estimation = styled.div`
 export const PDF = styled.div`
   @media print {
     margin-top: -60px;
+
+    & * {
+      opacity: 1 !important;
+      transform: none !important;
+    }
   }
 `;
 
