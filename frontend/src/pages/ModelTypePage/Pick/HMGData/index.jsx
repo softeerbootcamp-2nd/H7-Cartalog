@@ -43,11 +43,13 @@ function HMGData() {
   const tagProps = { type: HMG_TAG.TYPE };
   const displacementProps = {
     title: HMG_DATA.DISPLACEMENT,
-    unit: `${modelType.hmgData.displacement?.toLocaleString('ko-KR')}${HMG_DATA.DISPLACEMENT_UNIT}`,
+    unit: `${modelType.hmgData.displacement?.toLocaleString('ko-KR') ?? ''}${
+      HMG_DATA.DISPLACEMENT_UNIT
+    }`,
   };
   const fuelEfficiencyProps = {
     title: HMG_DATA.FUELEFFICIENCY,
-    unit: `${modelType.hmgData?.fuelEfficiency}${HMG_DATA.FUELEFFICIENCY_UNIT}`,
+    unit: `${modelType.hmgData?.fuelEfficiency ?? ''}${HMG_DATA.FUELEFFICIENCY_UNIT}`,
   };
 
   return trim.isDefault ? (
@@ -69,7 +71,7 @@ function HMGData() {
       </S.Detail>
     </S.HMGData>
   ) : (
-    <>Loding..</>
+    <S.HMGData />
   );
 }
 
