@@ -371,14 +371,16 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_option_list"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintStart_toStartOf="@id/gl_title"
             app:layout_constraintTop_toBottomOf="@id/vw_item_divider_3"
-            app:viewModel="@{viewModel}"
+            app:layout_constraintBottom_toTopOf="@id/vw_summary_bgr"
+            app:optionList="@{viewModel.options}"
             tools:listitem="@layout/item_price_summary_option" />
 
         <View

@@ -87,6 +87,7 @@ class PriceSummaryViewModel(private val repository: CarRepository) : ViewModel()
                     _options.value?.add(
                         SummaryOptionPrice(it.name, it.price)
                     )
+                    _options.postValue(_options.value)
                 }
             }
         }
