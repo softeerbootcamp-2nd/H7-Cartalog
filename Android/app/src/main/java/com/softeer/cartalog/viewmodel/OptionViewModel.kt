@@ -114,4 +114,12 @@ class OptionViewModel(private val repository: CarRepository) : ViewModel() {
     suspend fun getUserDataFromDB() {
         selectedDataFromDB = repository.getOptionTypeDataList()
     }
+
+    suspend fun updateCarData(){
+        val old = repository.getMyCarData()
+        val update = old!!.copy(
+            totalPrice = userTotalPrice.value!!
+        )
+        repository.saveUserCarData(update)
+    }
 }
