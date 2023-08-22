@@ -10,7 +10,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import softeer.wantcar.cartalog.chosen.repository.ChosenRepository;
+import softeer.wantcar.cartalog.chosen.repository.dto.ChosenDto;
 import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
+import softeer.wantcar.cartalog.model.dto.ModelTypeOptionDto;
 import softeer.wantcar.cartalog.model.dto.OptionDto;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 import softeer.wantcar.cartalog.model.repository.dto.ModelTypeDto;
@@ -52,17 +54,25 @@ class ModelOptionServiceTest {
             ModelTypeDto modelType3 = ModelTypeDto.builder().modelOptionId(3L).childCategory("category3").build();
             List<ModelTypeDto> modelTypes = List.of(modelType1, modelType2, modelType3, modelType4);
             when(modelOptionQueryRepository.findModelTypeByTrimId(anyLong())).thenReturn(modelTypes);
-            List<Long> modelOptionIds = List.of(modelType1.getModelOptionId(), modelType2.getModelOptionId(), modelType3.getModelOptionId(), modelType4.getModelOptionId());
+            List<String> modelOptionIds = List.of(
+                    "O" + modelType1.getModelOptionId(),
+                    "O" + modelType2.getModelOptionId(),
+                    "O" + modelType3.getModelOptionId(),
+                    "O" + modelType4.getModelOptionId());
 
-            List<Integer> chosen = List.of(10, 20, 30, 40);
-            when(chosenRepository.findModelTypeChosenByOptionId(modelOptionIds, 90)).thenReturn(chosen);
+            List<ChosenDto> chosen = List.of(
+                    new ChosenDto("O" + modelType1.getModelOptionId(), 10),
+                    new ChosenDto("O" + modelType2.getModelOptionId(), 20),
+                    new ChosenDto("O" + modelType3.getModelOptionId(), 30),
+                    new ChosenDto("O" + modelType4.getModelOptionId(), 40));
+            when(chosenRepository.findModelTypeChosenByOptionId(modelOptionIds)).thenReturn(chosen);
 
             //when
             ModelTypeListResponseDto modelTypeList = modelOptionService.findModelTypeListByTrimId(anyLong());
 
             //then
             List<String> collect = modelTypeList.getModelTypes().stream()
-                    .map(modelTypeDto -> modelTypeDto.getType())
+                    .map(ModelTypeOptionDto::getType)
                     .collect(Collectors.toUnmodifiableList());
             softAssertions.assertThat(collect.containsAll(List.of("category1", "category2", "category3"))).isTrue();
             List<OptionDto> options = modelTypeList.getModelTypes().stream()

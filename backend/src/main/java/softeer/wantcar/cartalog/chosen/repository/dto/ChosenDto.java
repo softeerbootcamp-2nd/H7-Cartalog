@@ -1,18 +1,20 @@
 package softeer.wantcar.cartalog.chosen.repository.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.ToString;
+
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class ChosenDto<T> {
-    private T idCode;
-    private long totalRecords;
-    private long recentRecords;
+public class ChosenDto {
+    private String idCode;
+    private int chosen;
 
-    public int getChosen() {
-        return Math.round((float) recentRecords * 100 / totalRecords);
+    public static ChosenDto findChosenDtoById(List<ChosenDto> chosenDtoList, String id) {
+        return chosenDtoList.stream()
+                .filter(chosenDto -> chosenDto.getIdCode().equals(id))
+                .findAny()
+                .orElseThrow(RuntimeException::new);
     }
 }

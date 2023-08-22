@@ -3,8 +3,8 @@ package softeer.wantcar.cartalog.model.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import softeer.wantcar.cartalog.chosen.ChosenConfig;
 import softeer.wantcar.cartalog.chosen.repository.ChosenRepository;
+import softeer.wantcar.cartalog.chosen.repository.dto.ChosenDto;
 import softeer.wantcar.cartalog.global.dto.HMGDataDtoInterface;
 import softeer.wantcar.cartalog.model.dto.ModelTypeListResponseDto;
 import softeer.wantcar.cartalog.model.dto.ModelTypeOptionDto;
@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Slf4j
 @Service
@@ -31,21 +30,25 @@ public class ModelOptionServiceImpl implements ModelOptionService {
         if (modelTypeDtoList.isEmpty()) {
             throw new IllegalArgumentException();
         }
-        List<Long> modelTypeIds = modelTypeDtoList.stream()
-                .map(ModelTypeDto::getModelOptionId)
-                .distinct()
-                .collect(Collectors.toUnmodifiableList());
+        List<String> modelTypeIds = getModelTypeIds(modelTypeDtoList);
+        List<ChosenDto> modelTypeChosen = chosenRepository.findModelTypeChosenByOptionId(modelTypeIds);
 
-        List<Integer> modelTypeChosen = chosenRepository.findModelTypeChosenByOptionId(modelTypeIds, ChosenConfig.CHOSEN_DAYS);
-
-        Map<Long, Integer> chosenMap = new HashMap<>();
-        IntStream.range(0, modelTypeIds.size())
-                .forEach(index -> chosenMap.put(modelTypeIds.get(index), modelTypeChosen.get(index)));
+        Map<String, Integer> chosenMap = new HashMap<>();
+        modelTypeChosen.forEach(chosen -> chosenMap.put(chosen.getIdCode(), chosen.getChosen()));
         ModelTypeListResponseDto.ModelTypeListResponseDtoBuilder builder = buildModelTypeListResponseDto(modelTypeDtoList, chosenMap);
         return builder.build();
     }
 
-    private static ModelTypeListResponseDto.ModelTypeListResponseDtoBuilder buildModelTypeListResponseDto(List<ModelTypeDto> modelTypeDtoList, Map<Long, Integer> chosenMap) {
+    private static List<String> getModelTypeIds(List<ModelTypeDto> modelTypeDtoList) {
+        return modelTypeDtoList.stream()
+                .map(modelType -> "O" + modelType.getModelOptionId())
+                .distinct()
+                .sorted()
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    private static ModelTypeListResponseDto.ModelTypeListResponseDtoBuilder buildModelTypeListResponseDto(List<ModelTypeDto> modelTypeDtoList,
+                                                                                                          Map<String, Integer> chosenMap) {
         Map<String, Map<Long, OptionDto.OptionDtoBuilder>> dtoBuilderMap = new HashMap<>();
 
         modelTypeDtoList.forEach(mapper -> {
@@ -56,7 +59,7 @@ public class ModelOptionServiceImpl implements ModelOptionService {
                             .name(mapper.getName())
                             .price(mapper.getPrice())
                             .imageUrl(mapper.getImageUrl())
-                            .chosen(chosenMap.get(mapper.getModelOptionId()))
+                            .chosen(chosenMap.get("O" + mapper.getModelOptionId()))
                             .description(mapper.getDescription()));
             HMGDataDtoInterface hmgDataDto = mapper.toHMGDataDto();
             if (hmgDataDto != null) {

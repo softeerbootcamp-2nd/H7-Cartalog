@@ -9,8 +9,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import softeer.wantcar.cartalog.chosen.ChosenConfig;
 import softeer.wantcar.cartalog.chosen.repository.ChosenRepository;
+import softeer.wantcar.cartalog.chosen.repository.dto.ChosenDto;
 import softeer.wantcar.cartalog.trim.dto.TrimExteriorColorListResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimInteriorColorListResponseDto;
 import softeer.wantcar.cartalog.trim.repository.TrimColorQueryRepository;
@@ -54,8 +54,8 @@ class TrimColorServiceTest {
             when(trimColorQueryRepository.findTrimExteriorColorsByTrimId(anyLong())).thenReturn(trimExteriorColors);
 
             List<String> exteriorColorCodes = List.of("A1", "B2");
-            List<Integer> exteriorColorChosen = List.of(10, 20);
-            when(chosenRepository.findExteriorColorChosenByExteriorColorCode(exteriorColorCodes, ChosenConfig.CHOSEN_DAYS))
+            List<ChosenDto> exteriorColorChosen = List.of(new ChosenDto("A1", 10), new ChosenDto("B2", 20));
+            when(chosenRepository.findExteriorColorChosenByExteriorColorCode(exteriorColorCodes))
                     .thenReturn(exteriorColorChosen);
 
             //when
@@ -69,7 +69,7 @@ class TrimColorServiceTest {
             List<Integer> actualColorChosen = trimExteriorColor.getExteriorColors().stream()
                     .map(TrimExteriorColorListResponseDto.TrimExteriorColorDto::getChosen)
                     .collect(Collectors.toUnmodifiableList());
-            softAssertions.assertThat(actualColorChosen.containsAll(exteriorColorChosen)).isTrue();
+            softAssertions.assertThat(actualColorChosen.containsAll(List.of(10, 20))).isTrue();
         }
 
         @Test
@@ -100,8 +100,8 @@ class TrimColorServiceTest {
             when(trimColorQueryRepository.findTrimInteriorColorsByTrimIdAndExteriorColorCode(1L, exteriorColorCode)).thenReturn(trimInteriorColors);
 
             List<String> interiorColorCodes = List.of("A1", "B2");
-            List<Integer> interiorColorChosen = List.of(10, 20);
-            when(chosenRepository.findInteriorColorChosenByInteriorColorCode(exteriorColorCode, interiorColorCodes, ChosenConfig.CHOSEN_DAYS))
+            List<ChosenDto> interiorColorChosen = List.of(new ChosenDto("A1", 10), new ChosenDto("B2", 20));
+            when(chosenRepository.findInteriorColorChosenByInteriorColorCode(interiorColorCodes))
                     .thenReturn(interiorColorChosen);
 
             //when
@@ -115,7 +115,7 @@ class TrimColorServiceTest {
             List<Integer> actualColorChosen = trimInteriorColor.getInteriorColors().stream()
                     .map(TrimInteriorColorListResponseDto.TrimInteriorColorDto::getChosen)
                     .collect(Collectors.toUnmodifiableList());
-            softAssertions.assertThat(actualColorChosen.containsAll(interiorColorChosen)).isTrue();
+            softAssertions.assertThat(actualColorChosen.containsAll(List.of(10, 20))).isTrue();
         }
 
         @Test

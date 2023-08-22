@@ -3,8 +3,8 @@ package softeer.wantcar.cartalog.trim.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import softeer.wantcar.cartalog.chosen.ChosenConfig;
 import softeer.wantcar.cartalog.chosen.repository.ChosenRepository;
+import softeer.wantcar.cartalog.chosen.repository.dto.ChosenDto;
 import softeer.wantcar.cartalog.global.dto.HMGDataDto;
 import softeer.wantcar.cartalog.trim.dto.TrimOptionDetailResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimOptionListResponseDto;
@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -103,17 +102,16 @@ public class TrimOptionServiceImpl implements TrimOptionService {
     }
 
     private List<TrimOptionChosenInfo> getChosenThenTransformTrimOptionChosenInfo(List<TrimOptionInfo> optionPackageInfo, boolean isOption) {
-        List<Long> ids = optionPackageInfo.stream()
+        List<String> ids = optionPackageInfo.stream()
                 .map(TrimOptionInfo::getId)
-                .map(id -> id.substring(1))
-                .mapToLong(Long::parseLong)
-                .boxed()
                 .collect(Collectors.toUnmodifiableList());
-        List<Integer> chosen = isOption
-                ? chosenRepository.findOptionChosenByOptionId(ids, ChosenConfig.CHOSEN_DAYS)
-                : chosenRepository.findPackageChosenByOptionId(ids, ChosenConfig.CHOSEN_DAYS);
-        return IntStream.range(0, optionPackageInfo.size())
-                .mapToObj(index -> TrimOptionChosenInfo.from(optionPackageInfo.get(index), chosen.get(index)))
+
+        List<ChosenDto> chosenDtoList = isOption ?
+                chosenRepository.findOptionChosenByOptionId(ids) :
+                chosenRepository.findPackageChosenByOptionId(ids);
+
+        return optionPackageInfo.stream()
+                .map(info -> TrimOptionChosenInfo.from(info, ChosenDto.findChosenDtoById(chosenDtoList, info.getId()).getChosen()))
                 .collect(Collectors.toUnmodifiableList());
     }
 

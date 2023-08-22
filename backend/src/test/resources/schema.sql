@@ -1,4 +1,5 @@
 -- noinspection SqlInsertValuesForFile
+DROP TABLE IF EXISTS chosens;
 DROP TABLE IF EXISTS similar_estimates;
 DROP TABLE IF EXISTS pending_hash_tag_similarities;
 DROP TABLE IF EXISTS hash_tag_similarities;
@@ -327,6 +328,14 @@ CREATE TABLE hash_tag_similarities
     PRIMARY KEY (origin_hash_tag_index, target_hash_tag_index)
 );
 
+CREATE TABLE chosens
+(
+    id_code     VARCHAR(16),
+    domain      VARCHAR(64),
+    chosen      INT,
+    PRIMARY KEY (id_code, domain)
+);
+
 INSERT INTO basic_model_categories (category)
 SELECT *
 FROM CSVREAD('classpath:csv/basic_model_categories.csv', null, 'fieldSeparator=|');
@@ -479,6 +488,10 @@ FROM CSVREAD('classpath:csv/similar_estimates.csv', null, 'fieldSeparator=|');
 INSERT INTO hash_tag_similarities (origin_hash_tag_index, target_hash_tag_index, similarity)
 SELECT *
 FROM CSVREAD('classpath:csv/hash_tag_similarities.csv', null, 'fieldSeparator=|');
+
+INSERT INTO chosens (id_code, domain, chosen)
+SELECT *
+FROM CSVREAD('classpath:csv/chosens.csv', null, 'fieldSeparator=|');
 
 ALTER TABLE pending_hash_tag_similarities
     ALTER COLUMN idx RESTART WITH 400;

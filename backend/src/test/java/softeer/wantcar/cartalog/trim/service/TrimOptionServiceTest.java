@@ -5,8 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import softeer.wantcar.cartalog.chosen.ChosenConfig;
 import softeer.wantcar.cartalog.chosen.repository.ChosenRepository;
+import softeer.wantcar.cartalog.chosen.repository.dto.ChosenDto;
 import softeer.wantcar.cartalog.trim.dto.TrimOptionDetailResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimOptionListResponseDto;
 import softeer.wantcar.cartalog.trim.dto.TrimPackageDetailResponseDto;
@@ -54,9 +54,9 @@ class TrimOptionServiceTest {
                     .thenReturn(List.of(getTrimOptionInfo("P1", false, "AAA")));
 
             int option2Chosen = 20;
-            when(chosenRepository.findOptionChosenByOptionId(List.of(2L), ChosenConfig.CHOSEN_DAYS)).thenReturn(List.of(option2Chosen));
+            when(chosenRepository.findOptionChosenByOptionId(List.of("O2"))).thenReturn(List.of(new ChosenDto("O2", 20)));
             int package1Chosen = 30;
-            when(chosenRepository.findPackageChosenByOptionId(List.of(1L), ChosenConfig.CHOSEN_DAYS)).thenReturn(List.of(package1Chosen));
+            when(chosenRepository.findPackageChosenByOptionId(List.of("P1"))).thenReturn(List.of(new ChosenDto("P1", 30)));
 
             //when
             TrimOptionListResponseDto responseDto = trimOptionService.getTrimOptionList(1L, "AAA");
