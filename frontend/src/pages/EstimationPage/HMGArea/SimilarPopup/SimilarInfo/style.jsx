@@ -40,7 +40,7 @@ export const ArrowButton = styled.button`
     fill: ${({ theme }) => theme.color.gray['600']};
   }
 `;
-export const Info = styled.div`
+export const LeftInfo = styled.div`
   display: flex;
   flex-direction: column;
   width: 165px;
@@ -65,12 +65,18 @@ export const Price = styled.div`
 
 export const RightArea = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: 275px;
   height: 224px;
   flex-shrink: 0;
 
   background-color: ${({ theme }) => theme.color.gray['50']};
+`;
+
+export const RightInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 235px;
 `;
 
 export const TagWrapper = styled.div`
@@ -79,11 +85,19 @@ export const TagWrapper = styled.div`
 
 export const OptionWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   margin-top: 10px;
   margin-left: 16px;
 `;
 
 export const OptionTitle = styled.div`
+  margin-bottom: 4px;
   font: ${({ theme }) => theme.font.headKR.Regular10};
   color: ${({ theme }) => theme.color.gray['900']};
+`;
+
+export const CardWrapper = styled.div`
+  display: flex;
+  width: 220px;
+  gap: 8px;
 `;
