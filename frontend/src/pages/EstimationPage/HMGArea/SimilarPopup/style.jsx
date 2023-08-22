@@ -101,3 +101,7 @@ export const LeftArea = styled.div`
     object-fit: cover;
   }
 `;
+
+export const Footer = styled.div`
+  margin-top: 41px;
+`;

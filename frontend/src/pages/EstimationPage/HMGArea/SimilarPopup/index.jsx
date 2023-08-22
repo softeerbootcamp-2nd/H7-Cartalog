@@ -1,13 +1,20 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useData } from '../../../../utils/Context';
-import { SIMILAR } from './constants';
+import { SIMILAR, BUTTON } from './constants';
 import { ReactComponent as CloseIcon } from '../../../../../assets/icons/cancel.svg';
 import * as S from './style';
+import Button from '../../../../components/Button';
 
 function SimilarPopup({ show, close }) {
   const { setTrimState, page, exteriorColor, interiorColor, summary } = useData();
   const [toggle, setToggle] = useState(false);
+  const buttonProps = {
+    type: BUTTON.TYPE,
+    state: BUTTON.STATE,
+    mainTitle: BUTTON.MAIN_TITLE,
+    event: () => {},
+  };
 
   useEffect(() => {
     if (!page || page === 1) return;
@@ -66,6 +73,9 @@ function SimilarPopup({ show, close }) {
               </S.LeftArea>
             </S.Contents>
           </S.PopupWrapper>
+          <S.Footer>
+            <Button {...buttonProps} />
+          </S.Footer>
         </S.SimilarPopup>
       </>,
       document.querySelector('#modal'),
