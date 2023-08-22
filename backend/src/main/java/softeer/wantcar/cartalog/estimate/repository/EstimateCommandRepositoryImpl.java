@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-@SuppressWarnings({"SqlResolve", "SqlNoDataSourceInspection"})
+@SuppressWarnings({"SqlResolve", "SqlNoDataSourceInspection", "DataFlowIssue"})
 @Repository
 @RequiredArgsConstructor
 @Transactional

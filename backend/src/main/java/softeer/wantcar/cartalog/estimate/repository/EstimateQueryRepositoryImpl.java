@@ -119,13 +119,13 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
                 .addValue("countOfSumPackages", selectPackages.size() * Math.max(selectOptions.size(), 1))
                 .addValue("countOfSumOptions", Math.max(selectPackages.size(), 1) * selectOptions.size());
 
-        String appendPackageIdSQL = "" +
+        String appendPackageIdSQL =
                 "       AND Sum(CASE " +
                 "                 WHEN model_package_id IN ( :selectPackageIds ) THEN 1 " +
                 "                 ELSE 0 " +
                 "               end) = :countOfSumPackages ";
 
-        String appendOptionIdSQL = "" +
+        String appendOptionIdSQL =
                 "       AND Sum(CASE " +
                 "                 WHEN model_option_id IN ( :selectOptionIds ) THEN 1 " +
                 "                 ELSE 0 " +
