@@ -28,6 +28,7 @@ public class TrimOptionChosenInfo {
                 .name(trimOptionInfo.getName())
                 .parentCategory(trimOptionInfo.getParentCategory())
                 .childCategory(trimOptionInfo.getChildCategory())
+                .imageUrl(trimOptionInfo.getImageUrl())
                 .price(trimOptionInfo.getPrice())
                 .basic(trimOptionInfo.isBasic())
                 .colorCondition(trimOptionInfo.isColorCondition())
