@@ -31,11 +31,7 @@ public class ModelOptionServiceImpl implements ModelOptionService {
         if (modelTypeDtoList.isEmpty()) {
             throw new IllegalArgumentException();
         }
-        List<Long> modelTypeIds = modelTypeDtoList.stream()
-                .map(ModelTypeDto::getModelOptionId)
-                .distinct()
-                .collect(Collectors.toUnmodifiableList());
-
+        List<Long> modelTypeIds = getModelTypeIds(modelTypeDtoList);
         List<Integer> modelTypeChosen = chosenRepository.findModelTypeChosenByOptionId(modelTypeIds, ChosenConfig.CHOSEN_DAYS);
 
         Map<Long, Integer> chosenMap = new HashMap<>();
@@ -43,6 +39,14 @@ public class ModelOptionServiceImpl implements ModelOptionService {
                 .forEach(index -> chosenMap.put(modelTypeIds.get(index), modelTypeChosen.get(index)));
         ModelTypeListResponseDto.ModelTypeListResponseDtoBuilder builder = buildModelTypeListResponseDto(modelTypeDtoList, chosenMap);
         return builder.build();
+    }
+
+    private static List<Long> getModelTypeIds(List<ModelTypeDto> modelTypeDtoList) {
+        return modelTypeDtoList.stream()
+                .map(ModelTypeDto::getModelOptionId)
+                .distinct()
+                .sorted()
+                .collect(Collectors.toUnmodifiableList());
     }
 
     private static ModelTypeListResponseDto.ModelTypeListResponseDtoBuilder buildModelTypeListResponseDto(List<ModelTypeDto> modelTypeDtoList, Map<Long, Integer> chosenMap) {
