@@ -3,7 +3,6 @@ import { useData, TotalPrice } from '../../../utils/Context';
 import { FOOTER } from '../constants';
 import * as S from './style';
 import Button from '../../../components/Button';
-import ImageViewButton from '../../../components/ImageViewButton';
 
 function Footer({ pdfEvent }) {
   const { page, price } = useData();
@@ -36,17 +35,8 @@ function Footer({ pdfEvent }) {
     },
   };
 
-  const imageViewButtonProps = {
-    onClick: () => {},
-    text: FOOTER.CHECK_IMAGE,
-  };
-
   return (
     <S.Footer className={isVisible ? 'visible' : ''}>
-      <S.ImageViewButtonWrapper>
-        <ImageViewButton {...imageViewButtonProps} />
-      </S.ImageViewButtonWrapper>
-
       <S.FooterBlur>
         <S.FooterWrapper>
           <S.TotalPrice>

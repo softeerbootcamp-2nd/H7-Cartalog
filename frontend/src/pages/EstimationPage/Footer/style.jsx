@@ -20,16 +20,6 @@ export const Footer = styled.div`
   z-index: 1;
 `;
 
-export const ImageViewButtonWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  width: 1280px;
-  padding: 0 128px;
-  margin: 0 auto;
-  margin-bottom: 15px;
-  box-sizing: border-box;
-`;
-
 export const FooterBlur = styled.div`
   display: flex;
   align-items: center;
