@@ -102,13 +102,10 @@ export function StateProvider({ children }) {
         break;
       case 'estimation':
         acc[key] = {
-          fetchData: [],
+          id: null,
+          isPost: false,
+          averagePrice: null,
           isFetch: false,
-          interiorColorId: 'I49',
-          pick: 'A22',
-          pickName: '퀼팅천연(블랙)',
-          pickCarImageUrl:
-            'https://want-car-image.s3.ap-northeast-2.amazonaws.com/palisade/le-blanc/options/10_driverseat_s.jpg',
         };
         break;
       case 'summary':
