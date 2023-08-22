@@ -4,15 +4,13 @@ import com.softeer.cartalog.data.enums.PriceDataType
 import com.softeer.cartalog.data.model.CarColor
 import com.softeer.cartalog.data.model.DetailOptions
 import com.softeer.cartalog.data.model.Options
-import com.softeer.cartalog.data.model.Trims
 import com.softeer.cartalog.data.model.SummaryCarImage
 import com.softeer.cartalog.data.model.Trim
 import com.softeer.cartalog.data.model.TrimDetail
+import com.softeer.cartalog.data.model.Trims
 import com.softeer.cartalog.data.model.Type
 import com.softeer.cartalog.data.model.db.MyCar
 import com.softeer.cartalog.data.model.db.PriceData
-import retrofit2.Response
-import retrofit2.http.Query
 
 interface CarRepository {
 
@@ -30,4 +28,7 @@ interface CarRepository {
     suspend fun getTypeData(type: PriceDataType): PriceData
     suspend fun saveUserColorData(color: PriceData)
     suspend fun saveUserCarData(myCar: MyCar)
+    suspend fun getOptionTypeDataList(): List<PriceData>
+    suspend fun setOptionTypeDataList(optionList: List<PriceData>): List<Long>
+    suspend fun deleteOptionItem(option: PriceData)
 }

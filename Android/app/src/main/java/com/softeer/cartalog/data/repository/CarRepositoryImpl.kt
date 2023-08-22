@@ -1,11 +1,10 @@
 package com.softeer.cartalog.data.repository
 
-import android.util.Log
 import com.softeer.cartalog.data.enums.PriceDataType
-import com.softeer.cartalog.data.model.SummaryCarImage
 import com.softeer.cartalog.data.model.CarColor
 import com.softeer.cartalog.data.model.DetailOptions
 import com.softeer.cartalog.data.model.Options
+import com.softeer.cartalog.data.model.SummaryCarImage
 import com.softeer.cartalog.data.model.Trim
 import com.softeer.cartalog.data.model.TrimDetail
 import com.softeer.cartalog.data.model.Trims
@@ -14,7 +13,6 @@ import com.softeer.cartalog.data.model.db.MyCar
 import com.softeer.cartalog.data.model.db.PriceData
 import com.softeer.cartalog.data.repository.local.CarLocalDataSource
 import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
-import retrofit2.Response
 
 class CarRepositoryImpl(
     private val carLocalDataSource: CarLocalDataSource,
@@ -168,6 +166,18 @@ class CarRepositoryImpl(
 
     override suspend fun saveUserCarData(myCar: MyCar) {
         carLocalDataSource.updateMyCarData(myCar)
+    }
+
+    override suspend fun getOptionTypeDataList(): List<PriceData> {
+        return carLocalDataSource.getOptionTypeDataList()
+    }
+
+    override suspend fun setOptionTypeDataList(optionList: List<PriceData>): List<Long> {
+        return carLocalDataSource.insertOptionDataList(optionList)
+    }
+
+    override suspend fun deleteOptionItem(option: PriceData) {
+        carLocalDataSource.deleteOptionItem(option)
     }
 
 

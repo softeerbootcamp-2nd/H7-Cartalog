@@ -1,6 +1,7 @@
 package com.softeer.cartalog.data.local
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -21,6 +22,16 @@ interface PriceDataDao {
 
     @Query("SELECT COUNT(*) FROM PriceData WHERE carId = :carId")
     suspend fun getPriceDataCountByCarId(carId: Int): Int
+
     @Query("SELECT * FROM PriceData")
     suspend fun getPriceDataList(): List<PriceData>
+
+    @Query("SELECT * FROM PriceData WHERE PriceData.optionType = :type")
+    suspend fun getTypeDataList(type: PriceDataType): List<PriceData>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertOptionDataList(priceDataList: List<PriceData>): List<Long>
+
+    @Delete
+    suspend fun deleteOptionItem(option: PriceData)
 }
