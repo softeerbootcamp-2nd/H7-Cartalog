@@ -1,6 +1,6 @@
 import { keyframes, styled } from 'styled-components';
 
-const circleAnimation = keyframes`
+const thumbAnimation = keyframes`
   0% {
     opacity: 0;
   }
@@ -16,6 +16,7 @@ export const PriceGraph = styled.div`
     position: absolute;
     color: ${({ theme }) => theme.color.activeBlue};
     font: ${({ theme }) => theme.font.textKR.Medium14};
+    animation: ${thumbAnimation} 1s ease forwards;
   }
 `;
 
@@ -31,7 +32,7 @@ export const PriceGraphSvg = styled.svg`
   & > circle {
     position: relative;
     opacity: 0;
-    animation: ${circleAnimation} 0.5s ease forwards;
+    animation: ${thumbAnimation} 1s ease forwards;
 
     &:nth-of-type(1) {
       fill: ${({ theme }) => theme.color.blueBG};
