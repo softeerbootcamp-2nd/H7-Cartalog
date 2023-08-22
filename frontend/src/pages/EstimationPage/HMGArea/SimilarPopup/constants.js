@@ -1,5 +1,8 @@
-export const SUMMARY = {
-  TITLE: '견적 요약',
+export const SIMILAR = {
+  TITLE: '내 견적과 비슷한 실제 출고 견적',
+  SUB_TITLE: '들을\n확인하고 비교해보세요.',
+  INFO_TITLE:
+    '*유사 출고 견적이란,\n내 견적과 해시태그 유사도가 높은 다른 사람들의 실제 출고 견적이에요.',
   PRICE_TITLE: '현재 총 가격',
   WON: '원',
 };

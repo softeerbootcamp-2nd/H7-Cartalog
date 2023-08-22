@@ -11,7 +11,7 @@ export const SimilarPopup = styled.div`
   transform: translate(-50%, -50%);
   z-index: 1000;
   width: 850px;
-  height: 468px;
+  height: 520px;
   border-radius: 8px;
   background-color: ${({ theme }) => theme.color.white};
   overflow: hidden;
@@ -29,17 +29,37 @@ export const Overlay = styled.div`
   backdrop-filter: blur(6px);
 `;
 
+export const PopupWrapper = styled.div`
+  margin-left: 40px;
+`;
+
 export const Header = styled.div`
   display: flex;
+  margin-top: 57px;
+`;
+
+export const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
 `;
 
 export const Title = styled.div`
-  width: 100%;
-  padding-top: 20px;
-  font: ${({ theme }) => theme.font.headKR.Medium18};
+  font: ${({ theme }) => theme.font.headKR.Medium16};
   color: ${({ theme }) => theme.color.gray['800']};
   font-display: swap;
-  text-align: center;
+  white-space: pre-wrap;
+
+  & > span {
+    color: ${({ theme }) => theme.color.activeBlue2};
+  }
+`;
+
+export const TitleInfo = styled.div`
+  font: ${({ theme }) => theme.font.headKR.Regular12};
+  color: ${({ theme }) => theme.color.primary.default};
+  font-display: swap;
+  white-space: pre-wrap;
 `;
 
 export const CloseButton = styled.button`
@@ -59,14 +79,13 @@ export const CloseButton = styled.button`
 
 export const Contents = styled.div`
   display: flex;
-  flex: 1;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 40px;
+  width: 762px;
+  height: 224px;
+  flex-shrink: 0;
+  margin-top: 25px;
 
-  ::-webkit-scrollbar {
-    display: none;
-  }
+  border-radius: 2px;
+  border: 1px solid ${({ theme }) => theme.color.activeBlue};
 `;
 
 export const LeftArea = styled.div`
@@ -77,34 +96,8 @@ export const LeftArea = styled.div`
   gap: 20px;
 
   & > img {
-    width: 418px;
-    height: 212px;
+    width: 274px;
+    height: 156px;
     object-fit: cover;
   }
-`;
-
-export const RightArea = styled.div`
-  height: 310px;
-  overflow-y: scroll;
-`;
-
-export const TotalPrice = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 0 40px;
-  margin-bottom: 24px;
-  gap: 8px;
-`;
-
-export const TextTitle = styled.div`
-  font: ${({ theme }) => theme.font.headKR.Regular12};
-  color: ${({ theme }) => theme.color.gray['700']};
-  font-display: swap;
-`;
-
-export const PriceTitle = styled.div`
-  font: ${({ theme }) => theme.font.headKR.Medium24};
-  color: ${({ theme }) => theme.color.primary.default};
-  font-display: swap;
 `;
