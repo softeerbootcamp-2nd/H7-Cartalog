@@ -120,7 +120,11 @@ fun setOptionRecyclerView(
 ) {
     // 처음 optionfragment 열렸을 때 추가옵션 세팅을 위한 함수
     recyclerView.setHasFixedSize(true)
-    recyclerView.adapter = OptionSelectAdapter(viewModel, "전체")
+    recyclerView.adapter = OptionSelectAdapter(viewModel, "전체").apply {
+        viewModel.selectOptions?.let {
+            setItems(it)
+        }
+    }
     recyclerView.adapter?.notifyDataSetChanged()
 }
 
