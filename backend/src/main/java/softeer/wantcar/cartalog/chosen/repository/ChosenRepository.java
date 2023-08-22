@@ -1,15 +1,17 @@
 package softeer.wantcar.cartalog.chosen.repository;
 
+import softeer.wantcar.cartalog.chosen.repository.dto.ChosenDto;
+
 import java.util.List;
 
 public interface ChosenRepository {
-    List<Integer> findModelTypeChosenByOptionId(List<String> modelTypeIds);
+    List<ChosenDto> findModelTypeChosenByOptionId(List<String> modelTypeIds);
 
-    List<Integer> findOptionChosenByOptionId(List<String> optionIds);
+    List<ChosenDto> findOptionChosenByOptionId(List<String> optionIds);
 
-    List<Integer> findPackageChosenByOptionId(List<String> packageIds);
+    List<ChosenDto> findPackageChosenByOptionId(List<String> packageIds);
 
-    List<Integer> findExteriorColorChosenByExteriorColorCode(List<String> exteriorColorCodes);
+    List<ChosenDto> findExteriorColorChosenByExteriorColorCode(List<String> exteriorColorCodes);
 
-    List<Integer> findInteriorColorChosenByInteriorColorCode(List<String> interiorColorCodes);
+    List<ChosenDto> findInteriorColorChosenByInteriorColorCode(List<String> interiorColorCodes);
 }
