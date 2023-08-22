@@ -42,7 +42,8 @@ public class ChosenRepositoryImpl implements ChosenRepository {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("optionIds", modelTypeIds);
 
-        var query = jdbcTemplate.query("SELECT id_code, chosen FROM chosens WHERE domain = 'model_type' ",
+        var query = jdbcTemplate.query("SELECT id_code, chosen FROM chosens " +
+                                       "WHERE domain = 'model_type' AND id_code IN (:optionIds) ",
                 parameters, RowMapperUtils.mapping(ChosenDto.class, getIdCodeRowMapperStrategy));
         if (modelTypeIds.size() != query.size()) {
             throw new IllegalArgumentException();
@@ -60,7 +61,8 @@ public class ChosenRepositoryImpl implements ChosenRepository {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("optionIds", optionIds);
 
-        var query = jdbcTemplate.query("SELECT id_code, chosen FROM chosens WHERE domain = 'model_option' ",
+        var query = jdbcTemplate.query("SELECT id_code, chosen FROM chosens " +
+                                       "WHERE domain = 'model_option' AND id_code IN (:optionIds) ",
                 parameters, RowMapperUtils.mapping(ChosenDto.class, getIdCodeRowMapperStrategy));
         if (optionIds.size() != query.size()) {
             throw new IllegalArgumentException();
@@ -79,7 +81,8 @@ public class ChosenRepositoryImpl implements ChosenRepository {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("packageIds", packageIds);
 
-        var query = jdbcTemplate.query("SELECT id_code, chosen FROM chosens WHERE domain = 'model_package' ",
+        var query = jdbcTemplate.query("SELECT id_code, chosen FROM chosens " +
+                                       "WHERE domain = 'model_package' AND id_code IN (:packageIds) ",
                 parameters, RowMapperUtils.mapping(ChosenDto.class, getIdCodeRowMapperStrategy));
         if (packageIds.size() != query.size()) {
             throw new IllegalArgumentException();
@@ -98,7 +101,8 @@ public class ChosenRepositoryImpl implements ChosenRepository {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("exteriorColorCodes", exteriorColorCodes);
 
-        var query = jdbcTemplate.query("SELECT id_code, chosen FROM chosens WHERE domain = 'exterior_color' ",
+        var query = jdbcTemplate.query("SELECT id_code, chosen FROM chosens " +
+                                       "WHERE domain = 'exterior_color' AND id_code IN (:exteriorColorCodes) ",
                 parameters, RowMapperUtils.mapping(ChosenDto.class, getIdCodeRowMapperStrategy));
 
         if (exteriorColorCodes.size() != query.size()) {
@@ -111,15 +115,15 @@ public class ChosenRepositoryImpl implements ChosenRepository {
     }
 
     @Override
-    public List<Integer> findInteriorColorChosenByInteriorColorCode(String exteriorColorCode, List<String> interiorColorCodes) {
+    public List<Integer> findInteriorColorChosenByInteriorColorCode(List<String> interiorColorCodes) {
         if (interiorColorCodes.size() == 0) {
             return List.of();
         }
         SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("exteriorColorCode", exteriorColorCode)
                 .addValue("interiorColorCodes", interiorColorCodes);
 
-        var query = jdbcTemplate.query("SELECT id_code, chosen FROM chosens WHERE domain = 'interior_color' ",
+        var query = jdbcTemplate.query("SELECT id_code, chosen FROM chosens " +
+                                       "WHERE domain = 'interior_color' AND id_code IN (:interiorColorCodes) ",
                 parameters, RowMapperUtils.mapping(ChosenDto.class, getIdCodeRowMapperStrategy));
 
         if (interiorColorCodes.size() != query.size()) {

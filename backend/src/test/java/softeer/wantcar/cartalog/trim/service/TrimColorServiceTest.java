@@ -100,7 +100,7 @@ class TrimColorServiceTest {
 
             List<String> interiorColorCodes = List.of("A1", "B2");
             List<Integer> interiorColorChosen = List.of(10, 20);
-            when(chosenRepository.findInteriorColorChosenByInteriorColorCode(exteriorColorCode, interiorColorCodes))
+            when(chosenRepository.findInteriorColorChosenByInteriorColorCode(interiorColorCodes))
                     .thenReturn(interiorColorChosen);
 
             //when

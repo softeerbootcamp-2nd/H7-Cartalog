@@ -54,7 +54,7 @@ public class TrimColorServiceImpl implements TrimColorService {
                 .map(TrimInteriorColorQueryResult::getCode)
                 .collect(Collectors.toUnmodifiableList());
 
-        List<Integer> interiorColorCods = chosenRepository.findInteriorColorChosenByInteriorColorCode(exteriorColorCode, interiorColorCodes);
+        List<Integer> interiorColorCods = chosenRepository.findInteriorColorChosenByInteriorColorCode(interiorColorCodes);
 
         TrimInteriorColorListResponseDto.TrimInteriorColorListResponseDtoBuilder builder = TrimInteriorColorListResponseDto.builder();
 

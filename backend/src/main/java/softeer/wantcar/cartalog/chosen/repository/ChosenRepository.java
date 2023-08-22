@@ -11,5 +11,5 @@ public interface ChosenRepository {
 
     List<Integer> findExteriorColorChosenByExteriorColorCode(List<String> exteriorColorCodes);
 
-    List<Integer> findInteriorColorChosenByInteriorColorCode(String exteriorColorCode, List<String> interiorColorCodes);
+    List<Integer> findInteriorColorChosenByInteriorColorCode(List<String> interiorColorCodes);
 }

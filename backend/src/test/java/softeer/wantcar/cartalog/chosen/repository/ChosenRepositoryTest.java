@@ -1,7 +1,6 @@
 package softeer.wantcar.cartalog.chosen.repository;
 
 import org.assertj.core.api.SoftAssertions;
-import org.assertj.core.api.ThrowableAssert;
 import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,11 +13,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -35,15 +30,8 @@ class ChosenRepositoryTest {
     NamedParameterJdbcTemplate jdbcTemplate;
     ChosenRepository chosenRepository;
 
-    int intDayDifference = 0;
-
     @BeforeEach
     void setUp() {
-        LocalDate currentTime = LocalDate.now();
-        LocalDate baseTime = LocalDate.of(2023, 8, 20);
-
-        long dayDifference = ChronoUnit.DAYS.between(baseTime, currentTime);
-        intDayDifference = Math.toIntExact(dayDifference);
         chosenRepository = new ChosenRepositoryImpl(jdbcTemplate);
     }
 
@@ -55,22 +43,13 @@ class ChosenRepositoryTest {
         void success() {
             //given
             List<String> modelTypeIds = List.of("O1", "O2", "O3", "O4", "O5", "O6");
-
-            List<Integer> modelTypeRecentRecords = List.of(126, 115, 126, 115, 126, 115);
-            List<Integer> modelTypeTotalRecords = List.of(241, 241, 241, 241, 241, 241);
-
-            List<Integer> collect = IntStream.range(0, 6)
-                    .mapToDouble(i -> (double) modelTypeRecentRecords.get(i) * 100 / modelTypeTotalRecords.get(i))
-                    .mapToLong(Math::round)
-                    .mapToInt(operand -> (int) operand)
-                    .boxed()
-                    .collect(Collectors.toUnmodifiableList());
+            List<Integer> expectResults = List.of(50, 50, 50, 50, 50, 50);
 
             //when
             List<Integer> modelTypeChosen = chosenRepository.findModelTypeChosenByOptionId(modelTypeIds);
 
             //then
-            softAssertions.assertThat(modelTypeChosen).isEqualTo(collect);
+            softAssertions.assertThat(modelTypeChosen).isEqualTo(expectResults);
         }
 
         @Test
@@ -80,10 +59,9 @@ class ChosenRepositoryTest {
             List<String> modelTypeIds = List.of("NOT-EXIST");
 
             //when
-            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findModelTypeChosenByOptionId(modelTypeIds);
-
             //then
-            assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> chosenRepository.findModelTypeChosenByOptionId(modelTypeIds))
+                    .isInstanceOf(IllegalArgumentException.class);
         }
 
         @Test
@@ -106,22 +84,13 @@ class ChosenRepositoryTest {
         void success() {
             //given
             List<String> modelSelectOptionIds = List.of("O97", "O98", "O99", "O100", "O101", "O102", "O103", "O104", "O105", "O106", "O107");
-
-            List<Integer> modelSelectOptionRecords = List.of(57, 34, 42, 53, 41, 45, 39, 40, 48, 42, 40);
-            List<Integer> modelSelectOptionTotalRecords = List.of(241, 241, 241, 126, 241, 241, 241, 241, 241, 241, 241);
-
-            List<Integer> modelSelectOptionChosenExpected = IntStream.range(0, modelSelectOptionIds.size())
-                    .mapToDouble(i -> (double) modelSelectOptionRecords.get(i) * 100 / modelSelectOptionTotalRecords.get(i))
-                    .mapToLong(Math::round)
-                    .mapToInt(operand -> (int) operand)
-                    .boxed()
-                    .collect(Collectors.toUnmodifiableList());
+            List<Integer> expectResults = List.of(42, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21);
 
             //when
             List<Integer> modelSelectOptionChosen = chosenRepository.findOptionChosenByOptionId(modelSelectOptionIds);
 
             //then
-            softAssertions.assertThat(modelSelectOptionChosen).isEqualTo(modelSelectOptionChosenExpected);
+            softAssertions.assertThat(modelSelectOptionChosen).isEqualTo(expectResults);
         }
 
         @Test
@@ -131,10 +100,9 @@ class ChosenRepositoryTest {
             List<String> modelOptionIds = List.of("NOT-EXIST");
 
             //when
-            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findOptionChosenByOptionId(modelOptionIds);
-
             //then
-            assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> chosenRepository.findOptionChosenByOptionId(modelOptionIds))
+                    .isInstanceOf(IllegalArgumentException.class);
         }
 
         @Test
@@ -157,21 +125,13 @@ class ChosenRepositoryTest {
         void success() {
             //given
             List<String> modelPackageIds = List.of("P1", "P2", "P3", "P4");
-            List<Integer> modelPackageRecentRecords = List.of(50, 52, 56, 57);
-            List<Integer> modelPackageTotalRecords = List.of(241, 241, 241, 241);
-
-            List<Integer> modelPackageChosenExpected = IntStream.range(0, modelPackageIds.size())
-                    .mapToDouble(i -> (double) modelPackageRecentRecords.get(i) * 100 / modelPackageTotalRecords.get(i))
-                    .mapToLong(Math::round)
-                    .mapToInt(operand -> (int) operand)
-                    .boxed()
-                    .collect(Collectors.toUnmodifiableList());
+            List<Integer> expectResults = List.of(21, 21, 21, 21);
 
             //when
             List<Integer> modelPackageChosen = chosenRepository.findPackageChosenByOptionId(modelPackageIds);
 
             //then
-            softAssertions.assertThat(modelPackageChosen).isEqualTo(modelPackageChosenExpected);
+            softAssertions.assertThat(modelPackageChosen).isEqualTo(expectResults);
         }
 
         @Test
@@ -181,10 +141,9 @@ class ChosenRepositoryTest {
             List<String> modelPackageIds = List.of("NOT-EXIST");
 
             //when
-            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findPackageChosenByOptionId(modelPackageIds);
-
             //then
-            assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> chosenRepository.findPackageChosenByOptionId(modelPackageIds))
+                    .isInstanceOf(IllegalArgumentException.class);
         }
 
         @Test
@@ -200,28 +159,20 @@ class ChosenRepositoryTest {
     }
 
     @Nested
-    @DisplayName("모델 패키지 선택률 조회 테스트")
+    @DisplayName("모델 외장 색상 선택률 조회 테스트")
     class findExteriorColorChosenByExteriorColorCode {
         @Test
         @DisplayName("선택률을 가져와야 한다.")
         void success() {
             //given
             List<String> exteriorColorIds = List.of("A2B", "D2S", "P7V", "R2T", "UB7", "WC9");
-            List<Integer> exteriorColorRecentRecords = List.of(38, 46, 36, 35, 42, 44);
-            List<Integer> exteriorColorTotalRecords = List.of(241, 241, 241, 241, 241, 241);
-
-            List<Integer> exteriorColorChosenExpected = IntStream.range(0, exteriorColorIds.size())
-                    .mapToDouble(i -> (double) exteriorColorRecentRecords.get(i) * 100 / exteriorColorTotalRecords.get(i))
-                    .mapToLong(Math::round)
-                    .mapToInt(operand -> (int) operand)
-                    .boxed()
-                    .collect(Collectors.toUnmodifiableList());
+            List<Integer> expectResults = List.of(17, 17, 17, 17, 17, 17);
 
             //when
             List<Integer> exteriorColorChosen = chosenRepository.findExteriorColorChosenByExteriorColorCode(exteriorColorIds);
 
             //then
-            softAssertions.assertThat(exteriorColorChosen).isEqualTo(exteriorColorChosenExpected);
+            softAssertions.assertThat(exteriorColorChosen).isEqualTo(expectResults);
         }
 
         @Test
@@ -231,10 +182,9 @@ class ChosenRepositoryTest {
             List<String> exteriorColorIds = List.of("AAA");
 
             //when
-            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findExteriorColorChosenByExteriorColorCode(exteriorColorIds);
-
             //then
-            assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> chosenRepository.findExteriorColorChosenByExteriorColorCode(exteriorColorIds))
+                    .isInstanceOf(IllegalArgumentException.class);
         }
 
         @Test
@@ -250,29 +200,20 @@ class ChosenRepositoryTest {
     }
 
     @Nested
-    @DisplayName("모델 패키지 선택률 조회 테스트")
+    @DisplayName("모델 내장 색상 선택률 조회 테스트")
     class findInteriorColorChosenByInteriorColorCode {
         @Test
         @DisplayName("선택률을 가져와야 한다.")
         void success() {
             //given
             List<String> interiorColorIds = List.of("I49", "YJY");
-
-            List<Integer> interiorColorRecentRecords = List.of(19, 19);
-            List<Integer> interiorColorTotalRecords = List.of(38, 38);
-
-            List<Integer> interiorColorChosenExpected = IntStream.range(0, interiorColorIds.size())
-                    .mapToDouble(i -> (double) interiorColorRecentRecords.get(i) * 100 / interiorColorTotalRecords.get(i))
-                    .mapToLong(Math::round)
-                    .mapToInt(operand -> (int) operand)
-                    .boxed()
-                    .collect(Collectors.toUnmodifiableList());
+            List<Integer> expectResults = List.of(50, 50);
 
             //when
-            List<Integer> exteriorColorChosen = chosenRepository.findInteriorColorChosenByInteriorColorCode("A2B", interiorColorIds);
+            List<Integer> exteriorColorChosen = chosenRepository.findInteriorColorChosenByInteriorColorCode(interiorColorIds);
 
             //then
-            softAssertions.assertThat(exteriorColorChosen).isEqualTo(interiorColorChosenExpected);
+            softAssertions.assertThat(exteriorColorChosen).isEqualTo(expectResults);
         }
 
         @Test
@@ -282,10 +223,9 @@ class ChosenRepositoryTest {
             List<String> interiorColorIds = List.of("AAA");
 
             //when
-            ThrowableAssert.ThrowingCallable runnable = () -> chosenRepository.findInteriorColorChosenByInteriorColorCode("A2B", interiorColorIds);
-
             //then
-            assertThatThrownBy(runnable).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> chosenRepository.findInteriorColorChosenByInteriorColorCode(interiorColorIds))
+                    .isInstanceOf(IllegalArgumentException.class);
         }
 
         @Test
@@ -293,7 +233,7 @@ class ChosenRepositoryTest {
         void returnEmptyList() {
             //given
             //when
-            List<Integer> interiorColorChosen = chosenRepository.findInteriorColorChosenByInteriorColorCode("A2B", List.of());
+            List<Integer> interiorColorChosen = chosenRepository.findInteriorColorChosenByInteriorColorCode(List.of());
 
             //then
             assertThat(interiorColorChosen.size()).isEqualTo(0);
