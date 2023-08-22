@@ -12,3 +12,8 @@ export const BUTTON = {
   STATE: 'inactive',
   MAIN_TITLE: '옵션을 선택해 추가해보세요.',
 };
+
+export const SIMILAR_INFO = {
+  TITLE: '유사견적서',
+  OPTION: '내 견적에 없는 옵션이에요.',
+};

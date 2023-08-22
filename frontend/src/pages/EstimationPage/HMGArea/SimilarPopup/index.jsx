@@ -5,10 +5,11 @@ import { SIMILAR, BUTTON } from './constants';
 import { ReactComponent as CloseIcon } from '../../../../../assets/icons/cancel.svg';
 import * as S from './style';
 import Button from '../../../../components/Button';
+import SimilarInfo from './SimilarInfo';
 
 function SimilarPopup({ show, close }) {
-  const { setTrimState, page, exteriorColor, interiorColor, summary } = useData();
-  const [toggle, setToggle] = useState(false);
+  const { setTrimState, page, exteriorColor, interiorColor } = useData();
+
   const buttonProps = {
     type: BUTTON.TYPE,
     state: BUTTON.STATE,
@@ -33,7 +34,6 @@ function SimilarPopup({ show, close }) {
       }));
     }
     fetchData();
-    setToggle(false);
   }, [exteriorColor, interiorColor]);
 
   return (
@@ -57,20 +57,9 @@ function SimilarPopup({ show, close }) {
                 <CloseIcon onClick={close} />
               </S.CloseButton>
             </S.Header>
-            {/*  */}
             <S.Contents>
-              <S.LeftArea>
-                <img
-                  src={summary.interiorImage}
-                  alt="interior"
-                  style={toggle ? null : { display: 'none' }}
-                />
-                <img
-                  src={summary.sideImage}
-                  alt="exterior"
-                  style={toggle ? { display: 'none' } : null}
-                />
-              </S.LeftArea>
+              {/* 반복문 돌려야함 */}
+              <SimilarInfo />
             </S.Contents>
           </S.PopupWrapper>
           <S.Footer>

@@ -79,27 +79,8 @@ export const CloseButton = styled.button`
 
 export const Contents = styled.div`
   display: flex;
-  width: 762px;
-  height: 224px;
   flex-shrink: 0;
   margin-top: 25px;
-
-  border-radius: 2px;
-  border: 1px solid ${({ theme }) => theme.color.activeBlue};
-`;
-
-export const LeftArea = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-
-  & > img {
-    width: 274px;
-    height: 156px;
-    object-fit: cover;
-  }
 `;
 
 export const Footer = styled.div`
