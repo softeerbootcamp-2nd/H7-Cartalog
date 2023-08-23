@@ -13,6 +13,7 @@ function Info({ setTrimState, exteriorColor }) {
   };
 
   const handleMouseDown = () => {
+    if (exteriorColor.rotate) return;
     setTrimState((prevState) => ({
       ...prevState,
       exteriorColor: {
@@ -24,6 +25,7 @@ function Info({ setTrimState, exteriorColor }) {
 
   useEffect(() => {
     const handleMouseUp = () => {
+      if (!exteriorColor.rotate) return;
       setTrimState((prevState) => ({
         ...prevState,
         exteriorColor: {
@@ -36,7 +38,7 @@ function Info({ setTrimState, exteriorColor }) {
     return () => {
       document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [setTrimState]);
+  }, [exteriorColor.rotate, setTrimState]);
 
   return (
     <S.Info onMouseDown={handleMouseDown}>
