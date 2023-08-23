@@ -2,9 +2,9 @@ import Section from '../../Section';
 import Info from './Info';
 import Pick from './Pick';
 
-function Skeleton({ type }) {
+function Skeleton() {
   const SectionProps = {
-    type,
+    type: 'TrimSelect',
     Info: <Info />,
     Pick: <Pick />,
   };
