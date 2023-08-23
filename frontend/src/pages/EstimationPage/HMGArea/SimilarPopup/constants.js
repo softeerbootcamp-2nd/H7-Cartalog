@@ -36,3 +36,8 @@ export const ADD_POPUP = {
   EXIT: '확인',
   EXIT_TEXT: '선택된 옵션이 있습니다.\n지금 서비스 종료 시 저장되지 않습니다.',
 };
+
+export const OPTION_POPUP = {
+  EXIT: '확인',
+  EXIT_TEXT: '선택한 옵션이\n내 견적서에 추가되었습니다.',
+};

@@ -1,7 +1,14 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useData, TotalPrice } from '../../../../utils/Context';
-import { SIMILAR, SELECT_BUTTON, ADD_BUTTON, SELECT_POPUP, ADD_POPUP } from './constants';
+import {
+  SIMILAR,
+  SELECT_BUTTON,
+  ADD_BUTTON,
+  SELECT_POPUP,
+  ADD_POPUP,
+  OPTION_POPUP,
+} from './constants';
 import { ReactComponent as CloseIcon } from '../../../../../assets/icons/cancel.svg';
 import * as S from './style';
 import Button from '../../../../components/Button';
@@ -11,11 +18,12 @@ import PriceCompareBar from '../../../../components/PriceCompareBar';
 
 function SimilarPopup({ show, close }) {
   const data = useData();
+  const [addClicked, setAddClicked] = useState(false);
   const [exitShow, setExitShow] = useState(false);
   const handleExitShow = () => setExitShow(true);
   const handleExitClose = () => setExitShow(false);
   const [similarPage, setSimilarPage] = useState(0);
-  const [similarPrice, setSimilarPrice] = useState(42239849); // 수정
+  const [similarPrice, setSimilarPrice] = useState(42239849);
 
   const selectButtonProps = {
     type: SELECT_BUTTON.TYPE,
@@ -29,7 +37,10 @@ function SimilarPopup({ show, close }) {
     state: ADD_BUTTON.STATE,
     subTitle: `${ADD_BUTTON.SUB_TITLE} ${data.estimation.similarEstimateOption.length}개`,
     mainTitle: ADD_BUTTON.MAIN_TITLE,
-    event: () => {},
+    event: () => {
+      handleExitShow();
+      setAddClicked(true);
+    },
   };
 
   const selectPopupProps = {
@@ -64,6 +75,20 @@ function SimilarPopup({ show, close }) {
     children: ADD_POPUP.EXIT_TEXT,
   };
 
+  const optionPopupProps = {
+    show: exitShow,
+    close: handleExitClose,
+    actions: [
+      {
+        text: OPTION_POPUP.EXIT,
+        onClick: () => {
+          close();
+          setAddClicked(false);
+        },
+      },
+    ],
+    children: OPTION_POPUP.EXIT_TEXT,
+  };
   console.log(data.estimation.similarEstimateCountInfo);
 
   return (
@@ -117,12 +142,13 @@ function SimilarPopup({ show, close }) {
           </>,
           document.querySelector('#modal'),
         )}
-
-      {data.estimation.similarEstimateOption.length === 0 ? (
-        <Popup {...selectPopupProps} />
-      ) : (
-        <Popup {...addPopupProps} />
-      )}
+      {(() => {
+        if (addClicked) return <Popup {...optionPopupProps} />;
+        if (data.estimation.similarEstimateOption.length === 0)
+          return <Popup {...selectPopupProps} />;
+        if (data.estimation.similarEstimateOption.length !== 0) return <Popup {...addPopupProps} />;
+        return null;
+      })()}
     </>
   );
 }
