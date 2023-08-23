@@ -5,25 +5,13 @@ function SearchBar({ placeholder = '', search }) {
   const [value, setValue] = useState('');
   const handleChange = (event) => {
     setValue(event.target.value);
-  };
-  const handleSubmit = () => {
-    search(value);
-  };
-  const handleKeyDown = (event) => {
-    if (event.key !== 'Enter') return;
-    handleSubmit();
+    search(event.target.value);
   };
 
   return (
     <S.SearchBar>
-      <S.SearchInput
-        placeholder={placeholder}
-        value={value}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-        onSubmit={handleSubmit}
-      />
-      <S.SearchButton type="button" onClick={handleSubmit} />
+      <S.SearchInput placeholder={placeholder} value={value} onChange={handleChange} />
+      <S.SearchButton type="button" />
     </S.SearchBar>
   );
 }
