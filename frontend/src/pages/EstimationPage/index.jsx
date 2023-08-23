@@ -22,18 +22,22 @@ function Estimation() {
     async function fetchData() {
       if (!data.estimation.isFetch && data.page === 6) {
         try {
-          const response = await fetch('http://3.36.126.30/estimates', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              detailTrimId: data.modelType.detailTrimId,
-              exteriorColorCode: data.exteriorColor.code,
-              interiorColorCode: data.interiorColor.code,
-              selectOptionOrPackageIds: data.optionPicker.chosenOptions,
+          const [response, averageResponse, similarResponse] = await Promise.all([
+            fetch('http://3.36.126.30/estimates', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                detailTrimId: data.modelType.detailTrimId,
+                exteriorColorCode: data.exteriorColor.code,
+                interiorColorCode: data.interiorColor.code,
+                selectOptionOrPackageIds: data.optionPicker.chosenOptions,
+              }),
             }),
-          });
+            fetch(`http://3.36.126.30/estimates/distribution?trimId=${data.trim.id}`),
+            fetch(`http://3.36.126.30/?estimateId=${data.estimation?.id}`),
+          ]);
 
           if (response.ok) {
             const responseData = await response.json();
@@ -50,24 +54,24 @@ function Estimation() {
           } else {
             console.error('견적서 요청 실패', response.status);
           }
+
+          const [averageFetch, similarFetch] = await Promise.all([
+            averageResponse.json(),
+            similarResponse.json(),
+          ]);
+
+          data.setTrimState((prevState) => ({
+            ...prevState,
+            estimation: {
+              ...prevState.estimation,
+              isFetch: true,
+              averagePrice: averageFetch,
+              myEstimateCount: similarFetch.myEstimateCount,
+              similarEstimateCounts: similarFetch.similarEstimateCounts,
+            },
+          }));
         } catch (error) {
           console.error('네트워크 오류', error);
-        } finally {
-          if (!data.estimation.isFetch) {
-            const response = await fetch(
-              `http://3.36.126.30/estimates/distribution?trimId=${data.trim.id}`,
-            );
-            const dataFetch = await response.json();
-
-            data.setTrimState((prevState) => ({
-              ...prevState,
-              estimation: {
-                ...prevState.estimation,
-                isFetch: true,
-                averagePrice: dataFetch,
-              },
-            }));
-          }
         }
       }
     }

@@ -1,17 +1,19 @@
 import { useState, useRef } from 'react';
+import { useData } from '../../../../utils/Context';
 import * as S from './style';
 import Chart from '../../../../components/Chart';
 import HMGCard from '../../../../components/HMGCard';
 import useIntersectionObserver from '../../../../hooks/useIntersectionObserver';
 import SimilarPopup from '../SimilarPopup';
 
-function SimilarCard({ data }) {
+function SimilarCard() {
+  const data = useData();
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
   const targetRef = useRef();
   const isInViewport = useIntersectionObserver(targetRef);
-  const max = data?.similar?.reduce((acc, cur) => Math.max(acc, cur.value), 0);
+  const max = Math.max(data.estimation.myEstimateCount);
 
   return (
     <HMGCard
@@ -27,10 +29,10 @@ function SimilarCard({ data }) {
       <S.ChartWrapper
         className={isInViewport ? null : 'stop'}
         ref={targetRef}
-        $n={(data?.similar?.length ?? 0) + 1}
+        $n={(data.estimation.similarEstimateCounts?.length ?? 0) + 1}
       >
-        <Chart active value={data?.value} max={max} />
-        {data?.similar?.map((item) => (
+        <Chart active value={data.estimation.myEstimateCount} max={max} />
+        {data.estimation?.similarEstimateCounts.map((item) => (
           <Chart key={item.id} value={item.value} max={max} />
         ))}
       </S.ChartWrapper>
