@@ -1,37 +1,39 @@
 import { useEffect, useState } from 'react';
 import { useData } from '../../utils/Context';
 import { OPTION_PICKER } from './constants';
-import Skeleton from '../../components/Skeleton';
 import Section from '../../components/Section';
 import Info from './Info';
 import Pick from './Pick';
+import useFetch from '../../hooks/useFetch';
 
 function OptionPicker() {
   const { setTrimState, page, modelType, interiorColor, optionPicker } = useData();
   const [selectedId, setSelectedId] = useState(null);
+  const fetchedData = useFetch(
+    `models/trims/options?detailTrimId=${modelType.detailTrimId}&interiorColorCode=${interiorColor.code}`,
+  );
 
   useEffect(() => {
-    async function fetchData() {
-      if (optionPicker.isFetch || page !== 5) return;
-      const response = await fetch(
-        `http://3.36.126.30/models/trims/options?detailTrimId=${modelType.detailTrimId}&interiorColorCode=${interiorColor.code}`,
-      );
-      const dataFetch = await response.json();
-
-      setTrimState((prevState) => ({
-        ...prevState,
-        optionPicker: {
-          ...prevState.optionPicker,
-          isFetch: true,
-          defaultOptions: [...dataFetch.defaultOptions],
-          selectOptions: [...dataFetch.selectOptions],
-          category: [...dataFetch.multipleSelectParentCategory],
-        },
-      }));
-      setSelectedId(dataFetch.selectOptions[0].id);
-    }
-    fetchData();
-  }, [interiorColor.code, modelType.detailTrimId, optionPicker.isFetch, page, setTrimState]);
+    if (!fetchedData || optionPicker.isFetch || page !== 5) return;
+    setTrimState((prevState) => ({
+      ...prevState,
+      optionPicker: {
+        ...prevState.optionPicker,
+        isFetch: true,
+        defaultOptions: [...fetchedData.defaultOptions],
+        selectOptions: [...fetchedData.selectOptions],
+        category: [...fetchedData.multipleSelectParentCategory],
+      },
+    }));
+    setSelectedId(fetchedData.selectOptions[0].id);
+  }, [
+    fetchedData,
+    interiorColor.code,
+    modelType.detailTrimId,
+    optionPicker.isFetch,
+    page,
+    setTrimState,
+  ]);
 
   const SectionProps = {
     type: OPTION_PICKER.TYPE,
@@ -39,11 +41,7 @@ function OptionPicker() {
     Pick: <Pick selected={selectedId} setSelected={setSelectedId} />,
   };
 
-  const SkeletonProps = {
-    type: OPTION_PICKER.TYPE,
-  };
-
-  return optionPicker.isFetch ? <Section {...SectionProps} /> : <Skeleton {...SkeletonProps} />;
+  return <Section {...SectionProps} />;
 }
 
 export default OptionPicker;

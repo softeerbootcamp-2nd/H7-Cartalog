@@ -1,4 +1,3 @@
-import { useData } from '../../../utils/Context';
 import { EXTERIOR_COLOR, PICK } from '../constants';
 import * as S from './style';
 import PickTitle from '../../../components/PickTitle';
@@ -6,14 +5,12 @@ import ColorCard from '../../../components/ColorCard';
 import ColorChip from '../../../components/ColorChip';
 import NextColor from '../../../components/NextColor';
 
-function Pick() {
-  const { setTrimState, exteriorColor } = useData();
+function Pick({ setTrimState, exteriorColor }) {
   const pickTitleProps = { mainTitle: PICK.TITLE };
   const colorProps = { $position: exteriorColor.position };
 
   const handleColorCardClick = (exterior) => {
     if (exterior.code === exteriorColor.code) return;
-
     setTrimState((prevState) => ({
       ...prevState,
       exteriorColor: {

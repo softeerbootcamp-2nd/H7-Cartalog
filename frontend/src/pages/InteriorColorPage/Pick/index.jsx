@@ -1,12 +1,10 @@
-import { useData } from '../../../utils/Context';
 import { INTERIOR_COLOR, PICK } from '../constants';
 import * as S from './style';
 import PickTitle from '../../../components/PickTitle';
 import ColorCard from '../../../components/ColorCard';
 import ColorChip from '../../../components/ColorChip';
 
-function Pick() {
-  const { setTrimState, interiorColor } = useData();
+function Pick({ setTrimState, interiorColor }) {
   const pickTitleProps = { mainTitle: PICK.TITLE };
 
   const handleColorCardClick = (interior) => {

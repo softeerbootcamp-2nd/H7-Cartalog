@@ -12,7 +12,7 @@ function HMGData() {
     async function fetchData() {
       if (!trim.isDefault) return;
       const response = await fetch(
-        `http://3.36.126.30/models/trims/detail?modelTypeIds=${modelType.powerTrainId}&modelTypeIds=${modelType.bodyTypeId}&modelTypeIds=${modelType.wheelDriveId}&trimId=${trim.id}`,
+        `http://13.209.9.2/models/trims/detail?modelTypeIds=${modelType.powerTrainId}&modelTypeIds=${modelType.bodyTypeId}&modelTypeIds=${modelType.wheelDriveId}&trimId=${trim.id}`,
       );
       const dataFetch = await response.json();
 
