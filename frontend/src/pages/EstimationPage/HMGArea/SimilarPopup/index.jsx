@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useData } from '../../../../utils/Context';
 import { SIMILAR, BUTTON, POPUP } from './constants';
@@ -7,7 +7,6 @@ import * as S from './style';
 import Button from '../../../../components/Button';
 import Popup from '../../../../components/Popup';
 import SimilarInfo from './SimilarInfo';
-import useFetch from '../../../../hooks/useFetch';
 import PriceCompareBar from '../../../../components/PriceCompareBar';
 
 function SimilarPopup({ show, close }) {
@@ -15,6 +14,7 @@ function SimilarPopup({ show, close }) {
   const [exitShow, setExitShow] = useState(false);
   const handleExitShow = () => setExitShow(true);
   const handleExitClose = () => setExitShow(false);
+  const [similarPage, setSimilarPage] = useState(0);
 
   const buttonProps = {
     type: BUTTON.TYPE,
@@ -39,24 +39,7 @@ function SimilarPopup({ show, close }) {
     children: POPUP.EXIT_TEXT,
   };
 
-  // 데이터 받아와야함
-  // const fetchedGetData = useFetch(
-  //   `similarity/releases?estimateId=${data.estimation.id}&similarEstimateId=${data.trim.id}`,
-  // );
-
-  // useEffect(() => {
-  //   if (!fetchedGetData || data.estimation.isFetch || data.page !== 6) return;
-  //   data.setTrimState((prevState) => ({
-  //     ...prevState,
-  //     estimation: {
-  //       ...prevState.estimation,
-  //       isPost: true,
-  //       id: fetchedPostData,
-  //       isFetch: true,
-  //       averagePrice: fetchedGetData,
-  //     },
-  //   }));
-  // }, [data, fetchedGetData, fetchedPostData]);
+  console.log(data.estimation.similarEstimateCountInfo);
 
   return (
     <>
@@ -81,9 +64,15 @@ function SimilarPopup({ show, close }) {
                     <CloseIcon onClick={handleExitShow} />
                   </S.CloseButton>
                 </S.Header>
-                <S.Contents>
-                  {/* 반복문 돌려야함 */}
-                  <SimilarInfo />
+                <S.Contents style={{ transform: `translateX(${-similarPage * 772}px)` }}>
+                  {data.estimation.similarEstimateCountInfo.map((info) => (
+                    <SimilarInfo
+                      key={info.estimateInfo.detailTrimId}
+                      info={info.estimateInfo}
+                      page={similarPage}
+                      setPage={setSimilarPage}
+                    />
+                  ))}
                 </S.Contents>
               </S.PopupWrapper>
               <S.Footer>

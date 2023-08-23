@@ -31,6 +31,7 @@ export const ArrowButton = styled.button`
   align-items: center;
   justify-content: center;
   padding: 8px;
+  cursor: pointer;
 
   & > svg {
     fill: ${({ theme }) => theme.color.gray['200']};

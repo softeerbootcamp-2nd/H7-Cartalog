@@ -7,29 +7,41 @@ import * as S from './style';
 import HMGTag from '../../../../../components/HMGTag';
 import SimilarCard from '../SimilarCard';
 
-function SimilarInfo() {
+function SimilarInfo({ info, page, setPage }) {
   const [rightArrow, setRightArrow] = useState('');
   const [leftArrow, setLeftArrow] = useState('');
-  const { summary } = useData();
+  const data = useData();
   const value = 42239849;
+
+  useEffect(() => {
+    setLeftArrow(page === 0 ? '' : 'active');
+    setRightArrow(page !== data.estimation.similarEstimateCountInfo.length - 1 ? 'active' : '');
+  }, [data.estimation.similarEstimateCountInfo.length, page]);
 
   return (
     <S.SimilarInfo>
       <S.LeftArea>
-        <S.ArrowButton className={leftArrow}>
+        <S.ArrowButton
+          className={leftArrow}
+          onClick={() => setPage(page - 1)}
+          disabled={leftArrow !== 'active'}
+        >
           <LeftArrow />
         </S.ArrowButton>
         <S.LeftInfo>
           <S.SubTitle>{SIMILAR_INFO.TITLE}</S.SubTitle>
           <S.MainTitle>Le Blanc</S.MainTitle>
           <S.HashTags>
-            {['하이', '바보', '크롱'].slice(0, 3).map((hashtag) => (
-              <div key={hashtag}>{hashtag}</div>
-            ))}
+            {info.modelTypes
+              .map((type) => type.name)
+              .slice(0, 3)
+              .map((hashtag) => (
+                <div key={hashtag}>{hashtag}</div>
+              ))}
           </S.HashTags>
           <S.Price>{value.toLocaleString('ko-KR')}원</S.Price>
         </S.LeftInfo>
-        <img src={summary.sideImage} alt="exterior" />
+        <img src={info.exteriorCarSideImageUrl} alt="exterior" />
       </S.LeftArea>
       <S.RightArea>
         <S.RightInfo>
@@ -46,7 +58,7 @@ function SimilarInfo() {
                 price={350000}
                 //   selected={exteriorColor.code === exterior.code}
                 onClick={() => {}}
-                imageUrl={summary.sideImage}
+                // imageUrl={summary.sideImage}
               />
               <SimilarCard
                 //   key={exterior.code}
@@ -54,12 +66,16 @@ function SimilarInfo() {
                 price={350000}
                 //   selected={exteriorColor.code === exterior.code}
                 onClick={() => {}}
-                imageUrl={summary.sideImage}
+                // imageUrl={summary.sideImage}
               />
             </S.CardWrapper>
           </S.OptionWrapper>
         </S.RightInfo>
-        <S.ArrowButton className={rightArrow}>
+        <S.ArrowButton
+          className={rightArrow}
+          onClick={() => setPage(page + 1)}
+          disabled={rightArrow !== 'active'}
+        >
           <RightArrow />
         </S.ArrowButton>
       </S.RightArea>

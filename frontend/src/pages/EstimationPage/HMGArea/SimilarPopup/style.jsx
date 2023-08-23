@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import { FadeIn, FadeInWithTransform } from '../../../../styles/GlobalStyle';
+import { EASE_OUT_CUBIC } from '../../../../constants';
 
 export const SimilarPopup = styled.div`
   ${FadeInWithTransform}
@@ -88,6 +89,8 @@ export const Contents = styled.div`
   display: flex;
   flex-shrink: 0;
   margin-top: 25px;
+  gap: 12px;
+  transition: transform 0.5s ${EASE_OUT_CUBIC};
 `;
 
 export const Footer = styled.div`
