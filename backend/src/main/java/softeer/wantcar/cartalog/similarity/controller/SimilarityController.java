@@ -97,14 +97,13 @@ public class SimilarityController {
     }
 
     @ApiOperation(
-            value = "123",
-            notes = "내 견적의 출고 개수와 유사 견적들의 출고 개수, 유사 견적 정보를 제공한다.")
+            value = "모든 유사 견적 조회",
+            notes = "모든 견적 식별자와 유사한 견적 정보를 제공한다.")
     @ApiImplicitParam(
             name = "estimateId", value = "내 견적 식별자", required = true,
             dataType = "java.lang.Long", paramType = "query", example = "1")
     @ApiResponses({
-            @ApiResponse(code = 404, message = "존재하지 않는 견적 식별자입니다."),
-            @ApiResponse(code = 500, message = "적절하지 않은 데이터가 있어 요청을 처리할 수 없습니다. 관리자에게 문의하세요.")})
+            @ApiResponse(code = 404, message = "존재하지 않는 견적 식별자입니다.")})
     @GetMapping("/releasesAll")
     public ResponseEntity<SimilarEstimateListResponseDto> findAllSimilarEstimates(@RequestParam("estimateId") Long estimateId) {
         SimilarEstimateCountResponseDto similarEstimateCounts = similarityService.getSimilarEstimateCounts(estimateId);
