@@ -21,15 +21,29 @@ import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.tabs.TabLayout
 import com.softeer.cartalog.R
 import com.softeer.cartalog.data.local.MyCarDatabase
+import com.softeer.cartalog.data.remote.api.RetrofitClient
+import com.softeer.cartalog.data.repository.CarRepositoryImpl
+import com.softeer.cartalog.data.repository.local.CarLocalDataSource
+import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
 import com.softeer.cartalog.databinding.ActivityMainBinding
 import com.softeer.cartalog.ui.dialog.PriceSummaryBottomSheetFragment
 import com.softeer.cartalog.util.PriceDataCallback
+import com.softeer.cartalog.viewmodel.CommonViewModelFactory
 import com.softeer.cartalog.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallback {
-    private val mainViewModel: MainViewModel by viewModels()
+
     private val binding: ActivityMainBinding by lazy {
         DataBindingUtil.setContentView(this, R.layout.activity_main)
+    }
+    private val carRepositoryImpl by lazy {
+        CarRepositoryImpl(
+            CarLocalDataSource(MyCarDatabase.getInstance(this@MainActivity)!!),
+            CarRemoteDataSource(RetrofitClient.carApi)
+        )
+    }
+    private val mainViewModel: MainViewModel by viewModels {
+        CommonViewModelFactory(carRepositoryImpl)
     }
     private val navController by lazy {
         binding.fcContainer.getFragment<NavHostFragment>().navController
@@ -69,12 +83,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
                 tab?.let {
                     val selectedPosition = it.position
 
-                    // 처음부터 시작하기 눌렀을 때 동작
-                    // TODO :: RoomDB 초기화 해야함!
                     if (mainViewModel.isReset.value == true) {
+                        mainViewModel.changeResetState()
                         navController.navigate(R.id.trimFragment)
                         resetTabTextColor(tabLayout)
-                        mainViewModel.changeResetState()
                     }
 
                     // 다음 탭 이동 동작
@@ -88,7 +100,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
                             4 -> navController.navigate(R.id.action_interiorFragment_to_optionFragment)
                             5 -> navController.navigate(R.id.action_optionFragment_to_confirmFragment)
                         }
-
                         setPrevTabTextColor(tabLayout, selectedPosition)
                     }
 
@@ -104,7 +115,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
                         }
                         tabLayout.getTabAt(selectedPosition)?.customView = null
                     }
-
                     mainViewModel.setStepIndex(selectedPosition)
                 }
             }
@@ -178,6 +188,4 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
     fun getUserTotalPrice(): Int {
         return mainViewModel.totalPrice.value!!
     }
-
-
 }

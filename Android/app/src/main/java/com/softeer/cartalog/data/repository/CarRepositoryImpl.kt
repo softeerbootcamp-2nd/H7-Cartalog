@@ -16,7 +16,6 @@ import com.softeer.cartalog.data.model.estimate.EstimateRequest
 import com.softeer.cartalog.data.model.estimate.SimilarEstimates
 import com.softeer.cartalog.data.repository.local.CarLocalDataSource
 import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
-import retrofit2.Response
 
 class CarRepositoryImpl(
     private val carLocalDataSource: CarLocalDataSource,
@@ -199,6 +198,9 @@ class CarRepositoryImpl(
         return if (response.isSuccessful) response.body()!! else null
     }
 
+    override suspend fun deleteAllData() {
+        carLocalDataSource.deleteAllData()
+    }
 
 
 }

@@ -3,8 +3,11 @@ package com.softeer.cartalog.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.softeer.cartalog.data.repository.CarRepository
+import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class MainViewModel(private val repository: CarRepository) : ViewModel() {
 
     private val _stepIndex = MutableLiveData(0)
     val stepIndex: LiveData<Int> = _stepIndex
@@ -66,5 +69,8 @@ class MainViewModel : ViewModel() {
 
     fun changeResetState() {
         _isReset.value = !_isReset.value!!
+        viewModelScope.launch {
+            repository.deleteAllData()
+        }
     }
 }

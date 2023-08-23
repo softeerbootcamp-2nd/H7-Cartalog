@@ -14,7 +14,6 @@ import com.softeer.cartalog.data.model.db.PriceData
 import com.softeer.cartalog.data.model.estimate.EstimateCounts
 import com.softeer.cartalog.data.model.estimate.EstimateRequest
 import com.softeer.cartalog.data.model.estimate.SimilarEstimates
-import retrofit2.Response
 
 interface CarRepository {
 
@@ -38,4 +37,5 @@ interface CarRepository {
     suspend fun postEstimate(estimate: EstimateRequest): Int
     suspend fun getEstimateCount(estimateId: Int): EstimateCounts
     suspend fun getSimilarEstimate(estimateId: Int, similarEstimateId: Int): SimilarEstimates?
+    suspend fun deleteAllData()
 }
