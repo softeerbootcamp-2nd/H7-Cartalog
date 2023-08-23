@@ -109,7 +109,6 @@ export function StateProvider({ children }) {
           myEstimateCount: null,
           similarEstimateCounts: [],
           similarEstimateCountInfo: [],
-          similarEstimateOption: [],
         };
         break;
       case 'summary':
