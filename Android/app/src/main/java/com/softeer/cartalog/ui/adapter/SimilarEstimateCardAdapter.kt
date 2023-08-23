@@ -3,13 +3,9 @@ package com.softeer.cartalog.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.softeer.cartalog.data.model.estimate.SimilarEstimateOption
 import com.softeer.cartalog.data.model.estimate.SimilarEstimates
-import com.softeer.cartalog.data.model.trim.Trim
 import com.softeer.cartalog.databinding.ItemEstimateCardBinding
-import com.softeer.cartalog.databinding.ItemTrimCardBinding
 import com.softeer.cartalog.viewmodel.EstimateViewModel
-import com.softeer.cartalog.viewmodel.TrimViewModel
 
 class SimilarEstimateCardAdapter(private val viewModel: EstimateViewModel) :
     RecyclerView.Adapter<SimilarEstimateCardAdapter.SimilarEstimateCardViewHolder>() {
@@ -39,6 +35,7 @@ class SimilarEstimateCardAdapter(private val viewModel: EstimateViewModel) :
             isSelected = position == viewModel.selectedCard.value
             binding.isSelected = isSelected
             binding.item = item
+            binding.position = (position + 1)
         }
     }
 }

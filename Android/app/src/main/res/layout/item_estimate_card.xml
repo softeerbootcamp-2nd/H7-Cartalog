@@ -14,6 +14,10 @@
         <variable
             name="item"
             type="com.softeer.cartalog.data.model.estimate.SimilarEstimates" />
+
+        <variable
+            name="position"
+            type="Integer" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -75,7 +79,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="26dp"
-                android:text="첫 번째 유사견적서"
+                android:text="@{String.format(`%d 번째 유사견적서`,position)}"
                 android:textColor="@color/gray_900"
                 app:layout_constraintEnd_toEndOf="@id/gl_end"
                 app:layout_constraintStart_toStartOf="@id/gl_start"
@@ -87,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/hyndaisans_head_bold"
                 android:paddingTop="3dp"
-                android:text="Le Blanc"
+                android:text="@{item.trimName}"
                 android:textColor="@color/primary_color_700"
                 android:textSize="26sp"
                 app:layout_constraintEnd_toEndOf="@id/gl_end"
@@ -98,6 +102,7 @@
                 android:id="@+id/cg_hashtag"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                app:hashTags="@{item.modelTypes}"
                 app:layout_constraintStart_toStartOf="@id/gl_start"
                 app:layout_constraintTop_toBottomOf="@id/tv_trim_name">
 
@@ -114,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/hyndaisans_head_medium"
-                android:text="41,980,000 원"
+                android:text="@{String.format(`%,d원`,item.price)}"
                 android:textColor="@color/primary_color_700"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/gl_center_vertical"
@@ -172,7 +177,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="내 견적에 없는 옵션이에요."
+                android:text="@string/estimate_hmg_data_title"
                 android:textColor="@color/gray_900"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@id/gl_start"
@@ -182,12 +187,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginTop="10dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_hmg_title_1"
-                app:layout_constraintBottom_toBottomOf="parent"
                 tools:itemCount="2"
                 tools:listitem="@layout/item_estimate_option" />
 
