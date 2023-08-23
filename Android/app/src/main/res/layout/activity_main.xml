@@ -54,20 +54,22 @@
 
             <ImageView
                 android:id="@+id/iv_guide_msg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_main_guide_msg"
-                android:layout_marginStart="33dp"
+                android:layout_width="256dp"
+                android:layout_height="236dp"
+                android:paddingHorizontal="8dp"
+                android:paddingBottom="20dp"
+                android:background="@drawable/img_main_guide_bgr"
+                android:src="@drawable/img_main_guide_contents"
                 android:layout_marginBottom="20dp"
                 app:layout_constraintBottom_toTopOf="@id/iv_guide_contents"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="@id/iv_guide_contents"/>
 
             <ImageView
                 android:id="@+id/iv_guide_contents"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_main_guide_trim"
-                android:layout_marginBottom="124dp"
+                android:layout_marginBottom="128dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
