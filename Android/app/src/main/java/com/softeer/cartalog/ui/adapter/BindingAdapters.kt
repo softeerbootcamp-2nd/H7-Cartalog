@@ -22,6 +22,7 @@ import com.softeer.cartalog.util.ItemDividerDecoration
 import com.softeer.cartalog.util.ItemHorizontalSpacingDecoration
 import com.softeer.cartalog.util.ItemVerticalSpacingDecoration
 import com.softeer.cartalog.util.UtilManager
+import com.softeer.cartalog.viewmodel.EstimateViewModel
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import com.softeer.cartalog.viewmodel.InteriorViewModel
 import com.softeer.cartalog.viewmodel.MainViewModel
@@ -84,6 +85,32 @@ fun setTrimCardViewPager(
                     delay(300)
                     viewPager.setCurrentItem(1, true)
                 }
+            }
+        })
+    }
+    indicator.attachTo(viewPager)
+}
+
+@BindingAdapter("viewModel", "indicator")
+fun setSimilarEstimateCardViewPager(
+    viewPager: ViewPager2,
+    viewModel: EstimateViewModel,
+    indicator: DotsIndicator
+) {
+
+    val adjustedOffsetPx = UtilManager.getViewPagerGap(viewPager)
+    val similarEstimateCardAdapter = SimilarEstimateCardAdapter(viewModel)
+    with(viewPager) {
+        offscreenPageLimit = 2
+        adapter = similarEstimateCardAdapter
+        setPageTransformer { page, position ->
+            page.translationX = position * -adjustedOffsetPx
+        }
+        registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                viewModel.changeSelectedCard(position)
+                similarEstimateCardAdapter.notifyItemRangeChanged(position - 1, 3)
             }
         })
     }

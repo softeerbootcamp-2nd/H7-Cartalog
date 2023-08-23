@@ -4,12 +4,17 @@ import com.softeer.cartalog.data.model.option.DetailOptions
 import com.softeer.cartalog.data.model.summary.SummaryCarImage
 import com.softeer.cartalog.data.model.color.ExteriorColors
 import com.softeer.cartalog.data.model.color.InteriorColors
+import com.softeer.cartalog.data.model.estimate.EstimateCounts
+import com.softeer.cartalog.data.model.estimate.EstimateRequest
+import com.softeer.cartalog.data.model.estimate.SimilarEstimates
 import com.softeer.cartalog.data.model.option.Options
 import com.softeer.cartalog.data.model.type.TrimDetail
 import com.softeer.cartalog.data.model.trim.Trims
 import com.softeer.cartalog.data.model.type.Types
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface CarApi {
@@ -51,4 +56,16 @@ interface CarApi {
     suspend fun getDetailOptions(
         @Query("optionId") optionId: String,
     ): Response<DetailOptions>
+
+    @POST("/estimates")
+    suspend fun postEstimate(@Body estimate: EstimateRequest): Response<Int>
+
+    @GET("/similarity")
+    suspend fun getEstimateCount(@Query("estimateId") estimateId: Int): Response<EstimateCounts>
+
+    @GET("/similarity/releases")
+    suspend fun getSimilarEstimate(
+        @Query("estimateId") estimateId: Int,
+        @Query("similarEstimateId") similarEstimateId: Int
+    ): Response<SimilarEstimates>
 }

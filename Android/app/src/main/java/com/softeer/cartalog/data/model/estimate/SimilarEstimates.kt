@@ -6,5 +6,5 @@ data class SimilarEstimates(
     val modelTypes         : List<String>,
     val exteriorColorCode  : String,
     val interiorColorCode  : String,
-    val nonExistentOptions : List<String>
+    val nonExistentOptions : List<SimilarEstimateOption>
 )

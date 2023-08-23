@@ -4,6 +4,9 @@ import com.softeer.cartalog.data.model.option.DetailOptions
 import com.softeer.cartalog.data.model.summary.SummaryCarImage
 import com.softeer.cartalog.data.model.color.ExteriorColors
 import com.softeer.cartalog.data.model.color.InteriorColors
+import com.softeer.cartalog.data.model.estimate.EstimateCounts
+import com.softeer.cartalog.data.model.estimate.EstimateRequest
+import com.softeer.cartalog.data.model.estimate.SimilarEstimates
 import com.softeer.cartalog.data.model.option.Options
 import com.softeer.cartalog.data.model.type.TrimDetail
 import com.softeer.cartalog.data.model.trim.Trims
@@ -53,6 +56,21 @@ class CarRemoteDataSource(
 
     suspend fun getDetailOptions(optionId: String): Response<DetailOptions> {
         return carApi.getDetailOptions(optionId)
+    }
+
+    suspend fun postEstimate(estimate: EstimateRequest): Response<Int> {
+        return carApi.postEstimate(estimate)
+    }
+
+    suspend fun getEstimateCount(estimateId: Int): Response<EstimateCounts> {
+        return carApi.getEstimateCount(estimateId)
+    }
+
+    suspend fun getSimilarEstimate(
+        estimateId: Int,
+        similarEstimateId: Int
+    ): Response<SimilarEstimates> {
+        return carApi.getSimilarEstimate(estimateId, similarEstimateId)
     }
 
 }

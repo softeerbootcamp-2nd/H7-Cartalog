@@ -11,6 +11,10 @@ import com.softeer.cartalog.data.model.trim.Trims
 import com.softeer.cartalog.data.model.type.Type
 import com.softeer.cartalog.data.model.db.MyCar
 import com.softeer.cartalog.data.model.db.PriceData
+import com.softeer.cartalog.data.model.estimate.EstimateCounts
+import com.softeer.cartalog.data.model.estimate.EstimateRequest
+import com.softeer.cartalog.data.model.estimate.SimilarEstimates
+import retrofit2.Response
 
 interface CarRepository {
 
@@ -31,4 +35,7 @@ interface CarRepository {
     suspend fun getOptionTypeDataList(): List<PriceData>
     suspend fun setOptionTypeDataList(optionList: List<PriceData>): List<Long>
     suspend fun deleteOptionItem(option: PriceData)
+    suspend fun postEstimate(estimate: EstimateRequest): Int
+    suspend fun getEstimateCount(estimateId: Int): EstimateCounts
+    suspend fun getSimilarEstimate(estimateId: Int, similarEstimateId: Int): SimilarEstimates?
 }

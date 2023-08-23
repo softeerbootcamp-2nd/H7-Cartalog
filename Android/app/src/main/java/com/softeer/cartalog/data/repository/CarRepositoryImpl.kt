@@ -11,8 +11,12 @@ import com.softeer.cartalog.data.model.trim.Trims
 import com.softeer.cartalog.data.model.type.Type
 import com.softeer.cartalog.data.model.db.MyCar
 import com.softeer.cartalog.data.model.db.PriceData
+import com.softeer.cartalog.data.model.estimate.EstimateCounts
+import com.softeer.cartalog.data.model.estimate.EstimateRequest
+import com.softeer.cartalog.data.model.estimate.SimilarEstimates
 import com.softeer.cartalog.data.repository.local.CarLocalDataSource
 import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
+import retrofit2.Response
 
 class CarRepositoryImpl(
     private val carLocalDataSource: CarLocalDataSource,
@@ -179,4 +183,22 @@ class CarRepositoryImpl(
     override suspend fun deleteOptionItem(option: PriceData) {
         carLocalDataSource.deleteOptionItem(option)
     }
+
+    override suspend fun postEstimate(estimate: EstimateRequest): Int {
+        val response = carRemoteDataSource.postEstimate(estimate)
+        return if (response.isSuccessful) response.body()!! else 0
+    }
+
+    override suspend fun getEstimateCount(estimateId: Int): EstimateCounts {
+        val response = carRemoteDataSource.getEstimateCount(estimateId)
+        return if (response.isSuccessful) response.body()!! else EstimateCounts(0, emptyList())
+    }
+
+    override suspend fun getSimilarEstimate(estimateId: Int, similarEstimateId: Int): SimilarEstimates? {
+        val response = carRemoteDataSource.getSimilarEstimate(estimateId, similarEstimateId)
+        return if (response.isSuccessful) response.body()!! else null
+    }
+
+
+
 }
