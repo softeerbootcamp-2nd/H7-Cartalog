@@ -3,8 +3,6 @@ name: Spring API CD
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the dev branch
 on:
-  push:
-    branches: [ main, dev, BE_dev ]
   pull_request:
     types: [ closed ]
     branches: [ main, dev, BE_dev ]
@@ -28,6 +26,11 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11.0.8
+
+      - name: 운영 서버 설정 파일 생성
+        run: echo "$APPLICATION_PRODUCTION" > ./src/main/resources/application-production.yml
+        env:
+          APPLICATION_PRODUCTION: ${{ secrets.APPLICATION_PRODUCTION }}
 
       - name: ./gradlew 권한 설정
         run: chmod +x ./gradlew

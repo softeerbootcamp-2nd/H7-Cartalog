@@ -5,7 +5,7 @@ REPOSITORY=$HOME_DIRECTORY/server
 cd $REPOSITORY
 
 LOG_FILE=$HOME_DIRECTORY/deploy.log
-APP_NAME=CartalogApplication
+APP_NAME=cartalog
 JAR_NAME=$(ls $REPOSITORY/build/libs/ | grep '.jar' | tail -n 1)
 JAR_PATH=$REPOSITORY/build/libs/$JAR_NAME
 
@@ -21,6 +21,6 @@ else
 fi
 
 echo "> $JAR_PATH 배포"
-nohup java -jar $JAR_PATH >> $LOG_FILE 2>&1 &
+nohup java -jar -Dspring.profiles.active=production $JAR_PATH >> $LOG_FILE 2>&1 &
 
 echo "[$(date)] server deploy" >> $LOG_FILE
