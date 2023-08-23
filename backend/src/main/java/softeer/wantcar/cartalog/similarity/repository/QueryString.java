@@ -39,10 +39,10 @@ public class QueryString {
             "   )";
 
     protected static final String findSimilarEstimateIds =
-            "SELECT estimate_id " +
+            "SELECT MIN(estimate_id) " +
             "FROM similar_estimates " +
-            "WHERE hash_tag_index IN (:hashTagIndexes) " +
-            "LIMIT 4 ";
+            "WHERE hash_tag_index IN ( :hashTagIndexes ) " +
+            "GROUP BY hash_tag_index ";
 
     protected static final String updateLastCalculatedIndex =
             "UPDATE pending_hash_tag_similarities " +
