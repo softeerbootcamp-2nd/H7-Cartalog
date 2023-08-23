@@ -3,7 +3,7 @@ package com.softeer.cartalog.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.softeer.cartalog.data.model.SummaryOptionPrice
+import com.softeer.cartalog.data.model.summary.SummaryOptionPrice
 import com.softeer.cartalog.databinding.ItemPriceSummaryOptionBinding
 
 class SummaryOptionsAdapter(private val optionList: List<SummaryOptionPrice>) :

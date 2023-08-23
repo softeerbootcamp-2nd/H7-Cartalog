@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.softeer.cartalog.data.enums.PriceDataType
-import com.softeer.cartalog.data.model.SummaryCarImage
-import com.softeer.cartalog.data.model.SummaryOptionPrice
+import com.softeer.cartalog.data.model.summary.SummaryCarImage
+import com.softeer.cartalog.data.model.summary.SummaryOptionPrice
 import com.softeer.cartalog.data.model.db.MyCar
 import com.softeer.cartalog.data.model.db.PriceData
 import com.softeer.cartalog.data.repository.CarRepository

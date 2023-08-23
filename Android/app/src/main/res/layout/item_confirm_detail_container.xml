@@ -5,7 +5,7 @@
     <data>
         <variable
             name="detailData"
-            type="com.softeer.cartalog.data.model.ConfirmDetail" />
+            type="com.softeer.cartalog.data.model.confirm.ConfirmDetail" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

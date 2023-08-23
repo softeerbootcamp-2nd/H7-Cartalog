@@ -20,8 +20,8 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.tabs.TabLayout
 import com.softeer.cartalog.R
 import com.softeer.cartalog.data.enums.OptionMode
-import com.softeer.cartalog.data.model.Option
-import com.softeer.cartalog.data.model.SummaryCarImage
+import com.softeer.cartalog.data.model.option.Option
+import com.softeer.cartalog.data.model.summary.SummaryCarImage
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import com.softeer.cartalog.viewmodel.InteriorViewModel
 import com.softeer.cartalog.viewmodel.OptionViewModel
@@ -88,7 +88,7 @@ fun setOnClickToggle(
                 .withEndAction {
                     layout.visibility = View.VISIBLE
                     if (idx != 5) {
-                        fragmentContainer.setPadding(0, 150, 0, 0)
+                        fragmentContainer.setPadding(0, 170, 0, 0)
                     }
                 }
             button.animate().rotation(180f).start()

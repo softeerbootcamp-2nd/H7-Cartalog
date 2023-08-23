@@ -10,7 +10,7 @@
 
         <variable
             name="option"
-            type="com.softeer.cartalog.data.model.DetailOptions" />
+            type="com.softeer.cartalog.data.model.option.DetailOptions" />
 
     </data>
 

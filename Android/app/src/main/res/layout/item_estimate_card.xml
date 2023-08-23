@@ -12,8 +12,8 @@
             type="Boolean" />
 
         <variable
-            name="trimItem"
-            type="com.softeer.cartalog.data.model.Trim" />
+            name="item"
+            type="com.softeer.cartalog.data.model.estimate.SimilarEstimates" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

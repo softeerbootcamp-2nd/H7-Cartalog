@@ -1,16 +1,20 @@
 package com.softeer.cartalog.data.repository
 
 import com.softeer.cartalog.data.enums.PriceDataType
-import com.softeer.cartalog.data.model.CarColor
-import com.softeer.cartalog.data.model.DetailOptions
-import com.softeer.cartalog.data.model.Options
-import com.softeer.cartalog.data.model.SummaryCarImage
-import com.softeer.cartalog.data.model.Trim
-import com.softeer.cartalog.data.model.TrimDetail
-import com.softeer.cartalog.data.model.Trims
-import com.softeer.cartalog.data.model.Type
+import com.softeer.cartalog.data.model.color.CarColor
+import com.softeer.cartalog.data.model.option.DetailOptions
+import com.softeer.cartalog.data.model.option.Options
+import com.softeer.cartalog.data.model.summary.SummaryCarImage
+import com.softeer.cartalog.data.model.trim.Trim
+import com.softeer.cartalog.data.model.type.TrimDetail
+import com.softeer.cartalog.data.model.trim.Trims
+import com.softeer.cartalog.data.model.type.Type
 import com.softeer.cartalog.data.model.db.MyCar
 import com.softeer.cartalog.data.model.db.PriceData
+import com.softeer.cartalog.data.model.estimate.EstimateCounts
+import com.softeer.cartalog.data.model.estimate.EstimateRequest
+import com.softeer.cartalog.data.model.estimate.SimilarEstimates
+import retrofit2.Response
 
 interface CarRepository {
 
@@ -31,4 +35,7 @@ interface CarRepository {
     suspend fun getOptionTypeDataList(): List<PriceData>
     suspend fun setOptionTypeDataList(optionList: List<PriceData>): List<Long>
     suspend fun deleteOptionItem(option: PriceData)
+    suspend fun postEstimate(estimate: EstimateRequest): Int
+    suspend fun getEstimateCount(estimateId: Int): EstimateCounts
+    suspend fun getSimilarEstimate(estimateId: Int, similarEstimateId: Int): SimilarEstimates?
 }

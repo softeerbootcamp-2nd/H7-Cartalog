@@ -116,7 +116,7 @@
         android:label="TypeDetailDialog">
         <argument
             android:name="types"
-            app:argType="com.softeer.cartalog.data.model.Types" />
+            app:argType="com.softeer.cartalog.data.model.type.Types" />
 
     </dialog>
     <dialog

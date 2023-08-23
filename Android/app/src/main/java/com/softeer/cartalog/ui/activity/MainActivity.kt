@@ -162,7 +162,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
 
             R.id.btn_similar_estimate -> {
                 startActivity(Intent(this@MainActivity, EstimateActivity::class.java))
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             }
         }
     }

@@ -2,10 +2,9 @@ package com.softeer.cartalog.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.findFragment
 import androidx.recyclerview.widget.RecyclerView
-import com.softeer.cartalog.data.model.Type
+import com.softeer.cartalog.data.model.type.Type
 import com.softeer.cartalog.databinding.ItemTypeDetailPopupBinding
 import com.softeer.cartalog.ui.dialog.TypeDetailDialog
 import com.softeer.cartalog.viewmodel.TypeViewModel
