@@ -16,6 +16,8 @@ import { TRIM_SELECT } from '../../pages/TrimSelectPage/constants';
 import { MODEL_TYPE } from '../../pages/ModelTypePage/constants';
 import { EXTERIOR_COLOR } from '../../pages/ExteriorColorPage/constants';
 import { INTERIOR_COLOR } from '../../pages/InteriorColorPage/constants';
+import { OPTION_PICKER } from '../../pages/OptionPickerPage/constants';
+import { ESTIMATION } from '../../pages/EstimationPage/constants';
 
 function Interaction() {
   const data = useData();
@@ -85,8 +87,16 @@ function Interaction() {
             <InteriorColor />
           </Suspense>
         )}
-        {isFetchMap[4] && <OptionPicker />}
-        {isFetchMap[5] && <Estimation />}
+        {isFetchMap[4] && (
+          <Suspense fallback={<Skeleton type={OPTION_PICKER.TYPE} />}>
+            <OptionPicker />
+          </Suspense>
+        )}
+        {isFetchMap[5] && (
+          <Suspense fallback={<Skeleton type={ESTIMATION.TYPE} />}>
+            <Estimation />
+          </Suspense>
+        )}
       </S.Page>
       <Footer />
       <PriceStaticBar />
