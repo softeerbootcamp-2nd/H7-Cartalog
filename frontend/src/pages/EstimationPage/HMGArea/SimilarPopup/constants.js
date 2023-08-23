@@ -16,10 +16,12 @@ export const BUTTON = {
 export const SIMILAR_INFO = {
   TITLE: '유사견적서',
   OPTION: '내 견적에 없는 옵션이에요.',
+  SELECT_OPTION: '선택된 옵션',
+  ADD_OPTION: '내 견적서에 추가하기',
 };
 
 export const POPUP = {
   CANCEL: '취소',
-  EXIT: '종료',
+  EXIT: '닫기',
   EXIT_TEXT: '유사견적을 닫으시겠습니까?',
 };

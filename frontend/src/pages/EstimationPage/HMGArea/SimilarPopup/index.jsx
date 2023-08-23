@@ -7,6 +7,7 @@ import * as S from './style';
 import Button from '../../../../components/Button';
 import Popup from '../../../../components/Popup';
 import SimilarInfo from './SimilarInfo';
+import useFetch from '../../../../hooks/useFetch';
 
 function SimilarPopup({ show, close }) {
   const data = useData();
@@ -37,24 +38,24 @@ function SimilarPopup({ show, close }) {
     children: POPUP.EXIT_TEXT,
   };
 
-  useEffect(() => {
-    if (!data.page || data.page === 1) return;
-    async function fetchData() {
-      const response = await fetch(
-        `http://13.209.9.2/models/images?exteriorColorCode=${data.exteriorColor.code}&interiorColorCode=${data.interiorColor.code}`,
-      );
-      const dataFetch = await response.json();
+  // 데이터 받아와야함
+  // const fetchedGetData = useFetch(
+  //   `similarity/releases?estimateId=${data.estimation.id}&similarEstimateId=${data.trim.id}`,
+  // );
 
-      data.setTrimState((prevState) => ({
-        ...prevState,
-        summary: {
-          sideImage: dataFetch.sideExteriorImageUrl,
-          interiorImage: dataFetch.interiorImageUrl,
-        },
-      }));
-    }
-    fetchData();
-  }, [data]);
+  // useEffect(() => {
+  //   if (!fetchedGetData || data.estimation.isFetch || data.page !== 6) return;
+  //   data.setTrimState((prevState) => ({
+  //     ...prevState,
+  //     estimation: {
+  //       ...prevState.estimation,
+  //       isPost: true,
+  //       id: fetchedPostData,
+  //       isFetch: true,
+  //       averagePrice: fetchedGetData,
+  //     },
+  //   }));
+  // }, [data, fetchedGetData, fetchedPostData]);
 
   return (
     <>
