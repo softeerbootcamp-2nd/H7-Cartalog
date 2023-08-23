@@ -2,6 +2,13 @@ import styled from 'styled-components';
 
 export const Info = styled.div`
   display: flex;
+
+  & > button {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 `;
 
 export const ModelText = styled.div`

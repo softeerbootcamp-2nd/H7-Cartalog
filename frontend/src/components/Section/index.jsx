@@ -7,11 +7,11 @@ import * as S from './style';
  * @param Pick {Comment} 'Pick' 구역에 안에 넣을 컴포넌트
  * @returns
  */
-function Section({ type, url, Info, Pick }) {
+function Section({ type, url, Info, Pick, className }) {
   const SectionProps = { type, $url: url };
 
   return (
-    <S.Section>
+    <S.Section className={className}>
       <S.Background {...SectionProps}>
         <S.Contents>{Info}</S.Contents>
       </S.Background>

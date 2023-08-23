@@ -8,6 +8,7 @@ import useFetch from '../../hooks/useFetch';
 
 function OptionPicker() {
   const { setTrimState, page, modelType, interiorColor, optionPicker } = useData();
+  const [expanded, setExpanded] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const fetchedData = useFetch(
     `models/trims/options?detailTrimId=${modelType.detailTrimId}&interiorColorCode=${interiorColor.code}`,
@@ -36,8 +37,9 @@ function OptionPicker() {
   ]);
 
   const SectionProps = {
+    className: expanded ? 'expanded' : '',
     type: OPTION_PICKER.TYPE,
-    Info: <Info optionId={selectedId} />,
+    Info: <Info optionId={selectedId} expanded={expanded} setExpanded={setExpanded} />,
     Pick: <Pick selected={selectedId} setSelected={setSelectedId} />,
   };
 

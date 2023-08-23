@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { EASE_OUT_CUBIC } from '../../constants';
 
 export const Section = styled.div`
   position: relative;
@@ -18,15 +19,23 @@ const SectionByType = {
     background: ${theme.color.modelGrad};
   `,
   ExteriorColor: ({ theme }) => `
-  background: ${theme.color.blueBG};
+    background: ${theme.color.blueBG};
   `,
   InteriorColor: ({ $url }) => `
     background-image: url(${$url});
     background-repeat : no-repeat;
     background-size : cover;
   `,
-  AddOption: ({ theme }) => `
+  OptionPicker: ({ theme }) => `
     background: ${theme.color.blueBG};
+    position: sticky;
+    top: -250px;
+    z-index: 3;
+    transition: top 0.25s ${EASE_OUT_CUBIC};
+
+    .expanded & {
+      top: 0;
+    }
   `,
 };
 
