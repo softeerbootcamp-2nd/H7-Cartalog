@@ -63,7 +63,8 @@ public class QueryString {
             "SELECT ROUND(COALESCE(AVG(estimates.price), 0)) AS average_price " +
             "FROM release_records " +
             "JOIN estimates ON estimates.id=release_records.estimate_id " +
-            "   INNER JOIN detail_trims ON detail_trims.id = estimates.detail_trim_id AND detail_trims.trim_id= :trimId";
+            "JOIN detail_trims on detail_trims.id = estimates.detail_trim_id " +
+            "AND detail_trims.trim_id = :trimId ";
 
     public static final String findEstimateCounts =
             "SELECT " +

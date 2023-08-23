@@ -186,17 +186,28 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
 
     @Override
     public int getEstimatePrice(EstimateDto estimateDto) {
+        List<Long> optionIds = getNonEmptyList(estimateDto.getModelOptionIds(), 0L);
+        List<Long> packageIds = getNonEmptyList(estimateDto.getModelPackageIds(), 0L);
+
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("detailTrimId", estimateDto.getDetailTrimId())
                 .addValue("exteriorColorId", estimateDto.getTrimExteriorColorId())
                 .addValue("interiorColorId", estimateDto.getTrimInteriorColorId())
-                .addValue("optionIds", estimateDto.getModelOptionIds())
-                .addValue("packageIds", estimateDto.getModelPackageIds());
+                .addValue("optionIds", optionIds)
+                .addValue("packageIds", packageIds);
         try {
             return jdbcTemplate.queryForObject(QueryString.getEstimatePrice,
                     parameters, Integer.class);
         } catch (EmptyResultDataAccessException exception) {
             return 0;
         }
+    }
+
+    private static List<Long> getNonEmptyList(List<Long> lst, Long defaultValue) {
+        List<Long> optionIds = lst;
+        if (optionIds == null || optionIds.isEmpty()) {
+            optionIds = List.of(defaultValue);
+        }
+        return optionIds;
     }
 }
