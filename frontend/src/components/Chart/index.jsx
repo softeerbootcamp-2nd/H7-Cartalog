@@ -5,7 +5,7 @@ function Chart({ active, value, max }) {
 
   return (
     <S.Chart className={active ? 'active' : null}>
-      <div>{value.toLocaleString()}대</div>
+      <div>{value?.toLocaleString() ?? 0}대</div>
       <S.Bar $height={height} />
       <div>{active ? '내 견적' : '유사견적'}</div>
     </S.Chart>
