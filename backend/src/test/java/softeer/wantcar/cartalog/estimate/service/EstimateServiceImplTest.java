@@ -149,7 +149,7 @@ class EstimateServiceImplTest {
                     .map(EstimateResponseDto.OptionPackageDto::getId)
                     .collect(Collectors.toUnmodifiableList());
             softAssertions.assertThat(actualSelectOptionPackageIds.containsAll(optionListDto.getAllOptionIds())).isTrue();
-            softAssertions.assertThat(estimate.getExteriorCarDirectory()).isEqualTo(shareInfoDto.getExteriorCarImageDirectory());
+            softAssertions.assertThat(estimate.getExteriorCarSideImageUrl()).isEqualTo(shareInfoDto.getExteriorCarSideImageUrl());
             softAssertions.assertThat(estimate.getInteriorCarImageUrl()).isEqualTo(shareInfoDto.getInteriorColorImageUrl());
             softAssertions.assertThat(estimate.getDisplacement()).isEqualTo(shareInfoDto.getDisplacement());
             softAssertions.assertThat(estimate.getFuelEfficiency()).isEqualTo(shareInfoDto.getFuelEfficiency());

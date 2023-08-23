@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateCountDto;
 import softeer.wantcar.cartalog.estimate.service.EstimateService;
+import softeer.wantcar.cartalog.similarity.dto.SimilarEstimateCountInfoResponseDto;
 import softeer.wantcar.cartalog.similarity.dto.SimilarEstimateCountResponseDto;
 import softeer.wantcar.cartalog.similarity.dto.SimilarEstimateResponseDto;
 import softeer.wantcar.cartalog.similarity.service.SimilarityService;
@@ -103,6 +104,41 @@ class SimilarityControllerTest {
             //when
             //then
             assertThatThrownBy(() -> similarityController.findSimilarEstimateCounts(1L))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
+    }
+
+    @Nested
+    @DisplayName("findSimilarEstimateCountAndInfo 테스트")
+    class findSimilarEstimateCountAndInfoTest {
+        @Test
+        @DisplayName("존재하는 견적 식별자를 제공할 경우 200 상태와 함께 해당 견적 개수 및 유사 견적 개수들과 해당 견적 세부사항을 반환한다.")
+        void success() {
+            //given
+            SimilarEstimateCountResponseDto similarEstimateCountResponse = mock(SimilarEstimateCountResponseDto.class);
+            when(similarityService.getSimilarEstimateCounts(1L)).thenReturn(similarEstimateCountResponse);
+
+
+            //when
+            ResponseEntity<SimilarEstimateCountInfoResponseDto> similarEstimateCountInfos = similarityController.findSimilarEstimateCountAndInfo(1L);
+
+            //then
+            assert similarEstimateCountInfos.getBody() != null;
+            softAssertions.assertThat(similarEstimateCountInfos.getStatusCode()).isEqualTo(HttpStatus.OK);
+            softAssertions.assertThat(similarEstimateCountInfos.getBody().getMyEstimateCount()).isEqualTo(similarEstimateCountResponse.getMyEstimateCount());
+            softAssertions.assertAll();
+        }
+
+        @Test
+        @DisplayName("실패 테스트")
+        void failure() {
+            //given
+            when(similarityService.getSimilarEstimateCounts(anyLong()))
+                    .thenThrow(IllegalArgumentException.class);
+
+            //when
+            //then
+            assertThatThrownBy(() -> similarityController.findSimilarEstimateCountAndInfo(1L))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }
