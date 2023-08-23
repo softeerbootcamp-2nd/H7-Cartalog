@@ -11,13 +11,12 @@ import ModelType from '../../pages/ModelTypePage';
 import ExteriorColor from '../../pages/ExteriorColorPage';
 import OptionPicker from '../../pages/OptionPickerPage';
 import Estimation from '../../pages/EstimationPage';
-import Skeleton from '../Skeleton';
-import { TRIM_SELECT } from '../../pages/TrimSelectPage/constants';
-import { MODEL_TYPE } from '../../pages/ModelTypePage/constants';
-import { EXTERIOR_COLOR } from '../../pages/ExteriorColorPage/constants';
-import { INTERIOR_COLOR } from '../../pages/InteriorColorPage/constants';
-import { OPTION_PICKER } from '../../pages/OptionPickerPage/constants';
-import { ESTIMATION } from '../../pages/EstimationPage/constants';
+import TrimSelectSkeleton from '../Skeleton/TrimSelect';
+import ModelTypeSkeleton from '../Skeleton/ModelType';
+import ExteriorColorSkeleton from '../Skeleton/ExteriorColor';
+import InteriorColorSkeleton from '../Skeleton/InteriorColor';
+import OptionPickerSkeleton from '../Skeleton/OptionPicker';
+import EstimationSkeleton from '../Skeleton/Estimation';
 
 function Interaction() {
   const data = useData();
@@ -67,31 +66,31 @@ function Interaction() {
     <S.Interaction>
       <Header />
       <S.Page ref={pageRef}>
-        <Suspense fallback={<Skeleton type={TRIM_SELECT.TYPE} />}>
+        <Suspense fallback={<TrimSelectSkeleton />}>
           <TrimSelect />
         </Suspense>
         {isFetchMap[1] && (
-          <Suspense fallback={<Skeleton type={MODEL_TYPE.TYPE} />}>
+          <Suspense fallback={<ModelTypeSkeleton />}>
             <ModelType />
           </Suspense>
         )}
         {isFetchMap[2] && (
-          <Suspense fallback={<Skeleton type={EXTERIOR_COLOR.TYPE} />}>
+          <Suspense fallback={<ExteriorColorSkeleton />}>
             <ExteriorColor />
           </Suspense>
         )}
         {isFetchMap[3] && (
-          <Suspense fallback={<Skeleton type={INTERIOR_COLOR.TYPE} />}>
+          <Suspense fallback={<InteriorColorSkeleton />}>
             <InteriorColor />
           </Suspense>
         )}
         {isFetchMap[4] && (
-          <Suspense fallback={<Skeleton type={OPTION_PICKER.TYPE} />}>
+          <Suspense fallback={<OptionPickerSkeleton />}>
             <OptionPicker />
           </Suspense>
         )}
         {isFetchMap[5] && (
-          <Suspense fallback={<Skeleton type={ESTIMATION.TYPE} />}>
+          <Suspense fallback={<EstimationSkeleton />}>
             <Estimation />
           </Suspense>
         )}

@@ -1,4 +1,14 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const backgroundChange = keyframes`
+    0%,
+    100% {
+      background-color: #EDEDEEaa;
+    }
+    50% {
+      background-color: #DADCDDaa;
+    }
+`;
 
 export const Pick = styled.div`
   display: flex;
@@ -11,6 +21,7 @@ export const MainTitle = styled.div`
   margin-top: 16px;
   border-radius: 5px;
   background-color: ${({ theme }) => theme.color.gray['100']};
+  animation: ${backgroundChange} 2s infinite;
 `;
 
 export const Contents = styled.div`
@@ -25,4 +36,5 @@ export const MainPick = styled.div`
   margin-top: 15px;
   border-radius: 5px;
   background-color: ${({ theme }) => theme.color.gray['100']};
+  animation: ${backgroundChange} 2s infinite;
 `;
