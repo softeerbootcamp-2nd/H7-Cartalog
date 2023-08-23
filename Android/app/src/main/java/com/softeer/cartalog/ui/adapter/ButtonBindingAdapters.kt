@@ -1,5 +1,6 @@
 package com.softeer.cartalog.ui.adapter
 
+import android.content.res.ColorStateList
 import android.util.Log
 import android.view.View
 import android.widget.HorizontalScrollView
@@ -9,6 +10,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentContainerView
@@ -260,4 +262,38 @@ fun setImageCheckBtn(
     button.setOnClickListener {
         nestedScrollView.smoothScrollTo(0, 0)
     }
+}
+
+@BindingAdapter("constraintLayout","imageView")
+fun setInfoBtnClick(
+    infoBtn: ImageView,
+    constraintLayout: ConstraintLayout,
+    guideBgr: ImageView
+){
+    infoBtn.setOnClickListener {
+        if(constraintLayout.visibility == View.GONE){
+            infoBtn.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(infoBtn.context, R.color.white))
+            constraintLayout.visibility = View.VISIBLE
+        } else {
+            infoBtn.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(infoBtn.context, R.color.primary_color_900))
+            constraintLayout.visibility = View.GONE
+        }
+    }
+
+    constraintLayout.setOnClickListener {
+        infoBtn.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(infoBtn.context, R.color.primary_color_900))
+        constraintLayout.visibility = View.GONE
+    }
+    guideBgr.setOnClickListener(null)
+}
+
+@BindingAdapter("imageView")
+fun setGuideClick(
+    constraintLayout: ConstraintLayout,
+    imageView: ImageView
+){
+    constraintLayout.setOnClickListener{
+        constraintLayout.visibility = View.GONE
+    }
+    imageView.setOnClickListener(null)
 }

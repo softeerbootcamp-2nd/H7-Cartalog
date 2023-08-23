@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.softeer.cartalog.data.local.MyCarDatabase
@@ -13,6 +14,7 @@ import com.softeer.cartalog.data.remote.api.RetrofitClient
 import com.softeer.cartalog.data.repository.CarRepositoryImpl
 import com.softeer.cartalog.data.repository.local.CarLocalDataSource
 import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
+import com.softeer.cartalog.databinding.DialogShareBinding
 import com.softeer.cartalog.databinding.FragmentConfirmBinding
 import com.softeer.cartalog.ui.activity.MainActivity
 import com.softeer.cartalog.util.PriceDataCallback
@@ -63,7 +65,15 @@ class ConfirmFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = confirmViewModel
 
+        val dialogBinding = DialogShareBinding.inflate(layoutInflater)
+        val dialog = AlertDialog.Builder(requireContext()).setView(dialogBinding.root).create()
 
+        binding.btnShare.setOnClickListener {
+            dialog.show()
+        }
+        dialogBinding.btnClose.setOnClickListener{
+            dialog.dismiss()
+        }
     }
 
     override fun onDestroyView() {

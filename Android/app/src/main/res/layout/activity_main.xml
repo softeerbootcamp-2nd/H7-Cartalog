@@ -39,6 +39,42 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="10dp" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_guide_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/pop_up_black"
+            android:elevation="15dp"
+            app:imageView="@{ivGuideContents}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_guide_msg"
+                android:layout_width="256dp"
+                android:layout_height="236dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/img_main_guide_bgr"
+                android:paddingHorizontal="8dp"
+                android:paddingBottom="20dp"
+                android:src="@drawable/img_main_guide_contents"
+                app:layout_constraintBottom_toTopOf="@id/iv_guide_contents"
+                app:layout_constraintStart_toStartOf="@id/iv_guide_contents" />
+
+            <ImageView
+                android:id="@+id/iv_guide_contents"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="128dp"
+                android:src="@drawable/img_main_guide_trim"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <TextView
             android:id="@+id/btn_selected_car"
             android:layout_width="wrap_content"

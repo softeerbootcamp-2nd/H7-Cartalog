@@ -75,4 +75,15 @@
     <string name="estimate_range_bar_mine">내 견적</string>
     <string name="estimate_range_bar_text_1">내 견적 보다 </string>
     <string name="estimate_range_bar_text_2">원 비싸요. </string>
+
+    <string name="guide_estimate_title_blue">내 견적과 비슷한 실제 출고 견적</string>
+    <string name="guide_estimate_title_black_1">들을</string>
+    <string name="guide_estimate_title_black_2">확인하고 비교해보세요.</string>
+    <string name="guide_estimate_contents">*유사 견적이란, 내 견적과 해시태그 유사도가\n높은 다른 사람들의 실제 출고 견적이에요.</string>
+
+    <string name="share_title">공유하기</string>
+    <string name="share_sub_title_1">SNS</string>
+    <string name="share_sub_content_1">견적서를 SNS로 바로 공유해보세요.</string>
+    <string name="share_sub_title_2">링크 공유</string>
+    <string name="share_sub_content_2">내 견적서 링크를 복사해 견적을 다시 확인해보세요.\n(30일 유효)</string>
 </resources>
