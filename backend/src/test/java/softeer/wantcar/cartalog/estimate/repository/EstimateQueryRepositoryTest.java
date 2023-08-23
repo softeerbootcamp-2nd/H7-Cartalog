@@ -284,5 +284,22 @@ class EstimateQueryRepositoryTest {
             //then
             assertThat(estimatePrice).isEqualTo(40440000);
         }
+
+        @Test
+        @DisplayName("잘못된 식별자로견적서 가격 가져오기 테스트")
+        void failure() {
+
+            //given
+            EstimateDto estimateDto = EstimateDto.builder()
+                    .detailTrimId(9L)
+                    .trimExteriorColorId(0L)
+                    .trimInteriorColorId(7L)
+                    .build();
+            //when
+            int estimatePrice = estimateQueryRepository.getEstimatePrice(estimateDto);
+
+            //then
+            assertThat(estimatePrice).isEqualTo(0);
+        }
     }
 }

@@ -198,7 +198,7 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
         try {
             return jdbcTemplate.queryForObject(QueryString.getEstimatePrice,
                     parameters, Integer.class);
-        } catch (EmptyResultDataAccessException exception) {
+        } catch (EmptyResultDataAccessException | NullPointerException exception) {
             return 0;
         }
     }
