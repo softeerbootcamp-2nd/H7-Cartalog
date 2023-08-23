@@ -75,4 +75,9 @@
     <string name="estimate_range_bar_mine">내 견적</string>
     <string name="estimate_range_bar_text_1">내 견적 보다 </string>
     <string name="estimate_range_bar_text_2">원 비싸요. </string>
+    
+    <string name="guide_estimate_title_blue">내 견적과 비슷한 실제 출고 견적</string>
+    <string name="guide_estimate_title_black_1">들을</string>
+    <string name="guide_estimate_title_black_2">확인하고 비교해보세요.</string>
+    <string name="guide_estimate_contents">*유사 견적이란, 내 견적과 해시태그 유사도가\n높은 다른 사람들의 실제 출고 견적이에요.</string>
 </resources>
