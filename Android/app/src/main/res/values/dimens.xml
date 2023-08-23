@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="page_margin">70dp</dimen>
+    <dimen name="pager_width">312dp</dimen>
+
+    <dimen name="option_detail_dialog_width">380dp</dimen>
+    <dimen name="option_detail_dialog_height">550dp</dimen>
+
+</resources>

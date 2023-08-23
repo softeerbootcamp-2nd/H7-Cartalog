@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.softeer.cartalog.viewmodel.ConfirmViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/cl_confirm_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/vw_summary_bgr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/sv_confirm_contents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    tools:context=".ui.fragment.ConfirmFragment">
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/gl_start"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_begin="20dp" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/gl_center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.5" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/gl_end"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_end="20dp" />
+
+
+                    <ImageView
+                        android:id="@+id/iv_background"
+                        android:layout_width="0dp"
+                        android:layout_height="536dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/img_confirm_bgr"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_car_model_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="182dp"
+                        android:fontFamily="@font/hyndaisans_head_bold"
+                        android:text="@string/confirm_car_model"
+                        android:textColor="@color/white"
+                        android:textSize="65sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/iv_car_model"
+                        android:layout_width="375dp"
+                        android:layout_height="200dp"
+                        android:scaleType="centerCrop"
+                        app:imgUrl="@{viewModel.carInfo.exteriorImg}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_car_model_title" />
+
+
+                    <HorizontalScrollView
+                        android:id="@+id/hsv_interior_img"
+                        android:layout_width="0dp"
+                        android:layout_height="536dp"
+                        android:background="@color/white"
+                        android:fillViewport="true"
+                        android:overScrollMode="never"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="536dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/iv_interior"
+                                android:layout_width="match_parent"
+                                android:layout_height="536dp"
+                                android:adjustViewBounds="true"
+                                app:imgUrl="@{viewModel.carInfo.interiorImg}" />
+                        </LinearLayout>
+                    </HorizontalScrollView>
+
+
+                    <RadioGroup
+                        android:id="@+id/rg_exterior_interior"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="18dp"
+                        android:background="@drawable/shape_radio_background"
+                        android:orientation="horizontal"
+                        android:padding="5dp"
+                        app:horizontalScrollView="@{hsvInteriorImg}"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_background"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <RadioButton
+                            android:id="@+id/rb_exterior"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/selector_radio_exterior_interior"
+                            android:button="@null"
+                            android:checked="true"
+                            android:fontFamily="@font/hyndaisans_text"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:paddingHorizontal="24dp"
+                            android:paddingVertical="10dp"
+                            android:text="@string/tab_exterior"
+                            android:textAlignment="center"
+                            android:textColor="@drawable/selector_radio_text_exterior_interior" />
+
+                        <RadioButton
+                            android:id="@+id/rb_interior"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/selector_radio_exterior_interior"
+                            android:button="@null"
+                            android:fontFamily="@font/hyndaisans_text"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:paddingHorizontal="24dp"
+                            android:paddingVertical="10dp"
+                            android:text="@string/tab_interior"
+                            android:textAlignment="center"
+                            android:textColor="@drawable/selector_radio_text_exterior_interior" />
+                    </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/tv_summary_head_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="55dp"
+                        android:fontFamily="@font/hyndaisans_head_medium"
+                        android:text="@string/confirm_title_summary"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="@id/gl_end"
+                        app:layout_constraintStart_toStartOf="@id/gl_start"
+                        app:layout_constraintTop_toBottomOf="@id/rg_exterior_interior" />
+
+                    <View
+                        android:id="@+id/vw_car_summary_bgr"
+                        android:layout_width="0dp"
+                        android:layout_height="95dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@color/sky_blue_30"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_summary_head_title" />
+
+                    <TextView
+                        android:id="@+id/tv_car_summary_title_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="26dp"
+                        android:text="@string/summary_model"
+                        android:textColor="@color/gray_600"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="@id/gl_start"
+                        app:layout_constraintTop_toTopOf="@id/vw_car_summary_bgr" />
+
+                    <TextView
+                        android:id="@+id/tv_summary_contents_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/hyndaisans_head_medium"
+                        android:text="@{viewModel.carInfo.trim}"
+                        android:textColor="@color/gray_900"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="@id/tv_car_summary_title_1"
+                        app:layout_constraintTop_toBottomOf="@id/tv_car_summary_title_1" />
+
+                    <TextView
+                        android:id="@+id/tv_car_summary_title_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="26dp"
+                        android:text="@string/summary_title_2"
+                        android:textColor="@color/gray_600"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toEndOf="@id/gl_center"
+                        app:layout_constraintTop_toTopOf="@id/vw_car_summary_bgr" />
+
+                    <TextView
+                        android:id="@+id/tv_car_summary_contents_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/hyndaisans_head_medium"
+                        android:text="@{String.format(`%.2fkm/l`,viewModel.carInfo.fuelEfficiency)}"
+                        android:textColor="@color/gray_900"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="@id/tv_car_summary_title_2"
+                        app:layout_constraintTop_toBottomOf="@id/tv_car_summary_title_2" />
+
+                    <TextView
+                        android:id="@+id/tv_car_summary_title_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="64dp"
+                        android:layout_marginTop="26dp"
+                        android:text="@string/summary_title_3"
+                        android:textColor="@color/gray_600"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toEndOf="@id/tv_car_summary_title_2"
+                        app:layout_constraintTop_toTopOf="@id/vw_car_summary_bgr" />
+
+                    <TextView
+                        android:id="@+id/tv_car_summary_contents_3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/hyndaisans_head_medium"
+                        android:text="@{String.format(`%,dcc`,viewModel.carInfo.displacement)}"
+                        android:textColor="@color/gray_900"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="@id/gl_end"
+                        app:layout_constraintStart_toStartOf="@id/tv_car_summary_title_3"
+                        app:layout_constraintTop_toBottomOf="@id/tv_car_summary_title_3" />
+
+                    <TextView
+                        android:id="@+id/tv_detail_head_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/hyndaisans_head_medium"
+                        android:text="@string/confirm_title_detail"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="@id/gl_end"
+                        app:layout_constraintStart_toStartOf="@id/gl_start"
+                        app:layout_constraintTop_toBottomOf="@id/vw_car_summary_bgr" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="20dp"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_detail_head_title"
+                        app:listData="@{viewModel.detailPriceList}" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_check_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/btn_check_img"
+                android:minWidth="78dp"
+                android:minHeight="30dp"
+                android:text="@string/confirm_btn_check_img"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:nestedScrollView="@{svConfirmContents}" />
+            
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <View
+            android:id="@+id/vw_summary_bgr"
+            android:layout_width="0dp"
+            android:layout_height="58dp"
+            android:background="@color/white"
+            android:elevation="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_confirm_container" />
+
+        <TextView
+            android:id="@+id/tv_complete_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:elevation="8dp"
+            android:text="@{@string/confirm_complete_msg(viewModel.carInfo.carName)}"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/vw_summary_bgr"
+            app:layout_constraintStart_toStartOf="@id/vw_summary_bgr"
+            app:layout_constraintTop_toTopOf="@id/vw_summary_bgr" />
+
+        <TextView
+            android:id="@+id/tv_price_summary_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="20dp"
+            android:elevation="8dp"
+            android:text="@string/summary_total_price"
+            android:textColor="@color/gray_700"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/vw_summary_bgr"
+            app:layout_constraintTop_toTopOf="@id/vw_summary_bgr" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="8dp"
+            android:elevation="8dp"
+            android:fontFamily="@font/hyndaisans_head_medium"
+            android:text="@{String.format(`%,d원`, viewModel.userTotalPrice)}"
+            android:textColor="@color/primary_color_500"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/vw_summary_bgr"
+            app:layout_constraintEnd_toEndOf="@id/vw_summary_bgr"
+            app:layout_constraintTop_toBottomOf="@id/tv_price_summary_title" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_share"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="@color/gray_300"
+            android:elevation="11dp"
+            android:fontFamily="@font/hyndaisans_head_medium"
+            android:text="@string/btn_share"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_consult"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vw_summary_bgr" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_consult"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="@color/primary_color_700"
+            android:elevation="11dp"
+            android:fontFamily="@font/hyndaisans_head_medium"
+            android:text="@string/btn_consult"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_share"
+            app:layout_constraintTop_toBottomOf="@id/vw_summary_bgr" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

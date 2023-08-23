@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="option"
+            type="com.softeer.cartalog.data.model.Option" />
+
+        <variable
+            name="position"
+            type="Integer" />
+
+        <variable
+            name="optionId"
+            type="String" />
+
+        <variable
+            name="optionAdapter"
+            type="com.softeer.cartalog.ui.adapter.OptionSelectAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.softeer.cartalog.viewmodel.OptionViewModel" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_card"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        app:adapter="@{optionAdapter}"
+        app:cardBackgroundColor="@{viewModel.selectedSelectOption.contains(option) ? @color/active_blue_card_bg : @color/gray_50}"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="0dp"
+        app:option="@{option}"
+        app:strokeColor="@{viewModel.selectedSelectOption.contains(option) ?  @color/active_blue :  @color/gray_200}"
+        app:strokeWidth="@{viewModel.selectedSelectOption.contains(option) ? 7 : 4}"
+        app:viewModel="@{viewModel}">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_center"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.55" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_start"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="12dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_end"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="12dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_top"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="12dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="12dp" />
+
+            <ImageView
+                android:id="@+id/iv_option"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                app:imgUrl="@{option.imageUrl}"
+                app:layout_constraintBottom_toBottomOf="@id/gl_center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/cg_hashtag"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:hashTags="@{option.hashTags}"
+                app:layout_constraintBottom_toBottomOf="@id/iv_option"
+                app:layout_constraintEnd_toEndOf="@id/gl_end"
+                app:layout_constraintStart_toStartOf="@id/gl_start" />
+
+
+            <TextView
+                android:id="@+id/btn_hmg_data"
+                style="@style/HmgDataButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
+                android:visibility="@{option.hasHMGData ? View.VISIBLE : View.GONE}"
+                app:drawableEndCompat="@drawable/icon_arrow_end_small"
+                app:drawableTint="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/btn_detail_view"
+                style="@style/DetailViewTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="6dp"
+                android:visibility="@{option.hasHMGData ? View.GONE : View.VISIBLE}"
+                app:drawableEndCompat="@drawable/icon_arrow_end_small"
+                app:drawableTint="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_selected_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text='@{option.chosen + "%"}'
+                android:textColor="@{viewModel.selectedSelectOption.contains(option) ? @color/active_blue : @color/gray_600}"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@id/gl_start"
+                app:layout_constraintTop_toBottomOf="@id/iv_option" />
+
+            <TextView
+                android:id="@+id/tv_selected_percent_guide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/option_item_select_guide"
+                android:textColor="@{viewModel.selectedSelectOption.contains(option) ? @color/gray_700 : @color/gray_600}"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@id/tv_selected_percent"
+                app:layout_constraintTop_toTopOf="@id/tv_selected_percent" />
+
+            <TextView
+                android:id="@+id/tv_color_title"
+                style="@style/FragmentHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{option.name}"
+                android:textColor="@{viewModel.selectedSelectOption.contains(option) ? @color/gray_900 : @color/gray_600}"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/gl_start"
+                app:layout_constraintTop_toBottomOf="@id/tv_selected_percent_guide" />
+
+            <TextView
+                android:id="@+id/tv_color_price"
+                style="@style/FragmentHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{String.format("+ %,d 원", option.price)}'
+                android:textColor="@{viewModel.selectedSelectOption.contains(option) ? @color/gray_900 : @color/gray_600}"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/gl_bottom"
+                app:layout_constraintStart_toStartOf="@id/gl_start" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_check"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                app:cardBackgroundColor="@{viewModel.selectedSelectOption.contains(option) ?  @color/active_blue :  @color/gray_50}"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/gl_bottom"
+                app:layout_constraintEnd_toEndOf="@id/gl_end"
+                app:strokeColor="@{viewModel.selectedSelectOption.contains(option) ?  @color/active_blue :  @color/gray_200}"
+                app:strokeWidth="1dp">
+
+                <ImageView
+                    android:id="@+id/btn_check"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp"
+                    android:src="@drawable/selector_btn_check"
+                    android:tint="@{viewModel.selectedSelectOption.contains(option) ? @color/white : @color/gray_400}" />
+            </com.google.android.material.card.MaterialCardView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

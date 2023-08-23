@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="carColor"
+            type="com.softeer.cartalog.data.model.CarColor" />
+
+        <variable
+            name="position"
+            type="Integer" />
+
+        <variable
+            name="adapter"
+            type="com.softeer.cartalog.ui.adapter.ExteriorColorAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.softeer.cartalog.viewmodel.ExteriorViewModel" />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_root"
+        android:layout_width="150dp"
+        android:layout_height="175dp"
+        android:layout_marginVertical="10dp"
+        app:adapter="@{adapter}"
+        app:cardBackgroundColor="@{position == adapter.selectedItem ? @color/active_blue_card_bg : @color/white}"
+        app:cardCornerRadius="2dp"
+        app:cardElevation="2dp"
+        app:position="@{position}"
+        app:strokeColor="@color/active_blue"
+        app:strokeWidth="@{position == adapter.selectedItem ? 7 : 0}"
+        app:viewModel="@{viewModel}">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_start"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="12dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_end"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="12dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_top"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="12dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="12dp" />
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_colorring_guide"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="1000dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="@id/gl_end"
+                app:layout_constraintStart_toStartOf="@id/gl_start"
+                app:layout_constraintTop_toTopOf="@id/gl_top"
+                app:strokeColor="@{position == adapter.selectedItem ? @color/active_blue : @color/gray_600}"
+                app:strokeWidth="2dp" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_colorring"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:cardCornerRadius="100dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/cv_colorring_guide"
+                app:layout_constraintEnd_toEndOf="@id/cv_colorring_guide"
+                app:layout_constraintStart_toStartOf="@id/cv_colorring_guide"
+                app:layout_constraintTop_toTopOf="@id/cv_colorring_guide">
+
+                <ImageView
+                    android:id="@+id/iv_colorring"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="centerCrop"
+                    app:imgUrl="@{carColor.colorImageUrl}" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tv_selected_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text='@{carColor.chosen + "%"}'
+                android:textColor="@{position == adapter.selectedItem ? @color/active_blue : @color/gray_600}"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="@id/gl_start"
+                app:layout_constraintTop_toBottomOf="@id/cv_colorring_guide" />
+
+            <TextView
+                android:id="@+id/tv_selected_percent_guide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/exterior_item_select"
+                android:textColor="@{position == adapter.selectedItem ? @color/gray_700 : @color/gray_600}"
+                android:textSize="10sp"
+                app:layout_constraintStart_toEndOf="@id/tv_selected_percent"
+                app:layout_constraintTop_toTopOf="@id/tv_selected_percent" />
+
+            <TextView
+                android:id="@+id/tv_color_title"
+                style="@style/FragmentHeader"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text='@{carColor.name}'
+                android:textColor="@{position == adapter.selectedItem ? @color/gray_900 : @color/gray_600}"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@id/gl_end"
+                app:layout_constraintStart_toStartOf="@id/gl_start"
+                app:layout_constraintTop_toBottomOf="@id/tv_selected_percent_guide" />
+
+            <TextView
+                android:id="@+id/tv_color_price"
+                style="@style/FragmentHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{String.format("+ %,d 원", carColor.price)}'
+                android:textColor="@{position == adapter.selectedItem ? @color/gray_900 : @color/gray_600}"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/gl_bottom"
+                app:layout_constraintStart_toStartOf="@id/gl_start" />
+
+            <ImageView
+                android:id="@+id/btn_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/selector_btn_check"
+                android:tint="@{position == adapter.selectedItem ? @color/active_blue : @color/gray_600}"
+                app:layout_constraintBottom_toBottomOf="@id/gl_bottom"
+                app:layout_constraintEnd_toEndOf="@id/gl_end" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

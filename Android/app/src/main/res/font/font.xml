@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <font
+        app:font="@font/hyndaisans_head_bold"/>
+    <font
+        app:font="@font/hyndaisans_head_light"/>
+    <font
+        app:font="@font/hyndaisans_head_medium"/>
+    <font
+        app:font="@font/hyndaisans_text" />
+
+</font-family>
