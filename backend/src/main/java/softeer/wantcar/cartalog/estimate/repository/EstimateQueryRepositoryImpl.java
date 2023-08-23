@@ -46,7 +46,7 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
         }
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("estimateIds", estimateIds);
-        return jdbcTemplate.query(QueryString.findEstimateInfo2BydEstimateIds,
+        return jdbcTemplate.query(QueryString.findEstimateInfoWithSideImageBydEstimateIds,
                 parameters, RowMapperUtils.mapping(EstimateInfoWithSideImageDto.class, serverPath.getImageServerPathRowMapperStrategy()));
     }
 

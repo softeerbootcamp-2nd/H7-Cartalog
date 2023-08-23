@@ -7,6 +7,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Getter
 @JsonPropertyOrder({"trimName", "price", "modelTypes", "exteriorColorCode", "interiorColorCode", "exteriorCarSideImageUrl", "nonExistentOptions"})
-public class SimilarEstimate2ResponseDto extends SimilarEstimateResponseDto {
+public class SimilarEstimateWithSideImageResponseDto extends SimilarEstimateResponseDto {
     private String exteriorCarSideImageUrl;
 }

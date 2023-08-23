@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
 import softeer.wantcar.cartalog.estimate.repository.dto.*;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
-import softeer.wantcar.cartalog.similarity.dto.SimilarEstimate2ResponseDto;
+import softeer.wantcar.cartalog.similarity.dto.SimilarEstimateWithSideImageResponseDto;
 import softeer.wantcar.cartalog.similarity.dto.SimilarEstimateCountResponseDto;
 import softeer.wantcar.cartalog.similarity.dto.SimilarEstimateResponseDto;
 import softeer.wantcar.cartalog.similarity.repository.SimilarityCommandRepository;
@@ -39,7 +39,7 @@ public class SimilarityServiceImpl implements SimilarityService {
     }
 
     @Override
-    public SimilarEstimate2ResponseDto getSimilarEstimateInfo2(Long estimateId, Long similarEstimateId) {
+    public SimilarEstimateWithSideImageResponseDto getSimilarEstimateInfo2(Long estimateId, Long similarEstimateId) {
         List<EstimateInfoWithSideImageDto> similarEstimateInfos = estimateQueryRepository.findEstimateInfoWithSideImageByEstimateIds(List.of(similarEstimateId));
         if (similarEstimateInfos.isEmpty()) {
             return null;
@@ -90,10 +90,10 @@ public class SimilarityServiceImpl implements SimilarityService {
                 .build();
     }
 
-    private static SimilarEstimate2ResponseDto getSimilarEstimate2ResponseDto(Long estimateId,
-                                                                              Long similarEstimateId,
-                                                                              List<EstimateInfoWithSideImageDto> similarEstimateInfo2s,
-                                                                              Map<Long, List<EstimateOptionInfoDto>> estimateOptionInfos) {
+    private static SimilarEstimateWithSideImageResponseDto getSimilarEstimate2ResponseDto(Long estimateId,
+                                                                                          Long similarEstimateId,
+                                                                                          List<EstimateInfoWithSideImageDto> similarEstimateInfo2s,
+                                                                                          Map<Long, List<EstimateOptionInfoDto>> estimateOptionInfos) {
         EstimateInfoWithSideImageDto similarEstimateInfo = similarEstimateInfo2s.get(0);
 
         List<String> existOptionInfos = estimateOptionInfos.getOrDefault(estimateId, new ArrayList<>()).stream()
@@ -104,7 +104,7 @@ public class SimilarityServiceImpl implements SimilarityService {
         List<EstimateInfoDto> similarEstimateInfos = similarEstimateInfo2s.stream()
                 .collect(Collectors.toUnmodifiableList());
 
-        return SimilarEstimate2ResponseDto.builder()
+        return SimilarEstimateWithSideImageResponseDto.builder()
                 .trimName(similarEstimateInfo.getTrimName())
                 .price(getEstimatePrice(similarEstimateInfos, similarEstimateOptionInfos))
                 .modelTypes(getModelTypes(similarEstimateInfos))

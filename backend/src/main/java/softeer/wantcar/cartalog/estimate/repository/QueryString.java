@@ -35,7 +35,7 @@ public class QueryString {
             "JOIN trim_interior_colors AS tic ON tic.id=e.trim_interior_color_id " +
             "WHERE e.id IN (:estimateIds);";
 
-    protected static final String findEstimateInfo2BydEstimateIds =
+    protected static final String findEstimateInfoWithSideImageBydEstimateIds =
             "SELECT " +
             "   e.id AS estimate_id, " +
             "   e.detail_trim_id AS detail_trim_id, " +

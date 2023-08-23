@@ -8,5 +8,5 @@ import java.util.List;
 @Getter
 @Builder
 public class SimilarEstimateListResponseDto {
-    private List<SimilarEstimate2ResponseDto> similarEstimates;
+    private List<SimilarEstimateWithSideImageResponseDto> similarEstimates;
 }
