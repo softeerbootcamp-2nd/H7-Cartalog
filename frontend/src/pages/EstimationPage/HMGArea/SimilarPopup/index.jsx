@@ -41,7 +41,7 @@ function SimilarPopup({ show, close }) {
     if (!data.page || data.page === 1) return;
     async function fetchData() {
       const response = await fetch(
-        `http://3.36.126.30/models/images?exteriorColorCode=${data.exteriorColor.code}&interiorColorCode=${data.interiorColor.code}`,
+        `http://13.209.9.2/models/images?exteriorColorCode=${data.exteriorColor.code}&interiorColorCode=${data.interiorColor.code}`,
       );
       const dataFetch = await response.json();
 

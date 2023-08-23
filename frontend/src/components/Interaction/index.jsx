@@ -63,8 +63,6 @@ function Interaction() {
     }
   }, [data.page]);
 
-  const pageToRender = (page) => isFetchMap[page];
-
   return (
     <S.Interaction>
       <Header />

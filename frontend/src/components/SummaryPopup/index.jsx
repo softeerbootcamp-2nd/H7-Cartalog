@@ -65,7 +65,7 @@ function SummaryPopup({ show, close }) {
     if (!page || page === 1) return;
     async function fetchData() {
       const response = await fetch(
-        `http://3.36.126.30/models/images?exteriorColorCode=${exteriorColor.code}&interiorColorCode=${interiorColor.code}`,
+        `http://13.209.9.2/models/images?exteriorColorCode=${exteriorColor.code}&interiorColorCode=${interiorColor.code}`,
       );
       const dataFetch = await response.json();
 
