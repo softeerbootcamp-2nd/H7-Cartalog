@@ -7,43 +7,47 @@ import * as S from './style';
 import HMGTag from '../../../../../components/HMGTag';
 import SimilarCard from '../SimilarCard';
 
-function SimilarInfo({ info, page, setPage, setPrice, option, setOption }) {
+function SimilarInfo({
+  info,
+  page,
+  setPage,
+  setPrice,
+  option,
+  setOption,
+  optionData,
+  setOptionData,
+}) {
   const [rightArrow, setRightArrow] = useState('');
   const [leftArrow, setLeftArrow] = useState('');
   const data = useData();
-  const value = 42239849;
 
   useEffect(() => {
     setLeftArrow(page === 0 ? '' : 'active');
     setRightArrow(page !== data.estimation.similarEstimateCountInfo.length - 1 ? 'active' : '');
   }, [data.estimation.similarEstimateCountInfo.length, page]);
 
-  // useEffect(() => {
-  //   setPrice(info.price);
-  // },[info.price]]);
-
   return (
     <S.SimilarInfo>
       <S.LeftArea>
         <S.ArrowButton
           className={leftArrow}
-          onClick={() => setPage(page - 1)}
+          onClick={() => {
+            setPage(page - 1);
+            setPrice(data.estimation.similarEstimateCountInfo[page - 1].price);
+          }}
           disabled={leftArrow !== 'active'}
         >
           <LeftArrow />
         </S.ArrowButton>
         <S.LeftInfo>
           <S.SubTitle>{SIMILAR_INFO.TITLE}</S.SubTitle>
-          <S.MainTitle>Le Blanc</S.MainTitle>
+          <S.MainTitle>{info.trimName}</S.MainTitle>
           <S.HashTags>
-            {info.modelTypes
-              .map((type) => type.name)
-              .slice(0, 3)
-              .map((hashtag) => (
-                <div key={hashtag}>{hashtag}</div>
-              ))}
+            {info.modelTypes.slice(0, 3).map((hashtag) => (
+              <div key={hashtag}>{hashtag}</div>
+            ))}
           </S.HashTags>
-          <S.Price>{value.toLocaleString('ko-KR')}원</S.Price>
+          <S.Price>{info.price.toLocaleString('ko-KR')}원</S.Price>
         </S.LeftInfo>
         <img src={info.exteriorCarSideImageUrl} alt="exterior" />
       </S.LeftArea>
@@ -54,32 +58,37 @@ function SimilarInfo({ info, page, setPage, setPrice, option, setOption }) {
           </S.TagWrapper>
           <S.OptionWrapper>
             <S.OptionTitle>{SIMILAR_INFO.OPTION}</S.OptionTitle>
-            {/* 옵션 선택 시 Footer 버튼 변경 */}
             <S.CardWrapper>
-              <SimilarCard
-                //   key={exterior.code}
-                name="빌트인 캠"
-                price={350000}
-                //   selected={exteriorColor.code === exterior.code}
-                onClick={() => {}}
-                // imageUrl={summary.sideImage}
-              />
-              <SimilarCard
-                //   key={exterior.code}
-                name="빌트인 캠"
-                price={350000}
-                //   selected={option.includes(info.id)}
-                onClick={() => {
-                  // setOption([...option, info.id]])
-                }}
-                // imageUrl={summary.sideImage}
-              />
+              {info.nonExistentOptions.map((nonOption) => (
+                <SimilarCard
+                  key={nonOption.optionId}
+                  name={nonOption.name}
+                  price={nonOption.price}
+                  imageUrl={nonOption.imageUrl}
+                  selected={
+                    option.includes(nonOption.optionId) ||
+                    data.optionPicker.chosenOptions.includes(nonOption.optionId)
+                  }
+                  onClick={() => {
+                    if (option.includes(nonOption.optionId)) {
+                      setOption(option.filter((id) => id !== nonOption.optionId));
+                      setOptionData(optionData.filter((nonData) => nonData !== nonOption));
+                    } else {
+                      setOption([...option, nonOption.optionId]);
+                      setOptionData([...optionData, nonOption]);
+                    }
+                  }}
+                />
+              ))}
             </S.CardWrapper>
           </S.OptionWrapper>
         </S.RightInfo>
         <S.ArrowButton
           className={rightArrow}
-          onClick={() => setPage(page + 1)}
+          onClick={() => {
+            setPage(page + 1);
+            setPrice(data.estimation.similarEstimateCountInfo[page + 1].price);
+          }}
           disabled={rightArrow !== 'active'}
         >
           <RightArrow />

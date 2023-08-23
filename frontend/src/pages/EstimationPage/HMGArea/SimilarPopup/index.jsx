@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useData, TotalPrice } from '../../../../utils/Context';
 import {
@@ -18,13 +18,18 @@ import PriceCompareBar from '../../../../components/PriceCompareBar';
 
 function SimilarPopup({ show, close }) {
   const data = useData();
-  const [selectedOption, setSelectedOption] = useState([1, 2]);
+  const [selectedOption, setSelectedOption] = useState([]);
+  const [selectedOptionData, setSelectedOptionData] = useState([]);
   const [addClicked, setAddClicked] = useState(false);
   const [exitShow, setExitShow] = useState(false);
   const handleExitShow = () => setExitShow(true);
   const handleExitClose = () => setExitShow(false);
   const [similarPage, setSimilarPage] = useState(0);
-  const [similarPrice, setSimilarPrice] = useState(42239849);
+  const [similarPrice, setSimilarPrice] = useState();
+
+  useEffect(() => {
+    setSimilarPrice(data.estimation.similarEstimateCountInfo[0]?.price);
+  }, [data.estimation.similarEstimateCountInfo]);
 
   const selectButtonProps = {
     type: SELECT_BUTTON.TYPE,
@@ -85,11 +90,12 @@ function SimilarPopup({ show, close }) {
         onClick: () => {
           data.setTrimState((prevState) => ({
             ...prevState,
-            estimation: {
-              ...prevState.estimation,
-              similarEstimateOption: [
-                ...prevState.estimation.similarEstimateOption,
-                ...selectedOption,
+            optionPicker: {
+              ...prevState.optionPicker,
+              chosenOptions: [...prevState.optionPicker.chosenOptions, ...selectedOption],
+              chosenOptionsData: [
+                ...prevState.optionPicker.chosenOptionsData,
+                ...selectedOptionData,
               ],
             },
           }));
@@ -101,7 +107,6 @@ function SimilarPopup({ show, close }) {
     ],
     children: OPTION_POPUP.EXIT_TEXT,
   };
-  console.log(data.estimation.similarEstimateCountInfo);
 
   return (
     <>
@@ -134,13 +139,15 @@ function SimilarPopup({ show, close }) {
                 <S.Contents style={{ transform: `translateX(${-similarPage * 772}px)` }}>
                   {data.estimation.similarEstimateCountInfo.map((info) => (
                     <SimilarInfo
-                      key={info.estimateInfo.detailTrimId}
-                      info={info.estimateInfo}
+                      key={info.price}
+                      info={info}
                       page={similarPage}
                       setPage={setSimilarPage}
                       setPrice={setSimilarPrice}
                       option={selectedOption}
                       setOption={setSelectedOption}
+                      optionData={selectedOptionData}
+                      setOptionData={setSelectedOptionData}
                     />
                   ))}
                 </S.Contents>
