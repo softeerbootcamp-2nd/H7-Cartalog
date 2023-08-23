@@ -18,6 +18,6 @@ public class EstimateShareInfoDto {
     private String interiorColorName;
     private int interiorColorPrice;
     private String interiorColorImageUrl;
-    private String exteriorCarImageDirectory;
+    private String exteriorCarSideImageUrl;
     private String interiorCarImageUrl;
 }

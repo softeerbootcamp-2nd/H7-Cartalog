@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateCountDto;
+import softeer.wantcar.cartalog.estimate.service.EstimateService;
 import softeer.wantcar.cartalog.similarity.dto.SimilarEstimateCountResponseDto;
 import softeer.wantcar.cartalog.similarity.dto.SimilarEstimateResponseDto;
 import softeer.wantcar.cartalog.similarity.service.SimilarityService;
@@ -21,12 +22,14 @@ import static org.mockito.Mockito.*;
 class SimilarityControllerTest {
     SimilarityService similarityService;
     SimilarityController similarityController;
+    EstimateService estimateService;
     SoftAssertions softAssertions;
 
     @BeforeEach
     void setUp() {
         similarityService = mock(SimilarityService.class);
-        similarityController = new SimilarityController(similarityService);
+        estimateService = mock(EstimateService.class);
+        similarityController = new SimilarityController(similarityService, estimateService);
         softAssertions = new SoftAssertions();
     }
 

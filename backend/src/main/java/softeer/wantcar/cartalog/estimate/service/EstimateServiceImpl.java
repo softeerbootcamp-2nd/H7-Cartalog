@@ -93,9 +93,8 @@ public class EstimateServiceImpl implements EstimateService {
                         .price(estimateShareInfo.getInteriorColorPrice())
                         .build()
                 )
-                .exteriorCarDirectory(estimateShareInfo.getExteriorCarImageDirectory())
+                .exteriorCarSideImageUrl(estimateShareInfo.getExteriorCarSideImageUrl())
                 .interiorCarImageUrl(estimateShareInfo.getInteriorColorImageUrl());
-
 
         List<OptionPackageInfoDto> modelTypesInfos =
                 trimOptionQueryRepository.findOptionPackageInfoByOptionPackageIds(estimateModelTypeIds, new ArrayList<>());
