@@ -15,22 +15,22 @@ import Skeleton from '../Skeleton';
 import { TRIM_SELECT } from '../../pages/TrimSelectPage/constants';
 import { MODEL_TYPE } from '../../pages/ModelTypePage/constants';
 import { EXTERIOR_COLOR } from '../../pages/ExteriorColorPage/constants';
+import { INTERIOR_COLOR } from '../../pages/InteriorColorPage/constants';
 
 function Interaction() {
   const data = useData();
   const pageRef = useRef();
+  const isFetchMap = {
+    1: data.trim.isFetch,
+    2: data.modelType.isFetch,
+    3: data.exteriorColor.isFetch,
+    4: data.interiorColor.isFetch,
+    5: data.optionPicker.isFetch,
+    6: data.estimation.isFetch,
+  };
 
   useEffect(() => {
     const handlePopstate = () => {
-      const isFetchMap = {
-        1: data.trim.isFetch,
-        2: data.modelType.isFetch,
-        3: data.exteriorColor.isFetch,
-        4: data.interiorColor.isFetch,
-        5: data.optionPicker.isFetch,
-        6: data.estimation.isFetch,
-      };
-
       const canGoBack = isFetchMap[window.history.state.nowPage] || false;
 
       if (!canGoBack) {
@@ -51,7 +51,7 @@ function Interaction() {
   }, [data]);
 
   useEffect(() => {
-    pageRef.current.style.transition = `all 0.5s ${EASE_OUT_CUBIC}`;
+    pageRef.current.style.transition = `transform 0.5s ${EASE_OUT_CUBIC}`;
     pageRef.current.style.transform = `translateX(min(-${data.page - 1}00%, -${
       (data.page - 1) * 1280
     }px))`;
@@ -61,6 +61,8 @@ function Interaction() {
     }
   }, [data.page]);
 
+  const pageToRender = (page) => isFetchMap[page];
+
   return (
     <S.Interaction>
       <Header />
@@ -68,15 +70,23 @@ function Interaction() {
         <Suspense fallback={<Skeleton type={TRIM_SELECT.TYPE} />}>
           <TrimSelect />
         </Suspense>
-        <Suspense fallback={<Skeleton type={MODEL_TYPE.TYPE} />}>
-          <ModelType />
-        </Suspense>
-        <Suspense fallback={<Skeleton type={EXTERIOR_COLOR.TYPE} />}>
-          <ExteriorColor />
-        </Suspense>
-        <InteriorColor />
-        <OptionPicker />
-        <Estimation />
+        {isFetchMap[1] && (
+          <Suspense fallback={<Skeleton type={MODEL_TYPE.TYPE} />}>
+            <ModelType />
+          </Suspense>
+        )}
+        {isFetchMap[2] && (
+          <Suspense fallback={<Skeleton type={EXTERIOR_COLOR.TYPE} />}>
+            <ExteriorColor />
+          </Suspense>
+        )}
+        {isFetchMap[3] && (
+          <Suspense fallback={<Skeleton type={INTERIOR_COLOR.TYPE} />}>
+            <InteriorColor />
+          </Suspense>
+        )}
+        {isFetchMap[4] && <OptionPicker />}
+        {isFetchMap[5] && <Estimation />}
       </S.Page>
       <Footer />
       <PriceStaticBar />
