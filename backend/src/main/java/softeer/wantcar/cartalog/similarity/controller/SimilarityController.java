@@ -4,6 +4,7 @@ import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import softeer.wantcar.cartalog.similarity.dto.SimilarEstimateCountResponseDto;
@@ -13,6 +14,7 @@ import softeer.wantcar.cartalog.similarity.service.SimilarityService;
 @Api(tags = {"유사 견적 관련 API"})
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/similarity")
 public class SimilarityController {
     private final SimilarityService similarityService;
 
