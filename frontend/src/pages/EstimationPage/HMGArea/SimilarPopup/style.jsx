@@ -38,10 +38,17 @@ export const Header = styled.div`
   margin-top: 57px;
 `;
 
+export const InfoWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 762px;
+`;
+
 export const Info = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 35px;
+  justify-content: space-between;
 `;
 
 export const Title = styled.div`

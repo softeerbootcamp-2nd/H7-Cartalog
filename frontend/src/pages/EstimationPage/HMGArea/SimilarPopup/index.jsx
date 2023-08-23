@@ -8,6 +8,7 @@ import Button from '../../../../components/Button';
 import Popup from '../../../../components/Popup';
 import SimilarInfo from './SimilarInfo';
 import useFetch from '../../../../hooks/useFetch';
+import PriceCompareBar from '../../../../components/PriceCompareBar';
 
 function SimilarPopup({ show, close }) {
   const data = useData();
@@ -66,13 +67,17 @@ function SimilarPopup({ show, close }) {
             <S.SimilarPopup>
               <S.PopupWrapper>
                 <S.Header>
-                  <S.Info>
-                    <S.Title>
-                      <span>{SIMILAR.TITLE}</span>
-                      {SIMILAR.SUB_TITLE}
-                    </S.Title>
-                    <S.TitleInfo>{SIMILAR.INFO_TITLE}</S.TitleInfo>
-                  </S.Info>
+                  <S.InfoWrapper>
+                    <S.Info>
+                      <S.Title>
+                        <span>{SIMILAR.TITLE}</span>
+                        {SIMILAR.SUB_TITLE}
+                      </S.Title>
+                      <S.TitleInfo>{SIMILAR.INFO_TITLE}</S.TitleInfo>
+                    </S.Info>
+                    <PriceCompareBar />
+                  </S.InfoWrapper>
+
                   <S.CloseButton>
                     <CloseIcon onClick={handleExitShow} />
                   </S.CloseButton>
