@@ -11,7 +11,7 @@ import ModelType from '../../pages/ModelTypePage';
 import ExteriorColor from '../../pages/ExteriorColorPage';
 import OptionPicker from '../../pages/OptionPickerPage';
 import Estimation from '../../pages/EstimationPage';
-import Skeleton from '../Skeleton';
+import Skeleton from '../Skeleton/Estimation';
 import { TRIM_SELECT } from '../../pages/TrimSelectPage/constants';
 import { MODEL_TYPE } from '../../pages/ModelTypePage/constants';
 import { EXTERIOR_COLOR } from '../../pages/ExteriorColorPage/constants';
