@@ -18,6 +18,7 @@ import com.softeer.cartalog.data.model.confirm.ConfirmDetail
 import com.softeer.cartalog.data.model.option.Options
 import com.softeer.cartalog.data.model.summary.SummaryOptionPrice
 import com.softeer.cartalog.data.model.db.PriceData
+import com.softeer.cartalog.data.model.estimate.SimilarEstimates
 import com.softeer.cartalog.util.ItemDividerDecoration
 import com.softeer.cartalog.util.ItemHorizontalSpacingDecoration
 import com.softeer.cartalog.util.ItemVerticalSpacingDecoration
@@ -91,11 +92,12 @@ fun setTrimCardViewPager(
     indicator.attachTo(viewPager)
 }
 
-@BindingAdapter("viewModel", "indicator")
+@BindingAdapter("viewModel", "indicator", "estimates")
 fun setSimilarEstimateCardViewPager(
     viewPager: ViewPager2,
     viewModel: EstimateViewModel,
-    indicator: DotsIndicator
+    indicator: DotsIndicator,
+    estimates: List<SimilarEstimates>
 ) {
 
     val adjustedOffsetPx = UtilManager.getViewPagerGap(viewPager)
