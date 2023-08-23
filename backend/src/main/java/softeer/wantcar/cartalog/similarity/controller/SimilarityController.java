@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import softeer.wantcar.cartalog.estimate.dto.EstimateCountInfoDto;
 import softeer.wantcar.cartalog.estimate.service.EstimateService;
-import softeer.wantcar.cartalog.similarity.dto.SimilarEstimateCountInfoResponseDto;
-import softeer.wantcar.cartalog.similarity.dto.SimilarEstimateCountResponseDto;
-import softeer.wantcar.cartalog.similarity.dto.SimilarEstimateResponseDto;
+import softeer.wantcar.cartalog.similarity.dto.*;
 import softeer.wantcar.cartalog.similarity.service.SimilarityService;
 
 import java.util.List;
@@ -96,5 +94,32 @@ public class SimilarityController {
                 .myEstimateCount(similarEstimateCounts.getMyEstimateCount())
                 .similarEstimateCounts(estimateCountInfoList)
                 .build());
+    }
+
+    @ApiOperation(
+            value = "123",
+            notes = "내 견적의 출고 개수와 유사 견적들의 출고 개수, 유사 견적 정보를 제공한다.")
+    @ApiImplicitParam(
+            name = "estimateId", value = "내 견적 식별자", required = true,
+            dataType = "java.lang.Long", paramType = "query", example = "1")
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "존재하지 않는 견적 식별자입니다."),
+            @ApiResponse(code = 500, message = "적절하지 않은 데이터가 있어 요청을 처리할 수 없습니다. 관리자에게 문의하세요.")})
+    @GetMapping("/releasesAll")
+    public ResponseEntity<SimilarEstimateListResponseDto> findAllSimilarEstimates(@RequestParam("estimateId") Long estimateId) {
+        SimilarEstimateCountResponseDto similarEstimateCounts = similarityService.getSimilarEstimateCounts(estimateId);
+        if (similarEstimateCounts == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<SimilarEstimate2ResponseDto> similarEstimateResponseDtoList = similarEstimateCounts.getSimilarEstimateCounts().stream()
+                .map(estimateCountDto -> similarityService.getSimilarEstimateInfo2(estimateId, estimateCountDto.getEstimateId()))
+                .collect(Collectors.toUnmodifiableList());
+
+        SimilarEstimateListResponseDto build = SimilarEstimateListResponseDto.builder()
+                .similarEstimates(similarEstimateResponseDtoList)
+                .build();
+
+        return ResponseEntity.ok().body(build);
     }
 }

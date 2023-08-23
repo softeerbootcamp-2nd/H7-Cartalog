@@ -40,6 +40,17 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
     }
 
     @Override
+    public List<EstimateInfoWithSideImageDto> findEstimateInfoWithSideImageByEstimateIds(List<Long> estimateIds) {
+        if (estimateIds.isEmpty()) {
+            return new ArrayList<>();
+        }
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("estimateIds", estimateIds);
+        return jdbcTemplate.query(QueryString.findEstimateInfo2BydEstimateIds,
+                parameters, RowMapperUtils.mapping(EstimateInfoWithSideImageDto.class, serverPath.getImageServerPathRowMapperStrategy()));
+    }
+
+    @Override
     public List<EstimateOptionInfoDto> findEstimateOptionsByEstimateIds(List<Long> estimateIds) {
         if (estimateIds.isEmpty()) {
             return new ArrayList<>();

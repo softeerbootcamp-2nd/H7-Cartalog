@@ -4,11 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateCountDto;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateInfoDto;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionIdListDto;
-import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionInfoDto;
+import softeer.wantcar.cartalog.estimate.repository.dto.*;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
+import softeer.wantcar.cartalog.similarity.dto.SimilarEstimate2ResponseDto;
 import softeer.wantcar.cartalog.similarity.dto.SimilarEstimateCountResponseDto;
 import softeer.wantcar.cartalog.similarity.dto.SimilarEstimateResponseDto;
 import softeer.wantcar.cartalog.similarity.repository.SimilarityCommandRepository;
@@ -38,6 +36,17 @@ public class SimilarityServiceImpl implements SimilarityService {
         Map<Long, List<EstimateOptionInfoDto>> estimateOptionInfos = getEstimateOptionInfos(List.of(estimateId, similarEstimateId));
 
         return getSimilarEstimateResponseDto(estimateId, similarEstimateId, similarEstimateInfos, estimateOptionInfos);
+    }
+
+    @Override
+    public SimilarEstimate2ResponseDto getSimilarEstimateInfo2(Long estimateId, Long similarEstimateId) {
+        List<EstimateInfoWithSideImageDto> similarEstimateInfos = estimateQueryRepository.findEstimateInfoWithSideImageByEstimateIds(List.of(similarEstimateId));
+        if (similarEstimateInfos.isEmpty()) {
+            return null;
+        }
+        Map<Long, List<EstimateOptionInfoDto>> estimateOptionInfos = getEstimateOptionInfos(List.of(estimateId, similarEstimateId));
+
+        return getSimilarEstimate2ResponseDto(estimateId, similarEstimateId, similarEstimateInfos, estimateOptionInfos);
     }
 
     @Override
@@ -77,6 +86,31 @@ public class SimilarityServiceImpl implements SimilarityService {
                 .modelTypes(getModelTypes(similarEstimateInfos))
                 .exteriorColorCode(similarEstimateInfo.getExteriorColorCode())
                 .interiorColorCode(similarEstimateInfo.getInteriorColorCode())
+                .nonExistentOptions(getNonExistOptionInfoDtoList(existOptionInfos, similarEstimateOptionInfos))
+                .build();
+    }
+
+    private static SimilarEstimate2ResponseDto getSimilarEstimate2ResponseDto(Long estimateId,
+                                                                              Long similarEstimateId,
+                                                                              List<EstimateInfoWithSideImageDto> similarEstimateInfo2s,
+                                                                              Map<Long, List<EstimateOptionInfoDto>> estimateOptionInfos) {
+        EstimateInfoWithSideImageDto similarEstimateInfo = similarEstimateInfo2s.get(0);
+
+        List<String> existOptionInfos = estimateOptionInfos.getOrDefault(estimateId, new ArrayList<>()).stream()
+                .map(EstimateOptionInfoDto::getOptionId)
+                .collect(Collectors.toList());
+        List<EstimateOptionInfoDto> similarEstimateOptionInfos = estimateOptionInfos.getOrDefault(similarEstimateId, new ArrayList<>());
+
+        List<EstimateInfoDto> similarEstimateInfos = similarEstimateInfo2s.stream()
+                .collect(Collectors.toUnmodifiableList());
+
+        return SimilarEstimate2ResponseDto.builder()
+                .trimName(similarEstimateInfo.getTrimName())
+                .price(getEstimatePrice(similarEstimateInfos, similarEstimateOptionInfos))
+                .modelTypes(getModelTypes(similarEstimateInfos))
+                .exteriorColorCode(similarEstimateInfo.getExteriorColorCode())
+                .interiorColorCode(similarEstimateInfo.getInteriorColorCode())
+                .exteriorCarSideImageUrl(similarEstimateInfo.getExteriorCarSideImageUrl())
                 .nonExistentOptions(getNonExistOptionInfoDtoList(existOptionInfos, similarEstimateOptionInfos))
                 .build();
     }

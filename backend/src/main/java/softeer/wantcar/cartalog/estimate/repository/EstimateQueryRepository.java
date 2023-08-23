@@ -20,6 +20,8 @@ public interface EstimateQueryRepository {
 
     List<EstimateInfoDto> findEstimateInfoBydEstimateIds(List<Long> similarEstimateIds);
 
+    List<EstimateInfoWithSideImageDto> findEstimateInfoWithSideImageByEstimateIds(List<Long> similarEstimateIds);
+
     List<EstimateOptionInfoDto> findEstimateOptionsByEstimateIds(List<Long> estimateIds);
 
     List<EstimateOptionInfoDto> findEstimatePackagesByEstimateIds(List<Long> estimateIds);

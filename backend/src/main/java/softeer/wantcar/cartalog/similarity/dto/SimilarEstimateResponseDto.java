@@ -1,12 +1,12 @@
 package softeer.wantcar.cartalog.similarity.dto;
 
-import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionInfoDto;
 
 import java.util.List;
 
-@Builder
+@SuperBuilder
 @Getter
 public class SimilarEstimateResponseDto {
     private String trimName;
