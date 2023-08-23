@@ -15,7 +15,7 @@ import javax.websocket.server.PathParam;
 
 @Api(tags = {"트림 색상 API"})
 @RestController
-@RequestMapping("/api/models/trims")
+@RequestMapping("/models/trims")
 @RequiredArgsConstructor
 @Slf4j
 public class TrimColorController {

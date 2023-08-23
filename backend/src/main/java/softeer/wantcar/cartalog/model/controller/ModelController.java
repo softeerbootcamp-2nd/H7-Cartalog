@@ -18,7 +18,7 @@ import javax.websocket.server.PathParam;
 
 @Api(tags = {"모델 관련 API"})
 @RestController
-@RequestMapping("/api/models")
+@RequestMapping("/models")
 @RequiredArgsConstructor
 @Slf4j
 public class ModelController {
