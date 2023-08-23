@@ -22,7 +22,7 @@ function Info({ optionId, expanded, setExpanded }) {
     if (!optionId) return;
     async function fetchData() {
       const response = await fetch(
-        `http://13.209.9.2/models/trims/options/detail?optionId=${optionId}`,
+        `https://api.hyundei.shop/models/trims/options/detail?optionId=${optionId}`,
       );
       const data = await response.json();
       setOptionInfo(data);
