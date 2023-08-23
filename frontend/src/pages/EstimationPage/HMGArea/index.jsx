@@ -38,7 +38,6 @@ function HMGArea() {
     <S.HMGArea>
       <PriceCard />
       {data.estimation.similarEstimateCounts.length !== 0 && <SimilarCard />}
-      <SimilarCard />
     </S.HMGArea>
   );
 }
