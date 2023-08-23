@@ -17,3 +17,9 @@ export const SIMILAR_INFO = {
   TITLE: '유사견적서',
   OPTION: '내 견적에 없는 옵션이에요.',
 };
+
+export const POPUP = {
+  CANCEL: '취소',
+  EXIT: '종료',
+  EXIT_TEXT: '유사견적을 닫으시겠습니까?',
+};

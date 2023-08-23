@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import { EXIT, POPUP } from '../constants';
 import { ReactComponent as Cancel } from '../../../../assets/icons/cancel.svg';
 import * as S from './style';

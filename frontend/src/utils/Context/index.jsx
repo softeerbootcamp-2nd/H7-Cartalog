@@ -106,6 +106,8 @@ export function StateProvider({ children }) {
           isPost: false,
           averagePrice: null,
           isFetch: false,
+          myEstimateCount: null,
+          similarEstimateCounts: [],
         };
         break;
       case 'summary':
