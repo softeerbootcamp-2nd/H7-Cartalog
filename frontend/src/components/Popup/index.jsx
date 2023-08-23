@@ -34,7 +34,7 @@ function Popup({ show, close, actions, children }) {
           <S.PopupActions>{actionButtons}</S.PopupActions>
         </S.Popup>
       </>,
-      document.querySelector('#modal'),
+      document.querySelector('#exitModal'),
     )
   );
 }
