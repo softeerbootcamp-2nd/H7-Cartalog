@@ -3,7 +3,7 @@ import * as S from './style';
 
 function PriceGraph({ min, max, avg, value, width, height }) {
   const svgRef = useRef();
-  const [coords, setCoords] = useState([]);
+  const [coords, setCoords] = useState([0, 0]);
   const drawWidth = width - 2;
   const drawHeight = height - 2;
   const avgX = ((avg - min) / (max - min)) * width;
