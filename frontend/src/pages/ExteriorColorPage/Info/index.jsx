@@ -1,14 +1,11 @@
 import { useEffect } from 'react';
-import { useData } from '../../../utils/Context';
 import { INFO } from '../constants';
 import * as S from './style';
 import Title from '../../../components/Title';
 import TrimImage from './TrimImage';
 import TrimStand from './TrimStand';
 
-function Info() {
-  const { setTrimState, exteriorColor } = useData();
-
+function Info({ setTrimState, exteriorColor }) {
   const TitleProps = {
     type: INFO.TYPE,
     subTitle: INFO.SUB_TITLE,
@@ -25,22 +22,21 @@ function Info() {
     }));
   };
 
-  const handleMouseUp = () => {
-    setTrimState((prevState) => ({
-      ...prevState,
-      exteriorColor: {
-        ...prevState.exteriorColor,
-        rotate: false,
-      },
-    }));
-  };
-
   useEffect(() => {
+    const handleMouseUp = () => {
+      setTrimState((prevState) => ({
+        ...prevState,
+        exteriorColor: {
+          ...prevState.exteriorColor,
+          rotate: false,
+        },
+      }));
+    };
     document.addEventListener('mouseup', handleMouseUp);
     return () => {
       document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, []);
+  }, [setTrimState]);
 
   return (
     <S.Info onMouseDown={handleMouseDown}>
