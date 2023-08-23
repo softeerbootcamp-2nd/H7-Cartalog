@@ -101,7 +101,7 @@ public class QueryString {
             "       model_interior_colors.name                     AS interior_color_name, " +
             "       model_interior_colors.price                    AS interior_color_price, " +
             "       model_interior_colors.image_url                AS interior_color_image_url, " +
-            "       model_exterior_colors.exterior_image_directory AS exterior_car_image_directory, " +
+            "       model_exterior_colors.side_exterior_image_url  AS exterior_car_side_image_url, " +
             "       model_interior_colors.interior_image_url       AS interior_car_image_url " +
             "FROM   estimates " +
             "       INNER JOIN detail_trims " +
