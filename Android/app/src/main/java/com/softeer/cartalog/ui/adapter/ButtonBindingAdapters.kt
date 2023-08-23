@@ -292,10 +292,8 @@ fun setGuideClick(
     constraintLayout: ConstraintLayout,
     imageView: ImageView
 ){
-
-    val clickListener = View.OnClickListener {
+    constraintLayout.setOnClickListener{
         constraintLayout.visibility = View.GONE
     }
-    constraintLayout.setOnClickListener(clickListener)
-    imageView.setOnClickListener(clickListener)
+    imageView.setOnClickListener(null)
 }
