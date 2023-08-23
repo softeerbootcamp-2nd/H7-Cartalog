@@ -1,11 +1,9 @@
-import { useData } from '../../../utils/Context';
 import { PICK } from '../constants';
 import * as S from './style';
 import PickTitle from '../../../components/PickTitle';
 import PickCard from './PickCard';
 
-function Pick() {
-  const { modelType } = useData();
+function Pick({ modelType }) {
   const pickTitleProps = { mainTitle: PICK.TITLE };
 
   return (

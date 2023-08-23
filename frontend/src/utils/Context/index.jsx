@@ -116,7 +116,9 @@ export function StateProvider({ children }) {
           interiorImage: '',
         };
         break;
-
+      case 'page':
+        acc[key] = 1;
+        break;
       default:
         acc[key] = null; // 다른 키들은 null로 초기화
     }
