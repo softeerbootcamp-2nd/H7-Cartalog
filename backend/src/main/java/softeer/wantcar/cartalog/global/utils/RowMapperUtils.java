@@ -108,7 +108,7 @@ public abstract class RowMapperUtils {
     }
 
     public static <T> RowMapper<T> mapping(final Class<T> clazz, final List<RowMapperStrategy> rowMapperStrategies) {
-        Constructor<?>[] constructors = clazz.getConstructors();
+        Constructor<?>[] constructors = clazz.getDeclaredConstructors();
         if (constructors.length > 1) {
             throw new RuntimeException("생성자가 2개 이상입니다");
         }
@@ -116,23 +116,8 @@ public abstract class RowMapperUtils {
 
         return (rs, rowNum) -> {
             List<Object> args = new ArrayList<>();
-            for (Field field : clazz.getDeclaredFields()) {
-                Class<?> type = field.getType();
-                String name = convertSnakeCase(field.getName());
 
-                List<RowMapperStrategy> strategies = new ArrayList<>();
-                if (rowMapperStrategies != null) {
-                    strategies.addAll(rowMapperStrategies);
-                }
-                strategies.addAll(getDefaultRowMapperStrategies());
-
-                for (RowMapperStrategy rowMapperStrategy : strategies) {
-                    if (rowMapperStrategy.isMappingTarget(type, name)) {
-                        args.add(rowMapperStrategy.mapping(name, rs));
-                        break;
-                    }
-                }
-            }
+            mappingToFieldOnSupers(clazz, rowMapperStrategies, rs, args);
 
             try {
                 Constructor<T> declaredConstructor = clazz.getDeclaredConstructor(array);
@@ -142,6 +127,35 @@ public abstract class RowMapperUtils {
                 throw new IllegalArgumentException("자동 rowMapper 변환 불가능");
             }
         };
+    }
+
+    private static <T> void mappingToFieldOnSupers(Class<T> clazz, List<RowMapperStrategy> rowMapperStrategies, ResultSet rs, List<Object> args) throws SQLException {
+        if (clazz == Object.class) {
+            return;
+        }
+
+        for (Field field : clazz.getDeclaredFields()) {
+            mappingToField(rowMapperStrategies, rs, args, field);
+        }
+        mappingToFieldOnSupers(clazz.getSuperclass(), rowMapperStrategies, rs, args);
+    }
+
+
+    private static void mappingToField(List<RowMapperStrategy> rowMapperStrategies, ResultSet rs, List<Object> args, Field field) throws SQLException {
+        Class<?> type = field.getType();
+        String name = convertSnakeCase(field.getName());
+        List<RowMapperStrategy> strategies = new ArrayList<>();
+        if (rowMapperStrategies != null) {
+            strategies.addAll(rowMapperStrategies);
+        }
+        strategies.addAll(getDefaultRowMapperStrategies());
+
+        for (RowMapperStrategy rowMapperStrategy : strategies) {
+            if (rowMapperStrategy.isMappingTarget(type, name)) {
+                args.add(rowMapperStrategy.mapping(name, rs));
+                break;
+            }
+        }
     }
 
     private static String convertSnakeCase(String fieldName) {

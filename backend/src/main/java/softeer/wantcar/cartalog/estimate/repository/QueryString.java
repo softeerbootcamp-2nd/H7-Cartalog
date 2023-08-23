@@ -35,6 +35,27 @@ public class QueryString {
             "JOIN trim_interior_colors AS tic ON tic.id=e.trim_interior_color_id " +
             "WHERE e.id IN (:estimateIds);";
 
+    protected static final String findEstimateInfoWithSideImageBydEstimateIds =
+            "SELECT " +
+            "   e.id AS estimate_id, " +
+            "   e.detail_trim_id AS detail_trim_id, " +
+            "   t.name AS trim_name, " +
+            "   t.min_price AS trim_price, " +
+            "   mec.color_code AS exterior_color_code, " +
+            "   tic.model_interior_color_code AS interior_color_code, " +
+            "   mo.name AS model_type_name, " +
+            "   mo.price AS model_type_price, " +
+            "   mec.side_exterior_image_url AS exterior_car_side_image_url " +
+            "FROM estimates AS e " +
+            "JOIN detail_trims AS dt ON dt.id=e.detail_trim_id " +
+            "JOIN trims AS t ON t.id=dt.trim_id " +
+            "JOIN detail_model_decision_options AS dmdo ON dmdo.detail_model_id = dt.detail_model_id " +
+            "JOIN model_options AS mo ON mo.id=dmdo.model_option_id " +
+            "JOIN trim_exterior_colors AS tec ON tec.id=e.trim_exterior_color_id " +
+            "JOIN model_exterior_colors AS mec ON mec.id=tec.model_exterior_color_id " +
+            "JOIN trim_interior_colors AS tic ON tic.id=e.trim_interior_color_id " +
+            "WHERE e.id IN (:estimateIds);";
+
     protected static final String findEstimateOptionsByEstimateIds =
             "SELECT " +
             "   e.id AS estimate_id, " +
