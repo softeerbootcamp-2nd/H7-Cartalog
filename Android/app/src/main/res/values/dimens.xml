@@ -4,6 +4,6 @@
     <dimen name="pager_width">312dp</dimen>
 
     <dimen name="option_detail_dialog_width">380dp</dimen>
-    <dimen name="option_detail_dialog_height">550dp</dimen>
+    <dimen name="option_detail_dialog_height">575dp</dimen>
 
 </resources>
