@@ -6,7 +6,7 @@ export const Overlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 999;
+  z-index: 1001;
   width: 100%;
   height: 100%;
   background-color: #1f1f1fb2;
@@ -21,7 +21,7 @@ export const Popup = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1000;
+  z-index: 1002;
   width: 335px;
   height: 200px;
   border-radius: 4px;
