@@ -76,7 +76,6 @@ class EstimateQueryRepositoryTest {
     @Nested
     @DisplayName("findEstimateCounts 테스트")
     class findEstimateCountsTest {
-        //TODO: 등록된 유사 견적이 존재하지 않아 테스트 불가
         @Test
         @DisplayName("존재하는 견적 식별자들을 전달할 경우 견적의 개수를 반환한다")
         void returnEstimateCounts() {
@@ -90,7 +89,7 @@ class EstimateQueryRepositoryTest {
                 softAssertions.assertThat(estimateCounts.get(estimateId - 1).getEstimateId())
                         .isEqualTo(estimateId);
             }
-//            softAssertions.assertAll();
+            softAssertions.assertAll();
         }
 
         @Test
