@@ -97,15 +97,18 @@ class ModelControllerTest {
         @DisplayName("존재하지 않는 식별자로 조회시 404 상태를 반환한다.")
         void returnStatusCode404() {
             //given
-            when(modelQueryRepository.findCarSideExteriorAndInteriorImage("A", "A"))
+            String exteriorColorCode = "A";
+            String interiorColorCode = "A";
+            when(modelQueryRepository.findCarSideExteriorAndInteriorImage(exteriorColorCode, interiorColorCode))
                     .thenReturn(null);
 
             //when
-            ResponseEntity<EstimateImageDto> actualResponse = modelController.findSideExteriorAndInteriorImage("A", "A");
+            ResponseEntity<EstimateImageDto> actualResponse = modelController.findSideExteriorAndInteriorImage(exteriorColorCode, interiorColorCode);
 
             //then
             softAssertions.assertThat(actualResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
             softAssertions.assertThat(actualResponse.getBody()).isNull();
+            softAssertions.assertAll();
         }
     }
 }

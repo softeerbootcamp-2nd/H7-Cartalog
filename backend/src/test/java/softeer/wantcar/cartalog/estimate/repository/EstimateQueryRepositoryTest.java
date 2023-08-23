@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.repository.dto.*;
+import softeer.wantcar.cartalog.estimate.service.dto.EstimateDto;
 import softeer.wantcar.cartalog.global.ServerPath;
 
 import java.util.List;
@@ -231,7 +232,7 @@ class EstimateQueryRepositoryTest {
             softAssertions.assertThat(estimateShareInfo.getExteriorColorPrice()).isEqualTo(0);
             softAssertions.assertThat(estimateShareInfo.getExteriorColorName()).isEqualTo("그라파이트 그레이 메탈릭");
             softAssertions.assertThat(estimateShareInfo.getInteriorCarImageUrl())
-                    .isEqualTo(serverPath.attachImageServerPath("palisade/interior/YJY.png"));
+                    .isEqualTo(serverPath.attachImageServerPath("palisade/interior/YJY.webp"));
             softAssertions.assertThat(estimateShareInfo.getInteriorColorName()).isEqualTo("쿨그레이");
             softAssertions.assertAll();
         }
@@ -269,6 +270,20 @@ class EstimateQueryRepositoryTest {
     @Nested
     @DisplayName("getEstimatePrice 테스트")
     class getEstimatePriceTest {
-        //TODO
+        @Test
+        @DisplayName("견적서 가격 가져오기 테스트")
+        void success() {
+            //given
+            EstimateDto estimateDto = EstimateDto.builder()
+                    .detailTrimId(9L)
+                    .trimExteriorColorId(7L)
+                    .trimInteriorColorId(7L)
+                    .build();
+            //when
+            int estimatePrice = estimateQueryRepository.getEstimatePrice(estimateDto);
+
+            //then
+            assertThat(estimatePrice).isEqualTo(40440000);
+        }
     }
 }

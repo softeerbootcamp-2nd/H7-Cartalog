@@ -60,9 +60,10 @@ public class QueryString {
             "WHERE e.id IN (:estimateIds)";
 
     protected static final String findAveragePrice =
-            "SELECT ROUND(COALESCE(AVG(estimate.price), 0)) AS average_price " +
-            "FROM release_records" +
-            "JOIN estimates ON estimates.id=release_records.estimate_id ";
+            "SELECT ROUND(COALESCE(AVG(estimates.price), 0)) AS average_price " +
+            "FROM release_records " +
+            "JOIN estimates ON estimates.id=release_records.estimate_id " +
+            "   INNER JOIN detail_trims ON detail_trims.id = estimates.detail_trim_id AND detail_trims.trim_id= :trimId";
 
     public static final String findEstimateCounts =
             "SELECT " +
@@ -145,9 +146,10 @@ public class QueryString {
             "           ON mec.id = tec.model_exterior_color_id AND tec.id = :exteriorColorId) + " +
             "    (SELECT mic.price FROM trim_interior_colors AS tic  " +
             "        JOIN model_interior_colors AS mic " +
-            "           ON mic.code = tic.model_interior_color_code AND tic.trim_exterior_color_id = :interiorColorId) + " +
-            "    (SELECT SUM(mo.price) FROM model_options AS mo WHERE mo.id IN (:optionIds)) + " +
-            "    (SELECT SUM(mp.price) FROM model_packages AS mp WHERE mp.id IN (:packageIds)) AS price " +
+            "           ON mic.code = tic.model_interior_color_code " +
+                    "       AND tic.trim_exterior_color_id = :exteriorColorId AND tic.id= :interiorColorId ) + " +
+            "    IFNULL((SELECT SUM(mo.price) FROM model_options AS mo WHERE mo.id IN (:optionIds)), 0) + " +
+            "    IFNULL((SELECT SUM(mp.price) FROM model_packages AS mp WHERE mp.id IN (:packageIds)), 0) AS price " +
             "FROM detail_trims AS dt " +
             "JOIN trims AS t " +
             "   ON t.id = dt.trim_id " +
