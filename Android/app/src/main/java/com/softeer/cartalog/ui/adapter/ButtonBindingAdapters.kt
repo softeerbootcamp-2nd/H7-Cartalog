@@ -286,3 +286,16 @@ fun setInfoBtnClick(
     }
     guideBgr.setOnClickListener(null)
 }
+
+@BindingAdapter("imageView")
+fun setGuideClick(
+    constraintLayout: ConstraintLayout,
+    imageView: ImageView
+){
+
+    val clickListener = View.OnClickListener {
+        constraintLayout.visibility = View.GONE
+    }
+    constraintLayout.setOnClickListener(clickListener)
+    imageView.setOnClickListener(clickListener)
+}
