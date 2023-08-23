@@ -102,13 +102,13 @@ export function StateProvider({ children }) {
         break;
       case 'estimation':
         acc[key] = {
-          id: null,
+          id: 1,
           isPost: false,
           averagePrice: null,
           isFetch: false,
           myEstimateCount: null,
           similarEstimateCounts: [],
-          similarEstimateReleases: [],
+          similarEstimateCountInfo: [],
         };
         break;
       case 'summary':

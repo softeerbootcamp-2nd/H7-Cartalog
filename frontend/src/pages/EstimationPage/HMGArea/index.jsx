@@ -17,6 +17,7 @@ function HMGArea() {
     },
   });
   const fetchedGetData = useFetch(`estimates/distribution?trimId=${data.trim.id}`);
+  const fetchedInfoData = useFetch(`similarity/countInfo?estimateId=${data.estimation.id}`);
 
   useEffect(() => {
     if (!fetchedPostData || !fetchedGetData || data.estimation.isFetch || data.page !== 6) return;
@@ -28,9 +29,10 @@ function HMGArea() {
         id: fetchedPostData,
         isFetch: true,
         averagePrice: fetchedGetData,
+        similarEstimateCountInfo: fetchedInfoData.similarEstimateCounts,
       },
     }));
-  }, [data, fetchedGetData, fetchedPostData]);
+  }, [data, fetchedGetData, fetchedInfoData, fetchedPostData]);
 
   return (
     <S.HMGArea>
