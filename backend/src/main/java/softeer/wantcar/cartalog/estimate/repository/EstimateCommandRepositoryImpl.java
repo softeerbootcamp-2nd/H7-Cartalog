@@ -34,12 +34,12 @@ public class EstimateCommandRepositoryImpl implements EstimateCommandRepository 
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("detailTrimId", estimateDto.getDetailTrimId())
                 .addValue("exteriorColorId", estimateDto.getTrimExteriorColorId())
-                .addValue("exteriorColorId", estimateDto.getTrimInteriorColorId())
+                .addValue("interiorColorId", estimateDto.getTrimInteriorColorId())
                 .addValue("price", price)
                 .addValue("nextId", nextId);
 
         String addEstimateQuery = "INSERT INTO estimates ( id, detail_trim_id, trim_exterior_color_id, trim_interior_color_id, price ) " +
-                                  "VALUES ( :nextId, :detailTrimId, :exteriorColorId, :exteriorColorId, :price )";
+                                  "VALUES ( :nextId, :detailTrimId, :exteriorColorId, :interiorColorId, :price )";
 
         jdbcTemplate.update(addEstimateQuery, parameters);
     }

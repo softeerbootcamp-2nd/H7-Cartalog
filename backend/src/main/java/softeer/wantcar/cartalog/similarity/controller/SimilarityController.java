@@ -14,7 +14,7 @@ import softeer.wantcar.cartalog.similarity.service.SimilarityService;
 @Api(tags = {"유사 견적 관련 API"})
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/similarity")
+@RequestMapping("/similarity")
 public class SimilarityController {
     private final SimilarityService similarityService;
 

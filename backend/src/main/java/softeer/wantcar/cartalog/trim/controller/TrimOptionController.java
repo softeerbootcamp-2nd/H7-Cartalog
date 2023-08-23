@@ -20,7 +20,7 @@ import java.util.Objects;
 @Slf4j
 @Api(tags = {"트림 옵션 관련 API"})
 @RestController
-@RequestMapping("/api/models/trims/options")
+@RequestMapping("/models/trims/options")
 @RequiredArgsConstructor
 public class TrimOptionController {
     private final TrimOptionService trimOptionService;

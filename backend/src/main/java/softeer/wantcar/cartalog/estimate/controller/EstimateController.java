@@ -11,7 +11,7 @@ import softeer.wantcar.cartalog.estimate.service.EstimateService;
 
 @Api(tags = {"견적서 API"})
 @RestController
-@RequestMapping("/api/estimates")
+@RequestMapping("/estimates")
 @RequiredArgsConstructor
 public class EstimateController {
     private final EstimateQueryRepository estimateQueryRepository;
