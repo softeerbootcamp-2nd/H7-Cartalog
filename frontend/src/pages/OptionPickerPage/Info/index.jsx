@@ -2,13 +2,15 @@ import { useEffect, useState } from 'react';
 import * as S from './style';
 import Title from '../../../components/Title';
 import Description from './Description';
+import ImageViewButton from '../../../components/ImageViewButton';
 
 const TYPE = 'dark';
 const CATEGORY = '파워트레인/성능';
 
-function Info({ optionId }) {
+function Info({ optionId, expanded, setExpanded }) {
   const [optionInfo, setOptionInfo] = useState();
   const [imageUrl, setImageUrl] = useState();
+  const imageButtonText = expanded ? '이미지 접기' : '이미지 확인';
   const TitleProps = {
     type: TYPE,
     subTitle: optionInfo?.category ?? CATEGORY,
@@ -37,6 +39,7 @@ function Info({ optionId }) {
         <Title {...TitleProps} />
       </S.ModelText>
       <S.ModelImage src={imageUrl} />
+      <ImageViewButton text={imageButtonText} onClick={() => setExpanded((prev) => !prev)} />
     </S.Info>
   );
 }
