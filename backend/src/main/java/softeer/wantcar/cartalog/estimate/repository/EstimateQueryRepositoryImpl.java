@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
-@SuppressWarnings({"SqlNoDataSourceInspection", "SqlResolve"})
+@SuppressWarnings({"SqlNoDataSourceInspection", "SqlResolve", "DataFlowIssue"})
 @Repository
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -119,13 +119,13 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
                 .addValue("countOfSumPackages", selectPackages.size() * Math.max(selectOptions.size(), 1))
                 .addValue("countOfSumOptions", Math.max(selectPackages.size(), 1) * selectOptions.size());
 
-        String appendPackageIdSQL = "" +
+        String appendPackageIdSQL =
                 "       AND Sum(CASE " +
                 "                 WHEN model_package_id IN ( :selectPackageIds ) THEN 1 " +
                 "                 ELSE 0 " +
                 "               end) = :countOfSumPackages ";
 
-        String appendOptionIdSQL = "" +
+        String appendOptionIdSQL =
                 "       AND Sum(CASE " +
                 "                 WHEN model_option_id IN ( :selectOptionIds ) THEN 1 " +
                 "                 ELSE 0 " +
@@ -182,5 +182,32 @@ public class EstimateQueryRepositoryImpl implements EstimateQueryRepository {
         } catch (EmptyResultDataAccessException exception) {
             return null;
         }
+    }
+
+    @Override
+    public int getEstimatePrice(EstimateDto estimateDto) {
+        List<Long> optionIds = getNonEmptyList(estimateDto.getModelOptionIds(), 0L);
+        List<Long> packageIds = getNonEmptyList(estimateDto.getModelPackageIds(), 0L);
+
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("detailTrimId", estimateDto.getDetailTrimId())
+                .addValue("exteriorColorId", estimateDto.getTrimExteriorColorId())
+                .addValue("interiorColorId", estimateDto.getTrimInteriorColorId())
+                .addValue("optionIds", optionIds)
+                .addValue("packageIds", packageIds);
+        try {
+            return jdbcTemplate.queryForObject(QueryString.getEstimatePrice,
+                    parameters, Integer.class);
+        } catch (EmptyResultDataAccessException | NullPointerException exception) {
+            return 0;
+        }
+    }
+
+    private static List<Long> getNonEmptyList(List<Long> lst, Long defaultValue) {
+        List<Long> optionIds = lst;
+        if (optionIds == null || optionIds.isEmpty()) {
+            optionIds = List.of(defaultValue);
+        }
+        return optionIds;
     }
 }

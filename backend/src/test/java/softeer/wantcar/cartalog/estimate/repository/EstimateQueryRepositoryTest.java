@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.repository.dto.*;
+import softeer.wantcar.cartalog.estimate.service.dto.EstimateDto;
 import softeer.wantcar.cartalog.global.ServerPath;
 
 import java.util.List;
@@ -75,7 +76,6 @@ class EstimateQueryRepositoryTest {
     @Nested
     @DisplayName("findEstimateCounts 테스트")
     class findEstimateCountsTest {
-        //TODO: 등록된 유사 견적이 존재하지 않아 테스트 불가
         @Test
         @DisplayName("존재하는 견적 식별자들을 전달할 경우 견적의 개수를 반환한다")
         void returnEstimateCounts() {
@@ -89,7 +89,7 @@ class EstimateQueryRepositoryTest {
                 softAssertions.assertThat(estimateCounts.get(estimateId - 1).getEstimateId())
                         .isEqualTo(estimateId);
             }
-//            softAssertions.assertAll();
+            softAssertions.assertAll();
         }
 
         @Test
@@ -231,7 +231,7 @@ class EstimateQueryRepositoryTest {
             softAssertions.assertThat(estimateShareInfo.getExteriorColorPrice()).isEqualTo(0);
             softAssertions.assertThat(estimateShareInfo.getExteriorColorName()).isEqualTo("그라파이트 그레이 메탈릭");
             softAssertions.assertThat(estimateShareInfo.getInteriorCarImageUrl())
-                    .isEqualTo(serverPath.attachImageServerPath("palisade/interior/YJY.png"));
+                    .isEqualTo(serverPath.attachImageServerPath("palisade/interior/YJY.webp"));
             softAssertions.assertThat(estimateShareInfo.getInteriorColorName()).isEqualTo("쿨그레이");
             softAssertions.assertAll();
         }
@@ -263,6 +263,43 @@ class EstimateQueryRepositoryTest {
             softAssertions.assertThat(estimateModelTypeIds.size()).isEqualTo(3);
             softAssertions.assertThat(estimateModelTypeIds.containsAll(List.of(1L, 3L, 6L))).isTrue();
             softAssertions.assertAll();
+        }
+    }
+
+    @Nested
+    @DisplayName("getEstimatePrice 테스트")
+    class getEstimatePriceTest {
+        @Test
+        @DisplayName("견적서 가격 가져오기 테스트")
+        void success() {
+            //given
+            EstimateDto estimateDto = EstimateDto.builder()
+                    .detailTrimId(9L)
+                    .trimExteriorColorId(7L)
+                    .trimInteriorColorId(7L)
+                    .build();
+            //when
+            int estimatePrice = estimateQueryRepository.getEstimatePrice(estimateDto);
+
+            //then
+            assertThat(estimatePrice).isEqualTo(40440000);
+        }
+
+        @Test
+        @DisplayName("잘못된 식별자로견적서 가격 가져오기 테스트")
+        void failure() {
+
+            //given
+            EstimateDto estimateDto = EstimateDto.builder()
+                    .detailTrimId(9L)
+                    .trimExteriorColorId(0L)
+                    .trimInteriorColorId(7L)
+                    .build();
+            //when
+            int estimatePrice = estimateQueryRepository.getEstimatePrice(estimateDto);
+
+            //then
+            assertThat(estimatePrice).isEqualTo(0);
         }
     }
 }

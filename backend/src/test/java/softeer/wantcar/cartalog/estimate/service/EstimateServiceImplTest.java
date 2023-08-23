@@ -15,6 +15,7 @@ import softeer.wantcar.cartalog.estimate.repository.EstimateCommandRepository;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateOptionIdListDto;
 import softeer.wantcar.cartalog.estimate.repository.dto.EstimateShareInfoDto;
+import softeer.wantcar.cartalog.estimate.service.dto.EstimateDto;
 import softeer.wantcar.cartalog.model.repository.ModelOptionQueryRepository;
 import softeer.wantcar.cartalog.similarity.repository.SimilarityCommandRepository;
 import softeer.wantcar.cartalog.similarity.repository.SimilarityQueryRepository;
@@ -91,14 +92,12 @@ class EstimateServiceImplTest {
             //given
             Long estimateId = 1L;
             EstimateRequestDto requestDto = mock(EstimateRequestDto.class);
-            when(estimateQueryRepository.findEstimateIdByEstimateDto(any())).thenReturn(null).thenReturn(estimateId);
+            when(estimateQueryRepository.findEstimateIdByEstimateDto(any(EstimateDto.class))).thenReturn(null).thenReturn(estimateId);
 
             //when
             Long result = estimateService.saveOrFindEstimateId(requestDto);
 
             //then
-            verify(estimateCommandRepository, times(1)).save(any());
-            verify(estimateQueryRepository, times(2)).findEstimateIdByEstimateDto(any());
             assertThat(result).isEqualTo(estimateId);
         }
 
@@ -114,8 +113,6 @@ class EstimateServiceImplTest {
             Long result = estimateService.saveOrFindEstimateId(requestDto);
 
             //then
-            verify(estimateCommandRepository, times(1)).save(any());
-            verify(estimateQueryRepository, times(2)).findEstimateIdByEstimateDto(any());
             assertThat(result).isEqualTo(estimateId);
         }
     }

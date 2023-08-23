@@ -20,7 +20,7 @@ import java.util.List;
 @Slf4j
 @Api(tags = {"트림 관련 API"})
 @RestController
-@RequestMapping("/models/trims")
+@RequestMapping("/api/models/trims")
 @RequiredArgsConstructor
 public class TrimController {
     private final TrimQueryRepository trimQueryRepository;

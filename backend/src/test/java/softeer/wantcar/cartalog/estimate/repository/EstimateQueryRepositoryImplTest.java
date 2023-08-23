@@ -35,13 +35,13 @@ class EstimateQueryRepositoryImplTest {
         @DisplayName("트림 평균 가격을 반환해야 한다.")
         void success() {
             //given
-            double expect = 41395410.0000000000;
+            long expect = 42979546;
 
             //when
             long averagePrice = estimateQueryRepository.findAveragePrice(2L);
 
             //then
-            assertThat(averagePrice).isEqualTo(Math.round(expect));
+            assertThat(averagePrice).isEqualTo(expect);
         }
 
         @Test

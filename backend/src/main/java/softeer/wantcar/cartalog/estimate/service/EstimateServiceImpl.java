@@ -53,7 +53,7 @@ public class EstimateServiceImpl implements EstimateService {
         }
 
         try {
-            saveEstimate(trimId, estimateDto);
+            saveEstimate(trimId, estimateDto, estimateQueryRepository.getEstimatePrice(estimateDto));
         } catch (DataAccessException exception) {
             throw new IllegalArgumentException();
         }
@@ -140,9 +140,8 @@ public class EstimateServiceImpl implements EstimateService {
                 );
     }
 
-    private void saveEstimate(Long trimId, EstimateDto estimateDto) {
-        Long estimateId;
-        estimateId = estimateCommandRepository.save(estimateDto);
+    private void saveEstimate(Long trimId, EstimateDto estimateDto, int price) {
+        Long estimateId = estimateCommandRepository.save(estimateDto, price);
         String hashTagKey = PendingHashTagMap.getHashTagKey(getTotalHashTags(estimateDto));
         if (!similarityQueryRepository.existHashTagKey(trimId, hashTagKey)) {
             similarityCommandRepository.saveHashTagKey(trimId, hashTagKey, 0);

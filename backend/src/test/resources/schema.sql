@@ -270,6 +270,7 @@ CREATE TABLE estimates
     detail_trim_id         BIGINT NOT NULL,
     trim_exterior_color_id BIGINT NOT NULL,
     trim_interior_color_id BIGINT NOT NULL,
+    price                  INT    NOT NULL,
     FOREIGN KEY (detail_trim_id) REFERENCES detail_trims (id) ON UPDATE CASCADE,
     FOREIGN KEY (trim_exterior_color_id) REFERENCES trim_exterior_colors (id) ON UPDATE CASCADE,
     FOREIGN KEY (trim_interior_color_id) REFERENCES trim_interior_colors (id) ON UPDATE CASCADE
@@ -277,8 +278,8 @@ CREATE TABLE estimates
 
 CREATE TABLE estimate_options
 (
-    estimate_id     BIGINT,
-    model_option_id BIGINT,
+    estimate_id     BIGINT NOT NULL ,
+    model_option_id BIGINT NOT NULL ,
     PRIMARY KEY (estimate_id, model_option_id),
     FOREIGN KEY (estimate_id) REFERENCES estimates (id) ON UPDATE CASCADE,
     FOREIGN KEY (model_option_id) REFERENCES model_options (id) ON UPDATE CASCADE
@@ -286,8 +287,8 @@ CREATE TABLE estimate_options
 
 CREATE TABLE estimate_packages
 (
-    estimate_id      BIGINT,
-    model_package_id BIGINT,
+    estimate_id      BIGINT NOT NULL ,
+    model_package_id BIGINT NOT NULL ,
     PRIMARY KEY (estimate_id, model_package_id),
     FOREIGN KEY (estimate_id) REFERENCES estimates (id) ON UPDATE CASCADE,
     FOREIGN KEY (model_package_id) REFERENCES model_packages (id) ON UPDATE CASCADE
@@ -295,10 +296,10 @@ CREATE TABLE estimate_packages
 
 CREATE TABLE pending_hash_tag_similarities
 (
-    idx                   BIGINT AUTO_INCREMENT,
-    hash_tag_key          VARCHAR(255),
-    trim_id               BIGINT,
-    last_calculated_index BIGINT,
+    idx                   BIGINT AUTO_INCREMENT NOT NULL ,
+    hash_tag_key          VARCHAR(255)          NOT NULL ,
+    trim_id               BIGINT                NOT NULL ,
+    last_calculated_index BIGINT                NOT NULL ,
     PRIMARY KEY (idx),
     FOREIGN KEY (trim_id) REFERENCES trims (id) ON UPDATE CASCADE
 );
@@ -313,8 +314,8 @@ CREATE TABLE release_records
 
 CREATE TABLE similar_estimates
 (
-    hash_tag_index BIGINT,
-    estimate_id    BIGINT,
+    hash_tag_index BIGINT NOT NULL ,
+    estimate_id    BIGINT NOT NULL ,
     PRIMARY KEY (hash_tag_index, estimate_id),
     FOREIGN KEY (hash_tag_index) REFERENCES pending_hash_tag_similarities (idx) ON UPDATE CASCADE,
     FOREIGN KEY (estimate_id) REFERENCES estimates (id) ON UPDATE CASCADE
@@ -322,17 +323,17 @@ CREATE TABLE similar_estimates
 
 CREATE TABLE hash_tag_similarities
 (
-    origin_hash_tag_index VARCHAR(255),
-    target_hash_tag_index VARCHAR(255),
-    similarity            FLOAT NOT NULL,
+    origin_hash_tag_index VARCHAR(255)  NOT NULL ,
+    target_hash_tag_index VARCHAR(255)  NOT NULL ,
+    similarity            FLOAT         NOT NULL,
     PRIMARY KEY (origin_hash_tag_index, target_hash_tag_index)
 );
 
 CREATE TABLE chosens
 (
-    id_code     VARCHAR(16),
-    domain      VARCHAR(64),
-    chosen      INT,
+    id_code     VARCHAR(16) NOT NULL ,
+    domain      VARCHAR(64) NOT NULL ,
+    chosen      INT         NOT NULL ,
     PRIMARY KEY (id_code, domain)
 );
 
@@ -461,7 +462,7 @@ INSERT INTO detail_trim_package_interior_color_condition (id, detail_trim_packag
 SELECT *
 FROM CSVREAD('classpath:csv/detail_trim_package_interior_color_condition.csv', null, 'fieldSeparator=|');
 
-INSERT INTO estimates (id, detail_trim_id, trim_exterior_color_id, trim_interior_color_id)
+INSERT INTO estimates (id, detail_trim_id, trim_exterior_color_id, trim_interior_color_id, price)
 SELECT *
 FROM CSVREAD('classpath:csv/estimates.csv', null, 'fieldSeparator=|');
 
