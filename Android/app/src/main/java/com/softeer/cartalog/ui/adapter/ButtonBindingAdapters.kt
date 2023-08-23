@@ -86,7 +86,7 @@ fun setOnClickToggle(
                 .withEndAction {
                     layout.visibility = View.VISIBLE
                     if (idx != 5) {
-                        fragmentContainer.setPadding(0, 150, 0, 0)
+                        fragmentContainer.setPadding(0, 170, 0, 0)
                     }
                 }
             button.animate().rotation(180f).start()
