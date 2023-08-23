@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useData } from '../../../../utils/Context';
+import { useData, TotalPrice } from '../../../../utils/Context';
 import { SIMILAR, BUTTON, POPUP } from './constants';
 import { ReactComponent as CloseIcon } from '../../../../../assets/icons/cancel.svg';
 import * as S from './style';
@@ -15,6 +15,7 @@ function SimilarPopup({ show, close }) {
   const handleExitShow = () => setExitShow(true);
   const handleExitClose = () => setExitShow(false);
   const [similarPage, setSimilarPage] = useState(0);
+  const [similarPrice, setSimilarPrice] = useState(42239849); // 수정
 
   const buttonProps = {
     type: BUTTON.TYPE,
@@ -58,7 +59,12 @@ function SimilarPopup({ show, close }) {
                       </S.Title>
                       <S.TitleInfo>{SIMILAR.INFO_TITLE}</S.TitleInfo>
                     </S.Info>
-                    <PriceCompareBar />
+                    <PriceCompareBar
+                      min={data.trim.minPrice}
+                      max={data.trim.maxPrice}
+                      my={TotalPrice(data.price)}
+                      value={similarPrice}
+                    />
                   </S.InfoWrapper>
                   <S.CloseButton>
                     <CloseIcon onClick={handleExitShow} />
@@ -71,6 +77,7 @@ function SimilarPopup({ show, close }) {
                       info={info.estimateInfo}
                       page={similarPage}
                       setPage={setSimilarPage}
+                      setPrice={setSimilarPrice}
                     />
                   ))}
                 </S.Contents>

@@ -7,7 +7,7 @@ import * as S from './style';
 import HMGTag from '../../../../../components/HMGTag';
 import SimilarCard from '../SimilarCard';
 
-function SimilarInfo({ info, page, setPage }) {
+function SimilarInfo({ info, page, setPage, setPrice }) {
   const [rightArrow, setRightArrow] = useState('');
   const [leftArrow, setLeftArrow] = useState('');
   const data = useData();
@@ -50,7 +50,7 @@ function SimilarInfo({ info, page, setPage }) {
           </S.TagWrapper>
           <S.OptionWrapper>
             <S.OptionTitle>{SIMILAR_INFO.OPTION}</S.OptionTitle>
-            {/* 옵션카드 */}
+            {/* 옵션 선택 시 Footer 버튼 변경 */}
             <S.CardWrapper>
               <SimilarCard
                 //   key={exterior.code}
