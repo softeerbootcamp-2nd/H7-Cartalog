@@ -1,14 +1,14 @@
 package com.softeer.cartalog.data.repository
 
 import com.softeer.cartalog.data.enums.PriceDataType
-import com.softeer.cartalog.data.model.CarColor
-import com.softeer.cartalog.data.model.DetailOptions
-import com.softeer.cartalog.data.model.Options
-import com.softeer.cartalog.data.model.SummaryCarImage
-import com.softeer.cartalog.data.model.Trim
-import com.softeer.cartalog.data.model.TrimDetail
-import com.softeer.cartalog.data.model.Trims
-import com.softeer.cartalog.data.model.Type
+import com.softeer.cartalog.data.model.color.CarColor
+import com.softeer.cartalog.data.model.option.DetailOptions
+import com.softeer.cartalog.data.model.option.Options
+import com.softeer.cartalog.data.model.summary.SummaryCarImage
+import com.softeer.cartalog.data.model.trim.Trim
+import com.softeer.cartalog.data.model.type.TrimDetail
+import com.softeer.cartalog.data.model.trim.Trims
+import com.softeer.cartalog.data.model.type.Type
 import com.softeer.cartalog.data.model.db.MyCar
 import com.softeer.cartalog.data.model.db.PriceData
 

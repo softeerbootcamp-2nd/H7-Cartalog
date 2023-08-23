@@ -7,9 +7,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.softeer.cartalog.data.enums.ModelTypeSubject
 import com.softeer.cartalog.data.enums.PriceDataType
-import com.softeer.cartalog.data.model.TrimDetail
-import com.softeer.cartalog.data.model.Type
-import com.softeer.cartalog.data.model.TypeOption
+import com.softeer.cartalog.data.model.type.TrimDetail
+import com.softeer.cartalog.data.model.type.Type
+import com.softeer.cartalog.data.model.type.TypeOption
 import com.softeer.cartalog.data.model.db.PriceData
 import com.softeer.cartalog.data.repository.CarRepository
 import kotlinx.coroutines.launch

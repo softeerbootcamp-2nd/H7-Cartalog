@@ -1,4 +1,4 @@
-package com.softeer.cartalog.data.model
+package com.softeer.cartalog.data.model.confirm
 
 data class ModelOption(
     val id: Int,

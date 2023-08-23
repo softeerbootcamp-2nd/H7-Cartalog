@@ -6,7 +6,7 @@
 
         <variable
             name="option"
-            type="com.softeer.cartalog.data.model.SummaryOptionPrice" />
+            type="com.softeer.cartalog.data.model.summary.SummaryOptionPrice" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

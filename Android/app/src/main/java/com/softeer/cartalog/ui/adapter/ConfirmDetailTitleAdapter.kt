@@ -3,7 +3,7 @@ package com.softeer.cartalog.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.softeer.cartalog.data.model.ConfirmDetail
+import com.softeer.cartalog.data.model.confirm.ConfirmDetail
 import com.softeer.cartalog.databinding.ItemConfirmDetailContainerBinding
 
 class ConfirmDetailTitleAdapter(private val detailTitleList: List<ConfirmDetail>) :

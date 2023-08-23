@@ -21,7 +21,7 @@
 
         <variable
             name="typeItem"
-            type="com.softeer.cartalog.data.model.Type" />
+            type="com.softeer.cartalog.data.model.type.Type" />
 
         <variable
             name="viewModel"

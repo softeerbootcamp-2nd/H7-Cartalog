@@ -13,10 +13,10 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.softeer.cartalog.R
-import com.softeer.cartalog.data.model.CarColor
-import com.softeer.cartalog.data.model.ConfirmDetail
-import com.softeer.cartalog.data.model.Options
-import com.softeer.cartalog.data.model.SummaryOptionPrice
+import com.softeer.cartalog.data.model.color.CarColor
+import com.softeer.cartalog.data.model.confirm.ConfirmDetail
+import com.softeer.cartalog.data.model.option.Options
+import com.softeer.cartalog.data.model.summary.SummaryOptionPrice
 import com.softeer.cartalog.data.model.db.PriceData
 import com.softeer.cartalog.util.ItemDividerDecoration
 import com.softeer.cartalog.util.ItemHorizontalSpacingDecoration

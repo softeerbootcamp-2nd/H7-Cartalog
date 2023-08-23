@@ -13,7 +13,7 @@
 
         <variable
             name="trimItem"
-            type="com.softeer.cartalog.data.model.Trim" />
+            type="com.softeer.cartalog.data.model.trim.Trim" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

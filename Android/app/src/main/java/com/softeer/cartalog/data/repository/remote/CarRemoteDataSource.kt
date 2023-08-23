@@ -1,13 +1,13 @@
 package com.softeer.cartalog.data.repository.remote
 
-import com.softeer.cartalog.data.model.DetailOptions
-import com.softeer.cartalog.data.model.SummaryCarImage
-import com.softeer.cartalog.data.model.ExteriorColors
-import com.softeer.cartalog.data.model.InteriorColors
-import com.softeer.cartalog.data.model.Options
-import com.softeer.cartalog.data.model.TrimDetail
-import com.softeer.cartalog.data.model.Trims
-import com.softeer.cartalog.data.model.Types
+import com.softeer.cartalog.data.model.option.DetailOptions
+import com.softeer.cartalog.data.model.summary.SummaryCarImage
+import com.softeer.cartalog.data.model.color.ExteriorColors
+import com.softeer.cartalog.data.model.color.InteriorColors
+import com.softeer.cartalog.data.model.option.Options
+import com.softeer.cartalog.data.model.type.TrimDetail
+import com.softeer.cartalog.data.model.trim.Trims
+import com.softeer.cartalog.data.model.type.Types
 import com.softeer.cartalog.data.remote.api.CarApi
 import retrofit2.Response
 
