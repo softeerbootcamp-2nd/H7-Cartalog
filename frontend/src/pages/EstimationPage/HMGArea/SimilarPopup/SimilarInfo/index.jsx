@@ -8,22 +8,25 @@ import HMGTag from '../../../../../components/HMGTag';
 import SimilarCard from '../SimilarCard';
 
 function SimilarInfo() {
-  const [rightClassName, setRightClassName] = useState('');
-  const [leftClassName, setLeftClassName] = useState('');
+  const [rightArrow, setRightArrow] = useState('');
+  const [leftArrow, setLeftArrow] = useState('');
   const { summary } = useData();
   const value = 42239849;
 
   return (
     <S.SimilarInfo>
       <S.LeftArea>
-        <S.ArrowButton className={leftClassName}>
+        <S.ArrowButton className={leftArrow}>
           <LeftArrow />
         </S.ArrowButton>
         <S.LeftInfo>
           <S.SubTitle>{SIMILAR_INFO.TITLE}</S.SubTitle>
           <S.MainTitle>Le Blanc</S.MainTitle>
-          {/* 해시태그 */}
-          해시태그
+          <S.HashTags>
+            {['하이', '바보', '크롱'].slice(0, 3).map((hashtag) => (
+              <div key={hashtag}>{hashtag}</div>
+            ))}
+          </S.HashTags>
           <S.Price>{value.toLocaleString('ko-KR')}원</S.Price>
         </S.LeftInfo>
         <img src={summary.sideImage} alt="exterior" />
@@ -56,7 +59,7 @@ function SimilarInfo() {
             </S.CardWrapper>
           </S.OptionWrapper>
         </S.RightInfo>
-        <S.ArrowButton className={rightClassName}>
+        <S.ArrowButton className={rightArrow}>
           <RightArrow />
         </S.ArrowButton>
       </S.RightArea>

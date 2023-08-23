@@ -57,8 +57,28 @@ export const MainTitle = styled.div`
   color: ${({ theme }) => theme.color.primary['700']};
 `;
 
+export const HashTags = styled.div`
+  display: flex;
+  align-items: center;
+  height: 16px;
+  gap: 5px;
+  margin-top: 10px;
+  overflow: hidden;
+
+  & > div {
+    flex-shrink: 0;
+    padding: 2px 6px;
+    font: ${({ theme }) => theme.font.textKR.Regular10};
+    color: ${({ theme }) => theme.color.gray['50']};
+    font-display: swap;
+    background-color: rgba(117, 117, 117, 0.5);
+    backdrop-filter: blur(2px);
+  }
+`;
+
 export const Price = styled.div`
   margin-top: 23px;
+  margin-bottom: 20px;
   font: ${({ theme }) => theme.font.headKR.Medium14};
   color: ${({ theme }) => theme.color.primary['700']};
 `;

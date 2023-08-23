@@ -77,7 +77,6 @@ function SimilarPopup({ show, close }) {
                     </S.Info>
                     <PriceCompareBar />
                   </S.InfoWrapper>
-
                   <S.CloseButton>
                     <CloseIcon onClick={handleExitShow} />
                   </S.CloseButton>
