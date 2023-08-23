@@ -7,7 +7,7 @@ import * as S from './style';
 import HMGTag from '../../../../../components/HMGTag';
 import SimilarCard from '../SimilarCard';
 
-function SimilarInfo({ info, page, setPage, setPrice }) {
+function SimilarInfo({ info, page, setPage, setPrice, option, setOption }) {
   const [rightArrow, setRightArrow] = useState('');
   const [leftArrow, setLeftArrow] = useState('');
   const data = useData();
@@ -17,6 +17,10 @@ function SimilarInfo({ info, page, setPage, setPrice }) {
     setLeftArrow(page === 0 ? '' : 'active');
     setRightArrow(page !== data.estimation.similarEstimateCountInfo.length - 1 ? 'active' : '');
   }, [data.estimation.similarEstimateCountInfo.length, page]);
+
+  // useEffect(() => {
+  //   setPrice(info.price);
+  // },[info.price]]);
 
   return (
     <S.SimilarInfo>
@@ -64,8 +68,10 @@ function SimilarInfo({ info, page, setPage, setPrice }) {
                 //   key={exterior.code}
                 name="빌트인 캠"
                 price={350000}
-                //   selected={exteriorColor.code === exterior.code}
-                onClick={() => {}}
+                //   selected={option.includes(info.id)}
+                onClick={() => {
+                  // setOption([...option, info.id]])
+                }}
                 // imageUrl={summary.sideImage}
               />
             </S.CardWrapper>

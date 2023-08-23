@@ -18,6 +18,7 @@ import PriceCompareBar from '../../../../components/PriceCompareBar';
 
 function SimilarPopup({ show, close }) {
   const data = useData();
+  const [selectedOption, setSelectedOption] = useState([1, 2]);
   const [addClicked, setAddClicked] = useState(false);
   const [exitShow, setExitShow] = useState(false);
   const handleExitShow = () => setExitShow(true);
@@ -35,7 +36,7 @@ function SimilarPopup({ show, close }) {
   const addButtonProps = {
     type: ADD_BUTTON.TYPE,
     state: ADD_BUTTON.STATE,
-    subTitle: `${ADD_BUTTON.SUB_TITLE} ${data.estimation.similarEstimateOption.length}개`,
+    subTitle: `${ADD_BUTTON.SUB_TITLE} ${selectedOption.length}개`,
     mainTitle: ADD_BUTTON.MAIN_TITLE,
     event: () => {
       handleExitShow();
@@ -82,8 +83,19 @@ function SimilarPopup({ show, close }) {
       {
         text: OPTION_POPUP.EXIT,
         onClick: () => {
+          data.setTrimState((prevState) => ({
+            ...prevState,
+            estimation: {
+              ...prevState.estimation,
+              similarEstimateOption: [
+                ...prevState.estimation.similarEstimateOption,
+                ...selectedOption,
+              ],
+            },
+          }));
           close();
           setAddClicked(false);
+          setSelectedOption([]);
         },
       },
     ],
@@ -127,12 +139,14 @@ function SimilarPopup({ show, close }) {
                       page={similarPage}
                       setPage={setSimilarPage}
                       setPrice={setSimilarPrice}
+                      option={selectedOption}
+                      setOption={setSelectedOption}
                     />
                   ))}
                 </S.Contents>
               </S.PopupWrapper>
               <S.Footer>
-                {data.estimation.similarEstimateOption.length === 0 ? (
+                {selectedOption.length === 0 ? (
                   <Button {...selectButtonProps} />
                 ) : (
                   <Button {...addButtonProps} />
@@ -144,9 +158,8 @@ function SimilarPopup({ show, close }) {
         )}
       {(() => {
         if (addClicked) return <Popup {...optionPopupProps} />;
-        if (data.estimation.similarEstimateOption.length === 0)
-          return <Popup {...selectPopupProps} />;
-        if (data.estimation.similarEstimateOption.length !== 0) return <Popup {...addPopupProps} />;
+        if (selectedOption.length === 0) return <Popup {...selectPopupProps} />;
+        if (selectedOption.length !== 0) return <Popup {...addPopupProps} />;
         return null;
       })()}
     </>
