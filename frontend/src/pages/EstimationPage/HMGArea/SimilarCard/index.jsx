@@ -13,7 +13,7 @@ function SimilarCard() {
   const handleClose = () => setShow(false);
   const targetRef = useRef();
   const isInViewport = useIntersectionObserver(targetRef);
-  const max = data?.similar?.reduce((acc, cur) => Math.max(acc, cur.value), 0);
+  const max = Math.max(data.estimation.myEstimateCount);
 
   return (
     <HMGCard
@@ -31,13 +31,9 @@ function SimilarCard() {
         ref={targetRef}
         $n={(data.estimation.similarEstimateCounts?.length ?? 0) + 1}
       >
-        <Chart
-          active
-          value={data.estimation.myEstimateCount}
-          max={Math.max(data.estimation.myEstimateCount)}
-        />
+        <Chart active value={data.estimation.myEstimateCount} max={max} />
         {data.estimation?.similarEstimateCounts.map((item) => (
-          <Chart key={item.id} value={item.value} max={Math.max(data.estimation.myEstimateCount)} />
+          <Chart key={item.id} value={item.value} max={max} />
         ))}
       </S.ChartWrapper>
       <S.Button onClick={handleShow}>유사 출고 견적 확인하기</S.Button>

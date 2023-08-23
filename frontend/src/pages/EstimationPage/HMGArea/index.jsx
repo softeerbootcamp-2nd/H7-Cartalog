@@ -1,12 +1,16 @@
-import PriceCard from './PriceCard';
-import SimilarCard from './SimilarCard';
+import { useData } from '../../../utils/Context';
 import * as S from './style';
+import PriceCard from './PriceCard';
+
+import SimilarCard from './SimilarCard';
 
 function HMGArea() {
+  const data = useData();
+
   return (
     <S.HMGArea>
       <PriceCard />
-      <SimilarCard />
+      {data.estimation.similarEstimateCounts.length !== 0 && <SimilarCard />}
     </S.HMGArea>
   );
 }
