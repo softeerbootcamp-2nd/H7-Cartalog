@@ -7,26 +7,49 @@ import * as S from './style';
 import HMGTag from '../../../../../components/HMGTag';
 import SimilarCard from '../SimilarCard';
 
-function SimilarInfo() {
-  const [rightClassName, setRightClassName] = useState('');
-  const [leftClassName, setLeftClassName] = useState('');
-  const { summary } = useData();
-  const value = 42239849;
+function SimilarInfo({
+  info,
+  page,
+  setPage,
+  setPrice,
+  option,
+  setOption,
+  optionData,
+  setOptionData,
+}) {
+  const [rightArrow, setRightArrow] = useState('');
+  const [leftArrow, setLeftArrow] = useState('');
+  const data = useData();
+
+  useEffect(() => {
+    setLeftArrow(page === 0 ? '' : 'active');
+    setRightArrow(page !== data.estimation.similarEstimateCountInfo.length - 1 ? 'active' : '');
+  }, [data.estimation.similarEstimateCountInfo.length, page]);
 
   return (
     <S.SimilarInfo>
       <S.LeftArea>
-        <S.ArrowButton className={leftClassName}>
+        <S.ArrowButton
+          className={leftArrow}
+          onClick={() => {
+            setPage(page - 1);
+            setPrice(data.estimation.similarEstimateCountInfo[page - 1].price);
+          }}
+          disabled={leftArrow !== 'active'}
+        >
           <LeftArrow />
         </S.ArrowButton>
         <S.LeftInfo>
           <S.SubTitle>{SIMILAR_INFO.TITLE}</S.SubTitle>
-          <S.MainTitle>Le Blanc</S.MainTitle>
-          {/* 해시태그 */}
-          해시태그
-          <S.Price>{value.toLocaleString('ko-KR')}원</S.Price>
+          <S.MainTitle>{info.trimName}</S.MainTitle>
+          <S.HashTags>
+            {info.modelTypes.slice(0, 3).map((hashtag) => (
+              <div key={hashtag}>{hashtag}</div>
+            ))}
+          </S.HashTags>
+          <S.Price>{info.price.toLocaleString('ko-KR')}원</S.Price>
         </S.LeftInfo>
-        <img src={summary.sideImage} alt="exterior" />
+        <img src={info.exteriorCarSideImageUrl} alt="exterior" />
       </S.LeftArea>
       <S.RightArea>
         <S.RightInfo>
@@ -35,28 +58,39 @@ function SimilarInfo() {
           </S.TagWrapper>
           <S.OptionWrapper>
             <S.OptionTitle>{SIMILAR_INFO.OPTION}</S.OptionTitle>
-            {/* 옵션카드 */}
             <S.CardWrapper>
-              <SimilarCard
-                //   key={exterior.code}
-                name="빌트인 캠"
-                price={350000}
-                //   selected={exteriorColor.code === exterior.code}
-                onClick={() => {}}
-                imageUrl={summary.sideImage}
-              />
-              <SimilarCard
-                //   key={exterior.code}
-                name="빌트인 캠"
-                price={350000}
-                //   selected={exteriorColor.code === exterior.code}
-                onClick={() => {}}
-                imageUrl={summary.sideImage}
-              />
+              {info.nonExistentOptions.map((nonOption) => (
+                <SimilarCard
+                  key={nonOption.optionId}
+                  name={nonOption.name}
+                  price={nonOption.price}
+                  imageUrl={nonOption.imageUrl}
+                  selected={
+                    option.includes(nonOption.optionId) ||
+                    data.optionPicker.chosenOptions.includes(nonOption.optionId)
+                  }
+                  onClick={() => {
+                    if (option.includes(nonOption.optionId)) {
+                      setOption(option.filter((id) => id !== nonOption.optionId));
+                      setOptionData(optionData.filter((nonData) => nonData !== nonOption));
+                    } else {
+                      setOption([...option, nonOption.optionId]);
+                      setOptionData([...optionData, nonOption]);
+                    }
+                  }}
+                />
+              ))}
             </S.CardWrapper>
           </S.OptionWrapper>
         </S.RightInfo>
-        <S.ArrowButton className={rightClassName}>
+        <S.ArrowButton
+          className={rightArrow}
+          onClick={() => {
+            setPage(page + 1);
+            setPrice(data.estimation.similarEstimateCountInfo[page + 1].price);
+          }}
+          disabled={rightArrow !== 'active'}
+        >
           <RightArrow />
         </S.ArrowButton>
       </S.RightArea>

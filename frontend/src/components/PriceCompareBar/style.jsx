@@ -1,7 +1,6 @@
 import { styled } from 'styled-components';
 import { EASE_OUT_CUBIC } from '../../constants';
 
-// eslint-disable-next-line import/prefer-default-export
 export const PriceCompareBar = styled.div`
   display: flex;
   flex-direction: column;
@@ -12,6 +11,7 @@ export const PriceCompareBar = styled.div`
   padding: 10px 16px;
   border-radius: 10px;
   background: ${({ theme }) => theme.color.primary['700']};
+  box-sizing: border-box;
 `;
 
 export const Info = styled.div`

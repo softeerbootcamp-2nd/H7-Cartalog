@@ -65,7 +65,7 @@ function SummaryPopup({ show, close }) {
     if (!page || page === 1) return;
     async function fetchData() {
       const response = await fetch(
-        `http://13.209.9.2/models/images?exteriorColorCode=${exteriorColor.code}&interiorColorCode=${interiorColor.code}`,
+        `https://api.hyundei.shop/models/images?exteriorColorCode=${exteriorColor.code}&interiorColorCode=${interiorColor.code}`,
       );
       const dataFetch = await response.json();
 
