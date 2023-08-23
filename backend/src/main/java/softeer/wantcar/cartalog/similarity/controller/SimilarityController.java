@@ -112,13 +112,13 @@ public class SimilarityController {
         }
 
         List<SimilarEstimateWithSideImageResponseDto> similarEstimateResponseDtoList = similarEstimateCounts.getSimilarEstimateCounts().stream()
-                .map(estimateCountDto -> similarityService.getSimilarEstimateInfo2(estimateId, estimateCountDto.getEstimateId()))
+                .map(estimateCountDto -> similarityService.getSimilarEstimateInfoWithSideImage(estimateId, estimateCountDto.getEstimateId()))
                 .collect(Collectors.toUnmodifiableList());
 
-        SimilarEstimateListResponseDto build = SimilarEstimateListResponseDto.builder()
+        SimilarEstimateListResponseDto similarEstimateListResponseDto = SimilarEstimateListResponseDto.builder()
                 .similarEstimates(similarEstimateResponseDtoList)
                 .build();
 
-        return ResponseEntity.ok().body(build);
+        return ResponseEntity.ok().body(similarEstimateListResponseDto);
     }
 }
