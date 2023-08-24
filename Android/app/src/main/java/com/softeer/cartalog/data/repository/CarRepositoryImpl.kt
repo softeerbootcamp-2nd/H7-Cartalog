@@ -1,22 +1,26 @@
 package com.softeer.cartalog.data.repository
 
+import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.softeer.cartalog.data.enums.PriceDataType
 import com.softeer.cartalog.data.model.color.CarColor
-import com.softeer.cartalog.data.model.option.DetailOptions
-import com.softeer.cartalog.data.model.option.Options
-import com.softeer.cartalog.data.model.summary.SummaryCarImage
-import com.softeer.cartalog.data.model.trim.Trim
-import com.softeer.cartalog.data.model.type.TrimDetail
-import com.softeer.cartalog.data.model.trim.Trims
-import com.softeer.cartalog.data.model.type.Type
 import com.softeer.cartalog.data.model.db.MyCar
 import com.softeer.cartalog.data.model.db.PriceData
 import com.softeer.cartalog.data.model.estimate.EstimateCounts
 import com.softeer.cartalog.data.model.estimate.EstimateRequest
 import com.softeer.cartalog.data.model.estimate.SimilarEstimates
+import com.softeer.cartalog.data.model.option.DetailOptions
+import com.softeer.cartalog.data.model.option.Options
+import com.softeer.cartalog.data.model.summary.SummaryCarImage
+import com.softeer.cartalog.data.model.trim.Trim
+import com.softeer.cartalog.data.model.trim.Trims
+import com.softeer.cartalog.data.model.type.TrimDetail
+import com.softeer.cartalog.data.model.type.Type
 import com.softeer.cartalog.data.repository.local.CarLocalDataSource
 import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
-import retrofit2.Response
+import okio.ByteString.Companion.encodeUtf8
+
 
 class CarRepositoryImpl(
     private val carLocalDataSource: CarLocalDataSource,
@@ -185,7 +189,9 @@ class CarRepositoryImpl(
     }
 
     override suspend fun postEstimate(estimate: EstimateRequest): Int {
+//        val json = Gson().toJson(estimate)
         val response = carRemoteDataSource.postEstimate(estimate)
+        Log.d("TESTER", "post ${response}")
         return if (response.isSuccessful) response.body()!! else 0
     }
 

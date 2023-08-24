@@ -35,7 +35,9 @@ class SimilarEstimateCardAdapter(private val viewModel: EstimateViewModel) :
             isSelected = position == viewModel.selectedCard.value
             binding.isSelected = isSelected
             binding.item = item
-            binding.position = (position + 1)
+            binding.position = position
+            binding.viewModel = viewModel
+
         }
     }
 }

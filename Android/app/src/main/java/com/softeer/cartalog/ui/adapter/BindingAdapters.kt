@@ -141,6 +141,16 @@ fun setInteriorColorRecyclerView(
     recyclerView.addItemDecoration(ItemHorizontalSpacingDecoration(16))
 }
 
+@BindingAdapter("viewModel", "cardPosition")
+fun setSimilarEstimateRecyclerView(
+    recyclerView: RecyclerView,
+    viewModel: EstimateViewModel,
+    cardPosition: Int
+) {
+    val adapter = EstimateOptionsAdapter(viewModel, cardPosition).apply { setItems() }
+    recyclerView.adapter = adapter
+}
+
 @BindingAdapter("viewModel", "optionList")
 fun setOptionRecyclerView(
     recyclerView: RecyclerView,
