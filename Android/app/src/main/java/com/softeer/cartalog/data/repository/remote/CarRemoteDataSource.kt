@@ -12,6 +12,7 @@ import com.softeer.cartalog.data.model.type.TrimDetail
 import com.softeer.cartalog.data.model.trim.Trims
 import com.softeer.cartalog.data.model.type.Types
 import com.softeer.cartalog.data.remote.api.CarApi
+import okhttp3.ResponseBody
 import retrofit2.Response
 
 class CarRemoteDataSource(

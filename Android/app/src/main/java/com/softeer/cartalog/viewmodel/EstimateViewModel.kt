@@ -1,12 +1,14 @@
 package com.softeer.cartalog.viewmodel
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.softeer.cartalog.data.enums.PriceDataType
 import com.softeer.cartalog.data.model.estimate.EstimateRequest
+import com.softeer.cartalog.data.model.estimate.SimilarEstimateOption
 import com.softeer.cartalog.data.model.estimate.SimilarEstimates
 import com.softeer.cartalog.data.model.option.Options
 import com.softeer.cartalog.data.repository.CarRepository
@@ -23,11 +25,19 @@ class EstimateViewModel(private val repository: CarRepository) : ViewModel() {
     private val _selectedCard = MutableLiveData(0)
     val selectedCard: LiveData<Int> = _selectedCard
 
-    private val _selectedOptions = MutableLiveData<MutableList<Options>>(mutableListOf())
-    val selectOptions: LiveData<MutableList<Options>> = _selectedOptions
+    private val _selectedOptions =
+        MutableLiveData<MutableList<SimilarEstimateOption>>(mutableListOf())
+    val selectedOptions: LiveData<MutableList<SimilarEstimateOption>> = _selectedOptions
+
+    private val _message = MutableLiveData<String>()
+    val message: LiveData<String> = _message
 
     init {
         setData(2)
+    }
+
+    fun showMessage(message: String) {
+        _message.value = message
     }
 
     private fun setData(trimId: Int) {
@@ -50,25 +60,25 @@ class EstimateViewModel(private val repository: CarRepository) : ViewModel() {
             val selectOptionOrPackageIds = repository.getOptionTypeDataList().map { it.code ?: "" }
 
             // 3. 견적서 업로드
-            try{
-                val estimate = EstimateRequest(detailTrimId, exteriorColorCode, interiorColorCode, selectOptionOrPackageIds)
-                Log.d("TESTER", "$estimate")
-                val estimateId = repository.postEstimate(estimate)
-                Log.d("TESTER", "$estimateId")
-            }catch (e: Exception){
-                e.printStackTrace()
-            }
-            val estimateId = 1
-
+            val estimate = EstimateRequest(
+                detailTrimId,
+                exteriorColorCode,
+                interiorColorCode,
+                selectOptionOrPackageIds
+            )
+            Log.d("TESTER", "$estimate")
+            val estimateId = repository.postEstimate(estimate)
+            Log.d("TESTER", "$estimateId")
 
             // 4. 견적서 번호를 통한 견적조회
             val estimateCounts = repository.getEstimateCount(estimateId)
             Log.d("TESTER", "$estimateCounts")
 
             // 5. 유사견적이 있으면 해당 유사견적을 확인하여 뷰모델에 저장하기
-            if(estimateCounts.similarEstimateCounts.isNotEmpty()){
-                for(similar in estimateCounts.similarEstimateCounts){
-                    val similarEstimateItem = repository.getSimilarEstimate(estimateId, similar.estimateId)
+            if (estimateCounts.similarEstimateCounts.isNotEmpty()) {
+                for (similar in estimateCounts.similarEstimateCounts) {
+                    val similarEstimateItem =
+                        repository.getSimilarEstimate(estimateId, similar.estimateId)
                     similarEstimateItem?.let { _estimateList.value?.add(it) }
                 }
             }
@@ -79,8 +89,23 @@ class EstimateViewModel(private val repository: CarRepository) : ViewModel() {
         }
     }
 
-    fun changeSelectedCard(position: Int){
+    fun changeSelectedCard(position: Int) {
         _selectedCard.value = position
     }
 
+    fun addSelectedOption(option: SimilarEstimateOption) {
+        var isSame = false
+        for(options in _selectedOptions.value!!){
+            if(options.name == option.name){
+                isSame = true
+            }
+        }
+        if(!isSame){ _selectedOptions.value?.add(option) } else {
+            showMessage("이미 추가하신 옵션입니다!")
+        }
+    }
+
+    fun removeSelectedOption(option: SimilarEstimateOption) {
+        _selectedOptions.value?.remove(option)
+    }
 }

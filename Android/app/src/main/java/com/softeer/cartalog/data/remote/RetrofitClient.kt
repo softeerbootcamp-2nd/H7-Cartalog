@@ -5,7 +5,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "http://13.209.9.2/"
+    private const val BASE_URL = "https://api.hyundei.shop/"
 
     private val gson = GsonBuilder()
         .create()
@@ -17,5 +17,4 @@ object RetrofitClient {
         .build()
 
     val carApi: CarApi = client.create(CarApi::class.java)
-
 }

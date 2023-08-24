@@ -20,8 +20,10 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.tabs.TabLayout
 import com.softeer.cartalog.R
 import com.softeer.cartalog.data.enums.OptionMode
+import com.softeer.cartalog.data.model.estimate.SimilarEstimateOption
 import com.softeer.cartalog.data.model.option.Option
 import com.softeer.cartalog.data.model.summary.SummaryCarImage
+import com.softeer.cartalog.viewmodel.EstimateViewModel
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import com.softeer.cartalog.viewmodel.InteriorViewModel
 import com.softeer.cartalog.viewmodel.OptionViewModel
@@ -112,6 +114,27 @@ fun setOptionItemClickListener(
             adapter.selectedItems.add(option)
             viewModel.addSelectedSelectOption(option)
             Log.d("TEST", "added ${viewModel.selectedSelectOption.value}")
+        }
+        adapter.notifyItemChanged(adapter.items.indexOf(option))
+    }
+}
+
+@BindingAdapter("adapter", "viewModel", "option")
+fun setSimilarOptionItemClickListener(
+    cardView: MaterialCardView,
+    adapter: EstimateOptionsAdapter,
+    viewModel: EstimateViewModel,
+    option: SimilarEstimateOption
+) {
+    cardView.setOnClickListener {
+        if (viewModel.selectedOptions.value!!.contains(option)) {
+            adapter.selectedItems.remove(option)
+            viewModel.removeSelectedOption(option)
+            Log.d("TEST", "removed ${viewModel.selectedOptions.value}")
+        } else {
+            adapter.selectedItems.add(option)
+            viewModel.addSelectedOption(option)
+            Log.d("TEST", "added ${viewModel.selectedOptions.value}")
         }
         adapter.notifyItemChanged(adapter.items.indexOf(option))
     }

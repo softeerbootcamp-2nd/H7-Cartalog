@@ -11,9 +11,12 @@ import com.softeer.cartalog.data.model.option.Options
 import com.softeer.cartalog.data.model.type.TrimDetail
 import com.softeer.cartalog.data.model.trim.Trims
 import com.softeer.cartalog.data.model.type.Types
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -57,8 +60,9 @@ interface CarApi {
         @Query("optionId") optionId: String,
     ): Response<DetailOptions>
 
+    @Headers("accept: */*", "Content-Type: application/json")
     @POST("/estimates")
-    suspend fun postEstimate(@Body estimate: EstimateRequest): Response<Int>
+    suspend fun postEstimate(@Body estimateRequestDto: EstimateRequest): Response<Int>
 
     @GET("/similarity")
     suspend fun getEstimateCount(@Query("estimateId") estimateId: Int): Response<EstimateCounts>
