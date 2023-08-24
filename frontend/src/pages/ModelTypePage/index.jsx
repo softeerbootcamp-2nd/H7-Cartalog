@@ -11,7 +11,7 @@ function ModelType() {
   const fetchedData = useFetch(`models/types?trimId=${trim.id}`);
 
   useEffect(() => {
-    if (modelType.isFetch || page !== 2) return;
+    if (!fetchedData || modelType.isFetch || page !== 2) return;
     const findOptionByTypeAndId = (typeName, typeId) => {
       const type = fetchedData.modelTypes.find((data) => data.type === typeName);
       return type.options.find((name) => name.id === typeId);
