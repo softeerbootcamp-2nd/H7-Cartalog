@@ -26,10 +26,17 @@ import com.softeer.cartalog.data.repository.CarRepositoryImpl
 import com.softeer.cartalog.data.repository.local.CarLocalDataSource
 import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
 import com.softeer.cartalog.databinding.ActivityMainBinding
-import com.softeer.cartalog.ui.dialog.PriceSummaryBottomSheetFragment
+import com.softeer.cartalog.ui.fragment.ExteriorFragment
+import com.softeer.cartalog.ui.fragment.InteriorFragment
+import com.softeer.cartalog.ui.fragment.OptionFragment
+import com.softeer.cartalog.ui.fragment.TypeFragment
 import com.softeer.cartalog.util.PriceDataCallback
 import com.softeer.cartalog.viewmodel.CommonViewModelFactory
 import com.softeer.cartalog.viewmodel.MainViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallback {
 
@@ -47,9 +54,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
     }
     private val navController by lazy {
         binding.fcContainer.getFragment<NavHostFragment>().navController
-    }
-    private val bottomSheetFragment by lazy {
-        PriceSummaryBottomSheetFragment()
     }
     private var tabFont: Typeface? = null
 
@@ -147,10 +151,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
 
     override fun onClick(view: View?) {
         when (view?.id) {
-            R.id.btn_price_summary -> {
-                bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
-            }
-
             R.id.btn_exit -> {
                 val dialogView =
                     LayoutInflater.from(this@MainActivity).inflate(R.layout.dialog_exit, null)
@@ -159,8 +159,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
                     .create()
 
                 dialogView.findViewById<Button>(R.id.btn_exit)?.setOnClickListener {
-                    Process.killProcess(Process.myPid())
-                    finish()
+                    CoroutineScope(Dispatchers.IO).launch {
+                        saveUserData()
+                        withContext(Dispatchers.Main){
+                            Process.killProcess(Process.myPid())
+                            finish()
+                        }
+                    }
                 }
                 dialogView.findViewById<Button>(R.id.btn_restart)?.setOnClickListener {
                     mainViewModel.changeResetState()
@@ -187,5 +192,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
 
     fun getUserTotalPrice(): Int {
         return mainViewModel.totalPrice.value!!
+    }
+
+    private suspend fun saveUserData() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fc_container) as NavHostFragment
+        val currentFragment = navHostFragment.childFragmentManager.primaryNavigationFragment
+
+        when(currentFragment){
+            is TypeFragment -> {
+                currentFragment.saveUserAllData()
+            }
+            is InteriorFragment -> {
+                currentFragment.saveUserAllData()
+            }
+            is ExteriorFragment -> {
+                currentFragment.saveUserAllData()
+            }
+            is OptionFragment -> {
+                currentFragment.saveUserAllData()
+            }
+        }
     }
 }
