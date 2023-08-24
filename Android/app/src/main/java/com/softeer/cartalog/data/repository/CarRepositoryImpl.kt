@@ -19,8 +19,6 @@ import com.softeer.cartalog.data.model.type.TrimDetail
 import com.softeer.cartalog.data.model.type.Type
 import com.softeer.cartalog.data.repository.local.CarLocalDataSource
 import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
-import okio.ByteString.Companion.encodeUtf8
-
 
 class CarRepositoryImpl(
     private val carLocalDataSource: CarLocalDataSource,
@@ -205,6 +203,9 @@ class CarRepositoryImpl(
         return if (response.isSuccessful) response.body()!! else null
     }
 
+    override suspend fun deleteAllData() {
+        carLocalDataSource.deleteAllData()
+    }
 
 
 }

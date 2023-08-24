@@ -24,4 +24,7 @@ interface MyCarDao {
 
     @Update
     suspend fun upDateMyCar(myCar: MyCar)
+
+    @Query("DELETE FROM MyCar")
+    suspend fun deleteAll()
 }

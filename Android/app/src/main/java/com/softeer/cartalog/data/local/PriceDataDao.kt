@@ -34,4 +34,7 @@ interface PriceDataDao {
 
     @Delete
     suspend fun deleteOptionItem(option: PriceData)
+
+    @Query("DELETE FROM PriceData")
+    suspend fun deleteAll()
 }
