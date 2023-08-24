@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { URL } from '../constants';
 
 function useFetch(path, { method = 'GET', body = null } = {}) {
-  const navigation = useNavigate();
   const [promise, setPromise] = useState();
   const [status, setStatus] = useState('pending');
   const [result, setResult] = useState();
@@ -14,7 +12,6 @@ function useFetch(path, { method = 'GET', body = null } = {}) {
     setResult(promiseResult);
   }
   function rejectPromise(promiseError) {
-    navigation('/error');
     setStatus('error');
     setError(promiseError);
   }
@@ -30,7 +27,6 @@ function useFetch(path, { method = 'GET', body = null } = {}) {
       };
       const response = await fetch(`${URL}${path}`, body && config);
 
-      if (!response.ok) navigation('/error');
       const data = await response.json();
 
       resolvePromise(data);
