@@ -3,6 +3,7 @@ import * as S from './style';
 import Title from '../../../components/Title';
 import Description from './Description';
 import ImageViewButton from '../../../components/ImageViewButton';
+import { URL } from '../../../constants';
 
 const TYPE = 'dark';
 const CATEGORY = '파워트레인/성능';
@@ -21,9 +22,7 @@ function Info({ optionId, expanded, setExpanded }) {
   useEffect(() => {
     if (!optionId) return;
     async function fetchData() {
-      const response = await fetch(
-        `https://api.hyundei.shop/models/trims/options/detail?optionId=${optionId}`,
-      );
+      const response = await fetch(`${URL}models/trims/options/detail?optionId=${optionId}`);
       const data = await response.json();
       setOptionInfo(data);
       setImageUrl(data.imageUrl);
