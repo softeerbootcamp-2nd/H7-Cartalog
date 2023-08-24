@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class EstimateServiceImpl implements EstimateService {
     private final EstimateQueryRepository estimateQueryRepository;
     private final EstimateCommandRepository estimateCommandRepository;
@@ -40,6 +40,7 @@ public class EstimateServiceImpl implements EstimateService {
     private final TrimOptionQueryRepository trimOptionQueryRepository;
 
     @Override
+    @Transactional
     public Long saveOrFindEstimateId(EstimateRequestDto estimateRequestDto) {
         List<Long> selectPackages = estimateRequestDto.getSelectPackageIds();
         List<Long> selectOptions = estimateRequestDto.getSelectOptionIds();
@@ -52,13 +53,20 @@ public class EstimateServiceImpl implements EstimateService {
             return estimateId;
         }
 
+        return saveEstimate(trimId, estimateDto);
+    }
+
+    private synchronized Long saveEstimate(Long trimId, EstimateDto estimateDto) {
+        Long estimateId = estimateQueryRepository.findEstimateIdByEstimateDto(estimateDto);
+        if (estimateId != null) {
+            return estimateId;
+        }
+
         try {
-            saveEstimate(trimId, estimateDto, estimateQueryRepository.getEstimatePrice(estimateDto));
+            return saveEstimate(trimId, estimateDto, estimateQueryRepository.getEstimatePrice(estimateDto));
         } catch (DataAccessException exception) {
             throw new IllegalArgumentException();
         }
-
-        return estimateQueryRepository.findEstimateIdByEstimateDto(estimateDto);
     }
 
     @Override
@@ -139,13 +147,14 @@ public class EstimateServiceImpl implements EstimateService {
                 );
     }
 
-    private void saveEstimate(Long trimId, EstimateDto estimateDto, int price) {
+    private Long saveEstimate(Long trimId, EstimateDto estimateDto, int price) {
         Long estimateId = estimateCommandRepository.save(estimateDto, price);
         String hashTagKey = PendingHashTagMap.getHashTagKey(getTotalHashTags(estimateDto));
         if (!similarityQueryRepository.existHashTagKey(trimId, hashTagKey)) {
             similarityCommandRepository.saveHashTagKey(trimId, hashTagKey, 0);
             similarityCommandRepository.saveSimilarEstimate(trimId, hashTagKey, estimateId);
         }
+        return estimateId;
     }
 
     private EstimateDto buildEstimateDao(Long trimId, EstimateRequestDto estimateRequestDto, List<Long> selectPackages, List<Long> selectOptions) {
