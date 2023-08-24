@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.similarity.repository.dto.PendingHashTagMap;
 import softeer.wantcar.cartalog.similarity.repository.dto.SimilarityInfo;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -163,6 +164,11 @@ class SimilarityQueryRepositoryTest {
     class findSimilarEstimateIdsTest {
         @BeforeEach
         void setUp() {
+            jdbcTemplate.update("INSERT INTO similar_estimates (hash_tag_index, estimate_id) VALUES " +
+                                "    (1, 2), " +
+                                "    (1, 3), " +
+                                "    (1, 4), " +
+                                "    (1, 5) ", new HashMap<>());
         }
 
         @Test
@@ -172,12 +178,13 @@ class SimilarityQueryRepositoryTest {
             //given
             //when
             List<Long> estimateIds =
-                    similarityQueryRepository.findSimilarEstimateIds(List.of(1L, 2L, 3L, 4L));
+                    similarityQueryRepository.findSimilarEstimateIds(List.of(1L));
 
             //then
             System.out.println(estimateIds);
             softAssertions.assertThat(estimateIds).isNotNull();
             softAssertions.assertThat(estimateIds.size()).isLessThanOrEqualTo(4);
+            softAssertions.assertThat(estimateIds).containsAll(List.of(1L, 2L, 3L, 4L));
             softAssertions.assertAll();
         }
 
