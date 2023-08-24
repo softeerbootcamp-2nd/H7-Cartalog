@@ -1,7 +1,6 @@
 package softeer.wantcar.cartalog.estimate.repository.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -10,7 +9,6 @@ import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
-@Builder
 public class EstimateOptionIdListDto {
     private Long trimId;
     private List<Long> optionIds;

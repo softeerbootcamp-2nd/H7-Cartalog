@@ -1,13 +1,15 @@
 package softeer.wantcar.cartalog.estimate.dto;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-@Builder
+@ToString
+@AllArgsConstructor
 public class EstimateRequestDto {
     private Long detailTrimId;
     private String exteriorColorCode;
