@@ -72,7 +72,7 @@
                         android:id="@+id/tv_car_model_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="182dp"
+                        android:layout_marginTop="180dp"
                         android:fontFamily="@font/hyndaisans_head_bold"
                         android:text="@string/confirm_car_model"
                         android:textColor="@color/white"
@@ -83,10 +83,11 @@
 
                     <ImageView
                         android:id="@+id/iv_car_model"
-                        android:layout_width="375dp"
-                        android:layout_height="200dp"
+                        android:layout_width="0dp"
+                        android:layout_height="210dp"
                         android:scaleType="centerCrop"
                         app:imgUrl="@{viewModel.carInfo.exteriorImg}"
+                        app:layout_constraintBottom_toTopOf="@id/rg_exterior_interior"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_car_model_title" />
