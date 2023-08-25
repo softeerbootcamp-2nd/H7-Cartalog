@@ -121,6 +121,7 @@ class EstimateViewModel(private val repository: CarRepository) : ViewModel() {
         if (!isSame) {
             _selectedOptions.value?.add(option)
             _totalPrice.value = _totalPrice.value!!.plus(option.price)
+            _totalPriceProgress.value = calculateProgressFromPrice(totalPrice.value!!)
 
         } else {
             showMessage("이미 추가하신 옵션입니다!")

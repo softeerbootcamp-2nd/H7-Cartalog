@@ -1,6 +1,5 @@
 package com.softeer.cartalog.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -48,21 +47,28 @@ class ConfirmViewModel(private val repository: CarRepository) : ViewModel() {
             extraOptionList = allPriceData.filter {priceData ->
                 priceData.optionType == PriceDataType.OPTION
             }
-            Log.d("DATA","${carInfo.value}")
             setDetailList()
         }
     }
 
-    private fun setDetailList(){
-        _detailPriceList.value = listOf(
-            ConfirmDetail("모델 타입", modelTypeList),
-            ConfirmDetail("색상", colorList),
-            ConfirmDetail("추가 옵션", extraOptionList),
-            ConfirmDetail("탁송", null),
-            ConfirmDetail("할인 및 포인트", null),
-            ConfirmDetail("면세 구분 및 등록비", null),
-            ConfirmDetail("결제 수단", null),
-            ConfirmDetail("안내 사항", null),
-        )
+    suspend fun getOptionDataChanged(){
+        extraOptionList = repository.getOptionTypeDataList()
+    }
+
+    suspend fun setTotalPriceFromDB(){
+        _userTotalPrice.postValue(repository.getTotalPrice())
+    }
+
+    fun setDetailList(){
+            _detailPriceList.value = listOf(
+                ConfirmDetail("모델 타입", modelTypeList),
+                ConfirmDetail("색상", colorList),
+                ConfirmDetail("추가 옵션", extraOptionList),
+                ConfirmDetail("탁송", null),
+                ConfirmDetail("할인 및 포인트", null),
+                ConfirmDetail("면세 구분 및 등록비", null),
+                ConfirmDetail("결제 수단", null),
+                ConfirmDetail("안내 사항", null),
+            )
     }
 }

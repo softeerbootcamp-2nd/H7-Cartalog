@@ -38,4 +38,5 @@ interface CarRepository {
     suspend fun getEstimateCount(estimateId: Int): EstimateCounts
     suspend fun getSimilarEstimate(estimateId: Int, similarEstimateId: Int): SimilarEstimates?
     suspend fun deleteAllData()
+    suspend fun getTotalPrice(): Int
 }

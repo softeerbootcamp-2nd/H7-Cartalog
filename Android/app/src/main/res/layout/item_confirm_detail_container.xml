@@ -18,7 +18,7 @@
             android:layout_height="48dp"
             android:background="@color/blue_bg"
             app:isEmpty="@{detailData.contents == null ? true : false}"
-            app:recyclerView="@{rcDetailList}"
+            app:recyclerView="@{rvDetailList}"
             app:button="@{tvDetailMoreBtn}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +50,7 @@
             app:tint="@color/gray_900" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rc_detail_list"
+            android:id="@+id/rv_detail_list"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/white"

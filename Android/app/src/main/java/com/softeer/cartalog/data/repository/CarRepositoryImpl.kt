@@ -1,8 +1,6 @@
 package com.softeer.cartalog.data.repository
 
 import android.util.Log
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.softeer.cartalog.data.enums.PriceDataType
 import com.softeer.cartalog.data.model.color.CarColor
 import com.softeer.cartalog.data.model.db.MyCar
@@ -205,6 +203,10 @@ class CarRepositoryImpl(
 
     override suspend fun deleteAllData() {
         carLocalDataSource.deleteAllData()
+    }
+
+    override suspend fun getTotalPrice(): Int {
+        return carLocalDataSource.getTotalPrice()
     }
 
 
