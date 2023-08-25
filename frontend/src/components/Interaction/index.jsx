@@ -69,27 +69,27 @@ function Interaction() {
         <Suspense fallback={<TrimSelectSkeleton />}>
           <TrimSelect />
         </Suspense>
-        {isFetchMap[1] && (
+        {(isFetchMap[2] || data.page === 2) && (
           <Suspense fallback={<ModelTypeSkeleton />}>
             <ModelType />
           </Suspense>
         )}
-        {isFetchMap[2] && (
+        {(isFetchMap[3] || data.page === 3) && (
           <Suspense fallback={<ExteriorColorSkeleton />}>
             <ExteriorColor />
           </Suspense>
         )}
-        {isFetchMap[3] && (
+        {(isFetchMap[4] || data.page === 4) && (
           <Suspense fallback={<InteriorColorSkeleton />}>
             <InteriorColor />
           </Suspense>
         )}
-        {isFetchMap[4] && (
+        {(isFetchMap[5] || data.page === 5) && (
           <Suspense fallback={<OptionPickerSkeleton />}>
             <OptionPicker />
           </Suspense>
         )}
-        {isFetchMap[5] && (
+        {(isFetchMap[6] || data.page === 6) && (
           <Suspense fallback={<EstimationSkeleton />}>
             <Estimation />
           </Suspense>
