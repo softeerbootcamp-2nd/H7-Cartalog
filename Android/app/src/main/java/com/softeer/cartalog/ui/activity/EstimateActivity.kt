@@ -1,11 +1,10 @@
 package com.softeer.cartalog.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import com.softeer.cartalog.R
 import com.softeer.cartalog.data.local.MyCarDatabase
 import com.softeer.cartalog.data.remote.api.RetrofitClient
@@ -15,6 +14,10 @@ import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
 import com.softeer.cartalog.databinding.ActivityEstimateBinding
 import com.softeer.cartalog.viewmodel.CommonViewModelFactory
 import com.softeer.cartalog.viewmodel.EstimateViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class EstimateActivity : AppCompatActivity() {
 
@@ -34,10 +37,24 @@ class EstimateActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.btnBack.setOnClickListener { finish() }
+        val totalPrice = intent.getIntExtra(MainActivity.TOTAL_PRICE,0)
+        val minPrice = intent.getIntExtra(MainActivity.MIN_PRICE,0)
+        val maxPrice = intent.getIntExtra(MainActivity.MAX_PRICE,0)
+        estimateViewModel.setPriceData(totalPrice, minPrice, maxPrice)
 
         binding.viewModel = estimateViewModel
         binding.lifecycleOwner = this@EstimateActivity
+
+        binding.btnBack.setOnClickListener { finish() }
+        binding.btnAddOptions.setOnClickListener{
+            CoroutineScope(Dispatchers.IO).launch {
+                estimateViewModel.saveUserSelection()
+                withContext(Dispatchers.Main){
+                    finish()
+                }
+            }
+
+        }
 
         estimateViewModel.message.observe(this) { message ->
             if (!message.isNullOrEmpty()) {

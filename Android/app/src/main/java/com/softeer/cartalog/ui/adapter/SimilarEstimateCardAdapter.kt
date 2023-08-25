@@ -33,6 +33,9 @@ class SimilarEstimateCardAdapter(private val viewModel: EstimateViewModel) :
         var isSelected = false
         fun bind(item: SimilarEstimates?, position: Int) {
             isSelected = position == viewModel.selectedCard.value
+            if(isSelected){
+                item?.price?.let { viewModel.setEstimatePrice(it) }
+            }
             binding.isSelected = isSelected
             binding.item = item
             binding.position = position

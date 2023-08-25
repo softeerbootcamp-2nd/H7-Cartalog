@@ -40,6 +40,12 @@ import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallback {
 
+    companion object {
+        const val TOTAL_PRICE = "total_price"
+        const val MIN_PRICE = "min_price"
+        const val MAX_PRICE = "max_price"
+    }
+
     private val binding: ActivityMainBinding by lazy {
         DataBindingUtil.setContentView(this, R.layout.activity_main)
     }
@@ -161,7 +167,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
                 dialogView.findViewById<Button>(R.id.btn_exit)?.setOnClickListener {
                     CoroutineScope(Dispatchers.IO).launch {
                         saveUserData()
-                        withContext(Dispatchers.Main){
+                        withContext(Dispatchers.Main) {
                             Process.killProcess(Process.myPid())
                             finish()
                         }
@@ -176,7 +182,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
             }
 
             R.id.btn_similar_estimate -> {
-                startActivity(Intent(this@MainActivity, EstimateActivity::class.java))
+                val intent = Intent(this@MainActivity, EstimateActivity::class.java)
+                intent.putExtra(TOTAL_PRICE, mainViewModel.totalPrice.value!!)
+                intent.putExtra(MIN_PRICE, mainViewModel.minPrice.value!!)
+                intent.putExtra(MAX_PRICE, mainViewModel.maxPrice.value!!)
+                startActivity(intent)
             }
         }
     }
@@ -195,19 +205,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
     }
 
     private suspend fun saveUserData() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fc_container) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fc_container) as NavHostFragment
         val currentFragment = navHostFragment.childFragmentManager.primaryNavigationFragment
 
-        when(currentFragment){
+        when (currentFragment) {
             is TypeFragment -> {
                 currentFragment.saveUserAllData()
             }
+
             is InteriorFragment -> {
                 currentFragment.saveUserAllData()
             }
+
             is ExteriorFragment -> {
                 currentFragment.saveUserAllData()
             }
+
             is OptionFragment -> {
                 currentFragment.saveUserAllData()
             }
