@@ -81,10 +81,10 @@ class EstimateViewModel(private val repository: CarRepository) : ViewModel() {
                 selectOptionOrPackageIds
             )
             Log.d("TESTER", "$estimate")
-//            val estimateId = repository.postEstimate(estimate)
-//            Log.d("TESTER", "$estimateId")
+            val estimateId = repository.postEstimate(estimate)
+            Log.d("TESTER", "$estimateId")
 
-            val estimateId = 1
+//            val estimateId = 1
 
             // 4. 견적서 번호를 통한 견적조회
             val estimateCounts = repository.getEstimateCount(estimateId)

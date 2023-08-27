@@ -1,5 +1,6 @@
 package com.softeer.cartalog.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,7 @@ import com.softeer.cartalog.data.enums.PriceDataType
 import com.softeer.cartalog.data.model.confirm.ConfirmDetail
 import com.softeer.cartalog.data.model.db.MyCar
 import com.softeer.cartalog.data.model.db.PriceData
+import com.softeer.cartalog.data.model.estimate.EstimateRequest
 import com.softeer.cartalog.data.repository.CarRepository
 import kotlinx.coroutines.launch
 

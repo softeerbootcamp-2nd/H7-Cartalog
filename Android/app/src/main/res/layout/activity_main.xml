@@ -336,7 +336,7 @@
                         android:fontFamily="@font/hyndaisans_head_bold"
                         android:text="@string/btn_open_similar_estimate"
                         android:textColor="@{viewModel.isExcess ? @color/white : @color/primary_color_500}"
-                        android:visibility="@{viewModel.stepIndex == 5 ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{viewModel.stepIndex == 5 ? (viewModel.isEstimateExist ? View.VISIBLE : View.GONE) : View.GONE}"
                         app:cornerRadius="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
