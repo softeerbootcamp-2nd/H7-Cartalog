@@ -28,7 +28,7 @@ function SimilarPopup({ show, close }) {
   const [similarPrice, setSimilarPrice] = useState();
 
   useEffect(() => {
-    setSimilarPrice(data.estimation.similarEstimateCountInfo[0]?.price);
+    setSimilarPrice(data.estimation.similarEstimateCountInfo.similarEstimateCounts[0]?.price);
   }, [data.estimation.similarEstimateCountInfo]);
 
   const selectButtonProps = {
@@ -137,10 +137,10 @@ function SimilarPopup({ show, close }) {
                   </S.CloseButton>
                 </S.Header>
                 <S.Contents style={{ transform: `translateX(${-similarPage * 772}px)` }}>
-                  {data.estimation.similarEstimateCountInfo.map((info) => (
+                  {data.estimation.similarEstimateCountInfo.similarEstimateCounts?.map((info) => (
                     <SimilarInfo
-                      key={info.price}
-                      info={info}
+                      key={info.estimateId}
+                      info={info.estimateInfo}
                       page={similarPage}
                       setPage={setSimilarPage}
                       setPrice={setSimilarPrice}

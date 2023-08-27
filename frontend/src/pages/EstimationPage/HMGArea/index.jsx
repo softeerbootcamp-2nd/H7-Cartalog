@@ -3,41 +3,57 @@ import { useData } from '../../../utils/Context';
 import * as S from './style';
 import PriceCard from './PriceCard';
 import SimilarCard from './SimilarCard';
-import useFetch from '../../../hooks/useFetch';
+import { URL } from '../../../constants';
 
 function HMGArea() {
   const data = useData();
-  const fetchedPostData = useFetch('estimates', {
-    method: 'POST',
-    body: {
-      detailTrimId: data.modelType.detailTrimId,
-      exteriorColorCode: data.exteriorColor.code,
-      interiorColorCode: data.interiorColor.code,
-      selectOptionOrPackageIds: data.optionPicker.chosenOptions,
-    },
-  });
-  const fetchedGetData = useFetch(`estimates/distribution?trimId=${data.trim.id}`);
-  const fetchedInfoData = useFetch(`similarity/releasesAll?estimateId=${data.estimation.id}`);
 
   useEffect(() => {
-    if (!fetchedPostData || !fetchedGetData || data.estimation.isFetch || data.page !== 6) return;
-    data.setTrimState((prevState) => ({
-      ...prevState,
-      estimation: {
-        ...prevState.estimation,
-        isPost: true,
-        id: fetchedPostData,
-        isFetch: true,
-        averagePrice: fetchedGetData,
-        similarEstimateCountInfo: fetchedInfoData.similarEstimates,
-      },
-    }));
-  }, [data, fetchedGetData, fetchedInfoData, fetchedPostData]);
+    if (data.estimation.isFetch || data.page !== 6) return;
+    const fetchData = async () => {
+      const [estimateId, averagePrice] = await Promise.all([
+        fetch(`${URL}estimates`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            detailTrimId: data.modelType.detailTrimId,
+            exteriorColorCode: data.exteriorColor.code,
+            interiorColorCode: data.interiorColor.code,
+            selectOptionOrPackageIds: data.optionPicker.chosenOptions,
+          }),
+        }).then((res) => res.json()),
+        fetch(`${URL}estimates/distribution?trimId=${data.trim.id}`).then((res) => res.json()),
+      ]);
+      const similarEstimateCountInfo = await fetch(
+        `${URL}similarity/countInfo?estimateId=${estimateId}`,
+      ).then((res) => res.json());
+
+      data.setTrimState((prevState) => ({
+        ...prevState,
+        estimation: {
+          ...prevState.estimation,
+          isPost: true,
+          id: estimateId,
+          isFetch: true,
+          averagePrice,
+          similarEstimateCountInfo,
+        },
+      }));
+    };
+
+    fetchData();
+  }, [data]);
+
+  if (!data.estimation.isFetch) return <S.HMGArea />;
 
   return (
     <S.HMGArea>
-      <PriceCard />
-      {data.estimation.similarEstimateCounts.length !== 0 && <SimilarCard />}
+      <PriceCard name={data.trim.name} averagePrice={data.estimation.averagePrice} />
+      {data.estimation.similarEstimateCountInfo.similarEstimateCounts.length !== 0 && (
+        <SimilarCard data={data} />
+      )}
     </S.HMGArea>
   );
 }
