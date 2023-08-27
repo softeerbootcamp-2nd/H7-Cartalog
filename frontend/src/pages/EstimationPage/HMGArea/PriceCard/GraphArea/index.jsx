@@ -2,7 +2,7 @@ import { useData, TotalPrice } from '../../../../../utils/Context';
 import * as S from './style';
 import PriceGraph from '../../../../../components/PriceGraph';
 
-function GrapArea() {
+function GrapArea({ averagePrice }) {
   const data = useData();
 
   return (
@@ -10,7 +10,7 @@ function GrapArea() {
       <PriceGraph
         min={data.trim.minPrice}
         max={data.trim.maxPrice}
-        avg={data.estimation.averagePrice}
+        avg={averagePrice ?? data.trim.minPrice}
         value={TotalPrice(data.price)}
         width={314}
         height={117}

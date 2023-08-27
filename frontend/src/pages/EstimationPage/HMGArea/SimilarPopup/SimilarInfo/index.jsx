@@ -23,8 +23,12 @@ function SimilarInfo({
 
   useEffect(() => {
     setLeftArrow(page === 0 ? '' : 'active');
-    setRightArrow(page !== data.estimation.similarEstimateCountInfo.length - 1 ? 'active' : '');
-  }, [data.estimation.similarEstimateCountInfo.length, page]);
+    setRightArrow(
+      page !== data.estimation.similarEstimateCountInfo.similarEstimateCounts.length - 1
+        ? 'active'
+        : '',
+    );
+  }, [data.estimation.similarEstimateCountInfo.similarEstimateCounts.length, page]);
 
   return (
     <S.SimilarInfo>
@@ -33,7 +37,9 @@ function SimilarInfo({
           className={leftArrow}
           onClick={() => {
             setPage(page - 1);
-            setPrice(data.estimation.similarEstimateCountInfo[page - 1].price);
+            setPrice(
+              data.estimation.similarEstimateCountInfo.similarEstimateCounts[page - 1].price ?? 0,
+            );
           }}
           disabled={leftArrow !== 'active'}
         >
@@ -43,11 +49,11 @@ function SimilarInfo({
           <S.SubTitle>{SIMILAR_INFO.TITLE}</S.SubTitle>
           <S.MainTitle>{info.trimName}</S.MainTitle>
           <S.HashTags>
-            {info.modelTypes.slice(0, 3).map((hashtag) => (
-              <div key={hashtag}>{hashtag}</div>
+            {info.modelTypes?.slice(0, 3).map((hashtag) => (
+              <div key={hashtag.id}>{hashtag.name}</div>
             ))}
           </S.HashTags>
-          <S.Price>{info.price.toLocaleString('ko-KR')}원</S.Price>
+          <S.Price>{info.price?.toLocaleString('ko-KR')}원</S.Price>
         </S.LeftInfo>
         <img src={info.exteriorCarSideImageUrl} alt="exterior" />
       </S.LeftArea>
@@ -59,7 +65,7 @@ function SimilarInfo({
           <S.OptionWrapper>
             <S.OptionTitle>{SIMILAR_INFO.OPTION}</S.OptionTitle>
             <S.CardWrapper>
-              {info.nonExistentOptions.map((nonOption) => (
+              {info.nonExistentOptions?.map((nonOption) => (
                 <SimilarCard
                   key={nonOption.optionId}
                   name={nonOption.name}
