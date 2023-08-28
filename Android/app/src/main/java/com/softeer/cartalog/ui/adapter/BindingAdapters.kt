@@ -194,7 +194,6 @@ fun setBudgetLimit(
 
         override fun onStopTrackingTouch(p0: SeekBar?) {
         }
-
     })
 }
 
@@ -253,7 +252,6 @@ fun setSummaryOptionsRecyclerView(
     recyclerView: RecyclerView,
     optionList: MutableList<SummaryOptionPrice>
 ) {
-
     val adapter = if (optionList.isEmpty()) {
         SummaryOptionsAdapter(listOf(SummaryOptionPrice("-", -1)))
     } else {
@@ -302,5 +300,4 @@ fun setHashTagChipGroup(
             })
         }
     }
-
 }

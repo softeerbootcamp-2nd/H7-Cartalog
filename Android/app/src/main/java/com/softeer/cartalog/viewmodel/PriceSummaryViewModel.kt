@@ -17,9 +17,6 @@ class PriceSummaryViewModel(private val repository: CarRepository) : ViewModel()
     private val _myCar = MutableLiveData<MyCar>()
     val myCar: LiveData<MyCar> = _myCar
 
-    private val _priceData = MutableLiveData<List<PriceData>>()
-    val priceData: LiveData<List<PriceData>> = _priceData
-
     private val _powerTrain = MutableLiveData<SummaryOptionPrice>()
     val powerTrain: LiveData<SummaryOptionPrice> = _powerTrain
 
@@ -44,10 +41,12 @@ class PriceSummaryViewModel(private val repository: CarRepository) : ViewModel()
     private val _userTotalPrice = MutableLiveData(0)
     val userTotalPrice: LiveData<Int> = _userTotalPrice
 
+    private var priceData: List<PriceData> = listOf()
+
     init {
         viewModelScope.launch {
             _myCar.value = repository.getMyCarData()
-            _priceData.value = repository.getPriceDataList()
+            priceData = repository.getPriceDataList()
             val colorCode = setOptionValues()
             _carImage.value = repository.getSummaryCarImage(colorCode.first, colorCode.second)
             setUserTotalPrice()
@@ -59,7 +58,7 @@ class PriceSummaryViewModel(private val repository: CarRepository) : ViewModel()
         var exteriorCode = ""
         var interiorCode = ""
 
-        _priceData.value?.forEach {
+        priceData.forEach {
             when (it.optionType) {
                 PriceDataType.POWERTRAIN -> {
                     _powerTrain.value = SummaryOptionPrice(it.name, it.price)
@@ -95,7 +94,7 @@ class PriceSummaryViewModel(private val repository: CarRepository) : ViewModel()
     }
 
     private fun setUserTotalPrice() {
-        _userTotalPrice.value = myCar.value!!.minPrice + priceData.value!!.sumOf { it.price }
+        _userTotalPrice.value = myCar.value!!.minPrice + priceData.sumOf { it.price }
     }
 
 }
