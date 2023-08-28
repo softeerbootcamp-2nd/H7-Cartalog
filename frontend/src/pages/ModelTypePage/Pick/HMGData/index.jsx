@@ -4,6 +4,7 @@ import { HMG_DATA, HMG_TAG } from '../../constants';
 import * as S from './style';
 import HMGTag from '../../../../components/HMGTag';
 import HMGUnit from './HMGUnit';
+import { URL } from '../../../../constants';
 
 function HMGData() {
   const { setTrimState, trim, modelType } = useData();
@@ -12,7 +13,7 @@ function HMGData() {
     async function fetchData() {
       if (!trim.isDefault) return;
       const response = await fetch(
-        `http://13.209.9.2/models/trims/detail?modelTypeIds=${modelType.powerTrainId}&modelTypeIds=${modelType.bodyTypeId}&modelTypeIds=${modelType.wheelDriveId}&trimId=${trim.id}`,
+        `${URL}models/trims/detail?modelTypeIds=${modelType.powerTrainId}&modelTypeIds=${modelType.bodyTypeId}&modelTypeIds=${modelType.wheelDriveId}&trimId=${trim.id}`,
       );
       const dataFetch = await response.json();
 

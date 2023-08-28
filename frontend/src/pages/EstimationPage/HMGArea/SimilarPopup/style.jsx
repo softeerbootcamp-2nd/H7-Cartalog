@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import { FadeIn, FadeInWithTransform } from '../../../../styles/GlobalStyle';
+import { EASE_OUT_CUBIC } from '../../../../constants';
 
 export const SimilarPopup = styled.div`
   ${FadeInWithTransform}
@@ -38,10 +39,17 @@ export const Header = styled.div`
   margin-top: 57px;
 `;
 
+export const InfoWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 762px;
+`;
+
 export const Info = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 35px;
+  justify-content: space-between;
 `;
 
 export const Title = styled.div`
@@ -81,6 +89,8 @@ export const Contents = styled.div`
   display: flex;
   flex-shrink: 0;
   margin-top: 25px;
+  gap: 12px;
+  transition: transform 0.5s ${EASE_OUT_CUBIC};
 `;
 
 export const Footer = styled.div`

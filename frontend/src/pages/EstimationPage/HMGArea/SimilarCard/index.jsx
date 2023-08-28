@@ -1,19 +1,18 @@
 import { useState, useRef } from 'react';
-import { useData } from '../../../../utils/Context';
 import * as S from './style';
 import Chart from '../../../../components/Chart';
 import HMGCard from '../../../../components/HMGCard';
 import useIntersectionObserver from '../../../../hooks/useIntersectionObserver';
 import SimilarPopup from '../SimilarPopup';
 
-function SimilarCard() {
-  const data = useData();
+function SimilarCard({ data }) {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
   const targetRef = useRef();
   const isInViewport = useIntersectionObserver(targetRef);
-  const max = Math.max(data.estimation.myEstimateCount);
+  const { myEstimateCount, similarEstimateCounts } = data.estimation.similarEstimateCountInfo;
+  const max = Math.max(myEstimateCount, ...similarEstimateCounts.map((item) => item.count));
 
   return (
     <HMGCard
@@ -31,13 +30,13 @@ function SimilarCard() {
         ref={targetRef}
         $n={(data.estimation.similarEstimateCounts?.length ?? 0) + 1}
       >
-        <Chart active value={data.estimation.myEstimateCount} max={max} />
-        {data.estimation?.similarEstimateCounts.map((item) => (
-          <Chart key={item.id} value={item.value} max={max} />
+        <Chart active value={myEstimateCount} max={max} />
+        {similarEstimateCounts.map((item) => (
+          <Chart key={item.estimateId} value={item.count} max={max} />
         ))}
       </S.ChartWrapper>
       <S.Button onClick={handleShow}>유사 출고 견적 확인하기</S.Button>
-      <SimilarPopup show={show} close={handleClose} />
+      <SimilarPopup data={similarEstimateCounts} show={show} close={handleClose} />
     </HMGCard>
   );
 }

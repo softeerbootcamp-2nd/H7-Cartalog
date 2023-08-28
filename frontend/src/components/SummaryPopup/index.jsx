@@ -6,6 +6,7 @@ import { ReactComponent as CloseIcon } from '../../../assets/icons/cancel.svg';
 import * as S from './style';
 import Toggle from '../Toggle';
 import InfoPanel from './InfoPanel';
+import { URL } from '../../constants';
 
 function SummaryPopup({ show, close }) {
   const { setTrimState, page, exteriorColor, interiorColor, summary, optionPicker } = useData();
@@ -65,7 +66,7 @@ function SummaryPopup({ show, close }) {
     if (!page || page === 1) return;
     async function fetchData() {
       const response = await fetch(
-        `http://13.209.9.2/models/images?exteriorColorCode=${exteriorColor.code}&interiorColorCode=${interiorColor.code}`,
+        `${URL}models/images?exteriorColorCode=${exteriorColor.code}&interiorColorCode=${interiorColor.code}`,
       );
       const dataFetch = await response.json();
 
