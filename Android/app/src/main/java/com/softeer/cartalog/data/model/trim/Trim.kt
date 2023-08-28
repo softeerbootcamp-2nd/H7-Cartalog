@@ -1,4 +1,4 @@
-package com.softeer.cartalog.data.model
+package com.softeer.cartalog.data.model.trim
 
 data class Trim(
     val id: Int,

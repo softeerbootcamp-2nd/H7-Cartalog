@@ -72,7 +72,7 @@
                         android:id="@+id/tv_car_model_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="182dp"
+                        android:layout_marginTop="180dp"
                         android:fontFamily="@font/hyndaisans_head_bold"
                         android:text="@string/confirm_car_model"
                         android:textColor="@color/white"
@@ -83,10 +83,11 @@
 
                     <ImageView
                         android:id="@+id/iv_car_model"
-                        android:layout_width="375dp"
-                        android:layout_height="200dp"
+                        android:layout_width="0dp"
+                        android:layout_height="210dp"
                         android:scaleType="centerCrop"
                         app:imgUrl="@{viewModel.carInfo.exteriorImg}"
+                        app:layout_constraintBottom_toTopOf="@id/rg_exterior_interior"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_car_model_title" />
@@ -267,6 +268,7 @@
                         app:layout_constraintTop_toBottomOf="@id/vw_car_summary_bgr" />
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_option_list"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
@@ -288,7 +290,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|bottom"
                 android:layout_marginBottom="12dp"
-                android:background="@drawable/btn_check_img"
+                android:background="@drawable/shape_btn_check_img"
                 android:minWidth="78dp"
                 android:minHeight="30dp"
                 android:text="@string/confirm_btn_check_img"

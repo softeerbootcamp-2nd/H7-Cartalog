@@ -13,15 +13,17 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.softeer.cartalog.R
-import com.softeer.cartalog.data.model.CarColor
-import com.softeer.cartalog.data.model.ConfirmDetail
-import com.softeer.cartalog.data.model.Options
-import com.softeer.cartalog.data.model.SummaryOptionPrice
+import com.softeer.cartalog.data.model.color.CarColor
+import com.softeer.cartalog.data.model.confirm.ConfirmDetail
+import com.softeer.cartalog.data.model.option.Options
+import com.softeer.cartalog.data.model.summary.SummaryOptionPrice
 import com.softeer.cartalog.data.model.db.PriceData
+import com.softeer.cartalog.data.model.estimate.SimilarEstimates
 import com.softeer.cartalog.util.ItemDividerDecoration
 import com.softeer.cartalog.util.ItemHorizontalSpacingDecoration
 import com.softeer.cartalog.util.ItemVerticalSpacingDecoration
 import com.softeer.cartalog.util.UtilManager
+import com.softeer.cartalog.viewmodel.EstimateViewModel
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import com.softeer.cartalog.viewmodel.InteriorViewModel
 import com.softeer.cartalog.viewmodel.MainViewModel
@@ -65,7 +67,6 @@ fun setTrimCardViewPager(
     viewModel: TrimViewModel,
     indicator: DotsIndicator
 ) {
-
     val adjustedOffsetPx = UtilManager.getViewPagerGap(viewPager)
     val trimItemAdapter = TrimCardAdapter(viewModel)
     with(viewPager) {
@@ -84,6 +85,33 @@ fun setTrimCardViewPager(
                     delay(300)
                     viewPager.setCurrentItem(1, true)
                 }
+            }
+        })
+    }
+    indicator.attachTo(viewPager)
+}
+
+@BindingAdapter("viewModel", "indicator", "estimates")
+fun setSimilarEstimateCardViewPager(
+    viewPager: ViewPager2,
+    viewModel: EstimateViewModel,
+    indicator: DotsIndicator,
+    estimates: List<SimilarEstimates>
+) {
+
+    val adjustedOffsetPx = UtilManager.getViewPagerGap(viewPager)
+    val similarEstimateCardAdapter = SimilarEstimateCardAdapter(viewModel)
+    with(viewPager) {
+        offscreenPageLimit = 2
+        adapter = similarEstimateCardAdapter
+        setPageTransformer { page, position ->
+            page.translationX = position * -adjustedOffsetPx
+        }
+        registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                viewModel.changeSelectedCard(position)
+                similarEstimateCardAdapter.notifyItemRangeChanged(position - 1, 3)
             }
         })
     }
@@ -110,6 +138,16 @@ fun setInteriorColorRecyclerView(
     val adapter = InteriorColorAdapter(viewModel)
     recyclerView.adapter = adapter
     recyclerView.addItemDecoration(ItemHorizontalSpacingDecoration(16))
+}
+
+@BindingAdapter("viewModel", "cardPosition")
+fun setSimilarEstimateRecyclerView(
+    recyclerView: RecyclerView,
+    viewModel: EstimateViewModel,
+    cardPosition: Int
+) {
+    val adapter = EstimateOptionsAdapter(viewModel, cardPosition).apply { setItems() }
+    recyclerView.adapter = adapter
 }
 
 @BindingAdapter("viewModel", "optionList")
@@ -155,7 +193,6 @@ fun setBudgetLimit(
 
         override fun onStopTrackingTouch(p0: SeekBar?) {
         }
-
     })
 }
 
@@ -214,7 +251,6 @@ fun setSummaryOptionsRecyclerView(
     recyclerView: RecyclerView,
     optionList: MutableList<SummaryOptionPrice>
 ) {
-
     val adapter = if (optionList.isEmpty()) {
         SummaryOptionsAdapter(listOf(SummaryOptionPrice("-", -1)))
     } else {
@@ -263,5 +299,4 @@ fun setHashTagChipGroup(
             })
         }
     }
-
 }

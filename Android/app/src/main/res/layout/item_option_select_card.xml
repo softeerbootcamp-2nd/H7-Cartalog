@@ -8,15 +8,7 @@
 
         <variable
             name="option"
-            type="com.softeer.cartalog.data.model.Option" />
-
-        <variable
-            name="position"
-            type="Integer" />
-
-        <variable
-            name="optionId"
-            type="String" />
+            type="com.softeer.cartalog.data.model.option.Option" />
 
         <variable
             name="optionAdapter"

@@ -65,6 +65,7 @@
     <string name="confirm_title_summary">요약 견적</string>
     <string name="confirm_title_detail">상세 견적</string>
     <string name="confirm_btn_check_img">이미지 확인</string>
+    <string name="confirm_estimate_tag">유사 견적에서 추가된 옵션입니다.</string>
 
     <string name="exit_content">내 차 만들기를 종료하시겠습니까?</string>
     <string name="estimate_header">유사견적</string>
@@ -75,6 +76,7 @@
     <string name="estimate_range_bar_mine">내 견적</string>
     <string name="estimate_range_bar_text_1">내 견적 보다 </string>
     <string name="estimate_range_bar_text_2">원 비싸요. </string>
+    <string name="estimate_hmg_data_title">내 견적에 없는 옵션이에요.</string>
 
     <string name="guide_estimate_title_blue">내 견적과 비슷한 실제 출고 견적</string>
     <string name="guide_estimate_title_black_1">들을</string>

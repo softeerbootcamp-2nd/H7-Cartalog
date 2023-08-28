@@ -20,6 +20,10 @@ import com.softeer.cartalog.ui.activity.MainActivity
 import com.softeer.cartalog.util.PriceDataCallback
 import com.softeer.cartalog.viewmodel.CommonViewModelFactory
 import com.softeer.cartalog.viewmodel.ConfirmViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ConfirmFragment : Fragment() {
     private var _binding: FragmentConfirmBinding? = null
@@ -42,11 +46,26 @@ class ConfirmFragment : Fragment() {
             (activity as MainActivity).changeTab(4)
         }
     }
+    private var isReturnedFromEstimate = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         totalPrice = (activity as MainActivity).getUserTotalPrice()
         dataCallback = context as PriceDataCallback
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (isReturnedFromEstimate) {
+            CoroutineScope(Dispatchers.IO).launch {
+                confirmViewModel.getOptionDataChanged()
+                confirmViewModel.setTotalPriceFromDB()
+                withContext(Dispatchers.Main){
+                    confirmViewModel.setDetailList()
+                }
+            }
+            isReturnedFromEstimate = false
+        }
     }
 
     override fun onCreateView(
@@ -79,5 +98,10 @@ class ConfirmFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onPause() {
+        super.onPause()
+        isReturnedFromEstimate = true
     }
 }

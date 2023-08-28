@@ -5,7 +5,6 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/trimFragment">
 
-
     <fragment
         android:id="@+id/trimFragment"
         android:name="com.softeer.cartalog.ui.fragment.TrimFragment"
@@ -17,6 +16,7 @@
             app:enterAnim="@anim/slide_in_from_right"
             app:exitAnim="@anim/slide_out_to_left" />
     </fragment>
+
     <fragment
         android:id="@+id/typeFragment"
         android:name="com.softeer.cartalog.ui.fragment.TypeFragment"
@@ -38,8 +38,8 @@
         <action
             android:id="@+id/action_typeFragment_to_priceSummaryBottomSheetFragment"
             app:destination="@id/priceSummaryBottomSheetFragment" />
-
     </fragment>
+
     <fragment
         android:id="@+id/exteriorFragment"
         android:name="com.softeer.cartalog.ui.fragment.ExteriorFragment"
@@ -59,6 +59,7 @@
             android:id="@+id/action_exteriorFragment_to_priceSummaryBottomSheetFragment"
             app:destination="@id/priceSummaryBottomSheetFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/interiorFragment"
         android:name="com.softeer.cartalog.ui.fragment.InteriorFragment"
@@ -78,6 +79,7 @@
             android:id="@+id/action_interiorFragment_to_priceSummaryBottomSheetFragment"
             app:destination="@id/priceSummaryBottomSheetFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/optionFragment"
         android:name="com.softeer.cartalog.ui.fragment.OptionFragment"
@@ -100,6 +102,7 @@
             android:id="@+id/action_optionFragment_to_priceSummaryBottomSheetFragment"
             app:destination="@id/priceSummaryBottomSheetFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/confirmFragment"
         android:name="com.softeer.cartalog.ui.fragment.ConfirmFragment"
@@ -110,15 +113,17 @@
             app:enterAnim="@anim/slide_in_from_left"
             app:exitAnim="@anim/slide_out_to_right" />
     </fragment>
+
     <dialog
         android:id="@+id/typeDetailDialog"
         android:name="com.softeer.cartalog.ui.dialog.TypeDetailDialog"
         android:label="TypeDetailDialog">
         <argument
             android:name="types"
-            app:argType="com.softeer.cartalog.data.model.Types" />
+            app:argType="com.softeer.cartalog.data.model.type.Types" />
 
     </dialog>
+
     <dialog
         android:id="@+id/optionDetailDialog"
         android:name="com.softeer.cartalog.ui.dialog.OptionDetailDialog"
@@ -129,8 +134,8 @@
         <argument
             android:name="optionId"
             app:argType="string" />
-
     </dialog>
+
     <dialog
         android:id="@+id/priceSummaryBottomSheetFragment"
         android:name="com.softeer.cartalog.ui.dialog.PriceSummaryBottomSheetFragment"

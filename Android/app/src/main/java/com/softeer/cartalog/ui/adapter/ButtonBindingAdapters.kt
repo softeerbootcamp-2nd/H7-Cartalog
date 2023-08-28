@@ -1,7 +1,6 @@
 package com.softeer.cartalog.ui.adapter
 
 import android.content.res.ColorStateList
-import android.util.Log
 import android.view.View
 import android.widget.HorizontalScrollView
 import android.widget.ImageButton
@@ -20,8 +19,10 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.tabs.TabLayout
 import com.softeer.cartalog.R
 import com.softeer.cartalog.data.enums.OptionMode
-import com.softeer.cartalog.data.model.Option
-import com.softeer.cartalog.data.model.SummaryCarImage
+import com.softeer.cartalog.data.model.estimate.SimilarEstimateOption
+import com.softeer.cartalog.data.model.option.Option
+import com.softeer.cartalog.data.model.summary.SummaryCarImage
+import com.softeer.cartalog.viewmodel.EstimateViewModel
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import com.softeer.cartalog.viewmodel.InteriorViewModel
 import com.softeer.cartalog.viewmodel.OptionViewModel
@@ -34,7 +35,6 @@ fun setExteriorItemClickListener(
     position: Int
 ) {
     cardView.setOnClickListener {
-
         adapter.notifyItemChanged(adapter.selectedItem)
         if (adapter.selectedItem != position) {
             adapter.selectedItem = position
@@ -52,7 +52,6 @@ fun setInteriorItemClickListener(
     position: Int
 ) {
     cardView.setOnClickListener {
-
         adapter.notifyItemChanged(adapter.selectedItem)
         if (adapter.selectedItem != position) {
             adapter.selectedItem = position
@@ -69,7 +68,6 @@ fun setOnClickToggle(
     fragmentContainer: FragmentContainerView,
     idx: Int
 ) {
-
     button.setOnClickListener {
         if (layout.visibility == View.VISIBLE) {
             layout.animate()
@@ -88,7 +86,7 @@ fun setOnClickToggle(
                 .withEndAction {
                     layout.visibility = View.VISIBLE
                     if (idx != 5) {
-                        fragmentContainer.setPadding(0, 150, 0, 0)
+                        fragmentContainer.setPadding(0, 170, 0, 0)
                     }
                 }
             button.animate().rotation(180f).start()
@@ -107,11 +105,28 @@ fun setOptionItemClickListener(
         if (viewModel.selectedSelectOption.value!!.contains(option)) {
             adapter.selectedItems.remove(option)
             viewModel.removeSelectedSelectOption(option)
-            Log.d("TEST", "removed ${viewModel.selectedSelectOption.value}")
         } else {
             adapter.selectedItems.add(option)
             viewModel.addSelectedSelectOption(option)
-            Log.d("TEST", "added ${viewModel.selectedSelectOption.value}")
+        }
+        adapter.notifyItemChanged(adapter.items.indexOf(option))
+    }
+}
+
+@BindingAdapter("adapter", "viewModel", "option")
+fun setSimilarOptionItemClickListener(
+    cardView: MaterialCardView,
+    adapter: EstimateOptionsAdapter,
+    viewModel: EstimateViewModel,
+    option: SimilarEstimateOption
+) {
+    cardView.setOnClickListener {
+        if (viewModel.selectedOptions.value!!.contains(option)) {
+            adapter.selectedItems.remove(option)
+            viewModel.removeSelectedOption(option)
+        } else {
+            adapter.selectedItems.add(option)
+            viewModel.addSelectedOption(option)
         }
         adapter.notifyItemChanged(adapter.items.indexOf(option))
     }
@@ -125,7 +140,6 @@ fun setOptionTabSelected(
 ) {
     tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
         override fun onTabSelected(tab: TabLayout.Tab?) {
-
             when (tab?.position) {
                 0 -> {
                     viewModel.setNowOptionMode(OptionMode.SELECT_OPTION)
@@ -250,7 +264,6 @@ fun setImageCheckBtn(
     button: AppCompatButton,
     nestedScrollView: NestedScrollView
 ) {
-
     nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
         if (scrollY > oldScrollY) {
             button.visibility = View.VISIBLE

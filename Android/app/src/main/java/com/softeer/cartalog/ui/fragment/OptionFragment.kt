@@ -70,8 +70,7 @@ class OptionFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.btnNext.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
-                optionViewModel.saveUserSelection()
-                optionViewModel.updateCarData()
+                saveUserAllData()
                 withContext(Dispatchers.Main) {
                     (activity as MainActivity).changeTab(5)
                 }
@@ -79,8 +78,7 @@ class OptionFragment : Fragment() {
         }
         binding.btnPrev.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
-                optionViewModel.saveUserSelection()
-                optionViewModel.updateCarData()
+                saveUserAllData()
                 withContext(Dispatchers.Main) {
                     (activity as MainActivity).changeTab(3)
                 }
@@ -104,5 +102,10 @@ class OptionFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    suspend fun saveUserAllData(){
+        optionViewModel.saveUserSelection()
+        optionViewModel.updateCarData()
     }
 }

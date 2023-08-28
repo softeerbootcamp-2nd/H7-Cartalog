@@ -4,13 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import com.softeer.cartalog.data.enums.ModelTypeSubject
 import com.softeer.cartalog.data.enums.PriceDataType
-import com.softeer.cartalog.data.model.TrimDetail
-import com.softeer.cartalog.data.model.Type
-import com.softeer.cartalog.data.model.TypeOption
 import com.softeer.cartalog.data.model.db.PriceData
+import com.softeer.cartalog.data.model.type.TrimDetail
+import com.softeer.cartalog.data.model.type.Type
+import com.softeer.cartalog.data.model.type.TypeOption
 import com.softeer.cartalog.data.repository.CarRepository
 import kotlinx.coroutines.launch
 
@@ -24,9 +23,6 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
 
     private val _wheeldrive1Selected = MutableLiveData(true)
     val wheeldrive1Selected: LiveData<Boolean> = _wheeldrive1Selected
-
-    private val _navController = MutableLiveData<NavController>()
-    val navController: LiveData<NavController> = _navController
 
     private val _typeList: MutableLiveData<List<Type>> = MutableLiveData(emptyList())
     val typeList: LiveData<List<Type>> = _typeList
@@ -46,8 +42,6 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
 
     init {
         setTypeData()
-        // TODO - 트림 화면에서 넘어온 트림 id로 요청해야함
-        setHmgData(2)
         setSelectedType()
     }
 
@@ -117,15 +111,12 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
                 selectedBodyType?.optionId == 5
             _wheeldrive1Selected.value =
                 selectedWheelDrive?.optionId == 3
+            setHmgData(2)
         }
     }
 
     fun setUserTotalPrice(price: Int) {
         _userTotalPrice.value = price
-    }
-
-    fun setNavController(navController: NavController) {
-        _navController.value = navController
     }
 
     private fun getTypeData(type: ModelTypeSubject): TypeOption {

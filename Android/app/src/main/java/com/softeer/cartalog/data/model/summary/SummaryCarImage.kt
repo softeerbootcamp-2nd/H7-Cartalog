@@ -1,4 +1,4 @@
-package com.softeer.cartalog.data.model
+package com.softeer.cartalog.data.model.summary
 
 data class SummaryCarImage(
     val sideExteriorImageUrl: String,

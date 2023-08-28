@@ -12,7 +12,7 @@
 
         <variable
             name="typeList"
-            type="com.softeer.cartalog.data.model.Types" />
+            type="com.softeer.cartalog.data.model.type.Types" />
 
         <variable
             name="viewModel"

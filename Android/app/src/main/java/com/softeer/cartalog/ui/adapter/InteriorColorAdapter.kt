@@ -3,7 +3,7 @@ package com.softeer.cartalog.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.softeer.cartalog.data.model.CarColor
+import com.softeer.cartalog.data.model.color.CarColor
 import com.softeer.cartalog.databinding.ItemInteriorColorBinding
 import com.softeer.cartalog.viewmodel.InteriorViewModel
 
@@ -33,7 +33,6 @@ class InteriorColorAdapter(private val viewModel: InteriorViewModel) :
     inner class InteriorColorViewHolder(val binding: ItemInteriorColorBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: CarColor?, position: Int) {
-            binding.lifecycleOwner = binding.lifecycleOwner
             binding.viewModel = viewModel
             binding.position = position
             binding.carColor = item

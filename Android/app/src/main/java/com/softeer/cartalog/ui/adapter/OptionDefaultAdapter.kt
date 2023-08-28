@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.softeer.cartalog.data.model.Option
+import com.softeer.cartalog.data.model.option.Option
 import com.softeer.cartalog.databinding.ItemOptionDefaultCardBinding
 import com.softeer.cartalog.ui.fragment.OptionFragmentDirections
 
@@ -34,7 +34,6 @@ class OptionDefaultAdapter(val list: List<Option>) :
     inner class OptionDefaultViewHolder(val binding: ItemOptionDefaultCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Option, position: Int) {
-            binding.lifecycleOwner = binding.lifecycleOwner
             binding.position = position
             binding.option = item
 

@@ -24,4 +24,10 @@ interface MyCarDao {
 
     @Update
     suspend fun upDateMyCar(myCar: MyCar)
+
+    @Query("DELETE FROM MyCar")
+    suspend fun deleteAll()
+
+    @Query("SELECT totalPrice FROM MyCar")
+    suspend fun getTotalPrice(): Int
 }

@@ -58,7 +58,6 @@ class TypeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTypeBinding.inflate(inflater, container, false)
-        typeViewModel.setNavController(findNavController())
         typeViewModel.setUserTotalPrice(totalPrice)
         requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), callback)
         return binding.root
@@ -70,8 +69,7 @@ class TypeFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.btnNext.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
-                typeViewModel.saveUserSelection()
-                typeViewModel.updateCarData()
+                saveUserAllData()
                 withContext(Dispatchers.Main){
                     (activity as MainActivity).changeTab(2)
                 }
@@ -79,8 +77,7 @@ class TypeFragment : Fragment() {
         }
         binding.btnPrev.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
-                typeViewModel.saveUserSelection()
-                typeViewModel.updateCarData()
+                saveUserAllData()
                 withContext(Dispatchers.Main){
                     (activity as MainActivity).changeTab(0)
                 }
@@ -104,4 +101,8 @@ class TypeFragment : Fragment() {
         _binding = null
     }
 
+    suspend fun saveUserAllData(){
+        typeViewModel.saveUserSelection()
+        typeViewModel.updateCarData()
+    }
 }

@@ -3,7 +3,7 @@ package com.softeer.cartalog.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.softeer.cartalog.data.model.Trim
+import com.softeer.cartalog.data.model.trim.Trim
 import com.softeer.cartalog.databinding.ItemTrimCardBinding
 import com.softeer.cartalog.viewmodel.TrimViewModel
 

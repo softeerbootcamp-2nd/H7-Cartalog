@@ -1,4 +1,4 @@
-package com.softeer.cartalog.data.model
+package com.softeer.cartalog.data.model.option
 
 data class Option(
     val id: String,

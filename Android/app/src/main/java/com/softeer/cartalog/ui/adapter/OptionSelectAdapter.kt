@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.softeer.cartalog.data.model.Option
+import com.softeer.cartalog.data.model.option.Option
 import com.softeer.cartalog.databinding.ItemOptionSelectCardBinding
 import com.softeer.cartalog.ui.fragment.OptionFragmentDirections
 import com.softeer.cartalog.viewmodel.OptionViewModel
@@ -47,9 +47,7 @@ class OptionSelectAdapter(private val viewModel: OptionViewModel, private val fi
     inner class OptionSelectViewHolder(val binding: ItemOptionSelectCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Option?, position: Int) {
-            binding.lifecycleOwner = binding.lifecycleOwner
             binding.viewModel = viewModel
-            binding.position = position
             binding.optionAdapter = this@OptionSelectAdapter
 
             item?.let { option ->

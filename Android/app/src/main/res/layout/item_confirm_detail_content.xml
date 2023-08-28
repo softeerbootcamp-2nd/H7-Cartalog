@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
         <import type="com.softeer.cartalog.data.enums.PriceDataType"/>
         <variable
             name="item"
@@ -57,9 +58,9 @@
             android:id="@+id/tv_item_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray_500"
+            android:textColor="@{item.optionType == PriceDataType.OPTION ? @color/gray_900 : @color/gray_500}"
             android:layout_marginStart="8dp"
-            android:text="@{item.optionType.typeName}"
+            android:text="@{item.optionType == PriceDataType.OPTION ? item.name : item.optionType.typeName}"
             app:layout_constraintTop_toTopOf="@id/gl_top"
             app:layout_constraintStart_toEndOf="@id/iv_item" />
 
@@ -68,7 +69,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/gray_900"
-            android:text="@{item.name}"
+            android:text="@{item.optionType == PriceDataType.OPTION ? `` : item.name}"
             android:maxLines="1"
             android:ellipsize="end"
             android:layout_marginEnd="8dp"
@@ -76,6 +77,21 @@
             app:layout_constraintBottom_toBottomOf="@id/iv_item"
             app:layout_constraintStart_toStartOf="@id/tv_item_type"
             tools:text="알콘 단조 브레이크 20인치 20인치 휠 패키지"/>
+
+        <TextView
+            android:id="@+id/tv_item_estimate_tag"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/primary_color_500"
+            android:text="@string/confirm_estimate_tag"
+            android:visibility="@{item.isCheckedFromEstimate ? View.VISIBLE : View.GONE}"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@id/tv_item_price"
+            app:layout_constraintBottom_toBottomOf="@id/iv_item"
+            app:layout_constraintStart_toStartOf="@id/tv_item_type"/>
 
         <TextView
             android:id="@+id/tv_item_price"
