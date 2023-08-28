@@ -36,7 +36,7 @@ function SimilarCard({ data }) {
         ))}
       </S.ChartWrapper>
       <S.Button onClick={handleShow}>유사 출고 견적 확인하기</S.Button>
-      <SimilarPopup show={show} close={handleClose} />
+      <SimilarPopup data={similarEstimateCounts} show={show} close={handleClose} />
     </HMGCard>
   );
 }
