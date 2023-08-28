@@ -6,10 +6,6 @@
     <data>
 
         <variable
-            name="position"
-            type="Integer" />
-
-        <variable
             name="adapter"
             type="com.softeer.cartalog.ui.adapter.EstimateOptionsAdapter" />
 
