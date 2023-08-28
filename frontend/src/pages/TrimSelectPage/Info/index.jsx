@@ -1,13 +1,11 @@
 import { INFO } from '../constants';
 import * as S from './style';
 import Title from '../../../components/Title';
-import HMGTag from '../../../components/HMGTag';
 import TrimImage from './TrimImage';
-import HMGData from '../../../components/HMGData';
+import HMGInfo from './HMGInfo';
 
 function Info({ trim }) {
   const selectedTrim = trim.fetchData?.find((trimData) => trimData.id === trim.id);
-  const hmgTagProps = { type: INFO.HMGTAG };
   const titleProps = {
     type: INFO.TYPE,
     subTitle: selectedTrim?.description,
@@ -18,15 +16,7 @@ function Info({ trim }) {
     <S.Info>
       <S.TrimText>
         <Title {...titleProps} />
-        <S.HMG>
-          <HMGTag {...hmgTagProps} />
-          <S.HMGInfo>
-            {INFO.HMGTAG_OPTION}&nbsp;
-            <S.Highlight>{INFO.HMGTAG_DATA}</S.Highlight>
-            {INFO.HMGTAG_LAST}
-          </S.HMGInfo>
-          <HMGData data={selectedTrim?.hmgData} />
-        </S.HMG>
+        <HMGInfo data={selectedTrim?.hmgData} />
       </S.TrimText>
       <TrimImage
         data={{
