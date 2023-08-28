@@ -67,7 +67,6 @@ fun setTrimCardViewPager(
     viewModel: TrimViewModel,
     indicator: DotsIndicator
 ) {
-
     val adjustedOffsetPx = UtilManager.getViewPagerGap(viewPager)
     val trimItemAdapter = TrimCardAdapter(viewModel)
     with(viewPager) {

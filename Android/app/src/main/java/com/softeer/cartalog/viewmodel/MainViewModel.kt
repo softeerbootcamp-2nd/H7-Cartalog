@@ -80,7 +80,7 @@ class MainViewModel(private val repository: CarRepository) : ViewModel() {
         }
     }
 
-    private fun setData(trimId: Int) {
+    fun setEstimateData(trimId: Int) {
         viewModelScope.launch {
 
             // 1. detail trim id 먼저 불러오기

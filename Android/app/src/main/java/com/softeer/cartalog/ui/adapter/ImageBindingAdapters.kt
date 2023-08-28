@@ -44,6 +44,15 @@ fun setImage360Init(
     }
 }
 
+@BindingAdapter("estimateImg")
+fun setEstimateImage(
+    imageView: ImageView,
+    colorCode: String?
+) {
+
+    imageView.load(colorCode?.let{ UtilManager.get360Image(it, 10) })
+}
+
 @SuppressLint("ClickableViewAccessibility")
 @BindingAdapter("viewModel")
 fun setImage360WithUrl(

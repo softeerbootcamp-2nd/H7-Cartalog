@@ -28,7 +28,7 @@ class OptionDefaultAdapter(val list: List<Option>) :
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return 20
     }
 
     inner class OptionDefaultViewHolder(val binding: ItemOptionDefaultCardBinding) :

@@ -136,6 +136,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
 
     fun changeTab(idx: Int) {
         binding.tlStep.selectTab(binding.tlStep.getTabAt(idx))
+        if(idx == 5) mainViewModel.setEstimateData(2)
     }
 
     fun setPrevTabTextColor(tabLayout: TabLayout, selectedPosition: Int) {
