@@ -274,7 +274,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
-                        android:progress="50"
+                        android:progress="@{viewModel.budgetRangeLimitProgress}"
                         android:progressDrawable="@{viewModel.isExcess ? @drawable/shape_seekbar_bar_excess : @drawable/shape_seekbar_bar}"
                         android:splitTrack="false"
                         app:idx="@{viewModel.stepIndex}"

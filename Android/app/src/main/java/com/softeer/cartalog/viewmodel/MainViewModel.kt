@@ -30,10 +30,8 @@ class MainViewModel(private val repository: CarRepository) : ViewModel() {
     private val _maxPrice = MutableLiveData(0)
     val maxPrice: LiveData<Int> = _maxPrice
     private var priceRange = 0
-
     private val _isReset = MutableLiveData<Boolean>(false)
     val isReset: LiveData<Boolean> = _isReset
-
     private val _isEstimateExist = MutableLiveData(false)
     val isEstimateExist: LiveData<Boolean> = _isEstimateExist
 
@@ -56,6 +54,7 @@ class MainViewModel(private val repository: CarRepository) : ViewModel() {
     fun setTotalPriceProgress(total: Int) {
         _totalPrice.value = total
         _totalPriceProgress.value = calculateProgressFromPrice(totalPrice.value!!)
+        _isExcess.value = budgetRangeLimit.value!! < totalPrice.value!!
     }
 
     private fun calculateProgressFromPrice(price: Int): Int {
@@ -112,7 +111,7 @@ class MainViewModel(private val repository: CarRepository) : ViewModel() {
 
             // 4. 견적서 번호를 통한 견적조회
             val estimateCounts = repository.getEstimateCount(estimateId)
-            if(estimateCounts.similarEstimateCounts.isNotEmpty()){
+            if (estimateCounts.similarEstimateCounts.isNotEmpty()) {
                 _isEstimateExist.value = true
             }
 
