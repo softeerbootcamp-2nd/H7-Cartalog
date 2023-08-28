@@ -104,9 +104,9 @@ class SimilarityServiceTest {
             when(estimateQueryRepository.findEstimateOptionIdsByEstimateId(anyLong()))
                     .thenReturn(new EstimateOptionIdListDto(1L, List.of(1L, 2L), List.of(1L, 2L)));
             when(estimateQueryRepository.findEstimateCounts(anyList()))
-                    .thenReturn(List.of(new EstimateCountDto(1L, 1L),
-                            new EstimateCountDto(2L, 2L),
-                            new EstimateCountDto(3L, 2L)));
+                    .thenReturn(List.of(new EstimateCountDto(1L, 1L, 40000000),
+                            new EstimateCountDto(2L, 2L, 40000001),
+                            new EstimateCountDto(3L, 2L, 40000002)));
             when(similarityQueryRepository.findSimilarEstimateIds(anyList()))
                     .thenReturn(List.of(1L, 2L, 3L));
             //when

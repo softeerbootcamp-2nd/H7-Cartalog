@@ -86,8 +86,10 @@ class EstimateQueryRepositoryTest {
             //then
             softAssertions.assertThat(estimateCounts.size()).isEqualTo(3);
             for (int estimateId = 1; estimateId <= estimateCounts.size(); estimateId++) {
-                softAssertions.assertThat(estimateCounts.get(estimateId - 1).getEstimateId())
+                EstimateCountDto curEstimateDto = estimateCounts.get(estimateId - 1);
+                softAssertions.assertThat(curEstimateDto.getEstimateId())
                         .isEqualTo(estimateId);
+                softAssertions.assertThat(curEstimateDto.getPrice()).isGreaterThan(30000000);
             }
             softAssertions.assertAll();
         }

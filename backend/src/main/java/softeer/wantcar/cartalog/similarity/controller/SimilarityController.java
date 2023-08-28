@@ -2,6 +2,7 @@ package softeer.wantcar.cartalog.similarity.controller;
 
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import softeer.wantcar.cartalog.similarity.service.SimilarityService;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Api(tags = {"유사 견적 관련 API"})
 @RestController
 @RequiredArgsConstructor
@@ -85,6 +87,7 @@ public class SimilarityController {
                 .map(counts -> EstimateCountInfoDto.builder()
                         .estimateId(counts.getEstimateId())
                         .count(counts.getCount())
+                        .price(counts.getPrice())
                         .estimateInfo(estimateService.findEstimateByEstimateId(counts.getEstimateId()))
                         .build()
                 )

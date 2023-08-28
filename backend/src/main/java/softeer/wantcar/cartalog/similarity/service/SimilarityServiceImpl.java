@@ -1,6 +1,7 @@
 package softeer.wantcar.cartalog.similarity.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import softeer.wantcar.cartalog.estimate.repository.EstimateQueryRepository;
@@ -17,6 +18,7 @@ import softeer.wantcar.cartalog.similarity.repository.dto.SimilarityInfo;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -62,9 +64,8 @@ public class SimilarityServiceImpl implements SimilarityService {
 
         List<EstimateCountDto> estimateCounts = estimateQueryRepository.findEstimateCounts(estimateIds);
 
-        Long myEstimateCount = getMyEstimateCount(estimateId, estimateCounts);
         return SimilarEstimateCountResponseDto.builder()
-                .myEstimateCount(myEstimateCount)
+                .myEstimateCount(getMyEstimateCount(estimateId, estimateCounts))
                 .similarEstimateCounts(getSimilarEstimateCounts(estimateId, estimateCounts))
                 .build();
     }
@@ -167,8 +168,8 @@ public class SimilarityServiceImpl implements SimilarityService {
     private static Long getMyEstimateCount(Long estimateId, List<EstimateCountDto> estimateCounts) {
         return estimateCounts.stream()
                 .filter(estimateCountDto -> Objects.equals(estimateCountDto.getEstimateId(), estimateId))
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new).getCount();
+                .findAny()
+                .orElse(new EstimateCountDto(estimateId, 0L, 40000000)).getCount();
     }
 
     private static List<EstimateCountDto> getSimilarEstimateCounts(Long estimateId, List<EstimateCountDto> estimateCounts) {
