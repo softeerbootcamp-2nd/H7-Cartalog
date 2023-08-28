@@ -6,10 +6,6 @@
     <data>
 
         <variable
-            name="position"
-            type="Integer" />
-
-        <variable
             name="adapter"
             type="com.softeer.cartalog.ui.adapter.EstimateOptionsAdapter" />
 
@@ -87,12 +83,14 @@
             <TextView
                 android:id="@+id/tv_color_title"
                 style="@style/FragmentHeader"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:gravity="start"
                 android:text='@{option.name}'
                 android:textColor="@{viewModel.selectedOptions.contains(option) ? @color/gray_900 : @color/gray_600}"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@id/gl_start"
+                app:layout_constraintEnd_toEndOf="@id/gl_end"
                 android:layout_marginTop="15dp"
                 app:layout_constraintTop_toBottomOf="@id/iv_color" />
 

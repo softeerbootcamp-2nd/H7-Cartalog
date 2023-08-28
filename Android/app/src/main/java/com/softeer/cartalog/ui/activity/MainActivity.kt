@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
         const val TOTAL_PRICE = "total_price"
         const val MIN_PRICE = "min_price"
         const val MAX_PRICE = "max_price"
+        const val ESTIMATE_ID = "estimate_id"
     }
 
     private val binding: ActivityMainBinding by lazy {
@@ -136,6 +137,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
 
     fun changeTab(idx: Int) {
         binding.tlStep.selectTab(binding.tlStep.getTabAt(idx))
+        if(idx == 5) mainViewModel.setEstimateData(2)
     }
 
     fun setPrevTabTextColor(tabLayout: TabLayout, selectedPosition: Int) {
@@ -186,6 +188,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PriceDataCallbac
                 intent.putExtra(TOTAL_PRICE, mainViewModel.totalPrice.value!!)
                 intent.putExtra(MIN_PRICE, mainViewModel.minPrice.value!!)
                 intent.putExtra(MAX_PRICE, mainViewModel.maxPrice.value!!)
+                intent.putExtra(ESTIMATE_ID, mainViewModel.estimateId.value!!)
                 startActivity(intent)
             }
         }

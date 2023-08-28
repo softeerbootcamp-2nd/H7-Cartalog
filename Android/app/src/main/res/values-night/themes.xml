@@ -1,7 +1,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.CarTaLog" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- Customize your light theme here. -->
+        <item name="android:textViewStyle">@style/hyndaiTextFontStyle</item>
+        <item name="android:buttonStyle">@style/hyndaiButtonFontStyle</item>
+        <item name="android:editTextStyle">@style/hyndaiEditTextFontStyle</item>
+        <item name="android:radioButtonStyle">@style/hyndaiCompoundButtonFontStyle</item>
+        <item name="android:checkboxStyle">@style/hyndaiCheckBoxFontStyle</item>
+        <item name="chipStyle">@style/ChipHashTagStyle</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="bottomSheetDialogTheme">@style/BottomSheetDialogTheme</item>
     </style>
+
+    <style name="Theme.CarTaLog" parent="Base.Theme.CarTaLog" />
+
 </resources>

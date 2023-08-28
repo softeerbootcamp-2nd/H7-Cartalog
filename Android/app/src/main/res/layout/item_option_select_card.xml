@@ -11,14 +11,6 @@
             type="com.softeer.cartalog.data.model.option.Option" />
 
         <variable
-            name="position"
-            type="Integer" />
-
-        <variable
-            name="optionId"
-            type="String" />
-
-        <variable
             name="optionAdapter"
             type="com.softeer.cartalog.ui.adapter.OptionSelectAdapter" />
 

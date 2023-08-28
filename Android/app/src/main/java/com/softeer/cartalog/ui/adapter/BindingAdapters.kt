@@ -67,7 +67,6 @@ fun setTrimCardViewPager(
     viewModel: TrimViewModel,
     indicator: DotsIndicator
 ) {
-
     val adjustedOffsetPx = UtilManager.getViewPagerGap(viewPager)
     val trimItemAdapter = TrimCardAdapter(viewModel)
     with(viewPager) {
@@ -194,7 +193,6 @@ fun setBudgetLimit(
 
         override fun onStopTrackingTouch(p0: SeekBar?) {
         }
-
     })
 }
 
@@ -253,7 +251,6 @@ fun setSummaryOptionsRecyclerView(
     recyclerView: RecyclerView,
     optionList: MutableList<SummaryOptionPrice>
 ) {
-
     val adapter = if (optionList.isEmpty()) {
         SummaryOptionsAdapter(listOf(SummaryOptionPrice("-", -1)))
     } else {
@@ -302,5 +299,4 @@ fun setHashTagChipGroup(
             })
         }
     }
-
 }

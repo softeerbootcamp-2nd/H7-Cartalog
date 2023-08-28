@@ -7,15 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.softeer.cartalog.data.enums.PriceDataType
 import com.softeer.cartalog.data.model.db.PriceData
-import com.softeer.cartalog.data.model.estimate.EstimateRequest
 import com.softeer.cartalog.data.model.estimate.SimilarEstimateOption
 import com.softeer.cartalog.data.model.estimate.SimilarEstimates
 import com.softeer.cartalog.data.repository.CarRepository
 import kotlinx.coroutines.launch
 
 class EstimateViewModel(private val repository: CarRepository) : ViewModel() {
-
-    var detailTrimId = 0
 
     private var _estimateList = MutableLiveData<MutableList<SimilarEstimates>>(mutableListOf())
     val estimateList: LiveData<MutableList<SimilarEstimates>> = _estimateList
@@ -32,19 +29,24 @@ class EstimateViewModel(private val repository: CarRepository) : ViewModel() {
 
     private val _totalPrice = MutableLiveData(0)
     val totalPrice: LiveData<Int> = _totalPrice
+
     private val _totalPriceProgress = MutableLiveData<Int>(0)
     val totalPriceProgress: LiveData<Int> = _totalPriceProgress
 
     private val _estimatePrice = MutableLiveData(0)
     val estimatePrice: LiveData<Int> = _estimatePrice
+
     private val _estimatePriceProgress = MutableLiveData<Int>(0)
     val estimatePriceProgress: LiveData<Int> = _estimatePriceProgress
 
     private val _minPrice = MutableLiveData(0)
     val minPrice: LiveData<Int> = _minPrice
+
     private val _maxPrice = MutableLiveData(0)
     val maxPrice: LiveData<Int> = _maxPrice
+
     private var priceRange = 0
+    var estimateId = 0
 
     init {
         setData(2)
@@ -54,43 +56,10 @@ class EstimateViewModel(private val repository: CarRepository) : ViewModel() {
         _message.value = message
     }
 
-    private fun setData(trimId: Int) {
+    fun setData(trimId: Int) {
         viewModelScope.launch {
-
-            // 1. detail trim id 먼저 불러오기
-            val selectPowerTrain = repository.getTypeData(PriceDataType.POWERTRAIN).optionId
-            val selectBodyType = repository.getTypeData(PriceDataType.BODYTYPE).optionId
-            val selectWheelDrive = repository.getTypeData(PriceDataType.WHEELDRIVE).optionId
-
-            val modelTypeIds = "$selectPowerTrain,$selectBodyType,$selectWheelDrive"
-            detailTrimId = repository.getTrimDetail(modelTypeIds, trimId).detailTrimId
-
-            // 2. 견적서 서버에 POST 후 내 견적서 정보 받아오기
-            // 내, 외장 선택한 코드 가져오기
-            val exteriorColorCode = repository.getTypeData(PriceDataType.EXTERIOR_COLOR).code ?: ""
-            val interiorColorCode = repository.getTypeData(PriceDataType.INTERIOR_COLOR).code ?: ""
-
-            // 옵션 선택한 것들 코드 가져오기
-            val selectOptionOrPackageIds = repository.getOptionTypeDataList().map { it.code ?: "" }
-
-            // 3. 견적서 업로드
-            val estimate = EstimateRequest(
-                detailTrimId,
-                exteriorColorCode,
-                interiorColorCode,
-                selectOptionOrPackageIds
-            )
-            Log.d("TESTER", "$estimate")
-            val estimateId = repository.postEstimate(estimate)
-            Log.d("TESTER", "$estimateId")
-
-//            val estimateId = 1
-
-            // 4. 견적서 번호를 통한 견적조회
             val estimateCounts = repository.getEstimateCount(estimateId)
-            Log.d("TESTER", "$estimateCounts")
 
-            // 5. 유사견적이 있으면 해당 유사견적을 확인하여 뷰모델에 저장하기
             if (estimateCounts.similarEstimateCounts.isNotEmpty()) {
                 for (similar in estimateCounts.similarEstimateCounts) {
                     val similarEstimateItem =
@@ -102,8 +71,6 @@ class EstimateViewModel(private val repository: CarRepository) : ViewModel() {
             }
 
             _estimateList.postValue(_estimateList.value)
-            _estimateList.value?.toString()?.let { Log.d("TESTER", it) }
-
         }
     }
 
@@ -151,7 +118,7 @@ class EstimateViewModel(private val repository: CarRepository) : ViewModel() {
         return (adjustedValue.toFloat() / priceRange.toFloat() * 100).toInt()
     }
 
-    suspend fun saveUserSelection(){
+    suspend fun saveUserSelection() {
         val optionList = selectedOptions.value!!.map {
             PriceData(
                 carId = 1,

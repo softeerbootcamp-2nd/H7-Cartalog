@@ -58,7 +58,6 @@ class TypeSelectView(context: Context, attrs: AttributeSet) : ConstraintLayout(c
 
     fun setInit(){
         when(modelType){
-            // TODO: Hardcoded for TEST!!
             ModelTypeSubject.POWERTRAIN -> {
             }
             ModelTypeSubject.BODYTYPE -> {

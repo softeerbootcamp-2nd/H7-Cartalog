@@ -33,7 +33,6 @@ class ExteriorColorAdapter(private val viewModel: ExteriorViewModel) :
     inner class ExteriorColorViewHolder(val binding: ItemExteriorColorBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: CarColor?, position: Int) {
-            binding.lifecycleOwner = binding.lifecycleOwner
             binding.viewModel = viewModel
             binding.position = position
             binding.carColor = item
