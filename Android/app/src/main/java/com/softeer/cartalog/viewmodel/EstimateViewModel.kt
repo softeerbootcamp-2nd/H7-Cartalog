@@ -7,15 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.softeer.cartalog.data.enums.PriceDataType
 import com.softeer.cartalog.data.model.db.PriceData
-import com.softeer.cartalog.data.model.estimate.EstimateRequest
 import com.softeer.cartalog.data.model.estimate.SimilarEstimateOption
 import com.softeer.cartalog.data.model.estimate.SimilarEstimates
 import com.softeer.cartalog.data.repository.CarRepository
 import kotlinx.coroutines.launch
 
 class EstimateViewModel(private val repository: CarRepository) : ViewModel() {
-
-    var detailTrimId = 0
 
     private var _estimateList = MutableLiveData<MutableList<SimilarEstimates>>(mutableListOf())
     val estimateList: LiveData<MutableList<SimilarEstimates>> = _estimateList
@@ -64,7 +61,6 @@ class EstimateViewModel(private val repository: CarRepository) : ViewModel() {
             val estimateCounts = repository.getEstimateCount(estimateId)
             Log.d("TESTER", "$estimateCounts")
 
-            // 해당 유사견적을 확인하여 뷰모델에 저장하기
             if (estimateCounts.similarEstimateCounts.isNotEmpty()) {
                 for (similar in estimateCounts.similarEstimateCounts) {
                     val similarEstimateItem =
@@ -125,7 +121,7 @@ class EstimateViewModel(private val repository: CarRepository) : ViewModel() {
         return (adjustedValue.toFloat() / priceRange.toFloat() * 100).toInt()
     }
 
-    suspend fun saveUserSelection(){
+    suspend fun saveUserSelection() {
         val optionList = selectedOptions.value!!.map {
             PriceData(
                 carId = 1,
