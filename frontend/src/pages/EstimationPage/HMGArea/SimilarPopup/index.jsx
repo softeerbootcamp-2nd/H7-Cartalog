@@ -18,6 +18,7 @@ import PriceCompareBar from '../../../../components/PriceCompareBar';
 
 function SimilarPopup({ show, close }) {
   const data = useData();
+  const { similarEstimateCounts } = data.estimation.similarEstimateCountInfo;
   const [selectedOption, setSelectedOption] = useState([]);
   const [selectedOptionData, setSelectedOptionData] = useState([]);
   const [addClicked, setAddClicked] = useState(false);
@@ -28,8 +29,8 @@ function SimilarPopup({ show, close }) {
   const [similarPrice, setSimilarPrice] = useState();
 
   useEffect(() => {
-    setSimilarPrice(data.estimation.similarEstimateCountInfo.similarEstimateCounts[0]?.price);
-  }, [data.estimation.similarEstimateCountInfo]);
+    setSimilarPrice(similarEstimateCounts[0]?.price);
+  }, [similarEstimateCounts]);
 
   const selectButtonProps = {
     type: SELECT_BUTTON.TYPE,
@@ -137,12 +138,14 @@ function SimilarPopup({ show, close }) {
                   </S.CloseButton>
                 </S.Header>
                 <S.Contents style={{ transform: `translateX(${-similarPage * 772}px)` }}>
-                  {data.estimation.similarEstimateCountInfo.similarEstimateCounts?.map((info) => (
+                  {similarEstimateCounts?.map((info) => (
                     <SimilarInfo
                       key={info.estimateId}
+                      estimateId={info.estimateId}
                       info={info.estimateInfo}
                       page={similarPage}
                       setPage={setSimilarPage}
+                      price={info.price}
                       setPrice={setSimilarPrice}
                       option={selectedOption}
                       setOption={setSelectedOption}

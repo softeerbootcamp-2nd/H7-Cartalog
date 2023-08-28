@@ -9,17 +9,31 @@ import SimilarCard from '../SimilarCard';
 
 function SimilarInfo({
   info,
+  estimateId,
   page,
   setPage,
+  price,
   setPrice,
   option,
   setOption,
   optionData,
   setOptionData,
 }) {
+  const [similarData, setSimilarData] = useState();
   const [rightArrow, setRightArrow] = useState('');
   const [leftArrow, setLeftArrow] = useState('');
   const data = useData();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchedData = await fetch(
+        `https://api.hyundei.shop/similarity/releases?estimateId=1&similarEstimateId=${estimateId}`,
+      ).then((res) => res.json());
+      setSimilarData(fetchedData);
+    };
+
+    fetchData();
+  }, [estimateId]);
 
   useEffect(() => {
     setLeftArrow(page === 0 ? '' : 'active');
@@ -30,6 +44,8 @@ function SimilarInfo({
     );
   }, [data.estimation.similarEstimateCountInfo.similarEstimateCounts.length, page]);
 
+  if (!similarData) return <S.SimilarInfo />;
+
   return (
     <S.SimilarInfo>
       <S.LeftArea>
@@ -37,9 +53,9 @@ function SimilarInfo({
           className={leftArrow}
           onClick={() => {
             setPage(page - 1);
-            setPrice(
-              data.estimation.similarEstimateCountInfo.similarEstimateCounts[page - 1].price ?? 0,
-            );
+            const newPrice =
+              data.estimation.similarEstimateCountInfo.similarEstimateCounts[page - 1].price;
+            setPrice(newPrice);
           }}
           disabled={leftArrow !== 'active'}
         >
@@ -47,13 +63,13 @@ function SimilarInfo({
         </S.ArrowButton>
         <S.LeftInfo>
           <S.SubTitle>{SIMILAR_INFO.TITLE}</S.SubTitle>
-          <S.MainTitle>{info.trimName}</S.MainTitle>
+          <S.MainTitle>{similarData.trimName}</S.MainTitle>
           <S.HashTags>
-            {info.modelTypes?.slice(0, 3).map((hashtag) => (
-              <div key={hashtag.id}>{hashtag.name}</div>
+            {similarData.modelTypes?.map((hashtag) => (
+              <div key={hashtag}>{hashtag}</div>
             ))}
           </S.HashTags>
-          <S.Price>{info.price?.toLocaleString('ko-KR')}원</S.Price>
+          <S.Price>{similarData.price?.toLocaleString('ko-KR')}원</S.Price>
         </S.LeftInfo>
         <img src={info.exteriorCarSideImageUrl} alt="exterior" />
       </S.LeftArea>
@@ -65,7 +81,7 @@ function SimilarInfo({
           <S.OptionWrapper>
             <S.OptionTitle>{SIMILAR_INFO.OPTION}</S.OptionTitle>
             <S.CardWrapper>
-              {info.nonExistentOptions?.map((nonOption) => (
+              {similarData.nonExistentOptions?.map((nonOption) => (
                 <SimilarCard
                   key={nonOption.optionId}
                   name={nonOption.name}
@@ -93,7 +109,9 @@ function SimilarInfo({
           className={rightArrow}
           onClick={() => {
             setPage(page + 1);
-            setPrice(data.estimation.similarEstimateCountInfo[page + 1].price);
+            const newPrice =
+              data.estimation.similarEstimateCountInfo.similarEstimateCounts[page + 1].price;
+            setPrice(newPrice);
           }}
           disabled={rightArrow !== 'active'}
         >
