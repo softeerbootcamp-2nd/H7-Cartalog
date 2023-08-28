@@ -4,13 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import com.softeer.cartalog.data.enums.ModelTypeSubject
 import com.softeer.cartalog.data.enums.PriceDataType
+import com.softeer.cartalog.data.model.db.PriceData
 import com.softeer.cartalog.data.model.type.TrimDetail
 import com.softeer.cartalog.data.model.type.Type
 import com.softeer.cartalog.data.model.type.TypeOption
-import com.softeer.cartalog.data.model.db.PriceData
 import com.softeer.cartalog.data.repository.CarRepository
 import kotlinx.coroutines.launch
 
@@ -43,7 +42,6 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
 
     init {
         setTypeData()
-        setHmgData(2)
         setSelectedType()
     }
 
@@ -113,6 +111,7 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
                 selectedBodyType?.optionId == 5
             _wheeldrive1Selected.value =
                 selectedWheelDrive?.optionId == 3
+            setHmgData(2)
         }
     }
 
