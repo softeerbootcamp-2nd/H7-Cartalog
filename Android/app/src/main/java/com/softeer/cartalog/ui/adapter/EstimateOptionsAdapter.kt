@@ -25,7 +25,6 @@ class EstimateOptionsAdapter(private val viewModel: EstimateViewModel, private v
 
     fun setItems(){
         items.clear()
-        Log.d("TEST", cardPosition.toString())
         items.addAll(viewModel.estimateList.value!![cardPosition].nonExistentOptions)
     }
 

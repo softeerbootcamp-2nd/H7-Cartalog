@@ -43,7 +43,6 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
 
     init {
         setTypeData()
-        // TODO - 트림 화면에서 넘어온 트림 id로 요청해야함
         setHmgData(2)
         setSelectedType()
     }

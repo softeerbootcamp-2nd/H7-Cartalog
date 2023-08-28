@@ -59,7 +59,6 @@ class EstimateViewModel(private val repository: CarRepository) : ViewModel() {
     fun setData(trimId: Int) {
         viewModelScope.launch {
             val estimateCounts = repository.getEstimateCount(estimateId)
-            Log.d("TESTER", "$estimateCounts")
 
             if (estimateCounts.similarEstimateCounts.isNotEmpty()) {
                 for (similar in estimateCounts.similarEstimateCounts) {
@@ -72,8 +71,6 @@ class EstimateViewModel(private val repository: CarRepository) : ViewModel() {
             }
 
             _estimateList.postValue(_estimateList.value)
-            _estimateList.value?.toString()?.let { Log.d("TESTER", it) }
-
         }
     }
 

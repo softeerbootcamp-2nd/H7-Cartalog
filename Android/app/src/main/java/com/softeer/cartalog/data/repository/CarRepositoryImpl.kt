@@ -187,7 +187,6 @@ class CarRepositoryImpl(
     override suspend fun postEstimate(estimate: EstimateRequest): Int {
 //        val json = Gson().toJson(estimate)
         val response = carRemoteDataSource.postEstimate(estimate)
-        Log.d("TESTER", "post ${response}")
         return if (response.isSuccessful) response.body()!! else 0
     }
 

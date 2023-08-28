@@ -117,9 +117,7 @@ class MainViewModel(private val repository: CarRepository) : ViewModel() {
                 interiorColorCode,
                 selectOptionOrPackageIds
             )
-            Log.d("TESTER", "$estimate")
             _estimateId.value = repository.postEstimate(estimate)
-            Log.d("TESTER", "${estimateId.value}")
 
             // 4. 견적서 번호를 통한 견적조회
             val estimateCounts = repository.getEstimateCount(_estimateId.value!!)
