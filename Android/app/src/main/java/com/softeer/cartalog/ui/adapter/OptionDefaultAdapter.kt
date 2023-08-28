@@ -34,7 +34,6 @@ class OptionDefaultAdapter(val list: List<Option>) :
     inner class OptionDefaultViewHolder(val binding: ItemOptionDefaultCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Option, position: Int) {
-            binding.lifecycleOwner = binding.lifecycleOwner
             binding.position = position
             binding.option = item
 

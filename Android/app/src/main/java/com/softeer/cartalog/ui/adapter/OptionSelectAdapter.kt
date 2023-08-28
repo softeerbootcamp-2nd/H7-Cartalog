@@ -47,7 +47,6 @@ class OptionSelectAdapter(private val viewModel: OptionViewModel, private val fi
     inner class OptionSelectViewHolder(val binding: ItemOptionSelectCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Option?, position: Int) {
-            binding.lifecycleOwner = binding.lifecycleOwner
             binding.viewModel = viewModel
             binding.position = position
             binding.optionAdapter = this@OptionSelectAdapter
