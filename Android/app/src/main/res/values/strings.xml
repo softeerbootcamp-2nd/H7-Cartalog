@@ -1,3 +1,91 @@
 <resources>
     <string name="app_name">CarTaLog</string>
+
+    <string name="btn_exit">종료</string>
+    <string name="btn_prev">이전</string>
+    <string name="btn_next">다음</string>
+    <string name="btn_price_summary">견적 요약</string>
+    <string name="btn_close_price_summary">견적 요약 닫기</string>
+    <string name="btn_open_similar_estimate">유사 출고 견적 확인하기</string>
+    <string name="btn_share">공유하기</string>
+    <string name="btn_consult">상담신청</string>
+    <string name="btn_restart">처음부터 시작하기</string>
+    <string name="btn_exit_2">저장하고 종료하기</string>
+
+    <string name="tab_trim">트림</string>
+    <string name="tab_type">타입</string>
+    <string name="tab_exterior">외장</string>
+    <string name="tab_interior">내장</string>
+    <string name="tab_option">옵션</string>
+    <string name="tab_confirm">완료</string>
+    <string name="tab_option_not_default">추가옵션</string>
+    <string name="tab_option_default">기본옵션</string>
+
+    <string name="range_bar_title">예산 범위</string>
+
+    <string name="trim_header">트림을 선택해주세요.</string>
+
+    <string name="type_header">모델타입을 선택해주세요.</string>
+    <string name="type_powertrain">파워트레인</string>
+    <string name="type_bodytype">바디타입</string>
+    <string name="type_wheeldrive">구동방식</string>
+
+    <string name="option_all">전체</string>
+    <string name="option_detail">상세품목</string>
+    <string name="option_acc">악세사리</string>
+    <string name="option_wheel">휠</string>
+    <string name="option_powertrain">파워트레인/성능</string>
+    <string name="option_safetech">지능형 안전기술</string>
+    <string name="option_safe">안전</string>
+    <string name="option_exterior">외관</string>
+    <string name="option_interior">내장</string>
+    <string name="option_seat">시트</string>
+    <string name="option_convenience">편의</string>
+    <string name="option_multimedia">멀티미디어</string>
+    <string name="option_item_default_price">기본포함</string>
+    <string name="option_item_select_guide">가 선택했어요</string>
+
+    <string name="interior_header">내장 색상을 선택해주세요.</string>
+
+    <string name="exterior_header">외장 색상을 선택해주세요.</string>
+    <string name="exterior_360">← - - - - - - - - 360° - - - - - - - - →</string>
+    <string name="exterior_item_select">의 선택</string>
+
+    <string name="summary_now_price">현재 견적 가격</string>
+    <string name="summary_model">모델</string>
+    <string name="summary_exterior">외장 색상</string>
+    <string name="summary_interior">내장 색상</string>
+    <string name="summary_total_price">최종 견적 가격</string>
+    <string name="summary_title_2">평균 연비</string>
+    <string name="summary_title_3">배기량</string>
+    <string name="summary_option">옵션</string>
+
+    <string name="confirm_complete_msg">합리적인 가격으로 완성된\n나만의 %s가 탄생했어요!</string>
+    <string name="confirm_car_model">Le Blanc</string>
+    <string name="confirm_title_summary">요약 견적</string>
+    <string name="confirm_title_detail">상세 견적</string>
+    <string name="confirm_btn_check_img">이미지 확인</string>
+    <string name="confirm_estimate_tag">유사 견적에서 추가된 옵션입니다.</string>
+
+    <string name="exit_content">내 차 만들기를 종료하시겠습니까?</string>
+    <string name="estimate_header">유사견적</string>
+    <string name="estimate_btn_none">옵션을 선택해 추가해보세요.</string>
+    <string name="estimate_btn_choice">선택된 옵션 4개</string>
+    <string name="estimate_btn_add">내 견적서에 추가하기.</string>
+    <string name="estimate_range_bar_title">유사견적 가격</string>
+    <string name="estimate_range_bar_mine">내 견적</string>
+    <string name="estimate_range_bar_text_1">내 견적 보다 </string>
+    <string name="estimate_range_bar_text_2">원 비싸요. </string>
+    <string name="estimate_hmg_data_title">내 견적에 없는 옵션이에요.</string>
+
+    <string name="guide_estimate_title_blue">내 견적과 비슷한 실제 출고 견적</string>
+    <string name="guide_estimate_title_black_1">들을</string>
+    <string name="guide_estimate_title_black_2">확인하고 비교해보세요.</string>
+    <string name="guide_estimate_contents">*유사 견적이란, 내 견적과 해시태그 유사도가\n높은 다른 사람들의 실제 출고 견적이에요.</string>
+
+    <string name="share_title">공유하기</string>
+    <string name="share_sub_title_1">SNS</string>
+    <string name="share_sub_content_1">견적서를 SNS로 바로 공유해보세요.</string>
+    <string name="share_sub_title_2">링크 공유</string>
+    <string name="share_sub_content_2">내 견적서 링크를 복사해 견적을 다시 확인해보세요.\n(30일 유효)</string>
 </resources>

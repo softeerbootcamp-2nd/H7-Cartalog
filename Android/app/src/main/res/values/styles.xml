@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="hyndaiTextFontStyle" parent="@android:style/Widget.DeviceDefault.TextView">
+        <item name="android:textColor">@color/gray_900</item>
+        <item name="android:fontFamily">@font/hyndaisans_text</item>
+    </style>
+
+    <style name="hyndaiButtonFontStyle" parent="@android:style/Widget.DeviceDefault.Button.Borderless">
+        <item name="android:fontFamily">@font/hyndaisans_text</item>
+    </style>
+
+    <style name="hyndaiEditTextFontStyle" parent="@android:style/Widget.DeviceDefault.EditText">
+        <item name="android:fontFamily">@font/hyndaisans_text</item>
+    </style>
+
+    <style name="hyndaiCompoundButtonFontStyle" parent="@android:style/Widget.DeviceDefault.CompoundButton.RadioButton">
+        <item name="android:fontFamily">@font/hyndaisans_text</item>
+    </style>
+
+    <style name="hyndaiCheckBoxFontStyle" parent="@android:style/Widget.DeviceDefault.CompoundButton.CheckBox">
+        <item name="android:fontFamily">@font/hyndaisans_text</item>
+    </style>
+
+    <style name="TabTextStyle" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/hyndaisans_head_bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TabOptionTextStyle" parent="TabTextStyle">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TabOptionDetailTextStyle" parent="TabTextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/hyndaisans_text</item>
+    </style>
+
+    <style name="TabItemStyle" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/hyndaisans_head_bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/active_blue2</item>
+        <item name="tabBackground">@color/white</item>
+    </style>
+
+    <style name="HmgDataTag">
+        <item name="fontFamily">@font/hyndaisans_head_bold</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:text">HMG Data</item>
+        <item name="android:background">@color/active_blue2</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+    </style>
+
+    <style name="HmgDataButton" parent="HmgDataTag">
+        <item name="android:paddingTop">9dp</item>
+        <item name="android:paddingBottom">9dp</item>
+    </style>
+
+    <style name="DetailViewTag">
+        <item name="fontFamily">@font/hyndaisans_text</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:text">상세보기</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:textColor">@color/gray_800</item>
+        <item name="android:paddingTop">7.5dp</item>
+        <item name="android:paddingBottom">7.5dp</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+    </style>
+
+    <style name="Theme.AppCompat.Transparent.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="FragmentHeader" parent="@android:style/Widget.DeviceDefault.TextView">
+        <item name="android:textSize">18sp</item>
+        <item name="fontFamily">@font/hyndaisans_head_bold</item>
+    </style>
+
+    <style name="SelectChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/white</item>
+        <item name="chipStrokeColor">@color/gray_200</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="fontFamily">@font/hyndaisans_head_medium</item>
+    </style>
+
+    <style name="RadioButtonStyle" parent="Widget.Material3.CompoundButton.RadioButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/selector_radio_option_category</item>
+        <item name="android:button">@null</item>
+        <item name="android:fontFamily">@font/hyndaisans_text</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@drawable/selector_radio_text_option_category</item>
+    </style>
+
+    <style name="ChipHashTagStyle" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="chipBackgroundColor">#80757575</item>
+        <item name="chipSurfaceColor">#80757575</item>
+        <item name="android:textColor">@color/gray_50</item>
+        <item name="chipCornerRadius">2dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="chipStartPadding">2dp</item>
+        <item name="chipEndPadding">2dp</item>
+        <item name="chipMinHeight">25dp</item>
+        <item name="android:textAppearance">@style/hyndaiTextFontStyle</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme"
+        parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:textViewStyle">@style/hyndaiTextFontStyle</item>
+    </style>
+
+    <style name="BottomSheetStyle"
+        parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/shape_bottomsheet_corner</item>
+    </style>
+</resources>

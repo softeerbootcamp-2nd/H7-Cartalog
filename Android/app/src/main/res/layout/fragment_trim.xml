@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.softeer.cartalog.viewmodel.TrimViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.fragment.TrimFragment">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <TextView
+            android:id="@+id/tv_header"
+            style="@style/FragmentHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/trim_header"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="@id/gl_start"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_slide_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:paddingStart="25dp"
+            android:paddingTop="0dp"
+            android:paddingEnd="25dp"
+            android:paddingBottom="0dp"
+            app:indicator="@{dotsIndicator}"
+            app:layout_constraintBottom_toTopOf="@id/dots_indicator"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_header"
+            app:viewModel="@{viewModel}" />
+
+        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+            android:id="@+id/dots_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="33dp"
+            app:dotsColor="@color/gray_200"
+            app:dotsCornerRadius="8dp"
+            app:dotsSize="8dp"
+            app:dotsSpacing="4dp"
+            app:dotsWidthFactor="3"
+            app:layout_constraintBottom_toTopOf="@id/btn_choose"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vp_slide_container"
+            app:progressMode="false"
+            app:selectedDotColor="@color/primary_color_500" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_choose"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/primary_color_700"
+            android:inputType="text"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:textColor="@color/gray_50"
+            android:textSize="16sp"
+            android:text="@{viewModel.trimList.size() > 0 ? String.format(`%s %s`, viewModel.trimList.get(viewModel.selectedTrim).name, `선택하기`) : ``}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

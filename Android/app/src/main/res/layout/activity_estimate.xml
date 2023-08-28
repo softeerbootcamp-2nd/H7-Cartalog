@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.softeer.cartalog.viewmodel.EstimateViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".ui.activity.EstimateActivity">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="10dp" />
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_arrow_back"
+            app:layout_constraintStart_toStartOf="@id/gl_start"
+            app:layout_constraintTop_toTopOf="@id/tv_title"
+            app:tint="@color/gray_800" />
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/hyndaisans_head_bold"
+            android:gravity="center"
+            android:text="@string/estimate_header"
+            android:textColor="@color/gray_900"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_start"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btn_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="12dp"
+            android:src="@drawable/icon_info"
+            app:constraintLayout="@{clGuideContainer}"
+            app:imageView="@{ivGuideBgr}"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintTop_toTopOf="@id/tv_title"
+            app:tint="@color/white" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_guide_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/pop_up_black"
+            android:elevation="10dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_guide_bgr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/img_estimate_guide_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_guide_title_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/hyndaisans_head_medium"
+                android:text="@string/guide_estimate_title_blue"
+                android:textColor="@color/active_blue"
+                app:layout_constraintStart_toStartOf="@id/iv_guide_bgr"
+                app:layout_constraintTop_toTopOf="@id/iv_guide_bgr" />
+
+            <TextView
+                android:id="@+id/tv_guide_title_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/hyndaisans_head_medium"
+                android:text="@string/guide_estimate_title_black_1"
+                android:textColor="@color/gray_900"
+                app:layout_constraintStart_toEndOf="@id/tv_guide_title_1"
+                app:layout_constraintTop_toTopOf="@id/iv_guide_bgr" />
+
+            <TextView
+                android:id="@+id/tv_guide_title_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/hyndaisans_head_medium"
+                android:text="@string/guide_estimate_title_black_2"
+                android:textColor="@color/gray_900"
+                app:layout_constraintStart_toStartOf="@id/tv_guide_title_1"
+                app:layout_constraintTop_toBottomOf="@id/tv_guide_title_1" />
+
+            <View
+                android:id="@+id/vw_guide_divider"
+                android:layout_width="36dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/primary_color_200"
+                app:layout_constraintStart_toStartOf="@id/tv_guide_title_3"
+                app:layout_constraintTop_toBottomOf="@id/tv_guide_title_3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="6dp"
+                android:text="@string/guide_estimate_contents"
+                android:textAlignment="textStart"
+                android:textColor="@color/primary_color_500"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_guide_bgr"
+                app:layout_constraintEnd_toEndOf="@id/iv_guide_bgr"
+                app:layout_constraintStart_toStartOf="@id/iv_guide_bgr"
+                app:layout_constraintTop_toBottomOf="@id/vw_guide_divider" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_budget_range"
+            android:layout_width="0dp"
+            android:layout_height="105dp"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/primary_color_700"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_start"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:strokeWidth="0dp" />
+
+        <TextView
+            android:id="@+id/tv_budget_range_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="9dp"
+            android:fontFamily="@font/hyndaisans_head_bold"
+            android:text="@string/estimate_range_bar_title"
+            android:textColor="@color/gray_50"
+            app:layout_constraintStart_toStartOf="@id/cv_budget_range"
+            app:layout_constraintTop_toTopOf="@id/cv_budget_range" />
+
+        <TextView
+            android:id="@+id/tv_budget_range_text_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="9dp"
+            android:layout_marginEnd="4dp"
+            android:fontFamily="@font/hyndaisans_head_light"
+            android:text="@string/estimate_range_bar_text_1"
+            android:textColor="@color/gray_50"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_budget_range_title"
+            app:layout_constraintEnd_toStartOf="@id/tv_budget_range_text_price"
+            app:layout_constraintTop_toTopOf="@id/tv_budget_range_title" />
+
+        <TextView
+            android:id="@+id/tv_budget_range_text_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/hyndaisans_head_medium"
+            android:text="@{String.format(`%,d`,(viewModel.estimatePrice - viewModel.totalPrice))}"
+            android:textColor="@color/active_blue2"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_budget_range_text_1"
+            app:layout_constraintEnd_toStartOf="@id/tv_budget_range_text_2"
+            app:layout_constraintTop_toTopOf="@id/tv_budget_range_text_1"
+            tools:text="200000" />
+
+        <TextView
+            android:id="@+id/tv_budget_range_text_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/hyndaisans_head_light"
+            android:text="@string/estimate_range_bar_text_2"
+            android:textColor="@color/gray_50"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_budget_range_text_1"
+            app:layout_constraintEnd_toEndOf="@id/cv_budget_range"
+            app:layout_constraintTop_toTopOf="@id/tv_budget_range_text_1" />
+
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/sb_budget_range_limit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:progress="@{viewModel.estimatePriceProgress}"
+            android:progressDrawable="@drawable/shape_seekbar_bar_estimate"
+            android:splitTrack="false"
+            android:thumb="@drawable/icon_seekbar_estimate_pin"
+            app:layout_constraintEnd_toEndOf="@id/cv_budget_range"
+            app:layout_constraintStart_toStartOf="@id/cv_budget_range"
+            app:layout_constraintTop_toBottomOf="@id/tv_budget_range_title" />
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/sb_user_total_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:progress="@{viewModel.totalPriceProgress}"
+            android:progressDrawable="@android:color/transparent"
+            android:thumb="@drawable/icon_seekbar_user_pin"
+            app:layout_constraintEnd_toEndOf="@id/sb_budget_range_limit"
+            app:layout_constraintStart_toStartOf="@id/sb_budget_range_limit"
+            app:layout_constraintTop_toBottomOf="@id/tv_budget_range_title" />
+
+        <TextView
+            android:id="@+id/tv_min_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/primary_color_200"
+            android:textSize="11sp"
+            android:text="@{String.format(`%d만원`,(viewModel.minPrice/10000))}"
+            app:layout_constraintStart_toStartOf="@id/sb_budget_range_limit"
+            app:layout_constraintTop_toBottomOf="@id/sb_budget_range_limit"
+            tools:text="4300만원" />
+
+        <TextView
+            android:id="@+id/tv_max_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/primary_color_200"
+            android:textSize="11sp"
+            android:text="@{String.format(`%d만원`,viewModel.maxPrice/10000)}"
+            app:layout_constraintEnd_toEndOf="@id/sb_budget_range_limit"
+            app:layout_constraintTop_toBottomOf="@id/sb_budget_range_limit"
+            tools:text="4300만원" />
+
+
+        <TextView
+            android:id="@+id/tv_mine_estimate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="10dp"
+            android:drawablePadding="4dp"
+            android:text="@string/estimate_range_bar_mine"
+            android:textColor="@color/active_blue"
+            android:textSize="11sp"
+            app:drawableStartCompat="@drawable/icon_circle"
+            app:drawableTint="@color/active_blue"
+            app:layout_constraintBottom_toBottomOf="@id/cv_budget_range"
+            app:layout_constraintEnd_toStartOf="@id/tv_similar_estimate"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/cv_budget_range" />
+
+        <TextView
+            android:id="@+id/tv_similar_estimate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:drawablePadding="4dp"
+            android:text="@string/estimate_header"
+            android:textColor="@color/white"
+            android:textSize="11sp"
+            app:drawableStartCompat="@drawable/icon_circle"
+            app:drawableTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/cv_budget_range"
+            app:layout_constraintEnd_toEndOf="@id/cv_budget_range"
+            app:layout_constraintStart_toEndOf="@id/tv_mine_estimate" />
+
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_slide_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:paddingStart="20dp"
+            android:paddingTop="0dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="0dp"
+            app:estimates="@{viewModel.estimateList}"
+            app:indicator="@{dotsIndicator}"
+            app:layout_constraintBottom_toTopOf="@id/dots_indicator"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cv_budget_range"
+            app:viewModel="@{viewModel}" />
+
+        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+            android:id="@+id/dots_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="25dp"
+            app:dotsColor="@color/gray_200"
+            app:dotsCornerRadius="8dp"
+            app:dotsSize="8dp"
+            app:dotsSpacing="4dp"
+            app:dotsWidthFactor="3"
+            app:layout_constraintBottom_toTopOf="@id/btn_add_options"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vp_slide_container"
+            app:progressMode="false"
+            app:selectedDotColor="@color/primary_color_500" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_add_options"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:background="@color/primary_color_700"
+            android:fontFamily="@font/hyndaisans_head_medium"
+            android:text="@string/estimate_btn_none"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.softeer.cartalog.data.enums.OptionMode" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.softeer.cartalog.viewmodel.OptionViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/sv_option_contents"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="120dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context=".ui.fragment.OptionFragment">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_root"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="16dp" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="16dp" />
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tl_option"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="50dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:recyclerView="@{rvOption}"
+                    app:tabBackground="@color/white"
+                    app:tabGravity="start"
+                    app:tabIndicatorColor="@color/primary_color_500"
+                    app:tabSelectedTextColor="@color/gray_900"
+                    app:tabTextAppearance="@style/TabOptionTextStyle"
+                    app:tabTextColor="@color/gray_200"
+                    app:viewModel="@{viewModel}">
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tab_option_not_default" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tab_option_default" />
+
+                </com.google.android.material.tabs.TabLayout>
+
+                <HorizontalScrollView
+                    android:id="@+id/sv_category_select"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:scrollIndicators="none"
+                    android:scrollbars="none"
+                    android:visibility="@{viewModel.nowOptionMode == OptionMode.SELECT_OPTION ? View.VISIBLE : View.INVISIBLE}"
+                    app:layout_constraintEnd_toEndOf="@id/gl_end"
+                    app:layout_constraintStart_toStartOf="@id/gl_start"
+                    app:layout_constraintTop_toBottomOf="@id/tl_option">
+
+                    <RadioGroup
+                        android:id="@+id/rg_category_select"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:optionMode="@{viewModel.nowOptionMode}"
+                        app:recyclerView="@{rvOption}"
+                        app:viewModel="@{viewModel}">
+
+                        <RadioButton
+                            android:id="@+id/rb_select_all"
+                            style="@style/RadioButtonStyle"
+                            android:layout_marginEnd="10dp"
+                            android:checked="true"
+                            android:paddingHorizontal="18dp"
+                            android:paddingVertical="8dp"
+                            android:text="@string/option_all" />
+
+                        <RadioButton
+                            android:id="@+id/rb_select_detail"
+                            style="@style/RadioButtonStyle"
+                            android:layout_marginEnd="10dp"
+                            android:paddingHorizontal="18dp"
+                            android:paddingVertical="8dp"
+                            android:text="@string/option_detail" />
+
+                        <RadioButton
+                            android:id="@+id/rb_select_acc"
+                            style="@style/RadioButtonStyle"
+                            android:layout_marginEnd="10dp"
+                            android:paddingHorizontal="18dp"
+                            android:paddingVertical="8dp"
+                            android:text="@string/option_acc" />
+
+                        <RadioButton
+                            android:id="@+id/rb_select_wheel"
+                            style="@style/RadioButtonStyle"
+                            android:layout_marginEnd="10dp"
+                            android:paddingHorizontal="18dp"
+                            android:paddingVertical="8dp"
+                            android:text="@string/option_wheel" />
+                    </RadioGroup>
+                </HorizontalScrollView>
+
+                <HorizontalScrollView
+                    android:id="@+id/sv_category_default"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:scrollbars="none"
+                    android:visibility="@{viewModel.nowOptionMode == OptionMode.DEFAULT_OPTION ? View.VISIBLE : View.INVISIBLE}"
+                    app:layout_constraintEnd_toEndOf="@id/gl_end"
+                    app:layout_constraintStart_toStartOf="@id/gl_start"
+                    app:layout_constraintTop_toBottomOf="@id/tl_option">
+
+                    <RadioGroup
+                        android:id="@+id/rg_category_default"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:optionMode="@{viewModel.nowOptionMode}"
+                        app:recyclerView="@{rvOption}"
+                        app:viewModel="@{viewModel}">
+
+                        <RadioButton
+                            android:id="@+id/rb_default_all"
+                            style="@style/RadioButtonStyle"
+                            android:layout_marginEnd="10dp"
+                            android:checked="true"
+                            android:paddingHorizontal="18dp"
+                            android:paddingVertical="8dp"
+                            android:text="@string/option_all" />
+
+                        <RadioButton
+                            android:id="@+id/rb_default_powertrain"
+                            style="@style/RadioButtonStyle"
+                            android:layout_marginEnd="10dp"
+                            android:paddingHorizontal="18dp"
+                            android:paddingVertical="8dp"
+                            android:text="@string/option_powertrain" />
+
+                        <RadioButton
+                            android:id="@+id/rb_default_safetech"
+                            style="@style/RadioButtonStyle"
+                            android:layout_marginEnd="10dp"
+                            android:paddingHorizontal="18dp"
+                            android:paddingVertical="8dp"
+                            android:text="@string/option_safetech" />
+
+                        <RadioButton
+                            android:id="@+id/rb_default_safe"
+                            style="@style/RadioButtonStyle"
+                            android:layout_marginEnd="10dp"
+                            android:paddingHorizontal="18dp"
+                            android:paddingVertical="8dp"
+                            android:text="@string/option_safe" />
+
+                        <RadioButton
+                            android:id="@+id/rb_default_exterior"
+                            style="@style/RadioButtonStyle"
+                            android:layout_marginEnd="10dp"
+                            android:paddingHorizontal="18dp"
+                            android:paddingVertical="8dp"
+                            android:text="@string/option_exterior" />
+
+                        <RadioButton
+                            android:id="@+id/rb_default_interior"
+                            style="@style/RadioButtonStyle"
+                            android:layout_marginEnd="10dp"
+                            android:paddingHorizontal="18dp"
+                            android:paddingVertical="8dp"
+                            android:text="@string/option_interior" />
+
+                        <RadioButton
+                            android:id="@+id/rb_default_seat"
+                            style="@style/RadioButtonStyle"
+                            android:layout_marginEnd="10dp"
+                            android:paddingHorizontal="18dp"
+                            android:paddingVertical="8dp"
+                            android:text="@string/option_seat" />
+
+                        <RadioButton
+                            android:id="@+id/rb_default_convenience"
+                            style="@style/RadioButtonStyle"
+                            android:layout_marginEnd="10dp"
+                            android:paddingHorizontal="18dp"
+                            android:paddingVertical="8dp"
+                            android:text="@string/option_convenience" />
+
+                        <RadioButton
+                            android:id="@+id/rb_default_multimedia"
+                            style="@style/RadioButtonStyle"
+                            android:layout_marginEnd="10dp"
+                            android:paddingHorizontal="18dp"
+                            android:paddingVertical="8dp"
+                            android:text="@string/option_multimedia" />
+                    </RadioGroup>
+
+                </HorizontalScrollView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_option"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:nestedScrollingEnabled="false"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="@id/gl_end"
+                    app:layout_constraintStart_toStartOf="@id/gl_start"
+                    app:layout_constraintTop_toBottomOf="@id/sv_category_select"
+                    app:optionList="@{viewModel.options}"
+                    app:viewModel="@{viewModel}"
+                    tools:listitem="@layout/item_option_select_card" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <View
+            android:id="@+id/vw_summary_bgr"
+            android:layout_width="0dp"
+            android:layout_height="58dp"
+            android:background="@color/white"
+            android:elevation="8dp"
+            app:layout_constraintBottom_toTopOf="@id/vw_summary_bgr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sv_option_contents" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_price_summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/selector_btn_price_summary"
+            android:elevation="8dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingHorizontal="17dp"
+            android:paddingVertical="7dp"
+            android:text="@string/btn_price_summary"
+            android:textColor="@drawable/selector_text_price_summary"
+            app:layout_constraintBottom_toBottomOf="@id/vw_summary_bgr"
+            app:layout_constraintStart_toStartOf="@id/vw_summary_bgr"
+            app:layout_constraintTop_toTopOf="@id/vw_summary_bgr" />
+
+        <TextView
+            android:id="@+id/tv_price_summary_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="20dp"
+            android:elevation="8dp"
+            android:text="@string/summary_now_price"
+            android:textColor="@color/gray_700"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/vw_summary_bgr"
+            app:layout_constraintTop_toTopOf="@id/vw_summary_bgr" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="8dp"
+            android:elevation="8dp"
+            android:fontFamily="@font/hyndaisans_head_medium"
+            android:text="@{String.format(`%,d원`, viewModel.userTotalPrice)}"
+            android:textColor="@color/primary_color_500"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/vw_summary_bgr"
+            app:layout_constraintEnd_toEndOf="@id/vw_summary_bgr"
+            app:layout_constraintTop_toBottomOf="@id/tv_price_summary_title" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_prev"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="@color/gray_300"
+            android:elevation="11dp"
+            android:fontFamily="@font/hyndaisans_head_medium"
+            android:text="@string/btn_prev"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_next"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vw_summary_bgr" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_next"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="@color/primary_color_700"
+            android:elevation="11dp"
+            android:fontFamily="@font/hyndaisans_head_medium"
+            android:text="@string/btn_next"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_prev"
+            app:layout_constraintTop_toBottomOf="@id/vw_summary_bgr" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
