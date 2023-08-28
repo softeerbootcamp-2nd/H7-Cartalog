@@ -58,7 +58,6 @@ class TypeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTypeBinding.inflate(inflater, container, false)
-        typeViewModel.setNavController(findNavController())
         typeViewModel.setUserTotalPrice(totalPrice)
         requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), callback)
         return binding.root

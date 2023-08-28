@@ -25,9 +25,6 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
     private val _wheeldrive1Selected = MutableLiveData(true)
     val wheeldrive1Selected: LiveData<Boolean> = _wheeldrive1Selected
 
-    private val _navController = MutableLiveData<NavController>()
-    val navController: LiveData<NavController> = _navController
-
     private val _typeList: MutableLiveData<List<Type>> = MutableLiveData(emptyList())
     val typeList: LiveData<List<Type>> = _typeList
 
@@ -122,10 +119,6 @@ class TypeViewModel(private val repository: CarRepository) : ViewModel() {
 
     fun setUserTotalPrice(price: Int) {
         _userTotalPrice.value = price
-    }
-
-    fun setNavController(navController: NavController) {
-        _navController.value = navController
     }
 
     private fun getTypeData(type: ModelTypeSubject): TypeOption {
