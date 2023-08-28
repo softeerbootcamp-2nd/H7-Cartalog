@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react';
 import * as S from './style';
-import Toggle from '../../../../components/Toggle';
 
 function CarImage({ interiorColor, exteriorColor, toggle }) {
   const interior = interiorColor.carImageUrl;

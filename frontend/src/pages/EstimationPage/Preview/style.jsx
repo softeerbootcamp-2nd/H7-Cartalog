@@ -30,7 +30,9 @@ export const CarInfo = styled.div`
   }
 
   & > .toggle {
+    ${SlideFromBottom}
     position: absolute;
     bottom: 20px;
+    animation-delay: 1.5s;
   }
 `;
