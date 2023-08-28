@@ -90,7 +90,6 @@
         <item name="chipStrokeColor">@color/gray_200</item>
         <item name="chipStrokeWidth">1dp</item>
         <item name="fontFamily">@font/hyndaisans_head_medium</item>
-        <!-- 다른 속성들 -->
     </style>
 
     <style name="RadioButtonStyle" parent="Widget.Material3.CompoundButton.RadioButton">
