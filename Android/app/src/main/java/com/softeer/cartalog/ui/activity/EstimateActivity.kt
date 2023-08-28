@@ -37,10 +37,15 @@ class EstimateActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val totalPrice = intent.getIntExtra(MainActivity.TOTAL_PRICE,0)
         val minPrice = intent.getIntExtra(MainActivity.MIN_PRICE,0)
         val maxPrice = intent.getIntExtra(MainActivity.MAX_PRICE,0)
+        val estimateId = intent.getIntExtra(MainActivity.ESTIMATE_ID, 0)
+
+        estimateViewModel.estimateId = estimateId
         estimateViewModel.setPriceData(totalPrice, minPrice, maxPrice)
+        estimateViewModel.setData(2)
 
         binding.viewModel = estimateViewModel
         binding.lifecycleOwner = this@EstimateActivity

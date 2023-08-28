@@ -49,6 +49,7 @@ class EstimateViewModel(private val repository: CarRepository) : ViewModel() {
     val maxPrice: LiveData<Int> = _maxPrice
 
     private var priceRange = 0
+    var estimateId = 0
 
     init {
         setData(2)
@@ -58,43 +59,12 @@ class EstimateViewModel(private val repository: CarRepository) : ViewModel() {
         _message.value = message
     }
 
-    private fun setData(trimId: Int) {
+    fun setData(trimId: Int) {
         viewModelScope.launch {
-
-            // 1. detail trim id 먼저 불러오기
-            val selectPowerTrain = repository.getTypeData(PriceDataType.POWERTRAIN).optionId
-            val selectBodyType = repository.getTypeData(PriceDataType.BODYTYPE).optionId
-            val selectWheelDrive = repository.getTypeData(PriceDataType.WHEELDRIVE).optionId
-
-            val modelTypeIds = "$selectPowerTrain,$selectBodyType,$selectWheelDrive"
-            detailTrimId = repository.getTrimDetail(modelTypeIds, trimId).detailTrimId
-
-            // 2. 견적서 서버에 POST 후 내 견적서 정보 받아오기
-            // 내, 외장 선택한 코드 가져오기
-            val exteriorColorCode = repository.getTypeData(PriceDataType.EXTERIOR_COLOR).code ?: ""
-            val interiorColorCode = repository.getTypeData(PriceDataType.INTERIOR_COLOR).code ?: ""
-
-            // 옵션 선택한 것들 코드 가져오기
-            val selectOptionOrPackageIds = repository.getOptionTypeDataList().map { it.code ?: "" }
-
-            // 3. 견적서 업로드
-            val estimate = EstimateRequest(
-                detailTrimId,
-                exteriorColorCode,
-                interiorColorCode,
-                selectOptionOrPackageIds
-            )
-            Log.d("TESTER", "$estimate")
-            val estimateId = repository.postEstimate(estimate)
-            Log.d("TESTER", "$estimateId")
-
-//            val estimateId = 1
-
-            // 4. 견적서 번호를 통한 견적조회
             val estimateCounts = repository.getEstimateCount(estimateId)
             Log.d("TESTER", "$estimateCounts")
 
-            // 5. 유사견적이 있으면 해당 유사견적을 확인하여 뷰모델에 저장하기
+            // 해당 유사견적을 확인하여 뷰모델에 저장하기
             if (estimateCounts.similarEstimateCounts.isNotEmpty()) {
                 for (similar in estimateCounts.similarEstimateCounts) {
                     val similarEstimateItem =

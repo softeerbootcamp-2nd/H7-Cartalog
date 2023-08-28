@@ -42,6 +42,9 @@ class MainViewModel(private val repository: CarRepository) : ViewModel() {
     private val _isEstimateExist = MutableLiveData(false)
     val isEstimateExist: LiveData<Boolean> = _isEstimateExist
 
+    private val _estimateId = MutableLiveData(0)
+    val estimateId: LiveData<Int> = _estimateId
+
     private var priceRange = 0
 
     fun setStepIndex(index: Int) {
@@ -115,11 +118,11 @@ class MainViewModel(private val repository: CarRepository) : ViewModel() {
                 selectOptionOrPackageIds
             )
             Log.d("TESTER", "$estimate")
-            val estimateId = repository.postEstimate(estimate)
-            Log.d("TESTER", "$estimateId")
+            _estimateId.value = repository.postEstimate(estimate)
+            Log.d("TESTER", "${estimateId.value}")
 
             // 4. 견적서 번호를 통한 견적조회
-            val estimateCounts = repository.getEstimateCount(estimateId)
+            val estimateCounts = repository.getEstimateCount(_estimateId.value!!)
             if (estimateCounts.similarEstimateCounts.isNotEmpty()) {
                 _isEstimateExist.value = true
             }
