@@ -4,22 +4,17 @@ import android.annotation.SuppressLint
 import android.view.MotionEvent
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import androidx.lifecycle.LifecycleCoroutineScope
-import coil.Coil
 import coil.ImageLoader
 import coil.disk.DiskCache
 import coil.load
 import coil.memory.MemoryCache
-import coil.request.CachePolicy
 import coil.request.ImageRequest
-import com.softeer.cartalog.data.enums.PriceDataType
-import coil.size.Precision
 import coil.transition.CrossfadeTransition
+import com.softeer.cartalog.data.enums.PriceDataType
 import com.softeer.cartalog.util.UtilManager
 import com.softeer.cartalog.viewmodel.ExteriorViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @BindingAdapter("imgUrl")
@@ -115,9 +110,9 @@ fun setImageViewScaleType(
     imageView: ImageView,
     optionType: PriceDataType
 ){
-    if(optionType == PriceDataType.EXTERIOR_COLOR || optionType == PriceDataType.INTERIOR_COLOR){
-        imageView.scaleType = ImageView.ScaleType.CENTER_CROP
-    } else {
+    if(optionType == PriceDataType.POWERTRAIN || optionType == PriceDataType.BODYTYPE ||  optionType == PriceDataType.WHEELDRIVE){
         imageView.scaleType = ImageView.ScaleType.FIT_CENTER
+    } else {
+        imageView.scaleType = ImageView.ScaleType.CENTER_CROP
     }
 }

@@ -1,16 +1,20 @@
 package com.softeer.cartalog.data.repository
 
+import android.util.Log
 import com.softeer.cartalog.data.enums.PriceDataType
-import com.softeer.cartalog.data.model.CarColor
-import com.softeer.cartalog.data.model.DetailOptions
-import com.softeer.cartalog.data.model.Options
-import com.softeer.cartalog.data.model.SummaryCarImage
-import com.softeer.cartalog.data.model.Trim
-import com.softeer.cartalog.data.model.TrimDetail
-import com.softeer.cartalog.data.model.Trims
-import com.softeer.cartalog.data.model.Type
+import com.softeer.cartalog.data.model.color.CarColor
 import com.softeer.cartalog.data.model.db.MyCar
 import com.softeer.cartalog.data.model.db.PriceData
+import com.softeer.cartalog.data.model.estimate.EstimateCounts
+import com.softeer.cartalog.data.model.estimate.EstimateRequest
+import com.softeer.cartalog.data.model.estimate.SimilarEstimates
+import com.softeer.cartalog.data.model.option.DetailOptions
+import com.softeer.cartalog.data.model.option.Options
+import com.softeer.cartalog.data.model.summary.SummaryCarImage
+import com.softeer.cartalog.data.model.trim.Trim
+import com.softeer.cartalog.data.model.trim.Trims
+import com.softeer.cartalog.data.model.type.TrimDetail
+import com.softeer.cartalog.data.model.type.Type
 import com.softeer.cartalog.data.repository.local.CarLocalDataSource
 import com.softeer.cartalog.data.repository.remote.CarRemoteDataSource
 
@@ -179,4 +183,31 @@ class CarRepositoryImpl(
     override suspend fun deleteOptionItem(option: PriceData) {
         carLocalDataSource.deleteOptionItem(option)
     }
+
+    override suspend fun postEstimate(estimate: EstimateRequest): Int {
+//        val json = Gson().toJson(estimate)
+        val response = carRemoteDataSource.postEstimate(estimate)
+        Log.d("TESTER", "post ${response}")
+        return if (response.isSuccessful) response.body()!! else 0
+    }
+
+    override suspend fun getEstimateCount(estimateId: Int): EstimateCounts {
+        val response = carRemoteDataSource.getEstimateCount(estimateId)
+        return if (response.isSuccessful) response.body()!! else EstimateCounts(0, emptyList())
+    }
+
+    override suspend fun getSimilarEstimate(estimateId: Int, similarEstimateId: Int): SimilarEstimates? {
+        val response = carRemoteDataSource.getSimilarEstimate(estimateId, similarEstimateId)
+        return if (response.isSuccessful) response.body()!! else null
+    }
+
+    override suspend fun deleteAllData() {
+        carLocalDataSource.deleteAllData()
+    }
+
+    override suspend fun getTotalPrice(): Int {
+        return carLocalDataSource.getTotalPrice()
+    }
+
+
 }

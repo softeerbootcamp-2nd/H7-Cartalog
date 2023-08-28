@@ -6,13 +6,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.softeer.cartalog.data.model.db.PriceData
 import com.softeer.cartalog.databinding.ItemConfirmDetailContentBinding
 
-class ConfirmDetailContentsAdapter(private val detailContentsList: List<PriceData>): RecyclerView.Adapter<ConfirmDetailContentsAdapter.ConfirmDetailContentsViewHolder>() {
+class ConfirmDetailContentsAdapter(private val detailContentsList: List<PriceData>) :
+    RecyclerView.Adapter<ConfirmDetailContentsAdapter.ConfirmDetailContentsViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ConfirmDetailContentsViewHolder {
-        val binding = ItemConfirmDetailContentBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = ItemConfirmDetailContentBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return ConfirmDetailContentsViewHolder(binding)
     }
 

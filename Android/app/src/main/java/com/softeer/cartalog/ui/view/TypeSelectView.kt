@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -15,7 +14,7 @@ import androidx.navigation.findNavController
 import com.softeer.cartalog.R
 import com.softeer.cartalog.databinding.ViewTypeselectBinding
 import com.softeer.cartalog.data.enums.ModelTypeSubject
-import com.softeer.cartalog.data.model.Types
+import com.softeer.cartalog.data.model.type.Types
 import com.softeer.cartalog.ui.fragment.TypeFragmentDirections
 import com.softeer.cartalog.viewmodel.TypeViewModel
 

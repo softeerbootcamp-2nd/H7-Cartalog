@@ -1,14 +1,18 @@
 package com.softeer.cartalog.data.repository.remote
 
-import com.softeer.cartalog.data.model.DetailOptions
-import com.softeer.cartalog.data.model.SummaryCarImage
-import com.softeer.cartalog.data.model.ExteriorColors
-import com.softeer.cartalog.data.model.InteriorColors
-import com.softeer.cartalog.data.model.Options
-import com.softeer.cartalog.data.model.TrimDetail
-import com.softeer.cartalog.data.model.Trims
-import com.softeer.cartalog.data.model.Types
+import com.softeer.cartalog.data.model.option.DetailOptions
+import com.softeer.cartalog.data.model.summary.SummaryCarImage
+import com.softeer.cartalog.data.model.color.ExteriorColors
+import com.softeer.cartalog.data.model.color.InteriorColors
+import com.softeer.cartalog.data.model.estimate.EstimateCounts
+import com.softeer.cartalog.data.model.estimate.EstimateRequest
+import com.softeer.cartalog.data.model.estimate.SimilarEstimates
+import com.softeer.cartalog.data.model.option.Options
+import com.softeer.cartalog.data.model.type.TrimDetail
+import com.softeer.cartalog.data.model.trim.Trims
+import com.softeer.cartalog.data.model.type.Types
 import com.softeer.cartalog.data.remote.api.CarApi
+import okhttp3.ResponseBody
 import retrofit2.Response
 
 class CarRemoteDataSource(
@@ -53,6 +57,21 @@ class CarRemoteDataSource(
 
     suspend fun getDetailOptions(optionId: String): Response<DetailOptions> {
         return carApi.getDetailOptions(optionId)
+    }
+
+    suspend fun postEstimate(estimate: EstimateRequest): Response<Int> {
+        return carApi.postEstimate(estimate)
+    }
+
+    suspend fun getEstimateCount(estimateId: Int): Response<EstimateCounts> {
+        return carApi.getEstimateCount(estimateId)
+    }
+
+    suspend fun getSimilarEstimate(
+        estimateId: Int,
+        similarEstimateId: Int
+    ): Response<SimilarEstimates> {
+        return carApi.getSimilarEstimate(estimateId, similarEstimateId)
     }
 
 }

@@ -1,6 +1,7 @@
-package com.softeer.cartalog.data.model
+package com.softeer.cartalog.data.model.option
 
 import com.google.gson.annotations.SerializedName
+import com.softeer.cartalog.data.model.trim.TrimHmgData
 
 class DetailOptions(
     val name: String,

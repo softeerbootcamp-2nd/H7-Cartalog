@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.softeer.cartalog.data.enums.OptionMode
 import com.softeer.cartalog.data.enums.PriceDataType
-import com.softeer.cartalog.data.model.Option
-import com.softeer.cartalog.data.model.Options
+import com.softeer.cartalog.data.model.option.Option
+import com.softeer.cartalog.data.model.option.Options
 import com.softeer.cartalog.data.model.db.PriceData
 import com.softeer.cartalog.data.repository.CarRepository
 import kotlinx.coroutines.launch

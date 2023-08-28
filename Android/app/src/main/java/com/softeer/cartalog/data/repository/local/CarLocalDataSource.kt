@@ -54,4 +54,13 @@ class CarLocalDataSource(
     suspend fun deleteOptionItem(option: PriceData){
         priceDataDao.deleteOptionItem(option)
     }
+
+    suspend fun deleteAllData(){
+        myCarDao.deleteAll()
+        priceDataDao.deleteAll()
+    }
+
+    suspend fun getTotalPrice(): Int{
+        return myCarDao.getTotalPrice()
+    }
 }

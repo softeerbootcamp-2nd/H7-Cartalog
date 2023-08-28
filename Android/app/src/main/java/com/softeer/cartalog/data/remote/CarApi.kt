@@ -1,15 +1,23 @@
 package com.softeer.cartalog.data.remote.api
 
-import com.softeer.cartalog.data.model.DetailOptions
-import com.softeer.cartalog.data.model.SummaryCarImage
-import com.softeer.cartalog.data.model.ExteriorColors
-import com.softeer.cartalog.data.model.InteriorColors
-import com.softeer.cartalog.data.model.Options
-import com.softeer.cartalog.data.model.TrimDetail
-import com.softeer.cartalog.data.model.Trims
-import com.softeer.cartalog.data.model.Types
+import com.softeer.cartalog.data.model.option.DetailOptions
+import com.softeer.cartalog.data.model.summary.SummaryCarImage
+import com.softeer.cartalog.data.model.color.ExteriorColors
+import com.softeer.cartalog.data.model.color.InteriorColors
+import com.softeer.cartalog.data.model.estimate.EstimateCounts
+import com.softeer.cartalog.data.model.estimate.EstimateRequest
+import com.softeer.cartalog.data.model.estimate.SimilarEstimates
+import com.softeer.cartalog.data.model.option.Options
+import com.softeer.cartalog.data.model.type.TrimDetail
+import com.softeer.cartalog.data.model.trim.Trims
+import com.softeer.cartalog.data.model.type.Types
+import okhttp3.ResponseBody
 import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Headers
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface CarApi {
@@ -51,4 +59,17 @@ interface CarApi {
     suspend fun getDetailOptions(
         @Query("optionId") optionId: String,
     ): Response<DetailOptions>
+
+    @Headers("accept: */*", "Content-Type: application/json")
+    @POST("/estimates")
+    suspend fun postEstimate(@Body estimateRequestDto: EstimateRequest): Response<Int>
+
+    @GET("/similarity")
+    suspend fun getEstimateCount(@Query("estimateId") estimateId: Int): Response<EstimateCounts>
+
+    @GET("/similarity/releases")
+    suspend fun getSimilarEstimate(
+        @Query("estimateId") estimateId: Int,
+        @Query("similarEstimateId") similarEstimateId: Int
+    ): Response<SimilarEstimates>
 }
