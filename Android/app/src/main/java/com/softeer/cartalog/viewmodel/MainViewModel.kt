@@ -14,28 +14,35 @@ class MainViewModel(private val repository: CarRepository) : ViewModel() {
 
     private val _stepIndex = MutableLiveData(0)
     val stepIndex: LiveData<Int> = _stepIndex
+
     private val _budgetRangeLimit = MutableLiveData(0)
     val budgetRangeLimit: LiveData<Int> = _budgetRangeLimit
+
     private val _budgetRangeLimitProgress = MutableLiveData(50)
     val budgetRangeLimitProgress: LiveData<Int> = _budgetRangeLimitProgress
+
     private val _totalPrice = MutableLiveData(0)
     val totalPrice: LiveData<Int> = _totalPrice
+
     private val _totalPriceProgress = MutableLiveData<Int>(0)
     val totalPriceProgress: LiveData<Int> = _totalPriceProgress
+
     private val _isExcess = MutableLiveData(false)
     val isExcess: LiveData<Boolean> = _isExcess
 
     private val _minPrice = MutableLiveData(0)
     val minPrice: LiveData<Int> = _minPrice
+
     private val _maxPrice = MutableLiveData(0)
     val maxPrice: LiveData<Int> = _maxPrice
-    private var priceRange = 0
 
     private val _isReset = MutableLiveData<Boolean>(false)
     val isReset: LiveData<Boolean> = _isReset
 
     private val _isEstimateExist = MutableLiveData(false)
     val isEstimateExist: LiveData<Boolean> = _isEstimateExist
+
+    private var priceRange = 0
 
     fun setStepIndex(index: Int) {
         _stepIndex.value = index
@@ -56,6 +63,7 @@ class MainViewModel(private val repository: CarRepository) : ViewModel() {
     fun setTotalPriceProgress(total: Int) {
         _totalPrice.value = total
         _totalPriceProgress.value = calculateProgressFromPrice(totalPrice.value!!)
+        _isExcess.value = budgetRangeLimit.value!! < totalPrice.value!!
     }
 
     private fun calculateProgressFromPrice(price: Int): Int {
@@ -112,7 +120,7 @@ class MainViewModel(private val repository: CarRepository) : ViewModel() {
 
             // 4. 견적서 번호를 통한 견적조회
             val estimateCounts = repository.getEstimateCount(estimateId)
-            if(estimateCounts.similarEstimateCounts.isNotEmpty()){
+            if (estimateCounts.similarEstimateCounts.isNotEmpty()) {
                 _isEstimateExist.value = true
             }
 

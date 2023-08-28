@@ -1,7 +1,6 @@
 package com.softeer.cartalog.ui.adapter
 
 import android.content.res.ColorStateList
-import android.util.Log
 import android.view.View
 import android.widget.HorizontalScrollView
 import android.widget.ImageButton
@@ -36,7 +35,6 @@ fun setExteriorItemClickListener(
     position: Int
 ) {
     cardView.setOnClickListener {
-
         adapter.notifyItemChanged(adapter.selectedItem)
         if (adapter.selectedItem != position) {
             adapter.selectedItem = position
@@ -54,7 +52,6 @@ fun setInteriorItemClickListener(
     position: Int
 ) {
     cardView.setOnClickListener {
-
         adapter.notifyItemChanged(adapter.selectedItem)
         if (adapter.selectedItem != position) {
             adapter.selectedItem = position
@@ -71,7 +68,6 @@ fun setOnClickToggle(
     fragmentContainer: FragmentContainerView,
     idx: Int
 ) {
-
     button.setOnClickListener {
         if (layout.visibility == View.VISIBLE) {
             layout.animate()
@@ -109,11 +105,9 @@ fun setOptionItemClickListener(
         if (viewModel.selectedSelectOption.value!!.contains(option)) {
             adapter.selectedItems.remove(option)
             viewModel.removeSelectedSelectOption(option)
-            Log.d("TEST", "removed ${viewModel.selectedSelectOption.value}")
         } else {
             adapter.selectedItems.add(option)
             viewModel.addSelectedSelectOption(option)
-            Log.d("TEST", "added ${viewModel.selectedSelectOption.value}")
         }
         adapter.notifyItemChanged(adapter.items.indexOf(option))
     }
@@ -130,11 +124,9 @@ fun setSimilarOptionItemClickListener(
         if (viewModel.selectedOptions.value!!.contains(option)) {
             adapter.selectedItems.remove(option)
             viewModel.removeSelectedOption(option)
-            Log.d("TEST", "removed ${viewModel.selectedOptions.value}")
         } else {
             adapter.selectedItems.add(option)
             viewModel.addSelectedOption(option)
-            Log.d("TEST", "added ${viewModel.selectedOptions.value}")
         }
         adapter.notifyItemChanged(adapter.items.indexOf(option))
     }
@@ -148,7 +140,6 @@ fun setOptionTabSelected(
 ) {
     tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
         override fun onTabSelected(tab: TabLayout.Tab?) {
-
             when (tab?.position) {
                 0 -> {
                     viewModel.setNowOptionMode(OptionMode.SELECT_OPTION)
@@ -273,7 +264,6 @@ fun setImageCheckBtn(
     button: AppCompatButton,
     nestedScrollView: NestedScrollView
 ) {
-
     nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
         if (scrollY > oldScrollY) {
             button.visibility = View.VISIBLE

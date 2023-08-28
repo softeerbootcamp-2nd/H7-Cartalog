@@ -32,18 +32,22 @@ class EstimateViewModel(private val repository: CarRepository) : ViewModel() {
 
     private val _totalPrice = MutableLiveData(0)
     val totalPrice: LiveData<Int> = _totalPrice
+
     private val _totalPriceProgress = MutableLiveData<Int>(0)
     val totalPriceProgress: LiveData<Int> = _totalPriceProgress
 
     private val _estimatePrice = MutableLiveData(0)
     val estimatePrice: LiveData<Int> = _estimatePrice
+
     private val _estimatePriceProgress = MutableLiveData<Int>(0)
     val estimatePriceProgress: LiveData<Int> = _estimatePriceProgress
 
     private val _minPrice = MutableLiveData(0)
     val minPrice: LiveData<Int> = _minPrice
+
     private val _maxPrice = MutableLiveData(0)
     val maxPrice: LiveData<Int> = _maxPrice
+
     private var priceRange = 0
 
     init {
