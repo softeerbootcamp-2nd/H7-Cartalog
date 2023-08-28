@@ -45,7 +45,6 @@ class EstimateOptionsAdapter(private val viewModel: EstimateViewModel, private v
             binding.adapter = this@EstimateOptionsAdapter
             binding.viewModel = viewModel
             binding.option = item
-            binding.position = position
 
         }
     }

@@ -48,7 +48,6 @@ class OptionSelectAdapter(private val viewModel: OptionViewModel, private val fi
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Option?, position: Int) {
             binding.viewModel = viewModel
-            binding.position = position
             binding.optionAdapter = this@OptionSelectAdapter
 
             item?.let { option ->
