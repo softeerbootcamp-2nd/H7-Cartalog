@@ -169,7 +169,7 @@ public class SimilarityServiceImpl implements SimilarityService {
         return estimateCounts.stream()
                 .filter(estimateCountDto -> Objects.equals(estimateCountDto.getEstimateId(), estimateId))
                 .findAny()
-                .orElse(new EstimateCountDto(estimateId, 0L)).getCount();
+                .orElse(new EstimateCountDto(estimateId, 0L, 40000000)).getCount();
     }
 
     private static List<EstimateCountDto> getSimilarEstimateCounts(Long estimateId, List<EstimateCountDto> estimateCounts) {
