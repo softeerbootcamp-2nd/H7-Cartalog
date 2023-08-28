@@ -80,8 +80,8 @@ class SimilarityControllerTest {
         void returnStatus200AndEstimateCounts() {
             //given
             SimilarEstimateCountResponseDto expectResponse = new SimilarEstimateCountResponseDto(3L,
-                    List.of(new EstimateCountDto(2L, 3L),
-                            new EstimateCountDto(3L, 4L)));
+                    List.of(new EstimateCountDto(2L, 3L, 40000000),
+                            new EstimateCountDto(3L, 4L, 40000001)));
             when(similarityService.getSimilarEstimateCounts(anyLong()))
                     .thenReturn(expectResponse);
             //when

@@ -87,6 +87,7 @@ public class SimilarityController {
                 .map(counts -> EstimateCountInfoDto.builder()
                         .estimateId(counts.getEstimateId())
                         .count(counts.getCount())
+                        .price(counts.getPrice())
                         .estimateInfo(estimateService.findEstimateByEstimateId(counts.getEstimateId()))
                         .build()
                 )

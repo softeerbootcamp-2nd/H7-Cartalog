@@ -8,5 +8,6 @@ import lombok.Getter;
 public class EstimateCountInfoDto {
     private Long estimateId;
     private Long count;
+    private int price;
     private EstimateResponseDto estimateInfo;
 }

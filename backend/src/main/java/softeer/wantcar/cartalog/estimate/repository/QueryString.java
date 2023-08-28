@@ -90,7 +90,8 @@ public class QueryString {
     public static final String findEstimateCounts =
             "SELECT " +
             "   estimate_id, " +
-            "   count(estimate_id) AS count " +
+            "   count(estimate_id) AS count, " +
+            "   (SELECT price FROM estimates WHERE id=estimate_id) AS price " +
             "FROM release_records " +
             "WHERE estimate_id IN (:estimateIds) " +
             "GROUP BY estimate_id ";
