@@ -10,10 +10,10 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins(
-                        "https://hyendei.shop",
-                        "https://hyendei.shop:443",
-                        "https://www.hyendei.shop",
-                        "https://www.hyendei.shop:443",
+                        "https://hyundei.shop",
+                        "https://hyundei.shop:443",
+                        "https://www.hyundei.shop",
+                        "https://www.hyundei.shop:443",
                         "https://localhost:5173," +
                         "http://localhost:5173");
     }
