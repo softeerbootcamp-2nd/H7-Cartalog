@@ -14,7 +14,11 @@ public class WebConfig implements WebMvcConfigurer {
                         "https://hyundei.shop:443",
                         "https://www.hyundei.shop",
                         "https://www.hyundei.shop:443",
-                        "https://localhost:5173," +
+                        "http://hyundei.shop",
+                        "http://hyundei.shop:80",
+                        "http://www.hyundei.shop",
+                        "http://www.hyundei.shop:80",
+                        "http://localhost:5173," +
                         "http://localhost:5173");
     }
 }
